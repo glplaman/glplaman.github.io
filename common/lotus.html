@@ -1,0 +1,61 @@
+<style>
+  .lotus {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 2rem;
+    text-align: initial;
+  }
+
+  .lotus-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center 100%;
+    opacity: 0.2;
+    animation: spread 10s linear infinite alternate;
+  }
+
+  .lotus-item::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 0 50% 50% 50%;
+    border: 1px solid #fff;
+    background-image: linear-gradient(-45deg, var(--warn-color, #f78fb3), var(--third-color, #f8a5c2));
+    transform: rotate(45deg);
+  }
+
+  .lotus-item::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--warn-color);
+  }
+
+  @keyframes spread {
+
+    50%,
+    100% {
+      transform: rotate(calc(16deg*var(--rad)));
+      opacity: 1;
+    }
+  }
+</style>
+<div class="lotus">
+  <div class="lotus-item" style="--rad:-4"></div>
+  <div class="lotus-item" style="--rad:4"></div>
+  <div class="lotus-item" style="--rad:-3"></div>
+  <div class="lotus-item" style="--rad:3"></div>
+  <div class="lotus-item" style="--rad:-2"></div>
+  <div class="lotus-item" style="--rad:2"></div>
+  <div class="lotus-item" style="--rad:-1"></div>
+  <div class="lotus-item" style="--rad:1"></div>
+  <div class="lotus-item" style="--rad:0"></div>
+</div>

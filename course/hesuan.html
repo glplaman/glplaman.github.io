@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>核酸检测</title>
+    <link rel="stylesheet" href="../css/font_3468246_tjd5qsvz30r/iconfont.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .img-box {
+            width: 450px;
+            position: relative;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .top {
+            position: absolute;
+            width: 90%;
+            left: 50%;
+            top: 2.4%;
+            transform: translateX(-50%);
+            color: #fffef9;
+            font-size: 20px;
+        }
+
+        .info {
+            position: absolute;
+            top: 12.5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            font-size: 17px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            background-color: #fff;
+        }
+
+        .zone {
+            position: absolute;
+            width: 90%;
+            left: 50%;
+            top: 7%;
+            transform: translateX(-50%);
+            color: #fffef9;
+            font-size: 20px;
+        }
+
+        .zone-txt {
+            flex: 1;
+            text-align: center;
+        }
+
+        .iconfont {
+            font-size: 24px;
+            vertical-align: middle;
+        }
+
+        .title {
+            background-color: #ecf2f9;
+            border-radius: 4px;
+            line-height: 36px;
+            padding: 0 20px;
+        }
+
+        .mid-time {
+            position: absolute;
+            top: 19%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            background-color: rgba(255, 255, 255, 1);
+            text-align: center;
+            font-size: 30px;
+            line-height: 30px;
+            font-weight: 600;
+        }
+
+        .bottom-time {
+            position: absolute;
+            left: 13%;
+            bottom: 24.6%;
+            font-size: 16px;
+            color: #fffef9;
+        }
+
+        @media screen and (max-width:750px) {
+            .img-box {
+                width: 100%;
+            }
+
+            .top-time {
+                font-size: 16px;
+            }
+
+            .bottom-time {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img-box">
+        <img src="../imgs/hesuan0.jpg" alt="">
+        <!-- <div class="flex top">
+            <div class="top-time">08:26</div>
+            <div class="top-right">
+                <span class="iconfont icon-signal"></span><span style="font-size: 14px;"> 5G </span><span
+                    class="iconfont icon-dianchi-gaodianliang"></span>
+            </div>
+        </div> -->
+        <div class="flex zone">
+            <span class="iconfont icon-jiantou_liebiaoxiangzuo"></span>
+            <div class="zone-txt" contenteditable>粤康码</div>
+        </div>
+        <div class="flex info">
+            <span contenteditable>佛山<span class="iconfont icon-jiantou_liebiaozhankai"></span></span>
+            <div class="title" contenteditable>张*彬 | 管理</div>
+            <span style="color: #378bff;"><span class="iconfont icon-yinlianglabashengyin"></span>播报</span>
+        </div>
+        <div class="mid-time">11-12 08:26:36</div>
+        <div class="bottom-time" contenteditable>2022-11-12 09:26</div>
+    </div>
+    <script>
+        window.onload = function () {
+            let data, year, mon, day, hour, min, sec;
+            // let topTxt = document.querySelector('.top-time');
+            let midTxt = document.querySelector('.mid-time');
+            updateTime();
+            setInterval(updateTime, 1000);
+            function updateTime() {
+                console.log("hi");
+                data = new Date();
+                year = data.getFullYear();
+                mon = data.getMonth() + 1;
+                day = data.getDate() > 9 ? data.getDate() : '0' + data.getDate();
+                hour = data.getHours() > 9 ? data.getHours() : '0' + data.getHours();
+                min = data.getMinutes() > 9 ? data.getMinutes() : '0' + data.getMinutes();
+                sec = data.getSeconds() > 9 ? data.getSeconds() : '0' + data.getSeconds();
+                // topTxt.innerHTML = `${hour}:${min}`;
+                midTxt.innerHTML = `${mon}-${day} ${hour}:${min}:${sec}`;
+            }
+        }
+    </script>
+</body>
+
+</html>

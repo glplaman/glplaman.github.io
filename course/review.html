@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毕设暨就业反思</title>
+  <link rel="stylesheet" href="/utils/lib/swiper-11.0.5/package/swiper-bundle.min.css" />
+  <style>
+    @import url(../css/fonts_Michroma.css);
+    @import url(../css/fonts_YuWei.css);
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background-color: #fff;
+      border-radius: 4px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-image: linear-gradient(#fff, #f40);
+      border-radius: 4px;
+    }
+
+    .box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      align-items: center;
+      height: 100vh;
+      scroll-snap-align: start;
+      background-image: linear-gradient(#f40, #5f1c03);
+    }
+
+    .swiper {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 16/9;
+      box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .swiper-title {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'YuWei';
+      font-size: 48px;
+      filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.5));
+    }
+
+    .swiper-title::before,
+    .swiper-title::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-image: url(../imgs/xh.png);
+      background-size: cover;
+    }
+
+    .swiper-slide {
+      display: grid;
+      place-items: center;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .info {
+      position: relative;
+      color: #fff;
+      font-family: 'Michroma';
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 36px;
+    }
+
+    .swiper-pagination-bullet {
+      background-color: transparent;
+      width: 40px;
+      height: 8px;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      opacity: 1;
+    }
+
+    .swiper-pagination-bullet-active {
+      background-color: #f40;
+      border-color: transparent;
+    }
+
+    .swiper1 .swiper-slide,
+    .swiper2 .swiper-slide {
+      background-size: contain;
+      background-position: center;
+    }
+
+    footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      color: #f1f1f1;
+      font-size: 12px;
+      padding: 10px 0;
+    }
+
+    footer img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .ring {
+      height: 200px;
+      filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.8));
+
+    }
+
+    .ring-item {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 10px solid var(--b-c);
+      display: grid;
+      place-items: center;
+      transform: translateX(calc(var(--m)*100px));
+    }
+
+    .ring .item2 {
+      transform: translateY(40%);
+    }
+
+    .ring .seg {
+      border-color: transparent;
+    }
+
+    .ring .item1.seg {
+      border-bottom-color: #089;
+      transform: translateX(-100px) rotate(-90deg);
+    }
+
+    .ring .item2.seg {
+      transform: translateY(40%) rotate(-130deg);
+      border-bottom-color: #37c264;
+    }
+
+    .ring .item3.seg {
+      border-bottom-color: #ff0;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="app">
+    <div class="box">
+      <div class="swiper-title">毕设反馈</div>
+      <div class="swiper swiper1">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(item,ind) in imgs" :style="`background-image: url(${item.url})`">
+            <div class="info"><span></span><span>{{item.num}}</span> <span>Day {{ind+1}}</span></div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="swiper-title">常见问题</div>
+      <div class="swiper swiper2">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(item,ind) in 25" :style="`background-image: url(/imgs/temp/p${ind}.png)`">
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="swiper-title">努力方向</div>
+      <div class="info">
+        <div>完善制度</div>
+        <div>优化人培</div>
+        <div>加强保障</div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="swiper-title">双向奔赴</div>
+      <div class="info ring">
+        <div class="ring-item item1" style="--m:-1;--b-c:#089">老师</div>
+        <div class="ring-item item2" style="--m:0;--b-c:#37c264">学生</div>
+        <div class="ring-item item3" style="--m:1;--b-c:#ff0">学校</div>
+        <div class="ring-item item1 seg" style="--m:-1;--b-c:#089"></div>
+        <div class="ring-item item2 seg" style="--m:0;--b-c:#37c264"></div>
+        <div class="ring-item item3 seg" style="--m:1;--b-c:#ff0"></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="swiper-title">加强沟通</div>
+    </div>
+    <div class="box">
+      <div class="swiper-title">主观能动性</div>
+    </div>
+    <footer>
+      <img src="/imgs//avatar.jpg" alt="">
+      <span>glpla.github.io &commat; 2024-06-06 &nbsp;&nbsp;</span>
+    </footer>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+    createApp({
+      setup() {
+        const message = ref('Hello Vue!')
+        const imgs = ref([{ url: '/imgs/temp/1.jpg', num: 0 }, { url: '/imgs/temp/2.jpg', num: 0 }, { url: '/imgs/temp/3.jpg', num: 0 }, { url: '/imgs/temp/4.jpg', num: 2 }, { url: '/imgs/temp/5.jpg', num: 4 }])
+        return {
+          message, imgs
+        }
+      }
+    }).mount('#app')
+  </script>
+  <script src="/utils/lib/anime.min.js"></script>
+  <script src="/utils/lib/swiper-11.0.5/package/swiper-bundle.min.js"></script>
+  <script>
+    const swiperInfo = document.querySelectorAll('.info')
+
+    const swiper = new Swiper('.swiper1', {
+      // loop: true,
+      // autoplay: {
+      //   delay: 4000
+      // },
+      speed: 1000,
+      mousewheel: true,
+
+      // If we need pagination
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    });
+    const swiper2 = new Swiper('.swiper2', {
+      // loop: true,
+      // autoplay: {
+      //   delay: 4000
+      // },
+      speed: 1000,
+      mousewheel: true,
+      // If we need pagination
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'fraction'
+      }
+    });
+
+    // anime
+    swiper.on('slideChange', function () {
+      console.log('slide changed');
+      anime({
+        targets: swiperInfo[swiper.realIndex].children,
+        opacity: [0, 1],
+        duration: 400,
+        easing: "linear",
+        delay: anime.stagger(400, { start: 300 }),
+        translateY: [anime.stagger(40, 10), 0],
+      })
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2024-01</title>
+  <link rel="stylesheet" href="./css/rank2024.css">
+  <style>
+    .portable-tbl {
+      display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+      .portable-tbl {
+        display: block;
+      }
+
+      .normal-tbl {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <nav class="menu" @click="toggleMenu">
+      <div class="ham" :class="{'active':showMenu}">
+        <div class="line"></div>
+      </div>
+      <ul class="nav" :class="{'active':showMenu}">
+        <li class="nav-item" style="--delay:0">202301</li>
+        <li class="nav-item" style="--delay:1">202302</li>
+        <li class="nav-item" style="--delay:2">202101</li>
+      </ul>
+    </nav>
+    <div class="cont">
+      <header>
+        <div class="title">广州新华学院 2024 - 2025 学年第 1 学期 xxx 课程平时成绩登记表</div>
+        <div class="desc">
+          <div>任课老师：张树彬</div>
+          <div>任课班级：23级xxxx班</div>
+          <div>开课单位：信息与智能工程学院</div>
+        </div>
+      </header>
+      <table class="normal-tbl">
+        <tr>
+          <th rowspan="2">序号</th>
+          <th rowspan="2">学号</th>
+          <th rowspan="2">姓名</th>
+          <th colspan="6">考勤 30%</th>
+          <th colspan="7">作业 60%</th>
+          <th rowspan="2">表现 10%</th>
+          <th rowspan="2">成绩</th>
+        </tr>
+        <tr>
+          <td>出勤</td>
+          <td>迟到</td>
+          <td>请假</td>
+          <td>缺勤</td>
+          <td>早退</td>
+          <td>合计</td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>合计</td>
+        </tr>
+        <tr v-for="(student,ind) in students">
+          <td>{{ind+1}}</td>
+          <td>{{student.id}}</td>
+          <td>{{student.name}}</td>
+          <td>{{student.clockin.present}}</td>
+          <td>{{student.clockin.late}}</td>
+          <td>{{student.clockin.leave}}</td>
+          <td>{{student.clockin.absent}}</td>
+          <td>{{student.clockin.early}}</td>
+          <td>{{clockinFn(student.clockin)}}</td>
+          <td>{{student.homework.item0}}</td>
+          <td>{{student.homework.item1}}</td>
+          <td>{{student.homework.item2}}</td>
+          <td>{{student.homework.item3}}</td>
+          <td>{{student.homework.item4}}</td>
+          <td>{{student.homework.item5}}</td>
+          <td>{{homeworkFn(student.homerwork)}}</td>
+          <td>{{student.bonus}}</td>
+          <td>{{gradeFn(student)}}</td>
+        </tr>
+        <!-- <tr>
+          <td colspan="18" class="tips">
+            <div>考勤说明：减分制；迟到-5；请假-10；缺勤-15；早退：-5</div>
+          </td>
+        </tr> -->
+      </table>
+      <table class="portable-tbl">
+        <tr>
+          <th>序号</th>
+          <th>学号</th>
+          <th>姓名</th>
+          <th>考勤 30%</th>
+          <th>作业 60%</th>
+          <th>表现 10%</th>
+          <th>成绩</th>
+        </tr>
+        <tr v-for="(student,ind) in students">
+          <td>{{ind+1}}</td>
+          <td>{{student.id}}</td>
+          <td>{{student.name}}</td>
+          <!-- <td>{{student.clockin.present}}</td>
+          <td>{{student.clockin.late}}</td>
+          <td>{{student.clockin.leave}}</td>
+          <td>{{student.clockin.absent}}</td>
+          <td>{{student.clockin.early}}</td> -->
+          <td>{{clockinFn(student.clockin)}}</td>
+          <!-- <td>{{student.homework.item0}}</td>
+          <td>{{student.homework.item1}}</td>
+          <td>{{student.homework.item2}}</td>
+          <td>{{student.homework.item3}}</td>
+          <td>{{student.homework.item4}}</td>
+          <td>{{student.homework.item5}}</td> -->
+          <td>{{homeworkFn(student.homerwork)}}</td>
+          <td>{{student.bonus}}</td>
+          <td>{{gradeFn(student)}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+    const { createApp, ref, computed } = Vue
+    createApp({
+      setup() {
+        const showMenu = ref(false)
+        const toggleMenu = () => {
+          showMenu.value = !showMenu.value
+        }
+
+        const students = ref([
+          {
+            "id": 20235481,
+            "name": "张树彬",
+            "clockin": {
+              "present": 8,
+              "late": 1,
+              "leave": 1,
+              "absent": 0,
+              "early": 0
+            },
+            "homework": {
+              "item0": 88,
+              "item1": 85,
+              "item2": 90,
+              "item3": 88,
+              "item4": 80,
+              "item5": 86,
+            },
+            "bonus": 88,
+          },
+          {
+            "id": 20235482,
+            "name": "新华学霸",
+            "clockin": {
+              "present": 9,
+              "late": 1,
+              "leave": 0,
+              "absent": 0,
+              "early": 0
+            },
+            "homework": {
+              "item0": 80,
+              "item1": 85,
+              "item2": 92,
+              "item3": 85,
+              "item4": 88,
+              "item5": 85,
+            },
+            "bonus": 90,
+          }
+        ])
+
+        const clockinFn = computed(() => {
+          return (items) => {
+            let sum = 100 - (items.late * 5 + items.leave * 10 + items.absent * 15 + items.early * 5)
+            return sum
+          }
+        })
+
+        const homeworkFn = computed(() => {
+          return (items) => {
+            let sum = 0
+            for (item in items) {
+              console.log(items[item]);
+              sum += items[item]
+            }
+            return parseInt(sum / 6)
+          }
+        })
+
+        const gradeFn = computed(() => {
+          return (student) => {
+            // clockin
+            let clockin = 100 - (student.clockin.late * 5 + student.clockin.leave * 10 + student.clockin.absent * 15 + student.clockin.early * 5)
+            // homerwork
+            let homework = 0
+            for (item in student.homework) {
+              homework += student.homework[item]
+            }
+            // bonus
+            let bonus = student.bonus
+            console.log(clockin, homework / 6, bonus / 4);
+            return parseInt(clockin * 0.3 + homework / 6 * 0.6 + bonus / 4 * 0.1)
+          }
+        })
+
+        // const printCont = () => {
+        //   console.log('print cont');
+        //   window.print()
+        // }
+
+        return {
+          showMenu,
+          students,
+          clockinFn,
+          homeworkFn,
+          gradeFn,
+          // printCont
+          toggleMenu
+        }
+      }
+    }).mount('#app')</script>
+</body>
+
+</html>

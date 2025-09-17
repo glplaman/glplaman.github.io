@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>积分榜 Rank</title>
+  <link rel="stylesheet" href="./css/rank.css">
+  <script src="//at.alicdn.com/t/c/font_4240947_umh5d220s7n.js"></script>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <header>
+      <div :class="{loading:isLoading}"></div>
+      <div class="logo">
+        <svg class="icon icon-logo">
+          <use xlink:href="#icon-icon-medal-1st"></use>
+        </svg>
+        <span class="logo-title">积分榜</span>
+      </div>
+      <div class="ham" @click="toggleMenu">
+        <svg class="icon">
+          <use xlink:href="#icon-thlist"></use>
+        </svg>
+      </div>
+      <div class="nav-wrap" :class="{active:isShow}">
+        <nav class="nav" v-for="(item, index) in navs" :key="item.ind">
+          <div class="nav-item" :class="{'active':ind==item.ind}" @click="toggleSubMenu(index)">{{item.title}}</div>
+          <div class="sub-nav" :class="{active:isSubShow && index==ind}">
+            <div class="sub-nav-item" :class="{'active':subind==subitem.subind && ind==item.ind}"
+              v-for="(subitem, subindex) in item.cont" :key="subitem.url" @click="getData(subitem.url, $event)"
+              :data-ind="item.ind" :data-subind="subindex"> {{subitem.desc}} </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="main">
+      <div class="main-cont" v-if="rank.cont.length">
+
+        <div class="item" v-for="(item,ind) in rank.cont" :key="item" :title="item.ucredit">
+          <div class="sn">{{item.usn}}</div>
+          <svg class="icon icon-avatar">
+            <use :xlink:href="`#icon-avatar${getInd(ind)}`"></use>
+          </svg>
+          <span class='name' :data-remarke="item.remark">{{item.uname}}</span>
+          <div class="star">
+            <svg class="icon icon-star" v-for="star in item.ucredit">
+              <use xlink:href="#icon-star"></use>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div v-else>No Records</div>
+    </div>
+    <svg class="icon icon-pos">
+      <use xlink:href="#icon-a-guzhang"></use>
+    </svg>
+
+    <footer>
+      <h4 v-if="rank.cont.length">{{rank.info.grade}}级{{rank.info.major}}{{rank.info.class}}班</h4>
+      <h4 v-if="rank.cont.length">{{rank.info.course}}</h4>
+      <h5>All Rights Reserved &copy; By Cnplaman 2022-2025</h5>
+    </footer>
+  </div>
+  <script src="/utils/lib/vue.global.prod.min.js"></script>
+  <script>
+    const { createApp, ref, onMounted, onBeforeMount } = Vue
+    const app = createApp({
+      setup() {
+        const navs = ref([{
+          ind: 0,
+          title: "2025春季",
+          cont: [
+            {
+              subind: 0,
+              desc: '2023软工4班',
+              url: '20240204.json',
+            }, {
+              subind: 1,
+              desc: '2023软工3班',
+              url: '20240203.json',
+            }]
+        }, {
+          ind: 1,
+          title: '2024秋季',
+          cont: [
+            {
+              subind: 0,
+              desc: '2023软工1班',
+              url: '20240101.json',
+            },
+            {
+              subind: 1,
+              desc: '2023软工3班',
+              url: '20240102.json',
+            },
+            {
+              subind: 2,
+              desc: '2023数媒1班',
+              url: '20240103.json',
+            },
+            {
+              subind: 3,
+              desc: '2023数媒2班',
+              url: '20240104.json',
+            },
+            {
+              subind: 4,
+              desc: '2023数媒3班',
+              url: '20240105.json',
+            },
+          ]
+        },
+        {
+          ind: 2,
+          title: '2024春季',
+          cont: [
+            {
+              subind: 0,
+              desc: '2022软工1班',
+              url: '202401.json',
+            },
+            {
+              desc: '2022数媒1班',
+              url: '202402.json',
+              subind: 1,
+            },
+          ]
+        },
+        {
+          ind: 3,
+          title: '2023秋季',
+          cont: [
+            {
+              subind: 0,
+              desc: '2022软工1班',
+              url: '202301.json',
+            },
+            {
+              subind: 1,
+              desc: '2023经济和语言1班',
+              url: '202302.json',
+            },
+            {
+              subind: 2,
+              desc: '2023服装1班',
+              url: '202303.json',
+            },
+            {
+              subind: 3,
+              desc: '2023播音网络1班',
+              url: '202304.json',
+            }
+          ]
+        }
+        ])
+        const ind = ref(0)
+        const subind = ref(0)
+        const rank = ref({
+          info: {
+            grade: '',
+            class: '',
+            course: ''
+          },
+          cont: []
+        });
+        const subNav = ref([])
+        const isLoading = ref(false)
+        const isShow = ref(false)
+        const isSubShow = ref(false)
+        const getData = (url, $event) => {
+          isLoading.value = true;
+
+          fetch(`/utils/data/rank/${url}`)
+            .then(res => res.json())
+            .then(res => {
+              rank.value = { info: res.info || {}, cont: res.cont || [] };
+              ind.value = $event ? $event.target.dataset.ind : 0;
+              subind.value = $event ? $event.target.dataset.subind : 0;
+              console.log(rank.value);
+              isSubShow.value = false;
+              isShow.value = false;
+
+              subNav.value.forEach(item => {
+                // console.log(item);
+                item.classList.remove('active');
+              });
+              // console.log(isLoading.value);
+            })
+            .finally(() => {
+              isLoading.value = false;
+              // console.log(isLoading.value);
+            });
+        }
+
+        const getInd = (ind) => {
+          return ind % 10;
+        }
+
+        const toggleMenu = () => {
+          isShow.value = !isShow.value;
+        }
+
+        const toggleSubMenu = (index) => {
+          if (isSubShow.value && index == ind.value) {
+            isSubShow.value = false;
+            isShow.value = false;
+            return;
+          }
+          isSubShow.value = false;
+          ind.value = index;
+          isSubShow.value = true;
+        }
+
+        onBeforeMount(() => {
+          isLoading.value = true;
+        })
+
+        onMounted(() => {
+          isLoading.value = false;
+          getData(navs.value[ind.value].cont[subind.value].url, null)
+        })
+
+        return {
+          navs,
+          ind,
+          subind,
+          rank,
+          subNav,
+          isShow,
+          isLoading,
+          isSubShow,
+          getData,
+          getInd,
+          toggleMenu,
+          toggleSubMenu
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>

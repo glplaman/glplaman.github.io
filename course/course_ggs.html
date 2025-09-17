@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Gzgs Course</title>
+  <link rel="stylesheet" href="./css/ggs.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.2.4/swiper-bundle.min.css">
+  <style>
+    .my-bullet-active {
+      background: #ff6600;
+      opacity: 1;
+    }
+
+    .swiper-slide {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .swiper-pagination {
+      position: unset;
+    }
+
+    .swiper-pagination-bullet {
+      background-color: #f46;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="(item,index) in course">
+          <div class="top-header">
+            <div>2022-2023教学周<span class="week-title">{{item.desc}}</span></div>
+            <small>{{year}}-{{location}}</small>
+          </div>
+          <div class="week-wrap" v-for="subItem in item.cont">
+            <div class="flex-h title">
+              <div>{{subItem.date}}</div>
+              <div>{{subItem.week}} <small>{{subItem.weekEn}}</small></div>
+            </div>
+            <div class="day-wrap" v-for="classItem in subItem.cont">
+              <div class="flex-h sub-title">
+                <div>{{classItem.subject}}</div>
+                <div>{{classItem.major}}</div>
+              </div>
+              <div class="flex-h sub-title">
+                <div>{{classItem.location}}</div>
+                <div>{{classItem.time}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.2.4/swiper-bundle.min.js"></script>
+  <script src="../utils/lib/vue.global.prod.min.js"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          cur: 0,
+          location: '',
+          year: '',
+          course: [],
+          weekInd: 0
+        }
+      },
+      created() {
+        let dateStart = new Date("2022-08-28");
+        let dateEnd = new Date()
+        this.cur = Math.floor((dateEnd - dateStart) / (7 * 24 * 60 * 60 * 1000));
+        console.log(this.cur);
+        if (this.cur > 15)
+          this.cur = 0;
+        fetch('../utils/data/data2022/course.json')
+          .then(res => res.json())
+          .then(res => {
+            this.location = res.locationCN;
+            this.year = res.year;
+            this.course = [...res.cont];
+            // 不能直接在这里初始化swiper
+          }).then(() => {
+            // 加多一层then可以确保是swiper启动时，各DOM已经就绪
+            const mySwiper = new Swiper('.swiper', {
+              // loop: true,
+              mousewheel: true,
+              paginationClickable: true,
+              pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                bulletActiveClass: 'my-bullet-active',
+              }
+            })
+            mySwiper.slideTo(this.cur, 1000, false)
+          })
+      }
+    }).mount('#app')        
+  </script>
+</body>
+
+</html>
