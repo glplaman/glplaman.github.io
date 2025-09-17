@@ -1,0 +1,367 @@
+@import url(//at.alicdn.com/t/c/font_3859342_b49fth327i.css);
+@import url(/css/fonts_Inconsolata.css);
+@import url(/css/fonts_GreatVibes.css);
+
+:root {
+  --main-color: #20bf6b;
+  --second-color: #2bcbba;
+  --warn-color: #C91F37;
+  --main-w: 1024px;
+  --p-m-g: 10px;
+  --bg-color: #fff;
+  --txt-color: #000;
+  --pre-bg-color: #000;
+  --pre-txt-color: #cdcd85;
+  --tips-color: #edf8db;
+  --tips-bold-color: var(--main-color);
+  --header-h: 100px;
+  --section-title-h: 60px;
+  --footer-h: 150px;
+}
+
+.dark-mode {
+  --bg-color: #000;
+  --txt-color: #fff;
+  --pre-bg-color: #242424;
+  --pre-txt-color: #D4AF37;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  font-size: 62.5%;
+}
+
+body {
+  width: 96%;
+  max-width: var(--main-w);
+  margin: 0 auto;
+  font-size: 1.6rem;
+  background-color: var(--bg-color);
+  color: var(--txt-color);
+  counter-reset: fig-sn tbl-sn;
+  timeline-scope: --n0, --n1, --n2, --n3, --n4, --n5, --n6, --n7, --n8, --n9, --n10, --n11, --n12, --n13, --n14, --n15, --n15;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  background-color: var(--bg-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color), var(--bg-color));
+  border-radius: 3px 3px 0 0;
+}
+
+a {
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+}
+
+a[target="_blank"]::after {
+  content: '\ebe4';
+  font-family: 'iconfont';
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  position: sticky;
+  top: var(--header-h);
+  background-color: var(--bg-color);
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+  margin-top: var(--p-m-g);
+}
+
+figure {
+  max-width: 100%;
+  margin: 5rem auto;
+}
+
+figcaption {
+  text-align: center;
+  font-size: 1.4rem;
+  counter-increment: fig-sn;
+}
+
+figcaption::before {
+  content: '图' counter(fig-sn)' ';
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+img+.fig-sn {
+  font-size: 1.4rem;
+  text-align: center;
+  counter-increment: img-sn;
+}
+
+img+.fig-sn::before {
+  content: '图' counter(img-sn)' ';
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #000;
+  margin: 2rem auto 5rem;
+}
+
+table caption {
+  text-align: center;
+  font-size: 1.4rem;
+  counter-increment: tbl-sn;
+  color: var(--txt-color);
+}
+
+table caption::before {
+  content: '表' counter(tbl-sn) ' ';
+}
+
+thead tr th {
+  background-color: var(--second-color);
+  color: #fff;
+  text-transform: capitalize;
+  text-align: justify;
+}
+
+table td {
+  text-align: justify;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+pre {
+  width: 100%;
+  color: var(--pre-txt-color);
+  padding: var(--p-m-g);
+  font-family: 'Inconsolata', Arial, Helvetica, sans-serif;
+  background-color: var(--pre-bg-color);
+  border-radius: 6px;
+  margin: var(--p-m-g) auto;
+  overflow-x: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+ul>li::before {
+  content: '\220E';
+  color: var(--main-color);
+  font-size: 1.2rem;
+  margin-right: calc(var(--p-m-g)/2);
+}
+
+ul.objective>li::before {
+  content: '\eba5' ' ';
+  font-family: 'iconfont';
+}
+
+ul.review>li::before {
+  content: '\e7e2' ' ';
+  font-family: 'iconfont';
+}
+
+ol {
+  list-style: none;
+  counter-reset: list-sn;
+}
+
+ol>li:has(>ul) {
+  margin-top: 20px;
+}
+
+ol>li {
+  counter-increment: list-sn;
+}
+
+ol>li::before {
+  content: counter(list-sn)'. ';
+}
+
+ol.reference>li::before {
+  content: '[' counter(list-sn)'] ';
+}
+
+.reference a:hover {
+  color: var(--main-color);
+}
+
+.iconfont {
+  color: var(--main-color);
+  font-size: 2rem;
+}
+
+.link {
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+.tips {
+  background-color: var(--tips-color);
+  padding: var(--p-m-g);
+  border-left: 4px solid var(--tips-bold-color);
+  margin: 2rem auto;
+  color: #000;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--p-m-g);
+  width: 96%;
+  max-width: var(--main-w);
+  height: var(--header-h);
+  background-color: var(--bg-color);
+  padding: 0 var(--p-m-g);
+  /* border-bottom: 1px solid var(--main-color); */
+  z-index: 1;
+}
+
+.title {
+  margin-right: auto;
+}
+
+.title span {
+  font-family: 'GreatVibes';
+  letter-spacing: 4px;
+  font-size: 2rem;
+}
+
+.ham {
+  display: none;
+  cursor: pointer;
+  font-size: 2.4rem;
+}
+
+.theme {
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.banner {
+  height: 250px;
+  background-image: url(../imgs/banner.png);
+  background-size: cover;
+}
+
+.nav-wrap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: var(--p-m-g);
+  z-index: 99;
+  background-color: var(--bg-color);
+}
+
+.nav-wrap .logo {
+  width: 8rem;
+  height: 8rem;
+  background-image: url(/utils/logo/ty.png);
+  background-size: cover;
+  border-radius: 50%;
+  margin: 0 auto var(--p-m-g);
+}
+
+.nav-wrap .nav {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.8;
+}
+
+.nav-item {
+  padding: 0 var(--p-m-g);
+  border-left: 4px solid transparent;
+  animation-name: --nav;
+  animation-timeline: var(--s);
+  font-size: 1.8rem;
+}
+
+.nav-item .iconfont {
+  color: inherit;
+}
+
+@keyframes --nav {
+
+  0%,
+  100% {
+    border-left-color: var(--main-color);
+    color: var(--main-color);
+  }
+}
+
+.section {
+  /* use view() */
+  view-timeline-name: var(--s);
+  view-timeline-inset: 50%;
+  margin-bottom: calc(4*var(--p-m-g));
+  line-height: 2;
+  padding-top: var(--header-h);
+}
+
+.section-title {
+  position: sticky;
+  top: var(--header-h);
+  height: var(--section-title-h);
+  line-height: var(--section-title-h);
+  background-color: var(--bg-color);
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.warn,
+.edu {
+  color: var(--warn-color);
+}
+
+@media screen and (max-width: 768px) {
+  .ham {
+    display: block;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .nav-wrap {
+    top: var(--header-h);
+    width: 100%;
+    height: 0;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+    overflow: hidden;
+  }
+
+  .nav-wrap.active {
+    height: calc(100vh - var(--header-h));
+    opacity: 1;
+  }
+
+}

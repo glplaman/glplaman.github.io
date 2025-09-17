@@ -1,0 +1,201 @@
+@import url(/utils/font/font_4078036_9q5t4t5po74/iconfont.css);
+
+:root {
+  --cn-red: #DE2910;
+  --cn-y: #FFDE00;
+  --header-h: 100px;
+}
+
+body,
+div,
+a,
+p,
+header,
+h1,
+h2,
+nav,
+main,
+footer {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.iconfont {
+  color: #fff;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 100px auto 60px;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100vh;
+  padding: 0 1rem;
+  font-size: 1.4rem;
+  line-height: 2;
+  color: #fff;
+  background-color: #111;
+}
+
+header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-h);
+}
+
+header h1 {
+  display: flex;
+  gap: 2px;
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+header h1 span.em {
+  color: var(--cn-red);
+}
+
+header h1 span.active {
+  animation: zoom 0.5s ease-in-out 2 alternate;
+}
+
+@keyframes zoom {
+  50% {
+    transform: scale(2);
+  }
+
+  100% {
+    transform: scale(0.5);
+  }
+}
+
+header .iconfont {
+  display: none;
+}
+
+header nav {
+  display: flex;
+  gap: 20px;
+}
+
+header nav a {
+  position: relative;
+  display: block;
+  font-size: 1.6rem;
+  text-transform: capitalize;
+  transition: 0.5s;
+}
+
+header nav a:hover {
+  color: var(--cn-y);
+}
+
+header nav a::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  border-radius: 2px;
+  background-image: linear-gradient(90deg, rgba(255, 222, 0, 0), var(--cn-y), rgba(255, 222, 0, 0));
+  transition: 0.5s;
+}
+
+header nav a:hover::before {
+  width: 100%;
+}
+
+/* main */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 1.6rem;
+  padding: 4rem 2rem;
+  background: url(/utils/xinhua/xh0.jpg) center/cover no-repeat;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 2;
+}
+
+.leading {
+  color: var(--cn-red);
+}
+
+.btns {
+  margin-top: auto;
+}
+
+.btn {
+  width: 160px;
+  padding: 10px 20px;
+  background-color: var(--cn-red);
+  color: #fff;
+  font-size: 1.6rem;
+  border-radius: 8px;
+  background-image: linear-gradient(to right, var(--cn-red), var(--cn-y), var(--cn-red));
+  background-size: 200% 100%;
+  background-position: left top;
+  transition: 1s;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.btn:hover {
+  background-position: right top;
+}
+
+footer {
+  text-align: center;
+  line-height: 60px;
+  font-size: 1.4rem;
+}
+
+@media screen and (max-width:768px) {
+  header .iconfont {
+    display: block;
+    font-size: 2rem;
+  }
+
+  header nav {
+    position: fixed;
+    top: var(--header-h);
+    right: -100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - var(--header-h));
+    background-color: #111;
+    text-align: center;
+    padding-top: 2rem;
+    line-height: 2;
+    z-index: 2;
+    transition: 0.5s;
+  }
+
+  header nav a {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  }
+
+  nav.active {
+    right: 0;
+  }
+}

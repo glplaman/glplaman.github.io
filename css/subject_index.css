@@ -1,0 +1,224 @@
+@import url(../css/fonts_Michroma.css);
+@import url(../css/fonts_Inconsolata.css);
+
+:root {
+  --blue-color: #4bc2ce;
+  --blue-bold-color: #1b9fab;
+  --tbl-color: #1abc9c;
+  --yellow-color: #f1c40f;
+  --warn-color: #f25e44;
+  --w-width: 1024px;
+  --header-h: 25vh;
+  --padding: 2rem;
+  --margin: 2rem;
+  --scroll-bar-w: 1rem;
+  --scroll-bar-r: 0.5rem;
+}
+
+body,
+header,
+dl,
+dt,
+dd,
+div,
+h1,
+span {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "微软雅黑", "Microsoft YaHei", Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  line-height: 2;
+}
+
+dl {
+  line-height: 2;
+  padding: var(--padding);
+}
+
+dt {
+  font-weight: 600;
+  line-height: 3;
+  margin-top: 3rem;
+}
+
+body {
+  background-color: #f2f3f4;
+  font-size: 1.6rem;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(#fff, var(--blue-color));
+  border-radius: 8px;
+}
+
+header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--padding);
+  height: var(--header-h);
+  color: #fff;
+  background-color: var(--blue-color);
+  background: linear-gradient(135deg, #0575E6, #00F260);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+header h1 {
+  font-family: "Michroma";
+  font-size: 2rem;
+  font-weight: normal;
+  text-shadow: 0 0 .5rem rgba(0, 0, 0, 0.8);
+}
+
+header span {
+  font-size: 1.4rem;
+  text-shadow: 0 0 .5rem rgba(0, 0, 0, 0.8);
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 6px;
+  background-image: linear-gradient(to right, var(--yellow-color) 0%, var(--blue-color) 50%, var(--yellow-color) 100%);
+  animation: roll 5s linear infinite alternate;
+}
+
+@keyframes roll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.container {
+  position: relative;
+  max-width: var(--w-width);
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.col3 {
+  columns: 30rem 3;
+  margin: var(--margin) auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: var(--padding);
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--padding);
+  margin: var(--margin) auto;
+}
+
+.chap {
+  padding-inline: var(--padding);
+  color: #fff;
+  background-color: var(--blue-color);
+  text-transform: capitalize;
+  line-height: 4;
+  font-size: 1.8rem;
+  font-family: 'Michroma';
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding-inline: 1rem;
+}
+
+.item:hover {
+  color: var(--blue-color);
+}
+
+.item::after {
+  content: attr(data-title);
+  order: 2;
+  text-transform: capitalize;
+  font-family: 'Inconsolata';
+}
+
+.item::before {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  background-repeat: repeat-x;
+  order: 1;
+}
+
+.help {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+  line-height: 1.5;
+  border-top: 1px solid var(--blue-color);
+  border-bottom: 1px solid var(--blue-color);
+}
+
+.help a::before {
+  content: '\269C';
+}
+
+.help a:hover {
+  color: var(--blue-color);
+}
+
+.help::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -3px;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 5px;
+  background-color: var(--blue-color);
+}
+
+.help::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 5px;
+  background-color: var(--blue-color);
+}
+
+iframe {
+  width: 100%;
+  margin-top: 2rem;
+}

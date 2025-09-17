@@ -1,0 +1,329 @@
+@import url(//at.alicdn.com/t/c/font_3859342_ozav4x2kf3.css);
+@import url(/css/fonts_Inconsolata.css);
+
+:root {
+  --main-color: #4bc2ce;
+  --second-color: #1b9fab;
+  --warn-color: #C91F37;
+  --tbl-color: #fabfb4;
+  --tbl-color-light: #feefec;
+  --tips-color: #edf8db;
+  --tips-bold-color: #2ed573;
+  --bar-color: #4bc2ce;
+  --bar-color-light: #1b9fab;
+  --main-color-yellow: #f1c40f;
+  --yellow-color: #f1c40f;
+  --tips-warn-color: rgba(255, 93, 115, 0.2);
+  --tips-warn-bold-color: #ff5d73;
+  --w-width: 1024px;
+  --header-h: 250px;
+  --chap-h: 120px;
+  --dt-h: 60px;
+  --p-m-g: 10px;
+  --footer-h: 150px;
+  accent-color: var(--warn-color);
+}
+
+body,
+dl,
+dd,
+div,
+header,
+a,
+p,
+h1,
+h2,
+h3,
+h5,
+table,
+thead,
+tbody,
+tfoot,
+label,
+tr,
+th,
+td,
+ul,
+li,
+img,
+picture,
+figure,
+figcaption,
+nav,
+pre,
+details,
+summary,
+nav,
+video {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  box-sizing: border-box;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+a {
+  color: var(--warn-color);
+  font: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+dl {
+  padding: 1rem;
+  line-height: 2;
+}
+
+dt {
+  font-weight: 600;
+  line-height: var(--dt-h);
+}
+
+dt:not(:first-child) {
+  margin-top: calc(4*var(--p-m-g));
+}
+
+dt:has(.iconfont) {
+  border-bottom: 1px solid var(--main-color);
+  margin-bottom: 1rem;
+}
+
+dl dd>p::before,
+ul>li::before {
+  content: '· ';
+}
+
+pre {
+  color: #dcdcaa;
+  padding: 1rem;
+  font-size: 1.6rem;
+  background-color: #000;
+  border-radius: 6px;
+  font-family: 'Inconsolata', 'Courier New', Courier;
+  overflow: auto;
+  margin: 1rem auto;
+}
+
+pre::-webkit-scrollbar {
+  height: 4px;
+  background-color: #fff;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background-color: #dcdcaa;
+}
+
+pre span {
+  counter-increment: sn;
+}
+
+pre span::before {
+  content: counter(sn, decimal-leading-zero)'    ';
+}
+
+/* normal table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: calc(4*var(--p-m-g)) auto;
+}
+
+thead {
+  background-color: var(--tbl-color);
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: var(--tbl-color);
+}
+
+th,
+td {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+tr:has(th) td {
+  background-color: var(--tbl-color);
+}
+
+tr:nth-child(even) td {
+  background-color: var(--tbl-color-light)
+}
+
+/* line table */
+table.line tr {
+  background-color: unset;
+  /* border-bottom: 1px solid var(--main-color); */
+}
+
+/* there line table */
+table.line3 {
+  border-top: 1px solid var(--main-color);
+  border-bottom: 1px solid var(--main-color);
+}
+
+table.line3 tr {
+  background-color: unset;
+}
+
+table.line3 tr:has(th) {
+  border-bottom: 1px solid var(--main-color);
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+img+.fig-sn {
+  text-align: center;
+  font-size: 1.4rem;
+  margin: 1em 0;
+}
+
+video {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 16/9;
+  margin: 0 auto;
+}
+
+details {
+  padding: var(--p-m-g);
+  line-height: 2;
+}
+
+summary {
+  cursor: pointer;
+}
+
+summary:hover {
+  color: var(--main-color);
+}
+
+iframe {
+  display: block;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 10vh;
+  background-color: #eee;
+  font-size: 62.5%;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  max-width: var(--w-width);
+  margin: 0 auto;
+  background-color: #fff;
+  font-size: 1.6rem;
+  z-index: 1;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color), #fff);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+/* sn start*/
+body {
+  counter-reset: tbl-sn img-sn exam-sn;
+}
+
+/* table */
+table {
+  counter-increment: tbl-sn;
+}
+
+table caption {
+  font-size: 1.4rem;
+}
+
+table caption::before {
+  content: '表' counter(tbl-sn)' ';
+}
+
+/* figure */
+figure,
+img+.fig-sn {
+  counter-increment: img-sn;
+}
+
+figure figcaption {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
+figure figcaption::before,
+img+.fig-sn::before {
+  content: '图' counter(img-sn)' ';
+}
+
+.sn {
+  counter-reset: list-sn;
+}
+
+.sn>div {
+  counter-increment: list-sn;
+}
+
+.sn>div::before {
+  content: counter(list-sn)'. ';
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.example-sn {
+  counter-increment: exam-sn;
+  margin-top: 2rem;
+}
+
+.example-sn::before {
+  content: '[例' counter(exam-sn)'] ';
+}
+
+.alpha {
+  counter-reset: alpha-sn;
+}
+
+.alpha>div {
+  counter-increment: alpha-sn;
+}
+
+.alpha>div::before {
+  content: counter(alpha-sn, upper-alpha) ': ';
+}
+
+.qa::before {
+  content: '[参考答案]';
+  color: var(--main-color);
+}
+
+/* sn end */

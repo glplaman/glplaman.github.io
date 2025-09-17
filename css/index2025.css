@@ -1,0 +1,276 @@
+@import url(//at.alicdn.com/t/c/font_3834292_bzwva2beroa.css);
+
+:root {
+  --bg-color: #f0f0f0;
+  --txt-color: #000;
+  --main-color: #9c010a;
+  --second-color: #fb000b;
+  --third-color: #f3c4be;
+  --warn-color: #ee7585;
+  --p-m-g: 1rem;
+}
+
+body,
+header,
+section,
+div,
+span,
+a,
+h1,
+h2,
+nav,
+ul,
+li,
+p,
+footer {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--txt-color);
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color), transparent);
+  border-radius: 8px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: '· ';
+}
+
+.iconfont {
+  font-size: 4rem;
+}
+
+header,
+section {
+  width: 100%;
+  max-width: 1190px;
+  margin: 0 auto;
+  padding: var(--p-m-g);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+header {
+  position: relative;
+  height: 600px;
+  background-color: var(--main-color);
+  background-image: url(/utils/festival/810.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.info {
+  position: absolute;
+  left: 3rem;
+  bottom: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.svg-txt {
+  display: block;
+  width: 120px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.svg-txt .title {
+  font-size: 2.4rem;
+  fill: var(--main-color);
+  stroke: #fff;
+  stroke-width: 1;
+  text-shadow:
+    0 0 1px #fff;
+  stroke-dasharray: 10 1000;
+  stroke-dashoffset: 10;
+  animation: draw 10s ease-in-out infinite;
+}
+
+@keyframes draw {
+
+  30%,
+  100% {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 0;
+  }
+}
+
+.avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+  height: 9rem;
+  color: transparent;
+  background-image: url(../imgs/avatar.jpg);
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  animation: -header-roll 10s linear infinite;
+  animation-play-state: paused;
+  border: 2px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+}
+
+.stamp-box {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  gap: var(--p-m-g);
+}
+
+.stamp {
+  width: 3rem;
+  height: 4rem;
+  background-image: url(../imgs/stamp.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 0.4rem #fff);
+}
+
+footer {
+  height: 30vh;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  margin-top: calc(10*var(--p-m-g));
+}
+
+footer .iconfont {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item::after {
+  content: attr(data-title);
+  order: 2;
+}
+
+.item::before {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  order: 1;
+}
+
+.item .iconfont {
+  font-size: 1.6rem;
+}
+
+.item a:hover {
+  color: var(--warn-color);
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  justify-items: center;
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  gap: 8rem;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 260px;
+}
+
+.nav-item h2 {
+  position: relative;
+  color: #333;
+  font-size: 20px;
+  /* -webkit-text-stroke: 1px #fff; */
+}
+
+.nav-item h2::after {
+  content: attr(data-label);
+  width: 0%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--second-color);
+  white-space: nowrap;
+  transition: 0.4s;
+  overflow: hidden;
+}
+
+.nav-item .iconfont {
+  color: var(--second-color);
+}
+
+.nav-item:hover h2::after {
+  width: 100%;
+}
+
+@media screen and (max-width:768px) {
+  header {
+    height: 100vh;
+    background-image: url(/utils/festival/811.png);
+  }
+
+  .nav {
+    gap: 0rem;
+    margin-top: 2rem;
+  }
+
+  .nav-item {
+    border-bottom: 1px solid var(--main-color);
+  }
+}
+
+@media (hover:none) {
+  a:hover {
+    box-shadow: none;
+    transition: none;
+  }
+}

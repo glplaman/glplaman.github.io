@@ -1,0 +1,156 @@
+/* @import url(//at.alicdn.com/t/c/font_3859342_a1zefhweue.css); */
+
+:root {
+  --main-color: #1abc9c;
+  --second-color: #0575E6;
+  --third-color: #4bc2ce;
+  --warn-color: #c81623;
+  --body-bg-color: #fafafa;
+  --bg-color: #fff;
+  --w-width: 1024px;
+  --header-h: 250px;
+  --chap-h: 90px;
+  --padding: 10px;
+  --margin: 20px;
+  --scroll-bar-w: 8px;
+  --scroll-bar-r: 4px;
+}
+
+body,
+header,
+div,
+h1,
+nav,
+a,
+span {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: justify;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  line-height: 2;
+}
+
+body {
+  background-color: var(--body-bg-color);
+  font-size: 1.6rem;
+}
+
+body::-webkit-scrollbar {
+  width: var(--scroll-bar-w);
+}
+
+body::-webkit-scrollbar-track {
+  background-color: var(--bg-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color), transparent);
+  border-radius: var(--scroll-bar-r);
+}
+
+header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--padding);
+  height: 30vh;
+  max-height: var(--header-h);
+  color: var(--bg-color);
+  background-color: var(--blue-color);
+  background: linear-gradient(45deg, var(--main-color), var(--second-color));
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+header h1 {
+  font-weight: normal;
+  font-size: 1.8rem;
+}
+
+header span {
+  font-size: 1.4rem;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: var(--scroll-bar-w);
+  background-image: linear-gradient(to right, #2ed573 0%, #f1c40f 50%, #4bc2ce 100%);
+  animation: roll 5s linear infinite alternate;
+}
+
+@keyframes roll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.container {
+  position: relative;
+  max-width: var(--w-width);
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  margin: 0 auto;
+}
+
+.cont-wrap {
+  padding: var(--padding);
+}
+
+.chap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: var(--chap-h);
+  padding: var(--padding);
+  color: var(--bg-color);
+  background-color: var(--third-color);
+  text-transform: capitalize;
+  font-size: 1.8rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item:hover {
+  color: var(--main-color);
+}
+
+.item::after {
+  content: attr(data-title);
+  order: 2;
+}
+
+.item::before {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  background-repeat: repeat-x;
+  order: 1;
+}

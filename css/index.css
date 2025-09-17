@@ -1,0 +1,316 @@
+@import url(//at.alicdn.com/t/c/font_3834292_kphygvphc4n.css);
+
+:root {
+  --bg-color: #fff;
+  --txt-color: #000;
+  --main-color: #1e574e;
+  --warn-color: #ee7585;
+  --active-color: #7ea05d;
+  --second-color: #7dcbb1;
+  --third-color: #f3c4be;
+  --box-shadow: #619fd466;
+  --border-r: 1rem;
+  --p-m-g: 1rem;
+}
+
+.dark-mode {
+  --bg-color: #000;
+  --txt-color: #fff;
+}
+
+body,
+div,
+span,
+a,
+header,
+h1,
+h4,
+img,
+dl,
+dt,
+dd,
+ul,
+li,
+footer {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 62.5%;
+  /* filter: grayscale(1); */
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--txt-color);
+  font-size: 1.6rem;
+  line-height: 2;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color), transparent);
+  border-radius: 8px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+.iconfont {
+  font-size: 4rem;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.w {
+  width: 100%;
+  max-width: 1190px;
+  margin: 0 auto;
+}
+
+header {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background-color: var(--main-color);
+  background-image: url(/utils/festival/lotus_bloom_leaves_125165_1280x720.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.info {
+  position: absolute;
+  left: 3rem;
+  bottom: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.svg-txt {
+  display: block;
+  width: 120px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.svg-txt .title {
+  font-size: 2.4rem;
+  fill: var(--main-color);
+  stroke: #fff;
+  stroke-width: 1;
+  text-shadow:
+    0 0 1px #fff;
+  /* 0 0 4px #fff, */
+  /* 0 0 10px #fff; */
+  stroke-dasharray: 10 1000;
+  stroke-dashoffset: 10;
+  animation: draw 10s ease-in-out infinite;
+}
+
+@keyframes draw {
+
+  30%,
+  100% {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 0;
+  }
+}
+
+.avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 9rem;
+  height: 9rem;
+  color: transparent;
+  background-image: url(../imgs/avatar.jpg);
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  animation: -header-roll 10s linear infinite;
+  animation-play-state: paused;
+  border: 2px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+}
+
+.avatar.play {
+  animation-play-state: running;
+}
+
+@keyframes -header-roll {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-box {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  display: flex;
+  align-items: center;
+  gap: var(--p-m-g);
+}
+
+.stamp {
+  width: 3rem;
+  height: 4rem;
+  background-image: url(../imgs/stamp.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 0.4rem #fff);
+}
+
+/* 
+.theme-icon {
+  font-size: 2.6rem;
+  color: #fff;
+  cursor: pointer;
+} */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-cont-w, 300px), 1fr));
+  gap: var(--p-m-g);
+  padding: var(--p-m-g);
+}
+
+.update {
+  background-color: var(--main-color);
+  color: #fff;
+  padding: var(--p-m-g);
+  border-radius: var(--border-r);
+}
+
+.update a {
+  padding-bottom: 4px;
+  background-image: linear-gradient(to right, var(--active-color), var(--active-color));
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 0px 2px;
+  transition: background-size 0.4s;
+}
+
+.update a::before {
+  content: '\2720' ' ';
+  color: var(--active-color);
+}
+
+.update a:hover {
+  background-position: left bottom;
+  background-size: 100% 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  column-gap: var(--p-m-g);
+  border-radius: var(--border-r);
+  border: 1px solid var(--second-color);
+  aspect-ratio: 16/9;
+  transition: 0.4s;
+  letter-spacing: 2px;
+  padding: calc(2*var(--p-m-g));
+  color: var(--second-color);
+}
+
+.warn,
+.nav-item:hover {
+  color: var(--main-color);
+  /* background-image: url(../imgs/snow.gif); */
+}
+
+footer {
+  height: 30vh;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 1.4rem;
+  padding-top: calc(4*var(--p-m-g));
+  /* margin: calc(4*var(--p-m-g)) auto; */
+  /* perspective: 1000px; */
+  background-image: url(../imgs/22e82b9d4e9d2251.png);
+  background-size: auto 100%;
+  background-position: left bottom;
+}
+
+/* music box */
+.dot {
+  position: absolute;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  pointer-events: none;
+}
+
+.dot:nth-child(even) {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 1);
+}
+
+@keyframes dot-move {
+  form {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(var(--x), var(--y));
+  }
+}
+
+@media screen and (max-width:768px) {
+  :root {
+    --border-r: 0;
+  }
+
+  header {
+    height: 100vh;
+    background-image: url(/utils/festival/xz.png);
+    /* background-image: url(../imgs/cherry_blossom_flowers_branch_196660_720x1280.jpg); */
+    /* background-image: url(https://images.wallpaperscraft.com/image/single/trees_snow_spruces_1328349_720x1280.jpg); */
+  }
+
+  video {
+    display: none;
+  }
+
+  .nav-item {
+    aspect-ratio: initial;
+  }
+}
+
+@media (hover:none) {
+  .nav-item:hover {
+    box-shadow: none;
+    transition: none;
+  }
+}
