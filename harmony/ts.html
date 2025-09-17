@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/tbl.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;TypeScript</h1>
+  </header>
+  <dl>
+    <dt>链接 links - <a href="https://www.typescriptlang.org/">typescript</a></dt>
+    <dd>1. 文档 Docs</dd>
+    <dd>2. 演练场 Playground</dd>
+  </dl>
+  <div class="chap">数据类型 data type</div>
+  <dl>
+    <dt>1. 布尔 boolean</dt>
+    <dd>基本数据类型</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>布尔 boolean - true、false</figcaption>
+        <pre>let isDown: boolean = true;</pre>
+      </figure>
+    </dd>
+    <dt>2. 数值 number</dt>
+    <dd>基本数据类型</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>数值 number - 都是浮点数</figcaption>
+        <pre>
+let age: number = 24;
+let age: number = 0b11000;
+let age: number = 0o28;
+let age: number = 0x18;        </pre>
+      </figure>
+    </dd>
+    <dt>3. 字符串 string</dt>
+    <dd>基本数据类型</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>字符串 string - 单引号、双引号</figcaption>
+        <pre>
+let name: string = 'cnplaman';
+let name: string = "cnplaman";</pre>
+      </figure>
+    </dd>
+    <dt>4. 数组 Array</dt>
+    <dd>
+      <figure class="code">
+        <figcaption>数组 - 基本数据类型[]；Array[基本数据类型]</figcaption>
+        <pre>
+let list: string[] = ['cnplaman', 'glpla'];
+let list: Array[string] = ["cnplaman", "glpla"];
+let gender=['male','female',1,0]</pre>
+      </figure>
+    </dd>
+    <dt>5. 元组</dt>
+    <dd>数据类型不必相同</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>元组 - : []</figcaption>
+        <pre>
+let x: [string, number];
+y = ['cnplaman', 24];//ok
+x = [24, 'cnplaman'];//fail</pre>
+      </figure>
+    </dd>
+    <dt>6. 枚举 enume</dt>
+    <dd>数据类型不必相同</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>枚举 enume - {}</figcaption>
+        <pre>
+enume Color= {red, green, blue};
+let c: Color = Color.red</pre>
+      </figure>
+    </dd>
+    <dt>7. 联合 Union Type</dt>
+    <dd>取值可以是多种类型中的一种</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>联合 Union Type</figcaption>
+        <pre>
+let gender: string | number;
+gender = 'male'
+gender = 1</pre>
+      </figure>
+    </dd>
+    <dt>8. 未知类型 unknown</dt>
+    <dd>仅仅声明，暂时还未定义其具体类型</dd>
+    <dt>9. 空值 null</dt>
+    <dt>10. 未定义 undefined</dt>
+    <dt>11. 空类型 void</dt>
+    <dd>没有返回值</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>void</figcaption>
+        <pre>
+function fn(): void {
+  console.log('hi, there.');
+}</pre>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">语句 statement</div>
+  <dl>
+    <dt>条件语句</dt>
+    <dd>根据不同的条件true、false，执行不同的分支</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>if</figcaption>
+        <pre>
+if(age > 18){
+  console.log('adult');
+}</pre>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>if-else</figcaption>
+        <pre>
+if(age > 18){
+  console.log('adult');
+}else{
+  console.log('teenager')
+}</pre>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>if-else if</figcaption>
+        <pre>
+if(age > 18){
+  console.log('adult');
+}else if(age > 24){
+  console.log('grownup')
+}else{
+  console.log('teenager')
+}</pre>
+      </figure>
+    </dd>
+    <dt>switch-case</dt>
+    <dd>测试某个变量是否大于某个值</dd>
+    <dd>分支语句多条时，应使用{}</dd>
+    <dd>应指定默认分支default</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>switch-case</figcaption>
+        <pre>
+switch(gender){
+  'male':
+    console.log('you are male');
+    break;
+  'female':
+    console.log('you are female');
+    break;
+  default:
+    console.log('not for sure');
+    break;
+}</pre>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">函数 function</div>
+  <dl>
+    <dd>函数名称 返回类型 参数</dd>
+    <dd>有名字的函数、匿名函数</dd>
+    <dd>参数使用?修饰，表示该参数可选</dd>
+    <dd>参数使用...修饰，表示该参数个数不限，可以任意数量</dd>
+    <dd>箭头函数：匿名函数的简写；更加简洁、高效</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>有名字的函数</figcaption>
+        <pre>
+function sum(x:number, y:number): number {
+  return x + y;
+}</pre>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>匿名函数 - 多见于函数表达式</figcaption>
+        <pre>
+let sum = function(x:number, y:number): number {
+  return x + y;
+}</pre>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>箭头函数</figcaption>
+        <pre>
+let sum = (x:number, y:number) => x + y;</pre>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">类 class</div>
+  <dl>
+    <dt>定义 definition</dt>
+    <dt>继承 extends</dt>
+    <dd>super()</dd>
+  </dl>
+  <div class="chap">模块 module</div>
+  <dl>
+    <dt>概述 overview</dt>
+    <dd>一个模块中的数据 - 变量、函数，想要提供给其他模块使用，必须导出export该数据</dd>
+    <dd>一个模块想要使用其他模块导出的数据，必须使用import导入</dd>
+    <dt>导出 export</dt>
+    <dt>导入 import</dt>
+  </dl>
+  <div class="chap">迭代器 iterator</div>
+  <dl>
+    <dd>字符串、数组等集合类的数据都可以迭代</dd>
+    <dt>for-of</dt>
+    <dd>遍历数组元素</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>for-of</figcaption>
+        <pre>
+let gender=['male','female',1,0]
+for(let item of gender){
+    console.log(item)
+}</pre>
+      </figure>
+    </dd>
+    <dt>for-in</dt>
+    <dd>遍历数组下标</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>for-in</figcaption>
+        <pre>
+let gender=['male','female',1,0]
+for(let ind in gender){
+    console.log(ind)
+}
+//"0","1","2","3"</pre>
+      </figure>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

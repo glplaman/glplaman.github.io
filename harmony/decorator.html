@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>装饰器 Decorator</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/tbl.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Decorator</h1>
+  </header>
+  <dl>
+    <dt>链接 links - <a href="https://www.typescriptlang.org/">typescript</a></dt>
+    <dd>1. 文档 Docs</dd>
+    <dd>2. 演练场 Playground</dd>
+  </dl>
+  <dl>
+    <dt>概述</dt>
+    <dd>在组件内使用@State装饰器来修饰变量，可以使组件根据不同的状态来呈现不同的效果 </dd>
+    <dd>若当前组件的状态需要通过其父组件传递而来，此时需要使用@Prop装饰器</dd>
+    <dd>若是父子组件状态需要相互绑定进行双向同步，则需要使用@Link装饰器</dd>
+    <dd>当状态改变，需要对状态变化进行监听做一些相应的操作时，可以使用@Watch装饰器来修饰状态</dd>
+    <dt>@component</dt>
+    <dd>使用 @component 自定义一个组件</dd>
+    <dt>@entry</dt>
+    <dd>使用 @entry 指定为默认入口组件</dd>
+    <dd>页面加载时，首先创建并加载默认入口组件</dd>
+    <dd>一个页面只能有一个默认入口组件</dd>
+    <dt>@state</dt>
+    <dd>管理组件内部状态</dd>
+    <dd>状态是驱动应用变化的数据；视图与状态关联的UI内容</dd>
+    <dd>通过管理组件的状态，实现交互</dd>
+    <dd>状态变化，会引起视图|页面UI更新 - <span class="warn">状态驱动视图更新</span></dd>
+    <dd>每个@state对应一个变量</dd>
+    <dd>@state装饰的变量是组件内部的状态数据，当这些状态数据被修改时，将会调用所在组件的build方法进行UI刷新</dd>
+    <dt>@link</dt>
+    <dd>管理子组件的状态；和父组件双向同步状态</dd>
+    <dd>@link装饰的变量和父组件的@State变量建立双向数据绑定，任何一方变化都会反映给另外一方</dd>
+    <dd>@link变量初始化由父组件创建时完成，不能由当前组件完成</dd>
+    <dd>同Vue的bind属性</dd>
+    <dt>@Pro</dt>
+    <dd>管理子组件的状态；父组件单向同步</dd>
+    <dd>组件之间的参数传递</dd>
+    <dd>@Prop装饰的变量必须使用其父组件提供的@State变量进行初始化</dd>
+    <dd>当前组件可以修改@Prop变量，但更改不会通知给父组件 - 单向绑定</dd>
+    <dd>同Vue的Prop属性</dd>
+    <dt>@watch</dt>
+    <dd>监听状态变化</dd>
+    <dt>@Builder</dt>
+    <dd>定义组件的声明式UI描述，在一个自定义组件内快速生成多个布局内容</dd>
+    <dd>
+      <figure class="img-sn">
+        <img
+          src="https://alliance-communityfile-drcn.dbankcdn.com/FileServer/getFile/cmtyManage/011/111/111/0000000000011111111.20230218100026.08664392171777894827837635761359:50001231000000:2800:651B4C40F8EEFBB2E58E6700E995054DC851E0D5C1319FD926718CED1817430F.png?needInitFileName=true"
+          alt="">
+        <figcaption>@State、@Prop、@Link关系</figcaption>
+      </figure>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

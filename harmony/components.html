@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件 Components</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/tbl.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Components</h1>
+  </header>
+  <dl>
+    <dt>链接 links - <a href="https://www.typescriptlang.org/">typescript</a></dt>
+    <dd>1. 文档 Docs</dd>
+    <dd>2. 演练场 Playground</dd>
+  </dl>
+  <div class="chap">基本组件</div>
+  <dl>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>基础组件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Text</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Button</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Image</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Slider</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>TextInput</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>LoadingProgress</td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+    <dt>Resource</dt>
+    <dd>资源引用类型，用于设置组件属性的值</dd>
+    <dd>将资源文件（字符串、图片、音频等）统一存放于resources目录下，便于开发者统一维护</dd>
+    <dd>
+      app 代表应用内 resources 目录中定义的资源；type 代表资源类型（或资源的存放位置），可以取
+      "color"、"float"、"string"、"plural"、"media"；name 代表资源命名，由开发者定义资源时确定
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>定义：在float.json中定义Button的宽高和字体大小</figcaption>
+        <pre>
+{
+  "float": [
+    {
+      "name": "button_width",
+      "value": "300vp"
+    },
+    {
+      "name": "button_height",
+      "value": "40vp"
+    },
+    {
+      "name": "login_fontSize",
+      "value": "18fp"
+    }
+  ]
+}</pre>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>引用："$r('app.type.name')"</figcaption>
+        <pre>
+Button('submit')
+  .width($r('app.float.button_width'))
+  .height($r('app.float.button_height'))
+  .fontSize($r('app.float.login_fontSize'))</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>Tips</div>
+      <div>类似HTML5的全局变量 :root</div>
+      <div>软代码 vs 硬代码</div>
+    </dd>
+  </dl>
+  <div class="chap">容器组件</div>
+  <dl>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>容器组件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Column</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Row</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Flex</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Grid</td>
+          <td>Grid GridItem</td>
+        </tr>
+        <tr>
+          <td>List</td>
+          <td>List ListItem</td>
+        </tr>
+        <tr>
+          <td>Tab</td>
+          <td>Tab TabContent</td>
+        </tr>
+        <tr>
+          <td>Swiper</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Divider</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Stack</td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">媒体组件</div>
+  <dl>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>媒体组件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Video</td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">绘制组件</div>
+  <dl>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>绘制组件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">网络组件</div>
+  <dl>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>网络组件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Web</td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">画布组件</div>
+  <dl>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>画布组件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">自定义组件</div>
+  <dl>
+    <dd>使用 @component 自定义一个组件</dd>
+    <dd>使用 struct 定义其结构</dd>
+    <dd>为自定义组件指定名称</dd>
+    <dd>使用 build方法描述自定义组件UI</dd>
+    <dd>自定义组件和使用它的组件通常在不同的文件中；为了方便使用，通常需要导出export，也便于模块化开发</dd>
+  </dl>
+  <div class="chap">组件的生命周期</div>
+  <dl>
+    <dd>1.AboutToAppear</dd>
+    <dd>2.AboutToDisappear</dd>
+    <dd>3.onPageShow</dd>
+    <dd>4.onPageHide</dd>
+    <dd>5.onBackPress</dd>
+    <dd>返回true，不进行页面返回，由页面自己处理返回逻辑</dd>
+    <dd>返回false，默认；由系统处理返回逻辑</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
