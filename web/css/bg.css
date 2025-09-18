@@ -1,0 +1,182 @@
+.basic {
+  width: 300px;
+  height: 300px;
+  margin: var(--p-m-g) auto;
+}
+
+/* .basic {
+  width: 320px;
+  height: 180px;
+  margin: 2rem auto;
+  padding: 1rem;
+} */
+
+.single-img {
+  height: 200px;
+  background-color: #a8e073;
+  background-image: url(/utils/logo/ty.png);
+  background-position: right bottom;
+  background-size: 50px;
+  background-repeat: no-repeat;
+  margin-bottom: var(--p-m-g);
+}
+
+.multi-img {
+  height: 200px;
+  background-image: url(/utils/logo/ty.png), url(/utils/logo/54414.png);
+  background-position: right bottom, top left;
+  background-size: 50px;
+  background-repeat: no-repeat;
+  margin-bottom: var(--p-m-g);
+  background-color: #a8e073;
+}
+
+.rpt li {
+  display: flex;
+  align-items: center;
+}
+
+.rpt div {
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  background-repeat: repeat-x;
+}
+
+.slider-bg {
+  height: 150px;
+  background-image: url(../imgs/banner.jpg);
+  transition: 2s;
+}
+
+.slider-bg:hover {
+  background-position: right top;
+}
+
+.bgs {
+  width: 320px;
+  height: 180px;
+  margin: var(--p-m-g) auto;
+  background-image: url(../imgs/bg.jpg);
+}
+
+.bgs-option:has(input[id="auto"]:checked)+.bgs {
+  background-size: auto;
+}
+
+.bgs-option:has(input[id="contain"]:checked)+.bgs {
+  background-size: contain;
+}
+
+.bgs-option:has(input[id="cover"]:checked)+.bgs {
+  background-size: cover;
+}
+
+.bgs-option:has(input[id="px"]:checked)+.bgs {
+  background-size: 100px;
+}
+
+.bgs-option:has(input[id="per"]:checked)+.bgs {
+  background-size: 20%;
+}
+
+.mask {
+  background-image: linear-gradient(transparent, #000), url(../imgs/bg.jpg);
+  background-size: cover;
+}
+
+.blinds {
+  background-image: linear-gradient(transparent, #000), url(../imgs/bg.jpg);
+  background-size: 100% 6px, cover;
+}
+
+.dog {
+  position: relative;
+  background-image: linear-gradient(210deg, transparent 3em, #ddd 0);
+  border-radius: var(--p-m-g);
+  overflow: hidden;
+}
+
+.dog::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(-120deg, #0dd 3em, transparent 0);
+  border-radius: var(--p-m-g);
+  transform-origin: top right;
+  transform: rotate(149deg) translate(13.8em, 2.3em);
+}
+
+.bg-origin {
+  width: 320px;
+  height: 180px;
+  border: 20px dashed rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  margin: 1rem auto;
+  background-color: #ff0;
+  background-image: url(../imgs/bg.jpg);
+  background-size: cover;
+  background-origin: padding-box;
+}
+
+.bgo-option:has(input[id="bgopadding"]:checked)+.bg-origin {
+  background-origin: padding-box;
+}
+
+.bgo-option:has(input[id="bgoborder"]:checked)+.bg-origin {
+  background-origin: border-box;
+}
+
+.bgo-option:has(input[id="bgocontent"]:checked)+.bg-origin {
+  background-origin: content-box;
+}
+
+.bg-clip {
+  width: 320px;
+  height: 180px;
+  line-height: 100px;
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+  border: 20px dashed rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  margin: 1rem auto;
+  background-color: #ff0;
+  background-image: url(../imgs/bg.jpg);
+  background-size: cover;
+  background-clip: border-box;
+}
+
+.bgc-option:has(input[id="bgcborder"]:checked)+.bg-clip {
+  background-clip: border-box;
+}
+
+.bgc-option:has(input[id="bgcpadding"]:checked)+.bg-clip {
+  background-clip: padding-box;
+}
+
+.bgc-option:has(input[id="bgccontent"]:checked)+.bg-clip {
+  background-clip: content-box;
+}
+
+.bgc-option:has(input[id="bgctext"]:checked)+.bg-clip {
+  background-clip: text;
+}
+
+.bg-attach-default {
+  overflow-y: auto;
+  background-image: url(../imgs/bg.jpg);
+}
+
+.bg-attach-fixed {
+  overflow-y: auto;
+  background-image: url(../imgs/bg.jpg);
+  background-attachment: fixed;
+}
+
+.bg-attach-local {
+  overflow-y: auto;
+  background-image: url(../imgs/bg.jpg);
+  background-attachment: local;
+}

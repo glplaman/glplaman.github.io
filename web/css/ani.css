@@ -1,0 +1,258 @@
+.plane {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 150px;
+  margin: 0;
+  animation: mov 10s linear infinite;
+}
+
+@keyframes mov {
+  0% {
+    margin-right: -800px;
+  }
+
+  100% {
+    margin-right: 100%;
+  }
+}
+
+input {
+  box-sizing: border-box;
+  outline: none;
+  width: 100%;
+}
+
+/* nav-ani */
+.demo-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  background-color: #f40;
+  line-height: 40px;
+}
+
+.demo-nav li {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.demo-nav:hover li {
+  animation: aniTop 0.5s linear forwards;
+  animation-delay: calc(var(--del)*0.1s);
+}
+
+@keyframes aniTop {
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.demo-nav a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 0 1rem;
+}
+
+.demo-nav a:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.card {
+  width: 320px;
+  height: 180px;
+  margin: 2rem auto;
+  /* background-image: linear-gradient(30deg, #f40, #f70); */
+  background-image: url(../imgs/neon.jpg);
+  background-size: cover;
+  animation: bg 5s linear infinite alternate;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 1rem rgba(0, 0, 0, 0.2);
+}
+
+@keyframes bg {
+  0% {
+    filter: hue-rotate(0);
+  }
+
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* typing */
+.typing {
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  width: 1ch;
+  margin: 2rem auto;
+  overflow: hidden;
+  animation: type 2s steps(9) forwards;
+  animation-play-state: paused;
+}
+
+.typing:hover {
+  animation-play-state: running;
+}
+
+@keyframes type {
+  to {
+    width: 9ch;
+  }
+}
+
+.shaking-ipt {
+  border: 1px solid #ddd;
+  height: 30px;
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.shaking-ipt:invalid {
+  color: #eb2f06;
+  animation: shaking .1s ease-in-out 3;
+  /* box-shadow: 0 0 2px #eb2f06; */
+}
+
+@keyframes shaking {
+  0% {
+    margin-left: 0;
+  }
+
+  25% {
+    margin-left: 4px;
+  }
+
+  75% {
+    margin-left: -4px;
+  }
+
+  75% {
+    margin-left: 0px;
+  }
+}
+
+/* focus */
+.ipt {
+  width: 100%;
+  height: 2rem;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ipt:focus {
+  animation: glow 800ms ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+
+  100% {
+    border-color: rgb(102, 255, 102);
+    box-shadow:
+      0 0 .2rem rgba(0, 255, 0, .6),
+      inset 0 0 .4rem rgba(0, 255, 0, .4),
+      0 0 .6rem rgb(0, 255, 0, .2);
+  }
+}
+
+/* example2 */
+
+.tx-box {
+  position: relative;
+  perspective: 800px;
+}
+
+.tx {
+  width: 80%;
+  min-height: 300px;
+  background-color: rgb(238, 236, 225);
+  transform-style: preserve-3d;
+  transform: translateZ(-10rem) rotateX(70deg);
+  margin: 0 auto;
+}
+
+.tx::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2rem;
+  background-image: linear-gradient(90deg, #fff 70%, #333 0);
+  background-size: 10rem;
+  transform: translateY(-50%);
+  animation: tx 2s linear infinite;
+}
+
+@keyframes tx {
+  0% {
+    background-position: 0;
+  }
+
+  100% {
+    background-position: -10rem;
+  }
+}
+
+.tx::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 0;
+  width: 100%;
+  height: 1rem;
+  background-color: #666;
+  transform-origin: top;
+  transform: rotateX(-70deg);
+}
+
+.tx-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -4rem;
+  width: 95%;
+  height: 2rem;
+  transform: translateX(-50%);
+  background-image: linear-gradient(rgba(0, 0, 0, .4), transparent);
+}
+
+
+/* example */
+.basic {
+  background-color: #ddd;
+  border-radius: 1rem;
+}
+
+.progress-step {
+  width: 0;
+  height: 1rem;
+  border-radius: 1rem;
+  background-color: #eb2f06;
+}
+
+.step-default {
+  animation: progress-ani 10s steps(10) forwards;
+}
+
+.step-start {
+  animation: progress-ani 10s steps(10, start) forwards;
+}
+
+.btn {
+  display: block;
+  filter: hue-rotate(45deg);
+  margin: 1rem auto;
+}
+
+@keyframes moveOut {
+  to {
+    transform: translateX(200%);
+  }
+}

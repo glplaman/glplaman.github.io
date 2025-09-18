@@ -1,0 +1,124 @@
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Columns */
+.masonry-columns {
+  columns: 7 100px;
+  column-gap: var(--p-m-g);
+}
+
+.masonry-columns .item {
+  position: relative;
+  counter-increment: gn;
+  border: 1px solid #333;
+  margin-bottom: 10px;
+}
+
+.masonry-columns .item::before {
+  content: counter(gn);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  color: #333;
+  line-height: 30px;
+  text-align: center;
+}
+
+/* flex */
+.masonry-flex {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 88vh;
+  gap: var(--p-m-g);
+}
+
+.masonry-flex .item {
+  position: relative;
+  width: calc((100% - 60px)/7);
+  counter-increment: sn;
+  background-color: #f1f2f3;
+  border: 1px solid #333;
+}
+
+.masonry-flex .item::before {
+  content: counter(sn);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  color: #333;
+  line-height: 30px;
+  text-align: center;
+}
+
+.masonry-flex .item:nth-child(7n+1) {
+  /* 1 8 15 22 29 */
+  order: 1;
+}
+
+.masonry-flex .item:nth-child(7n+2) {
+  /* 2 9 16 23 30 */
+  order: 2;
+}
+
+.masonry-flex .item:nth-child(7n+3) {
+  /* 3 10 17 24 31 */
+  order: 3;
+}
+
+.masonry-flex .item:nth-child(7n+4) {
+  /* 4 11 18 25 32 */
+  order: 4;
+}
+
+.masonry-flex .item:nth-child(7n+5) {
+  /* 5 12 19 26 33 */
+  order: 5;
+}
+
+.masonry-flex .item:nth-child(7n+6) {
+  /* 6 13 20 27 34 */
+  order: 6;
+}
+
+.masonry-flex .item:nth-child(7n+7) {
+  /* 7 14 21 28 35 */
+  order: 7;
+}
+
+/* grid */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--p-m-g);
+  height: 100vh;
+  grid-auto-flow: column;
+}
+
+.masonry-grid .item {
+  border: 1px solid #333;
+}
+
+@media screen and (max-width:768px) {
+  .masonry-flex {
+    height: 225vh;
+  }
+
+  .masonry-flex .item {
+    width: calc((100% - 20px)/3);
+  }
+
+  .masonry-grid {
+    height: 290vh;
+  }
+}

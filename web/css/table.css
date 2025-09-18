@@ -1,0 +1,127 @@
+input[type='radio'] {
+  accent-color: #f40;
+}
+
+label {
+  cursor: pointer;
+}
+
+#sp:checked~table {
+  border-collapse: separate;
+}
+
+#cl:checked~table {
+  border-collapse: collapse;
+}
+
+#bs0:checked~table {
+  border-spacing: 2px;
+}
+
+#bs1:checked~table {
+  border-spacing: 10px;
+}
+
+.dual-tbl td {
+  border: 1px solid var(--main-color-green);
+}
+
+.tbl-box {
+  position: relative;
+  z-index: 1;
+}
+
+.tbl-box::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  background-color: #fed;
+  z-index: -1;
+}
+
+.bold0 {
+  border-collapse: separate;
+}
+
+.bold0 td {
+  border: 1px solid var(--main-color-green);
+}
+
+#show:checked~.bold0 {
+  empty-cells: show;
+}
+
+#hide:checked~.bold0 {
+  empty-cells: hide;
+}
+
+.bold1 {
+  border: 4px double #888;
+}
+
+.radius-tbl {
+  border-collapse: separate;
+  border-radius: 8px;
+  border: 1px solid var(--main-color-green);
+}
+
+.radius-tbl td {
+  border-bottom: 1px solid var(--main-color-green);
+}
+
+.radius-tbl tr:last-child td {
+  border: none;
+}
+
+.radius-tbl-self tbody tr:first-child td:first-child {
+  border-top-left-radius: 8px;
+  background-color: #f40;
+}
+
+.radius-tbl-self tbody tr:first-child td:last-child {
+  border-top-right-radius: 8px;
+  background-color: #f40;
+}
+
+.radius-tbl-self td {
+  border: none;
+}
+
+.wrap-tbl {
+  height: 30vh;
+  overflow-y: auto;
+}
+
+.wrap-tbl table {
+  margin: unset;
+}
+
+.wrap-tbl table tr:first-child {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+@media screen and (max-width:768px) {
+  .pc thead tr {
+    display: none;
+  }
+
+  .pc tbody tr {
+    display: block;
+  }
+
+  .pc tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pc tbody td::before {
+    content: attr(data-label);
+  }
+}

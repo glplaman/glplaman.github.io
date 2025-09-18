@@ -1,0 +1,407 @@
+.demo-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.demo-wrap::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform-origin: center;
+  background-color: #f40;
+  transition: all 0.5s;
+}
+
+.demo-wrap.active::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #f40;
+}
+
+.btn {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.basic {
+  width: 320px;
+  height: 180px;
+  margin: 1rem auto;
+}
+
+/* .input-box {
+  position: relative;
+  width: 320px;
+  height: 50px;
+  margin: 2rem auto;
+  border-bottom: 1px solid var(--main-color-dark-blue);
+} */
+
+/* 
+.input-box input {
+  width: 100%;
+  height: 50px;
+  padding: 0 10px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.input-box label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.input-box .iconfont {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--main-color-dark-blue);
+}
+
+.input-box input:focus+label,
+.input-box input:valid+label {
+  top: -5px;
+} */
+
+.info-card {
+  position: relative;
+  border: 10px solid #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.info-card img {
+  position: relative;
+  z-index: 1;
+  transform-origin: left top;
+  transition: .5s;
+}
+
+.info-card:hover img {
+  transform: scale(0.8);
+  transition: 1s;
+}
+
+.info-card .icons {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+}
+
+.info-card .icons span {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  background-color: #f40;
+  margin: .2rem;
+  color: #fff;
+}
+
+.mars {
+  position: relative;
+  background-color: #b22222;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.mars .img {
+  transform-origin: top;
+  transition: .4s;
+}
+
+.mars .info {
+  position: absolute;
+  left: 0px;
+  bottom: -60px;
+  width: 100%;
+  line-height: 60px;
+  background-color: #b22222;
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+  transition: .4s;
+}
+
+.mars:hover .img {
+  transform: scale(.5);
+}
+
+.mars:hover .info {
+  bottom: 0px;
+}
+
+.rot {
+  position: relative;
+  background-color: #eeece1;
+  overflow: hidden;
+}
+
+.rot div {
+  position: absolute;
+  left: -230px;
+  top: -230px;
+  width: 80%;
+  height: 80%;
+  border: 10px solid #b22222;
+  transform-origin: left top;
+  transition: 1s;
+}
+
+.rot:hover div {
+  left: 10%;
+  top: 10%;
+  transform: rotate(360deg);
+}
+
+/* example3 */
+
+.tran {
+  position: relative;
+  background-color: #eeece1;
+}
+
+.tran div {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  border: 10px solid #b22222;
+  left: 10%;
+  top: 10%;
+  overflow: hidden;
+}
+
+.tran div::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -180px;
+  width: 320px;
+  height: 180px;
+  background-color: #fff;
+  transform-origin: left top;
+  transition: 1s;
+}
+
+.tran div:hover::after {
+  transform: rotate(-20deg);
+}
+
+.border {
+  position: relative;
+  background-color: #eeece1;
+}
+
+.border::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60%;
+  height: 50%;
+  border: solid #b22222;
+  border-width: 4px 0;
+  transform: translate(-50%, -50%) scaleX(0);
+  transition: .4s;
+}
+
+.border::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  height: 60%;
+  border: solid #b22222;
+  border-width: 0px 4px;
+  transform: translate(-50%, -50%) scaleY(0);
+  transition: .4s;
+}
+
+.border:hover::before {
+  transform: translate(-50%, -50%) scaleX(1);
+}
+
+.border:hover::after {
+  transform: translate(-50%, -50%) scaleY(1);
+}
+
+.flex-box {
+  display: flex;
+  margin: 1rem auto;
+}
+
+.step-title {
+  flex-basis: 100px;
+}
+
+.step-ref {
+  width: 300px;
+  height: 50px;
+  background-color: #ddd;
+  margin-bottom: 1rem;
+}
+
+.step-ref>div {
+  width: 50px;
+  height: 30px;
+  float: left;
+}
+
+.step-demo-end,
+.step-demo-start {
+  position: relative;
+  width: 200px;
+  height: 30px;
+  background-color: #000;
+  cursor: pointer;
+}
+
+.step-demo-end::before,
+.step-demo-start::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background-color: #f40;
+}
+
+.step-demo-end:hover::before {
+  width: 100%;
+  transition: 5s steps(5);
+}
+
+.step-demo-start:hover::before {
+  width: 100%;
+  transition: 5s steps(5, start);
+}
+
+.demo-nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #089;
+  color: #fff;
+  height: 60px;
+  line-height: 60px;
+}
+
+.demo-nav ul {
+  display: flex;
+  position: relative;
+}
+
+.demo-nav ul .item {
+  width: 80px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.demo-nav ul .bar {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  width: 80px;
+  height: 2px;
+  background-color: #fff;
+  transition: left 0.5s;
+}
+
+.demo-nav ul .item:nth-child(1):hover~.bar {
+  left: 0px;
+}
+
+.demo-nav ul .item:nth-child(2):hover~.bar {
+  left: 80px;
+}
+
+.demo-nav ul .item:nth-child(3):hover~.bar {
+  left: 160px;
+}
+
+.demo-nav ul .item:nth-child(4):hover~.bar {
+  left: 240px;
+}
+
+.icon-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  background-color: #089;
+  color: #fff;
+}
+
+.icon-nav ul {
+  display: flex;
+  gap: 20px;
+}
+
+.icon-nav li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 60px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.icon-nav li .iconfont {
+  font-size: 48px;
+  color: #fff;
+}
+
+.icon-nav .en,
+.icon-nav .cn {
+  position: absolute;
+  transition: .2s;
+}
+
+.icon-nav .en {
+  bottom: 0px;
+}
+
+.icon-nav .cn {
+  bottom: -30px;
+}
+
+.icon-nav li:hover .iconfont {
+  color: #ff0;
+}
+
+.icon-nav li:hover .en {
+  bottom: -30px;
+  transition-duration: 0.5s;
+}
+
+.icon-nav li:hover .cn {
+  bottom: 0px;
+  color: #ff0;
+  transition-duration: 0.5s;
+}
+
+@media (max-width:768px) {
+  .aside-nav {
+    display: none;
+  }
+}

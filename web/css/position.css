@@ -1,0 +1,194 @@
+header {
+  position: relative;
+  top: 0;
+  background-image: url(../imgs/pos0.jpg);
+  height: 40vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../imgs/pos0.png);
+  background-size: cover;
+  background-position: center;
+}
+
+header h1 {
+  position: absolute;
+  left: 2rem;
+  bottom: 2rem;
+}
+
+header span {
+  font-size: 20rem;
+  letter-spacing: 20px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.inset {
+  position: relative;
+  width: 180px;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--main-color);
+  margin: 1rem auto;
+}
+
+.inset::before {
+  content: '';
+  position: absolute;
+  inset: 20px 0;
+  background-color: var(--main-color);
+}
+
+.el-undone {
+  background-color: var(--main-color);
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+}
+
+.el-done {
+  position: relative;
+  background-color: var(--main-color);
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.el-undone+div,
+.el-done+div {
+  background-color: #fff;
+}
+
+.el-undone+dd,
+.el-done+dd {
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.environment {
+  position: relative;
+  height: 400px;
+  background-color: var(--main-color);
+  overflow: hidden;
+}
+
+.environment img {
+  position: absolute;
+}
+
+.environment .girl {
+  left: 0;
+  bottom: 60px;
+  width: 150px;
+  animation: riding 12s linear infinite;
+}
+
+.environment .boy {
+  right: 2rem;
+  bottom: 0;
+  width: 200px;
+}
+
+.environment .tree0 {
+  width: 200px;
+  left: 0;
+  top: 0;
+}
+
+.environment .tree1 {
+  width: 100px;
+  left: 20%;
+  top: 30%;
+}
+
+.environment .tree2 {
+  width: 300px;
+  right: 0%;
+  top: 0%;
+}
+
+.environment .tree3 {
+  width: 200px;
+  left: 0%;
+  bottom: 0%;
+}
+
+.environment .tree4 {
+  width: 200px;
+  right: 0;
+  bottom: 0;
+}
+
+.environment .tree5 {
+  width: 150px;
+  left: 40%;
+  top: 22%;
+}
+
+@keyframes riding {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(calc(100% + 1000px));
+  }
+
+  50.01% {
+    transform: translateX(calc(100% + 1000px)) rotateY(180deg);
+  }
+
+  100% {
+    transform: translateX(-100%) rotateY(180deg);
+  }
+}
+
+@media screen and (max-width:768px) {
+  header span {
+    font-size: 5rem;
+    letter-spacing: 10px;
+  }
+
+  .environment {
+    height: 300px;
+  }
+
+  .environment .girl {
+    width: 100px;
+  }
+
+  .environment .boy {
+    width: 150px;
+    right: 0;
+  }
+
+  .environment .tree0 {
+    width: 150px;
+  }
+
+  .environment .tree1 {
+    width: 50px;
+  }
+
+  .environment .tree2 {
+    width: 250px;
+  }
+
+  .environment .tree3 {
+    width: 150px;
+  }
+
+  .environment .tree4 {
+    width: 150px;
+  }
+
+  .environment .tree5 {
+    width: 100px;
+  }
+
+}
