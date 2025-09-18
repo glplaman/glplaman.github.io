@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=yes">
+  <title>大树小站 glpla.github.io</title>
+  <meta name="description"
+    content="大树小站; WEB; HTML5; Vue3; Unity; Network; OA; Java; Linux; Ubuntu; Word; Excel; PPT; Office; only for personal use.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <div class="info">
+        <a class="avatar" href="avatar">glpla.github.io</a>
+        <h1>
+          <svg class="svg-txt">
+            <text class="title" x="60" y="30" text-anchor="middle" dominant-baseline="central">大树小站</text>
+          </svg>
+        </h1>
+      </div>
+      <div class="icon-box">
+        <!-- <span class="iconfont icon-moon_stars_fill theme-icon" id="theme-btn"></span> -->
+        <div class="stamp"></div>
+      </div>
+    </header>
+  </div>
+  <div class="w grid">
+    <div class="update">
+      <div><a class="fade-link" target="_blank" href="./utils/index.html">在线资源</a>&nbsp;&nbsp;<a class="fade-link"
+          target="_blank" href="./course/paper.html">论文规范要点</a></div>
+      <div><a target="_blank" href="/utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx" title="实验报告模板 docx"
+          download>实验报告模板</a>&nbsp;&nbsp;<a href="/utils/file/附件5：xx课程实验报告册（模版）.docx" title="实验报告册 docx"
+          download>实验报告册</a></div>
+      <div><a class="fade-link" target="_blank" href="./course/rank.html">积分榜</a>&nbsp;&nbsp;<a target="_blank"
+          href="/utils/file/23软工1班_20230901_张树彬_实验3_表单综合运用.pdf" title="前端基础作业范例 pdf" download>基础范例</a>&nbsp;&nbsp;<a
+          target="_blank" href="/utils/file/22软工1班_20230901_张树彬_实验1_标签页.pdf" title="前端框架作业范例 pdf" download>框架范例</a>
+      </div>
+      <div><a target="_blank" href="/utils/file/附件9-关于印发《广州新华学院本科教学运行管理规定》的通知.pdf"
+          title="单击预览">教学运行管理规定</a>&nbsp;&nbsp;<a target="_blank" href="/utils/file/16-广州新华学院全日制本科学生学籍管理办法.pdf"
+          title="单击预览">学籍管理办法</a>
+      </div>
+      <div><a href="./vue/opening202402.html">Vue</a>&nbsp;&nbsp;<a
+          href="./web/opening202401.html">Web</a>&nbsp;&nbsp;<a href="./minip/opening.html">Mini App</a></div>
+      <div><a class="fade-link" href="./index_cover.html" target="_blank">最美2024</a>&nbsp;&nbsp;<a class="fade-link"
+          href="./index3d.html" target="_blank">3D入口</a>&nbsp;&nbsp;<a class="fade-link" href="./indexold.html"
+          target="_blank">老版入口</a></div>
+    </div>
+    <!-- <a class="nav-item fade-link" href="./course/index.html">
+      <span class="iconfont icon-update"></span>
+      <div class="title">Course
+        <br>课程
+      </div>
+    </a> -->
+    <!-- <a class="nav-item fade-link" href="./web/index.html">
+      <span class="iconfont icon-HTML-5"></span>
+      <div class="title">Front-End
+        <br>前端
+      </div>
+    </a> -->
+    <a class="nav-item fade-link" href="./vue/index.html">
+      <span class="iconfont icon-vue"></span>
+      <div class="title">Vue.js
+        <br>前端框架
+      </div>
+    </a>
+
+    <a class="nav-item fade-link" href="./common/index.html">
+      <span class="iconfont icon-chengguozhuanhuafuwu"></span>
+      <div class="title">Case
+        <br>案例欣赏
+      </div>
+    </a>
+  </div>
+  <footer>
+    <div class="cube">
+      <div class="side s0"></div>
+      <div class="side s1"></div>
+      <div class="side s2"></div>
+      <div class="side s3"></div>
+    </div>
+    <div>All rights reserved &copy; glpla 2022-2025</div>
+    <div>glpla@hotmail.com</div>
+    <div>广州新华学院</div>
+    <div>东莞 · 中国</div>
+  </footer>
+  <script src="/utils/lib/scrollreveal.min.js"></script>
+  <script type="module">
+
+    import { dot } from '../utils/custom/dot.js'
+    const body = document.body
+
+    // theme
+    // const themeBtn = document.querySelector('#theme-btn')
+    const html = document.documentElement
+    let isDarkMode = localStorage.getItem('dark-mode') === 'true'
+    if (isDarkMode) {
+      html.classList.add('dark-mode')
+      themeBtn.classList.remove('icon-moon_stars_fill')
+      themeBtn.classList.add('icon-sun_min_fill')
+    }
+    // themeBtn.addEventListener('click', (e) => {
+    //   html.classList.toggle('dark-mode')
+    //   if (themeBtn.classList.contains('icon-moon_stars_fill')) {
+    //     themeBtn.classList.remove('icon-moon_stars_fill')
+    //     themeBtn.classList.add('icon-sun_min_fill')
+    //     localStorage.setItem('dark-mode', 'true')
+    //   } else {
+    //     themeBtn.classList.remove('icon-sun_min_fill')
+    //     themeBtn.classList.add('icon-moon_stars_fill')
+    //     localStorage.setItem('dark-mode', 'false')
+    //   }
+    // })
+
+    // bgm
+    const avatar = body.querySelector('.avatar');
+    const audio = new Audio('/utils/music/华语群星 - 当那一天来临.ogg');
+    audio.volume = 0.5;
+    audio.addEventListener('ended', function () {
+      console.log('音频播放已结束');
+      avatar.classList.toggle('play')
+    });
+    avatar.addEventListener('click', (e) => {
+      e.preventDefault();
+      audio.paused ? audio.play() : audio.pause();
+      avatar.classList.toggle('play')
+      dot(e)
+    })
+
+    // reveal
+    const revealOption = {
+      delay: 100,
+      distance: "50px",
+      duration: 150,
+      easing: "ease-in-out",
+      origin: "bottom",
+      interval: 100,
+    };
+
+    ScrollReveal().reveal(".nav-item>*", revealOption);
+
+    const links = document.querySelectorAll('.nav-item');
+    const se = new Audio('/utils/sound/click0.mp3')
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault()
+        se.currentTime = 0;
+        se.play()
+        se.addEventListener('ended', () => {
+          window.location.href = link.href;
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>

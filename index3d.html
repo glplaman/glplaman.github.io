@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大树小站</title>
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.0/dist/aframe-extras.min.js"></script> -->
+</head>
+</head>
+
+</head>
+
+<body>
+
+  <script>
+    AFRAME.registerComponent('click-listener', {
+      init: function () {
+        // 获取当前组件所在实体元素
+        var el = this.el;
+
+        // 为实体添加点击事件监听器
+        el.addEventListener('click', function (event) {
+          // 当立方体被点击时，打开一个新的网页
+          window.open('./index.html', '_blank');
+        });
+      }
+    });
+  </script>
+
+  <a-scene log="Hello, Scene!">
+    <a-assets>
+      <img id="avatar" src="./imgs/avatar.jpg">
+      <!-- <img id="m0" src="./utils/military/military0.jpg">
+      <img id="m1" src="./utils/military/military1.jpg">
+      <img id="m2" src="./utils/military/military2.jpg">
+      <img id="m3" src="./utils/military/military3.jpg">
+      <img id="m4" src="./utils/military/military4.jpg">
+      <img id="m5" src="./utils/military/military5.jpg">
+      <img id="m6" src="./utils/military/military6.jpg">
+      <img id="m7" src="./utils/military/military7.jpg">
+      <img id="m8" src="./utils/military/military8.jpg">
+      <img id="m9" src="./utils/military/military9.jpg"> -->
+      <!-- <img id="wall" src="./utils/textures/TCom_NorwayForest_8K_hdri_sphere_tone.jpg"> -->
+      <!-- <img id="forest" src="./utils/textures/TCom_NorwayForest_8K_hdri_sphere_tone.jpg"> -->
+      <!-- <a-asset-item id="castle" src="./utils/textures/issum_the_town_on_capital_isle/scene.gltf"></a-asset-item> -->
+      <!-- <a-asset-item id="sprite"
+        src="./utils/textures/spiderwick-sprite-flower-head-animation/source/Sprite-Flower-Head.glb"></a-asset-item> -->
+      <!-- <a-asset-item id="spider"
+        src="./utils/textures/thicket-sprite-animation/source/Thicket-Sprite.glb"></a-asset-item> -->
+    </a-assets>
+
+    <a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
+
+    <a-entity id="box" position="0 8 -10" geometry="primitive:box" rotation="45 45 45" scale="1.5 1.5 1.5"
+      material="src: #avatar"
+      animation="property: object3D.position.y; from: 8; to: 5; dir: alternate; loop: true; dur: 2000; "
+      animation__mouseenter="property: rotation; from: 45 45 45; to: 45 405 45;  dur: 3000; easing: linear; startEvents: mouseenter;"
+      animation__mouseleave="property: rotation; to: 45 45 45; dur: 3000; startEvents: mouseleave;" click-listener>
+    </a-entity>
+
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="0" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="36" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="72" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="108" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="144" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="180" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="216" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="252" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="288" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+    <a-curvedimage id="img" src="" height="1.8" radius="10" theta-start="324" theta-length="18.34" position="0 5 -4"
+      scale="1 1 1"></a-curvedimage>
+
+    <a-entity
+      text="value: glpla.github.io\nAll rights reserved © 2022-2025\n1942194789@qq.com\n广州新华学院\n东莞 · 中国; align:center; color: #dcdcaa;lineHeight:80; font: ./utils/font/custom-msdf/custom-msdf.json; font-image: ./utils/font/custom-msdf/custom.png; negate:false"
+      position="0 1.6 -3" scale="2 2 2" geometry="primitive:plane;width:auto;height:auto;"
+      material="color:white; transparent: true; opacity: 0"
+      animation="property: scale; to: 2.2 2.2 2.2; dur: 100; startEvents: mouseenter;"
+      animation__resume="property: scale; to: 2 2 2; dur: 100; startEvents: mouseleave;" click-listener>
+    </a-entity>
+
+    <a-entity
+      environment="preset: forest; groundTexture:walkernoise; groundColor:#643600;groundColor2:#3d2407; dressing:trees;dressingColor:#96c24e;"></a-entity>
+
+    <!-- <a-entity gltf-model="#spider" animation-mixer="clip: *; autoplay: true" scale="0.05 0.05 0.05"
+      position="1 1.2 -3.8" rotation="0 -30 0"></a-entity> -->
+    <!-- <a-entity gltf-model="#sprite" animation-mixer="clip: *; autoplay: true" scale="0.05 0.05 0.05"
+      position="1.2 1.0 -3.4" rotation="0 -40 0"></a-entity> -->
+
+    <!-- <a-box src="#forest"></a-box> -->
+
+    <a-entity position="0 1.6 0">
+      <a-camera>
+        <a-cursor></a-cursor>
+      </a-camera>
+    </a-entity>
+
+    <!-- <a-entity id="castle" gltf-model="#castle" rotation="0 -70 0"></a-entity> -->
+
+  </a-scene>
+
+</body>
+
+</html>
