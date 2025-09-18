@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 综合运用 2</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>模态框</h1>
+    <h4>Modal</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">模态框的设计与开发</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <p>综合运用 Vue 框架知识点，设计并开发模态框</p>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <div>介绍</div>
+      <p>模态框 Modal 是一种常见的网页交互组件，通常用于在当前页面上弹出一个对话框，要求用户进行某种操作或提供信息，在用户未完成操作前无法继续与页面其他部分交互</p>
+      <p>常用于提示、表单提交、警告、登录注册等场景</p>
+      <div>特点</div>
+      <p>覆盖在当前页面之上：通过 position: fixed 定位在视口的特定位置</p>
+      <p>阻止用户操作背景内容：通常会有一个半透明遮罩层 overlay 覆盖页面主体</p>
+      <p>需要主动关闭：用户可以通过点击确认、取消按钮或关闭图标来关闭模态框</p>
+      <div>实现</div>
+      <p>. 普通方法</p>
+      <p>. 自定义属性 defineProps()</p>
+      <p>. 自定义事件 defineEmits()</p>
+      <p>. 双向绑定 defineModel()</p>
+      <p>. 混合</p>
+    </div>
+    <div class="title">需求分析</div>
+    <div>
+      <div>内容1 全覆盖模态框</div>
+      <p>模态框全覆盖视图</p>
+      <p>包括模态框背景、媒体内容；内容又包括标题、关闭按钮和其它展示的信息</p>
+      <p>单击背景或关闭按钮，关闭模态框</p>
+      <div>内容2 提示信息模态框</div>
+      <p>视口右上角显示</p>
+      <p>出现3秒后消失</p>
+      <p>根据不同的情况，显示不同的提示</p>
+      <p>可以手动关闭</p>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div>内容1 全覆盖模态框</div>
+    <div class="cont">
+      <div>普通方法 <a href="./vif.html">v-if/v-show</a></div>
+      <div>自定义属性 <a href="./component_props.html">defineProps()</a></div>
+      <div>自定义事件 <a href="./component_emits.html">defineEmits()</a></div>
+      <div>双向绑定 <a href="./component_model.html">defineModel()</a></div>
+      <div>混合</div>
+    </div>
+    <div>内容2 提示信息模态框</div>
+    <div>第一阶段 静态模态框</div>
+    <div class="cont">
+      <div>模态框组件 - 创建模态框组件 Tips.vue</div>
+      <p>. 在视口右上角展示一条静态数据</p>
+      <!-- <pre>const props = defineProps({ tips: String })</pre>
+      <pre>&lt;div class="tips" v-if="flag"&gt;hi, there.&lt;/div&gt;</pre>
+      <pre>
+.tips {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  padding: 4px 20px;
+  font-size: 12px;
+  color: #fff;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+}</pre> -->
+      <div>父组件</div>
+      <p>. 引入模态框组件并条件渲染</p>
+      <p>. 使用响应式数据 isOpenModal 控制其显示和隐藏：真，则显示，否则隐藏/关闭</p>
+      <p>. 使用延时隐藏模态框组件；如何节流?</p>
+      <!-- <pre>
+import Tips from './components/Tips.vue';
+const isOpenModal = ref(false)
+        
+watch(isModalOpen, (newval, oldval) => {
+  if (newval) {
+    setTimeout(() => {
+      isModalOpen.value = false
+    }, 3000);
+  }
+})
+
+const OpenModal = () => {
+  isOpenModal.value = true
+  setTimeout(() => {
+    isOpenModal.value = false;
+  }, 3000);
+}</pre> -->
+      <!-- <p>. 使用鼠标单击事件</p> -->
+      <!-- <pre>
+  &lt;Tips :flag="isOpenModal"&gt;&lt;/Tips&gt;
+  &lt;button @click="OpenModal"&gt;click to open modal&lt;/button&gt;</pre> -->
+      <!-- <figure class="img-sn">
+        <img src="./imgs/modal1.png" alt="">
+        <figcaption>默认隐藏模态框</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/modal0.png" alt="">
+        <figcaption>单击显示模态框</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/modal1.png" alt="">
+        <figcaption>3秒后自动隐藏模态框</figcaption>
+      </figure> -->
+    </div>
+    <div>第二阶段 传递参数</div>
+    <div>根据不同的情况传递不同的提示信息</div>
+    <div class="cont">
+      <div>模态框组件 - 定义一个属性 tips，取代静态文本</div>
+      <!-- <pre>const props = defineProps({ tips: String, flag: Boolean })</pre> -->
+      <!-- <pre>
+import { ref } from 'vue';
+let tips = ref('')
+defineExpose({ tips })</pre> -->
+      <!-- <pre>&lt;div class="tips" v-if="flag"&gt;{{ tips }}&lt;/div&gt;</pre> -->
+      <div>父组件 - 声明数据并传递；同时在打开方法中传递数据给模态框组件属性 msg</div>
+      <!-- <pre>
+let tips = ref('')
+const OpenModal = () => {
+  showTips('msg here')
+}
+
+const showTips = (msg) => {
+  isOpenModal.value = true;
+  tips.value = msg;
+  setTimeout(() => {
+    isOpenModal.value = false;
+  }, 3000);
+}</pre> -->
+      <!-- <pre>&lt;Tips :flag="isOpenModal" :tips="tips"&gt;&lt;/Tips&gt;</pre> -->
+    </div>
+    <div>第三阶段 过渡模态框</div>
+    <div class="cont">
+      <p>. 使用过渡组件包裹模态框 <span class="warn">根元素</span> 并指定 name 为 modal-fade，设计对应的 CSS 样式，实现淡入淡出过渡效果</p>
+      <!-- <pre>
+  &lt;transition name="modal-fade"&gt;
+    //
+  &lt;/transition&gt;</pre>
+      <pre>
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}</pre> -->
+    </div>
+    <!-- <div>第四阶段 改进模态框</div>
+    <div class="cont">
+      <div>使用特定的字体图标，增加用户体验，如感叹号、警告等</div>
+      <div>手动关闭 - 增加关闭按钮，单击时，关闭模态框；关闭按钮定位在模态框右上角</div>
+      <p>子组件暴露自定义事件</p>
+      <pre>
+const emits = defineEmits(['emitClose'])
+const closeModal = () => {
+  emits('emitClose')
+}</pre>
+      <p>父组件 - 响应模态框的自定义事件</p>
+      <pre>&lt;Tips v-if="isOpenModal" @emit-close="closeModal"&gt;&lt;/Tips&gt;</pre>
+      <pre>
+const closeModal = () => {
+  isOpenModal.value = false
+}        </pre>
+      <figure class="img-sn">
+        <img src="./imgs/modal2.png" alt="">
+        <figcaption>带关闭按钮的模态框</figcaption>
+      </figure>
+      <div>增加动态标题 title，如针对密码修改、图片上传等场景的提示</div>
+      <div>指定位置 position：水平垂直居中、左上角、右上角、底部居中、顶部居中等等</div>
+      <div>其它设计</div>
+    </div> -->
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>使用特定的字体图标，增加用户体验，如感叹号、警告等</div>
+      <div>手动关闭 - 增加关闭按钮，单击时，关闭模态框；关闭按钮定位在模态框右上角</div>
+      <div>增加动态标题 title，如针对密码修改、图片上传等场景的提示</div>
+      <div>指定位置 position：水平垂直居中、左上角、右上角、底部居中、顶部居中等等</div>
+      <div>侦听仓库的加载</div>
+      <div>其它设计</div>
+      <div>保存/推送项目到自己的代码仓库</div>
+      <!-- <pre>
+watch(() => goodStore.isLoading, (newVal, oldVal) => {
+  console.log(newVal);
+  if (newVal) {
+    msg.value = '正在加载中...'
+  } else {
+    msg.value = '加载完成'
+  }
+  show.value = true;
+})</pre> -->
+    </div>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

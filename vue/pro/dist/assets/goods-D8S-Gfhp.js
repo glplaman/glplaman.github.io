@@ -1,0 +1,1 @@
+import{C as c,B as i,r as a}from"./index-GjNbNo_D.js";const e=()=>c.get("https://glpla.github.io/utils/data/coffee.json"),f=i("goods",()=>{const s=a([]),o=a({});return{goods:s,good:o,getGoods:async()=>{const{data:t}=await e();s.value=t.cont},getGoodById:async t=>{const{data:d}=await e();return o.value=d.cont.find(n=>n.id==t),o.value}}});export{f as u};

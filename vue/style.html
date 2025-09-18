@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式 style</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>样式</h1>
+    <span>&commat;style</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>类 class 和内联样式 style 都是元素的属性 attribute，使用 v-bind 将它们和动态的<span class="warn">字符串</span>绑定</dd>
+    <dd>v-bind: 可以简写为冒号:</dd>
+    <dd>除了字符串外，表达式的值也可以是<span class="warn">对象</span>或<span class="warn">数组</span></dd>
+    <dt><a href="https://cn.vuejs.org/guide/essentials/class-and-style.html#binding-inline-styles">内联样式 style</a></dt>
+    <dd>
+      <div>内联样式是值对 key-value pair 集合</div>
+      <div>复合 CSS 属性可以使用小驼峰 camelCase，也支持短划线 kebab-cased；推荐使用小驼峰 camelCase，因为静态使用和动态绑定写法一致</div>
+      <div>注意双引号和单引号的配套使用</div>
+      <div>特别的，background-image 等使用了 url()、linear-gradient() 等等 CSS 函数的属性，静态使用仅可以引用 public 中的资源；动态绑定使用 - 同 <a
+          href="./img.html">图片 src</a> 的使用</div>
+      <pre>
+&lt;div style="color: #f40;"&gt;hi,there&lt;/div&gt;
+&lt;div style="fontSize: 20px"&gt;hi,there&lt;/div&gt;
+&lt;div style="font-size: 20px"&gt;hi,there&lt;/div&gt;
+&lt;div style="background-color: #f40;"&gt;hi,there&lt;/div&gt;
+&lt;div style="backgroundColor: #f40;"&gt;hi,there&lt;/div&gt;</pre>
+      <div class="tips">
+        <div>类的绑定使用能满足大多场景，不要纠结于内联样式的使用</div>
+      </div>
+    </dd>
+    <dt>绑定对象</dt>
+    <dd class="sn">
+      <p>绑定的是值 value</p>
+      <p>为了和绑定的数据|样式值区分，建议：key 使用引号括起来</p>
+      <div>直接指定样式值 - 复合 CSS 属性</div>
+      <pre>
+&lt;div :style="{ 'color': txtColor }"&gt;hi,there&lt;/div&gt;
+&lt;div :style="{ 'background-color': color }"&gt;content&lt;/div&gt;
+&lt;div :style="{ 'backgroundColor': color }"&gt;content&lt;/div&gt;</pre>
+      <div>拼接样式值 - 数值和单位</div>
+      <pre>
+&lt;div :style="{ 'fontSize': small + 'px' }">hi,there&lt;/div&gt;
+&lt;div :style="`font-size: ${small}px`"&gt;hi,there&lt;/div&gt;
+//模板字符串不支持小驼峰写法！！！
+&lt;div :style="`fontSize: ${small}px`"&gt;hi,there&lt;/div&gt;//x</pre>
+      <div>多样式使用逗号，分隔，渲染时变为分号;</div>
+      <pre>&lt;div :style="{ 'backgroundColor': color, 'lineHeight': h + 'px' }"&gt;content&lt;/div&gt;</pre>
+    </dd>
+    <dt>绑定数组</dt>
+    <dd>同类的数组绑定，应用较少</dd>
+    <dd id="val">[<span class="iconfont icon-keyboard"></span>] 标签页 - 使用对象绑定内联变量</dd>
+    <dd>
+      <pre>
+&lt;nav class="nav"&gt;
+  &lt;div class="item" @click="navInd = 0"&gt;Lorem.&lt;/div&gt;
+  &lt;div class="item" @click="navInd = 1"&gt;Neque?&lt;/div&gt;
+  &lt;div class="item" @click="navInd = 2"&gt;Incidunt.&lt;/div&gt;
+  &lt;div class="item" @click="navInd = 3"&gt;Quidem!&lt;/div&gt;
+  &lt;div class="line" :style="{ '--ind': navInd }"&gt;&lt;/div&gt;
+&lt;/nav&gt;</pre>
+      <pre>
+import { ref } from 'vue'
+const navInd = ref(0)</pre>
+      <pre>
+// 其它样式
+
+.line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 80px;
+  height: 2px;
+  background: #f40;
+  transform: translateX(calc(80px * var(--ind)));
+  transition: 0.5s;
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

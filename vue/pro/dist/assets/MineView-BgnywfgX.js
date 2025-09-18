@@ -1,0 +1,1 @@
+import{_ as e,c,o}from"./index-CPU-aW-9.js";const t={},s={class:"mine-view"};function n(_,a){return o(),c("div",s," to do ")}const i=e(t,[["render",n],["__scopeId","data-v-b6f666f7"]]);export{i as default};

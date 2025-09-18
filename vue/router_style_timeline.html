@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由样式 Style</title>
+  <!-- <link rel="stylesheet" href="../css/common.css"> -->
+  <link rel="stylesheet" href="../css/timeline.css">
+  <base target="_blank">
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="title">路由样式
+      <br>&commat;Style
+    </h1>
+    <span class="iconfont icon-menu ham" id="ham"></span>
+    <div class="nav-wrap">
+      <div class="logo"></div>
+      <nav class="nav">
+        <a class="nav-item" style="--s:--n0" href="#introduction">introduction</a>
+        <a class="nav-item" style="--s:--n1" href="#default">default</a>
+        <a class="nav-item" style="--s:--n2" href="#router">RouterOptions</a>
+        <a class="nav-item" style="--s:--n3" href="#routerlink">RouterLinkProps</a>
+        <a class="nav-item" style="--s:--n4" href="#summary">summary</a>
+        <a class="nav-item" style="--s:--n5" href="#homework">homework</a>
+      </nav>
+    </div>
+  </header>
+  <dl class="section" style="--s:--n0" id="introduction">
+    <dt class="section-title">引言 Introduction</dt>
+    <dd>
+      <div>. 除了可以自定义样式外，还可以使用 Vue 提供的内置样式类</div>
+      <div>. 区分当前路由样式 active 和严格匹配当前路由样式 exactActive</div>
+      <div>. 嵌套路由下，路由链上的会匹配应用当前路由样式 active - 无论嵌套路径多么深，只要链接的目标路径是当前路径的一部分，就会添加</div>
+      <div>. 而末端子路由应用严格匹配当前路由样式 exactActive - 仅当 to 属性<span class="warn">精确匹配</span>当前激活的路由时才会应用；<span
+          class="warn">重定向路由</span>不在考虑之内</div>
+      <div>. 单级路由下，当前路由会<span class="warn">同时叠加</span>两种样式类</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 匹配和严格匹配</div>
+      <div>路由a：重定向到路由b，最后匹配的是路由b，路由a无法激活匹配路由和严格匹配路由</div>
+      <div>路由b：最后匹配的也是路由b，可以激活匹配路由和严格匹配路由</div>
+    </dd>
+  </dl>
+  <dl class="section" style="--s:--n1" id="default">
+    <dt class="section-title">默认类 Default</dt>
+    <dd>
+      <div>. 默认情况下，Vue会为 &lt;RouterLink&gt; <a
+          href="https://router.vuejs.org/zh/guide/essentials/active-links.html">匹配当前路由的链接</a> 自动添加两个空白
+        的CSS样式类：router-link-active 和 router-link-exact-active，以高亮当前路由</div>
+      <div>. 通过覆盖/修改其样式可以定制路由样式</div>
+      <pre>
+.router-link-active {
+  color: #f40;
+}
+    
+.router-link-exact-active {
+  border-bottom: 1px solid #f40;
+}</pre>
+    </dd>
+  </dl>
+  <dl class="section" style="--s:--n2" id="router">
+    <dt class="section-title">路由属性类 <a
+        href="https://router.vuejs.org/api/interfaces/RouterOptions.html">RouterOptions</a></dt>
+    <dd>
+      <div>. 配置路由时指定选项属性：linkActiveClass、linkExactActiveClass</div>
+      <div>. 会<span class="warn">覆盖</span>上述默认的路由样式类</div>
+      <div>. 两个样式类默认为空，通过定制实现个性化开发</div>
+      <div>. 使用不同的样式类；样式内容可以一致</div>
+      <pre>
+const router = createRouter({
+  // ...
+  linkActiveClass : "nav-color";
+  linkExactActiveClass : "exact-nav-color";
+})</pre>
+      <div>. 或使用 options 属性更加明确的指定</div>
+      <pre>
+router.options = {
+  linkActiveClass: "nav-color",
+  linkExactActiveClass: "exact-nav-color",
+};</pre>
+      <div>. 或</div>
+      <pre>router.options.linkActiveClass = "nav-color"</pre>
+      <pre>router.options.linkExactActiveClass = "exact-nav-color"</pre>
+    </dd>
+  </dl>
+  <dl class="section" style="--s:--n3" id="routerlink">
+    <dt class="section-title">标签属性类 <a href="https://router.vuejs.org/api/interfaces/RouterLinkProps.html">
+        RouterLinkProps</a></dt>
+    <dd>
+      <div>. &lt;RouterLink&gt; 标签属性 ：activeClass、exactActiveClass</div>
+      <div>. 需要为<span class="warn">每个</span> &lt;RouterLink&gt; 都指定该属性</div>
+      <div>. 指定后，会覆盖默认的两个路由样式类</div>
+      <div>. 支持小驼峰和连字符两种格式</div>
+      <div>. 使用不同的样式类；样式内容可以一致</div>
+      <pre>
+&lt;RouterLink activeClass="btm" exactActiveClass="color" to="/home"&gt;home&lt;/RouterLink&gt;
+&lt;RouterLink active-class="btm" exact-active-class="color" to="/mine"&gt;mine&lt;/RouterLink&gt;</pre>
+      <pre>
+.btm {
+  color: #f40;
+}
+    
+.color {
+  border-bottom: 1px solid #f40;
+}</pre>
+    </dd>
+    <!-- <dt class="section-title">匹配路由</dt>
+    <dd>
+      <div>以上是全局路由样式，对所有路由生效</div>
+      <div>自定义路由样式 - 适合某个特定路由</div>
+      <div>根据当前路由和页面是否匹配来设置动态样式</div>
+      <pre>&lt;div :class = "{'active':route.path.includes('/home')}"&gt;Home&lt;/div&gt;</pre>
+    </dd> -->
+    <dd class="tips">
+      <div>. 以上是 <span class="warn">针对</span> 使用了 &lt;router-link&gt; 的声明式导航</div>
+      <div>. 如果是编程式导航，按照元素的普通样式和激活样式区分设计即可</div>
+      <div>. 标签属性类适合单独定制</div>
+      <div>. 路由属性类适合全局定制，也可以在相应的组件中，通过覆盖的方式单独定制</div>
+    </dd>
+  </dl>
+  <dl class="section" style="--s:--n4" id="summary">
+    <dt class="section-title">小结 Summary</dt>
+    <dd class="sn">
+      <div>&lt;RouterLink&gt; 路由样式设置</div>
+      <p>. 默认样式类： .router-link-active .router-link-exact-active</p>
+      <p>. 路由属性类： linkActiveClass、linkExactActiveClass</p>
+      <p>. 标签属性类： activeClass、exactActiveClass</p>
+      <div>全局应用路由样式</div>
+      <div>单独设置路由样式</div>
+    </dd>
+  </dl>
+  <dl class="section" style="--s:--n5" id="homework">
+    <dt class="section-title">作业 Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 路由样式设计</dd>
+    <dd>
+      <div>思路1：三种方式的优先级</div>
+      <div>思路2：可以分别设计路由样式；也可以先设置全局路由样式，再单独指定某个或某些路由样式，覆盖全局路由样式</div>
+      <div>方法：可以使用默认样式类、标签属性类和路由属性类实现</div>
+      <div>本例采用路由属性类，通过全局、单独定制的方式实现</div>
+      <div>1. 配置路由时，指定路由样式类</div>
+      <pre>
+const router = createRouter({
+  history: createWebHistory(),
+  routes:[
+    //...
+  ],
+  linkActiveClass: "nav-color",
+  linkExactActiveClass: "exact-nav-color",
+});</pre>
+      <div>2. 全局路由样式 - main.css</div>
+      <pre>
+.nav-color {
+  color: var(--main-color);
+}
+
+.exact-nav-color {
+  color: var(--main-color);
+}</pre>
+      <div>3. 主路由/导航 AppNav.vue - 封装为组件</div>
+      <div>3.1 组件数据 &lt;script&gt;</div>
+      <pre>
+const nav = ref([
+  { id: 0, title: '首页', path: '/', icon: 'icon-home1' },
+  { id: 1, title: '菜单', path: '/menu', icon: 'icon-coffee-cup' },
+  { id: 2, title: '电商', path: '/mall', icon: 'icon-Bag-' },
+  { id: 3, title: '会员卡', path: '/membership', icon: 'icon-membership_code' },
+  { id: 4, title: '我的', path: '/mine', icon: 'icon-rudolfdeer' }
+])</pre>
+      <div>3.1 组件模板 &lt;template&gt; - 配合字体图标实现</div>
+      <pre>
+&lt;div class="app-nav"&gt;
+  &lt;RouterLink class="nav-item" v-for="(item, ind) in nav" :to="item.path" :key="item.id" replace&gt;
+    &lt;span class="iconfont" :class="item.icon"&gt;&lt;/span&gt;
+    &lt;div&gt;{{ item.title }}&lt;/div&gt;
+  &lt;/RouterLink&gt;
+&lt;/div&gt;</pre>
+      <div>3.1 组件样式 &lt;style&gt; - 自动应用全局路由样式；其它样式略</div>
+      <img src="./imgs/rs0.png" alt="">
+      <img src="./imgs/rs1.png" alt="">
+      <img src="./imgs/rs2.png" alt="">
+      <img src="./imgs/rs3.png" alt="">
+      <img src="./imgs/rs4.png" alt="">
+      <div class="fig-sn">主路由/导航 AppNav.vue 全局样式应用效果</div>
+      <div>4. 菜单视图 MenuView.vue</div>
+      <div>4.1 配置标签页内容子路由 - 重定向到商品列表页</div>
+      <pre>
+{
+  path: "/menu",
+  name: "menu",
+  redirect: "/menu/goods",
+  component: () => import("@/views/MenuView.vue"),
+  meta: { showNav: true, title: "菜单" },
+  children: [
+    {
+      path: "goods",
+      name: "goods",
+      component: () => import("@/components/Goods.vue"),
+      meta: { title: "菜单-商品列表" },
+    },
+    {
+      path: "vip",
+      name: "vip",
+      component: () => import("@/components/Vip.vue"),
+      meta: { title: "菜单-会员卡" },
+    },
+    {
+      path: "rank",
+      name: "rank",
+      component: () => import("@/components/Rank.vue"),
+      meta: { title: "菜单-年度封神榜" },
+    },
+    {
+      path: "favorite",
+      name: "favorite",
+      component: () => import("@/components/Favorite.vue"),
+      meta: { title: "菜单-我的常点" },
+    },
+  ],
+}</pre>
+      <div>4.2 视图数据 &lt;script&gt; - 用于渲染视图模板</div>
+      <pre>
+const tabs = [
+  { ind: 0, title: '经典菜单', path: '/menu/goods', keyword: 'classic' },
+  { ind: 1, title: '会员卡', path: '/menu/vip', keyword: 'member' },
+  { ind: 2, title: '年度封神榜', path: '/menu/rank', keyword: 'rank' },
+  { ind: 3, title: '我的常点', path: '/menu/favorite', keyword: 'favor' },
+]</pre>
+      <div>4.3 视图模板 &lt;template&gt; - 需要指定子路由出口 - 路由视图 &lt;RouterView /&gt;</div>
+      <pre>
+&lt;div class="links"&gt;
+  &lt;RouterLink class="link" v-for="(item, ind) in tabs" :key="item.id" :to="item.path"&gt;
+    {{ item.title }}
+  &lt;/RouterLink&gt;
+&lt;/div&gt;
+&lt;div class="sub-view"&gt;
+  &lt;RouterView /&gt;
+&lt;/div&gt;</pre>
+      <div>4.4 视图样式 &lt;style&gt; - 重新制定样式，覆盖全局路由样式；采用父相子绝；其它辅助类可以自由设计</div>
+      <pre>
+.link {
+  position: relative;
+}
+
+.exact-nav-color::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background-color: var(--main-color);
+}</pre>
+      <img src="./imgs/rs5.png" alt="">
+      <img src="./imgs/rs6.png" alt="">
+      <img src="./imgs/rs7.png" alt="">
+      <img src="./imgs/rs8.png" alt="">
+      <div class="fig-sn">菜单视图 MenuView.vue 子路由样式应用效果</div>
+      <div>5. 菜单视图其它内容请自行设计并完善</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let ham = document.getElementById("ham");
+    let navs = document.querySelectorAll(".nav-item");
+    ham.addEventListener("click", () => {
+      ham.classList.toggle("active");
+      if (ham.classList.contains("icon-menu")) {
+        ham.classList.remove("icon-menu");
+        ham.classList.add("icon-close");
+      } else {
+        ham.classList.remove("icon-close");
+        ham.classList.add("icon-menu");
+      }
+    });
+    navs.forEach((nav) => {
+      nav.addEventListener("click", () => {
+        ham.classList.remove("active");
+        ham.classList.remove("icon-close");
+        ham.classList.add("icon-menu");
+      });
+    });
+  </script>
+</body>
+
+</html>

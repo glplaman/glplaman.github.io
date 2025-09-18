@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>状态管理 Pinia</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>状态管理</h1>
+    <span>&commat; Pinia</span>
+  </header>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://pinia.vuejs.org/zh/">Pinia - State</a></dd>
+    <dt>访问 state</dt>
+    <dd>
+      <div> 默认情况下，通过 仓库实例 访问 state，直接对其进行读写</div>
+      <pre>
+const store = useStore()
+store.count++</pre>
+    </dd>
+    <dt>重置 state</dt>
+    <dd>
+      <div>Setup Stores，需创建自己的 $reset()，手动还原</div>
+      <div>选项式 API，通过调用 store 的 $reset() 方法将 state 重置为初始值；简单粗暴</div>
+      <div class="warn">谨慎！！！</div>
+      <pre>
+export const useCounterStore = defineStore('counter', () => {
+    const count = ref(0)
+    
+    const  $reset = () => {
+        count.value = 0
+    }
+    
+    return { count, $reset }
+})</pre>
+    </dd>
+    <dt>变更 state</dt>
+    <dd>
+      <div>除了单独变更某个state外，还可以使用 patch ；且在同一时间更改多个属性</div>
+      <pre>
+store.$patch({
+    count: store.count + 1,
+    age: 120,
+    name: 'DIO',
+})</pre>
+    </dd>
+    <dt>替换 state</dt>
+    <dd>
+      <div>直接赋值修改并不能完全替换掉 store 的 state，因为那样会破坏其响应性</div>
+      <pre>store.$state = { count: 24 }</pre>
+      <div>但是，你可以使用 patch ；且在同一时间更改多个属性</div>
+      <pre>store.$patch({ count: 24, msg: 'hi,there.' })</pre>
+      <div>或使用参数</div>
+      <pre>
+store.$patch((state) => {
+    state.count = 1000;
+    state.msg = 'hi';
+});</pre>
+    </dd>
+    <dt>订阅 state</dt>
+    <dd>
+      <div>通过 store 的 $subscribe() 方法侦听 state 及其变化。比起普通的 watch()，使用 $subscribe() 的好处是 subscriptions 在
+        patch 后只触发一次</div>
+      <div>可以在 pinia 实例上使用 watch() 函数侦听整个 state</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

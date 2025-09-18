@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>综合开发之导航组件</title>
+  <link rel="stylesheet" href="./css/mix.css">
+</head>
+
+<body>
+  <header>
+    <div class="title">
+      <h1>导航组件</h1>
+      <span>NavItem.vue</span>
+    </div>
+    <div class="theme" id="theme">
+      <span class="iconfont icon-Sun"></span>
+      <span class="iconfont icon-Moon-Star"></span>
+    </div>
+    <span class="iconfont icon-menu ham" id="ham"></span>
+    <div class="nav-wrap">
+      <div class="logo"></div>
+      <nav class="nav">
+        <a class="nav-item" style="--s:--n0" href="#objective"><span class="iconfont icon-mylocation"></span>
+          Objective</a>
+        <a class="nav-item" style="--s:--n1" href="#content"><span class="iconfont icon-assignment"></span> Content</a>
+        <a class="nav-item" style="--s:--n2" href="#prerequisite"><span class="iconfont icon-assistantphoto"></span>
+          Prerequisite</a>
+        <a class="nav-item" style="--s:--n3" href="#review"><span class="iconfont icon-group"></span> Review</a>
+        <a class="nav-item" style="--s:--n4" href="#intro"><span class="iconfont icon-magicwand"></span>
+          Introduction</a>
+        <a class="nav-item" style="--s:--n5" href="#principle"><span class="iconfont icon-assistantphoto"></span>
+          Principle</a>
+        <a class="nav-item" style="--s:--n6" href="#procedure"><span class="iconfont icon-codepen1"></span>
+          Procedure</a>
+        <a class="nav-item" style="--s:--n7" href="#drill"><span class="iconfont icon-mouse"></span> Drill</a>
+        <a class="nav-item" style="--s:--n8" href="#summary"><span class="iconfont icon-hangzhengguanli"></span>
+          Summary</a>
+        <a class="nav-item" style="--s:--n9" href="#homework"><span class="iconfont icon-appguanli"></span> Homework</a>
+        <a class="nav-item" style="--s:--n10" href="#reference"><span class="iconfont icon-clip"></span> Reference</a>
+      </nav>
+    </div>
+  </header>
+  <section class="section" style="--s:--n0" id="objective">
+    <h2>目标 Objective</h2>
+    <ul>
+      <li>熟悉组件模块化开发的基本原则</li>
+      <li>掌握组件模块化开发的基本方法和流程</li>
+      <li>进一步熟悉组件之间通信的常见方法</li>
+      <li>进一步熟悉插槽的基本使用</li>
+      <li>进一步熟悉声明式导航的使用</li>
+      <li>进一步熟悉定制路由的样式</li>
+    </ul>
+  </section>
+  <section class="section" style="--s:--n1" id="content">
+    <h2>内容 Content</h2>
+    <ul>
+      <li>组件模块化开发的基本原则</li>
+      <li>组件模块化开发的基本方法和流程</li>
+      <li>组件模块化开发实操：导航组件</li>
+    </ul>
+  </section>
+  <section class="section" style="--s:--n2" id="prerequisite">
+    <h2>前置 Prerequisite</h2>
+    <p class="edu"><span class="iconfont icon-a-ziyuan4"></span> 温故而知新</p>
+    <p class="edu"><span class="iconfont icon-a-ziyuan4"></span> 学以致用</p>
+    <ol>
+      <li>列表渲染 v-for</li>
+      <div>
+        <p>. 基于一个数组或对象来渲染一个列表</p>
+        <p>. 以数组为例；titles 是数据源；title 是迭代变量，表示数据项，可以是任何有效标识符；index 是数据项索引/位置序号</p>
+        <p>. 更多信息，请访问 <a class="link" target="_blank" href="./vfor.html">列表渲染 v-for</a></p>
+        <pre>
+import { ref } from 'vue';
+const  titles = ref([
+  { id:0, title: 'Foo' },
+  { id:1, title: 'Bar' },
+  { id:2, title: 'Baz' },
+])</pre>
+        <pre>
+&lt;div v-for="(title, index) in titles" :key = "title.id"&gt;
+  // 其它内容
+  &lt;div&gt;{{ title.title }}&lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+      <li>自定义属性 defineProps()</li>
+      <div>
+        <p>. 父组件 → 子组件传递参数/通信</p>
+        <p>. 更多信息，请访问 <a class="link" target="_blank" href="./component_props.html"> 父传子 defineProps()</a></p>
+        <ul>
+          <li>子组件 Child.vue</li>
+          <p>. 定义属性参数，暴露接口；这里暴露了一个字符串类型的属性 msg，默认为空；使用变量 props 接受</p>
+          <pre>
+const props = defineProps({
+  msg: {
+    type: String,
+    default: ''
+  }
+})</pre>
+          <p>. 在结构中使用属性参数</p>
+          <pre>&lt;div&gt;{{ msg }}&lt;/div&gt;</pre>
+          <li>父组件 Super.vue</li>
+          <p>. 引入子组件、定义属性参数</p>
+          <pre>
+import { ref } from 'vue';
+import Child from './components/Child.vue';
+const  msg = ref('hi, there.')</pre>
+          <p>. 在结构中使用子组件并传递属性参数</p>
+          <pre>&lt;Child :msg = 'msg'&gt;&lt;/Child&gt;</pre>
+        </ul>
+      </div>
+      <li>插槽 &lt;slot&gt;</li>
+      <div>
+        <p>. 从结构上扩展组件功能；以默认插槽为例</p>
+        <p>. 更多信息，请访问 <a class="link" target="_blank" href="./component_slots.html">插槽 Slot</a></p>
+        <ul>
+          <li>子组件 Child.vue</li>
+          <p>. 定义插槽</p>
+          <pre>
+&lt;div&gt;
+  // 组件其它内容
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/div&gt;</pre>
+          <li>父组件 Super.vue</li>
+          <p>. 引入、使用子组件</p>
+          <pre>import Child from './components/Child.vue';</pre>
+          <p>. 传递插槽，可以是任意内容；只能使用双标签形式</p>
+          <pre>
+&lt;Child&gt;
+  &lt;div&gt;
+    // 插槽内容
+  &lt;/div&gt;
+&lt;/Child&gt;</pre>
+        </ul>
+      </div>
+      <li>阿里字体图标 iconfont</li>
+      <div>
+        <p>. 基于矢量图形的字体文件；轻量、兼容性好、易于使用、可定制</p>
+        <p>. 更多信息，请访问 <a class="link" target="_blank" href="../web/framework/iconfont.html">阿里字体图标 Iconfont</a></p>
+        <ul>
+          <li>创建项目</li>
+          <li>查找图标；添加到购物车</li>
+          <li>选择使用方式：类 class</li>
+          <li>生成链接</li>
+          <li>复制链接到项目 main.css 中并引入</li>
+          <pre>@import url(//at.alicdn.com/t/c/font_3859342_qe1ea0cgv5.css);</pre>
+          <li>使用图标：基类和图标类</li>
+          <pre>&lt;span class="iconfont icon-home"&gt;&lt;/span&gt;</pre>
+        </ul>
+      </div>
+      <li>定位 position</li>
+      <div>
+        <p>. 最好显式的指定较高的层级 z-index，确保位于其它元素上层</p>
+        <p>. 更多信息，请访问 <a class="link" target="_blank" href="../web/fixed.html">固定定位 Fixed</a>、<a class="link"
+            target="_blank" href="../web/sticky.html">粘性定位 Sticky</a></p>
+        <ul>
+          <li>主导航固定定位在视图底部</li>
+          <pre>
+.main-nav {
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+}</pre>
+          <li>二级导航粘性定位在视图顶部</li>
+          <pre>
+.menu-nav {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}</pre>
+        </ul>
+      </div>
+      <li>路由样式</li>
+      <div>
+        <ul>
+          <li>实现</li>
+          <p>. 默认类：.router-link-active、.router-link-exact-active</p>
+          <p>. 标签属性类：activeClass、exactActiveClass</P>
+          <p>. 路由属性类：linkActiveClass、linkExactActiveClass</P>
+          <li>作用域</li>
+          <p>. 全局样式、组件样式</p>
+        </ul>
+        <p>. 更多信息，请访问 <a class="link" target="_blank" href="./router_style.html">路由样式 router style</a></p>
+      </div>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n3" id="review">
+    <h2>回顾 Review</h2>
+    <p>. 略</p>
+  </section>
+  <section class="section" style="--s:--n4" id="intro">
+    <h2>引言 Introduction</h2>
+    <p>. 略</p>
+  </section>
+  <section class="section" style="--s:--n5" id="principle">
+    <h2>原则 Principle</h2>
+    <ul>
+      <li>职责单一原则 Single Responsibility Principle</li>
+      <p>. 一个组件只做一件事，保持组件功能的清晰和完整</p>
+      <li>可复用性 Reusability</li>
+      <p>. 设计组件时应考虑在应用的不同部分，甚至其他项目中都能重复使用</p>
+      <P>. 优化逻辑，模块化使用</P>
+      <p>. 根本目的</p>
+      <li>封装性 Encapsulation</li>
+      <p>. 组件内部的逻辑和样式应保持私有，除非通过 props 或 emits 显式暴露出去</p>
+      <p>. 样式隔离：使用 CSS Modules 或 scoped 样式，防止样式冲突</p>
+      <li>低耦合 Loose Coupling</li>
+      <p>. 组件不应直接依赖其他组件的内部逻辑</p>
+      <li>高内聚 High Cohesion</li>
+      <p>. 组件内的所有功能应在逻辑上紧密相关</p>
+      <li>可扩展性 Scalability</li>
+      <p>. 合理设计 props ：减少 props 的复杂度，尽量避免嵌套过深的对象或数组</p>
+      <p>. 灵活使用插槽：使用具名插槽、作用域插槽提升组件的扩展能力</p>
+      <p>. 解耦状态管理：对于复杂的组件，可以将状态抽离到 Pinia，避免组件间状态混乱</p>
+      <li>关注点分离 Separation of Concerns</li>
+      <p>. 根据需要将 UI 逻辑、状态管理和业务逻辑分离</p>
+      <li>性能优化 Performance Optimization</li>
+      <p>. 避免不必要的计算或重新渲染</p>
+      <p>. 在合适的地方使用记忆化 memoization 或计算属性 computed properties</p>
+      <li>一致的 API 设计 Consistent API Design</li>
+      <p>. 在所有组件中使用一致的命名规范和设计模式</p>
+      <p>. 引入语法检测</p>
+      <p>. 组件组合式 API 封装：将通用逻辑抽离为自定义 Composition API，如 useFetch()、useDarkMode() 等，提升复用性</p>
+      <li>异步加载 Asynchronous Loading</li>
+      <p>. 按需加载与异步组件：使用 defineAsyncComponent() 实现组件懒加载，提高首屏加载速度</p>
+    </ul>
+  </section>
+  <section class="section" style="--s:--n6" id="procedure">
+    <h2>过程 Procedure</h2>
+    <figure>
+      <img src="./imgs/xmind-component.png" alt="">
+      <figcaption>组件化过程</figcaption>
+    </figure>
+    <ol>
+      <li>需求分析 Requirement Analysis</li>
+      <p>. 明确组件的功能、输入输出，确定组件的使用场景</p>
+      <p>. 确定需要暴露的 props 和 emits</p>
+      <li>组件设计 Design</li>
+      <p>. 拆分组件结构，包括模板 template、逻辑 script 和样式style</p>
+      <p>. 使用 &lt;slot&gt; 实现内容扩展，提高灵活性</p>
+      <li>组件开发 Implementation</li>
+      <p>. 在 Vue 中，使用 defineProps() 接收父组件传入的数据</p>
+      <p>. 使用 defineEmits() 定义子组件向父组件通信的事件</p>
+      <p>. 编写组件内部逻辑和交互</p>
+      <p>. 完善组件的基本样式</p>
+      <li>组件注册 Registration </li>
+      <p>. 全局注册</p>
+      <p>. 在父组件中引入并注册子组件</p>
+      <li>组件使用 Usage</li>
+      <p>. 通过属性绑定传递数据</p>
+      <p>. 通过插槽传递内容</p>
+      <li>测试 Testing </li>
+      <p>. 测试组件在不同场景下的表现</p>
+      <p>. 开发者工具或第三方工具</p>
+      <li>优化 Optimization</li>
+      <p>. 对组件进行性能优化，如避免不必要的渲染、合理拆分逻辑等</p>
+      <li>文档编写 Documentation</li>
+      <p>. 提供组件的使用说明、API 文档以及示例代码</p>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n7" id="drill">
+    <h2>实操 Drill</h2>
+    <p class="edu"><span class="iconfont icon-a-ziyuan4"></span> 熟能生巧</p>
+    <p class="edu"><span class="iconfont icon-a-ziyuan4"></span> 没有规矩不成方圆</p>
+    <ol>
+      <li>需求分析</li>
+      <div>
+        <p>. 功能：导航</p>
+        <p>. 必选：使用文字提示</p>
+        <p>. 可选：其它提示，如图片、字体图标等</p>
+      </div>
+      <li>组件设计</li>
+      <div>
+        <p>. 核心功能：使用 &lt;RouterLink&gt; 配合属性传参 defineProps() 实现</p>
+        <p>. 拓展功能：使用插槽 &lt;slot&gt; 实现；采用主流字体图标 Iconfont</p>
+      </div>
+      <li>素材准备</li>
+      <div>
+        <p>. 字体图标：查找并引入字体图标在线链接到主样式文件 app.css</p>
+        <pre>@import url(//at.alicdn.com/t/c/font_4235521_imop9zdge2.css);</pre>
+      </div>
+      <li>组件开发</li>
+      <div>
+        <p>. 遵循 <span class="warn">先静态后动态</span> 的开发原则</p>
+        <p>. 在项目适当目录创建导航组件 NavItem.vue</p>
+        <p>. 静态设计</p>
+        <pre>
+&lt;RouterLink class="nav-item" to="/"&gt;
+  &lt;span&gt;Home&lt;/span&gt;
+&lt;/RouterLink&gt;</pre>
+        <p>. 动态设计：使用自定义的属性参数替换静态数据部分</p>
+        <p>. 这里直接使用 &lt;RouterLink&gt;；如果使用额外的容器作为根节点，后续的样式选择器要相应调整；必要时，需要使用深度选择器 :deep()</p>
+        <pre>
+&lt;RouterLink class="nav-item" :to="item.to"&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+  &lt;span&gt;{{ item.label }}&lt;/span&gt;
+&lt;/RouterLink&gt;</pre>
+        <pre>
+const props = defineProps({
+  item: {
+    type: Object,
+    default: {}
+  }
+})</pre>
+      </div>
+      <li>首页视图 HomeView.vue 中注册并使用导航组件 NavItem.vue 构建主导航菜单</li>
+      <div>
+        <p>. 引入导航组件、准备数据</p>
+        <p>. 这里采用静态数据源 items</p>
+        <pre>
+import NavItem from '@/components/NavItem.vue'
+const items = [
+  { label: 'Home', icon: 'icon-home', to: '/' },
+  { label: 'Menu', icon: 'icon-thlist', to: '/menu' },
+  { label: 'Mall', icon: 'icon-shoppingcart', to: '/mall' },
+  { label: 'Memeber', icon: 'icon-statis', to: '/memeber' },
+  { label: 'Mine', icon: 'icon-account', to: '/mine' }
+]</pre>
+        <p>. 额外使用一个 &lt;div&gt; 便于布局</p>
+        <p>. 列表渲染导航数据</p>
+        <p>. 使用字体图标填充插槽；因为使用插槽，自定义组件必须使用双标签形式</p>
+        <pre>
+&lt;div class="nav"&gt;
+  &lt;NavItem class="nav-item" v-for="item in items" :key="item.label" :item&gt;
+    &lt;span class="iconfont" :class="item.icon"&gt;&lt;/span&gt;
+  &lt;/NavItem&gt;
+&lt;/div&gt;</pre>
+        <p>. 固定定位在视图底部</p>
+        <p>. 提升层级</p>
+        <p>. 弹性盒子水平分布导航项</p>
+        <pre>
+.nav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(-main-nav-h);
+  z-index: 9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding: 0 var(--p-m-g);
+}</pre>
+        <p>. 路由样式：当前导航颜色为蓝色</p>
+        <p class="edu"><span class="iconfont icon-help"></span> 组件样式的特点是什么？</p>
+        <p>. 默认情况下，父组件只能操作子组件根节点的样式，以便布局</p>
+        <pre>
+.router-link-active,
+.router-link-exact-active{
+  color: var(--main-color);
+}</pre>
+        <figure>
+          <img src="./imgs/rs0.png" alt="">
+          <img src="./imgs/rs1.png" alt="">
+          <img src="./imgs/rs2.png" alt="">
+          <img src="./imgs/rs3.png" alt="">
+          <img src="./imgs/rs4.png" alt="">
+          <figcaption>主导航菜单</figcaption>
+        </figure>
+      </div>
+      <li>菜单视图 MennuView.vue 中引入/注册并使用导航组件 NavItem.vue，构建二级导航菜单</li>
+      <div>
+        <p>. 引入导航组件、准备数据</p>
+        <p>. 这里采用静态数据源 items；注意：嵌套路由 to 应为全路径</p>
+        <pre>
+import NavItem from '@/components/NavItem.vue'
+const items = [
+  { label: 'Goods', to: '/menu/goods' },
+  { label: 'Vip', to: '/menu/vip' },
+  { label: 'Rank', to: '/menu/rank' },
+  { label: 'Favorite', to: '/menu/favorite' },
+]</pre>
+        <p>. 额外使用一个 &lt;div&gt; 便于布局</p>
+        <p>. 列表渲染导航数据</p>
+        <p>. 没有使用插槽，仅仅展示文字，自定义组件可以使用单标签形式</p>
+        <pre>
+&lt;div class="nav"&gt;
+  &lt;NavItem class="nav-item" v-for="item in items" :key="item.label" :item&gt;&lt;/NavItem&gt;
+&lt;/div&gt;
+</pre>
+        <p>. 粘性定位在视图顶部：视图滚动时，保持二级菜单始终显式在顶部</p>
+        <p>. 提升层级</p>
+        <p>. 弹性盒子水平分布导航项</p>
+        <pre>
+.nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--p-m-g);
+}</pre>
+        <p>. 路由样式：当前导航底部为蓝色实线</p>
+        <pre>
+.nav-item {
+  position: relative;
+}
+
+.router-link-exact-active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 4px;
+  background-color: var(--main-color);
+}</pre>
+        <figure>
+          <img src="./imgs/rs5.png" alt="">
+          <img src="./imgs/rs6.png" alt="">
+          <img src="./imgs/rs7.png" alt="">
+          <img src="./imgs/rs8.png" alt="">
+          <figcaption>二级导航菜单</figcaption>
+        </figure>
+      </div>
+      <li>测试 - 略</li>
+      <li>优化 - 略</li>
+      <li>文档 - 略</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n8" id="summary">
+    <h2>小结 Summary</h2>
+    <ol>
+      <li>组件模块化开发的基本原则</li>
+      <li>组件模块化开发的基本方法和流程</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n9" id="homework">
+    <h2>作业 Homework</h2>
+    <ol>
+      <li>实操：完成导航组件 NavItem.vue 的设计与开发；</li>
+      <li>思考：是否可以全部采用插槽的方式封装导航组件？</li>
+      <li>拓展：使用模块化开发的思想，优化项目中其它部分；</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n10" id="reference">
+    <h2>参考 Reference</h2>
+    <ol class="reference">
+      <li><a target="_blank" href="./component.html">组件 Component</a></li>
+      <li><a target="_blank" href="./vfor.html">列表渲染 v-for</a></li>
+      <li><a target="_blank" href="./component_props.html"> 父传子 defineProps()</a></li>
+      <li><a target="_blank" href="./component_emits.html"> 子传父 defineEmits()</a></li>
+      <li><a target="_blank" href="./component_model.html"> 双向绑定 defineModel()</a></li>
+      <li><a target="_blank" href="./component_slots.html">插槽 Slot</a></li>
+      <li><a target="_blank" href="./router_usage.html">声明式导航 &lt;RouterLink&gt;</a></li>
+      <li><a target="_blank" href="./router_style.html">路由样式 style</a></li>
+      <li><a target="_blank" href="../web/framework/iconfont.html">阿里字体图标 Iconfont</a></li>
+      <li><a target="_blank" href="../web/flex.html">弹性盒子 Flex</a></li>
+      <li><a target="_blank" href="../web/position.html">定位 Position</a></li>
+      <li><a target="_blank" href="../web/fixed.html">固定定位 Fixed</a></li>
+      <li><a target="_blank" href="../web/sticky.html">粘性定位 Sticky</a></li>
+    </ol>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/mix.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>侦听器 Watcher</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>侦听器</h1>
+    <span>&commat;Watcher</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>watch 主要用于监听响应式数据的变化，并在变化时执行 <span class="warn">副作用</span> 操作 - allow you to observe changes in your reactive
+        state and perform side effects accordingly.</div>
+      <div>监听响应式数据源；当数据源发送变化时，在回调函数中处理响应的逻辑</div>
+      <div>使用 watch 函数在每次响应式状态发生变化时触发回调函数</div>
+      <div>侦听的是响应式数据，不能直接侦听响应式数据的属性</div>
+      <div>三个：数据源 source、回调函数 callback、配置项 options</div>
+      <div>需引入包 watch；更多信息，请访问 <a href="https://cn.vuejs.org/guide/essentials/watchers">侦听 - Watchers</a>、<a
+          href="https://cn.vuejs.org/api/reactivity-core.html#watch">API - watch()</a>
+      </div>
+      <pre>import { watch } from 'vue'</pre>
+      <pre>
+function watch&lt;T&gt;(
+    source: WatchSource&lt;T&gt;,
+    callback: WatchCallback&lt;T&gt;,
+    options?: WatchOptions
+): StopHandle</pre>
+    </dd>
+    <dt>Source</dt>
+    <dd>
+      <div>侦听数据类型 - 4种</div>
+      <div>. 一个 ref 对象 (包括计算属性)</div>
+      <div>. 一个 reactive 对象</div>
+      <div>. 一个 getter 函数：一个有返回的函数，特别适合侦听对象中的某个字段数据</div>
+      <div>. 多个响应式数据源组成的数组</div>
+    </dd>
+    <dd class="tips">实际开发中，更多是使用函数 Getter 来侦听数据的变化</dd>
+    <dt>Callback</dt>
+    <dd>
+      <div>侦听时，回调函数会使用2个参数来区分新值 newValue 和旧值 oldValue</div>
+      <div>通常我们只关心新值 newValue，即：一个参数就够了</div>
+      <div>可以是异步函数 async-await</div>
+      <div class="tips">onCleanup：回调函数的可选参数，是一个函数，用来注册清理回调；清理回调会在该副作用下一次执行前被调用</div>
+    </dd>
+    <dt>Options</dt>
+    <dd>
+      <div>1 立即侦听 immediate</div>
+      <div>watch 默认是懒执行的：仅当数据源变化时，才会执行回调</div>
+      <div>有时，需要在源变化之前就开始执行回调：设置配置项 immediate为true</div>
+      <div>如购物车总价，每次进入页面时都先结算一次；此时新值是当前值，而旧值未定义；同初恋一样，无前任</div>
+      <div>2 深度侦听 deep</div>
+      <div>默认情况下，只侦听简单类型响应式对象，不能侦听对象的属性或子对象</div>
+      <div>侦听复合对象内部属性时，需要开启深度侦听：设置 deep 为true</div>
+      <div>深度侦听需要遍历被侦听对象中的所有嵌套的属性；当用于大型数据结构时，开销很大，请只在必要时才使用它</div>
+      <div>侦听 reactive 对象时，默认开启 deep，且无法关闭</div>
+    </dd>
+    <dt>停止侦听</dt>
+    <dd>
+      <div>在大多数情况下，你无需关心怎么停止一个侦听器</div>
+      <div>要手动停止一个侦听器，请调用 watch 返回的函数</div>
+      <pre>
+const stopWatch = watch(source, callback)
+
+// 当已不再需要该侦听器时：
+stopWatch()</pre>
+    </dd>
+  </dl>
+  <div class="chap">ref</div>
+  <dl>
+    <dt>单个简单数据</dt>
+    <dd>
+      <div>当单击执行增加函数 inc 时，Vue 可以检测到 num 的变化，从而做出反应；如商品数量增加或减少时，总价发生变化</div>
+      <pre>
+const num = ref(0)
+const inc = () =>{
+    num.value++
+}
+watch(num, (newv, oldv) => {
+    console.log('num old vs new', oldv, newv);
+})</pre>
+      <div>如果侦听 num.value，则会提示数据源无效</div>
+      <pre>Invalid watch source:  0 A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types.at ... </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分析下面代码的功能</dd>
+    <dd>
+      <!-- <div>字符串倒序</div> -->
+      <pre>
+const msg = ref('')
+const str = ref('')
+watch(msg, (newv, oldv) => {
+    str.value = newv.split('').reverse().join('')
+})</pre>
+    </dd>
+    <dt>多个简单数据</dt>
+    <dd>
+      <div><span class="warn">任何</span>一个数据发生变化都会被监听到；是或的关系，不是与的关系</div>
+      <div>以数组的形式 <span class="warn">分别</span> 表示多个数据源：1个数据源变成多个数据源</div>
+      <div>以数组的形式 <span class="warn">分别</span> 显示新值和旧值：1个新值变成多个新值；一个旧值变成多个旧值</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 信用卡年费免除 - 首年免年费；当年消费达到一定金额(10000)或消费多少次(6)，免除次年年费</div>
+      <pre>
+const times = ref(0)
+const sum = ref(0)
+function incTimes() {
+    times.value++
+}
+function incSum() {
+    sum.value += 1000
+}
+watch([times, sum], ([new1, new2], [old1, old2]) => {
+    console.log(old1, new1, old2, new2);
+})</pre>
+    </dd>
+    <dt>复合数据 - 对象型 Object</dt>
+    <dd>
+      <div>watch 只会监听对象的变化，而不会监听对象内部属性的变化</div>
+      <pre>
+const user = ref({
+  id: 100,
+  name: 'glpla',
+  age: 18,
+  addr: {
+      city: 'cq',
+      code: '541000'
+  }
+})</pre>
+      <div>对象属性 age 变化不会触发侦听</div>
+      <pre>
+watch(user, (newv, oldv) => {
+    console.log('user is watched', newv, oldv);
+})</pre>
+      <div>改进1：开启深度侦听：设置 deep为 true</div>
+      <div>属性变化可以触发侦听；但是变化前后都是同一个对象；所以 newv 和 oldv 是一样的，其内部的属性会变化；仅仅知道数据属性发生变化，无法获知前后变化情况</div>
+      <div>利用开发者视图查看新旧值，是一样的</div>
+      <pre>
+watch(user, (newv, oldv) => {
+    console.log('user is watched', newv, oldv);
+}, { deep: true })</pre>
+      <div>改进2：利用 <span class="warn">函数</span> 获取侦听属性 - getter 函数，仅仅当该属性变化时才触发监听</div>
+      <div>age 变化时，触发侦听；其它属性变化时，不触发</div>
+      <div class="warn">不要遗漏 value</div>
+      <pre>
+watch(() => user.value.age, (newv, oldv) => {
+  console.log('user age is watched', newv, oldv);
+})</pre>
+      <div>改进3：使用 reactive 类型的响应式数据</div>
+    </dd>
+  </dl>
+  <div class="chap">reactive</div>
+  <dl>
+    <dd>
+      <div>侦听 reactive 对象时，默认开启 deep，且无法关闭；所以对象某个属性变化时，会触发侦听/被 Vue 捕获</div>
+      <div>同样：新值旧值是 reactive 对象，变化前后都是同一个对象；所以 newv 和 oldv 是一样的，其内部的属性也是一样的；可以捕获到数据属性变化，但是无法查看属性前后的变化</div>
+      <pre>
+const user = reactive({
+  id: 100,
+  name: 'glpla',
+  age: 18,
+  addr: {
+    city: 'cq',
+    code: '541000'
+  }
+})</pre>
+      <div>任一属性变化时，可以触发侦听</div>
+      <pre>
+watch(user, (newv, oldv) => {
+  console.log('user is watched', newv, oldv);
+  console.log('user is watched', newv.age, oldv.age);
+})</pre>
+    </dd>
+    <dt>单个属性变化</dt>
+    <dd>
+      <div>应用最为广泛</div>
+      <div>利用 <span class="warn">函数</span> 获取侦听的属性 - 简单属性</div>
+      <pre>
+watch(() => user.id, (newv, oldv) => {
+  console.log('user id is watched', newv, oldv);
+})</pre>
+      <div>利用 <span class="warn">函数</span> 获取侦听的属性 - 复合属性</div>
+      <pre>
+watch(() => user.addr.code, (newv, oldv) => {
+  console.log(newv, oldv);
+})</pre>
+    </dd>
+    <dt>多个属性变化</dt>
+    <dd>
+      <pre>
+watch([() => user.age, () => user.addr.code], ([n0, n1], [o0, o1]) => {
+  console.log(o0, n0, o1, n1);
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 总价计算 - 监听版</dd>
+    <dd>
+      <div>使用侦听实现：2个响应式数据；侦听产品数量 num，执行副作用 - 计算总价 sum</div>
+      <div>为什么要开启立即选项？</div>
+      <pre>
+&lt;div>{{ sum }}&lt;/div&gt;
+&lt;div class="inc" @click="num++"&gt;inc&lt;/div&gt;
+&lt;div&gt;{{ num }}&lt;/div&gt;
+&lt;div class="dec" @click="num--"&gt;dec&lt;/div&gt;</pre>
+      <pre>
+import { ref, watch } from 'vue';
+const num = ref(1);
+const sum = ref(0);
+const price = 9.9
+watch(num, (newv, oldv) => {
+  console.log('user is watched', newv, oldv);
+  sum.value = newv * price;
+}, { immediate: true })</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd>
+      <div>侦听 ref()</div>
+      <div>侦听 reactive()</div>
+      <div>侦听 watch 常用于触发异步操作等副作用，比如根据用户输入去发起 API 请求获取数据</div>
+      <div>计算属性 computed 多用于数据的2次处理</div>
+      <div>可以侦听一个或多个响应式数据</div>
+      <div>可以使用 getter 函数侦听响应式数据的特定属性</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd id="tabcard">[<span class="iconfont icon-keyboard"></span>] 类标签页</dd>
+    <dd>
+      <div>案例1. <a href="../course/rank.html">积分榜</a> - 菜单的变化触发数据加载</div>
+      <div>请完善样式 - 静态样式和选中样式</div>
+      <pre>&lt;div v-for="tab in tabs" :key="tab.id" @click="word = tab.data"&gt;{{ tab.label }}&lt;/div&gt;</pre>
+      <pre>
+import { ref, watch } from 'vue';
+const tabs = ref([{
+  id: 1,
+  label: '软工3班',
+  data: '20240203.json',
+}, {
+  id: 2,
+  label: '软工4班',
+  data: '20240204.json',
+}])
+const word = ref(tabs.value[0].data)
+watch(word, (newValue, oldValue) => {
+  console.log(newValue);
+  fetch(`https://glpla.github.io/utils/data/rank/${newValue}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+}, { immediate: true })</pre>
+      <div>案例2. 下拉菜单 &lt;select&gt; 的变化触发数据加载</div>
+      <div>案例3. <a href="./pro/dist/index.html">瑞幸咖啡</a>首页标签页 - 随享瑞幸、颜值水杯 - 的变化触发数据加载</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 登录页 - 发送验证码</dd>
+    <dd>
+      <div>发送验证码：初始状态禁止 disabled</div>
+      <div>侦听手机号码，如何符合要求，则激活发送验证码按钮</div>
+      <div>表单其它数据和功能略</div>
+      <pre>
+&lt;div class="item"&gt;
+  &lt;input type="text" v-model.number="user.code" required maxlength="6"&gt;
+  &lt;button class="tips" :disabled="isCellActive" @click="getCode"&gt;获取验证码&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const user = ref({
+  cell: '',
+  code: null,
+  isAgree: false,
+  code: null
+})
+const isCellActive = ref(true)
+watch(() => user.value.cell, (n, o) => {
+  if (/^1[3-9]\d{9}$/.test(n)) {
+    isCellActive.value = false
+  } else {
+    isCellActive.value = true
+  }
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 购物车</dd>
+    <dd class="sn">
+      <div>总价</div>
+      <p>侦听购物车商品长度或某个商品数量</p>
+      <p>选中某个商品，发生变化时，统计总价</p>
+      <p>修改选中商品的数量，更新总价</p>
+      <div>全选初判断</div>
+      <p>计算总价还要判断是否是全选；当选择了所有商品后，应为全选状态</p>
+      <p>继续选中商品，当选中商品的种类数量等于待选商品种类的数量时，应为全选</p>
+      <div>全选再判断</div>
+      <p>侦听购物车商品的全选对应的多选按钮 checkbox；选中 true，为全选；否则取消全选</p>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 侦听仓库：仓库状态发生变化时，给出相应的提示</dd>
+    <dd>更多信息，请访问 <a href="./pinia.html">仓库 - Pinia</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 侦听模态框的变化</dd>
+    <dd>
+      <div>用户信息采集过程中，非法、无效等数据校验，前端可以使用弹出窗口给出提示；一定时间后弹出窗口消失</div>
+      <div>需要在每个逻辑的校验中，弹出窗口、消失窗口</div>
+      <div>可以侦听弹窗的变化，当出现|条件为真时，开始倒计时，然后停止倒计时，关闭弹窗</div>
+      <pre>
+watch(isModalOpen, (newval, oldval) => {
+  if (newval) {
+    setTimeout(() => {
+    isModalOpen.value = false
+    }, 3000);
+  }
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

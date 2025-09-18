@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache ECharts</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .chart-box {
+      height: 320px;
+      margin: 1rem auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Apache ECharts</h1>
+  </header>
+  <dl>
+    <dd>需要指定图表容器高度</dd>
+    <dd>更多使用，请访问 <a href="https://echarts.apache.org/zh/index.html">Apache ECharts</a></dd>
+    <dd>其它图标库：<a href="./apxcharts.html">Apxcharts</a>、<a href="https://www.chartjs.org/">Chartjs</a></dd>
+    <dt>安装 Installation </dt>
+    <dd>
+      <pre>npm i echarts -S</pre>
+    </dd>
+    <dt>引入 Import</dt>
+    <dd>可以全部引入；也可以按需引入-推荐</dd>
+    <dt>使用 Usage</dt>
+    <dd><a href="https://echarts.apache.org/examples/zh/index.html">示例</a>给出了所有的图表使用实例。只需修改数据集即可</dd>
+    <dd class="example-sn">HTML5</dd>
+    <dd id="echarts" class="chart-box"></dd>
+    <dd class="example-sn">Vue</dd>
+    <dd>需要调整示例代码为Vue，以饼图为例，按需引入，需要调整的有：</dd>
+    <dd>DOM节点的获取 - ref</dd>
+    <dd>配置项 - onmounted</dd>
+    <dd>调整后的示例代码如下</dd>
+    <dd>逻辑</dd>
+    <dd>
+      <pre>
+import { ref, onMounted } from 'vue';
+import * as echarts from 'echarts/core';
+import { TooltipComponent, LegendComponent } from 'echarts/components';
+import { PieChart } from 'echarts/charts';
+import { LabelLayout } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+let main = ref(null)
+echarts.use([
+  TooltipComponent,
+  LegendComponent,
+  PieChart,
+  CanvasRenderer,
+  LabelLayout
+]);
+
+onMounted(() => {
+  let myChart = echarts.init(main.value);
+  let option;
+
+  option = {
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: 'center'
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2
+        },
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 40,
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: [
+          { value: 1048, name: 'Search Engine' },
+          { value: 735, name: 'Direct' },
+          { value: 580, name: 'Email' },
+          { value: 484, name: 'Union Ads' },
+          { value: 300, name: 'Video Ads' }
+        ]
+      }
+    ]
+  };
+  option && myChart.setOption(option);
+})</pre>
+    </dd>
+    <dd>结构 - 略</dd>
+    <dd>样式 - 略</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../utils/lib/echarts.min.js"></script>
+  <script>
+    let myChart = echarts.init(document.getElementById('echarts'));
+    let option = {
+      title: {
+        text: 'ECharts 入门示例',
+        subtext: 'just for demo',
+        textAlign: 'center'
+      },
+      tooltip: {
+        show: true,// default
+        backgroundColor: '#fff',
+        textStyle: {
+          color: '#f40'
+        }
+      },
+      legend: {
+        data: ['销量']
+      },
+      xAxis: {
+        show: true,
+        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+      },
+      yAxis: {},
+      series: [{
+        name: '销量',
+        type: 'bar',
+        data: [5, 20, 36, 10, 10, 20],
+        showBackground: true,
+        backgroundStyle: {
+          color: '#8888',
+          borderColor: '#888',
+          borderWidth: '1'
+        },
+        itemStyle: {
+          color: '#098'
+        },
+        emphasis: {
+          focus: 'self'
+        }
+      }],
+      backgroundColor: '#8888',
+      textStyle: {
+        color: '#888',
+        fontSize: '24'
+      }
+    };
+    myChart.setOption(option);
+  </script>
+</body>
+
+</html>

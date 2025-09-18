@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>导航守卫 Navigation Guards</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>导航守卫</h1>
+    <span>&commat;Guards</span>
+  </header>
+  <dl>
+    <dt>引言 Introduction</dt>
+    <dd>
+      <div>. 控制路由的访问权限，如：未登录，不可以下单、发帖、留言或领取优惠券，通常会引导用户/重定向到特定页面，如登录页面</div>
+      <div>. 完整路由属性和方法，请访问 <a href="https://router.vuejs.org/zh/api/interfaces/Router.html">Router</a></div>
+    </dd>
+    <dt>过程 Workflow</dt>
+    <dd class="sn">
+      <p>相当于是路由的生命周期函数</p>
+      <div>导航被触发</div>
+      <div>在失活的组件里调用 beforeRouteLeave 守卫</div>
+      <div>调用全局的 beforeEach 守卫</div>
+      <div>在重用的组件里调用 beforeRouteUpdate 守卫(2.2+)</div>
+      <div>在路由配置里调用 beforeEnter</div>
+      <div>解析异步路由组件</div>
+      <div>在被激活的组件里调用 beforeRouteEnter</div>
+      <div>调用全局的 beforeResolve 守卫(2.5+)</div>
+      <div>导航被确认</div>
+      <div>调用全局的 afterEach 钩子</div>
+      <div>触发 DOM 更新</div>
+      <div>调用 beforeRouteEnter 守卫中传给 next 的回调函数，创建好的组件实例会作为回调函数的参数传入</div>
+    </dd>
+    <dt>全局前置守卫 <a href="https://router.vuejs.org/zh/api/interfaces/Router.html#Methods-beforeEach">beforeEach()</a></dt>
+    <dd class="sn">
+      <p>. 添加一个导航钩子，每次导航之前被执行</p>
+      <p>. 使用路由实例 router 注册一个全局前置守卫 beforeEach，执行函数 fn：接收3个参数</p>
+      <table>
+        <caption>守卫参数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>to</td>
+            <td>进入的路由</td>
+          </tr>
+          <tr>
+            <td>from</td>
+            <td>离开的路由</td>
+          </tr>
+          <tr>
+            <td>next</td>
+            <td>路由控制/是否允许，如：未登录不允许访问，并引导|重定向到指定页面</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>正常访问；或不使用 next 形参</div>
+      <pre>
+router.beforeEach((to, from, next) => {
+  // ...
+  next()
+})</pre>
+      <pre>
+router.beforeEach((to, from) => {
+  // ...
+})</pre>
+      <div>不允许访问 - 简单粗暴，直接拒绝；不建议直接使用</div>
+      <pre>
+router.beforeEach((to, from, next) => {
+  if(to.path=='/order')
+    next(false)
+})</pre>
+      <div>在 next() 中指定跳转的路由，引导到指定页面 - 最佳体验</div>
+      <pre>
+router.beforeEach((to, from, next) => {
+  if (to.path == '/order') {
+    next({ name: 'home' })
+  } else {
+    next()
+  }
+})</pre>
+      <div>如果使用了 next()，但是不执行，则路由<span class="warn">不会跳转</span>，也就不会执行全局后置钩子 afterEach()</div>
+      <pre>
+router.beforeEach((to, from, next) => {
+    // ...   
+})</pre>
+    </dd>
+    <dt>全局后置守卫 <a href="https://router.vuejs.org/zh/api/interfaces/Router.html#Methods-afterEach">afterEach()</a></dt>
+    <dd>
+      <div>. 添加一个导航钩子，它会在每次导航之后被执行</div>
+      <div>. 使用路由实例 router 注册一个全局后置守卫 afterEach，执行函数 fn，接收 to、from 2个参数；含义同上</div>
+      <div>. 不接受 next，也不会改变导航本身，因为导航已结束</div>
+      <pre>
+router.afterEach((to, from) => {
+  // ...
+})</pre>
+    </dd>
+    <dt>局部路由守卫 <a href="https://router.vuejs.org/guide/advanced/navigation-guards.html#Per-Route-Guard">beforeEnter</a>
+    </dt>
+    <dd>
+      <div>. 某个路由独享的守卫；针对特定路由的控制</div>
+      <div>. 只在<span class="warn">进入</span>路由时触发</div>
+      <div>. 路由配置时指定</div>
+      <div>. 动态路由对应的多个路由之间不会触发，因为他们对应路由配置中同一条路由</div>
+      <div>. 建议和其它属性使用语法保持一致</div>
+      <div>1. 使用箭头函数表达式定义的函数，并将其作为属性值赋给 beforeEnter</div>
+      <pre>
+{
+  path: "/mall",
+  name: "mall",
+  component: () => import("@/views/MallView.vue"),
+  beforeEnter: (to, from, next) => {
+    console.log({ to, from, next });
+    next();
+  }
+}</pre>
+      <div>2. 使用具名函数；传统的函数定义</div>
+      <pre>
+{
+  path: "/mall",
+  name: "mall",
+  component: () => import("@/views/MallView.vue"),
+  beforeEnter(to, from, next) {
+    console.log({ to, from, next });
+    next();
+  }
+}</pre>
+    </dd>
+    <dt>注意 Warning</dt>
+    <dd>
+      <div>. 在 setup() 中，你不需要再做任何特别处理即可开箱使用 - 引入、实例化、使用；全局共享一个 store 实例，main.js 中的 useStore() 给你的 app 自动注入了 pinia
+        实例</div>
+      <div>. 如果没有，则需要手动注入</div>
+      <pre>
+//....                
+import { createPinia } from 'pinia'
+
+const pinia = createPinia()
+
+app.use(pinia)
+//这之后可以随意使用Pinia...</pre>
+      <div>. 路由守卫和状态管理：导航守卫运行在 Vue 应用初始化的早期阶段，此时可能还未创建或注入 Pinia store 实例；如果直接在路由中引入，会提示 <span
+          class="warn">"getActivePinia()" was called but there was no active Pinia.</span></div>
+      <div>. 更多信息，请访问 <a href="https://pinia.vuejs.org/zh/ssr/#using-the-store-outside-of-setup">Pinia - 在 setup()
+          外部使用 store</a></div>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd id="meta">[<span class="iconfont icon-keyboard"></span>] 每次导航结束后，设置文档 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Document">页面标题 title</a>，并让页面 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Window">滚动 scrollTo</a> 到顶部</dd>
+    <dd>
+      <div>. 为路由配置 meta 属性，指定 title</div>
+      <div>. 如果不是每个路由都配置 meta 属性，需判断再使用；必要时，应该指定默认值</div>
+      <pre>
+{
+  path: "/mine",
+  name: "mine",
+  component: () => import("@/views/MineView.vue"),
+  meta: { title: "我的 - 个人中心" },
+},</pre>
+      <pre>
+router.afterEach((to, from) => {
+  if(to.meta.title){
+    document.title = to.meta.title;
+    window.scrollTo(0, 0);
+  }
+})</pre>
+      <div class="quest">如何更优雅的处理数据异常？</div>
+      <!-- <pre>document.title = to.meta.title || "Vue3-Demo";</pre> -->
+    </dd>
+  </dl>
+  <div class="chap">Summary</div>
+  <dl>
+    <dd class="sn">
+      <div>beforeEach()</div>
+      <div>afterEach()</div>
+      <div>beforeEnter</div>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 添加页面 <a href="../node/dependency.html">NProgress - 进度条</a>
+      特效：导航前开始，导航后结束</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 登录认证 - 借助登录 token 或本地存储的登录信息实现路由控制</dd>
+    <dd>
+      <pre>
+router.beforeEach((to, from, next) => {
+    console.log('hi');
+    let token = localStorage.getItem('token')
+    if (to.path == '/order' && !token) {
+        next('/login')
+    } else {
+        next()
+    }
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 登录认证 - Supabase 中，采用 会话 Session 验证身份</dd>
+    <dd class="sn">
+      <p>思路：每次页面跳转时，获取元数据；如果需要验证就验证用户会话是否存在</p>
+      <div>创建 Supabase 项目</div>
+      <div>创建 Vue 项目</div>
+      <div>主页面 - 实现注册 sinUp、登录 signIn、注销 logOut 等逻辑</div>
+      <div>创建若干测试页面</div>
+      <div>配置路由 - routes，其中一个路由需要验证</div>
+      <pre>
+{
+  path: "/about",
+  name: "about",
+  component: () => import("@/views/AboutView.vue"),
+  meta: {
+    requiresAuth: true,
+  },
+},</pre>
+      <div>注册用户到 Supabase - 使用用户元数据 metadata</div>
+      <pre>
+const signUp = async () => {
+  isLoading.value = true;
+  let { data, error } = await supabase.auth.signUp({
+    email: user.value.email,
+    password: user.value.password,
+    options: {
+      data: {
+        name: 'coffee',
+        avatar: '/coffee.jpg',
+      }
+    }
+  })
+
+  if (error) {
+    console.log(error);
+    isLoading.value = false;
+    return;
+  }
+  isLoading.value = false;
+  console.log(data);
+}</pre>
+      <div>用户登录</div>
+      <pre>
+const signIn = async () => {
+  isLoading.value = true;
+  let { data, error } = await supabase.auth.signInWithPassword({
+    email: user.value.email,
+    password: user.value.password
+  })
+  if (error) {
+    console.log(error);
+    isLoading.value = false;
+    return;
+  }
+  isLoading.value = false;
+  console.log(data);
+}</pre>
+      <div>配置路由守卫 - 判断会话是否有效；否则拒绝访问某些页面/视图；记得引入 supabase</div>
+      <pre>
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresAuth) {
+    console.log("page requiresAuth");
+    let { data, error } = await supabase.auth.getSession();
+    if (data.session) {
+      console.log("authenticated");
+      next();
+    } else {
+      next({ name: "login" });
+    }
+  } else {
+    next();
+  }
+});</pre>
+      <div>其它</div>
+      <pre>
+const logOut = async () => {
+  isLoading.value = true;
+  let { error } = await supabase.auth.signOut()
+
+  if (error) {
+    console.log(error);
+    isLoading.value = false;
+    return;
+  }
+  isLoading.value = false;
+  console.log('log out');
+}</pre>
+      <div>改进</div>
+      <p>封装获取用户会话</p>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 统计访问量</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

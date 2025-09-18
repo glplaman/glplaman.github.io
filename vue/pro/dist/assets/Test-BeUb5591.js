@@ -1,0 +1,1 @@
+import{s as o}from"./supabase-DM8AhM-U.js";import{r as t,g as a,c as r,o as c}from"./index-CFKXARzf.js";const n={class:"test"},m={__name:"Test",setup(_){return t([]),a(async()=>{let{data:e,error:s}=await o.from("coffee").select("*").eq("id",1);console.log(e)}),(e,s)=>(c(),r("div",n))}};export{m as default};

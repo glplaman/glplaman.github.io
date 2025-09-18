@@ -1,0 +1,1 @@
+import{_ as e,c as s,b as o,d as c}from"./index-BW-jPEur.js";const t={},a={class:"favor"},n=c("h1",null,"This is an favor page",-1),r=[n];function _(d,i){return o(),s("div",a,r)}const l=e(t,[["render",_]]);export{l as default};

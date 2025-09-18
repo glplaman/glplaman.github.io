@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编程式导航 Router</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>编程式导航</h1>
+    <span>&commat;useRouter()</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>. 除了使用 &lt;RouterLink&gt; 创建声明式路由，还可以借助全局路由变量 $router 或 <a
+          href="https://router.vuejs.org/api/interfaces/Router.html">路由器
+          router</a> 的实例方法实现 <a href="https://router.vuejs.org/zh/guide/essentials/navigation.html">编程式路由</a></div>
+      <div>. Vue-router 提供的组合式函数；适用 Vue 3 的 Composition API </div>
+      <img src="./imgs/router1.png" alt="">
+      <p class="fig-sn">编程式路由</p>
+    </dd>
+    <dt>$router</dt>
+    <dd>
+      <div>. 全局路由变量</div>
+      <div>. 可以在模板/结构中直接使用 - 更方便、更简洁</div>
+      <pre>&lt;button @click="$router.push('/home')"&gt;返回首页&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.back()"&gt;后退&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.forward()"&gt;前进&lt;/button&gt;</pre>
+      <div>. 动态路由</div>
+      <pre>&lt;button @click="$router.replace('/details/1')"&gt;to details&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push('/details/' + id)"&gt;to details&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push(`/details/${id}`)"&gt;to details&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push({ name: 'details', params: { id: 1 } })"&gt;to details&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push({ name: 'details', params: { id } })"&gt;to details&lt;/button&gt;</pre>
+      <div>. 查询路由</div>
+      <pre>&lt;button @click="$router.push('/menu/goods?id=100')"&gt;to goods&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push('/menu/goods?id=' +100)"&gt;to goods&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push(`/menu/goods?id=${id}`)"&gt;to goods&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push({ name: 'goods', query: { id: 100 } })"&gt;to goods&lt;/button&gt;</pre>
+      <pre>&lt;button @click="$router.push({ name: 'goods', query: { id } })"&gt;to goods&lt;/button&gt;</pre>
+      <div class="tips">
+        <div>推荐使用对象的方式</div>
+        <div>请比较和 &lt;RouterLink&gt; 的区别</div>
+      </div>
+    </dd>
+    <dt><a href="https://router.vuejs.org/zh/api/#Functions-useRouter">useRouter()</a></dt>
+    <dd>
+      <div>. 是全局注入的函数，用于获取路由器实例，以便<span class="warn">操作路由</span> ，如压栈 push、替换 replace、前进 go 等；和上述方法分别一一对应</div>
+      <div>. 需引入路由包 useRouter 并创建路由实例 router</div>
+      <div>. 通常在事件处理函数中使用</div>
+      <pre>
+import { useRouter } from 'vue-router'
+const router = useRouter()</pre>
+      <table>
+        <caption>常用实例方法</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>push()</td>
+          <td>导航时向 history 添加新记录|压入路由，并跳转到目标；单击 &lt;RouterLink&gt; 时触发；可以逐级返回
+            <br>Programmatically navigate to a new URL by pushing an entry in the history stack
+          </td>
+        </tr>
+        <tr>
+          <td>replace()</td>
+          <td>导航时不会向 history 添加新记录，替换|取代了当前的条目；不可返回
+            <br>Programmatically navigate to a new URL by replacing the current entry in the history stack
+          </td>
+        </tr>
+        <tr>
+          <td>go(n)</td>
+          <td>导航到历史记录中的特定位置；可以前进或后退；参数 n 是一个整数，相对于当前位置的偏移量
+            <br>Allows you to move forward or backward through the history. Calls history.go().
+          </td>
+        </tr>
+        <tr>
+          <td>back()</td>
+          <td>后退一级；相当于 go(-1)
+            <br>Go back in history if possible by calling history.back(). Equivalent to router.go(-1).
+          </td>
+        </tr>
+        <tr>
+          <td>forward()</td>
+          <td>前进一级；相当于 go(1)
+            <br>Go forward in history if possible by calling history.forward(). Equivalent to router.go(1).
+          </td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击跳转到首页</dd>
+    <dd>
+      <pre>
+// 普通路由 
+const toHome = () => {
+  router.push('/home')
+}
+</pre>
+      <div>其它应用 - 同声明式导航</div>
+      <pre>
+// 查询路由 /register?plan=private
+router.push('/user?id=100')
+router.push({ path: '/user', query: { id: 100 } })
+
+// 动态路由
+// 直接拼接
+router.push('/user/100')
+// id = 100
+router.push('/user/' + id.value)
+// 使用模板字符串
+router.push(`/details/${id.value}`)
+// 使用对象 - 只能使用命名路由 name
+router.push({ name: 'details', params: { id: id.value } })
+router.push({ name: 'user', params: { id: 100 } })
+
+// 使用路由其它属性，如 replace 禁止返回路由
+router.push({ path: '/user', query: { id: 100 }, replace: true })
+router.replace({ path: '/user', query: { id: 100 } })</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 产品组件 GoodsItem.vue导航到产品详情页 DetailView.vue - 编程式导航版</dd>
+    <dd>
+      <div>路由设计</div>
+      <pre>
+{
+  path: '/details/:id',
+  component: () => import('@/views/DetailsView.vue'),
+}</pre>
+      <div>方案1：直接在结构中导航</div>
+      <pre>
+&lt;div class="goods-item" @click.stop="$router.push('/details/' + product.id)"&gt;
+  // ...
+&lt;/div&gt;</pre>
+      <div>方案2：在逻辑中导航</div>
+      <pre>
+&lt;div class="goods-item" @click.stop="toDetails(product.id)"&gt;
+  // ...
+&lt;/div&gt;</pre>
+      <pre>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const toDetails = (id) => {
+  router.push('/details/' + id)
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>结构中使用 - 直接使用全局路由变量 $router</div>
+      <div>逻辑中使用 - 引入路由包 useRouter 并实例 router</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 数据加载完毕后跳转至首页 - 在生命周期函数中，使用延时 setTimeout 模拟实现</dd>
+    <dd>
+      <pre>
+//引入
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+//使用 
+const router = useRouter()
+onMounted(()=>{
+  setTimeout(()=>{
+    //router.push('/home')
+    router.replace('/home') //这里通常使用replace模式
+  }, 3000)
+})</pre>
+      <div class="hint">如何优化代码？</div>
+      <!-- <div>清除定时器</div> -->
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

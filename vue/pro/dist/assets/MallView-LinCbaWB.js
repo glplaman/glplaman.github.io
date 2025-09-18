@@ -1,0 +1,1 @@
+import{_ as e,c,o}from"./index-CPU-aW-9.js";const t={},s={class:"mall-view"};function a(_,n){return o(),c("div",s," to do ")}const d=e(t,[["render",a],["__scopeId","data-v-6e6fbfdf"]]);export{d as default};

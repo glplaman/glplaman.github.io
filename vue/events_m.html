@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件修饰符 Events Modifiers</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>事件修饰符</h1>
+    <span>&commat;Events Modifiers</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>限制事件特性；如点击事件常见的修饰符有</div>
+      <table>
+        <caption>点击事件常见修饰符</caption>
+        <tr>
+          <th>类型</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>.prevent</td>
+          <td>阻止默认事件<br>&lt;form&gt; 的默认提交刷新；&lt;a&gt; 的默认跳转和刷新</td>
+        </tr>
+        <tr>
+          <td>.stop</td>
+          <td>停止事件的传播/冒泡 <br>多用于子元素</td>
+        </tr>
+        <tr>
+          <td>.self</td>
+          <td>事件对象 e.target 是自己才触发 <br>多用于父元素</td>
+        </tr>
+        <tr>
+          <td>.once</td>
+          <td>只触发一次</td>
+        </tr>
+        <tr>
+          <td>.capture</td>
+          <td><span class="warn">默认</span> 是冒泡事件；绑定一个事件捕获
+            <br>从文档的根节点开始，向下传播，直到到达目标元素<br>多用于父元素
+          </td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止<a href="../web/js/event_default.html">表单默认事件</a> - 提交时不刷新页面
+    </dd>
+    <dd>
+      <pre>
+&lt;form @submit.prevent="submit"&gt;
+    &lt;input type="text" name="uname" placeholder="your name"&gt;
+    &lt;button&gt;submit&lt;/button&gt;
+&lt;/form&gt;</pre>
+    </dd>
+    <dt>按键修饰符 Key Modifier</dt>
+    <dd>
+      <div>指定哪个键或哪些触发；多个按键根据先后顺序指定</div>
+      <div>如果不指定具体的键，任何一个键都可以触发</div>
+      <div>使用 <span class="warn">别名</span> 代替键，如 Enter 代表回车键、Space 代表空格键、Left 代表左方向键</div>
+      <div>还可以使用 <span class="warn">系统按键</span> ，如 Ctrl、Alt、Shift等</div>
+      <div>多用于表单</div>
+      <table>
+        <caption>按键事件修饰符</caption>
+        <tr>
+          <th>类型</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>keyup.enter</td>
+          <td>按下 Enter 键</td>
+        </tr>
+        <tr>
+          <td>keyup.alt.enter</td>
+          <td>按下 Alt 键 + Enter 键</td>
+        </tr>
+        <tr>
+          <td>keyup.ctrl.enter</td>
+          <td>配合 Ctrl 键 + Enter 键</td>
+        </tr>
+        <tr>
+          <td>keydown.tab</td>
+          <td>按下 Tab 键未释放</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>鼠标按键修饰符 Mouse Modifier</dt>
+    <dd>
+      <table>
+        <caption>鼠标按键修饰符</caption>
+        <tr>
+          <th>类型</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>left</td>
+          <td>左键</td>
+        </tr>
+        <tr>
+          <td>right</td>
+          <td>右键</td>
+        </tr>
+        <tr>
+          <td>middle</td>
+          <td>中键</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 模态框 - 普通元素版</dd>
+    <dd>
+      <div>详情页 DetailsView.vue → 权益保护模态框组件 Modal.vue：单击"详情"，打开模态框</div>
+      <div>单击"关闭"或其它任何地方关闭模态框</div>
+      <div>使用动态类实现 - 效果可以更丰富细腻</div>
+      <div>后期封装为组件使用</div>
+      <pre>
+&lt;div class="modal" :class="{ 'show': isShow }" @click.self="isShow = false"&gt;
+  &lt;div class="cont"&gt;
+    &lt;span class="close" @click.stop="isShow = false"&gt;&times;&lt;/span&gt;
+    // ...
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.modal {
+  display: none;
+  // ...
+}
+
+.show {
+  display: flex;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>事件修饰符</div>
+      <p>. prevent</p>
+      <p>. stop</p>
+      <p>. self</p>
+      <div>按键修饰符</div>
+      <p>. alt</p>
+      <p>. shift</p>
+      <p>. ctrl</p>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 模态框 - 普通元素版</dd>
+    <dd>
+      <div>使用条件渲染实现 - 样式比较简单</div>
+      <pre>
+&lt;div class="modal" v-show="isShow" @click.self="isShow = false"&gt;
+  &lt;div class="cont"&gt;
+    &lt;span class="close" @click.stop="isShow = false"&gt;&times;&lt;/span&gt;
+    // ...
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

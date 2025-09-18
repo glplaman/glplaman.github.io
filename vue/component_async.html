@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>异步组件 Async Components</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>异步组件</h1>
+    <span>&commat;Async</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div><a href="https://cn.vuejs.org/guide/components/async">异步组件 Async Components</a>：仅仅需要的时候才加载 - only load a
+        component from the server when it's needed</div>
+      <div>使用宏 defineAsyncComponent() 定义异步组件</div>
+      <div>提高"首屏加载"速度</div>
+      <div class="tips">动态组件如果高度不一致，切换时页面容易抖动；如果不考虑加载性能，建议使用普通组件实现</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标签页 - 切换时查看各组件的生命周期函数和网络加载情况</dd>
+    <dd>更多案例：<a href="../web/tabcard.html">标签页/手风琴</a>、<a href="../web/demo/acc_target.html">古诗欣赏</a>、<a
+        href="../web/demo/detail.html">详情页</a>、<a href="../web/demo/swiper0.html">轮播图</a>、<a
+        href="../web/demo/login_deer.html">一"鹿"有你</a></dd>
+    <dd>
+      <pre>
+&lt;button v-for="(_, tab) in tabs" @click="currentTab = tab" :key="tab"
+:class="['tab-button', { active: currentTab === tab }]"&gt;{{ tab }}&lt;/button&gt;
+
+&lt;component :is="tabs[currentTab]" class="tab"&gt;&lt;/component&gt;</pre>
+      <pre>
+import { defineAsyncComponent, ref } from 'vue'
+
+const AsyncHome = defineAsyncComponent(() => import('./components/Home.vue'))
+const AsyncInfo = defineAsyncComponent(() => import('./components/Info.vue'))
+const AsyncTeam = defineAsyncComponent(() => import('./components/Team.vue'))
+const AsyncWork = defineAsyncComponent(() => import('./components/Work.vue'))
+   
+const currentTab = ref('home')
+const tabs = {
+    "home": AsyncHome,
+    "info": AsyncInfo,
+    "team": AsyncTeam,
+    "work": AsyncWork
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用条件渲染，在开发者视图 → 网络 Network 中查看异步组件的加载情况，并观察项目发布后的打包情况</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 首页 HomeView.vue → tabcard：随享瑞幸和颜值水杯</dd>
+    <dd>
+      <div>分别体验普通组件和异步组件的开发效果</div>
+      <img src="./imgs/tab0.png" alt="">
+      <div class="fig-sn">随享瑞幸</div>
+      <img src="./imgs/tab1.png" alt="">
+      <div class="fig-sn">颜值水杯</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

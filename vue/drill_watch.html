@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 侦听综合运用</title>
+  <link rel="stylesheet" href="../css/exp.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>侦听综合运用</h1>
+    <h4>Watch</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">购物车</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <div>掌握侦听器 Watch 和自动侦听器 watchEffect 的基本使用</div>
+      <div>熟悉生命周期函数 Lifecycle 的不同阶段和使用</div>
+      <div>进一步理解 Vue 的响应式数据</div>
+      <div>进一步熟悉事件 Event 和事件修饰符 Modifier 的使用</div>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <div>数据的加载和渲染</div>
+      <div>商品数量的增加和减少</div>
+      <div>使用侦听处理业务</div>
+      <p>. 全选</p>
+      <p>. 部分选择</p>
+      <p>. 结算</p>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div class="cont">
+      <div>静态页面设计与实现</div>
+      <div>数据设计</div>
+      <p>. 待选商品 lists：数组；本地数据或使用 fetch 或 axios加载远程数据</p>
+      <p>. 选中商品 selectedLists；数组</p>
+      <p>. 是否全选 isAll，布尔；默认是真，全选</p>
+      <p>. 商品数量总数 count；数值</p>
+      <p>. 商品价格总数 totalPrice；数值</p>
+      <p>. 商品折扣价格总数 discountPrice；数值</p>
+      <pre>
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();
+const lists = ref([])
+const selectedLists = ref([])
+const isAll = ref(false)
+const totalPrice = ref(0)
+const discountPrice = ref(0)
+const count = ref(0)
+
+onMounted(() => {
+  lists.value = cartStore.lists;
+  selectedLists.value = [...lists.value]
+})</pre>
+      <div>渲染数据</div>
+      <p>. 列表渲染多个商品项</p>
+      <div>商品的选择侦听</div>
+      <p>. 每个商品项的选择和 selectedLists 使用双向绑定</p>
+      <pre>
+&lt;div v-for="(cart, ind) in lists">
+  &lt;input type="checkbox" name="cart" v-model="selectedLists" :value="cart"&gt;
+  // .商品信息，可以封装为组件
+&lt;/div></pre>
+      <p>. 侦听 selectedLists：如果选中列表长度和商品列表长度相等，则全选为真；否则全选为假</p>
+      <p>. 其它业务</p>
+      <pre>
+watch(selectedLists, (newVal) => {
+  isAll.value = newVal.length == lists.value.length
+  
+  // 总价结算 totalPrice
+  
+  // 数量结算 count
+
+  // 折扣 discountPrice
+}, { deep: true, immediate: true })</pre>
+      <div>商品的数量增加/减少</div>
+      <p>. 单击商品项的增加和减少按钮相应的调整其数量；并根据库存进行越界检测</p>
+      <p>. 这里使用内联事件方式；也可以使用函数方式</p>
+      <pre>&lt;button class="btn" @click="cart.quantity--" :disabled="cart.quantity &lt;= 1"&gt;-&lt;/button&gt;</pre>
+      <pre>&lt;button class="btn" @click="cart.quantity++" :disabled="cart.quantity >= cart.stock"&gt;+&lt;/button&gt;</pre>
+      <div>全选侦听</div>
+      <p>. 双向绑定 isAll</p>
+      <p>. 使用改变事件，判断是全选还是全不选</p>
+      <pre>&lt;input type="checkbox" name="all" v-model="isAll" @change="selectAllChange"/&gt;all</pre>
+      <pre>
+const selectAllChange = () => {
+  if (isAll.value) {
+    selectedLists.value = [...lists.value]
+  } else {
+    selectedLists.value = []
+  }
+}</pre>
+      <div>总价结算</div>
+      <p>. 确保侦听为深度侦听和立即侦听：便于页面渲染完毕时立即更新数据；或使用自动侦听 watchEffect</p>
+      <pre>totalPrice.value = selectedLists.value.reduce((total, item) => total + item.quantity * item.price * (1 - item.discount), 0).toFixed(2)</pre>
+      <div>数量结算</div>
+      <pre>count.value = selectedLists.value.reduce((total, item) => total + item.quantity, 0)</pre>
+      <div>折扣结算</div>
+      <pre>discountPrice.value = selectedLists.value.reduce((total, item) => total + item.quantity * item.price * item.discount, 0).toFixed(2)</pre>
+      <figure>
+        <img src="./imgs/watch0.png" alt="">
+        <figcaption>购物车静态页面</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/watch1.png" alt="">
+        <figcaption>购物车侦听1 - 自动全选并结算</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/watch2.png" alt="">
+        <figcaption>购物车侦听2 - 全选、增加商品数量</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/watch3.png" alt="">
+        <figcaption>购物车侦听3 - 部分选择</figcaption>
+      </figure>
+      <div>更多功能及效果</div>
+      <p>. 按数量排序</p>
+      <pre>
+const isAscending = ref(true)
+
+const sortQuantity = () => {
+  isAscending.value = !isAscending.value
+  return lists.value.sort((a, b) => isAscending.value ? a.price - b.price : b.price - a.price)
+}</pre>
+      <p>. 按字母排序</p>
+      <pre>
+const islocaleCompare = ref(true)
+
+const sortTitle = () => {
+  islocaleCompare.value = !islocaleCompare.value
+  return lists.value.sort((a, b) => islocaleCompare.value ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title))
+}</pre>
+      <figure>
+        <img src="./imgs/cart3.png" alt="">
+        <figcaption>默认显示</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/cart4.png" alt="">
+        <figcaption>字母排序 - 降序</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/cart5.png" alt="">
+        <figcaption>字母排序 - 升序</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/cart6.png" alt="">
+        <figcaption>数字排序 - 降序</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/cart7.png" alt="">
+        <figcaption>数字排序 - 升序</figcaption>
+      </figure>
+    </div>
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>封装商品项为组件</div>
+      <div>使用 Axios 处理数据</div>
+      <div>增加排序：商品名称、价格、库存等字段的升序、降序</div>
+      <div>保存/推送项目到自己的代码仓库</div>
+    </div>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

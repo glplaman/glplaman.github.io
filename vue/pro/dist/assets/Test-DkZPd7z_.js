@@ -1,0 +1,1 @@
+import{S as s}from"./Switch-Y0iReqkI.js";import{r as e,c,i as o,o as a}from"./index-Dj1hBsXs.js";const r={class:"test"},p={__name:"Test",setup(i){const t=e([{title:"自提"},{title:"外送"}]);return(l,n)=>(a(),c("div",r,[o(s,{switchs:t.value},null,8,["switchs"])]))}};export{p as default};

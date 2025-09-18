@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片 image</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>图片</h1>
+    <span>&commat;image</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>展示图片内容可以使用</div>
+      <div>1. 结构 <a href="../web/img.html">&lt;img&gt;</a></div>
+      <div>2. 样式 <a href="../web/background.html">BackgroundImage</a></div>
+    </dd>
+  </dl>
+  <div class="chap">图片 &lt;img&gt;</div>
+  <dl>
+    <dt>静态使用</dt>
+    <dd>
+      <div>1. 使用本地图片 - 相对路径或别名都可以</div>
+      <pre>&lt;img src="../assets/imgs/0.jpg" alt=""&gt;</pre>
+      <pre>&lt;img src="@/assets/imgs/0.jpg" alt=""&gt;</pre>
+      <div>2. 使用在线图片 - 应指定完整图片地址；如 <a href="https://pixabay.com/">pixabay</a>、<a
+          href="https://unsplash.com/">unsplash</a>、<a href="../utils/index.html">大树小站- 在线资源</a> 等；或自己创建 <a
+          href="../node/static.html">资源服务器</a>
+      </div>
+      <pre>
+&lt;img src="https://cdn.pixabay.com/photo/2023/04/01/21/11/tunnel-7893124_640.jpg" alt=""&gt;
+&lt;img src="https://glpla.github.io/utils/wallpaper/w0.jpg" alt=""&gt;</pre>
+    </dd>
+    <dt>动态绑定使用</dt>
+    <dd>
+      <div>可以绑定在线图片 url 地址</div>
+      <pre>let src = 'https://glpla.github.io/utils/coffee/coffee0.jpg'</pre>
+      <pre>&lt;img :src="src" alt=""&gt;</pre>
+      <div>或使用 <span class="warn">模板字符串 - ` `</span> 直接拼接域名和图片地址</div>
+      <pre>let :src="`https://glpla.github.io/utils${src}`"</pre>
+      <pre>let src = '/coffee/coffee0.jpg'</pre>
+      <div>不可以绑定本地图片 url 地址，Vue 会将其解析为一个字符串，而非地址</div>
+      <pre>let src = '@/assets/imgs/0.jpg'</pre>
+      <pre>&lt;img :src="src" alt=""&gt;</pre>
+      <div>解决方案1 - 使用 public 资源</div>
+      <div>将图片放到项目的 public 目录并直接引用；可以创建相应的文件夹 imgs 存放图片</div>
+      <div>vue-cli3 默认路径为 public，所以无需添加 public；public 即代表 /</div>
+      <pre>let src = '/imgs/logo.svg'</pre>
+      <pre>&lt;img :src="src" alt=""/&gt;</pre>
+      <div>解决方案2 - 使用 import 语句</div>
+      <div>将图片作为资源引入再使用 - 适合单个静态资源</div>
+      <pre>import src from '@/assets/logo.svg'</pre>
+      <pre>&lt;img :src="src" alt=""/&gt;</pre>
+      <!-- <div>import() 是一个异步函数，返回的是一个 Promise，而不是直接的 URL。因此，不能直接在模板中这样使用</div> -->
+      <!-- <pre>&lt;img :src="import('@/assets/logo.svg')" alt=""/&gt;</pre> -->
+      <div>解决方案3 - 采用 vite 的 <a href="https://cn.vitejs.dev/guide/assets.html">静态资源处理</a>；原生 Html 开发时，预览图片使用类似的
+        API实现，请参考 <a href="../web/input_file.html">输入类 input - 文件</a></div>
+      <div>为静态资源创建新的URL - 尤其适合处理多个静态资源</div>
+      <div>import.meta.url 是一个ESM的原生功能；会暴露当前模块的 URL。将它与原生的 URL 构造器 组合使用，在一个 JavaScript 模块中，通过<span
+          class="warn">相对路径</span>得到一个被完整解析的静态资源 URL</div>
+      <div>不可以使用别名 @ 引用路径</div>
+      <div>通常使用计算属性统一处理，便于列表渲染；具体实现，请访问 <a href="./vfor.html">列表渲染</a> 案例</div>
+      <div>也可以处理单个资源 - 使用普通的自定义方法即可，应显式的指定 return</div>
+      <pre>&lt;img :src="getImageUrl(src)" alt=""/&gt;</pre>
+      <pre>
+let src = '../imgs/10.jpg'
+const getImageUrl = (img) => {
+    return new URL(img, import.meta.url).href
+}</pre>
+      <div>或者使用函数拼接路径 - 推荐；案例应用请查看 <a href="./events.html#swiper">事件 - 手动轮播</a></div>
+      <pre>
+let src = '10.jpg'
+const getImageUrl = (img) => {
+    return new URL(`../imgs/${img}`, import.meta.url).href
+}</pre>
+      <div>还可以使用 <a href="./computed.html">计算属性</a>处理</div>
+    </dd>
+  </dl>
+  <div class="chap">背景图片 BackgroundImage</div>
+  <dl>
+    <dt>静态使用</dt>
+    <dd>
+      <div>1. 内联样式 style - 仅可以引用 public 中的资源</div>
+      <pre>
+&lt;div style="background-image: url('/imgs/bg.jpg');"&gt;hi,there&lt;/div&gt;
+&lt;div style="background-image: url('@/assets/bg.png');"&gt;hi,there&lt;/div&gt;// x
+&lt;div style="background-image: url(./assets/bg.jpg)"&gt;hi,there&lt;/div&gt;// x</pre>
+      <div>2. 样式 class</div>
+      <pre>
+.bg-img {
+  background-image: url('@/assets/dec0.png');
+}</pre>
+    </dd>
+    <dt>动态使用</dt>
+    <dd>
+      <div>为了和绑定的变量区分，使用引号包裹样式属性</div>
+      <div>模板字符串不支持小驼峰写法！！！- that depends</div>
+      <pre>
+&lt;div :style="{ 'backgroundImage': 'url(' + url + ')' }"&gt;hi,there&lt;/div&gt;
+&lt;div :style="{ 'background-image': 'url(' + url + ')' }"&gt;hi,there&lt;/div&gt;
+&lt;div :style="`background-image:url(${url})`"&gt;hi,there&lt;/div&gt;
+&lt;div :style="`backgroundImage:url(${url})`"&gt;hi,there&lt;/div&gt; // x</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd>
+      <div>1. 静态使用</div>
+      <div>. 网站图标icon、logo类的放在 public 目录</div>
+      <div>2. 动态使用</div>
+      <div>. 引入为资源，图片可以放在 src 目录任意地方；建议在 assets 目录</div>
+      <div>. 使用在线资源</div>
+      <div>. 自建资源服务器</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] Vite 框架对图片的处理</dd>
+    <dd class="sn">
+      <div>静态渲染：分别在 public、assets 和 assets 同级目录创建 imgs 文件夹以及组件目录，并放入一张大图和一张小图，在项目中引用，最后发布，查看框架对静态资源图片的处理情况</div>
+      <pre>
+&lt;div>public&lt;/div&gt;
+&lt;img src="/coffee1.jpg" alt="" /&gt;
+&lt;div&gt;public → imgs&lt;/div&gt;
+&lt;img src="/imgs/coffee3.jpg" alt="" /&gt;
+&lt;div&gt;src → assets&lt;/div&gt;
+&lt;img src="../assets/coffee0.jpg" alt="" /&gt;
+&lt;div&gt;src → assets → imgs&lt;/div&gt;
+&lt;img src="@/assets/imgs/coffee2.jpg" alt="" /&gt;
+&lt;div&gt;src → components&lt;/div&gt;
+&lt;img src="./coffee4.jpg" alt="" /&gt;
+&lt;div&gt;src → assets（icon）&lt;/div&gt;
+&lt;img src="@/assets/home_bar.png" alt="" /&gt;</pre>
+      <div>动态渲染：使用单个数据或列表渲染，查看框架对图片的处理</div>
+      <p>本质上是从根路径引用，所以也可以从 / 开始，引入任意地方的资源；但是打包的时候，会出现问题，因为打包后没有 src 目录</p>
+      <pre>&lt;img v-for="img in imgs" :key="img.id" :src="`/src/assets/${img.src}`"/&gt;</pre>
+      <p>采用部分地址拼接服务器地址</p>
+      <pre>&lt;img v-for="img in imgs" :key="img.id" :src="`https://url/${img.src}`"/&gt;</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

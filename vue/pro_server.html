@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>服务器 Server</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .iconfont {
+      padding-right: 10px;
+    }
+
+    .cont {
+      flex: 1;
+      padding-left: 20px;
+    }
+
+    .inner {
+      padding-left: 20px;
+    }
+
+    summary::marker {
+      content: '\02C3  ';
+    }
+
+    details[open]>summary::marker {
+      content: '\02C5  ';
+    }
+
+    .leading-txt {
+      color: var(--main-color);
+      padding-right: 10px;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>服务器</h1>
+    <span>&commat;Server</span>
+  </header>
+  <div class="container">
+    <div class="cont">
+      <details open>
+        <summary>server</summary>
+        <div class="inner">
+          <details>
+            <summary>node_modules</summary>
+          </details>
+          <details>
+            <summary>public</summary>
+            <div class="inner">
+              <details>
+                <summary>data</summary>
+                <div class="inner">
+                  <p><span class="leading-txt">{}</span>24090503.json</p>
+                  <p><span class="leading-txt">{}</span>good.json</p>
+                  <p><span class="leading-txt">{}</span>todo.json</p>
+                </div>
+              </details>
+              <details>
+                <summary>upload</summary>
+                <div class="inner">
+                  <p><span class="iconfont icon-photo"></span>image1714803481382.jpg</p>
+                </div>
+              </details>
+            </div>
+          </details>
+          <details>
+            <summary>router</summary>
+            <div class="inner">
+              <p><span class="leading-txt">js</span>uploadImg.js</p>
+              <p><span class="leading-txt">js</span>user.js</p>
+            </div>
+          </details>
+          <p><span class="leading-txt">js</span>index.js</p>
+          <p><span class="leading-txt">{}</span>package-lock.json</p>
+          <p><span class="leading-txt">{}</span>package.json</p>
+        </div>
+      </details>
+    </div>
+    <dl>
+      <dd class="sn">
+        <div>配置文件 package.js - 记得安装依赖再使用</div>
+        <pre>
+
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}</pre>
+        <div>主文件 index.js</div>
+        <pre>
+const express = require('express')
+
+// 创建Web服务器
+const app = express();
+const port = 3000;
+const host = '127.0.0.1'
+
+// 引入模块化路由
+const routerUser = require('./router/user')
+const routerUploadImg = require('./router/uploadImg')
+const routerGood = require('./router/good')
+const routerTodo = require('./router/todo')
+const routerCart = require('./router/cart')
+const routerOrder = require('./router/order')
+const routerMsg = require('./router/msg')
+const routerForm = require('./router/form')
+
+// 静态资源；系统中间件-靠前引用；路由中间件
+app
+  .use(express.static('./public'))
+  .use(express.urlencoded({ extended: true }))  // for parsing application/x-www-form-urlencoded
+  .use(express.json())  // for parsing application/json when POST
+  .use('/user', routerUser)
+  .use('/uploadimg', routerUploadImg)
+  .use('/good', routerGood)
+  .use('/todo', routerTodo)
+  .use('/cart', routerCart)
+  .use('/order', routerOrder)
+  .use('/msg', routerMsg)
+  .use('/form', routerForm)
+
+app.listen(port, host, () => {
+  console.log(`server is on at:http://${host}:${port}`);
+});</pre>
+        <div>上传图片 uploadImg.js</div>
+        <pre>
+const express = require('express')
+const multer = require('multer')
+const path = require('path')
+const router = express.Router()
+
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, __dirname + "/public/upload");
+  },
+  filename: (req, file, callback) => {
+    console.log('file', file);
+    let ext = path.extname(file.originalname)
+    callback(null, file.fieldname + Date.now() + ext)
+  }
+})
+
+const upload = multer({
+  storage: storage
+})
+
+router.post('/', upload.single('avatar'), (req, res) => {
+  console.log('req.file', req.file)
+  res.json({
+    "errno": 0,
+    "data": {
+      "url": 'http://127.0.0.1:3000/upload/' + req.file.filename,
+    }
+  })
+})
+
+module.exports = router;</pre>
+        <div>用户管理 user.js</div>
+        <pre>
+const fs = require('fs');
+const express = require('express')
+const router = express.Router()
+
+router.get('/', (req, res) => {
+  console.log(req.query);
+  let file = fs.readFileSync('./public/data/' + req.query.usn + '.json', 'utf8')
+  let jsonFile = JSON.parse(file)
+  console.log(jsonFile);
+  res.json({
+    "errno": 0,
+    "msg": 'get ok',
+    "data": jsonFile
+  })
+})
+
+router.get('/login', (req, res) => {
+  console.log('req.query', req.query);
+  let file = fs.readFile('./public/data/' + req.query.usn + '.json', 'utf8', (err, data) => {
+    if (err) {
+      res.json({
+        "errno": 2,
+        "msg": 'user not exist'
+      })
+    } else {
+      let jsonFile = JSON.parse(data)
+      if (req.query.upass === jsonFile.upass) {
+        res.json({
+          "errno": 0,
+          "msg": 'login ok',
+          "data": jsonFile
+        })
+      } else {
+        res.json({
+          "errno": 1,
+          "msg": 'pass not match'
+        })
+      }
+    }
+  })
+})
+
+router.post('/register', (req, res) => {
+  if (fs.existsSync('./public/data/' + req.body.usn + '.json')) {
+    res.json({
+      "errno": 2,
+      "msg": 'user exist'
+    })
+    return;
+  }
+  fs.writeFile('./public/data/' + req.body.usn + '.json', JSON.stringify(req.body), (err) => {
+    if (err) {
+      console.log('保存文件失败')
+      res.json({
+        "errno": 1,
+        "msg": 'try later'
+      })
+    } else {
+      console.log('保存文件成功')
+      res.json({
+        "errno": 0,
+        "msg": 'register ok'
+      })
+    }
+  })
+})
+
+router.post('/modify', (req, res) => {
+  console.log('modify', req.body);
+  const data = JSON.parse(fs.readFileSync('./public/data/' + req.body.usn + '.json', 'utf8'));
+  data[req.body.ukey] = req.body.uvalue
+  fs.writeFile('./public/data/' + req.body.usn + '.json', JSON.stringify(data, null, 4), (error) => {
+    if (error) {
+      console.log('保存文件失败')
+      res.json({
+        "errno": 2,
+        "msg": 'try later'
+      })
+    } else {
+      console.log('保存文件成功')
+      res.json({
+        "errno": 0,
+        "msg": 'modify ok'
+      })
+    }
+  })
+})
+
+module.exports = router</pre>
+        <div>其它文件 - 更新中</div>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

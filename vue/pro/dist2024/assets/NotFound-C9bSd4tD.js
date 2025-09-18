@@ -1,0 +1,1 @@
+import{_ as e,c as s,a as c,p as t,j as a,k as _}from"./index-CjcobUH4.js";const n={},d=o=>(t("data-v-c147616b"),o=o(),a(),o),p={class:"not-found"},r=d(()=>_("span",null,"Page lost",-1)),i=[r];function l(o,f){return c(),s("div",p,i)}const h=e(n,[["render",l],["__scopeId","data-v-c147616b"]]);export{h as default};

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 路由综合运用</title>
+  <link rel="stylesheet" href="../css/exp.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>路由综合运用</h1>
+    <h4>Router & Route</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">路由设计</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <div>掌握普通路由、命名路由、重定向路由和嵌套路由的基本使用</div>
+      <div>掌握单页路由、全站路由的设计与开发</div>
+      <div>掌握编程路由和路由守卫的常见应用</div>
+      <!-- <div>掌握 <a href="https://router.vuejs.org/zh/api/#Functions-useRoute">路由 useRoute()</a> 的基本使用</div> -->
+      <div>熟悉路由样式的使用</div>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <p>综合运用路由知识，使用声明式导航或编程式导航，完成项目的路由设计与开发</p>
+      <div>主菜单 MainMenu.vue 对应的路由设计，包括样式</div>
+      <div>菜单视图 MenuView.vue 的嵌套路由设计，包括样式</div>
+      <div>详情页 DetailsView.vue 的动态路由设计</div>
+      <div>产品组件 GoodsItem.vue 到产品详情页 DetailView.vue 的动态路由设计</div>
+      <div>路由守卫</div>
+      <p>更新标题</p>
+      <p>主菜单的控制：显示与否</p>
+      <p>购物车：定位位置</p>
+      <pre>
+{
+  path: "/",
+  name: "index",
+  component: HomeView,
+  meta: { showNav: true, title: "大树小咖" },
+}</pre>
+      <div>其它设计</div>
+      <p>访问量*</p>
+      <p>页面切换进度条*</p>
+      <p>面包屑导航*</p>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div class="cont">
+      <div>面包屑导航*</div>
+      <p>.创建组件 Breadcrumb.vue</p>
+      <p>.引入路由</p>
+      <pre>
+import { useRoute } from 'vue-router';
+const route = useRoute();</pre>
+      <p>.使用路由</p>
+      <pre>
+&lt;div class="bread"&gt;
+&lt;router-link v-for="(item, index) in route.matched" :key="index" :to="item.path"&gt;{{ item.name }}&lt;/router-link&gt;
+&lt;/div&gt;</pre>
+      <p>.仅仅使用路由信息渲染面包屑</p>
+      <pre>
+&lt;div class="bread"&gt;
+&lt;div v-for="(item, index) in route.matched" :key="index"&gt;{{ item.name }}&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>参考效果</div>
+      <figure>
+        <img src="./imgs/rs9.png" alt="">
+        <figcaption class="fig-sn">路由设计</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rs0.png" alt="">
+        <img src="./imgs/rs1.png" alt="">
+        <img src="./imgs/rs2.png" alt="">
+        <img src="./imgs/rs3.png" alt="">
+        <img src="./imgs/rs4.png" alt="">
+        <figcaption class="fig-sn">主路由样式</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rs5.png" alt="">
+        <img src="./imgs/rs6.png" alt="">
+        <img src="./imgs/rs7.png" alt="">
+        <img src="./imgs/rs8.png" alt="">
+        <figcaption class="fig-sn">子路由样式</figcaption>
+      </figure>
+    </div>
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>根据需要，使用动态路由、查询路由或传参路由传递参数</div>
+      <div>保存/推送项目到自己的代码仓库*</div>
+    </div>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

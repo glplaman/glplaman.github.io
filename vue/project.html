@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 Project</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>项目</h1>
+    <span>&commat;Project</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>使用 <a href="https://cn.vuejs.org/guide/quick-start.html">Vue</a> 官方推荐的脚手架工具 <a
+        href="https://cn.vitejs.dev/">Vite</a> 创建项目</dd>
+    <dd>也可以通过 CDN 使用 Vue 进行传统/原生开发</dd>
+    <dt>Procedure</dt>
+    <dd>
+      <div>详细操作请参考<span class="iconfont icon-video"></span> <a
+          href="https://www.bilibili.com/video/BV1KmP3eLEcj/?spm_id_from=333.1387.homepage.video_card.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">HelloWorld
+          - Bilibili</a></div>
+      <div>1. 创建空白文件夹作为你的项目开发<span class="warn">总目录</span>；后续案例都在此创建</div>
+      <div>2. 进入项目总目录，在地址栏输入 cmd，打开命令行窗口 CMD，输入以下指令，参照<span class="warn">示例命名格式</span>创建项目</div>
+      <pre>npm create vite@latest</pre>
+      <figure class="img-sn">
+        <img src="./imgs/pro1.jpg" alt="">
+      </figure>
+      <div>3. 选择 Vue 框架 - 使用方向键选择，回车确认</div>
+      <div>4. 定制 Vue 框架 - 新版本选项提示为 Official Vue Starter ↗；只配置基本的功能，包括路由管理 Vue-router 和状态管理 Pinia；typescript、语法检查等功能暂且不选
+      </div>
+      <figure class="img-sn">
+        <img src="./imgs/pro.jpg" alt="">
+      </figure>
+      <div>5. 项目构建完成后，根据提示逐步执行；因为后期还需要对项目完善开发，请关闭命令行窗口 CMD，使用 Vs Code 打开项目文件夹</div>
+      <div>6. 安装依赖：按 Ctrl + ~ 打开命令行窗口 CMD，执行安装依赖命令；默认情况下，项目不提供依赖，仅仅在配置文件中说明需要哪些依赖；每次复制或克隆别人项目都要先安装依赖；<span
+          class="warn">为什么项目不直接提供依赖？</span></div>
+      <pre>npm install</pre>
+      <div>7. 开发完善；如：定位到 src → App.vue → &lt;template&gt;，修改 &lt;HelloWorld&gt;中的 msg 为 'hello world' 并保存</div>
+      <div>8. 运行项目；在命令行窗口 CMD 中执行</div>
+      <pre>npm run dev</pre>
+      <div>9. 按住 CTRL + 单击项目链接，即可打开 Vue + Vite 的欢迎界面；恭喜，您已经打开了 Vue 开发的大门</div>
+      <figure class="img-sn">
+        <img src="./imgs/pro5.jpg" alt="">
+      </figure>
+      <div>10. 项目发布；发布后会生产目标文件夹 dist</div>
+      <pre>npm run build</pre>
+      <!-- <p>. 将路由模式由默认的 web 模式改为 hash 模式，需要引入 createWebHashHistory 包</p> -->
+      <!-- <pre>history: createWebHashHistory(import.meta.env.BASE_URL)</pre> -->
+      <div>11. 项目预览</div>
+      <pre>npm run preview</pre>
+    </dd>
+    <dt>Warning</dt>
+    <dd class="sn">
+      <div>与时俱进；根着官方走，不要死记硬背命令</div>
+      <div>不要在桌面创建项目</div>
+      <div>请确保系统相关盘符没有限制读写控制！！！通常不会出现这个问题</div>
+      <div>项目名称以字母开头，不要大写、不要驼峰命名；如果不知道命名规则，就看示例怎么提示，如 vite-project</div>
+      <div>项目目录和文件名不要出现中文符号</div>
+      <div>项目创建完毕后，后续操作请使用 Vs Code 完成：CMD 中，先切换到项目目录，再输入 code . 即可使用 Vs Code 打开项目</div>
+      <div>对于单页面应用 SPA，直接用 Live Server 打开 HTML 文件可能不会正常工作，因为 Live Server 默认不支持 History 模式，绕过了 Vite 的构建过程和路由配置；可以调整路由模式由
+        createWebHistory 为 createWebHashHistory</div>
+      <div>发布后，如果在 <span class="warn">当前项目</span> 中预览，需要为 vite.config.js 增加基地址配置，指定为相对路径</div>
+      <pre>base: './'</pre>
+    </dd>
+  </dl>
+  <div class="chap">Architecture</div>
+  <dl>
+    <dt>node_modules</dt>
+    <dd>
+      <div>依赖包</div>
+      <div>生产环境依赖 dependencies：项目上线后，所必须的依赖，如网络请求 Axios</div>
+      <div>开发环境依赖 devDependencies：开发过程中需要的依赖，发布上线后，不再需要，如 CSS 预处理</div>
+    </dd>
+    <dt>dist</dt>
+    <dd>
+      <div>项目发布后才有</div>
+      <div>将其推送到服务器上，项目就进入生产环境的测试环节；经过一系列的调试、重新发布、再上线，项目进入运维环节</div>
+    </dd>
+    <dt>public</dt>
+    <dd>
+      <div>公共资源，可以直接被项目使用，如图片，不需要解析</div>
+      <div>项目发布后，这里的资源会 <span class="warn">原封不动</span> 的拷贝到发布文件夹 dist</div>
+    </dd>
+    <dt>src</dt>
+    <dd>开发过程操作最多的目录，您大展身手的舞台</dd>
+    <dd class="sn">
+      <div>assets - 各种资源</div>
+      <div>components - 组件目录；可以根据业务逻辑再细分</div>
+      <div>router - 路由目录</div>
+      <p>.每条路由都对应一个组件 - map each route to a specific component</p>
+      <p>.定义的路由导出并在 main.js 中使用</p>
+      <div>stores - 仓库目录</div>
+      <div>App.vue - 根组件 root component</div>
+      <p>.特别的 <a href="./sfc.html">单文件组件 SFC</a>，包括结构 &lt;template&gt;、逻辑 &lt;script&gt;和样式 &lt;style&gt;</p>
+      <p>.结构 &lt;template&gt;：可以使用原生html标签、vue内置标签和组件标签；组件标签应先在逻辑中引入才能使用</p>
+      <p>.逻辑 &lt;script&gt;：可以引入其它组件、库、模块和本地样式</p>
+      <pre>
+import { ref } from 'vue';
+import axios from 'axios';
+import HelloWorld from '@/components/HelloWorld.vue'</pre>
+      <p>.样式 &lt;style&gt;：定制样式、引入其它样式</p>
+      <pre>@import url(//at.alicdn.com/t/c/font_4090429_8xfmdtpelxu.css);</pre>
+      <div>main.js - 逻辑入口文件；引用并挂载 App.vue</div>
+      <p>.可以引入样式库和第三方库等；只支持本地样式文件，不支持在线样式文件</p>
+      <p>.通常只引入主样式文件，然后在主样式文件中在使用其它样式文件，如初始化文件、第三方库等等</p>
+      <pre>import './assets/main.css'</pre>
+    </dd>
+    <dt>index.html</dt>
+    <dd>
+      <div>项目的主页文件</div>
+      <div>引入样式文件</div>
+      <div>指定挂载点和挂载的组件</div>
+      <pre>
+&lt;div id="app"&gt;&lt;/div&gt;
+&lt;script type="module" src="/src/main.js"&gt;&lt;/script&gt;</pre>
+    </dd>
+    <dt>package.json</dt>
+    <dd>
+      <div>依赖包管理文件；定制命令</div>
+      <div>区分生产环节依赖 dependencies 和开发环境依赖 devDependencies；更多信息，请访问 <a href="../node/ide.html#dep">Node</a>
+      </div>
+      <div>由于包的更新和大小等因素，项目分享或提交到代码仓库时，这部分会被忽略</div>
+      <div>用户拿到项目/代码，<span class="warn">第一件事情</span> 是安装依赖；否则项目不能运行</div>
+      <pre>
+{
+    "name": "helloworld",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "axios": "^1.6.7",
+        "font-awesome": "^4.7.0",
+        "nanoid": "^5.0.6",
+        "pinia": "^2.3.0",
+        "swiper": "^11.0.7",
+        "vue": "^3.4.15",
+        "vue-router": "^4.5.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.3",
+        "sass": "^1.71.1",
+        "vite": "^5.0.11"
+    }
+}</pre>
+      <div>为 dev 指定 host 选项，Vite 会暴露一个外部网络可用的 URL。使用这个 URL 在其他设备上访问你的开发服务器</div>
+      <pre>"dev": "vite --host"</pre>
+      <div>甚至指定主机地址，如0.0.0.0，监听所有网络接口，适用于需要特别指定的情况</div>
+      <pre>"dev": "vite --host 0.0.0.0"</pre>
+      <div>指定端口 port</div>
+      <pre>"dev": "vite --host 0.0.0.0 --port 5173"</pre>
+      <div class="tips">
+        <div>在大多数情况下，使用 --host 即可满足需求。如果需要更明确的配置，可以使用 --host 0.0.0.0</div>
+        <div>这里的配置是面向开发环境，不影响生产环境</div>
+      </div>
+    </dd>
+    <dt>vite.config.js</dt>
+    <dd>
+      <div><a href="https://cn.vitejs.dev/config/">配置 Vite</a>；默认配置仅包括插件 plugins 和解析规则 resolve</div>
+      <div>其它如基地址 base 和服务器 server 的相关配置，如项目打开 open、端口 port、<a href="../node/proxy.html">代理 Proxy</a> 等等，需手动添加</div>
+      <pre>
+import { fileURLToPath, URL } from "node:url";
+
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [vue(), vueDevTools()],
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+
+  // 以下为手动添加的配置
+  // 1. 在当前项目中预览发布的 dist，需要将默认的绝对路径调整为相对路径
+  base: './',
+
+  // 2. 网络请求出现跨域时，必须要代理
+  server: {
+    open: false,        //启动项目自动弹出浏览器预览；默认 false，手动启动
+    host: '0.0.0.0',    //主机；默认 locahost
+    port: '5173',       //端口；默认 5173
+    proxy: {
+      // 自建服务器代理
+      '/api': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      // 腾讯位置服务代理
+      "/map-api": {
+        target: "https://apis.map.qq.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/map-api/, ""),
+      },
+    }
+  }
+});</pre>
+    </dd>
+  </dl>
+  <div class="chap">工程化</div>
+  <dl>
+    <dd>配置 package.json</dd>
+    <dt>格式化依赖 format</dt>
+    <dd>
+      <div>发布前，通常需要对项目进行格式化规范操作</div>
+      <div>安装格式化依赖</div>
+      <pre>npm install prettier --save-dev</pre>
+      <div>在 package.json 的 script 中配置格式化</div>
+      <div>对项目所有文件格式化检查</div>
+      <pre>"format": "prettier --write ."</pre>
+      <div>只对 src 下所有文件格式化检查</div>
+      <pre>"format": "prettier --write src/"</pre>
+      <div>执行格式化检查</div>
+      <pre>npm run format</pre>
+    </dd>
+    <dt>语法检测 Eslint</dt>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./drill_ide.html">集成开发环境 IDE - HelloWorld</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 思考</dd>
+    <dd class="sn">
+      <div>发布后都发生了什么???</div>
+      <div>跨域是什么???</div>
+      <div>使用 <a href="https://tailwindcss.com/docs/guides/vite#vue">Tailwind.css</a> 样式库创建项目</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

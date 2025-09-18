@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 响应式综合运用</title>
+  <link rel="stylesheet" href="../css/exp.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>响应式综合运用</h1>
+    <h4>Reactivity</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">产品渲染</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <div>掌握类 class 和样式 style 的基本使用</div>
+      <div>掌握计算属性 Computed 的基本使用</div>
+      <div>掌握条件渲染 v-if 的基本使用</div>
+      <div>掌握列表渲染 v-for 的基本使用</div>
+      <div>掌握响应式数据 ref()、reactive() 的基本使用</div>
+      <div>初步了解路由的使用</div>
+      <div>进一步熟悉资源服务器的搭建和使用*</div>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <p>设计2个视图，分别展示产品列表和产品详情；具体设计可自由发挥。以下过程和具体内容仅仅作为参考</p>
+      <div>创建项目或在前续项目的基础上进行</div>
+      <div>准备数据：使用静态数据或服务器在线数据</div>
+      <div>创建并设计产品列表页 Goods.vue - 在主视图 HomeView.vue 引入并使用</div>
+      <p>.多产品渲染 - 条件渲染</p>
+      <p>.多产品渲染 - 列表渲染</p>
+      <p>.价格折扣 - 计算属性</p>
+      <div>创建并设计产品详情页 DetailsView.vue</div>
+      <p>.轮播图组件</p>
+      <p>.权益保障组件 - 条件渲染或动态样式</p>
+      <p>.价格说明 - 条件渲染或动态样式</p>
+      <p>.甜品 dessert、推荐 recommend 可以先不组件化设计，后续内容学习完再优化为组件</p>
+      <div>设计路由 - 在原路由基础上扩展</div>
+      <p>.主路由 /home 展示产品列表组件 Goods.vue</p>
+      <p>.详情页路由 /details 展示详情页组件 DetailView.vue</p>
+      <div>项目运行后，使用浏览器的地址栏分别输入 /home 和 /details 调试路由，查看页面视图</div>
+      <div>其它设计*</div>
+      <p>.定制滚动条 scrollbar</p>
+      <p>.阿里字体图标 Iconfont</p>
+      <p>.主题切换</p>
+      <p>.返回顶部</p>
+      <div>后端*</div>
+      <p>.搭建数据服务器；可以使用自己熟悉的服务器环境</p>
+      <p>.准备 json 数据；可以使用 <a href="https://glpla.github.io">大树小站</a> 提供的在线资源数据，也可以自己设计数据</p>
+      <p>.启动服务，响应用户的数据请求</p>
+      <p>.前端：从数据服务器拉取数据并渲染</p>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div class="cont">
+      <div>参考数据：也可以使用静态数据<a
+          href="/utils/data/coffee.json">https://glpla.github.io/utils/data/coffee.json</a>；其中一个节点信息如下；图片仅给出部分地址；实际使用时，要拼接上服务器地址；如果没有服务器支撑，请使用本地图片或在线图片
+      </div>
+      <pre>
+{
+  "id": 0,
+  "title": "桂院螺蛳粉",
+  "desc": "Lorem ipsum dolor sit, amet consectetur adipisicing elit",
+  "img": "/coffee/coffee0.jpg",
+  "price_original": 15,
+  "price": 12,
+  "discount": 0.2,
+  "flavour": "辛辣",
+  "is_follow": false,
+  "stock": 10,
+  "specification": [
+    {
+      "id": 101,
+      "label": "杯型",
+      "name": "cup",
+      "options": [
+        { "id": 1, "label": "中杯", "value": "中杯", "sel": true },
+        { "id": 2, "label": "大杯", "value": "大杯", "sel": false },
+        { "id": 3, "label": "超大杯", "value": "超大杯", "sel": false }
+      ]
+    },
+    {
+      "id": 102,
+      "label": "温度",
+      "name": "ther",
+      "options": [
+        { "id": 0, "label": "热", "value": "热", "sel": false },
+        { "id": 1, "label": "冰", "value": "冰", "sel": true }
+      ]
+    },
+    {
+      "id": 103,
+      "label": "糖度",
+      "name": "sugar",
+      "options": [
+        { "id": 0, "label": "半糖", "value": "半糖", "sel": false },
+        { "id": 1, "label": "标准糖", "value": "标准糖", "sel": false },
+        { "id": 2, "label": "不加糖", "value": "不加糖", "sel": true }
+      ]
+    }
+  ],
+  "dessert": [
+    {
+      "id": 1,
+      "img": "/dessert/dessert1.png",
+      "title": "巧克力碎·甜甜圈",
+      "price_original": 5,
+      "discount": 0.3
+    },
+    {
+      "id": 2,
+      "img": "/dessert/dessert2.png",
+      "title": "原味·蛋挞",
+      "price_original": 8,
+      "discount": 0.4
+    },
+    {
+      "id": 3,
+      "img": "/dessert/dessert3.png",
+      "title": "蔓越莓·饼干",
+      "price_original": 10,
+      "discount": 0.5
+    }
+  ],
+  "recommend": [
+    {
+      "id": 1,
+      "img": "/coffee/coffee1.jpg",
+      "title": "lorem ipsum dolor",
+      "desc": "lorem ipsum dolor sit amet consectetur elit",
+      "price_original": 12
+    },
+    {
+      "id": 2,
+      "img": "/coffee/coffee2.jpg",
+      "title": "lorem ipsum dolor",
+      "desc": "lorem ipsum dolor sit amet consectetur adipisicing",
+      "price_original": 15
+    },
+    {
+      "id": 3,
+      "img": "/coffee/coffee3.jpg",
+      "title": "lorem ipsum dolor",
+      "desc": "lorem ipsum dolor sit amet adipisicing elit",
+      "price_original": 20
+    }
+  ]
+}</pre>
+      <div>参考结构 - Goods.vue</div>
+      <pre>
+&lt;div class="goods"&gt;
+  &lt;template v-if="goods.length"&gt;
+    &lt;div class="item" v-for="(item, ind) in goods" :key="item.id"&gt;
+      &lt;img class="img" :src="'https://glpla.github.io/utils' + item.img" alt=""&gt;
+      &lt;div class="info"&gt;
+        &lt;h4 class="title"&gt;{{ item.name }} &lt;span class="flavour"&gt;{{ item.flavour }}&lt;/span&gt; &lt;/h4&gt;
+        &lt;div class="desc"&gt;{{ item.desc.repeat(2) }}&lt;/div&gt;
+        &lt;div class="price"&gt;&yen;{{ item.price }} &lt;span class="price-inner"&gt;(市场价&lt;span&gt;&yen;{{ item.price_original
+              }}&lt;/span&gt;)&lt;/span&gt; &lt;/div&gt;
+        &lt;div class="price-discount"&gt;预估到手 &lt;span&gt;&yen;{{ getDiscount(item) }}&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="btn" @click="addCart(item)"&gt;
+        &lt;span class="iconfont icon-gouwuche_o"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+  &lt;div v-else&gt;lists empty&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>参考逻辑 - Goods.vue；直接使用静态数据或使用服务器提高在线数据</div>
+      <pre>
+import { computed, onMounted, ref } from 'vue';
+
+const goods = ref([])
+
+const getDiscount = computed(() => {
+  return item => {
+    return (item.price * (1 - item.discount)).toFixed(2)
+  }
+})
+
+// 获取在线数据*
+onMounted(() => {
+  let json = fetch('https://glpla.github.io/utils/data/coffee.json')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.cont);
+      goods.value = data.cont
+    })
+})</pre>
+      <div>参考路由 - 在原路由基础上扩展</div>
+      <pre>
+{
+  path: "/home",
+  name: "home",
+  component: () => import("@/views/HomeView.vue")
+},
+{
+  path: "/details",
+  name: "details",
+  component: () => import("@/views/DetailsView.vue")
+}</pre>
+      <div>参考效果</div>
+      <figure>
+        <img src="./imgs/list0.png" alt="">
+        <figcaption>产品列表页 Goods.vue</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/list1.jpg" alt="">
+        <figcaption>产品详情页 DetailsView.vue</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/list2.jpg" alt="">
+        <figcaption>产品详情页 DetailsView.vue</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/modal.jpg" alt="">
+        <figcaption>消费者权益保护 Guarantee.vue</figcaption>
+      </figure>
+    </div>
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>组件化</div>
+      <p>.产品组件</p>
+      <p>.轮播图</p>
+      <div>逻辑优化*</div>
+      <p>.数据分页</p>
+      <p>.触底加载</p>
+      <p>.数据加载指示器以及动画</p>
+      <div>保存/推送项目到自己的代码仓库</div>
+    </div>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

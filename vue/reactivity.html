@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>响应式数据 Reactivity</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>响应式数据</h1>
+    <span>&commat;Reactivity</span>
+  </header>
+  <dl>
+    <dt>调试方法</dt>
+    <dd>
+      <div>. 简单事件</div>
+      <div>. setTimeout() </div>
+      <div>. 开发工具 <a href="https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home?hl=zh-CN">vue
+          devtools</a></div>
+    </dd>
+    <dt>Why</dt>
+    <dd>
+      <div>Vue 会自动检测响应式数据的变化，进而更新 DOM - 数据驱动 Data Driven</div>
+      <div>普通变量不会触发视图更新</div>
+      <div>更多响应式原理，请访问 <a href="https://vuejs.org/guide/essentials/reactivity-fundamentals.html">响应式基础 -
+          Reactivity Fundamentals</a>、<a href="https://cn.vuejs.org/guide/extras/reactivity-in-depth.html">深入响应式系统</a>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">ref()</div>
+  <dl>
+    <dd>
+      <div><a href="https://cn.vuejs.org/api/reactivity-core.html#ref">ref()</a>：创建<span
+          class="warn">基本数据类型、复合数据类型</span>的响应式数据 - creating reactive references to primitive values</div>
+      <div>ref() 将传入参数的值包装为一个带 .value 属性的 ref 对象 - wraps primitive values in a reactive object. Access the value using
+        .value</div>
+      <div>ref() 的 .value 属性是响应式 - Triggers re-renders when the value changes</div>
+      <div>ref() 还可用于 <a href="ref.html">模板引用</a>，用于获取 DOM 元素</div>
+    </dd>
+    <dt>Usage</dt>
+    <dd>
+      <div>1. 引入包 ref - 下述各例略</div>
+      <pre>import { ref } from 'vue'</pre>
+      <div>2. 声明响应式变量 - 执行函数、传入参数、变量接收</div>
+      <pre>const count = ref(0)</pre>
+      <div>3.1 结构中使用 - 直接使用；Vue 会 <span class="warn">自动拆包</span> 获取其 value - automatically unwrapped in templates</div>
+      <pre>&lt;div>{{count}}&lt;/div></pre>
+      <div>3.2 逻辑中使用 - 赋值时需额外指定 value 属性；可以由开发环境的插件自动补齐 value 属性</div>
+      <pre>
+console.log(count)
+console.log(count.value)</pre>
+      <div class="tips">
+        <div>安装了 <a href="../web/vscode.html#vue">相关插件</a> 的 Vc Code 环境，在创建 ref 时，可以自动导入</div>
+        <div>控制台输出，查看响应式变量的细节，如 value 属性在哪里</div>
+        <div>数据监听时，直接使用，无须使用 value 属性</div>
+        <div>Vs Code 的 Vue Official 扩展默认勾选 Auto Insert: Dot Value；如果没有或使用其它扩展，请勾选</div>
+      </div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单独使用和同时使用非响应式数据和响应式数据，查看视图的更新情况</dd>
+    <dd>
+      <pre>
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;div&gt;{{ num }}&lt;/div&gt;
+    &lt;div&gt;{{ age }}&lt;/div&gt;
+    &lt;button @click="inc"&gt;inc&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script setup&gt;
+import { ref } from 'vue'
+let num = 1
+const age = ref(12)
+const inc = () =&gt; {
+  num++
+  age.value++
+}
+&lt;/script&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">reactive()</div>
+  <dl>
+    <dd>
+      <div><a href="https://cn.vuejs.org/api/reactivity-core.html#reactive">reactive()</a>：只能创建<span
+          class="warn">复合数据类型</span>的响应式数据，如对象、数组 - For more complex state</div>
+      <div>响应式的代理整个对象 - Creates a reactive proxy of the entire object</div>
+      <div>不用指定 value 属性 - Properties can be accessed directly without .value</div>
+      <div>reactive() 将深层地转换对象：当访问嵌套对象时，它们也会被 reactive() 包装 - Suitable for complex nested objects</div>
+      <div>当 ref 的值是一个对象时，ref() 也会在内部调用它 - reactive()</div>
+    </dd>
+    <dt>Usage</dt>
+    <dd>
+      <div>1. 引入包 reactive - 下述各例略</div>
+      <pre>import { reactive } from 'vue'</pre>
+      <div>2. 声明响应式变量 - 执行函数、传入参数、变量接收</div>
+      <pre>
+const obj = reactive({
+    id: 10,
+    name: 'gz'
+})</pre>
+      <div>3.1. 结构中使用</div>
+      <pre>&lt;div>{{obj.id}} - {{obj.name}}&lt;/div></pre>
+      <div>3.2. 逻辑中使用 - 直接修改对象的属性以保持响应性 - 单个属性赋值</div>
+      <pre>
+const done = () => {
+    obj.id = 20
+}
+console.log(obj)</pre>
+      <div class="tips">控制台输出，查看响应式变量的细节</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分别声明1个简单 ref、1个复杂的 ref 和一个复杂的 reactive，查看其数据结构</dd>
+    <dd>
+      <pre>
+const age = ref(12)
+const state = reactive({
+  id: 1,
+  name: 'xh'
+})
+const obj = ref({
+  id: 1,
+  name: 'xh'
+})
+console.log(age, state, obj);</pre>
+    </dd>
+    <dt>Limitations</dt>
+    <dd>
+      <div>使用不当，会丢失数据的响应式 - Breaks Reactivity</div>
+      <div>更多注意事项，请访问 <a
+          href="https://cn.vuejs.org/guide/essentials/reactivity-fundamentals.html#limitations-of-reactive">limitations
+          of reactive</a>、<a
+          href="https://www.fadocodecamp.com/posts/maintaining-reactivity-in-vuejs-the-pitfall-of-destructuring-props">The
+          Pitfall of Destructuring Props</a>
+      </div>
+      <div>1. 不能声明简单数据类型 - value cannot be made reactive: 10</div>
+      <pre>const count = reactive(10)</pre>
+      <div>2. 不能重新赋值/不能轻易地“替换”响应式对象</div>
+      <pre>
+let obj = reactive({
+    id: 10,
+    name: 'gz'
+})
+
+const done = () => {
+    obj = {
+      id: 20,
+      name: 'gl'
+    }
+}</pre>
+      <div>3. 不能解构 - destructuring props；因为它是一个整体</div>
+      <pre>const { id, name } = obj</pre>
+      <!-- <div>也可以使用对象的分配方法，更新数据</div>
+      <pre>
+const done = () => {
+    Object.assign(obj,{
+        id: 20,
+        name: 'gz'
+    })
+}</pre> -->
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>经过函数 ref()、reactive() 处理后，普通的数据或对象就变成了响应式</div>
+      <div>使用 console.log() 查看一个变量是否具有响应式数据：如果带有 Proxy/refImpl，是响应式数据；否则就是普通变量</div>
+      <div>实际开发中，更多使用 ref()；因为可以直接改，且不容易丢失响应式</div>
+      <p>. 创建简单的响应式变量时，当然只能 ref()</p>
+      <p>. 如果需要简单的对象，ref()、reactive() 都可以</p>
+      <p>. 层级比较深的对象，请使用 reactive()</p>
+      <div>避免数据的响应式丢失</div>
+      <div>体会将数据声明为常量的优势</div>
+      <div>ref()、reactive() 都是深层响应，即所有后代级别对象属性都会响应；如果仅仅限制根级对象属性，请使用 <a
+          href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowref">shallowref()</a>、<a
+          href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowreactive">shallowreactive()</a></div>
+      <div>对 shallowref() 而言，它的根属性是 .value</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 主题切换/换肤 - 以 <a href="../web/framework/iconfont.html">阿里字体图标</a>
+      为例，仅展示图标的切换；具体主题样式由个人自定义</dd>
+    <dd class="sn">
+      <div>引入 - 请使用自己的账号选择图标并生成在线 CSS 链接</div>
+      <div>结构 - 动态绑定样式并绑定点击事件</div>
+      <pre>
+&lt;span 
+  @click="changeTheme" 
+  :class="['iconfont', darkMode ? 'icon-Sun' : 'icon-Moon-Star']"&gt;
+&lt;/span&gt;</pre>
+      <div>逻辑</div>
+      <pre>
+import { ref } from 'vue'
+
+const darkMode = ref(false)
+
+const changeTheme = () => {
+  darkMode.value = !darkMode.value
+}</pre>
+      <div>样式 - 略</div>
+      <p>[<span class="iconfont icon-magicwand"></span>] 优化</p>
+      <p>使用内联事件完成 - 省略事件处理函数 changeTheme 的定义</p>
+      <p>使用三元表达式 - 更直观</p>
+      <pre>
+&lt;span 
+  @click="darkMode = !darkMode" 
+  class="iconfont" 
+  :class="darkMode ? 'icon-Sun' : 'icon-Moon-Star'"&gt;
+&lt;/span&gt;</pre>
+      <pre>
+import { ref } from 'vue'
+
+const darkMode = ref(false)</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">商品列表页 Goods.vue</a> →
+      goodsItem.vue；数据节点请参考 <a href="./drill_reactivity.html">响应式综合运用</a> 或自行设计</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

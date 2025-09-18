@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>父传子 defineProps()</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>父传子</h1>
+    <span>&commat;defineProps()</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>通过编译宏 <a href="https://cn.vuejs.org/guide/components/props">defineProps()</a> 的形式实现通信|参数传递|数据传递</div>
+      <div>遵循 <span class="warn">单向数据流 - One-Way Data Flow</span> 的原则</div>
+    </dd>
+    <dt>过程</dt>
+    <dd class="sn">
+      <div>子组件在 &lt;script setup&gt; 顶级作用域下，使用宏 defineProps() 定义/声明属性来接收传递的参数并使用</div>
+      <div>父组件以属性的方式向子组件传递参数：可以是静态数据 Static ，也可以是响应式数据 Dynamic ；可以是简单数据，也可以是复合数据</div>
+    </dd>
+    <dd class="tips">
+      <div>props 应该是只读的，不推荐子组件直接修改 props：当父组件更新 props 时，子组件不应该反过来改变这个值</div>
+      <div>建议使用小驼峰命名方式 - camelCase </div>
+      <div>为了和普通变量区分，建议：传递的参数以 prop 开始，如 propName</div>
+      <div>只有数据的拥有者才可以修改数据：子组件不能直接修改父组件传递的属性参数；如果父组件把这个属性参数还分配了其它子组件。。。</div>
+      <div>子组件应该专注于 UI 展示和事件触发，通用、无状态；对应的逻辑由父组件决定</div>
+    </dd>
+    <dt>子组件</dt>
+    <dd>
+      <div>1. 声明属性参数</div>
+      <div>可以是数组或者对象</div>
+      <div>建议使用一个变量接收，便于在脚本中进一步处理</div>
+      <div>可以使用解构，参考文末的总结和练习</div>
+      <div>方案1：使用 <span class="warn">数组</span> 声明 - 仅指定属性名</div>
+      <pre>
+const props = defineProps(['propMsg', 'propId'])
+</pre>
+      <div>方案2：使用 <span class="warn">对象</span> 声明 - 指定属性名、属性类型 type、默认值 default 和是否必须 required；同时存在时，required 无效
+      </div>
+      <pre>
+const props = defineProps({
+  // 简洁声明
+  propMsg: String,
+  // 详细声明
+  propId: {
+    type: Number,
+    required: false,
+    default: 18
+  }
+})
+</pre>
+      <div>2. 使用传递来的参数|数据</div>
+      <div>结构中，可以直接使用；也可以使用属性变量获取</div>
+      <pre>&lt;div&gt;{{ propMsg }} - {{ props.propId }}&lt;/div&gt;</pre>
+      <pre>&lt;div&gt;computed {{ comp }}&lt;/div&gt;</pre>
+      <div>逻辑中，如果要处理接收的参数，必须使用定义的变量 props 获取，否则提示数据未定义(ReferenceError: msg is not defined)</div>
+      <div>可以根据需要对数据2次处理，如利用计算属性将接收的参数转换为大写</div>
+      <div>思考：为什么不可以直接修改父组件传递的属性参数？</div>
+      <pre>
+import { computed } from 'vue';
+const props = defineProps({
+  msg: String
+})
+const comp = computed(() => {
+    //return msg.toUpperCase()
+    return props.msg.toUpperCase()
+})</pre>
+    </dd>
+    <dt>父组件</dt>
+    <dd>
+      <div>1. 引入子组件，准备数据</div>
+      <pre>
+import { ref } from 'vue';
+import Test from './components/Test.vue';
+let msg = ref('hi,there')</pre>
+      <div>2. 使用子组件；以数据绑定的形式传递参数：1个静态数据 propId、1个响应式数据 propMsg</div>
+      <pre>&lt;Test :propMsg="msg" propId="18"&gt;&lt;/Test&gt;</pre>
+      <div>特别的，如果传递的数据和属性参数同名，可以简写</div>
+      <pre>&lt;Test :msg="msg"&gt;&lt;/Test&gt;</pre>
+      <pre>&lt;Test :msg&gt;&lt;/Test&gt;</pre>
+    </dd>
+    <dt>值的类型</dt>
+    <dd>
+      <div>1. 数值 Number</div>
+      <pre>&lt;Test :propId="18" /&gt;</pre>
+      <pre>&lt;Test :propId="item.id" /&gt;</pre>
+      <div>2. 布尔 Boolean</div>
+      <pre>&lt;Test isDone /&gt;</pre>
+      <pre>&lt;Test :isDone="false" /&gt;</pre>
+      <pre>&lt;Test :isDone="item.flag" /&gt;</pre>
+      <div>3. 数组 Array</div>
+      <pre>&lt;Test :arr="[1,2,3,4,5]" /&gt;</pre>
+      <pre>&lt;Test :arr="item.list" /&gt;</pre>
+      <div>4. 对象 Object</div>
+      <pre>&lt;Test :obj="{id:1001, name:'glpla'}" /&gt;</pre>
+      <pre>&lt;Test :obj="item.author" /&gt;</pre>
+      <div class="warn">5. 函数 Function</div>
+      <div>除了传递普通数据外，还可以传递方法 - 子组件执行父组件的方法，如：让父组件修改属性参数。。。</div>
+      <div>类型为函数；注意是 Function，不是 function</div>
+      <div>优势：职责分离、增强灵活性、提高复用性</div>
+      <div>还可以使用 <a href="./component_emits.html">自定义事件 - emits</a> 实现</div>
+      <div>应用：表单验证与提交 - 子组件展示表单，用户点击“提交”按钮时触发父组件的验证和提交逻辑</div>
+      <div>应用：动态切换内容 - 子组件展示多个选项卡，父组件通过传递回调函数控制当前显示的内容</div>
+      <div>应用：分页功能 - 子组件负责展示分页控件，父组件通过传递回调函数控制页面切换逻辑</div>
+      <div>应用：动态图表渲染 - 子组件负责展示图表，父组件通过传递回调函数动态更新图表数据</div>
+      <!-- <div>适合同时使用多个组件，但是每个组件的逻辑不同</div> -->
+      <div>
+        <div>子组件：定义/声明以便使用夫组件的方法</div>
+        <pre>
+const props = defineProps({
+  // 简洁声明
+  closeFn: Function,
+  // 详细声明
+  confirmFn: {
+    type: Function,
+    default: () => {}
+  }
+})</pre>
+        <pre>
+&lt;button @click="closeFn"&gt;&times;&lt;/button&gt;
+&lt;button @click="confirmFn"&gt;confirm&lt;/button&gt;</pre>
+        <div>父组件：定义事件处理函数</div>
+        <pre>
+const closeFn = () => { }
+const confirmFn = () => { }</pre>
+        <pre>&lt;Msg :closeFn="closeFn" :confirmFn="confirmFn"&gt;&lt;/Msg&gt;</pre>
+      </div>
+      <div>如果传递参数，要分别在声明和使用中指定</div>
+      <pre>&lt;button @click="sayHi('hi,there.')"&gt;say hi&lt;/button&gt;</pre>
+      <pre>const sayHi = (para) => { console.log(para) }</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 模态框 - 自定义属性版</dd>
+    <dd>
+      <div>详情页 DetailsView.vue → 权益保护模态框组件 Modal.vue：单击权益保护组件 Guarantee.vue 的"详情"按钮，执行父组件的业务逻辑方法，显示模态框</div>
+      <div>使用自定义属性 defineProps() 实现</div>
+      <div>这里模态框部分采用普通元素；后期封装为组件</div>
+      <div>1. 权益保护组件 Guarantee.vue</div>
+      <pre>
+&lt;div class="guarantee"&gt;
+  // ...
+  &lt;button @click.stop="props.showGuarantee"&gt;详情&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const props = defineProps({
+  showGuarantee: {
+    type: Function,
+    default: () => { }
+  }
+})</pre>
+      <div>3. 父组件 HomeView.vue</div>
+      <pre>
+&lt;Guarantee :show-guarantee="switchModal"&gt;&lt;/Guarantee&gt;
+&lt;div class="modal" v-show="isShowModal"&gt;&lt;/div&gt;</pre>
+      <pre>
+import { ref } from 'vue';
+import Guarantee from '@/components/Guarantee.vue';
+const isShowModal = ref(false);
+const switchModal = () => {
+  isShowModal.value = !isShowModal.value
+}</pre>
+      <div>可以使用内联事件实现，避免额外声明事件处理函数；注意 <span class="warn">自定义事件内联事件</span> 的语法要求</div>
+      <pre>
+&lt;Guarantee :show-guarantee="() => isShowModal = true"&gt;&lt;/Guarantee&gt;
+&lt;div class="modal" v-show="isShowModal"&gt;&lt;/div&gt;</pre>
+      <img src="./imgs/props.png" alt="">
+      <div class="fig-sn">数据流</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标题组件 Title.vue - 自定义属性版</dd>
+    <dd>
+      <div>1. 组件定义</div>
+      <pre>
+&lt;div class="title"&gt;
+  &lt;h3&gt;{{ title }}&lt;/h3&gt;
+  &lt;button @click="handle"&gt;
+    &lt;span&gt;查看全部&lt;/span&gt;
+    &lt;span class="iconfont icon-jiantou_liebiaoxiangyou_o"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const props = defineProps({
+  title: {
+    type: String,
+    default: ''
+  },
+  handle: {
+    type: Function,
+    default: () => { }
+  }
+})</pre>
+      <div>2. 组件使用：首页视图 HomeView.vue 使用了两次标题组件，每个组件分配不同的标题内容和事件</div>
+      <pre>
+&lt;Title title="我的优惠专区" :handle="toCoupon"&gt;&lt;/Title&gt;
+&lt;Title title="福利中心" :handle="toWelfare"&gt;&lt;/Title&gt;</pre>
+      <pre>
+const toCoupon = () => {
+  // alert('to coupon')
+}
+const toWelfare = () => {
+  // alert('to welfare')
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>defineProps() - 数组或对象</div>
+      <div>子组件声明并使用</div>
+      <div>父组件传递</div>
+      <p>. 普通数据</p>
+      <p>. 函数/方法</p>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 比较并分析下面两种声明属性方法的特点</dd>
+    <dd class="sn">
+      <div>使用解构</div>
+      <!-- <p>需要频繁更改结构</p> -->
+      <!-- <p>数据容易丢失响应式，取决于 vue 版本</p> -->
+      <pre>
+const { msg } = defineProps({
+  msg: { type: String, default: 'Vue.js' }
+})</pre>
+      <div>不使用解构</div>
+      <pre>
+const props = defineProps({
+  msg: { type: String, default: 'Vue.js' }
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 版权组件 - 传递普通数据</dd>
+    <dd>
+      <div>根据作者头像或者学号等信息展示相应的版权信息</div>
+      <div>如果不指定头像，则使用默认头像</div>
+      <div>如果不指定学号，则使用大树小站的域名 glpla.github.io</div>
+      <pre>
+&lt;div class="copyright"&gt;
+  &lt;img class="img" :src='src' alt=""&gt;
+  &lt;div class="desc"&gt;2024 - 2026 &copy; Copyright, powered by {{ id }}&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const props = defineProps({
+  src: {
+    type: String,
+    default: 'https://glpla.github.io/imgs/avatar.jpg'
+  },
+  id: {
+    type: String,
+    default: 'glpla.github.io'
+  }
+})</pre>
+    </dd>
+
+    <dd>[<span class="iconfont icon-keyboard"></span>] 轮播组件 Swiper.vue</dd>
+    <dd>
+      <div>阶段1：在原轮播组件中，封装指示器组件 Indictator.vue</div>
+      <pre>
+const props = defineProps({
+  items: {
+    type: Array,
+    default: () => []
+  },
+  currentInd: {
+    type: Number,
+    default: 0
+  }
+})</pre>
+      <pre>
+&lt;div class="indictator"&gt;
+  &lt;span class="dot" :class="{ 'active': currentInd === ind }" 
+  v-for="(item, ind) in items" :key="ind"&gt;{{ ind + 1
+  }}&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <div>轮播组件使用</div>
+      <pre>&lt;Indicators :items="imgsUrl" :currentInd="currentInd"/&gt;</pre>
+      <div>阶段2：为不同应用场景的组件提供不同的图片列表数据</div>
+      <pre>const props = defineProps(['imgsUrl'])</pre>
+      <div>父组件使用</div>
+      <pre>&lt;Swiper :imgsUrl="imgsUrl"/&gt;</pre>
+      <div>思考：为指示器增加更多属性控制，如位置 pos - 底部 bottom、右侧 right、顶部 top、类型 type - 数字 number、分数 fraction</div>
+      <div>思考：如何封装第三方库</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">商品列表页 Goods.vue</a></dd>
+    <dd>
+      <div>封装商品项组件 GoodsItem.vue 并遍历</div>
+      <pre>
+&lt;template v-if="goods.length"&gt;
+  &lt;GoodsItem :product="item" v-for="(item, ind) in goods" :key="item.id" /&gt;
+  &lt;footer class="f-s-s"&gt;我是有底线的~&lt;/footer&gt;
+&lt;/template&gt;
+&lt;div v-else&gt;商品获取失败，请刷新页面&lt;/div&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标签页组件 - <a href="./pro/dist/index.html">瑞幸咖啡</a>首页标签页 - 随享瑞幸、颜值水杯
+      -
+      的变化触发数据加载</dd>
+    <dd>
+      <div>标签页组件 ComTab.vue</div>
+      <pre>
+&lt;div class="com-tab"&gt;
+  &lt;div v-for="(tab, index) in props.tabs" :key="index" @click="props.selTab(tab)"&gt;{{ tab }}&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const props = defineProps({
+  tabs: {
+    type: Array,
+    default: () => []
+  },
+  selTab: {
+    type: Function,
+    default: () => { }
+  }
+})</pre>
+      <div>父组件 - 负责处理业务逻辑</div>
+      <pre>
+&lt;ComTab :tabs :sel-tab="selTab">&lt;/ComTab&gt;
+&lt;div&gt;{{ currentTab }}&lt;/div&gt;</pre>
+      <pre>
+import { ref } from 'vue';
+import ComTab from './ComTab.vue';
+const tabs = ['首页', '设置', '帮助'];
+const currentTab = ref('首页');
+const selTab = (tab) => {
+  currentTab.value = tab;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 菜单视图 MenuView.vue</dd>
+    <dd>
+      <div>1. 配送方式切换组件 Switch.vue</div>
+      <pre>&lt;Switch :switchs="switchs"&gt;&lt;/Switch&gt;</pre>
+      <div>2. 地图组件 Map.vue</div>
+      <div>使用第三方库 <a href="./lbs.html">腾讯位置服务</a></div>
+      <div>3. 嵌套路由组件 Tabbar.vue</div>
+      <pre>&lt;Tabbar :tabs="tabs"&gt;&lt;/Tabbar&gt;</pre>
+      <div>4. 购物车组件 Cart.vue</div>
+      <div>使用 <a href="./pinia.html">状态管理</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 爆品组件 Recommend.vue</dd>
+    <dd>
+      <div>每个产品推荐一定数量的相应的其它产品</div>
+      <pre>&lt;Recommend :reco="goods.recommend" /&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 地图组件 Map.vue 接收 配送组件 LocationView.vue 传递的 中心点 center 和点标记
+      geometries</dd>
+    <dd>
+      <pre>&lt;Map class="map" :center="center" :geometries="geometries"&gt;&lt;/Map&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 子组件如何修改/处理父组件传递的参数？</dd>
+    <!-- <dd>
+      <div>使用计算属性</div>
+      <div>使用自定义事件</div>
+      <div>使用仓库/状态管理</div>
+    </dd> -->
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

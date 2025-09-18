@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 注册与登录</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>注册与登录</h1>
+    <span>Center</span>
+  </header>
+  <dl class="number-mul-sn">
+    <dt>实验内容</dt>
+    <dd>
+      <div>注册</div>
+      <div>登录</div>
+    </dd>
+    <dt>前置知识</dt>
+    <dd>
+      <div>表单基本元素 - &lt;form&gt;、&lt;input&gt;、&lt;button&gt;</div>
+      <div>表单事件 - submit</div>
+      <div>双向绑定</div>
+      <div>网络请求 Axios - GET、POST</div>
+      <div>MD5加密</div>
+    </dd>
+    <dt>开发环境</dt>
+    <dd>
+      <div>操作系统 Window 10+</div>
+      <div>文本编辑器 Vs Code</div>
+      <div>谷歌浏览器 Chrome</div>
+      <div>Node.js</div>
+    </dd>
+    <dt>接口和用户信息</dt>
+    <dd>使用用户名uname和学号usn及密码upass完成注册</dd>
+    <dd>注册和登录时，密码使用MD5加密</dd>
+    <dd>每个用户维护一个以学号命名的json文件，如20221081.json</dd>
+    <dd>其它信息，如头像、性别、电邮、出生日期等在个人中心设置进一步完成</dd>
+    <dd>
+      <table>
+        <caption>接口</caption>
+        <tr>
+          <th style="width: 50%;">接口</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>/user/register</td>
+          <td>注册</td>
+        </tr>
+        <tr>
+          <td>/user/login</td>
+          <td>登录</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <table>
+        <caption>用户信息</caption>
+        <tr>
+          <th style="width: 50%;">字段</th>
+          <th>命名</th>
+        </tr>
+        <tr>
+          <td>姓名</td>
+          <td>uname</td>
+        </tr>
+        <tr>
+          <td>学号</td>
+          <td>usn</td>
+        </tr>
+        <tr>
+          <td>密码</td>
+          <td>upass</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">参考代码 - 注册</div>
+  <dl>
+    <dt>S端 - 响应请求</dt>
+    <dd>先判断用户文件是否存在，再保存新的用户文件</dd>
+    <dd>
+      <pre>
+router.post('/register', (req, res) => {
+  if (fs.existsSync('./public/data/' + req.body.usn + '.json')) {
+    res.json({
+      "err": 2,
+      "msg": 'user exist'
+    })
+    return;
+  }
+  fs.writeFile('./public/data/' + req.body.usn + '.json', JSON.stringify(req.body), (err) => {
+    if (err) {
+      console.log('保存文件失败')
+      res.json({
+        "err": 1,
+        "msg": 'try later'
+      })
+    } else {
+      console.log('保存文件成功')
+      res.json({
+        "err": 0,
+        "msg": 'register ok'
+      })
+    }
+  })
+})</pre>
+    </dd>
+    <dt>B端- 请求函数</dt>
+    <dd>先验证数据有效性再提交</dd>
+    <dd>
+      <pre>
+const register = () => {
+  if (user.value.upass != passPheck.value) {
+    console.log('password not match');
+    return;
+  }
+  if (!isAgree.value) {
+    console.log('pls check');
+    return;
+  }
+  axios.post('/user/register', user.value)
+    .then(res => {
+      switch (res.data.err) {
+        case 0:
+          console.log(res.data.msg);
+          //
+          break;
+        case 1:
+          console.log(res.data.msg);
+          //
+        break;
+        case 2:
+          console.log(res.data.msg);
+          //
+          break;
+      }
+      // flag.value = false
+    })
+    .catch(err => {
+      console.log('err 5', err);
+    })
+    .finally(() => {
+      console.log('register done logging');
+    })
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">参考代码 - 登录</div>
+  <dl>
+    <dt>S端 - 响应请求</dt>
+    <dd>根据学号usn查找是否有对应的数据文件</dd>
+    <dd>如果没有，提示用户不存在</dd>
+    <dd>如果有，检查密码是否匹配并给出相应的提示</dd>
+    <dd>
+      <pre>
+router.get('/login', (req, res) => {
+  let file = fs.readFile('./public/data/' + req.query.usn + '.json', 'utf8', (err, data) => {
+    if (err) {
+      res.json({
+        err: 2,
+        msg: 'fail, user not exsits',
+      })
+    } else {
+      let jsonData = JSON.parse(data)
+      if (jsonData.upass == req.query.upass) {
+        res.json({
+          err: 0,
+          msg: 'ok',
+        })
+      } else {
+        res.json({
+          err: 1,
+          msg: 'fail, password not match',
+        })
+      }
+    }
+  });
+})</pre>
+    </dd>
+    <dt>B端 - 请求函数</dt>
+    <dd>发送学号usn和密码upass，根据返回结果判断登录是否成功</dd>
+    <dd>
+      <pre>
+const login = () => {
+  axios.get('/user/login', {
+    params: {
+      usn: user.value.usn,
+      upass: user.value.upass
+    }
+  })
+    .then(res => {
+      switch (res.data.err) {
+        case 0:
+          console.log(res.data.msg);
+          //
+          break;
+        case 1:
+          console.log(res.data.msg);
+          //
+        break;
+        case 2:
+          console.log(res.data.msg);
+          //
+          break;
+      }
+    })
+    .catch(err => {
+      console.log('err 5', err);
+    })
+    .finally(() => {
+      console.log('login done logging');
+    })
+}        </pre>
+    </dd>
+  </dl>
+  <div class="chap">参考效果图</div>
+  <dl>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/login.png" alt="">
+        <figcaption>桌面端 login</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/reg.png" alt="">
+        <figcaption>桌面端 register</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/login1.png" alt="">
+        <figcaption>移动端 login</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/reg1.png" alt="">
+        <figcaption>移动端 register</figcaption>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">Axios 请求封装</div>
+  <dl>
+    <dt>初步封装 - 封装请求</dt>
+    <dd>创建 request.js 文件，封装Axios的GET、POST请求</dd>
+    <dd>
+      <pre>
+import axios from "axios";
+
+export const $get = async (url, params) => {
+  let { data } = await axios.get(url, { params })
+  return data;
+}
+export const $post = async (url, params) => {
+  let { data } = await axios.post(url, params)
+  return data;
+}      </pre>
+    </dd>
+    <dd>在使用的组件中导入并使用</dd>
+    <dd>
+      <pre>
+import { $get, $post } from '@/assets/utils/request';
+
+//POST
+let data = $post("/user/register", user.value)
+console.log(data);
+
+//GET
+let data = $get('/user/login', {
+  usn: user.value.usn,
+  upass: user.value.upass
+})
+console.log(data);</pre>
+    </dd>
+    <dt>再封装 -封装业务</dt>
+    <dd>还可以根据实际业务，进一步封装，如$login、$register等等</dd>
+    <dd>因为接口是死的，仅仅是数据有变化</dd>
+    <dd>1. 登录</dd>
+    <dd>
+      <pre>
+import { $get } from "../utils/request";
+export const $login = async (params) => {
+  let res = await $get("/user/login", params);
+  return res;
+}; </pre>
+    </dd>
+    <dd>直接使用</dd>
+    <dd>
+      <pre>
+import { $login } from '@/assets/utils/login.js';
+const login = async () => {
+  let res = await $login({
+    usn: user.value.usn,
+    upass: user.value.upass
+  });
+};</pre>
+    </dd>
+    <dd>2. 注册</dd>
+    <dd>
+      <pre>
+import { $post } from './request'
+export const $register = async (params) => {
+  let res = await $post('/user/register', params)
+  return res;
+}</pre>
+    </dd>
+    <dd>直接使用</dd>
+    <dd>
+      <pre>
+import { $register } from '@/assets/utils/register.js';
+let data = $register(user.value)
+const login = async () => {
+  let res = await $register(user.value);
+};</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

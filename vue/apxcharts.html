@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可视化图表库 ApxCharts</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.0/apexcharts.min.css" />
+    <base target="_blank">
+    <style>
+        .chart-box {
+            height: 320px;
+            margin: 1rem auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>可视化图表库</h1>
+        <span>&commat;ApxCharts</span>
+    </header>
+    <dl>
+        <dd>不需要指定图表容器高度</dd>
+        <div>更多使用信息，请参考文档</div>
+        <dt>步骤</dt>
+        <dd class="sn">
+            <div>打开 <a href="https://cdnjs.com/">cdnjs</a> ，查找ApexCharts，使用提供的在线资源</div>
+            <div>选择版本，分别复制js和CSS对应的标签链接到项目中</div>
+            <div>进入 <a href="https://apexcharts.com/">官网 - ApexCharts</a>，在文档DOC中，参照图表类型和对应的示例，创建自己的图表</div>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 水平条图表-Horizontal Bar Chart</dd>
+        <dd id="apxchart" class="chart-box"></dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.0/apexcharts.min.js"></script>
+    <script>
+        var options = {
+            series: [{
+                data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+                    'United States', 'China', 'Germany'
+                ],
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#apxchart"), options);
+        chart.render();
+    </script>
+</body>
+
+</html>

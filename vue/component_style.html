@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件样式 Style</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    header {
+      /* background-image: url(https://p3-sdbk2-media.byteimg.com/tos-cn-i-xv4ileqgde/74f648633cc949118d501e78b72fe301~tplv-xv4ileqgde-resize-w:1440.awebp); */
+      background-image: url(./imgs/panda.png);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>组件样式</h1>
+    <span>&commat;Style</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>父组件中，为只有一个根节点的子组件指定样式类 class 时，这个 class 会直接 <span class="warn">叠加</span> 到子组件的根节点上 - <a
+          href="https://cn.vuejs.org/guide/components/attrs">属性透传 Fallthrough Attributes</a></div>
+      <!-- <div>这个样式类，既不是子组件定义的属性 props，也不是子组件抛出的 emits 事件，但是仍然传递给了子组件</div> -->
+      <div>同样特点的属性还有 style、id 以及 v-on 等</div>
+      <div>更多样式信息，请访问 <a href="https://cn.vuejs.org/api/sfc-css-features.html">css features</a></div>
+      <div class="tips">每一个子组件都使用一个根节点，且使用同组件名的类，便于父组件布局</div>
+    </dd>
+    <dt>样式属性透传</dt>
+    <dd>
+      <div>样式合并 - class and style Merging</div>
+      <div>子组件 - 具有唯一根节点，且指定样式类 title</div>
+      <pre>&lt;div class="title"&gt;recommend&lt;/div&gt;</pre>
+      <div>父组件 - 引入并使用子组件，同时指定样式类 green</div>
+      <pre>&lt;Title class="green"&gt;&lt;/Title&gt;</pre>
+      <div>最终渲染 - 同时带有样式类 title 和 green；且 green 在 title 后 - merged with the class and style values that are
+        inherited from the parent</div>
+      <pre>&lt;div class="title green"&gt;recommend&lt;/div&gt;</pre>
+      <div><span class="iconfont icon-bangzhu2"></span>为什么 green 在 title 后？</div>
+    </dd>
+    <dt>事件属性透传</dt>
+    <dd>
+      <div>属性透传同样适用事件 - same rule applies to v-on</div>
+      <div>子组件 - 指定一个事件 say88</div>
+      <pre>&lt;div class="title" @click="say88"&gt;recommend&lt;/div&gt;</pre>
+      <div>父组件 - 透传一个事件 sayHi；事件触发时，先执行子组件的事件处理函数，再执行父组件的事件处理函数</div>
+      <div>子组件的任何元素都会触发透传的事件 sayHi</div>
+      <pre>&lt;Title @click="sayHi"&gt;&lt;/Title&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分析几种情况下，fn、doTitle 和 doFa 的触发情况</dd>
+    <dd>
+      <div>情况1：子组件传递一个普通属性和一个方法属性；父组件透传一个事件 doFa</div>
+      <pre>
+&lt;div class="title"&gt;
+  &lt;h3 @click="doTitle"&gt;{{ props.title }}&lt;/h3&gt;
+  &lt;span @click="fn"&gt;&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <pre>&lt;Title :fn="toCoupon" @click="doFa"&gt;&lt;/Title&gt;</pre>
+      <div>情况2：子组件使用事件修饰符 stop</div>
+      <pre>
+&lt;div class="title"&gt;
+  &lt;h3 @click.stop="doTitle"&gt;{{ props.title }}&lt;/h3&gt;
+  &lt;span @click="fn"&gt;&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <pre>&lt;Title :fn="toCoupon" @click="doFa"&gt;&lt;/Title&gt;</pre>
+      <div>情况3：父组件使用事件修饰符 self</div>
+      <pre>
+&lt;div class="title"&gt;
+  &lt;h3 @click="doTitle"&gt;{{ props.title }}&lt;/h3&gt;
+  &lt;span @click="fn"&gt;&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <pre>&lt;Title :fn="toCoupon" @click.self="doFa"&gt;&lt;/Title&gt;</pre>
+    </dd>
+    <dt>作用域 scoped</dt>
+    <dd>
+      <div>为 &lt;style&gt; 指定 scoped 时，它的 CSS 只会影响当前组件的元素</div>
+      <div>父组件的样式将不会 <span class="warn">渗透</span>
+        到子组件中 - 组件封装的特性</div>
+      <div>不过，子组件的根节点会同时被父组件的作用域样式和子组件的作用域样式影响。便于：让父组件可以从布局的角度出发，调整其子组件根元素的样式</div>
+      <div>更多作用域详细信息，请参考 <a href="./class.html">类 class</a>、<a href="https://cn.vuejs.org/api/sfc-css-features.html">API
+          - 单文件组件 CSS 功能</a></div>
+      <div class="tips">
+        <div>最佳体验：为组件的根节点指定与组件同名的样式类，很容易保证组件类的唯一性，且便于父组件布局</div>
+      </div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 版权组件结构</dd>
+    <dd>
+      <pre>
+&lt;template&gt;
+    &lt;div class="copyright"&gt;
+        &lt;span class="txt"&gt;copyright &commat; 2024-2026&lt;/span&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+        &lt;span class="txt"&gt;glpla.github.io&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;style scoped&gt;
+&lt;/style&gt;</pre>
+      <div>父组件指定样式，如标签选择器 span 或类选择器 .txt，甚至带上子组件根节点类，都不会影响子组件内元素的样式</div>
+      <pre>
+span {
+    font-weight: 600;
+}
+
+.txt {
+    color: #f40;
+}
+
+.copyright .txt {
+  color: #f40;
+}</pre>
+      <div>但是。但是。。但是。。。<span class="warn">父组件能影响到子组件根节点</span></div>
+      <pre>
+.copyright {
+    background-color: #000;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">特殊选择器</div>
+  <dl>
+    <dd class="tips">
+      <div>一般情况下，不建议父组件修改子组件的内部 - 破坏子组件的封装</div>
+      <div>特殊情况下，多见于UI框架的定制中，如 <a href="../web/framework/vant.html">Vant</a>；具体使用请参考官方文档</div>
+    </dd>
+    <dt>深度选择器 :deep(selector)</dt>
+    <dd>
+      <div>父组件如果想深入调整子组件内部元素的样式|影响到子组件，包括子组件的插槽元素，应使用伪类 :deep(selector)</div>
+      <div>::v-deep 已被废弃</div>
+      <div><span class="warn">父组件</span>使用深度选择器设置子组件内元素样式 - 父组件使用插槽，知道传递了什么元素，使用了什么选择器</div>
+      <pre>
+:deep(img) {
+    width: 30px;
+    height: 30px;
+}</pre>
+    </dd>
+    <dt>全局选择器 :global(selector)</dt>
+    <dd>
+      <div>使用 :global(selector) 将样式提权到全局|扩大作用域</div>
+      <div>理论上可以在父组件或子组件中指定；但是应尽量 <span class="warn">避免</span></div>
+      <div>建议 - 全局类写到单独的样式文件中并全局引入</div>
+      <pre>
+:global(.warn) {
+    color: red;
+}</pre>
+      <div class="tips">
+        <div>以上选择器请仅在必要时使用，否则应寻求其它方法</div>
+        <div>还有一个样式穿透 >>>；注意当前框架是否支持</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标题组件 Title.vue 的粘性定位</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 主导航 AppNav.vue 的固定定位</dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>组件样式透传</div>
+      <p>. 全局样式选择器 :global()</p>
+      <p>. 深度样式选择器 :deep()</p>
+      <div>组件事件透传</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 返回顶部 BackToTop.vue 的固定定位</dd>
+
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>过渡组件组 &lt;TransitionGroup&gt;</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>过渡组件组</h1>
+    <span>&lt;TransitionGroup&gt;</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>. 内置组件 - 无需注册即可在任意别的组件中使用</div>
+      <div>. 为列表中的 <span class="warn">多个</span> 元素或组件提供过渡效果</div>
+      <div>. 一个 v-for 列表中的元素或组件被插入，移动|顺序改变，或移除时应用动画</div>
+      <div>. 不需要使用条件来决定渲染过渡</div>
+      <div>. 默认情况下，它不会渲染一个容器元素。但你可以通过传入 tag 属性来指定一个元素作为容器元素来渲染</div>
+      <div>. 列表中的每个元素都必须有一个独一无二的 key - &lt;TransitionGroup&gt; children must be keyed. </div>
+      <div>. 和 &lt;Transition&gt; 的使用方法- 基本一致</div>
+      <div>. 多用于应用管理场景：用户管理、留言管理、商品管理、代办事项等等</div>
+      <div>. 更多信息，请访问 <a href="https://cn.vuejs.org/guide/built-ins/transition-group.html">官方文档 -
+          transition-group</a>
+        、<a href="https://cn.vuejs.org/api/built-in-components.html#transitiongroup">官方文档 - API</a> </div>
+      <pre>
+&lt;TransitionGroup tag="ul" move-class="your-class"&gt;
+  &lt;li v-for="(item, ind) in lists" :key="item.id"&gt;
+   // ...
+  &lt;/li&gt;
+&lt;/TransitionGroup&gt;</pre>
+    </dd>
+    <dt>属性 Props</dt>
+    <dd class="sn">
+      <div>name?</div>
+      <p>. 同 &lt;Transition&gt;</p>
+      <div>tag?: string</div>
+      <p>. 如果未定义，则渲染为片段 fragment</p>
+      <p>. 建议使用，可以节省一个 DOM 节点，如声明为 tag = "ul"</p>
+      <div>moveClass?: string</div>
+      <p>. 用于自定义过渡期间被应用的 CSS，用于覆盖默认的 .v-move 类，从而实现自定义的移动过渡效果</p>
+      <p>. 在模板中使用 kebab-case，例如 move-class = "xxx"</p>
+    </dd>
+    <dt>v-move</dt>
+    <dd>
+      <div>. 新内置类</div>
+      <div>. 对移动中的元素应用的过渡</div>
+      <div>. 当列表中的元素因为重新排序而需要改变位置时，这个类会被应用到正在移动的元素上</div>
+      <div>. 可以使用属性 moveClass 定制</div>
+    </dd>
+    <dd class="tips">如果使用了位移 transform，可能导致出现水平滚动条，请为容器指定 overflow-x: hidden</dd>
+    <dt>封装 Encapsulation</dt>
+    <dd>
+      <div>. 同一个项目中，过渡效果应尽量保持一致，不要太多</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 封装过渡组件 FadeTransition.vue</div>
+      <div>. 指定过渡样式；无法在组件内直接指定，应在 <span class="warn">全局样式</span> 中指定；为什么？</div>
+      <pre>
+&lt;div class="fade-transition"&gt;
+  &lt;TransitionGroup tag="ul" name="fade-list"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/TransitionGroup&gt;
+&lt;/div&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 加载数据，渲染时增加过渡效果</dd>
+    <dd class="sn">
+      <div>逻辑</div>
+      <p>. 加载积分榜数据；数据清洗后，选择积分大于10的数据项</p>
+      <pre>
+const lists = ref([])
+onMounted(() => {
+  fetch('https://glpla.github.io/utils/data/rank/20240203.json')
+    .then(res => res.json())
+    .then(data => {
+      lists.value = data.cont.filter(item => item.ucredit > 10)
+    })
+})</pre>
+      <div>结构</div>
+      <p>. 指定渲染标签 tag 为 ul</p>
+      <p>. 以内联变量 style 的形式，根据迭代变量 ind 分配不同的延时时间</p>
+      <p>. 可以在结构中处理延时时间，也可以在样式中处理延时时间；这里在结构中处理</p>
+      <p class="tips">多个元素使用延迟触发，用户体验更强烈；文档使用自定义属性 data- 实现；建议使用内联变量更方便</p>
+      <pre>
+&lt;TransitionGroup tag="ul"&gt;
+  &lt;li class="item" v-for="(item, ind) in lists" :key="item.id" :style="`--delay:${ind * 0.1}s`"&gt;
+    &lt;span&gt;{{ item.usn }}&lt;/span&gt;
+    &lt;span&gt;{{ item.uname }}&lt;/span&gt;
+    &lt;span&gt;{{ item.ucredit }}&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/TransitionGroup&gt;</pre>
+      <div>样式</div>
+      <p>. 从右上角移入；使用延时</p>
+      <p>. 其它样式略</p>
+      <p>. 为上级元素指定移除隐藏，可以消除元素位移导致触发滚动条</p>
+      <pre>
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s var(--delay) ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(-30px) translateX(30px);
+}</pre>
+      <div>增加数据</div>
+      <p>. 增加一个元素，分配添加数据项的方法（头插/尾插/任意位置插入），查看数据的过渡效果；方法自行实现</p>
+      <pre>&lt;div @click="addItem"&gt;add&lt;/div&gt;</pre>
+      <div>解决方案</div>
+      <p>. 使用 v-move 改善过渡效果；完善样式如下</p>
+      <pre>
+.v-move,
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s var(--delay) ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(-30px) translateX(30px);
+}</pre>
+      <div>删除数据</div>
+      <p>. 增加一个元素，分配删除数据项的方法（头部删除/尾部删除/任意位置删除），查看数据的过渡效果；方法自行实现</p>
+      <pre>&lt;div @click="delItem"&gt;deleete&lt;/div&gt;</pre>
+      <div>解决方案</div>
+      <p>. 过渡时，脱离文档流；增加一个样式如下</p>
+      <pre>
+.v-leave-active {
+  position: absolute;
+}</pre>
+    </dd>
+    <dd class="quest">封装为组件，再次实现案例</dd>
+  </dl>
+  <div class="chap">Summary</div>
+  <dl>
+    <dd class="sn">
+      <div>&lt;TransitionGroup&gt;的基本使用</div>
+      <div>新属性 tag</div>
+      <div>新类 v-move</div>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 代办事项</dd>
+    <dd>
+      <div>. 列表渲染事项数据</div>
+      <div>. 每条数据可以在完成时删除</div>
+      <div>. 删除时，要显示确认对话框 - 应用过渡</div>
+      <div>. 单击可以增加一条新的事项数据 - 应用过渡</div>
+      <div>1. 结构</div>
+      <pre>
+&lt;div class = "msg"&gt;
+    &lt;h3&gt;待办事项&lt;/h3&gt;
+    &lt;div class="ipt-box"&gt;
+        &lt;input type="text" required v-model="todo" @keydown.enter="insertItem"&gt;
+        &lt;button @click="insertItem"&gt;增加&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;template v-if="arr.length"&gt;
+        &lt;div class="item"&gt;
+            &lt;p&gt;序号&lt;/p&gt;
+            &lt;p&gt;待办事项&lt;/p&gt;
+            &lt;p&gt;操作&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;TransitionGroup name="list" tag="ul"&gt;
+            &lt;li class="item" v-for="(item, ind) in arr" :key="item.id" :style="`--delay: ${ind}`"&gt;
+                &lt;p&gt;{{ ind }}&lt;/p&gt;
+                &lt;p&gt;{{ item }}&lt;/p&gt;
+                &lt;button class="del-btn" @click="deleteItem(ind)"&gt;删除&lt;/button&gt;
+            &lt;/li&gt;
+        &lt;/TransitionGroup&gt;
+    &lt;/template&gt;
+    &lt;template v-else&gt;暂无记录&lt;/template&gt;
+&lt;/div&gt;</pre>
+      <div>2. 样式</div>
+      <div>. 内联变量 --delay：依次延时触发</div>
+      <div>. v-move：对移动中的元素应用的过渡，<span class="warn">专用</span> 于&lt;TransitionGroup&gt;</div>
+      <div>. v-leave-active：声明为绝对定位，保证删除不会跳跃</div>
+      <pre>
+.v-move,
+.v-enter-active,
+.v-leave-active {
+    transition: 0.4s ease-in-out calc(var(--delay)*0.1s);
+}
+
+.v-leave-active {
+    position: absolute;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

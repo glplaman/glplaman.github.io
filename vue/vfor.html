@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表渲染 v-for</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>列表渲染</h1>
+    <span>&commat;List Rendering</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>使用 for - in 渲染一个基于一个<span class="warn">数组</span>的列表 - render a list of items based on an array</div>
+      <div>更多信息，请访问 <a href="https://cn.vuejs.org/guide/essentials/list">列表渲染 - List Rendering</a></div>
+      <div>需显式的指定 <a href="https://cn.vuejs.org/api/built-in-special-attributes">特殊属性 - key</a> 以区分并跟踪每个节点</div>
+      <div>指定 key 有助于提高渲染性能；<span class="warn">据说</span>数据变化时只会渲染更新的数据项，不会全部重新渲染</div>
+    </dd>
+    <dt>Array</dt>
+    <dd>
+      <div>items 是源数据的数组</div>
+      <div>item 是迭代项/别名；可以是任意合法标识符</div>
+      <div>index 当前项的位置索引；可以是任意合法标识符；可选</div>
+      <pre>
+&lt;div v-for="(item, index) in items"&gt;
+  //
+&lt;/div&gt;</pre>
+      <div>用法1：仅使用迭代数据项别名 item</div>
+      <pre>
+&lt;ul&gt;
+    &lt;li v-for = "item in list" :key = "item.id" &gt; {{ item }} &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <div>用法2：同时使用数据元素对应的索引 index；使用括号()</div>
+      <pre>
+&lt;ul&gt;
+    &lt;li v-for = "(item, index) in list" :key = "item.id" &gt; {{ item }} &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <div>用法3：嵌套使用；每个循环都使用独立的迭代变量；因为块级作用域，可以重名；但是不建议</div>
+      <pre>
+&lt;ul&gt;
+    &lt;li v-for = "(item, ind) in list" :key = "item.id" &gt;
+        &lt;p v-for = "innerItem in item" :key = "innerItem.id" &gt; {{ innerItem }} &lt;/p&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</pre>
+    </dd>
+    <dt>Object</dt>
+    <dd>
+      <div>遍历一个对象的所有属性；默认显示对象的属性值</div>
+      <div>遍历的顺序会基于对该对象调用 Object.keys() 的返回值来决定</div>
+      <pre>const obj = reactive({ id: 101, name: 'glpla', age: 18 })</pre>
+      <div>.1个参数：表示值 value</div>
+      <pre>&lt;div v-for = "value in obj" &gt; {{ value }} &lt;/div&gt;</pre>
+      <div>.2个参数：第一个为值 value；第二个为键 key</div>
+      <pre>&lt;div v-for = "(value, key) in obj" &gt; {{ key }}:{{ value }} &lt;/div&gt;</pre>
+      <div>.3个参数：第一个为值 value；第二个为键 key；第三个为索引 index</div>
+      <pre>&lt;div v-for = "(value, key, index) in obj" &gt; {{ index }}:{{ key }}:{{ value }} &lt;/div&gt;</pre>
+      <div>每个位置的参数代表 <span class="warn">特定</span> 的属性，如果不相使用某个参数，可以使用非标准语法 _ 表示；多个可以使用数字区分</div>
+      <div>也可以考虑使用对象的静态方法 Object.keys 或 Object.entries 来遍历对象</div>
+      <div>可读性角度出发，不建议省略；你不用它就完事了呗</div>
+      <pre>&lt;div v-for = "(_, key) in obj" &gt; {{ key }} &lt;/div&gt;</pre>
+      <pre>&lt;div v-for = "(_1, _2, index) in obj" &gt; {{ index }} &lt;/div&gt;</pre>
+    </dd>
+    <dt><a href="https://cn.vuejs.org/api/built-in-special-elements.html#template">&lt;template&gt;</a></dt>
+    <dd>
+      <div>不推荐同时使用 v-if 和 v-for：二者优先级不明显</div>
+      <div>为区分结构，合理使用逻辑，特别是组合使用 v-for 和 v-if 时，可以使用特殊元素 &lt;template&gt;</div>
+      <div>它是一个不可见的包装器元素，最后渲染的结果并不会包含这个 &lt;template&gt;</div>
+      <pre>
+const list = ref(['home', 'product', 'about'])
+const isOn = ref(true)</pre>
+      <pre>
+&lt;template v-if = "isOn" &gt;
+    &lt;div v-for = "item in list" &gt; {{ item }} &lt;/div&gt;
+&lt;/template&gt;</pre>
+      <div class="tips">
+        <div>可以在 &lt;template&gt; 标签上使用 v-for 来渲染一个包含多个元素的块</div>
+        <div>可以直接在组件上使用 v-for，和在一般的元素上使用没有区别</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>v-for</div>
+      <div>key的运用</div>
+      <div>使用 &lt;template&gt; 处理条件渲染和列表渲染</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd id="tabcard">[<span class="iconfont icon-keyboard"></span>] 使用列表循环优化 <a href="./class.html#tabcard">类 class</a>
+      中的导航/标签页
+      TabCard 案例
+    </dd>
+    <dd>
+      <div>&lt;template&gt;：使用列表循环、内容绑定、属性绑定</div>
+      <pre>
+&lt;div class="test"&gt;
+  &lt;div class="btn" :class="{ 'active': ind == index }" @click="ind = index" 
+    v-for="(item, index) in navs"
+    :key="index"&gt;{{ item }}
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>&lt;script&gt;：增加一个标题数组 navs 用于导航列表循环</div>
+      <pre>
+import { ref, watchEffect } from 'vue'
+const ind = ref(0)
+const navs = ref(['Lorem.', 'Labore!', 'Quos.', 'Doloremque.'])</pre>
+      <div>&lt;style&gt;：样式不变</div>
+    </dd>
+    <dd id="swiper">[<span class="iconfont icon-keyboard"></span>] 自动轮播 Swiper.vue</dd>
+    <dd>
+      <div>使用列表渲染遍历本地图片数组，如果图片分配的 ind 和轮播活动图片索引 currentInd 一致，则显示当前图片，否则隐藏</div>
+      <div>使用数字指示器</div>
+      <div>样式略</div>
+      <div>请使用第三方 <a href="https://swiperjs.com/">swiper.js</a> 实现</div>
+      <pre>
+&lt;div class="swiper"&gt;
+  &lt;img :src="item" alt="" 
+    v-for="(item, ind) in imgsUrl" :key="ind" 
+    v-show="currentInd === ind"&gt;
+  &lt;div class="indictator"&gt;
+    &lt;span class="dot" :class="{ active: currentInd === ind }" 
+    v-for="(item, ind) in imgsUrl" :key="ind"&gt;{{ ind + 1 }}&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+const imgs = ref(['coffee0.jpg', 'coffee1.jpg', 'coffee2.jpg', 'coffee3.jpg', 'coffee4.jpg'])
+const currentInd = ref(0)
+let timer = null
+let duration = 3000
+const imgsUrl = computed(() => {
+  return imgs.value.map(img => new URL(`../assets/imgs/${img}`, import.meta.url).href)
+})
+onMounted(() => {
+  timer = setInterval(() => {
+    currentInd.value++
+    currentInd.value = currentInd.value % imgsUrl.value.length
+  }, duration)
+})
+onUnmounted(() => {
+  timer && clearInterval(timer)
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">商品列表页 Goods.vue</a></dd>
+    <dd>
+      <div>列表渲染获取的商品数据，渲染多个商品项</div>
+      <div>封装组件 GoodsItem.vue 实现</div>
+      <pre>
+&lt;div class="goods"&gt;
+  &lt;template v-if="goodsStore.goods.length"&gt;
+    &lt;GoodsItem v-for="(item, ind) in goodsStore.goods" :key="item.id" :product="item" /&gt;
+    &lt;footer class="f-s-s"&gt;我是有底线的~&lt;/footer&gt;
+  &lt;/template&gt;
+  &lt;div v-else&gt;商品获取失败，请刷新页面&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>后续使用<a href="./component_props.html">组件属性传参 defineProps()</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">商城视图 MallView.vue</a> - 动态处理图片资源
+    </dd>
+    <dd>
+      <div>处理 assets 中的图片，动态生成 url 便于列表渲染</div>
+      <pre>
+&lt;div class="item" v-for="item in linksUrl"&gt;
+  &lt;img :src="item.src" alt=""&gt;
+  &lt;p&gt;{{ item.title }}&lt;/p&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const links = ref([
+  {
+    id: 1,
+    title: '冻干咖啡',
+    src: 'm0.png'
+  },
+  {
+    id: 2,
+    title: '挂耳咖啡',
+    src: 'm1.png'
+  }, {
+    id: 3,
+    title: '咖啡液',
+    src: 'm2.png'
+  }, {
+    id: 4,
+    title: '咖啡豆',
+    src: 'm3.png'
+  }, {
+    id: 5,
+    title: '胶囊咖啡',
+    src: 'm4.png'
+  }
+])
+
+const linksUrl = computed(() => {
+  return links.value.map(item => ({
+    ...item,
+    src: new URL(`../assets/${item.src}`, import.meta.url).href
+  }))
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./component_async.html">异步组件 → 标签页</a> - 仅使用对象的 key</dd>
+    <dd>
+      <pre>
+&lt;button v-for="(_, tab) in tabs" @click="currentTab = tab" :key="tab"
+:class="['tab-button', { active: currentTab === tab }]"&gt;{{ tab }}&lt;/button&gt;
+
+&lt;component :is="tabs[currentTab]" class="tab"&gt;&lt;/component&gt;</pre>
+      <pre>
+const tabs = {
+  "随享瑞幸": AsyncGoods,
+  "颜值水杯": AsyncCup
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

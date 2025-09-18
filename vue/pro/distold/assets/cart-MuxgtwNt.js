@@ -1,0 +1,1 @@
+import{E as s,f as i}from"./index-CeVYWr2Z.js";const d=s("cart",()=>{const t=i([]);return{cart:t,addToCart:a=>{const e=t.value.find(r=>r.id===a.id);e?e.quantity++:t.value.push({...a,quantity:1})}}});export{d as u};

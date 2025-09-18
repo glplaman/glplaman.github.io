@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>缓存组件 &lt;KeepAlive&gt;</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>缓存组件</h1>
+    <span>&lt;KeepAlive&gt;</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>. 现实：多个组件间动态切换时，默认情况下，组件被替换掉 | unmount，再次回来时，状态被挂载 | onmount，并重新初始化，类似于 v-if 的执行</div>
+      <div>. 需求：特定情况下，当组件恢复时，为了继续使用其状态 | <span class="warn">恢复现场</span>，需要缓存 | 保留被移除的组件实例；同：函数的执行、调试断点</div>
+      <div>. 方案：使用内置组件 <a href="https://cn.vuejs.org/guide/built-ins/keep-alive.html">&lt;KeepAlive&gt;</a> 缓存组件实例</div>
+      <pre>
+&lt;KeepAlive&gt;
+  &lt;component :is="tabs[currentTab]"&gt;&lt;/component&gt;
+&lt;/KeepAlive&gt;</pre>
+    </dd>
+    <dt>Feature</dt>
+    <dd>
+      <div>. 默认会缓存内部的所有组件实例 - 主要面向 <a href="./component_dynamic.html">动态组件</a></div>
+      <div>. 路由视图 &lt;RouerView&gt; 也是一个动态组件；但是需要特别处理；见后续案例</div>
+      <div>. 可以使用属性 include 和 exclude 属性定制缓存行为</div>
+      <div>. 还可以使用属性 max 指定最大缓存组件数</div>
+    </dd>
+    <dt>Application</dt>
+    <dd>
+      <div>. 各管理平台的标签页应用</div>
+      <table>
+        <caption>&lt;KeepAlive&gt;属性</caption>
+        <tr>
+          <th>属性</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>include</td>
+          <td>需要缓存的组件</td>
+        </tr>
+        <tr>
+          <td>exclude</td>
+          <td>不需要缓存的组件</td>
+        </tr>
+        <tr>
+          <td>max</td>
+          <td>最大缓存组件数</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>lifecycle</dt>
+    <dd>
+      <div>. 缓存实例的 <a href="./lifecycle.html">生命周期函数</a></div>
+      <div>. 组件缓存后而仍作为组件树的一部分时，它将变为不活跃状态而不是被卸载</div>
+      <div>1. onActivated()</div>
+      <div>. 注册一个回调函数，若组件实例是 &lt;KeepAlive&gt; 缓存树的一部分，当组件被插入到 DOM 中时调用</div>
+      <div>2. onDeactivated()</div>
+      <div>. 注册一个回调函数，若组件实例是 &lt;KeepAlive&gt; 缓存树的一部分，当组件从 DOM 中被移除时调用</div>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd id="tabcard">[<span class="iconfont icon-keyboard"></span>] <a href="./component_dynamic.html#tabcard">标签页组件</a>
+      - 动态组件缓存版
+    </dd>
+    <dd class="sn">
+      <div>为每个组件增加 2 个 <a href="./lifecycle.html">生命周期函数/钩子</a>，当标签页切换时，查看组件的加载和激活状态；如</div>
+      <pre>
+onActivated(() => {
+  console.log('TabGoods onActivated');
+})
+onDeactivated(() => {
+  console.log('TabGoods onDeactivated');
+})</pre>
+      <div>使用缓存组件包裹动态组件，修改结构如下</div>
+      <pre>
+&lt;span v-for="(item, ind) in com" @click="index = ind"&gt;{{ item.tag }}&lt;/span&gt;
+&lt;KeepAlive&gt;
+  &lt;component :is="com[index].component"&gt;&lt;/component&gt;
+&lt;/KeepAlive&gt;</pre>
+      <div>查看组件切换时，控制台的输出</div>
+    </dd>
+  </dl>
+  <div class="chap">Summary</div>
+  <dl>
+    <dd class="sn">
+      <div>&lt;KeepAlive&gt;的属性</div>
+      <div>&lt;KeepAlive&gt;的生命周期</div>
+      <div>&lt;KeepAlive&gt;的事件</div>
+      <div>&lt;KeepAlive&gt;的应用</div>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 路由视图缓存</dd>
+    <dd>
+      <div>. 避免初始化逻辑重复执行，如数据加载</div>
+      <div>. 不是简单的使用缓存组件包裹，而应该使用动态组件实现；<span class="warn">注意查看浏览器的提示信息</span></div>
+      <div>. v-slot="{ Component }" 是 Vue 3 中用于接收 <a href="./component_slots.html#vslot">作用域插槽 scoped slot</a> 传递数据的语法：从
+        &lt;RouterView&gt; 接收当前激活的路由组件</div>
+      <pre>
+&lt;RouterView v-slot="{ Component }"&gt;
+  &lt;KeepAlive&gt;
+    &lt;component :is="Component" /&gt;
+  &lt;/KeepAlive&gt;
+&lt;/RouterView&gt;</pre>
+      <div>其它方案：使用前先判断</div>
+      <div>父组件</div>
+      <pre>
+&lt;div class="father"&gt;
+  &lt;MallPinia&gt;&lt;/MallPinia&gt;
+&lt;/div&gt;</pre>
+      <pre>import MallPinia from '@/components/MallPinia.vue';</pre>
+      <div>子组件</div>
+      <pre>
+onMounted(async () => {
+  if (!goodsStore.goods.length) {
+    console.log('first');
+    goods.value = await goodsStore.getAll();
+  } else {
+    goods.value = goodsStore.goods;
+  }
+})</pre>
+      <div class="hint">如何缓存特定路由？</div>
+      <!-- <pre>
+&lt;RouterView v-slot="{ Component, route }"&gt;
+  &lt;KeepAlive&gt;
+    &lt;Component :is="Component" :key="route.fullPath" v-if="route.meta.keepalive"&gt;&lt;/Component&gt;
+  &lt;/KeepAlive&gt;
+  &lt;Component :is="Component" :key="route.fullPath" v-if="!route.meta.keepalive"&gt;&lt;/Component&gt;
+&lt;/RouterView&gt;</pre> -->
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 缓存项目中其它业务部分</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../utils/custom/clipboard.js"></script>
+</body>
+
+</html>

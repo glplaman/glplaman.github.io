@@ -1,0 +1,1 @@
+import{_ as e,c as s,b as t,d as c}from"./index-DvUMe5fe.js";const o={},n={class:"setup"},_=c("h1",null,"This is an setup page",-1),a=[_];function r(d,i){return t(),s("div",n,a)}const l=e(o,[["render",r]]);export{l as default};

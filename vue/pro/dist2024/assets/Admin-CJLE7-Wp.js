@@ -1,0 +1,1 @@
+import{e as o,c as t,d as n,a as s}from"./index-CjcobUH4.js";const a={class:"admin"},i={__name:"Admin",setup(c){return(r,_)=>{const e=o("RouterView");return s(),t("div",a,[n(e)])}}};export{i as default};

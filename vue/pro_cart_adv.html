@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>综合开发之购物车</title>
+  <link rel="stylesheet" href="./css/mix.css">
+</head>
+
+<body>
+  <header>
+    <div class="title">
+      <h1>购物车</h1>
+      <span>Cart</span>
+    </div>
+    <div class="theme" id="theme">
+      <span class="iconfont icon-Sun"></span>
+      <span class="iconfont icon-Moon-Star"></span>
+    </div>
+    <span class="iconfont icon-menu ham" id="ham"></span>
+    <div class="nav-wrap">
+      <div class="logo"></div>
+      <nav class="nav">
+        <a class="nav-item" style="--s:--n0" href="#objective"><span class="iconfont icon-mylocation"></span>
+          Objective</a>
+        <a class="nav-item" style="--s:--n1" href="#content"><span class="iconfont icon-assignment"></span> Content</a>
+        <a class="nav-item" style="--s:--n2" href="#review"><span class="iconfont icon-group"></span> Review</a>
+        <a class="nav-item" style="--s:--n3" href="#introduction"><span class="iconfont icon-magicwand"></span>
+          Introduction</a>
+        <a class="nav-item" style="--s:--n4" href="#procedure"><span class="iconfont icon-codepen1"></span>
+          Procedure</a>
+        <a class="nav-item" style="--s:--n5" href="#prerequisite"><span class="iconfont icon-assistantphoto"></span>
+          Prerequisite</a>
+        <a class="nav-item" style="--s:--n6" href="#cartjs"><span class="iconfont icon-storage"></span>
+          cart.js</a>
+        <a class="nav-item" style="--s:--n7" href="#cartvue"><span class="iconfont icon-shoppingcart"></span>
+          Cart.vue</a>
+        <a class="nav-item" style="--s:--n8" href="#details"><span class="iconfont icon-details"></span>
+          DetailsView.vue</a>
+        <a class="nav-item" style="--s:--n9" href="#menu"><span class="iconfont icon-menu1"></span>
+          MenuView.vue</a>
+        <a class="nav-item" style="--s:--n10" href="#summary"><span class="iconfont icon-hangzhengguanli"></span>
+          Summary</a>
+        <a class="nav-item" style="--s:--n11" href="#homework"><span class="iconfont icon-appguanli"></span>
+          Homework</a>
+        <a class="nav-item" style="--s:--n12" href="#reference"><span class="iconfont icon-clip"></span> Reference</a>
+      </nav>
+    </div>
+  </header>
+  <section class="section" style="--s:--n0" id="objective">
+    <h2>目标 Objective</h2>
+    <div>综合运用 Vue 框架处理购物车相关业务</div>
+    <ol>
+      <li>模板语法</li>
+      <li>响应式数据</li>
+      <li>事件处理</li>
+      <li>双向绑定</li>
+      <li>生命周期函数</li>
+      <li>数据侦听</li>
+      <li>编程式导航/声明式导航</li>
+      <li>状态管理</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n1" id="content">
+    <h2>内容 Content</h2>
+    <ol>
+      <li>购物车仓库设计 cart.js</li>
+      <li>购物车组件设计 Cart.vue</li>
+      <li>购物车组件运用</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n2" id="review">
+    <h2>回顾 Review</h2>
+    <div>. 略</div>
+  </section>
+  <section class="section" style="--s:--n3" id="introduction">
+    <h2>引言 Introduction</h2>
+    <div>. 略</div>
+  </section>
+  <section class="section" style="--s:--n4" id="procedure">
+    <h2>过程 Procedure</h2>
+    <div>. 遵循先静态后动态的开发原则</div>
+    <div>. 略</div>
+  </section>
+  <section class="section" style="--s:--n5" id="prerequisite">
+    <h2>前置 Prerequisite</h2>
+    <ol>
+      <li>{{}}、v-bind / :</li>
+      <li>ref() / reactive()</li>
+      <li>v-on / @</li>
+      <li>.stop</li>
+      <li>v-model</li>
+      <li>onMounted()</li>
+      <li>watch() / watchEffect()</li>
+      <li>&lt;RouterLink&gt;</li>
+      <li>useRouter()</li>
+      <li>pinia</li>
+      <li><a class="link" href="https://www.npmjs.com/package/nanoid">NPM - Nanoid</a>：生成随机 id</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n6" id="cartjs">
+    <h2>购物车仓库 cart.js</h2>
+    <p>. 仓库创建 - 略</p>
+    <p>. 主要业务如下；可根据需求扩展</p>
+    <ol>
+      <li>购物车 lists</li>
+      <pre>const lists = ref([])</pre>
+      <p>. 为避免重复操作添加数据，可以预先准备一些核心测试数据，如下</p>
+      <pre>
+const lists = ref([
+  { id: 0, title: "coffee", price: 9, discount: 0.2, stock: 10, quantity: 1 },
+  { id: 1, title: "cup", price: 5, discount: 0.4, stock: 10, quantity: 1 },
+  { id: 2, title: "code", price: 16, discount: 0.1, stock: 10, quantity: 1 },
+  { id: 3, title: "cookie", price: 8, discount: 0.5, stock: 10, quantity: 1 },
+]);</pre>
+      <li>拉取/保存购物车 getLists()</li>
+      <p>. 远程加载数据；这里返回测试数据</p>
+      <pre>
+const getLists = () => {
+  // ...axios fetch
+  return lists.value;
+};</pre>
+      <li>添加到购物车 addToCarts(product)</li>
+      <p>. 如果商品不存在，则为当前商品添加新的 id 作为对应的购物车数据项的 id，该 id 会覆盖商品的 id；如果商品数据项已经存在，则数量相应的增加</p>
+      <p>. 也可以直接使用商品数据的 id，后续的查找相应的变化即可</p>
+      <p>. 其它业务：库存调整，需要使用商品仓库 goods.js；也可以放在订单中处理，库存才真正变化</p>
+      <pre>
+const addToCarts = (product) => {
+  const existingItem = lists.value.find((item) => item.productId === product.productId);
+  if (existingItem) {
+    existingItem.quantity += product.quantity;
+  } else {
+    // replace id with nanoid
+    lists.value.push({ 
+      ...product, 
+      id: nanoid(), 
+      create_time: Date.now()
+    });
+  }
+};</pre>
+      <li>从购物车中移除 removeFromCarts(id) </li>
+      <pre>
+const removeFromCart = (id) =>{
+  lists.value = lists.value.filter(item => item.id !== id)
+}</pre>
+      <li>清空购物车 clearCarts()</li>
+      <pre>
+const clearCarts = () => {
+  lists.value = [];
+};</pre>
+      <li>其它逻辑</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n7" id="cartjs">
+    <h2>购物车组件 Cart.vue</h2>
+    <p>. 操作购物车数据：数据加载、全选、数量调整、结算、下单等</p>
+    <ol>
+      <li>购物车UI设计 <a class="link" target="_blank" href="./template/CartViewTemplate.zip" download>单击下载</a></li>
+      <div>
+        <p>. 封装为一个组件</p>
+        <p>. 固定定位在菜单视图底部；弹性盒子方向调整为垂直；折叠时，由 footer 撑开；展开时，背景设为透明黑</p>
+        <p>. header 和 main 折叠时不显示 - 条件渲染</p>
+        <p>. header 设置外边距上为自动，撑开购物车</p>
+        <p>. main 指定最大高度；信息区可以设置单点溢出...</p>
+        <p>. footer 折叠时，背景为空；展开时设置白色</p>
+        <pre>
+&lt;div class="cart" :class="{ 'show-cart': isShow }"&gt;
+  &lt;header v-show="isShow"&gt;
+    // ...
+  &lt;/header&gt;
+  &lt;main v-show="isShow"&gt;
+    &lt;div class="cart-item" v-for="item in 4"&gt;
+      // ...
+    &lt;/div&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;div class="cont"&gt;
+      // ...
+    &lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/div&gt;</pre>
+        <figure>
+          <img src="./imgs/carts1.png" alt="">
+          <figcaption>购物车静态折叠效果</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/carts2.png" alt="">
+          <figcaption>购物车静态展开效果</figcaption>
+        </figure>
+      </div>
+      <li>数据准备</li>
+      <p>. 待选商品 lists：数组；本地数据或使用 fetch 或 axios加载远程数据</p>
+      <p>. 选中商品 selectedLists；数组</p>
+      <p>. 是否全选 isAll，布尔；默认是真，全选</p>
+      <p>. 商品数量总数 count；数值</p>
+      <p>. 商品价格总数 totalPrice；数值</p>
+      <p>. 商品折扣价格总数 discountPrice；数值</p>
+      <pre>
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();
+const lists = ref([])
+const selectedLists = ref([])
+const isAll = ref(false)
+const totalPrice = ref(0)
+const discountPrice = ref(0)
+const count = ref(0)
+
+onMounted(() => {
+  lists.value = cartStore.lists;
+  selectedLists.value = [...lists.value]
+})</pre>
+      <li>全选</li>
+      <p>. 双向绑定 isAll</p>
+      <p>. 使用改变事件，判断是全选还是全不选</p>
+      <pre>&lt;input type="checkbox" name="all" v-model="isAll" @change="selectAllChange"/&gt;all</pre>
+      <pre>
+const selectAllChange = () => {
+  if (isAll.value) {
+    selectedLists.value = [...lists.value]
+  } else {
+    selectedLists.value = []
+  }
+}</pre>
+      <li>数量增加/减少</li>
+      <p>. 单击商品项的增加和减少按钮相应的调整其数量；并根据库存进行越界检测</p>
+      <p>. 这里使用内联事件方式；也可以使用函数方式</p>
+      <pre>&lt;button class="btn" @click="cart.quantity--" :disabled="cart.quantity &lt;= 1"&gt;-&lt;/button&gt;</pre>
+      <pre>&lt;button class="btn" @click="cart.quantity++" :disabled="cart.quantity >= cart.stock"&gt;+&lt;/button&gt;</pre>
+      <li>商品价格总数</li>
+      <p>. 确保侦听为深度侦听和立即侦听：便于页面渲染完毕时立即更新数据；或使用自动侦听 watchEffect</p>
+      <pre>totalPrice.value = selectedLists.value.reduce((total, item) => total + item.quantity * item.price * (1 - item.discount), 0).toFixed(2)</pre>
+      <li>商品折扣价格总数</li>
+      <pre>discountPrice.value = selectedLists.value.reduce((total, item) => total + item.quantity * item.price * item.discount, 0).toFixed(2)</pre>
+      <li>商品数量总数</li>
+      <pre>count.value = selectedLists.value.reduce((total, item) => total + item.quantity, 0)</pre>
+      <li>去结算</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n8" id="details">
+    <h2>详情页 DetailsView.vue</h2>
+    <div>内容：加载商品数据并清洗 → 渲染 → 生成购物车数据</div>
+    <ol>
+      <li>购物车静态效果</li>
+      <p>. 购物车固定定位在详情页底部；没有封装</p>
+      <p>. 基本结构，无数据绑定、无事件</p>
+      <p>. 高度同主导航；网格布局；平分空间；保持间隔；其它价格部分单独设置结束对齐</p>
+      <p>. 按钮的初始化和相关变量均来自主样式文件 app.css</p>
+      <pre>
+&lt;div class="cart"&gt;
+  &lt;span class="price"&gt;&yen;&lt;span&gt;99&lt;/span&gt;起&lt;/span&gt;
+  &lt;div class="opers"&gt;
+    &lt;button class="oper dec"&gt;-&lt;/button&gt;
+    &lt;div class="quantity"&gt;1&lt;/div&gt;
+    &lt;button class="oper inc"&gt;+&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;button class="btn btn-cart"&gt;加入购物车&lt;/button&gt;
+  &lt;button class="btn btn-buy"&gt;立即购买&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <figure>
+        <img src="./imgs/carts0.png" alt="">
+        <figcaption>购物车静态效果</figcaption>
+      </figure>
+      <li>准备数据及清洗</li>
+      <p>. 在 onMounted 中已经获取到了商品数据；需要准备添加到购物车的数据；</p>
+      <p>. 利用解构处理/清洗数据，格式同原始数据保持一致；同名字段，后面的会覆盖前面的</p>
+      <p>. 增加一个数量字段 quantity，默认是1</p>
+      <p>. 处理规格 specification；规格组件的封装，请参考 <a class="link" target="_blank"
+          href="./component_model.html#specification">组件双向绑定 defineModel</a> - 规格组件
+        specification</p>
+      <p>. 这里没有处理甜点 dessert 和推荐商品 recommend</p>
+      <pre>
+// 商品仓库 goods.js 中读取的数据
+const good = ref({})
+// 清洗后的数据，加入到购物车仓库 cart.js 中
+const goodSelected = ref({})</pre>
+      <pre>
+onMounted(async () => {
+  let res = await goodsStore.getById(route.params.id)
+  good.value = res
+
+  goodSelected.value = {
+    ...res,
+    quantity: 1,
+    specification: [
+      { name: 'cup', value: res.specification[0].options.find(item => item.sel == true).label },
+      { name: 'ther', value: res.specification[1].options.find(item => item.sel == true).label },
+      { name: 'sugar', value: res.specification[2].options.find(item => item.sel == true).label, }],
+    dessert: [],
+    recommend: []
+  }
+})</pre>
+      <li>增加/减少数量</li>
+      <p>. 为数量按钮绑定单击事件</p>
+      <p>. 利用按钮的 disabled 处理越界；只判断下边界</p>
+      <p>. 这里使用内联事件实现</p>
+      <pre>
+&lt;div class="opers"&gt;
+  &lt;button class="oper dec" @click="goodSelected.quantity--" :disabled="goodSelected.quantity &lt;= 1"&gt;-&lt;/button&gt;
+  &lt;div class="quantity"&gt;{{ goodSelected.quantity }}&lt;/div&gt;
+  &lt;button class="oper inc" @click="goodSelected.quantity++"&gt;+&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <li>处理总价</li>
+      <p>. 使用计算 computed()处理；也可以使用监听 watch()</p>
+      <pre>
+const total = computed(() => {
+  return (goodSelected.value.price * (1 - goodSelected.value.discount) * goodSelected.value.quantity).toFixed(2)
+})</pre>
+      <li>添加到购物车</li>
+      <p>. 为加入购物车指定事件 addToCarts</p>
+      <p>. 创建购物车数据项：增加新字段 productId，保存商品 id；商品原 id 字段可以保留，也可以移除</p>
+      <p>. 数据项的 id 可以在这里指定；也可以在购物车仓库中指定；这里由购物车仓库指定</p>
+      <p>. 跳转到菜单视图；这里使用替换 replace 模式</p>
+      <pre>
+const addToCarts = () => {
+  const cartItem = {
+    ...goodSelected.value,
+    productId: goodSelected.value.id,
+  };
+  cartStore.addToCarts(cartItem)
+  router.replace('/menu')
+  alert('Added to carts')
+}</pre>
+      <li>立即购买</li>
+      <p>. 略</p>
+      <li>更新视图</li>
+      <p>. 使用响应式数据替换掉上述静态结构中的数据</p>
+      <p>. 完善详情页中其它部分</p>
+      <p>. 更多效果自行完成</p>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n9" id="menu">
+    <h2>菜单页 MenuView.vue</h2>
+    <div>
+      <p>. 假设购物车最开始数据为空；用户浏览详情页时，通过"添加到购物车"而产生数据</p>
+      <p>. 购物车组件加载时，获取购物车仓库数据，如果为空，则不显示</p>
+      <pre>
+import Cart from '@/components/Cart.vue';
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();</pre>
+      <pre>&lt;Cart v-if="cartStore.lists.length"&gt;&lt;/Cart&gt;</pre>
+    </div>
+  </section>
+  <section class="section" style="--s:--n10" id="summary">
+    <h2>小结 Summary</h2>
+    <ol>
+      <li>组件的运用</li>
+      <li>数据的运用</li>
+      <li>状态的运用</li>
+      <li>样式的运用</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n11" id="homework">
+    <h2>作业 Homework</h2>
+    <ol>
+      <li>完善细节设计和逻辑处理</li>
+      <li>进一步组件化</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n12" id="reference">
+    <h2>参考 Reference</h2>
+    <ol class="reference">
+      <li><a target="_blank" href="./template_syntax.html">模板语法 Template Syntax</a></li>
+      <li><a target="_blank" href="./reactivity.html">响应式数据 Reactivity</a></li>
+      <li><a target="_blank" href="./events.html">事件 Events</a></li>
+      <li><a target="_blank" href="./events_m.html">事件修饰符 Events Modifiers</a></li>
+      <li><a target="_blank" href="./lifecycle.html">生命周期函数 Lifecycle Hooks</a></li>
+      <li><a target="_blank" href="./component_props.html">父传子 defineProps()</a></li>
+      <li><a target="_blank" href="./component_model.html">组件双向绑定 defineModel</a></li>
+      <li><a target="_blank" href="./router.html">路由 Router</a></li>
+      <li><a target="_blank" href="./useroute.html">路由信息 useRoute()</a></li>
+      <li><a target="_blank" href="./userouter.html">编程式导航 useRouter()</a></li>
+      <li><a target="_blank" href="./pinia.html">状态管理 Pinia</a></li>
+      <li><a target="_blank" href="./pinia_case.html">状态管理应用 Pinia</a></li>
+      <li><a target="_blank" href="../web/flex.html">弹性盒子布局 Flex</a></li>
+      <li><a target="_blank" href="../web/grid.html">网格布局 Flex</a></li>
+      <li><a target="_blank" href="../web/js/array1.html">数组 Array</a></li>
+    </ol>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/mix.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>过渡组件 &lt;Transition&gt;</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>过渡组件</h1>
+    <span>&lt;Transition&gt;</span>
+  </header>
+  <dl>
+    <dd>除了类 class，内联样式 style 和状态 state 实现元素或组件的过渡和动画外，还可以使用 <a
+        href="https://cn.vuejs.org/guide/built-ins/transition.html">&lt;Transition&gt;</a> 制作基于状态变化的过渡和动画</dd>
+    <dt>Xmind</dt>
+    <dd>
+      <iframe src="https://xmind.ai/embed/LcNbTpCQ?sheet-id=a34d7a6d-c43e-4e19-ac74-b42e8dadaa63" width="900px"
+        height="540px" frameborder="0" scrolling="no" allow="fullscreen"></iframe>
+    </dd>
+    <dt>Introduction</dt>
+    <dd>
+      <div>内置组件 - 无需引用/注册即可在任意别的组件中使用</div>
+      <div>实现原理 - 为<span class="warn">单个</span>进入和离开 DOM 树的元素或组件添加动画效果；将进入和离开动画应用到通过默认插槽 slot 传递给它的元素或组件；将动画应用到它包裹的元素
+      </div>
+      <div>仅支持<span class="warn">单个元素或组件</span>作为其插槽内容。如果内容是一个组件，这个组件必须仅有一个<span class="warn">根元素</span></div>
+      <div>元素的 CSS 效果会叠加到过渡上，如设置了背景颜色，则过渡的进入和退出都将应用该背景属性</div>
+      <div>一般都会搭配原生 CSS 过渡动画 <a href="../web/transition.html">transition</a> 或帧动画 <a
+          href="../web/animation.html">animation</a> 一起使用</div>
+    </dd>
+    <dt>Scenario</dt>
+    <dd>
+      <div>. 由 v-if 所触发的切换</div>
+      <div>. 由 v-show 所触发的切换</div>
+      <div>. 由特殊元素 &lt;component&gt; 切换的动态组件</div>
+      <div>. 改变特殊的 key 属性</div>
+      <div>. 弥补了传统 CSS 的过渡动画 transition 不能响应 display 的显示和隐藏状态[???]</div>
+      <pre>
+&lt;Transition name="your_name" appear&gt;
+    &lt;div v-if="flag"&gt;true&lt;/div&gt;
+    &lt;div v-else&gt;false&lt;/div&gt;
+&lt;/Transition&gt;</pre>
+    </dd>
+    <dt>Phases</dt>
+    <dd>
+      <div>区分：进入 enter 还是离开 leave；每次过渡，只能触发一个阶段的效果：要么进来 enter，要么离开 leave</div>
+      <div>每个阶段又可细分为3个子阶段；如下图</div>
+      <div>每个阶段都对应一个内置样式类，默认的名字 name 是 <span class="warn">v</span> 开头；类的具体实现需要<span class="warn">自己定义</span></div>
+      <div>enter：包括：从哪里开始进入 from 和到哪里结束 to，中间则是进入的过渡过程 active</div>
+      <div>leave：包括：从哪里开始离开 from 和到哪里结束 to，中间则是离开的过渡过程 active</div>
+      <div>以透明度 opacity 变化为例；没有显示的指定 v-enter-to 和 v-leave-from 就使用元素的静态样式</div>
+      <img src="./imgs/transition0.png" alt="">
+      <div class="fig-sn">过渡阶段</div>
+      <pre>
+//开始：从0到1的过渡
+//结束：从1到0的过渡
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+  // 指定 opacity 参与过渡
+  transition: opacity 3s ease;
+  // 也可以省略具体的属性；默认所有属性都参与过渡
+  // transition: 3s ease;
+}</pre>
+    </dd>
+    <dt>Props</dt>
+    <dd>
+      <div>. 常见属性如下；也可以自定义样式类</div>
+      <div>1. name：字符串；过渡效果名/样式类的名字；默认是 v；多个过渡需要指定 name；还可以动态绑定 name，实现更丰富的过渡效果；见后续</div>
+      <div>2. appear：布尔；初次渲染时应用一个过渡效果/立即执行过渡效果</div>
+      <div>. 更多属性请访问 <a href="https://cn.vuejs.org/api/built-in-components#transition">Transition API - Props</a></div>
+    </dd>
+    <dt>Events</dt>
+    <dd>
+      <div>监听 &lt;Transition&gt; 组件事件的方式在过渡过程中挂上钩子函数</div>
+      <div>每个钩子函数都可以指定 el 获取事件对象，如获取对象的自定义数据 data-；后续的列表渲染中，经常会用到</div>
+      <div>enter 和 leave 需要额外指定结束函数 done</div>
+      <pre>
+&lt;Transition
+  @before-enter="onBeforeEnter"
+  @enter="onEnter"
+  @after-enter="onAfterEnter"
+  @enter-cancelled="onEnterCancelled"
+  @before-leave="onBeforeLeave"
+  @leave="onLeave"
+  @after-leave="onAfterLeave"
+  @leave-cancelled="onLeaveCancelled"
+&gt;
+&lt;/Transition&gt;</pre>
+      <pre>
+// 在元素被插入到 DOM 之前被调用
+// 用这个来设置元素的 "enter-from" 状态
+function onBeforeEnter(el) {}
+
+// 在元素被插入到 DOM 之后的下一帧被调用
+// 用这个来开始进入动画
+function onEnter(el, done) {
+  // 调用回调函数 done 表示过渡结束
+  // 如果与 CSS 结合使用，则这个回调是可选参数
+  done()
+}
+
+// 当进入过渡完成时调用。
+function onAfterEnter(el) {}
+
+// 当进入过渡在完成之前被取消时调用
+function onEnterCancelled(el) {}
+
+// 在 leave 钩子之前调用
+// 大多数时候，你应该只会用到 leave 钩子
+function onBeforeLeave(el) {}
+
+// 在离开过渡开始时调用
+// 用这个来开始离开动画
+function onLeave(el, done) {
+  // 调用回调函数 done 表示过渡结束
+  // 如果与 CSS 结合使用，则这个回调是可选参数
+  done()
+}
+
+// 在离开过渡完成、
+// 且元素已从 DOM 中移除时调用
+function onAfterLeave(el) {}
+
+// 仅在 v-show 过渡中可用
+function onLeaveCancelled(el) {}</pre>
+    </dd>
+    <dt>Advanced</dt>
+    <dd>
+      <div>1. 动态过渡效果</div>
+      <div>为每个过渡指定 name 属性加以区分；指定了 name 属性的过渡，其内置类将不再以 v- 开始，而是以 name- 名开始</div>
+      <pre>
+&lt;Transition name="scale" appear&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/Transition&gt;</pre>
+      <div>可以绑定 name 属性，当状态变化时，动态地应用不同类型的过渡</div>
+      <pre>
+&lt;Transition :name="transition-name" appear&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/Transition&gt;</pre>
+      <div>2. 封装过渡效果</div>
+      <div>将设计好的过渡效果应该到其它组件</div>
+      <div>一个项目中，不同元素的过渡效果应该尽量保持一致</div>
+      <div>封装 &lt;Transition&gt; 组件预留插槽 slot，以便运用到不同内容</div>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 详情页 DetailsView.vue → 权益保护模态框组件 Modal.vue；使用 <a
+        href="./component_model.html">双向绑定</a> 实现</dd>
+    <dd>
+      <div>. 位置变化 - 显示时，从底部移入；消失时，移回底部</div>
+      <div>. 使用默认样式类</div>
+      <pre>
+&lt;Transition&gt;
+  &lt;Modal v-if="isShow" v-model="isShow"&gt;&lt;/Modal&gt;
+&lt;/Transition&gt;</pre>
+      <pre>
+.modal {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 9;
+}
+
+.v-enter-from,
+.v-leave-to {
+  bottom: -100%;
+}
+
+.v-enter-active,
+.v-leave-active {
+  // 指定过渡属性
+  transition: bottom 0.5s ease-in-out;
+  // 不指定过渡属性；默认所有属性都参与过渡
+  transition: 0.5s ease-in-out;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary</div>
+  <dl>
+    <dd class="sn">
+      <div>&lt;Transition&gt;的特点</div>
+      <div>&lt;Transition&gt;的基本使用</div>
+      <div>&lt;Transition&gt;的事件</div>
+      <div>&lt;Transition&gt;的封装</div>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./drill_modal.html">提示信息模态框</a></dd>
+    <dd>
+      <div>单击时，模态框元素在视图右上角淡入</div>
+      <!-- <div>注意：事件元素应放在过渡组件前面，否则。。。</div> -->
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击按钮，提示文字缩小消失后，进入百度主页 - 基于 CSS 的animation</dd>
+    <dd>
+      <div>拓展1：请根据实例中的核心代码完成过渡类的设计</div>
+      <div>拓展2：增加其它监听事件，查看过渡效果</div>
+      <div>思考1：如果不增加按钮 button，直接把单击事件加到过渡组件或提示文本上???</div>
+      <div>思考2：如果监听CSS的 animation 事件???</div>
+      <pre>
+&lt;button @click="toBaidu"&gt;enter&lt;/button&gt;
+
+&lt;Transition name="zoom" @after-leave="onAfterLeave"&gt;
+    &lt;div class="item" v-if="isEnter"&gt;click to enter baidu&lt;/div&gt;
+&lt;/Transition&gt;</pre>
+      <pre>
+let isEnter = ref(true)
+
+const toBaidu = () => {
+  isEnter.value = false
+}
+const onAfterLeave = () => {
+  console.log('leave end');
+  window.location.href = 'https://www.baidu.com'
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用 appear 属性，配合组件封装：加载出现、点击消失</dd>
+    <dd class="sn">
+      <div>封装组件 &lt;Fadein&gt;</div>
+      <pre>
+&lt;div&gt;
+  &lt;Transition name="my-fadein" appear&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/Transition&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.my-fadein-enter-from,
+.my-fadein-leave-to {
+  opacity: 0;
+}
+
+.my-fadein-enter-active,
+.my-fadein-leave-active {
+  transition: opacity 0.4s;
+}</pre>
+      <div>使用组件 &lt;Fadein&gt; - 单击时，isShow逻辑取反，略</div>
+      <pre>
+&lt;div&gt;
+  &lt;button @click="renderDom"&gt;render&lt;/button&gt;
+
+  &lt;Fadein&gt;
+    &lt;p v-if="isShow"&gt;hi,there&lt;/p&gt;
+  &lt;/Fadein&gt;
+&lt;/div&gt;</pre>
+      <p>拓展：使用列表渲染，尝试为每一项增加封装的过渡效果；如果需要依次延时渲染，如何实现???</p>
+      <!-- <p>CSS内联变量</p> -->
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../utils/custom/clipboard.js"></script>
+</body>
+
+</html>

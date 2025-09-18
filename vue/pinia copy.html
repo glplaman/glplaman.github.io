@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>状态管理 Pinia</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+  <style>
+    header {
+      background-image:
+        url(./imgs/pinia.svg),
+        linear-gradient(var(--main-color), var(--warn-color));
+      background-repeat: no-repeat;
+      background-size: 10vh, 100%;
+      background-position: right 90px bottom -10px, 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>状态管理</h1>
+    <span>&commat; Pinia</span>
+  </header>
+  <dl>
+    <dt>Overview</dt>
+    <dd>
+      <div>Vue3 采用 <a href="https://pinia.vuejs.org/zh/">Pinia</a> 管理状态</div>
+      <div>Pinia 是 Vue 专属的集中式状态管理库，使用大菠萝作为 logo</div>
+      <div>仓库 <a href="https://pinia.vuejs.org/zh/core-concepts/#setup-stores">stores</a> 是一个保存全局状态 <span
+          class="warn">state</span> 和业务逻辑的实体；可以在 <span class="warn">整个应用</span> 中访问的数据</div>
+      <div>不与组件树绑定，而承载着全局状态</div>
+      <div>状态管理出现之前，使用共享组件完成对数据的共享使用；共享数据的修改通过共享组件发送自定义事件完成 - 任何一个使用它的组件都可以修改，不太容易维护</div>
+      <div>Vue2 采用 vuex</div>
+    </dd>
+    <dt>Concepts</dt>
+    <dd class="sn">
+      <div>State - 驱动整个应用的数据源；是 store 的核心。应先定义能代表应用或反映应用状态的 state - 相当于组件中的 data</div>
+      <div>Getter - 对状态的一种声明式映射 - 相当于组件中的 computed</div>
+      <div>Action - 根据用户的交互对数据源的操作 - 相当于组件中的 method</div>
+      <figure>
+        <img src="./imgs/pinia0.png" alt="">
+        <figcaption>关系</figcaption>
+      </figure>
+    </dd>
+    <dt>Deployment</dt>
+    <dd>
+      <div>强烈建议在创建项目时，选择状态管理；项目创建完毕后，可以直接使用；不建议新手手动安装部署使用</div>
+      <div>仓库通常集中保存在项目的 stores 目录（应提前创建好），并按照功能创建 <span class="warn">单独</span> 的仓库文件</div>
+      <div>强烈建议通过复制计时器仓库 counter.js 并修改的方式创建新的仓库</div>
+      <div>仓库在 onMounted 之前就已经准备好 - 兵马未动，粮草先行</div>
+      <div>1. Installation</div>
+      <pre>npm i pinia</pre>
+      <div>2. Import</div>
+      <div>在入口文件 main.js 引入并创建使用</div>
+      <pre>
+import './assets/main.css'
+
+import { createApp } from 'vue'
+import App from './App.vue'
+//1. 导入
+import { createPinia } from 'pinia'
+//2. 创建
+const pinia = createPinia()
+const app = createApp(App)
+//3. 使用
+app.use(pinia)
+app.mount('#app')</pre>
+    </dd>
+    <!-- <dd class="tips">
+            <div>仓库会自动处理数据的响应式。通常不需要使用 ref 或 reactive 来声明状态；但是调试的时候，数据最初不会更新</div>
+            <div>即使指定了ref()，后期维护的时候，也不能带上.value</div>
+            <div>仅仅在精细化操作的时候，需要指定；如：使用计算属性等</div>
+            <div>为了和开发保持一致和调试方便，建议尽量指定响应式</div>
+        </dd> -->
+    <dt>counter.js</dt>
+    <dd class="sn">
+      <div>引入 defineStore 库及其它必要库</div>
+      <div>使用 defineStore 创建仓库实例，其中：</div>
+      <p>. 第一个参数 counter 是你的应用中 Store 的唯一 ID，Pinia 将用它来连接 store 和 devtools</p>
+      <p>. 第二个参数接收 option 对象或 setup 函数；setup 函数和组合式 API 类似，且功能更灵活</p>
+      <div>导出仓库示例(函数；需执行后才可以得到仓库实例)，以 use 开头且以 Store 结尾命名，如 useCounterStore</div>
+      <pre>
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useCounterStore  = defineStore('counter', ()=>{
+  //state - ref()
+  const count = ref(0)
+  
+  //getters - computed()
+  const doubleCount = computed( () => count.value * 2 )
+  
+  //action - function()
+  const increment = () => count.value++
+
+  return { count, msg, doubleCount, increment }
+})</pre>
+      <div>目标组件使用 Store</div>
+      <p>逻辑 - 引入仓库、创建仓库实例、使用仓库数据；<span class="warn">创建仓库实例前无法使用</span></p>
+      <pre>
+import { useCounterStore } from '@/stores/counter';
+const store = useCounterStore();
+console.log('store', store);</pre>
+      <p>结构 - 渲染仓库数据；这里采用内联事件</p>
+      <pre>
+&lt;div&gt;{{ store.count }}&lt;/div&gt;
+&lt;div&gt;{{ store.doubleCount }}&lt;/div&gt;
+&lt;div @click="store.increment"&gt;store handle&lt;/div&gt;</pre>
+      <p class="tips">仓库中的状态应指定初始值，否则其中的方法只有执行后才能拿到值</p>
+    </dd>
+    <dt>Warning</dt>
+    <dd>
+      <div><a href="../web/js/object.html">解构</a> 使得 store 中的数据会丢失响应，方法不会</div>
+      <pre>
+import { useCounterStore } from '@/stores/counter';
+const store = useCounterStore();
+const { count, increment } = store;</pre>
+      <pre>&lt;div @click="increment"&gt;仓库数据 - {{ count }}&lt;/div&gt;</pre>
+      <div>使用 storeToRefs 包保持数据响应式 - 不建议；<span class="warn">命名冲突。。。可读性不好。。。运维困难。。。</span></div>
+      <div>storeToRefs 面向的是数据，不是方法；所以不需要对方法进行特别处理</div>
+      <pre>
+import { useCounterStore } from '@/stores/counter';
+import { storeToRefs } from 'pinia';
+const store = useCounterStore();
+const { count } = storeToRefs(store);</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

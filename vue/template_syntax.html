@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模板语法 Template Syntax</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>模板语法</h1>
+    <span>&commat;Template Syntax</span>
+  </header>
+  <dl>
+    <dt>Review</dt>
+    <dd>
+      <div>DOM节点/元素组成</div>
+      <div>标签名：&lt;&gt; 内部的内容</div>
+      <div>标签属性：值对 name - value pair，值 value 使用单引号或双引号</div>
+      <div>标签内容：开始标签和结束标签之间的纯文本部分，也可以是其它子元素</div>
+      <pre>
+&lt;div class="wrap" id="team" style="color: #f40;" data-ind="100" hidden&gt;
+    hi,there.
+&lt;/div&gt;</pre>
+    </dd>
+    <dt>Introduction</dt>
+    <dd>
+      <div>基于 HTML 的 <a href="https://cn.vuejs.org/guide/essentials/template-syntax">模板语法 - Template
+          Syntax</a>，使能够声明式地将其组件实例的数据 <span class="warn">绑定</span> 到呈现的 DOM - 数据绑定 data binding</div>
+      <div>解决数据和元素节点的内容或属性的关联</div>
+      <div>减少 DOM 操作</div>
+      <div>根据数据类型，区分：简单数据类型绑定和复杂数据类型绑定</div>
+      <div>根据数据响应式，区分：静态数据绑定和 <a href="./reactivity.html">动态数据/响应式数据</a> 绑定</div>
+      <div>简单逻辑 - 使用 JavaScript 表达式实现数据的2次处理和使用</div>
+      <div>复杂逻辑 - 使用 <a href="./computed.html">计算属性</a> 完成</div>
+    </dd>
+  </dl>
+  <div class="chap">Text Interpolation</div>
+  <dl>
+    <dd>
+      <div>文本插值表达式</div>
+      <div>解决 <span class="warn">数据和元素内容</span> 的关联</div>
+      <div>使用双大括号 <span class="warn">{{}}</span>，将数据解释为 <span class="warn">纯文本</span></div>
+      <pre>
+let msg = 'hi,there'
+let age = 18
+let score = 78
+let arr = [1, 2, 3]
+let obj = {
+    id: 100,
+    name: 'gl'
+}</pre>
+      <pre>
+&lt;div&gt;msg: {{ msg }} - {{ msg.substring(3) }}&lt;/div&gt;
+&lt;div&gt;age: {{ age }} - {{ age + 2 }}&lt;/div&gt;
+&lt;div&gt;score: {{ score >= 60 ? 'pass' : 'fail' }}&lt;/div&gt;
+&lt;div&gt;arr: {{ arr[0] }} - {{ arr[1] }}&lt;/div&gt;
+&lt;div&gt;id: {{ obj.id }} - name: {{ obj.name.toUpperCase() }}&lt;/div&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">Attribute Bindings</div>
+  <dl>
+    <dd>
+      <div>解决 <span class="warn">数据和元素属性</span> 的关联</div>
+      <div>使用 <span class="warn">v-bind</span> 指令将数据和 HTML 属性 Attribute 绑定</div>
+      <div>可以简写为 <span class="warn">冒号 :</span></div>
+      <div>不能使用 {{}}</div>
+      <div>拼接时，可以使用两个波浪线定义的模板字符串 ``，便于直接使用变量 - 建议</div>
+      <pre>v-bind:attribute = value</pre>
+      <pre>:attribute = value</pre>
+    </dd>
+    <dt>General</dt>
+    <dd>
+      <div>常见有：id、href、src、class、style、title</div>
+      <pre>
+let uid = '20250109'
+let url = 'https://glpla.github.io'
+// 在线链接 - OK
+let src = 'https://glpla.github.io/utils/coffee/coffee0.jpg'
+let imgId = 0
+// src 无法使用本地链接 - Fail
+let img = './assets/logo.svg'</pre>
+      <pre>
+&lt;div :id='uid'&gt;my id&lt;/div&gt;
+&lt;a :href="url" target="_blank"&gt;大树小站&lt;/a&gt;
+&lt;img :src="src" alt="img" title="bg"&gt;
+// 使用模板字符串 - 推荐
+&lt;img :src="`https://glpla.github.io/utils/coffee/coffee${imgId}.jpg`" alt="img" title="bg"&gt;
+// 使用嵌套引号 - 不建议
+&lt;img :src="'https://glpla.github.io/utils/coffee/coffee' + imgId + '.jpg'" alt="img" title="bg"&gt;
+// 无效；请检查元素；正确使用，请访问后续内容
+&lt;img :src="img" alt=""&gt;</pre>
+    </dd>
+    <dt>Boolean</dt>
+    <dd>
+      <div>常见有：hidden、checked、selected、disabled、autoplay、loop、controls</div>
+      <div>1. 静态数据使用</div>
+      <div>指定的任何数据包括空串，都会渲染为真</div>
+      <div>通常仅仅指定属性，表示功能启用；不指定该属性，则不启用</div>
+      <div>按钮 button - 以下几种写法均表示被禁止</div>
+      <pre>
+&lt;button disabled="true"&gt;submit&lt;/button&gt;
+&lt;button disabled="false"&gt;submit&lt;/button&gt;
+&lt;button disabled=""&gt;submit&lt;/button&gt;
+&lt;button disabled="123"&gt;submit&lt;/button&gt;
+&lt;button disabled&gt;submit&lt;/button&gt;</pre>
+      <div>借助 <a href="../web/selector_class.html">伪类选择器</a> 查看效果</div>
+      <pre>
+button:disabled {
+  background-color: red;
+}</pre>
+      <div>单选按钮 radio - male 被选中；应该显式指定 value</div>
+      <pre>
+&lt;input type="radio" name="gender" value="male" checked&gt;male
+&lt;input type="radio" name="gender" value="female"&gt;female</pre>
+      <div>多选按钮 checkbox - 根据需要指定 value；其它使用同 radio</div>
+      <div>2. 绑定数据使用</div>
+      <div>可使用 <span class="warn">常量关键字</span> true 或 false、布尔变量或表达式</div>
+      <pre>
+&lt;button :disabled="true"&gt;submit&lt;/button&gt;
+&lt;button :disabled="false"&gt;submit&lt;/button&gt;
+&lt;button :disabled="isEnable"&gt;submit&lt;/button&gt;
+&lt;button :disabled="age > 20"&gt;submit&lt;/button&gt;</pre>
+      <div>单选按钮的绑定</div>
+      <pre>let gender = "male"</pre>
+      <pre>
+&lt;input type="radio" name="gender" value="male" :checked="gender=='male'"&gt;male
+&lt;input type="radio" name="gender" value="female" :checked="gender=='female'"&gt;female</pre>
+    </dd>
+    <dt><a href="./img.html">src</a></dt>
+    <dd>图片的地址绑定</dd>
+    <dt><a href="./class.html">class</a></dt>
+    <dd>类的绑定</dd>
+    <dt><a href="./style.html">style</a></dt>
+    <dd>内联样式的绑定</dd>
+    <dt>Other</dt>
+    <dd class="sn">
+      <div>v-text：渲染普通文本</div>
+      <div>v-html：渲染 HTML 元素；但是不建议：在网站上动态渲染任意 HTML <span class="warn">非常危险</span></div>
+      <pre>
+let txt = 'hi, there.'
+let html = '&lt;p&gt;warning&lt;/p&gt;'</pre>
+      <pre>
+&lt;div v-text='txt'&gt;&lt;/div&gt;
+&lt;div v-html='html'&gt;&lt;/div&gt;</pre>
+    </dd>
+    <dt>Extension</dt>
+    <dd>v-bind 在样式中的应用</dd>
+    <dd>
+      <div>静态数据</div>
+      <pre>const color = 'red'</pre>
+      <div>推荐使用响应式数据 - 换肤</div>
+      <pre>const color = ref('red')</pre>
+      <div>在样式中绑定数据</div>
+      <pre>
+.title{
+  color: v-bind(color);
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

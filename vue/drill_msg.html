@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 综合运用 5</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>留言板</h1>
+    <h4>Message</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">留言板</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <div>掌握数据双向绑定 v-model 的基本使用</div>
+      <div>掌握事件绑定和使用的基本过程</div>
+      <div>掌握常用的事件和事件修饰符的基本使用</div>
+      <div>熟悉生命周期函数的不同阶段和使用</div>
+      <div>掌握数据提交 POST 的基本过程*</div>
+      <div>进一步熟悉组件的基本作用和使用</div>
+      <div>进一步熟悉响应式数据的基本使用</div>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <div>创建项目或组件</div>
+      <div>加载历史数据并渲染；可以使用自键服务器或从 <a href="/utils/index.html">大树小站</a> 在线资源获取</div>
+      <p>.留言内容较长时，应打点提示</p>
+      <p>.留言条目总数</p>
+      <table class="tbl-sn">
+        <caption>参考接口</caption>
+        <tr>
+          <th>接口</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>/message</td>
+          <td>全部拉取</td>
+        </tr>
+      </table>
+      <div>输入内容，按 Alt + Enter 提交</div>
+      <p>.提交时，使用样式如动画形式高亮输入框提示用户</p>
+      <p>.提交时，可以选择保存在本地或自建服务器</p>
+      <div>单个留言条目删除</div>
+      <div>全部留言条目删除</div>
+      <div>其它</div>
+      <p>.轮播 - 可以采用第三方库 <a href="../web/framework/swiper.html">swiper</a></p>
+      <p>.定制字体 @font-face</p>
+      <p>.其它设计</p>
+      <div>注册*</div>
+      <div>登录*</div>
+      <div>留言*</div>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div class="cont">
+      <div>响应式数据</div>
+      <pre>
+let msgs = ref([])
+let msg = ref('')
+let isRem = ref(false)
+let isFocus = ref(false)
+let imgInd = ref(0)
+let imgs = []</pre>
+      <div>数据请求</div>
+      <pre></pre>
+      <div>数据渲染 - 条件渲染和列表渲染组合使用</div>
+      <pre></pre>
+      <div>输入框</div>
+      <pre>
+&lt;div class="cont"&gt;
+  &lt;input :class="['ipt', { 'border-color': isFocus }]" type="text" v-model.trim="msg"
+    placeholder="message here. press ALT+Enter to submit" 
+    @keyup.alt.enter="submitMsg" 
+    @focus="getFocus"
+    @blur="loseFocus"&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const submitMsg = () => {
+  if (msg.value) {
+    msgs.value.unshift(msg.value)
+    msg.value = ''
+    isFocus.value = false
+  }
+}
+
+const getFocus = () => {
+  isFocus.value = true
+}
+
+const loseFocus = () => {
+  isFocus.value = false
+}</pre>
+      <pre>
+.ipt.border-color {
+  border-color: #942d00;
+}
+</pre>
+      <div>单个留言条目删除 - 根据条目 id 从 msgs 中删除</div>
+      <pre></pre>
+      <div>全部留言条目删除 - 清空 msgs</div>
+      <pre>
+&lt;div class="subcount"&gt;
+  &lt;div&gt;total {{ msgs.length }} messages&lt;/div&gt;
+  &lt;button class="del-btn" @click="delAllMsg"&gt;
+    &lt;span v-if="msgs.length"&gt;delete&lt;/span&gt;
+    &lt;span v-else class="iconfont icon-ban"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+        </pre>
+      <pre></pre>
+      <div>轮播 - 加载数据时，利用定时器循环背景图片并相应的调整指示器的样式</div>
+      <pre>
+  &lt;header class="header" :style="{ 'backgroundImage': 'url(' + imgs[imgInd] + ')' }"&gt;
+    &lt;div class="dot-box"&gt;
+      &lt;div :class="['dot', { 'active': ind == imgInd }]" v-for="(item, ind) in imgs.length " :key="item"&gt;{{ ind }}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;</pre>
+      <pre>
+  onMounted(() => {
+    ind = setInterval(() => {
+      updateImg()
+    }, 3000);
+    axios.get('https://glpla.github.io/utils/data/todo.json')
+      .then(res => {
+        msgs.value = res.data.cont
+      })
+  })</pre>
+      <div>其它样式的提升和优化</div>
+      <figure class="img-sn">
+        <img src="./imgs/todo0.png" alt="">
+        <figcaption>静态效果</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/todo1.png" alt="">
+        <figcaption>动态效果</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/todo2.png" alt="">
+        <figcaption>动态效果</figcaption>
+      </figure>
+    </div>
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>保存数据到本地存储 <a href="../web/js/localStorage.html">localStorage</a></div>
+      <div>定义服务器接口，保存数据到服务器</div>
+      <div>调整产品列表页项目，增加添加到购物车的功能</div>
+      <div>了解随机ID生成器的使用 <a href="https://github.com/ai/nanoid/blob/main/README.zh-CN.md">Nano ID</a></div>
+      <div>保存/推送项目到自己的代码仓库</div>
+    </div>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

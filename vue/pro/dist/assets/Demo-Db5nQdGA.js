@@ -1,0 +1,1 @@
+import{c as o,a as e,t as c,F as s,o as r}from"./index-D1Vg663f.js";const i={__name:"Demo",props:["tmp"],setup(t){const n=t,a=()=>{n.tmp++};return(l,m)=>(r(),o(s,null,[e("div",null,c(t.tmp),1),e("button",{onClick:a},"inc")],64))}};export{i as default};

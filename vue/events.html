@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件 Events</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>事件</h1>
+    <span>&commat;Events</span>
+  </header>
+  <dl>
+    <dt>事件类型 Classification</dt>
+    <dd>
+      <div>包括：鼠标事件、键盘事件等等</div>
+      <table>
+        <caption>常见事件类型</caption>
+        <tr>
+          <th>类型</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>click</td>
+          <td>鼠标单击</td>
+        </tr>
+        <tr>
+          <td>dbclick</td>
+          <td>鼠标双击</td>
+        </tr>
+        <tr>
+          <td>keyup</td>
+          <td>按下某键并松开</td>
+        </tr>
+        <tr>
+          <td>keydown</td>
+          <td>某键按下</td>
+        </tr>
+        <tr>
+          <td>mouseup</td>
+          <td>鼠标松开</td>
+        </tr>
+        <tr>
+          <td>mousedown</td>
+          <td>鼠标按下</td>
+        </tr>
+        <tr>
+          <td>mousemove</td>
+          <td>鼠标移动</td>
+        </tr>
+        <tr>
+          <td>mouseover</td>
+          <td>鼠标悬停</td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>Html 原生使用</dt>
+    <dd>
+      <div>可以使用匿名函数或具名函数</div>
+      <div>可以使用参数或事件对象</div>
+      <div>更多信息，请访问HTML5事件 <a href="../web/js/event.html">传统方式</a>、<a
+          href="../web/js/event_addEventListener.html">事件侦听方式</a></div>
+      <div>1. 元素属性形式 - 以 onxxx 的形式指定事件处理</div>
+      <div>使用匿名函数</div>
+      <pre>&lt;div onclick="alert('hi,there.')"&gt;点击我&lt;/div&gt;</pre>
+      <div>或使用具名函数</div>
+      <pre>&lt;div onclick="sayHi"&gt;点击我&lt;/div&gt;</pre>
+      <pre>
+function sayHi() {
+  alert('hi,there.')
+}</pre>
+      <div>2. 对象属性形式</div>
+      <div>先获取 <a href="../web/js/document.html">文档 Document</a> 或 <a href="../web/js/element.html">元素 Element</a>，
+        再分配事件</div>
+      <div>使用匿名函数</div>
+      <pre>
+let el = document.querySelector('div')
+el.onclick = function (e) {
+    console.log(e);
+    console.log(this);
+}</pre>
+      <div>或使用具名函数</div>
+      <pre>
+el.onclick = sayHi
+function sayHi(e) {
+  console.log(e);
+  console.log(this);
+}</pre>
+      <div>3. 事件侦听方式</div>
+      <div>默认是冒泡类型</div>
+      <div>可以添加多个事件侦听；可以移除事件侦听</div>
+      <div>使用匿名函数</div>
+      <pre>el.addEventListener(event-type, function(){}, capture)</pre>
+      <pre>el.addEventListener(event-type, ()=>{}, capture)</pre>
+      <div>使用具名函数</div>
+      <pre>el.addEventListener(event-type, event-handle, capture)</pre>
+      <pre>el.removeEventListener(event-type, event-handle, capture)</pre>
+    </dd>
+  </dl>
+  <div class="chap">Vue使用 Usage</div>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://cn.vuejs.org/guide/essentials/event-handling">事件处理 - Event Handling</a></dd>
+    <dd>建议采用模块化开发，可以复用业务；详细信息，请参考 <a href="../web/js/module.html">Module</a></dd>
+    <dt>v-on</dt>
+    <dd>使用 v-on 指令来监听 DOM 事件，并在事件触发时执行对应的 JavaScript |事件处理函数 handle</dd>
+    <dd>
+      <pre>&lt;div v-on:click="doSomething"&gt; ... &lt;/div&gt;</pre>
+      <div>可简写为 <span class="warn">@</span></div>
+      <pre>&lt;div @click="doSomething"&gt; ... &lt;/div&gt;</pre>
+    </dd>
+    <dt>内联事件</dt>
+    <dd>
+      <div>直接操作数据；适合简单逻辑</div>
+      <pre>&lt;div @click="console.log('hi')"&gt;console log&lt;/div&gt;</pre>
+      <div class="warn">单击，count 加1；count 要使用才可以响应；否则仅仅利用 vue devTool 数据无法响应</div>
+      <pre>
+&lt;div @click="count++"&gt;do something&lt;/div&gt;
+&lt;div&gt;使用数据{{count}}&lt;/div&gt;</pre>
+    </dd>
+    <dt>普通事件</dt>
+    <dd>
+      <div>1. 无参</div>
+      <pre>&lt;div @click="doClick"&gt;do something&lt;/div&gt;</pre>
+      <div>使用具名函数</div>
+      <pre>
+function doClick() {
+  console.log('hello,world');
+}</pre>
+      <div>使用匿名函数 - 函数表达式；必须先声明再使用</div>
+      <pre>
+const doClick = () => {
+  console.log('hello,world');
+}</pre>
+      <div>2. 携带参数 - 注意单引号和双引号的配对使用</div>
+      <pre>&lt;div @click="doClickPara('18')"&gt;do something with para&lt;/div&gt;</pre>
+      <pre>
+function doClickPara(para) {
+  console.log(para);
+}</pre>
+      <div>3. 仅使用事件对象；如使用事件对象对应的 target 获取自定义属性 data-</div>
+      <div>结构中无须指定</div>
+      <div>逻辑中可以可以使用任何形参代替事件对象；常用的有e、event等</div>
+      <pre>&lt;div @click="doClickData" data-id="101"&gt;do something with data-&lt;/div&gt;</pre>
+      <pre>
+function doClickData(e) {
+  console.log(e.target.dataset);
+}</pre>
+      <div>4. 同时使用事件对象和参数</div>
+      <div>结构中需要使用 <span class="warn">特殊变量 $event</span> 以便和普通参数区分开来</div>
+      <div>逻辑中可以使用任意形参代替特殊变量 $event</div>
+      <pre>
+&lt;div 
+  @click="doClickParaData('18', $event)" 
+  data-id="101"
+&gt;do something with para and data- &lt;/div&gt;</pre>
+      <pre>
+function doClickParaData(para,e) {
+  console.log(para, e.target.dataset);
+}</pre>
+      <div>列表渲染商品数据，单击获取每个产品的 id - 在详情页利用 id 拉取对应的商品并渲染</div>
+      <pre>
+&lt;div v-for="item in goods" :key="item.id"&gt;
+  &lt;div&gt;{{ item.name }}&lt;/div&gt;
+  &lt;button @click="getItem(item.id, $event)"&gt;More&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const getItem = (id, e) => {
+  console.log(id, e);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">其它 Other</div>
+  <dl>
+    <dt>Bubbling、Capturing</dt>
+    <dd>
+      <div>决定事件执行的顺序</div>
+      <div>事件冒泡 Bubbling - <span class="warn">默认</span>行为；单击 son，目标 son 先执行，然后冒泡到 fa 执行</div>
+      <pre>
+&lt;div class="fa" @click="doFa"&gt;
+  &lt;div class="son" @click="doSon"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>事件捕获 Capturing - 单击 son，先被 fa 捕获执行，再传播到目标 son执行</div>
+      <pre>
+&lt;div class="fa" @click.capture="doFa"&gt;
+  &lt;div class="son" @click="doSon"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dt>target、currentTarget</dt>
+    <dd>
+      <div>target：触发事件的目标 - 点的谁</div>
+      <div>currentTarget：当前响应事件的目标；随着事件流的变化，当前目标也在变化</div>
+      <div>单击 fa：点的是 fa；向上没有父级或者说没有冒泡，响应事件的也是 fa，所以 target 和 currentTarget 都是 fa</div>
+      <div> 单击son：首先 son 响应事件，所以 target 和 currentTarget 都是 son；然后事件冒泡到 fa，fa 响应的是 son 绑定的事件，所以
+        target 是 son，currentTarget 是 fa</div>
+      <div>更多信息，请访问 <a href="../web/js/event_target.html">Event - target</a>、<a
+          href="../web/js/event_delegation.html">Delegation</a></div>
+      <pre>
+&lt;div class="fa" @click="doFa"&gt;
+  &lt;div class="son" @click="doSon"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>如果 son 指定 stop，事件不会冒泡到 fa</div>
+      <pre>
+&lt;div class="fa" @click="doFa"&gt;
+  &lt;div class="son" @click.stop="doSon"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>如果 fa 指定 self，仅仅响应我自己绑定的事件 - 自嗨模式，不会响应 son 冒泡的事件：target 是我，事件处理器不来自子元素</div>
+      <pre>
+&lt;div class="fa" @click.self="doFa"&gt;
+  &lt;div class="son" @click="doSon"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>classification</div>
+      <div>v-on/@</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 商品详情页 DetailsView.vue → 商品数量增加 inc() 和减少 dec()</dd>
+    <dd>
+      <div>方案1：使用内联事件</div>
+      <pre>&lt;div @click="num++"&gt;inc&lt;/div&gt;</pre>
+      <div>方案2：使用具名函数</div>
+      <pre>&lt;div @click="inc"&gt;inc&lt;/div&gt;</pre>
+      <pre>
+function inc() {
+  num.value++
+}</pre>
+      <div>方案3：使用匿名函数</div>
+      <pre>&lt;div @click="inc"&gt;inc&lt;/div&gt;</pre>
+      <pre>
+const inc = () => {
+  num.value++
+}</pre>
+      <div>参考结构</div>
+      <pre>
+&lt;footer&gt;
+  &lt;div class="price"&gt;
+    &lt;div class="total"&gt;&yen;100&lt;/div&gt;
+    &lt;div class="nums"&gt;
+      &lt;button&gt;-&lt;/button&gt;
+      &lt;span class="num"&gt;1&lt;/span&gt;
+      &lt;button class="inc"&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="btns"&gt;
+    &lt;button&gt;立即购买&lt;/button&gt;
+    &lt;button class="cart"&gt;加入购物车&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</pre>
+      <div>参考样式</div>
+      <pre>
+footer {
+  line-height: 40px;
+}
+
+.price {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nums {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nums button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #f40;
+}
+
+.nums .num {
+  width: 30px;
+  text-align: center;
+}
+
+.nums button.inc {
+  background-color: #f40;
+  color: #fff;
+}
+
+.btns {
+  display: flex;
+  gap: 10px;
+}
+
+.btns button {
+  flex: 1;
+  border-radius: 20px;
+  border: 1px solid #f40;
+}
+
+.btns button.cart {
+  background-color: #f40;
+  color: #fff;
+}</pre>
+    </dd>
+    <!-- <dd id="swiper">[<span class="iconfont icon-keyboard"></span>] 手动轮播 Swiper - 单击时切换图片</dd>
+    <dd>
+      <div>方案1：绑定属性，使用 &lt;img&gt; 配合在线资源</div>
+      <pre>&lt;img :src=" 'https://glpla.github.io/utils/coffee/coffee' + imgInd + '.jpg' " alt="swiper-img"&gt;</pre>
+      <div>方案2：绑定样式，使用 background-image 配合在线资源</div>
+      <pre>&lt;div&gt; :style="{ 'background-image': 'url(https://glpla.github.io/utils/coffee/coffee' + imgInd + '.jpg)' }" &lt;div/&gt;</pre>
+      <div>方案3：使用静态资源处理 - 放在项目 assets 目录下的 imgs 文件夹中</div>
+      <pre>
+import { ref } from 'vue';
+let ind = ref(0)
+const chg = () => {
+  ind.value++
+  ind.value = ind.value % 5
+}
+const getPic = (ind) => {
+  return new URL(`./assets/imgs/${ind}.jpg`, import.meta.url).href
+}</pre>
+      <pre>
+&lt;div&gt;{{ ind }}&lt;/div&gt;
+&lt;img :src='getPic(ind)' alt=""&gt;
+&lt;button @click="chg"&gt;change pic&lt;/button&gt;</pre>
+    </dd> -->
+    <!-- <dd>[<span class="iconfont icon-keyboard"></span>] 模块化封装商品数量的增加 inc() 和减少 dec()</dd>
+    <dd>
+      <div>oper.js - 默认导出一个函数，这个函数执行后又返回2个函数</div>
+      <pre>
+export default () => {
+  const inc = () => console.log("oper inc");
+  const dec = () => console.log("oper dec");
+  return { inc, dec };
+};</pre>
+      <div>引入 - 因为是默认导出，所以引入时，可以指定任意名字</div>
+      <div>使用 - 执行导出的函数，通过解构拿到其中一个函数 inc，可以用于任何场合</div>
+      <div>注意：如果导出的是响应式数据，解构会丢失数据的响应式</div>
+      <pre>
+import oper from '@/assets/utils/oper'
+console.log(oper);
+const { inc } = oper()</pre>
+      <pre>&lt;button @click="inc"&gt;inc&lt;/button&gt;</pre>
+      <div>最好不要解构</div>
+      <pre>
+import oper from '@/assets/utils/oper'
+console.log(oper);
+const useOper = oper()</pre>
+      <pre>&lt;button @click="useOper.inc"&gt;inc&lt;/button&gt;</pre>
+    </dd> -->
+    <dd>[<span class="iconfont icon-keyboard"></span>] 导航/标签页 TabCard；<a href="./class.html#tabcard">实现1 - 内联事件</a>、<a
+        href="./vfor.html#tabcard">实现2 - 内联事件；列表渲染</a></dd>
+    <dd>
+      <div>使用 &lt;nav&gt; 和 &lt;a&gt; 实现</div>
+      <div>单击标签，对应的标签高亮显示</div>
+      <div>阻止 &lt;a&gt; 的默认事件</div>
+      <div>分别使用事件代理、不使用事件代理实现，并体会2者的区别</div>
+    </dd>
+    <!-- <dd>[<span class="iconfont icon-keyboard"></span>] 购物车 Cart.vue</dd>
+    <dd>
+      <div>1. 使用 for 循环统计商品的价格 totalPrice 和数量 totalQuantity</div>
+      <div>2. 使用 reduce 统计商品的价格 totalPrice 和数量 totalQuantity</div>
+      <div>2. 显示或折叠购物车 - 高度发生变化</div>
+      <pre>
+&lt;button 
+  @click.stop="isShowCartDetail = !isShowCartDetail"&gt;
+&lt;/button&gt;</pre>
+      <div>4. 商品数量增加或减少</div>
+      <pre>
+&lt;div&gt;
+  &lt;button @click="item.quantity--"&gt;-&lt;/button&gt;
+  &lt;span &gt;{{ item.quantity }}&lt;/span&gt;
+  &lt;button @click="item.quantity++"&gt;+&lt;/button&gt;
+&lt;/div&gt;</pre>
+    </dd> -->
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

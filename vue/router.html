@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由概述 Route</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>路由概述</h1>
+    <span>&commat;Route</span>
+  </header>
+  <dl>
+    <dd class="heading-title"><span>部署路由环境</span> <span>↓</span> <span>创建路由</span> <span>↓</span> <span>使用路由</span>
+      <span>↓</span> <span>渲染路由</span>
+    </dd>
+    <dt>Deployment</dt>
+    <dd>
+      <div>单独安装路由依赖并引入，比较麻烦，不推荐</div>
+      <div>1. 安装路由 - 为项目添加安装依赖</div>
+      <pre>npm i vue-router -S</pre>
+      <div>2. 引入路由 - 在入口文件 main.js 中引入路由，作为中间件使用；这里引入后，路由将作为 <a href="./component.html#global">全局组件</a>，其它组件可以直接使用</div>
+      <pre>
+//引入
+import router from './router'
+
+//使用 - 链式
+app.use(router).mount('#app')</pre>
+      <div><span class="iconfont icon-thumbup"></span> 创建项目的时候指定使用路由，自动生成路由配置文件</div>
+    </dd>
+  </dl>
+  <div class="chap">CreateRouter</div>
+  <dl>
+    <dd>
+      <div>使用路由功能，需要 <a href="https://router.vuejs.org/">vue-router</a> 的支持</div>
+      <div>推荐 <a href="./project.html">创建项目</a> 的时候指定使用路由，自动生成路由配置文件</div>
+      <div>也可以 <a href="https://router.vuejs.org/zh/installation.html">单独安装路由依赖</a>；需要单独配置并引入，比较麻烦，不推荐</div>
+      <div>使用 <a href="https://router.vuejs.org/zh/api/#Functions-createRouter">createRouter()</a> 函数，根据 <a
+          href="https://router.vuejs.org/api/interfaces/RouterOptions.html">路由选项 RouterOptions</a> 创建路由实例 <a
+          href="https://router.vuejs.org/api/interfaces/Router.html">
+          Router</a></div>
+      <table>
+        <caption>路由选项 RouterOptions</caption>
+        <tr>
+          <th>属性</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>history</td>
+          <td>createWebHistory：大多 WEB 应用使用的模式，SEO 优化好；需要正确配置服务器
+            <br>createWebHashHistory：基于 <a href="">hash</a>；SEO 优化体现一般；无须额外配置服务器
+          </td>
+        </tr>
+        <tr>
+          <td>routes</td>
+          <td>路由列表；详细配置属性使用见下表</td>
+        </tr>
+        <tr>
+          <td>linkActiveClass?
+            <br>linkExactActiveClass?
+          </td>
+          <td>路由匹配样式
+            <br>严格路由匹配样式
+          </td>
+        </tr>
+      </table>
+      <div class="tips">? 表示可选属性；下同</div>
+    </dd>
+    <dt>路由模式 <a href="https://router.vuejs.org/zh/guide/essentials/history-mode.html">History</a></dt>
+    <dd>
+      <div>历史记录模式</div>
+      <div>Vue2 使用 mode 配置项，Vue3 使用 history 配置项</div>
+      <div>需要引入对应的包再使用</div>
+      <div>1. createWebHistory()</div>
+      <div>HTML5 模式，URL 不带 #；传统网站模式</div>
+      <div>需要服务器端配合处理路径，否则容易出现 404；后端运维基本技能</div>
+      <pre>http://localhost:5173/</pre>
+      <pre>
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    // 
+})</pre>
+      <div>2. createWebHashHistory()</div>
+      <div>hash 模式；<span class="warn">推荐模式</span></div>
+      <div>URL 带 #，看起来不够美观</div>
+      <div>SEO 优化性能略微不足</div>
+      <div>兼容性更好，不需要服务器端配合处理路径；前后端开发比较省心</div>
+      <div>优秀作品提交，请使用哈希模式</div>
+      <pre>http://localhost:5173/#/</pre>
+      <pre>
+import { createRouter, createWebHashHistory } from 'vue-router'
+
+const router = createRouter({
+    history: createWebHashHistory(import.meta.env.BASE_URL),
+    // 
+})</pre>
+    </dd>
+    <dt>路由设计 <a href="https://router.vuejs.org/api/type-aliases/RouteRecordRaw.html">Routes - RouteRecordRaw</a></dt>
+    <dd>
+      <div>按照值对形式 name-value pair 配置路由，即把 URL 路径映射到组件；其中，路径 path 和组件 component <span class="warn">必填</span></div>
+      <div>所有的路由配置位于项目 src → router 文件夹中，通常是 index.js</div>
+      <div>更多路由配置特性，请访问 <a href="./router_adv.html">路由定义和分类</a></div>
+      <div class="tips">建议在系统默认的路由配置文件 router → index.js 中，根据项目需求，相应的增加并修改</div>
+      <table>
+        <caption>routes/RouteRecordRaw</caption>
+        <tr>
+          <th>属性</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>path</td>
+          <td>路由；必填</td>
+        </tr>
+        <tr>
+          <td>component</td>
+          <td>对应路由的组件；必填</td>
+        </tr>
+        <tr>
+          <td>name</td>
+          <td>命名路由：通过名字来指定路由；不能重复；更直观、灵活，简化路由使用，如动态路由</td>
+        </tr>
+        <tr>
+          <td>redirect</td>
+          <td>重定向路由：让指定的路由重新定位到另外一个路由</td>
+        </tr>
+        <tr>
+          <td>children</td>
+          <td>嵌套路由、子路由；嵌套路由通常需要使用重定向</td>
+        </tr>
+        <tr>
+          <td>props</td>
+          <td>是否启用路由参数；可以接收动态路由参数和查询路由参数</td>
+        </tr>
+        <tr>
+          <td>meta</td>
+          <td>路由元信息：用于路由组件的额外配置；无法在编程式路由中定义或覆盖</td>
+        </tr>
+        <tr>
+          <td>beforeEnter</td>
+          <td>路由独享的守卫</td>
+        </tr>
+      </table>
+      <div>1. 路径 path</div>
+      <div>
+        <div>/ 代表根路由</div>
+        <div>1.1 普通路由 - 仅仅指定路径</div>
+        <pre>
+{
+  path: '/menu',
+  component: () => import('@/views/MenuView.vue'),
+}</pre>
+        <div>1.2 查询路由 - 路由传参的方式之一；以值对 name-value pair 的形式，通过 ? 拼接在路由后面；多个值对以 & 分割
+        </div>
+        <div>使用/访问时传递参数，如用户分享</div>
+        <pre>https://localhost:5173/menu?user=glpla.github.io</pre>
+        <div>1.3 动态路由 - 路由传参的方式之一；以路径的方式拼接路由</div>
+        <div>便于实现视图共享 - 将给定匹配模式的路由映射到<span class="warn">同一个</span>组件，如 /goods/1
+          和 /goods/2 这样的 URL 都会映射到同一个路由 /goods: 在同一个页面根据 id 显示不同的商品 </div>
+        <div>使用通配符 <span class="warn">:</span> - wild card 定义对应当前路由的动态路由</div>
+        <div>可以定义一个或多个；<span class="warn">?</span> 表示该参数可选</div>
+        <pre>
+{
+  path: '/details/:id',
+  component: () => import('@/views/DetailsView.vue'),
+}</pre>
+        <pre>https://localhost:5173/details?id=1001</pre>
+        <div>1.4 异常路由 <a href="https://router.vuejs.org/guide/essentials/history-mode.html#Caveat">Caveat</a> -
+          处理路由目标异常的情况，如
+          404，页面丢失</div>
+        <div>404 路由：使用自定义的路径参数|正则表达式匹配其它任意路径；通常是<span class="warn">最后一个</span>路由配置项</div>
+        <pre>
+{
+  path: '/:pathMatch(.*)*',
+  name: 'NotFound',
+  component: () => import('../views/NotFound.vue')
+}</pre>
+        <div>也可以使用 <span class="warn">内置函数 h</span> 生成 html，避免额外创建组件</div>
+        <div>404 路由也可以针对某个特定的路由</div>
+        <div>如果针对根路由和特定路由的404处理都存在，特定路由应该在根路由之前，否则无法正常匹配</div>
+        <pre>import {h} from 'vue'</pre>
+        <pre>
+{
+  path: '/goods:pathMatch(.*)*',
+  name: 'goods-not-found',
+  component: h('p', {style: 'color: red'}, 'goods 404 Not Found')
+}</pre>
+      </div>
+      <div>2. 组件 component</div>
+      <div>
+        <div>路由对应的视图</div>
+        <!-- 
+      <div>每一个组件都可以作为一个视图 view</div>
+      <div>每一个组件都是一个单文件组件 SFC - Single File Component</div>
+      <div>单页面应用 SPA - Single Page Application</div> -->
+        <div>2.1 默认导入 Normal import - 系统就绪时，所有组件都已经显示导入；引入组件时，可以省略后缀名 .vue</div>
+        <pre>import TeamView from "@/views/AboutView.vue";</pre>
+        <pre>
+{ 
+  path: '/about', 
+  component: TeamView,
+}</pre>
+        <div>2.2 动态导入 - 需要的时候才导入；懒加载</div>
+        <pre>
+{ 
+  path: '/about', 
+  component: () => import("@/views/AboutView.vue")
+}</pre>
+      </div>
+      <div>3. 命名路由 <a href="https://router.vuejs.org/zh/guide/essentials/named-routes.html">Name</a> - 使用 name 属性指定路由名称
+      </div>
+      <div>
+        <div>路由命名应唯一</div>
+        <div>引用更方便、简洁，特别是长路由或多级嵌套路由</div>
+        <div>可读性好：采用语义化的命名</div>
+        <div>可维护性强：路由变化时，只改路由，命名可以保留</div>
+        <pre>
+{
+  path: '/center/login',
+  component: () => import("@/views/LoginView.vue")
+  name: 'login'
+}</pre>
+      </div>
+      <div>4. 重定向路由 <a href="https://router.vuejs.org/zh/guide/essentials/redirect-and-alias.html">Redirect</a></div>
+      <div>
+        <div>将一个路径重定向到另一个路径，适用于 URL 标准化、旧路径迁移和默认路径设置</div>
+        <div>嵌套路由不需要指定 component，因为它会重定向到目标路由，由目标路由的配置指定</div>
+        <div>可以直接使用 path；也可以使用命名路由 name - 推荐</div>
+        <pre>
+{
+  path: '/',
+  // redirect: '/home',
+  redirect: { name: 'home' },
+},
+{
+  path: '/home',
+  name: 'home'
+  component: () => import("@/views/HomeView.vue") 
+}</pre>
+      </div>
+      <div>5. 嵌套路由 <a href="https://router.vuejs.org/zh/guide/essentials/nested-routes.html">Nested Routes</a> - 使用
+        children 属性指定子路由</div>
+      <div>
+        <div>用于构建复杂的 SPA，特别是多层嵌套视图</div>
+        <div>每个子路由都有自己的视图组件</div>
+        <div>为了渲染子路由对应的视图组件，父路由对应的组件应提供 &lt;router-view&gt;</div>
+        <div>子路由的 path 可以省略父级路由，不用 /；/代表根路由/根路径</div>
+        <div>嵌套路由的样式，如果不是全局的作用，应该单独设计。具体实现请查看 <a href="./router_style.html">路由样式</a></div>
+        <div>可以使用模块化开发设计路由信息，便于管理和复用；见后续例子</div>
+        <pre>
+{
+  path: "/menu",
+  component: () => import("@/views/MenuView.vue"),
+  name: "menu",
+  children: [
+    {
+      path: "goods", // 省略父级路由
+      component: () => import("@/components/Goods.vue"),
+      name: "goods"
+    },
+    {
+      path: "vip", // 省略父级路由
+      component: () => import("@/components/Vip.vue"),
+      name: "vip"
+    },
+    {
+      path: "/menu/rank", // 可以使用完整路由；建议所有子路由配置保持一致
+      component: () => import("@/components/Rank.vue"),
+      name: "rank"
+    },
+    {
+      path: "/menu/favorite",
+      component: () => import("@/components/Favorite.vue"),
+      name: "favorite"
+    }
+  ]
+}</pre>
+        <div>通常情况下，父路由匹配时，除了渲染本身视图外，还会渲染某个子路由的视图；如果不特别处理，仅仅当子路由也匹配时，才会渲染</div>
+        <div>方案1：子路由使用空路由</div>
+        <pre>
+{
+  path: "/menu",
+  component: () => import("@/views/MenuView.vue"),
+  name: "menu",
+  children: [
+    {
+      path: "", //空路由
+      component: () => import("@/components/Goods.vue"),
+      name: "goods"
+    },
+    // ...
+  ]
+}</pre>
+        <div>方案2：父路由重定向到子路由 - 建议</div>
+        <pre>
+{
+  path: '/menu',
+  redirect: { name: "goods" }, // 使用命名路由
+  // redirect: '/menu/goods',  // 或使用完整路由
+  component: () => import('@/views/MenuView.vue'),
+  name: "menu",
+  children:[
+    {
+      path: 'goods',
+      component: () => import('@/components/Goods.vue'),
+      name: "goods"
+    },
+    // ...
+  ]
+}</pre>
+        <div class="tips">开发中，路由设计原则应该保持一致</div>
+      </div>
+      <div>6. 路由元数据 <a href="./userouter.html#meta">meta</a> - 指定元信息，方便路由引用，如 <a
+          href="./router_guard.html#meta">导航守卫</a> 时，更新页面标题；显示主导航菜单</div>
+      <div>
+        <pre>
+{
+  path: "/mall",
+  name: "mall",
+  component: () => import("@/views/MallView.vue"),
+  meta: { showNav: true, title: "瑞幸电商" },
+},</pre>
+      </div>
+      <div>7. 路由独享的守卫 <a href="./router_guard.html">beforeEnter</a> - 当前路由切换时触发，用以控制访问</div>
+      <div>8. 路由传参 <a href="./router_props.html">props</a> - 按照组件传参的形式传递路由参数</div>
+    </dd>
+    <dt>路由样式 <a href="./router_style.html">linkActiveClass</a></dt>
+    <dt>严格匹配路由样式 <a href="./router_style.html">linkExactActiveClass</a></dt>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>history</div>
+      <div>routes</div>
+      <p>. path</p>
+      <p>. component</p>
+      <p>. name</p>
+      <p>. redirect</p>
+      <p>. children</p>
+      <p>. meta</p>
+      <div>linkActiveClass</div>
+      <div>linkExactActiveClass</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 路由的 <a href="../node/module.html#vue">Vue 的模块化开发</a>、<a
+        href="../web/js/module.html">html 的模块化开发</a></dd>
+    <dd>
+      <div>除了直接配置路由 routes 外，还可以采用模块化 - 先定义再导入</div>
+      <div>方案1：普通导出 - 导入和导出需要指定名字</div>
+      <div>路由文件 routes.js：需要指定类型和名字</div>
+      <pre>
+export const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: () => import("@/views/HomeView.vue"),
+  },
+  // ...
+];</pre>
+      <div>router → index.js：导入时，需解构化并指定名字</div>
+      <pre>import { routes } from "../assets/routes";</pre>
+      <div>方案2：默认导出</div>
+      <div>路由文件 routes.js：默认导出，不需要指定类型和名字</div>
+      <pre>
+export default [
+  {
+    path: "/",
+    name: "home",
+    component: () => import("@/views/HomeView.vue"),
+  },
+  // ...
+];</pre>
+      <div>router → index.js：导入时必需指定名字</div>
+      <pre>import routes from "../assets/routes";</pre>
+    </dd>
+    <dd class="tips">
+      <div>当直接导出一个变量、函数或类时，不需要显式的 return</div>
+      <div>module.exports 是 CommonJS 模块系统的导出方式，通常用于 Node.js 环境</div>
+      <div>export 是 ES Module（ESM）的导出方式，是现代 JavaScript 标准的一部分，广泛用于浏览器和前端框架中</div>
+      <div>Vite 默认支持 ES Module（ESM），并且推荐使用 ESM 的语法（如 export 和 import）；使用 ESM 可以更好地与现代工具链集成，例如 TypeScript、Tree
+        Shaking（摇树优化）等</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

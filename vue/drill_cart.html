@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>综合开发之购物车</title>
+  <link rel="stylesheet" href="../css/exp.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>综合开发之购物车</h1>
+    <h4>Cart</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">购物车</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <div>掌握事件绑定和使用的基本过程</div>
+      <div>掌握常用的事件和事件修饰符的基本使用</div>
+      <div>掌握计算属性的基本使用</div>
+      <div>熟悉生命周期函数的不同阶段和使用</div>
+      <div>进一步熟悉组件的基本作用和使用</div>
+      <div>进一步熟悉响应式数据的基本使用</div>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <div>视图端</div>
+      <p>.根据请求的数据渲染页面</p>
+      <p>.数据变化时，更新页面</p>
+      <div>逻辑端</div>
+      <p>.使用普通事件处理业务</p>
+      <p>.商品数量的增加/减少；直至删除</p>
+      <p>.商品的全选/部分选择</p>
+      <p>.商品结算</p>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div>第一部分 购物车仓库 cart.js</div>
+    <div>第二部分 详情页 DetailsView.vue</div>
+    <div class="cont">
+      <div>购物车静态效果</div>
+      <p>. 购物车固定定位在详情页底部；没有封装</p>
+      <p>. 基本结构，无数据绑定、无事件</p>
+      <p>. 高度同主导航；网格布局；平分空间；保持间隔；其它价格部分单独设置结束对齐</p>
+      <p>. 按钮的初始化和相关变量均来自主样式文件 app.css</p>
+      <pre>
+&lt;div class="cart"&gt;
+  &lt;span class="price"&gt;&yen;&lt;span&gt;99&lt;/span&gt;起&lt;/span&gt;
+  &lt;div class="opers"&gt;
+    &lt;button class="oper dec"&gt;-&lt;/button&gt;
+    &lt;div class="quantity"&gt;1&lt;/div&gt;
+    &lt;button class="oper inc"&gt;+&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;button class="btn btn-cart"&gt;加入购物车&lt;/button&gt;
+  &lt;button class="btn btn-buy"&gt;立即购买&lt;/button&gt;
+&lt;/div&gt;
+      </pre>
+      <figure>
+        <img src="./imgs/carts0.png" alt="">
+        <figcaption>购物车静态效果</figcaption>
+      </figure>
+      <div>准备数据</div>
+      <p>. 在 onMounted 中已经获取到了商品数据；需要准备添加到购物车的数据；除了保持基本信息外，要增加一个数量字段 quantity，默认是1</p>
+      <p>. 利用解构处理数据；这里没有处理规格 specification、甜点 dessert 和推荐商品 recommend</p>
+      <pre>const good = ref({})</pre>
+      <pre>
+onMounted(async () => {
+  let res = await goodsStore.getById(route.params.id)
+  good.value = { 
+    ...res, 
+    quantity: 1,
+    dessert: [],  
+    recommend: [] 
+  }
+})</pre>
+      <p>准备数据进阶版 - 处理规格 specification</p>
+      <pre>
+onMounted(async () => {
+  let res = await goodsStore.getById(route.params.id)
+  good.value = {
+    ...res,
+    quantity: 1,
+    cup: res.specification[0].options.find(item => item.sel == true).label,
+    ther: res.specification[1].options.find(item => item.sel == true).label,
+    sugar: res.specification[2].options.find(item => item.sel == true).label,
+    dessert: [],  
+    recommend: [] 
+  }
+})</pre>
+      <div>增加/减少数量</div>
+      <p>. 为数量按钮绑定单击事件</p>
+      <p>. 利用按钮的 disabled 处理越界；只判断下边界</p>
+      <p>. 这里使用内联事件实现</p>
+      <pre>
+&lt;div class="opers"&gt;
+  &lt;button class="oper dec" @click="good.quantity--" :disabled="good.quantity &lt;= 1"&gt;-&lt;/button&gt;
+  &lt;div class="quantity"&gt;{{ good.quantity }}&lt;/div&gt;
+  &lt;button class="oper inc" @click="good.quantity++"&gt;+&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <div>处理总价</div>
+      <p>. 利用计算 computed() 或监听 watch()</p>
+      <pre>
+const total = computed(() => {
+  return (good.value.price * (1 - good.value.discount) * good.value.quantity).toFixed(2)
+})</pre>
+      <div>添加到购物车</div>
+      <p>. 为加入购物车指定事件 addToCarts</p>
+      <p>. 创建购物车数据项：增加新字段 productId，保存商品 id；商品原 id 字段可以保留，也可以移除</p>
+      <p>. 数据项的 id 可以在这里指定；也可以在购物车仓库中指定；这里由购物车仓库指定</p>
+      <p>. 跳转到菜单视图；这里使用替换 replace 模式</p>
+      <pre>
+const addToCarts = () => {
+  const cartItem = {
+    ...good.value,
+    productId: good.value.id,
+  };
+  cartStore.addToCarts(cartItem)
+  router.replace('/menu')
+}</pre>
+      <div>立即购买</div>
+      <p>. 略</p>
+      <div>更新视图</div>
+      <p>. 使用响应式数据替换掉上述静态结构中的数据</p>
+      <p>. 更多效果自行完成</p>
+      <!-- <div>全选</div>
+      <p>.为全选按钮双向绑定选中数据 selectedAll，并增加改变 change 事件 selAll</p>
+      <p>.状态改变后，为真，则为全选，选中商品列表和商品列表一致；为假，则取消全选，选中商品列表为空</p>
+      <pre>&lt;input type="checkbox" v-model="cartData.selectedAll" @change="selAll"gt;</pre>
+      <pre>
+const selAll = () => {
+  if (cartData.selectedAll) {
+    cartData.selectedLists = cartData.lists
+  } else {
+    cartData.selectedLists = []
+  }
+}</pre>
+      <div>单个商品选择与取消</div>
+      <p>.为单个商品对应的 checkbox 绑定每一项数据，并增加改变 change 事件 selItem，处理全选的真与假</p>
+      <p>.单个商品取消选择时，全选为假</p>
+      <p>.商品列表和选中商品列表数量相等，为全选；否则取消全选；额外判断条件，如果商品列表为空，则也应该取消全选</p>
+      <pre>&lt;input type="checkbox" :value="item" v-model="cartData.selectedLists" @change="selItem"&gt;</pre>
+      <pre>
+const selItem = () => {
+  if (cartData.selectedLists.length == cartData.lists.length && cartData.lists.length) {
+    cartData.selectedAll = true
+  } else {
+    cartData.selectedAll = false
+  }
+}</pre>
+      <div>结算</div>
+      <p>.为总价绑定计算属性 getTotal</p>
+      <p>.遍历选中列表，依次将商品单价和商品数量相乘，并累加，得到总价</p>
+      <pre>&lt;div class="total"&gt;总价{{ getTotal }}&lt;/div&gt;</pre>
+      <pre>
+const getTotal = computed(() => {
+let sum = 0
+
+//for - 传统循环
+for(let i=0; i &lt;cartData.selectedLists.length; i++){
+  sum += cartData.selectedLists[i].number * cartData.selectedLists[i].price
+}
+
+return sum
+})</pre> -->
+    </div>
+    <div>第三部分 菜单页 MenuView.vue</div>
+    <div class="cont"></div>
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>保存项目到自己的代码仓库</div>
+      <div>调整产品列表页项目，增加添加到购物车的功能</div>
+      <div>使用<a href="../web/js/array2.html" class="link">数组 Array - 迭代函数</a>优化结算逻辑</div>
+    </div>
+    <div class="title">说明</div>
+    <div class="cont">
+      <p>现场验收、课后提交实验报告</p>
+    </div>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+import{c as l,a as t,t as s,u as n,d as r,o as i}from"./index-CsISKw4a.js";const p={class:"about"},_={__name:"AboutView",setup(c){const a=r();return console.log(a),(u,e)=>{var o;return i(),l("div",p,[e[0]||(e[0]=t("h1",null,"This is an about page",-1)),t("div",null,"path:"+s(u.$route.fullPath),1),t("div",null,s((o=n(a).params)==null?void 0:o.id),1)])}}};export{_ as default};

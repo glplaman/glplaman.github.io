@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件双向绑定 defineModel</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>组件双向绑定</h1>
+    <span>&commat;defineModel()</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>组件的双向绑定：父组件的数据变化会影响到子组件；子组件的数据变化会影响到父组件</div>
+      <div>子组件使用宏 <a href="https://cn.vuejs.org/api/sfc-script-setup.html#definemodel">defineModel()</a> 声明一个双向绑定属性 prop
+      </div>
+      <div>父组件使用 v-model 关联绑定</div>
+      <div>可以双向绑定一个或多个数据</div>
+      <div>早期版本使用 <a href="https://cn.vuejs.org/guide/components/v-model.html">v-model</a> 实现</div>
+    </dd>
+    <dt>基本过程 Procedure</dt>
+    <dd>
+      <div>1. 子组件</div>
+      <div>使用 defineModel() 声明一个双向绑定属性 props，同样建议使用变量接收，默认是 model</div>
+      <pre>const model = defineModel()</pre>
+      <div>可以指定类型</div>
+      <pre>const model = defineModel({type: Number, default: 0 })</pre>
+      <div>声明的数据默认是 ref()，所以逻辑中使用需要指定 .value</div>
+      <div>2. 父组件</div>
+      <div>引入子组件并使用 v-model 绑定某个数据，如 count，该数据和子组件的定义的 model 建立起双向绑定</div>
+      <pre>&lt;Model v-model ="count" /&gt;</pre>
+      <div>子组件对数据 model 的操作，会影响到父组件 count</div>
+      <div>父组件对数据 count 的操作，会影响到子组件 model</div>
+      <div>子组件的 model 和 父组件的 count 双向绑定</div>
+      <img src="./imgs/model0.png" alt="">
+      <div class="fig-sn">数据流</div>
+    </dd>
+    <dt>最佳体验 Best Practice</dt>
+    <dd>
+      <div>1. 子组件 - 声明时显示指定 v-model 属性 num；同样可以指定类型 type 和默认值 default</div>
+      <pre>const num = defineModel('num')</pre>
+      <pre>const num = defineModel('num', { type: Number, default: 0 })</pre>
+      <div>2. 父组件 - 使用时显示指定 v-model 属性 num 和 count 绑定</div>
+      <pre>&lt;Model v-model:num ="count" /&gt;</pre>
+    </dd>
+    <dt>多个双向绑定</dt>
+    <dd>
+      <div>可以指定多个双向绑定数据；如 first, last</div>
+      <div>多个双向绑定必须指定参数</div>
+      <div>1. 子组件</div>
+      <pre>
+const first = defineModel('first')
+const last = defineModel('last')</pre>
+      <pre>
+&lt;input type="text" v-model="first"&gt;
+&lt;input type="text" v-model="last"&gt;</pre>
+      <div>2. 父组件</div>
+      <pre>
+let user = ref({
+    first: 'gl',
+    last: 'cn'
+})</pre>
+      <pre>&lt;Model v-model:first="user.first" v-model:last="user.last" /&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">底层机制</div>
+  <dl>
+    <dd>使用 <span class="warn">语法糖</span> 规则，修改为特定属性和特定方法，实现双向绑定</dd>
+    <dd>prop 名称将默认为 "modelValue"</dd>
+    <dt>单属性双向绑定</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 点赞组件 - 双向绑定版</dd>
+    <dd class="sn">
+      <div>调整后的子组件 - 逻辑</div>
+      <pre>
+const props = defineProps({
+    modelValue: Number
+})
+const emit = defineEmits(['update:modelValue'])
+const incLike = () => {
+    emit('update:modelValue', props.modelValue + 1)
+}</pre>
+      <div>调整后的子组件 - 结构</div>
+      <pre>&lt;div @click="incLike"&gt;&lt;span class="fa fa-heart"&gt;&lt;/span&gt; {{ modelValue }}&lt;/div&gt;</pre>
+      <div>调整后的父组件 - 逻辑</div>
+      <pre>let msg = ref(0)</pre>
+      <div>调整后的父组件 - 结构</div>
+      <pre>&lt;List v-model="msg"&gt;&lt;/List&gt;</pre>
+    </dd>
+    <dt>多属性双向绑定</dt>
+    <dd>使用修饰符区分不同的属性；使用冒号:不是点.</dd>
+    <dd>父组件</dd>
+    <dd>
+      <pre>&lt;List v-model:msg="msg" v-model:tips="tips"&gt;&lt;/List&gt;</pre>
+    </dd>
+    <dd>子组件</dd>
+    <dd>
+      <pre>
+const props = defineProps(['msg', 'tips'])
+const emits = defineEmits(['update:msg', 'update:tips'])</pre>
+    </dd>
+    <dd>
+      <pre>
+&lt;input type="text" :value="msg" @input="$emit('update:msg', $event.target.value)"&gt;
+&lt;input type="text" :value="tips" @input="$emit('update:tips', $event.target.value)"&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 模态框 - 双向绑定版</dd>
+    <dd>
+      <div>详情页 DetailsView.vue → 权益保护模态框组件 Modal.vue；使用双向绑定 defineModel() 实现</div>
+      <div>围绕一个数据 isShowModal 展开</div>
+      <div>1. 权益组件 Guarantee.vue</div>
+      <pre>
+&lt;div class="guarantee"&gt;
+  &lt;div&gt;guarantee&lt;/div&gt;
+  &lt;button @click="model = true"&gt;show&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <pre>const model = defineModel()</pre>
+      <div>2. 模态框组件 Modal.vue</div>
+      <pre>
+&lt;div class="modal"&gt;
+  &lt;div&gt;modal&lt;/div&gt;
+  &lt;button @click="model = false"&gt;close&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <pre>const model = defineModel()</pre>
+      <div>3. 父组件 HomeView.vue</div>
+      <pre>
+&lt;Guarantee v-model="isShowModal"&gt;&lt;/Guarantee&gt;
+&lt;Modal v-model="isShowModal" v-show="isShowModal"&gt;&lt;/Modal&gt;</pre>
+      <pre>
+import { ref } from 'vue';
+import Guarantee from '@/components/Guarantee.vue';
+import Modal from '@/components/Modal.vue';
+const isShowModal = ref(false);</pre>
+      <img src="./imgs/model.png" alt="">
+      <div class="fig-sn">数据流</div>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd>
+      <div>子组件：defineModel()</div>
+      <div>父组件：v-model</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd id="specification">[<span class="iconfont icon-keyboard"></span>] 产品规格 - 使用 radio 实现</dd>
+    <dd>
+      <div>. 数据结构不同，实现的方法略有不同</div>
+      <div>1. 杯型：中杯、大杯、霸王杯</div>
+      <div>2. 冷热：少冰、正常冰、多冰</div>
+      <div>3. 糖度：三分糖、五分糖、七分糖</div>
+      <div>子组件 Specification.vue：每个规格都是一组单选</div>
+      <pre>
+&lt;div class="specification"&gt;
+  &lt;span&gt;{{ item.label }}&lt;/span&gt;
+  &lt;label class="specification-item" v-for="option in item.options" :key="option.id"&gt;
+    &lt;input type="radio" :name="item.name" :value="option.label" v-model="model" hidden&gt;
+    &lt;span&gt;{{ option.label }}&lt;/span&gt;
+  &lt;/label&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const model = defineModel()
+const props = defineProps({
+  item: {
+    type: Object,
+    default: {}
+  }
+})</pre>
+      <div>参考数据节点</div>
+      <pre>
+{
+  "id": 101,
+  "label": "杯型",
+  "name": "cup",
+  "options": [
+    { "id": 1, "label": "中杯", "value": "中杯", "sel": true },
+    { "id": 2, "label": "大杯", "value": "大杯", "sel": false },
+    { "id": 3, "label": "超大杯", "value": "超大杯", "sel": false }
+  ]
+}</pre>
+      <img src="./imgs/specification.png" alt="">
+      <p class="fig-sn">详情页规格组件效果</p>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 甜点组件 - 使用 checkbox 实现</dd>
+    <dd>
+      <div>1. 子组件 RecoDessert.vue</div>
+      <div>. 定义 props 属性 dessert</div>
+      <div>. 额外指定 v-model 属性 dessertSelected</div>
+      <pre>
+const props = defineProps(['dessert'])
+const dessertSelected = defineModel('dessertSelected', { default: [] })</pre>
+      <pre>
+&lt;div class="reco-dessert"&gt;
+  &lt;div class="item" v-for="(item, ind) in dessert" :key="item.id"&gt;
+    &lt;input class="cb" type="checkbox" name="dessert" :id="item.id" :value="item.title" v-model="dessertSelected"&gt;
+    &lt;label :for="item.id"&gt;
+      &lt;img class="img" :src="`https://glpla.github.io/utils/${item.img}`" alt=""&gt;
+      &lt;p&gt;{{ item.title }}&lt;/p&gt;
+      &lt;div class="price"&gt;&yen;{{ item.priceOrignal }}&lt;/div&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>2. 父组件 DetailView.vue</div>
+      <div>. 使用本地数据或在线数据</div>
+      <div>. 样式略</div>
+      <pre>
+import RecoDessert from '@/components/RecoDessert.vue';
+// 商品数据
+const goods = ref({})
+// 选择的商品数据
+const goodsSelected = ref({
+  // ...
+  dessert: []
+})</pre>
+      <pre>&lt;RecoDessert :dessert="goods.dessert" v-model:dessertSelected="goodsSelected.dessert" /&gt;</pre>
+      <img src="./imgs/dessert.png" alt="">
+      <p class="fig-sn">详情页甜点组件效果</p>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 性别设置/个人中心 - 使用 radio 实现</dd>
+    <dd>
+      <div>修改单选组件为组件双向绑定</div>
+      <div>确定情况下的绑定应用 - 性别</div>
+      <div>子组件的 radio 和 父组件的数据双向绑定</div>
+      <div>子组件：绑定内容、绑定选择</div>
+      <div>父组件：响应子组件的性别选择；严格意义上，仅仅是子组件和父组件的数据绑定</div>
+      <div>也可以使用自定义事件实现</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

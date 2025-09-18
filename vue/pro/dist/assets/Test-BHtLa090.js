@@ -1,0 +1,1 @@
+import{C as r,w as o,c,t as n,u as s,b as i}from"./index-CYI7gVQ2.js";const u={__name:"Test",setup(l){let t=r({id:100,name:"glpla",age:18,addr:{city:"cq",code:"541000"}});return o(t,(a,e)=>{console.log("user is watched",a,e)}),(a,e)=>(i(),c("div",{onClick:e[0]||(e[0]=d=>s(t).id++)},n(s(t).id),1))}};export{u as default};

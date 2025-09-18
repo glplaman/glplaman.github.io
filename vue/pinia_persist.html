@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>持久化存储 Persist</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>持久化存储</h1>
+    <span>&commat; Persist</span>
+  </header>
+  <dl>
+    <dd>
+      <div>更多信息，请访问 <a href="https://www.npmjs.com/package/pinia-plugin-persistedstate">NPM -
+          pinia-plugin-persistedstate</a></div>
+      <div>状态的持久化存储通过第三方插件实现</div>
+      <div>本质上是使用了 <a href="../web/js/localStorage.html">localStorage</a></div>
+    </dd>
+    <dt>pinia-plugin-persistedstate</dt>
+    <dd class="sn">
+      <div>安装依赖</div>
+      <pre>npm i pinia-plugin-persistedstate</pre>
+      <div>main.js 中引入并使用</div>
+      <pre>
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)</pre>
+      <div>开启仓库的持久化选项</div>
+      <pre>
+import { defineStore } from 'pinia'
+
+export const useStore = defineStore('store', {
+  // ...
+  persist: true,
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

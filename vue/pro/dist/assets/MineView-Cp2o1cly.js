@@ -1,0 +1,1 @@
+import{_ as e,c,b as s}from"./index-CYI7gVQ2.js";const t={},n={class:"mine-view"};function o(_,a){return s(),c("div",n)}const i=e(t,[["render",o],["__scopeId","data-v-90866f11"]]);export{i as default};

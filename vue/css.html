@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式表 CSS</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>样式表</h1>
+    <span>&commat;CSS</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd class="sn">
+      <p>可以导入本地样式表；也可以导入在线样式表</p>
+      <p>可以全局引入；也可以组件引入</p>
+      <div>&lt;link&gt; - 结构中引入；在首页文件 index.html 中引入，全局有效</div>
+      <pre>&lt;link rel="stylesheet" href="//at.alicdn.com/t/c/font_3859342_gvcksnd8b65.css"&gt;</pre>
+      <div>import - 逻辑中引入；在主入口文件 main.js 中引入，全局有效；只能引入本地文件</div>
+      <pre>import "./assets/main.css";</pre>
+      <div>@import - CSS 文件或组件的 &lt;style&gt; 中引入</div>
+      <pre>
+@import './base.css';
+@import url(//at.alicdn.com/t/c/font_4235521_vw0a33le7e.css);</pre>
+      <div>src - 为组件的样式 &lt;style&gt;指定 src 属性</div>
+      <pre>&lt;style src="app.css"&gt;&lt;/style&gt;</pre>
+    </dd>
+    <dt>Scoped</dt>
+    <dd>
+      <div>样式部分中，使用 scoped 属性指定样式仅仅作用于当前组件的元素。但是会增加额外的开销：渲染时，每个组件分配一个属性</div>
+      <div>内部样式是通过组件的属性进行选择</div>
+      <div><span class="iconfont icon-dianzan"></span> 为组件的根节点指定一个特有的类。如 .nav。推荐以组件名字命名这个类 - 组件功能的唯一，可以保证组件类的唯一性</div>
+      <div>更多信息，请访问 <a href="https://cn.vuejs.org/api/sfc-css-features.html">API - 单文件组件 CSS 功能</a></div>
+      <figure class="img-sn">
+        <img src="./imgs/class0.png" alt="">
+        <figcaption>根组件分配的属性</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/class1.png" alt="">
+        <figcaption>父组件指定的7a7a和自己指定的0904</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/class2.png" alt="">
+        <figcaption>组件内部元素分配的组件属性</figcaption>
+      </figure>
+    </dd>
+    <dd id="theme">[<span class="iconfont icon-keyboard"></span>] 系统换肤 - 主题切换</dd>
+    <dd>
+      <div>参考源码 src → assets → base.css</div>
+      <div>Win + i → 个性化 → 颜色 color → 选择模式 → 浅色/深色/自定义</div>
+      <div>颜色模式切换后，查看页面效果；注释代码后再次查看页面效果</div>
+      <pre>
+@media (prefers-color-scheme: dark) {
+  // dark mode varible
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 自定义换肤 - 通过类的切换，利用局部变量覆盖全局变量实现主题切换；更多实现，请访问 <a
+        href="./watch_effect.html">自动侦听 Watch Effect</a></dd>
+    <dd>
+      <div>可以操作 &lt;html&gt; - 建议；也可以操作 &lt;body&gt;</div>
+      <div>俩者都在挂载点的外围，不在组件的作用域内，使用 <a href="../web/js/element.html">元素传统方法</a> 访问并修改</div>
+      <!-- <div>方案1：CSS 变量定义在全局样式中</div> -->
+      <pre>
+:root {
+  --bg-color: #fff;
+  --txt-color: #000;
+}
+
+.dark-theme {
+  --bg-color: #000;
+  --txt-color: #fff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--txt-color);
+  height: 100vh;
+}</pre>
+      <pre>
+const changeTheme = () => {
+  document.documentElement.classList.toggle('dark-theme')
+}</pre>
+      <!-- <div>方案2：取消组件样式的作用域限制 scoped</div> -->
+    </dd>
+    <dt>SCSS</dt>
+    <dd>原生 CSS3 也支持嵌套写法</dd>
+    <dd>后续案例演示会使用两种方法</dd>
+    <dd>请访问 <a href="./scss.html">SCSS</a></dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

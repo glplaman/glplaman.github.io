@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 个人中心页</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>个人中心页</h1>
+    <span>Center</span>
+  </header>
+  <dl class="number-mul-sn">
+    <dt>实验内容</dt>
+    <dd>
+      <div>头像定制</div>
+      <div>信息定制</div>
+      <div>收藏</div>
+      <div>订单</div>
+      <div>评论</div>
+      <div>热门推荐</div>
+      <div>地址管理</div>
+    </dd>
+    <dt>前置知识</dt>
+    <dd>
+      <div>文件上传</div>
+      <div>表单提交</div>
+      <div>双向绑定</div>
+      <div>网络请求 Axios - GET、POST</div>
+    </dd>
+    <dt>开发环境</dt>
+    <dd>
+      <div>操作系统 Window 10+</div>
+      <div>文本编辑器 Vs Code</div>
+      <div>谷歌浏览器 Chrome</div>
+      <div>Node.js</div>
+    </dd>
+    <dd>
+      <table>
+        <caption>API</caption>
+        <tr>
+          <th>分类</th>
+          <th>命名</th>
+        </tr>
+        <tr>
+          <td>/api/uploadimg</td>
+          <td>图像上传接口；图像name：image</td>
+        </tr>
+        <tr>
+          <td>/user/modify</td>
+          <td>用户信息修改接口；请求参数：usn、ukey、uvalue</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>参考代码 - 头像上传</dt>
+    <dd>头像上传和其它业务分开，单独设计：没有采用 &lt;form&gt; 表单，所以使用自定义表单数据提交</dd>
+    <dd>定制input/file，采用 - 移花接木 - 单独设计上传按钮</dd>
+    <dd>封装上传函数</dd>
+    <dd>可以略去header的配置</dd>
+    <dd>
+      <div>C端 - 逻辑</div>
+      <pre>
+import { ref, inject } from 'vue'
+const axios = inject('axios')
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => ({})
+  }
+})
+let ipt = ref(null)
+
+const selectImg = () => {
+  ipt.value.click();
+}
+
+const uploadIpt = (e) => {
+  let file = e.target.files[0];
+  uploadImg(file);
+}
+
+const uploadImg = (file) => {
+  let formData = new FormData()
+  formData.append('image', file)
+  axios.post('/api/uploadImg', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+    .then(res => {
+      // update user romote
+      updateUser({
+        usn: props.user.usn,
+        ukey: 'imgUrl',
+        uvalue: res.data.data.url
+      })
+      // update user local
+      props.user.imgUrl = res.data.data.url;
+    })
+    .catch(err => {
+      console.log('err', err);
+    })
+}
+
+const updateUser = (data) => {
+  axios.post('/user/modify', data)
+    .then(res => {
+      console.log('then', res);
+    })
+    .catch(err => {
+      console.log('err', err);
+    })
+}</pre>
+      <div>C端 - 结构</div>
+      <pre>
+&lt;div class="avatar"&gt;
+  &lt;img :src="user.imgUrl" alt=""&gt;
+  &lt;input type="file" name="image" ref="ipt" accept="image/*" hidden @change="uploadIpt"&gt;
+  &lt;div class="avatar-btn" @click="selectImg"&gt;上传头像&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>C端 - 样式略</div>
+      <div>S端</div>
+      <pre>
+const express = require('express')
+const multer = require('multer')
+const path = require('path')
+const router = express.Router()
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/upload')
+  },
+  filename: (req, file, cb) => {
+    console.log('file', file);
+    let ext = path.extname(file.originalname)
+    cb(null, file.fieldname + Date.now() + ext)
+  }
+})
+
+const upload = multer({
+  storage: storage
+})
+
+router.post('/', upload.single('image'), (req, res) => {
+  console.log('req.file', req.file)
+  res.json({
+    "errno": 0,
+    "data": {
+      "url": 'http://127.0.0.1:3000/upload/' + req.file.filename,
+    }
+  })
+})
+
+module.exports = router;</pre>
+    </dd>
+    <dt>参考代码 - 修改密码</dt>
+    <dd>使用MD5加密</dd>
+    <dd>使用旧密码才允许修改新密码，且新旧密码不能相同</dd>
+    <dd>
+      <div>C端 - 逻辑</div>
+      <pre>
+import { ref } from 'vue'
+import { md5 } from 'md5js';
+import axios from 'axios';
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => ({})
+  }
+})
+let oldupass = ref('')
+let newpass = ref('')
+let temppass = ref('')
+const submit = () => {
+  if (props.user.upass !== md5(oldupass.value)) {
+    console.log('pass not match');
+    return
+  }
+  if (newpass.value !== temppass.value) {
+    console.log('new pass not consistent');
+    return
+  }
+  if (newpass.value == oldupass.value) {
+    console.log('pass not change');
+    return
+  }
+  console.log(md5(newpass.value));
+  // update user remote
+  updateUser({
+    usn: props.user.usn,
+    ukey: 'upass',
+    uvalue: md5(newpass.value)
+  })
+  // update user local
+  props.user.upass = md5(newpass.value);
+}
+const updateUser = (data) => {
+  axios.post('/user/modify', data)
+    .then(res => {
+      console.log('then', res);
+    })
+    .catch(err => {
+      console.log('err', err);
+    })
+}      </pre>
+      <div>C端 - 结构</div>
+      <pre>
+&lt;div class="pass"&gt;
+  &lt;form @submit.prevent="submit"&gt;
+    &lt;div class="item"&gt;
+      &lt;div&gt;旧密码&lt;/div&gt;
+      &lt;input type="text" name="oldupass" maxlength="16" required v-model.lazy="oldupass" placeholder="16个字符以内"&gt;
+    &lt;/div&gt;
+    &lt;div class="item"&gt;
+      &lt;div&gt;新密码&lt;/div&gt;
+      &lt;input type="text" name="newpass" maxlength="16" required v-model.lazy="newpass" placeholder="16个字符以内"&gt;
+    &lt;/div&gt;
+    &lt;div class="item"&gt;
+      &lt;div&gt;确认新密码&lt;/div&gt;
+      &lt;input type="text" name="temppass" maxlength="16" v-model.lazy="temppass" required placeholder="16个字符以内"&gt;
+    &lt;/div&gt;
+    &lt;div class="btn-group"&gt;
+      &lt;button type="submit"&gt;提交&lt;/button&gt;
+      &lt;button type="reset"&gt;取消&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd class="tips">用户信息修改，采用同样的接口，C端可以封装为函数</dd>
+    <dt>参考效果</dt>
+    <dd>
+      <figure>
+        <img src="./imgs/setup3.png" alt="">
+        <figcaption>主要模块</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/setup0.png" alt="">
+        <figcaption>基本信息管理</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/setup1.png" alt="">
+        <figcaption>头像管理</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/setup2.png" alt="">
+        <figcaption>密码管理</figcaption>
+      </figure>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

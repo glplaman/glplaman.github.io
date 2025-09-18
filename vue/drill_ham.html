@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 综合运用 4</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>汉堡菜单</h1>
+    <h4>Hamburger</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">汉堡菜单的设计与开发</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <p>综合运用 Vue 框架知识点，设计并开发汉堡菜单</p>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <div>借助路由守卫和仓库，实现汉堡菜单的折叠和展开</div>
+      <div>路由的创建和使用</div>
+      <div>仓库的创建和使用</div>
+      <div>导航菜单的管理</div>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div class="cont">
+      <div>创建基于 Vite 的 Vue3 的项目，使用路由和状态管理</div>
+      <div>使用 Vs Code 打开，安装依赖，运行项目</div>
+      <div>创建若干测试组件</div>
+      <div>定制面向各个测试组件的路由，并为每个路由添加元数据 meta 指定标题 title</div>
+      <pre>
+{
+  path: '/test',
+  component: () => import('../views/Test.vue'),
+  meta: { title: 'Test' }
+}</pre>
+      <div>在首页中定制导航菜单，使得各组件可以相互跳转</div>
+      <div>定制移动端样式，加入汉堡菜单按钮</div>
+      <pre>
+&lt;div class="iconfont icon-thlist ham" @click="showMenu">&lt;/div&gt;
+&lt;nav :class="['main-nav', { 'active': store.flag }]"&gt;
+  //...
+&lt;/nav&gt;</pre>
+      <div>在仓库目录创建仓库 menu.js - 暴露一个变量 flag和一个取反的方法 switchFlag()</div>
+      <pre>
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+
+export const useMenuStore = defineStore('menu', () => {
+  const flag = ref(0)
+  const switchFlag = () => {
+    flag.value ? flag.value = false : flag.value = true
+  }
+
+  return { flag, switchFlag }
+})</pre>
+      <div>在首页逻辑引入仓库并实例化</div>
+      <pre>
+import { useMenuStore } from '@/stores/menu';
+const store = useMenuStore()</pre>
+      <div>为汉堡菜单添加事件showMenu，执行仓库暴露的方法 switchFlag()，管理导航菜单的折叠和展开</div>
+      <pre>
+const showMenu = () => {
+  store.switchFlag()
+}        </pre>
+      <div>在路由配置中添加导航守卫，使用仓库管理导航菜单的折叠和展开；每次路由响应完毕，都折叠汉堡菜单并设置页面标题</div>
+      <pre>
+import { useMenuStore } from '@/stores/menu'
+
+router.afterEach((to, from) => {
+  // 其它逻辑
+
+  document.title = to.meta.title
+
+  const store = useMenuStore()
+  store.flag = false
+})</pre>
+      <div>导航菜单的静态样式和动态样式 - 使用固定定位，折叠时，移出；展开时，移入</div>
+      <pre>
+.main-nav {
+  position: absolute;
+  left: -150px;
+  width: 150px;
+  height: calc(100vh - 20vh - 5vh);
+  background-color: #000;
+  transition: .4s;
+  padding: 10px;
+}
+
+.main-nav.active {
+  left: 0px;
+}</pre>
+      <figure class="img-sn">
+        <img src="./imgs/menu0.png" alt="">
+        <figcaption>静态时，折叠</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/menu1.png" alt="">
+        <figcaption>单击时，展开</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/menu2.png" alt="">
+        <img src="./imgs/menu3.png" alt="">
+        <img src="./imgs/menu4.png" alt="">
+        <figcaption>导航时更新网页标题</figcaption>
+      </figure>
+    </div>
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>优化菜单仓库</div>
+      <div>保存/推送项目到自己的代码仓库</div>
+    </div>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

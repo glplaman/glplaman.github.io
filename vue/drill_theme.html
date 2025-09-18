@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 综合运用 3</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>主题切换</h1>
+    <h4>Theme</h4>
+    <div class="title">实验题目</div>
+    <div class="cont">主题仓库的设计与开发</div>
+    <div class="title">实验目的</div>
+    <div class="cont">
+      <p>. 综合运用 Vue 框架知识点，设计并开发主题仓库</p>
+    </div>
+    <div class="title">实验内容</div>
+    <div class="cont">
+      <div>介绍</div>
+      <p>. 主题切换是指在 Web 应用中动态更改界面外观或样式的一种功能</p>
+      <p>. 通常用于实现暗黑模式、皮肤切换等场景</p>
+      <div>特点</div>
+      <p>. 改善用户体验</p>
+      <p>. 要精心、显式的指定主题色</p>
+      <div>方法</div>
+      <p>. 修改类名</p>
+      <p>. 修改属性</p>
+      <p>. 动态加载 CSS 文件</p>
+      <p>. 其它</p>
+      <div>换肤数据</div>
+      <p>. 两套 CSS 变量，条件发生时，从一套数据切换到另一套数据</p>
+      <pre>
+:root {
+  --bg-color: #fff;
+  --txt-color: #000;
+  // 其它内容...
+}
+
+// 类形式
+.dark-theme {
+  --bg-color: #000;
+  --txt-color: #fff;
+}
+
+// 自定义属性形式 data-
+[data-theme="dark"] {
+  --bg-color: #000;
+  --txt-color: #fff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--txt-color);
+  height: 100vh;
+}</pre>
+      <div>UI 实现</div>
+      <p>. 事件触发：可以操作 &lt;html&gt; 也可以操作 &lt;body&gt;</p>
+      <p>. 纯 CSS 实现：利用多选按钮 checkbox 的选择属性配合特定的选择器模拟事件</p>
+      <div>仓库实现</div>
+      <p>. 应结合不同的 UI 实现设计对应的仓库</p>
+    </div>
+    <div id="drill"></div>
+    <div class="title">参考效果和参考代码</div>
+    <div class="cont">
+      <figure>
+        <img src="./imgs/theme1.png" alt="">
+        <img src="./imgs/theme0.png" alt="">
+        <figcaption class="fig-sn">日间模式和夜间模式</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/theme2.png" alt="">
+        <img src="./imgs/theme3.png" alt="">
+        <figcaption class="fig-sn">日间模式和夜间模式</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/theme5.png" alt="">
+        <img src="./imgs/theme4.png" alt="">
+        <figcaption class="fig-sn">日间模式和夜间模式</figcaption>
+      </figure>
+    </div>
+    <div>
+      <div>实现1 事件触发</div>
+      <p>. 单击换肤元素：更改换肤元素的类；更改 &lt;body&gt; 的类</p>
+      <p>. 对结构没有特别要求</p>
+      <p>. 通过精心设计 .active 丰富 UI 效果</p>
+      <pre>
+theme.onclick = function () {
+  // 触发主题元素特效
+  theme.classList.toggle("active");
+  // 触发背景伪元素特效
+  document.body.classList.toggle("dark-mode");
+};</pre>
+      <p>. 背景过渡动画 - 不要显式指定过渡属性 <a href="../web/clip-path.html">clip-path</a>，使用默认的 All</p>
+      <pre>
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-color);
+  z-index: -1;
+  clip-path: circle(0% at 100% 0%);
+  transition: 0.5s ease-in-out;
+}
+
+body.dark-theme::before {
+  clip-path: circle(100%);
+}</pre>
+      <div>实现2 纯 CSS：利用多选按钮 checkbox 的选择属性 checked 配合特定的选择器模拟事件</div>
+      <p>. 对结构有要求</p>
+      <p>. 隐藏 &lt;input&gt;；选中时，.theme-icon从左侧移动到右侧</p>
+      <p>. 也可以使用 .theme-btn 的伪元素代替 .theme-icon</p>
+      <pre>
+&lt;input type="checkbox" id="theme" class="theme" hidden&gt;
+&lt;div class="theme-wrap"&gt;
+    &lt;span class="iconfont icon-Sun"&gt;&lt;/span&gt;
+    &lt;label for="theme" class="theme-btn"&gt;
+        &lt;div class="theme-icon"&gt;&lt;/div&gt;
+    &lt;/label&gt;
+    &lt;span class="iconfont icon-Moon-Star"&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <p>. &lt;body&gt;如果检测到 &lt;input&gt; 是选中状态，则更新/替换 CSS 变量</p>
+      <pre>
+body:has(.theme:checked) {
+    --main-bg-color: #000;
+    --main-txt-color: #f7f7f7;
+}</pre>
+    </div>
+    <div class="title">参考文献</div>
+    <div class="cont">
+      <div><a href="./css.html#theme">自定义换肤 - 更改类</a></div>
+      <div><a href="./watch_effect.html#theme">自定义换肤 - 更改属性</a></div>
+      <div><a href="./pinia_case.html#theme">状态管理应用</a></div>
+      <div><a href="../web/selector_class.html">伪类选择器</a></div>
+      <div><a href="../web/selector_com.html">组合选择器</a></div>
+      <div><a href="../web/selector_ele.html">伪元素选择器</a></div>
+      <div><a href="../web/transition.html">过渡动画</a></div>
+      <div><a href="../web/clip-path.html">背景路径裁剪</a></div>
+      <div><a
+          href="https://www.vecteezy.com/vector-art/12911433-day-night-mode-icon-vector-light-and-dark-switch-button-interface">vecteezy</a>
+      </div>
+    </div>
+
+    <div class="title">拓展与思考</div>
+    <div class="cont">
+      <div>使用其它方法实现并分析每个方法的特点</div>
+      <div>加入过渡动画</div>
+    </div>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script src="/utils/custom/drill-vue.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

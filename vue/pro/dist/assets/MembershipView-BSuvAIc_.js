@@ -1,0 +1,1 @@
+import{_ as e,c,o as s}from"./index-CRxbPlDs.js";const o={},t={class:"membership-view"};function r(_,a){return s(),c("div",t)}const i=e(o,[["render",r],["__scopeId","data-v-96b2bcb6"]]);export{i as default};

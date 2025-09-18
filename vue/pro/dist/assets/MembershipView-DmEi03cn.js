@@ -1,0 +1,1 @@
+import{_ as e,c,b as s}from"./index-CYI7gVQ2.js";const t={},o={class:"membership-view"};function r(_,a){return s(),c("div",o)}const i=e(t,[["render",r],["__scopeId","data-v-96b2bcb6"]]);export{i as default};

@@ -1,0 +1,1 @@
+import{b as t,m as c}from"./index-_uXUvIAb.js";const n="YI6BZ-MTZW4-HYFUC-F42DP-MK7MQ-3GBRU",p={__name:"Demo",setup(e){return c("axios"),window.cb=function(o){console.log(o)},t(()=>{const o=document.createElement("script");o.src=`https://apis.map.qq.com/ws/location/v1/ip?key=${n}&output=jsonp&callback=cb`,document.body.appendChild(o)}),(o,s)=>null}};export{p as default};

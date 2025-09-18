@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生命周期函数 Lifecycle Hooks</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>生命周期函数</h1>
+    <span>&commat; Lifecycle Hooks</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>组件的一生：创建 → 挂载 → 更新 → 销毁；又细分为前、后两个阶段</div>
+      <div>开发者根据组件的状态在特定阶段执行特定的操作</div>
+      <div>基本使用：引入对应的包 → 执行函数 → 传入回调</div>
+      <div>更多 API，请访问 <a href="https://cn.vuejs.org/api/">API</a>、<a
+          href="https://cn.vuejs.org/api/composition-api-lifecycle.html">Lifecycle</a></div>
+      <figure class="img-sn">
+        <img style="width: 80%;" src="./imgs/lifecycle.png" alt="">
+        <figcaption>Vue的生命周期函数</figcaption>
+      </figure>
+      <details open>
+        <summary style="font-weight: 600;">Lifetime</summary>
+        <details>
+          <summary>onBeforeMount()</summary>
+          <div>注册一个钩子，在组件被挂载之前被调用</div>
+          <div>初始化；拉取/操作数据；但是 <span class="warn">DOM还未就绪</span></div>
+          <div>
+            <pre>
+import { onBeforeMount } from 'vue'
+
+onBeforeMount(() => {
+    console.log("onBeforeMount");
+})</pre>
+          </div>
+        </details>
+        <details>
+          <summary>onMounted()</summary>
+          <div>注册一个回调函数，在组件挂载完成后执行：<span class="warn">DOM已就绪</span></div>
+          <div>多用于项目初始化</div>
+          <div>可以执行多个，但是仅仅执行1次</div>
+          <div>运维通过 <span class="warn">追加</span> 的方式，定义新的逻辑</div>
+          <div>
+            <pre>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+    console.log("onMounted:Initialization before");
+})
+onMounted(() => {
+    console.log("onMounted:Initialization now");
+})</pre>
+          </div>
+        </details>
+        <details>
+          <summary>onBeforeUpdate()</summary>
+          <div>注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之前调用</div>
+        </details>
+        <details>
+          <summary>onUpdated()</summary>
+          <div>更新完毕</div>
+          <div>注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之后调用</div>
+          <div>捕获响应式数据的更新；静态数据更新不会响应</div>
+        </details>
+        <details>
+          <summary>onBeforeUnmount()</summary>
+          <div>卸载之前</div>
+          <div>注册一个回调函数，在组件实例被卸载之前调用</div>
+          <div>是onBeforeUnmount，不是onBeforeUnmounted</div>
+        </details>
+        <details>
+          <summary>onUnmounted()</summary>
+          <div>注册一个回调函数，在组件实例被卸载之后调用</div>
+          <div>vue2中是destroy</div>
+        </details>
+        <details>
+          <summary>onActivated()</summary>
+          <div>适用于缓存组件</div>
+          <div>注册一个回调函数，若组件实例是 &lt;KeepAlive&gt; 缓存树的一部分，当组件被插入到 DOM 中时调用</div>
+        </details>
+        <details>
+          <summary>onDeactivated()</summary>
+          <div>适用于缓存组件</div>
+          <div>注册一个回调函数，若组件实例是 &lt;KeepAlive&gt; 缓存树的一部分，当组件从 DOM 中被移除时调用</div>
+        </details>
+      </details>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用响应式数据配合事件、延时或浏览器地址栏，查看视图的生命周期函数执行情况</dd>
+    <dd>
+      <pre>
+&lt;template&gt;
+    &lt;div class="about"&gt;
+        &lt;div&gt;about&lt;/div&gt;
+        &lt;div&gt;{{ cd }}秒后返回/work&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+    
+&lt;script setup&gt;
+import { onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+    
+const router = useRouter();
+    
+let cd = ref(5)
+    
+setInterval(() =&gt; {
+    cd.value--;
+    if (cd.value == -1) {
+        router.replace('/work')
+    }
+}, 1000)
+    
+onMounted(() =&gt; {
+    console.log('onMounted');
+})
+onBeforeUpdate(() =&gt; {
+    console.log('onBeforeUpdate');
+})
+onUpdated(() =&gt; {
+    console.log('onUpdated');
+})
+onBeforeUnmount(() =&gt; {
+    console.log('onBeforeUnmount');
+})
+onUnmounted(() =&gt; {
+    console.log('onUnmounted');
+})
+&lt;/script&gt;</pre>
+      <img src="./imgs/lifetime0.png" alt="">
+      <div class="tips">
+        <div>已安装 Vs Code 扩展 Vue Vscode Snippets 的，请注意编辑过程中的代码片段提示，不要一个一个字母编辑</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 焦点管理：自定义搜索组件，单击时，显示并自动获取焦点</dd>
+    <dd>
+      <div>方案1：使用表单属性 autofocus</div>
+      <pre>&lt;input type="text" ref="ipt" placeholder="your name" autofocus&gt;</pre>
+      <div>方案2：使用 <a href="./useTemplateRef.html">模板引用</a> 获取元素</div>
+      <div>搜索组件 Search.vue</div>
+      <pre>
+import { useTemplateRef, onMounted } from 'vue';
+const sql = useTemplateRef('sql')
+onMounted(() =&gt; {
+    sql.value.focus()
+})</pre>
+      <pre>&lt;input type="text" ref="sql" placeholder="your keyword"&gt;</pre>
+      <div>父组件 - 单击按钮显示搜索框</div>
+      <pre>
+import { ref } from 'vue';
+import Search from './components/Search.vue'
+const isShow = ref(false)</pre>
+      <pre>
+&lt;button @click="isShow = !isShow"&gt;click&lt;/button&gt;
+&lt;Search v-if="isShow"&gt;&lt;/Search&gt;</pre>
+      <div><span class="iconfont icon-bangzhu2"></span> 可以使用 v-show 吗？</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 模态框的显示隐藏和本案例有什么区别？</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 页面滚动事件</dd>
+    <dd>
+      <div>方案1：固定定位的元素变换样式，如添加阴影、显示返回顶部</div>
+      <div>&lt;header&gt; 固定在顶部 fixed；当滚动超过一定距离后，为 &lt;header&gt; 指定阴影</div>
+      <div>页面加载时，绑定事件处理器 - 监听页面的滚动事件</div>
+      <div>页面卸载时，移除绑定的事件处理器；别要注意定时器的清除</div>
+      <div>1.1 使用 <a href="./useTemplateRef.html">模板引用</a> 实现</div>
+      <pre>&lt;header class="header" ref="header"&gt;header&lt;/header&gt;</pre>
+      <pre>
+import { onMounted, onUnmounted, useTemplateRef } from 'vue'
+
+const header = useTemplateRef('header')
+
+const fn = () => {
+  header.value.classList.toggle('fixed', window.scrollY > 1000)
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', fn)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', fn)
+})</pre>
+      <div>1.2 使用动态类实现</div>
+      <pre>&lt;header class="header" :class="{ 'shadow': isShow }"&gt;header&lt;/header&gt;</pre>
+      <pre>
+const isShow = ref(false)
+
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    isShow.value = window.scrollY > 300
+  })
+})
+
+// ...</pre>
+      <div>样式略</div>
+      <div>方案2：粘性定位的元素变换样式 - <a href="./pro/dist/index.html">HomeView.vue</a> 页面/视图滚动到某个位置时，粘性定位在顶部
+      </div>
+      <div>利用 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">getBoundingClientRect()</a>
+        获取元素相对视口的 top；当 top 为0时，表示粘性定位触发，应用特定样式</div>
+      <div>这里使用传统事件方式 - 建议使用事件侦听的方式</div>
+      <pre>&lt;div class="tab-box" ref="tab-box"&gt;&lt;/div&gt;</pre>
+      <pre>
+import { onMounted, onUnmounted, useTemplateRef } from 'vue'
+
+const tabBox = useTemplateRef('tab-box')
+
+onMounted(() => {
+  window.onscroll = function () {
+    const rect = tabBox.value.getBoundingClientRect()
+    if (rect.top &lt;= 0) {
+      tabBox.value.classList.add('sticky')
+    } else {
+      tabBox.value.classList.remove('sticky')
+    }
+  }
+})
+
+onUnmounted(() => {
+  window.onscroll = null
+})</pre>
+      <div>使用事件监听 addEventListener() 和 样式的 toggle() 优化，如使用具名函数便于清除事件侦听</div>
+      <pre>
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    let rect = tabBox.value.getBoundingClientRect()
+    tabBox.value.classList.toggle('sticky', rect.top &lt;= 0)
+  })
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 定位页面</dd>
+    <dd>
+      <div>页面加载完毕，在顶部呈现；页面跳转时，可能会保留之前的滚动位置</div>
+      <pre>
+onMounted(() => {
+  window.scrollTo(0, 0)
+  // ...
+})</pre>
+      <div>多个页面需要控制时，可以使用 <a href="./route_guard.html">路由守卫 Guard</a></div>
+      <pre>
+router.afterEach((to, from) => {
+  document.title = to.meta.title;
+  window.scrollTo(0, 0);
+});</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标签页 - 使用 <a href="./component_dynamic.html">动态组件</a>
+      切换时，查看各组件的生命周期函数执行情况</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

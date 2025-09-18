@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>腾讯地图服务 LBS</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.0/apexcharts.min.css" />
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>腾讯地图服务</h1>
+    <span>&commat;LBS</span>
+  </header>
+  <dl>
+    <dd>提供更为深度的地图应用场景支持</dd>
+    <dd>开发文档 → JavaScript：Javascript API GL是基于WebGL技术打造的3D版地图API，3D化的视野更为自由，交互更加流畅</dd>
+    <dd>更多使用信息，请参考 <a href="https://lbs.qq.com/">腾讯地图服务 LBS</a>、<a
+        href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glOverview">javascriptGL</a></dd>
+    <dt>准备</dt>
+    <dd class="sn">
+      <div>注册账号</div>
+      <div>创建应用：控制台 → 应用管理 → 我的应用 → 创建应用</div>
+      <div>申请 KEY：普通 Web/Vue 应用不需要选择产品类别；Webservice API 借助 axios/fetch 采用接口请求的方式使用</div>
+      <p>如果使用Vue或者React框架，建议使用 <a
+          href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glComponents">tlbs-map地图组件库</a>，能够降低您的开发成本</p>
+    </dd>
+    <dd class="example-sn">获取当前位置并显示地图</dd>
+    <dd class="sn">
+      <div>获取当前坐标，并在成功回调函数 showPosition 中异步加载腾讯地图API；在Vue的挂载生命周期函数中调用</div>
+      <pre>navigator.geolocation.getCurrentPosition(showPosition, showError);</pre>
+      <pre>
+const showPosition = (position) => {
+    longitude.value = position.coords.longitude;
+    latitude.value = position.coords.latitude;
+    loadScript();
+}
+
+const showError = (error) => {
+    console.error(`Error code: ${error.code}. Message: ${error.message}`);
+}</pre>
+      <div>异步加载腾讯地图API - 创建 &lt;script&gt;，指定 src 并挂载到 &lt;body&gt;，最后使用回调函数 callback 初始化地图 </div>
+      <pre>
+const loadScript = () => {
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://map.qq.com/api/gljs?v=1.exp&key=your key&callback=initMap";
+    document.body.appendChild(script);
+}</pre>
+      <div>初始化地图，函数需要挂载到 window 对象；地图初始化，指定中心点，添加标记 showMarker</div>
+      <pre>
+window.initMap = () => {
+    let center = new TMap.LatLng(latitude.value, longitude.value)
+    mapInstance.value = new TMap.Map(map.value, {
+        center: center,
+        zoom: 17.2,
+        viewMode: '2D',
+        showControl: false
+    });
+    showMarker(center);
+}</pre>
+      <div>添加标记</div>
+      <pre>
+const showMarker = (center) => {
+// center marker
+    let marker = new TMap.MultiMarker({
+        position: center,
+        map: mapInstance.value,
+        styles: {
+            marker: new TMap.MarkerStyle({
+                width: 20,
+                height: 30,
+                anchor: { x: 10, y: 30 },
+            })
+        },
+        geometries: [
+            {
+                position: center,
+                id: 'marker',
+            }
+        ]
+    });
+}</pre>
+      <figure>
+        <img src="./imgs/lbs.png" alt="">
+        <figcaption>获取当前位置并显示地图</figcaption>
+      </figure>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

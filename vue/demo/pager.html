@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分页器 Pager</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_2964916_9l0p4dehk3.css);
+
+    :root {
+      --bg-color: #fff;
+      --txt-color: #000;
+      --main-color: #f40;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      font-size: 1.5rem;
+      height: 100vh;
+      background-color: var(--bg-color);
+      color: var(--txt-color);
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--p-m-g);
+      height: 100%;
+    }
+
+    table {
+      width: 96%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-bottom: 1px solid #ccc;
+      line-height: 2;
+    }
+
+    table th,
+    table td {
+      padding: 0 var(--p-m-g);
+    }
+
+    table tr:nth-child(even) {
+      background-color: #eee;
+    }
+
+    .loader {
+      display: none;
+      animation: rolling 1s linear infinite;
+    }
+
+    @keyframes rolling {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    th {
+      font-weight: normal;
+      background-color: var(--main-color);
+      color: var(--bg-color);
+      text-transform: capitalize;
+      text-align: left;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: var(--p-m-g);
+    }
+
+    .pagination .btn {
+      padding: var(--p-m-g);
+      border: none;
+      background-color: transparent;
+      font: inherit;
+      cursor: pointer;
+      color: var(--main-color);
+    }
+
+    .pagination .btn:disabled {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .pagination .page-num {
+      width: 30px;
+      text-align: center;
+    }
+
+    .loading .loader {
+      display: block;
+    }
+
+    .loading table,
+    .loading .pagination {
+      display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        justify-content: flex-start;
+      }
+
+      table,
+      thead,
+      tbody,
+      tr,
+      th,
+      td {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tbody td {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      tbody td::before {
+        content: attr(data-label);
+        text-transform: capitalize;
+      }
+
+      tbody td:not(:last-child) {
+        border-bottom: 1px solid #ddd;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <div class="loader">
+      <span class="iconfont icon-loading"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>gender</th>
+          <th>city</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="pagination">
+      <button class="btn" id="prev-btn">&lt;</button>
+      <span class="page-num" id="page-num">1</span>
+      <button class="btn" id="next-btn">&gt;</button>
+    </div>
+  </div>
+  <script>
+    let users = [];
+    let curPage = 1;
+    const rowPerPage = 10;
+
+    const container = document.querySelector('#container');
+    const prevBtn = container.querySelector('#prev-btn');
+    const nextBtn = container.querySelector('#next-btn');
+    const pageNum = container.querySelector('#page-num');
+    let tbody = container.querySelector('#tbody');
+    prevBtn.disabled = true
+
+    async function getUser() {
+      container.classList.add('loading')
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        let res = await fetch('https://randomuser.me/api/?results=100')
+        let json = await res.json()
+        // users = [...json.results]
+        users = json.results
+        disUser(users)
+      } catch (error) {
+        console.log(error);
+      } finally {
+        container.classList.remove('loading')
+      }
+    }
+    getUser()
+
+    function disUser(data) {
+      tbody.innerHTML = ''
+      let row = ''
+      let start = (curPage - 1) * rowPerPage;
+      let end = start + rowPerPage;
+      console.log(start, end);
+
+      dataItems = data.slice(start, end)
+
+      dataItems.forEach(item => {
+        row +=
+          `
+      <tr>
+        <td data-label='name'>${item.name.first} ${item.name.last}</td>
+        <td data-label='gender'>${item.gender}</td>
+        <td data-label='city'>${item.location.city}</td>
+        <td data-label='email'>${item.email}</td>
+      </tr>
+        `
+      })
+      tbody.innerHTML = row
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (curPage > 1) {
+        curPage--;
+        disUser(users)
+        pageNum.innerHTML = curPage
+        prevBtn.disabled = curPage === 1
+        nextBtn.disabled = curPage === users.length / rowPerPage
+      }
+    })
+
+    nextBtn.addEventListener('click', () => {
+      // curPage* rowPerPage < users.length
+      if (curPage < users.length / rowPerPage) {
+        curPage++;
+        disUser(users)
+        pageNum.innerHTML = curPage
+        prevBtn.disabled = curPage === 1
+        nextBtn.disabled = curPage === users.length / rowPerPage
+      }
+    })
+
+  </script>
+</body>
+
+</html>

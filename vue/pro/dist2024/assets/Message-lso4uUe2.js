@@ -1,0 +1,1 @@
+import{_ as s,c,a as o,p as a,l as t,d as n}from"./index-DeD7qWbD.js";const _={},d=e=>(a("data-v-87e731e8"),e=e(),t(),e),p={class:"message"},r=d(()=>n("span",{class:"iconfont icon-message-comments-fill"},null,-1)),i=[r];function l(e,f){return o(),c("div",p,i)}const h=s(_,[["render",l],["__scopeId","data-v-87e731e8"]]);export{h as default};

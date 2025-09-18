@@ -1,0 +1,1 @@
+import{C as o,r}from"./index-DlRMK_Zg.js";const c=o("cart",()=>{const e=r(!1),t=r([]);return{isLoading:e,cart:t,addToCart:s=>{const a=t.value.find(n=>n.id===s.id);a?a.quantity++:t.value.push({...s,quantity:1})},fetchCart:async()=>{e.value=!0;let a=await(await fetch("https://glpla.github.io/utils/data/cart.json")).json();t.value=a,e.value=!1}}});export{c as u};

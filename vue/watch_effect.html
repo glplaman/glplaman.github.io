@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自动侦听器 WatchEffect</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>自动侦听器</h1>
+    <span>&commat;WatchEffect</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>立即运行一个回调函数|副作用，同时自动感知代码依赖|追踪其中的数据源，并在其变化时重新执行回调函数</div>
+      <div>关注的是数据的状态变化，并不关注数据变化前后的值</div>
+      <div>需引入包 watchEffect</div>
+      <pre>import { watchEffect } from 'vue'</pre>
+      <pre>
+function watchEffect(
+  effect: (onCleanup: OnCleanup) => void,
+  options?: WatchEffectOptions
+): StopHandle</pre>
+      <div>effect：回调函数，也叫副作用函数 side effect，即某种操作，如对外部可变数据或变量的修改，外部接口的调用等</div>
+      <div>onCleanup：回调函数的可选参数，是一个函数，用来注册清理回调；清理回调会在该副作用下一次执行前被调用</div>
+      <div>options：可选的选项，可以用来调整副作用的刷新时机或调试副作用的依赖</div>
+      <div>StopHandle：自动侦听器函数返回一个停止器函数，详见后续内容</div>
+      <div>更多信息，请访问 <a href="https://cn.vuejs.org/api/reactivity-core.html#watcheffect">watchEffect()</a>
+      </div>
+    </dd>
+    <dd class="tips">
+      <div>watchEffect：会立即执行传入的函数，并自动追踪其中的所有响应式依赖。当这些依赖发生变化时，它会重新运行该函数</div>
+      <div>watch：需要显式指定要监听的响应式数据源（如 ref 或 reactive 对象），并且只在这些数据源变化时触发回调</div>
+      <div>watchEffect 也称自动侦听器，等同于使用了立即配置项 immediate；执行1-N次</div>
+      <div>watch 仅在侦听的数据源确实改变时才会触发回调；执行0-N次</div>
+      <div>watchEffect 更有效，只跟踪回调中被使用到的属性，而不是递归地跟踪所有的属性；但是不能获取旧值</div>
+      <div>watch 控制更为精细；旧值、新值、deep、immediate</div>
+    </dd>
+    <dt>停止侦听</dt>
+    <dd>
+      <div>在大多数情况下，你无需关心怎么停止一个侦听器</div>
+      <div>要手动停止一个侦听器，请调用 watchEffect 返回的函数</div>
+      <pre>
+const stopWatchEffect = watchEffect(num, (newv, oldv) => {})
+
+stopWatchEffect()
+</pre>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 侦听多个数据，如 name 和 age</dd>
+    <dd>
+      <pre>
+let num = ref(1)
+let msg = ref('')</pre>
+      <div>1. 使用侦听 watch - 分别单独侦听</div>
+      <pre>
+watch(num, (newVal, oldVal) => {
+  sum.value = newVal * price
+}, { immediate: true })
+
+watch(msg, (newVal, oldVal) => {
+  console.log('msg', newVal)
+})</pre>
+      <div>2. 使用自动侦听 watchEffect</div>
+      <pre>
+watchEffect(() => {
+  sum.value = num.value * price
+  console.log('msg', msg.value)
+})</pre>
+    </dd>
+    <dd id="theme">[<span class="iconfont icon-keyboard"></span>] 换肤 - 更新自定义属性实现</dd>
+    <dd>
+      <div>1. 准备2套变量</div>
+      <pre>
+:root {
+  --bg-color: #fff;
+  --txt-color: #333;
+}
+
+html[data-theme='dark'] {
+  --bg-color: #333;
+  --txt-color: #fff;
+}</pre>
+      <div>2. 准备元素并添加事件，改变主题的值</div>
+      <pre>&lt;button @click="setMode"&gt;darkMode&lt;/button&gt;</pre>
+      <div>3. 准备数据并自动监听主题</div>
+      <pre>
+import { ref, watchEffect } from 'vue'
+let darkMode = ref('light')
+const setMode = () => {
+  darkMode.value = darkMode.value === 'light' ? 'dark' : 'light'
+}
+watchEffect(() => {
+  document.documentElement.setAttribute('data-theme', darkMode.value)
+  // or
+  document.documentElement.dataset.theme = darkMode.value
+})</pre>
+    </dd>
+    <dd id="tabcard">[<span class="iconfont icon-keyboard"></span>] 类标签页</dd>
+    <dd>
+      <div>案例1. 使用自动侦听改写 <a href="../course/rank.html">积分榜</a></div>
+      <div>结构和数据见 <a href="./watch.html">侦听器</a></div>
+      <div>1. 采用回调函数 callback 方式</div>
+      <pre>
+watchEffect(
+  () => {
+    fetch(`https://glpla.github.io/utils/data/rank/${word.value}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+  }
+)</pre>
+      <div>2. 采用异步等待 async-await 方式</div>
+      <pre>
+watchEffect(async () => {
+  const res = await fetch(`https://glpla.github.io/utils/data/rank/${word.value}`)
+  const data = await res.json()
+  console.log('data', data)
+})</pre>
+      <div>3. 改进</div>
+      <div>. 加入加载指示器/进度条 - 条件渲染</div>
+      <pre>&lt;div class="loading" v-show="isLoading"&gt;loading&lt;/div&gt;</pre>
+      <pre>
+const isLoading = ref(false)
+watchEffect(async () => {
+  isLoading.value = true
+  const res = await fetch(`https://glpla.github.io/utils/data/rank/${word.value}`)
+  const data = await res.json()
+  console.log('data', data)
+  isLoading.value = false
+})
+      </pre>
+      <div>. 加入异常处理 try-catch；参考下例</div>
+      <div>案例2. 下拉菜单</div>
+      <div>使用下拉列表的双向绑定触发自动加载数据</div>
+      <div>应用1：门店/地址切换</div>
+      <div>应用2：加载不同类别的商品</div>
+      <pre>
+&lt;select v-model="selectedCategory"&gt;
+  &lt;option value="electronics"&gt;电子产品&lt;/option&gt;
+  &lt;option value="clothing"&gt;服装&lt;/option&gt;
+  &lt;option value="books"&gt;书籍&lt;/option&gt;
+&lt;/select&gt;</pre>
+      <pre>
+watchEffect(async () => {
+  try {
+    const response = await axios.get(`/api/items?category=${selectedCategory.value}`)
+    items.value = response.data
+  } catch (error) {
+    console.error(error)
+  }
+})</pre>
+      <div>案例3. <a href="./pro/dist/index.html">瑞幸咖啡</a>首页标签页 - 随享瑞幸、颜值水杯 -
+        的变化触发数据加载；后期可以使用使用 <a href="./component_dynamic.html">动态组件</a> 实现</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分析下面代码的功能</dd>
+    <dd>
+      <pre>
+watchEffect((onCleanup) => {
+    str.value = msg.value.split('').reverse().join('');
+    onCleanup(()=>{
+        console.log('clean done');
+    })
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

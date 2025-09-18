@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 商品</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>商品</h1>
+      <span>Center</span>
+    </header>
+    <dl class="number-mul-sn">
+      <dt>实验内容</dt>
+      <dd>
+        <div>商品列表页</div>
+        <p>. 数据加载和渲染</p>
+        <p>. 添加到购物车</p>
+        <p>. 查看详情</p>
+        <div>商品详情页</div>
+        <p>. 收藏</p>
+        <p>. 分享</p>
+        <p>. 选择规格、数量</p>
+        <p>. 查看评论</p>
+        <p>. 热门推荐</p>
+        <p>. 添加到购物车</p>
+        <p>. 直接下单</p>
+      </dd>
+      <dt>前置知识</dt>
+      <dd>
+        <div>数据绑定</div>
+        <div>状态管理</div>
+        <div>网络请求 Axios - GET</div>
+        <div>下拉刷新、触底加载 - 限自建服务器</div>
+      </dd>
+      <dt>开发环境</dt>
+      <dd>
+        <div>操作系统 Window 10+</div>
+        <div>文本编辑器 Vs Code</div>
+        <div>谷歌浏览器 Chrome</div>
+        <div>Node.js</div>
+      </dd>
+      <dt>数据接口</dt>
+      <dd>
+        <div>数据接口</div>
+        <pre>/utils/data/coffee.json</pre>
+        <div>商品节点数据 - 可根据需要调整</div>
+        <pre>
+{
+  "id": 1,
+  "name": "桂院牛肉面",
+  "desc": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+  "img": "/coffee/coffee1.jpg",
+  "priceOrignal": 14,
+  "price": 12,
+  "discount": 0.2,
+  "flavour": "卤香",
+  "isFollow": false,
+  "stock": 100,
+  "cup": [
+    {
+      "tag": "中杯",
+      "sel": true
+    },
+    {
+      "tag": "大杯",
+      "sel": false
+    },
+    {
+      "tag": "超大杯",
+      "sel": false
+    }
+  ],
+  "ther": [
+    {
+      "tag": "热",
+      "sel": false
+    },
+    {
+      "tag": "冰",
+      "sel": true
+    }
+  ],
+  "sugar": [
+    {
+      "tag": "不另外加糖",
+      "sel": true
+    },
+    {
+      "tag": "半糖",
+      "sel": false
+    },
+    {
+      "tag": "标准糖",
+      "sel": false
+    }
+  ]
+}</pre>
+      </dd>
+      <dt>参考代码 - 一般实现</dt>
+      <dd>触底加载 - 更多细节，请访问 <a href="../web/scroll.html">HTML - scroll</a></dd>
+      <dd>
+        <pre>
+import axios from 'axios';
+import { ref, onMounted, onUnmounted } from 'vue';
+let list = ref([])
+const loadList = () => {
+  axios.get('/good.json')
+    .then(res => {
+      list.value = [...list.value, ...res.data.cont]
+    })
+}
+
+const doScroll = () => {
+  let html = document.documentElement;
+  let per = html.scrollTop / (html.scrollHeight - html.clientHeight);
+  console.log(per);
+  if (per >= 0.7) {
+    console.log('loading');
+    loadList()
+  }
+}
+
+onMounted(() => {
+  loadList()
+  window.addEventListener('scroll', doScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', doScroll)
+})      </pre>
+      </dd>
+      <dt>参考代码 - 使用状态管理</dt>
+      <dd>
+        <div>创建商品仓库 good.js - 返回商品列表 good 和加载商品列表的异步函数 fetchGood</div>
+        <pre>
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import axios from 'axios'
+
+export const useGoodStore = defineStore('good', () => {
+  const good = ref([])
+  let loading = ref(false)
+  let error = ref(null)
+  let fetchGood = async () => {
+    loading = true
+    try {
+      // 假设调用API获取商品列表
+      const response = await axios.get('https://glpla.github.io/utils/data/coffee.json');
+      console.log(response.data.cont);
+      good.value = response.data.cont;
+    } catch (err) {
+      error.value = err.message
+    } finally {
+      loading = false
+    }
+  }
+  return { good, fetchGood }
+})</pre>
+        <div>在组件中引入仓库并获取数据 - 使用计算属性侦听 good 的变化；也可以使用监听 watch</div>
+        <pre>
+import { computed, onMounted } from 'vue';
+import { useGoodStore } from '@/stores/good';
+let store = useGoodStore()
+
+const getDiscount = computed(() => {
+  return item => {
+    return (item.price * (1 - item.discount)).toFixed(2)
+  }
+})
+
+const addCart = (item) => {
+  console.log(item);
+}
+
+onMounted(() => {
+  store.fetchGood()
+})
+const good = computed(() => store.good)</pre>
+        <div>页面渲染 - 列表渲染，略</div>
+      </dd>
+      <dt>参考效果</dt>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/project0.png" alt="">
+          <figcaption>商品列表页</figcaption>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

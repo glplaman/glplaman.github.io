@@ -1,0 +1,1 @@
+import{N as t}from"./index-C0kaU_JG.js";t.defaults.baseURL="https://glpla.github.io/utils/";const s=()=>t.get("/data/data2024/rank202401.json"),o=()=>t.get("/data/swiper.json"),e=()=>t.get("/data/coffee.json"),g=()=>t.get("/data/goods.json"),n=()=>t.get("/data/cart.json"),d=()=>t.get("/data/todo.json");export{s as a,e as b,n as c,d,g as e,o as g};

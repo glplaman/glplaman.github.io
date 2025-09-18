@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>腾讯地图服务 LBS</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>腾讯地图服务</h1>
+    <span>&commat;LBS for Vue3</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>提供更为深度的地图应用场景支持</div>
+      <div>开发文档 → JavaScript：Javascript API GL是基于WebGL技术打造的3D版地图API，3D化的视野更为自由，交互更加流畅</div>
+      <div>更多使用信息，请参考 <a href="https://lbs.qq.com/">腾讯地图服务 LBS</a>、<a
+          href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glOverview">javascript GL</a></div>
+    </dd>
+    <dt>准备</dt>
+    <dd class="sn">
+      <div>注册账号</div>
+      <div>创建应用</div>
+      <p>控制台 → 应用管理 → 我的应用 → 创建应用</p>
+      <div>申请 KEY</div>
+      <p>勾选产品 Webservice API，需要使用 <a
+          href="https://lbs.qq.com/service/webService/webServiceGuide/position/webServiceIp">定位服务 - IP定位</a> 服务和 <a
+          href="https://lbs.qq.com/service/webService/webServiceGuide/search/webServiceSuggestion">搜索服务 - 关键字输入提示</a>
+      </p>
+      <p><a href="https://lbs.qq.com/service/webService/webServiceGuide/webServiceOverview">Webservice
+          API</a>：腾讯地图面向企业开发者提供的地图服务，是基于HTTPS/HTTP协议的数据接口。 开发者可以使用任何客户端、服务器和开发语言，按照腾讯地图WebService
+        API规范，按需构建HTTPS请求，并获取结果数据（目前支持JSON/JSONP方式返回）</p>
+      <p><a href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glOverview">JavaScript API GL</a>：基于 WebGL 技术，主要面向 js
+        的使用</p>
+      <p>同一个账号所有的 key 共享免费额度</p>
+      <p>暂时不用的 key 不要分配额度；或者应先释放已经分配的额度</p>
+      <img src="./imgs/lbs0.png" alt="">
+      <p class="fig-sn">key 的配额分配</p>
+    </dd>
+    <dt>使用</dt>
+    <dd>
+      <div>使用方法很多，常见的有 <a href="https://lbs.qq.com/service/webService/webServiceGuide/webServiceOverview">WebService API
+        </a> 和 <a href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glOverview">JavaScript API </a></div>
+      <div>以下以 JavaScript
+        API 中面向 Vue 的 <a href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glComponents">tlbs-map 地图组件库</a>为例介绍其基本使用
+      </div>
+      <div>1. 安装</div>
+      <pre>npm install --save tlbs-map-vue</pre>
+      <div>2. 引入 - 在 main.js 作为中间件使用</div>
+      <pre>
+import TlbsMap from "tlbs-map-vue";
+
+app.use(TlbsMap);</pre>
+      <div>3. 使用 - 按照自定义组件的形式在组件内使用；修改示例，调整为 Vue3 的 setup 语法糖格式</div>
+    </dd>
+  </dl>
+  <div class="chap">地图 Map</div>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://lbs.qq.com/webApi/javascriptGL/glDoc/docIndexMap">Map</a></dd>
+    <dt>结构</dt>
+    <dd>
+      <div>请使用自己的 api-key</div>
+      <pre>
+&lt;tlbs-map ref="mapRef" api-key="YI6BZ-XXXX-YYYY-ZZZZ-MK7MQ-3GBRU" 
+  :center="center" 
+  :zoom="zoom" 
+  :control="control"
+  @click="onClick"
+  @map_inited="onMapInited"
+  @dragend="onDragEnd"&gt;
+&lt;/tlbs-map&gt;</pre>
+    </dd>
+    <dt>属性</dt>
+    <dd>
+      <div>1. 开发密钥 api-key</div>
+      <div>2. 中心点 center</div>
+      <div>构建地图时，通过 <a href="https://lbs.qq.com/service/webService/webServiceGuide/webServiceOverview">Webservice
+          API</a> 和获取；这里采用静态值</div>
+      <pre>const center = ref({ lat: 23.02067, lng: 113.75179 });</pre>
+      <div>3. 缩放 zoom</div>
+      <div>应显示指定；不指定可能影响点标记的显示</div>
+      <pre>const zoom = ref(15);</pre>
+      <div>4. 控制 control</div>
+      <div>标尺、缩放和旋转等控件</div>
+      <div>默认显示</div>
+      <pre>
+interface Control {
+  scale: { position: string; className: string } | boolean;
+  zoom: { position: string; className: string,  numVisible: boolean} | boolean;
+  rotation: { position: string; className: string } | boolean;
+}</pre>
+      <div>如果项目中不想显示，设置为 false</div>
+      <pre>
+const control = ref({
+  scale: false,
+  zoom: false,
+  rotation: false
+})</pre>
+    </dd>
+    <dt>事件</dt>
+    <dd>
+      <div>1. map_inited</div>
+      <div>地图实例初始化事件，可以在回调中获取地图实例</div>
+      <div>获取到地图实例就可以使用对应的 <a href="https://lbs.qq.com/webApi/javascriptGL/glDoc/docIndexMap">地图实例方法</a></div>
+      <pre>
+const onMapInited = () => {
+  // 地图加载完成后，可以获取地图实例，调用地图实例方法
+  console.log('map', mapRef.value);
+  console.log('map', mapRef.value.map);
+  console.log('map', mapRef.value.map.getCenter());
+};</pre>
+      <div>2. dragstart、drag、dragend</div>
+      <div>地图拖动结束时获取中心点并设置/更新中心点</div>
+      <pre>
+const onDragEnd = (e) => {
+  console.log('map dragend');
+  console.log(e);
+  const newCenter = mapRef.value.map.getCenter();
+  console.log('New center:', newCenter.lat, newCenter.lng);
+  center.value = { lat: newCenter.lat, lng: newCenter.lng };
+}</pre>
+    </dd>
+    <dt>方法</dt>
+    <dd>
+      <div>通过引用拿到地图实例后 - mapRef.value.map，可以使用相关的方法</div>
+      <div>1. 获取中心点 getCenter()</div>
+      <pre>
+const getMapCenter = () => {
+  console.log(mapRef.value.center.lat, mapRef.value.center.lng);
+  console.log(mapRef.value.map.getCenter());
+}</pre>
+      <div>2. 返回中心点 setCenter()</div>
+      <div>默认没有返回地图中心</div>
+      <div>结构 - 使用 Iconfont，添加事件、</div>
+      <pre>
+&lt;button class="pos" @click="setMapCenter"&gt;
+  &lt;span class="iconfont icon-location2"&gt;&lt;/span&gt;
+&lt;/button&gt;</pre>
+      <div>还可以直接修改中心点</div>
+      <pre>
+  const setMapCenter = () => {
+    mapRef.value.map.setCenter({ lat: 30.91799, lng: 110.397027 });
+    // center.value = { lat: 23.02067, lng: 113.75179 }
+  }
+</pre>
+      <div>样式 - 绝对定位在左下角；地图渲染的图层层级为1000，为了不被覆盖，应该大于1000</div>
+      <pre>
+.pos {
+  position: absolute;
+  left: 2rem;
+  bottom: 2rem;
+  background-color: rgb(255, 255, 255, 1);
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 1001;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">点标记 Marker</div>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://lbs.qq.com/webApi/javascriptGL/glDoc/glDocMarker">Marker</a></dd>
+    <dt>结构</dt>
+    <dd>
+      <div>&lt;tlbs-map&gt; 的子元素</div>
+      <pre>
+&lt;tlbs-multi-marker
+  ref="markerRef"
+  :geometries="geometries"
+  :styles="styles"
+  :options="options" 
+  @click="onMarkerClick"/&gt;</pre>
+    </dd>
+    <dt>属性</dt>
+    <dd>
+      <div>1. 位置 <a href="https://lbs.qq.com/webApi/javascriptGL/glDoc/glDocMarker#7">Geometries</a></div>
+      <div>常见有： id、样式ID styleId、位置 position</div>
+      <div>以数组的形式，提供多个点标记；可以由 API 获取点数据</div>
+      <div>使用 styleId 可以为每个点标记设置不同的样式</div>
+      <pre>
+const geometries = ref([
+  { styleId: 'marker', position: { lat: 39.91799, lng: 116.397027 } },
+])</pre>
+      <div>2. 样式 <a href="https://lbs.qq.com/webApi/javascriptGL/glDoc/glDocMarker#6">Styles</a></div>
+      <div>常见有：styleId 及对应的 width、height 和 src；图片采用静态导入，根据大小，等比例设置大小</div>
+      <div>大小只能为正整数</div>
+      <div>styleId 和上面的 styleId 对应；如果位置中指定相同的 styleId，则所有的点标记应用同样的样式</div>
+      <div>如果不指定 src，则使用默认的标记 - 一个红色的地图标记</div>
+      <pre>
+import src from '@/assets/logo-small.png';
+
+const styles = ref({
+  marker: {
+    width: 20,
+    height: 25,
+    anchor: { x: 10, y: 30 },
+    src,
+  },
+})</pre>
+      <div>3. 选项 <a href="https://lbs.qq.com/webApi/javascriptGL/glDoc/glDocMarker#2">Options</a></div>
+      <div>常见有：缩放比例</div>
+      <div>可以使用默认值</div>
+      <pre>
+const options = ref({
+  minZoom: 5,
+  maxZoom: 15,
+})</pre>
+    </dd>
+    <dt>事件</dt>
+    <dd>
+      <div>1. click</div>
+      <div>点击事件，可以获取到点击的点标记</div>
+    </dd>
+  </dl>
+  <div class="chap">WebService API</div>
+  <dl>
+    <dd>
+      <div>项目中主要使用到了搜索服务和定位服务</div>
+      <div>需要使用代理</div>
+      <div>更多信息，请访问 <a href="https://lbs.qq.com/service/webService/webServiceGuide/webServiceOverview">WebService
+          API</a></div>
+    </dd>
+    <dt>搜索服务 - <a href="https://lbs.qq.com/service/webService/webServiceGuide/search/webServiceSearch">地点搜索</a></dt>
+    <dd>
+      <div>结果包括：</div>
+      <pre>
+{
+  "id": "1902176000166755090",
+  "title": "瑞幸咖啡(桂林文化宫店)",
+  "address": "广西壮族自治区桂林市秀峰区依仁路38号文化宫名品街3号楼3-1-2号门面",
+  "tel": "",
+  "category": "娱乐休闲:咖啡厅",
+  "type": 0,
+  "location": {
+    "lat": 25.277125,
+    "lng": 110.296377
+  },
+  "_distance": 1928.57,
+  "ad_info": {
+    "adcode": 450302,
+    "province": "广西壮族自治区",
+    "city": "桂林市",
+    "district": "秀峰区"
+  }
+}</pre>
+      <div>页面中，还需要营业时间，需要对结果二次处理；默认营业时间为 08:30 - 21:30</div>
+      <pre>
+locs.value = res.data.data.map(item => ({
+  ...item,
+  open: '08:30 - 21:30'
+}))</pre>
+      <div>获取的信息，需要提供给点标记 geometries</div>
+      <pre>
+geometries.value = res.data.data.map(item => ({
+  styleId: 'marker',
+  position: item.location,
+  content: item.title
+}));</pre>
+    </dd>
+    <dt>定位服务 - <a href="https://lbs.qq.com/service/webService/webServiceGuide/position/webServiceIp">IP定位</a></dt>
+    <dd>
+      <div>结果包括：</div>
+      <pre>
+{
+  "status": 0,
+  "message": "Success",
+  "request_id": "9a7b4858d8de4ab381ce4ac4489d56f7",
+  "result": {
+    "ip": "117.183.223.153",
+    "location": {
+      "lat": 25.25235,
+      "lng": 110.31771
+    },
+    "ad_info": {
+      "nation": "中国",
+      "province": "广西壮族自治区",
+      "city": "桂林市",
+      "district": "七星区",
+      "adcode": 450305,
+      "nation_code": 156
+    }
+  }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 业务流分析</dd>
+    <dd class="sn">
+      <div>地图 Map.vue 加载时先利用 <span class="warn">定位服务</span> 获取中心点 center，再根据中心点使用 <span class="warn">搜索服务</span>
+        搜索附近的POI</div>
+      <div>对搜索结果分别处理</div>
+      <p>. 添加营业时间 open 给列表数据负责在页面视图底部渲染门店信息</p>
+      <p>. 构建点标记 geometries</p>
+      <pre>
+import { ref, onMounted, inject } from 'vue';
+const axios = inject('axios');
+const apiKey = 'YI6BZ-MTZW4-xxxx-yyyy-zzzz-3GBRU'
+const keyword = '瑞幸咖啡';
+const radius = 1000
+const locs = ref([]);
+const center = ref({})
+const geometries = ref([])
+
+onMounted(() => {
+  axios.get(`/map-api/ws/location/v1/ip?ip=&key=${apiKey}`)
+    .then(res => {
+      center.value = res.data.result.location
+      axios.get(`/map-api/ws/place/v1/search?boundary=nearby(${center.value.lat},${center.value.lng},${radius})&keyword=${keyword}&page_size=10&page_index=1&key=${apiKey}`)
+        .then(res => {
+          locs.value = res.data.data.map(item => ({
+            ...item,
+            open: '08:30 - 21:30'
+          }))
+          geometries.value = res.data.data.map(item => ({
+            styleId: 'marker',
+            position: item.location,
+            content: item.title
+          }));
+        })
+    })
+})</pre>
+      <p class="tips">axios 使用依赖注入的方式使用，并进行了代理处理</p>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

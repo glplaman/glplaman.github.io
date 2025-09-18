@@ -1,0 +1,1 @@
+import{_ as o,c,b as e}from"./index-lUHXOrYZ.js";const t={},a={class:"promotion"};function n(r,s){return e(),c("div",a,"promotion")}const i=o(t,[["render",n],["__scopeId","data-v-6ac7ea7a"]]);export{i as default};

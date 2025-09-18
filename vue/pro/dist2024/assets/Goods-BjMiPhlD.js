@@ -1,0 +1,1 @@
+import{_ as o,e as s,c as t,d as c,a as n}from"./index--aP1ir6c.js";const r={},a={class:"goods"};function _(d,i){const e=s("RouterView");return n(),t("div",a,[c(e)])}const l=o(r,[["render",_]]);export{l as default};

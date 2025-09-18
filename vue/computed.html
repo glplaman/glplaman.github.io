@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算属性 Computed Properties</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>计算属性</h1>
+    <span>&commat;Computed Properties</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>数据绑定时，可以使用简单的表达式实现数据的2次处理；如根据 num 判断奇偶、根据折扣计算最终价格</div>
+      <pre>&lt;div&gt;{{ num }} is {{ num % 2 ? 'odd' : 'even' }}&lt;/div&gt;</pre>
+      <pre>&lt;div&gt;{{ price * (1 - discount) }}&lt;/div&gt;</pre>
+      <div>逻辑复杂时，应该使用计算属性实现</div>
+    </dd>
+    <dt>Feature</dt>
+    <dd>
+      <div>需要引入 computed 包</div>
+      <pre>import { computed } from 'vue';</pre>
+      <div>计算属性是一个属性，不是方法，使用时不需要()</div>
+      <div>计算属性是响应式数据，会触发页面更新</div>
+      <div>计算属性返回的值是只读的，且永远不应该被更改 - 应该更新它所依赖的源状态以触发新的计算</div>
+      <div>计算属性返回的值是派生状态，可以把它看作是一个“临时快照” - deriving values from your reactive state；每当源状态发生变化时，就会创建一个新的快照</div>
+      <div>除了数据计算外，不应该有其它操作，如数据请求，DOM修改等副作用，即：只做一件事情</div>
+      <div>如果还需要执行其它操作，可以使用 <a href="./watch.html">侦听函数 - watch</a></div>
+      <div>更多信息，请访问 <a href="https://cn.vuejs.org/guide/essentials/computed">计算属性 - Computed Properties</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 判断奇偶</dd>
+    <dd>
+      <pre>&lt;div&gt;{{ num }} is {{ res }}&lt;/div&gt;</pre>
+      <pre>
+import { ref, computed } from 'vue';
+const num = ref(0);
+const res = computed(() => num.value % 2 === 0 ? 'even' : 'odd')</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 判断性别</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 参照B站规则处理关注、粉丝、点赞和播放数量</dd>
+    <dt>Computed Caching vs. Methods</dt>
+    <div>方法可以没有返回，且每次执行方法都会导致页面渲染</div>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 执行2次方法 inc 和执行2次计算属性 dec</dd>
+    <dd>
+      <div>创建方法 inc 和计算属性 dec</div>
+      <pre>
+import { computed } from 'vue';
+const inc = () => {
+  console.log('do function inc');
+}
+const dec = computed(() => {
+  console.log('do computed dec');
+})</pre>
+      <div>使用2次方法；2次计算属性</div>
+      <pre>
+&lt;div&gt;第1次 inc - {{ inc() }}&lt;/div&gt;
+&lt;div&gt;第2次 inc - {{ inc() }}&lt;/div&gt;
+&lt;div&gt;第1次 dec - {{ dec }}&lt;/div&gt;
+&lt;div&gt;第2次 dec - {{ dec }}&lt;/div&gt;</pre>
+      <div class="bg">分析</div>
+      <div>数据变化时，2次方法都会执行</div>
+      <div>数据变化时，计算属性仅第1次执行；第2次没有检测到数据变化，就不会执行</div>
+      <pre>
+do function inc
+do function inc
+do function dec</pre>
+      <div>使用 value 指定属性值</div>
+      <pre>
+import { ref, computed } from 'vue';
+let age = ref(18)
+const res = computed(() => {
+    return age.value >= 18 ? 'adault' : 'teenage'
+})</pre>
+      <pre>
+&lt;div&gt; {{ res }} &lt;/div&gt;</pre>
+    </dd>
+    <dt>Advance</dt>
+    <dd>
+      <div>计算属性是一个属性，不是方法，所以不能直接传递参数</div>
+      <div>通过 <a href="../web/js/closure.html">闭包 - closure</a> 的形式间接传递参数</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 将资源服务器地址和图片路径拼接为一个完整的在线地址</dd>
+    <dd>
+      <pre>
+const getUrl = computed(() => {
+    return (url) => {
+        return 'http://127.0.0.1:3000' + url
+    }
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 根据成绩求绩点</dd>
+    <dd>
+      <pre>
+let score = ref(80)
+const grade = computed(() => {
+  return (score) => {
+    switch (Math.floor(score / 10)) {
+      case 6:
+        return 'D'
+      case 7:
+        return 'C'
+      case 8:
+        return 'B'
+      case 9:
+        return 'A'
+      default:
+        return 'E'
+    }
+  }
+})</pre>
+      <div class="question">以上逻辑有什么需要改进的地方</div>
+      <pre>&lt;div&gt;grade {{ score }} - {{ grade(score) }}&lt;/div&gt;</pre>
+      <div>使用静态数据</div>
+      <pre>
+&lt;div&gt;grade 55 - {{ grade(55) }}&lt;/div&gt;
+&lt;div&gt;grade 60 - {{ grade(60) }}&lt;/div&gt;
+&lt;div&gt;grade 71 - {{ grade(71) }}&lt;/div&gt;
+&lt;div&gt;grade 80 - {{ grade(80) }}&lt;/div&gt;
+&lt;div&gt;grade 90 - {{ grade(90) }}&lt;/div&gt;
+&lt;div&gt;grade 100 - {{ grade(100) }}&lt;/div&gt;</pre>
+    </dd>
+    <!-- <dd >[<span class="iconfont icon-keyboard"></span>] 嵌套使用计算属性</dd>
+    <dd>
+      <div>统计考勤 clockin</div>
+      <div>统计作业 homework</div>
+      <div>统计表现 bonus</div>
+      <div>统计成绩 grade - 根据以上3项统计最终平时成绩</div>
+      <div>注意 <a href="../web/js/function2.html">箭头函数</a> 的几种写法</div>
+      <pre>
+const clockin = computed(() => {
+  return (items) => {
+    return 10
+  }
+})
+
+const homework = computed(() => (items) => {
+  return 3
+})
+
+const bonus = computed(() => items => 5 )
+
+const grade = computed(() => {
+  return clockin.value + homework.value + bonus.value
+})      </pre>
+    </dd> -->
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 折扣处理 - <a href="./pro/dist/index.html">商品列表页 Goods.vue</a></dd>
+    <dd>
+      <div>单个数据 - 直接处理</div>
+      <pre>&lt;div&gt;折后 {{ priceWithDis }}&lt;/div&gt;</pre>
+      <pre>
+const priceWithDis = computed(() => price.value * (1 - discount.value))</pre>
+      <div>多个数据 - 使用参数；toFixed() 是系统数据处理函数，可以指定保留小数点位数</div>
+      <pre>
+const getDiscount = computed(() => {
+  return item => {
+    return (item.price * (1 - item.discount)).toFixed(2)
+  }
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 总价计算 - 计算属性版</dd>
+    <dd>
+      <div>使用计算属性实现：1个响应式数据，1个派生数据；根据产品数量 num 派生总价 sum</div>
+      <pre>&lt;div&gt;总价 {{ sum }}&lt;/div&gt;</pre>
+      <pre>
+import { ref, computed } from 'vue';
+const num = ref(1);
+const price = 9.9
+const sum = computed(() => {
+  return num.value * price;
+});</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>计算属性的引入和使用</div>
+      <div>无参计算属性</div>
+      <div>带参计算属性</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分别使用普通方法和计算属性处理数据</dd>
+    <dd>
+      <img src="./imgs/computed0.png" alt="">
+      <p class="fig-sn">处理前</p>
+      <img src="./imgs/computed1.png" alt="">
+      <p class="fig-sn">处理后</p>
+      <!-- <pre>
+const msg = ref({
+  title: '瑞幸咖啡(桂林一中店)',
+  dis: 594.94
+})
+const com = computed(() => {
+  return {
+    title: msg.value.title.replace('瑞幸咖啡(', '').replace(/\)/, ''),
+    dis: msg.value.dis.toFixed(0)
+  }
+})</pre> -->
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用计算属性处理图片数组，得到图片的url</dd>
+    <dd>
+      <pre>
+import { ref, computed } from 'vue';
+const imgs = ref(['coffee0.jpg', 'coffee1.jpg', 'coffee2.jpg', 'coffee3.jpg', 'coffee4.jpg'])
+const imgsUrl = computed(() => {
+  return imgs.value.map(img => new URL(`/src/assets/imgs/${img}`, import.meta.url).href)
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标签页内联样式 - 根据当前导航项动态移动指示器；ind 是导航项的索引</dd>
+    <dd>
+      <div>结构中直接使用数据；逻辑应该加带使用.value</div>
+      <div>方案1：传统方案 - 直接拼接样式</div>
+      <pre>&lt;div class="line" :style="{ transform: `translateX(${ind * 100}px)` }"&gt;&lt;/div&gt;</pre>
+      <div>方案2：使用对象和计算属性 - 部分</div>
+      <pre>&lt;div class="line" :style="`transform: translateX(${dis}px)`"&gt;&lt;/div&gt;</pre>
+      <pre>const dis = computed(() => ind.value * 100)</pre>
+      <div>方案33：使用对象和计算属性 - 全部</div>
+      <pre>&lt;div class="line" :style="{ transform: trans }"&gt;&lt;/div&gt;</pre>
+      <pre>const dis = computed(() => `translateX(${ind.value * 100}px)`)</pre>
+      <div>方案4：使用 <a href="./style.html#val">CSS 内联变量</a>，可以直接在样式中应用 - 推荐</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

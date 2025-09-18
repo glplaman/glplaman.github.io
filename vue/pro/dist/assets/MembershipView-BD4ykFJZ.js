@@ -1,0 +1,1 @@
+import{_ as e,c,o}from"./index-CPU-aW-9.js";const s={},t={class:"membership-view"};function r(_,a){return o(),c("div",t," to do ")}const i=e(s,[["render",r],["__scopeId","data-v-e1f9e09a"]]);export{i as default};

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 管理页</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>管理页</h1>
+      <span>Center</span>
+    </header>
+    <dl class="number-mul-sn">
+      <dt>实验内容</dt>
+      <dd>
+        <div>用户管理</div>
+        <div>商品管理</div>
+        <div>订单管理</div>
+        <div>活动管理</div>
+        <div>评论管理</div>
+      </dd>
+      <dt>前置知识</dt>
+      <dd>
+        <div>组件双向绑定</div>
+        <div>网络请求 Axios - GET、POST</div>
+        <div>wangEditor</div>
+        <div>XLSX</div>
+      </dd>
+      <dt>开发环境</dt>
+      <dd>
+        <div>操作系统 Window 10+</div>
+        <div>文本编辑器 Vs Code</div>
+        <div>谷歌浏览器 Chrome</div>
+        <div>Node.js</div>
+      </dd>
+      <dt>参考代码</dt>
+      <dd>
+        <div>排序 - 按照大小</div>
+        <pre>
+const sortUp = (key) => {
+  data.lists.sort((a, b) => {
+    return a[key] - b[key]
+  })
+}
+const sortDown = (key) => {
+  data.lists.sort((a, b) => {
+    return b[key] - a[key]
+  })
+}</pre>
+        <div>排序 - 按照字符排名</div>
+        <pre>
+const sortStrUp = (key) => {
+  data.lists.sort((a, b) => {
+    return a[key].localeCompare(b[key])
+  })
+}
+const sortStrDown = (key) => {
+  data.lists.sort((a, b) => {
+    return b[key].localeCompare(a[key])
+  })
+}</pre>
+        <div>订单导入</div>
+        <pre>
+import { ref } from 'vue';
+import * as XLSX from 'xlsx/xlsx.mjs';
+let order = ref([])
+const selExcel = (e) => {
+  const file = e.target.files[0]
+  const fr = new FileReader()
+  fr.readAsArrayBuffer(file)
+  fr.onload = (ev) => {
+    const res = ev.target.result
+    const workbook = XLSX.read(res, { type: "binary" })
+    const wsName = workbook.SheetNames[0]
+    const sheetJson = XLSX.utils.sheet_to_json(workbook.Sheets[wsName])
+    console.log(sheetJson);
+    order.value = sheetJson
+  }
+}</pre>
+        <div>订单导出</div>
+        <pre>
+const outExcel = () => {
+  if (tbl.value) {
+    let workbook = XLSX.utils.table_to_book(tbl.value);
+    XLSX.writeFile(workbook, "order.xlsx");
+  } else {
+    console.log("tbl is null");
+  }
+}</pre>
+      </dd>
+      <dt>参考效果</dt>
+      <dd>
+        <figure>
+          <img src="./imgs/admin0.png" alt="">
+          <figcaption>商品管理</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/admin1.png" alt="">
+          <figcaption>活动管理</figcaption>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模板引用 useTemplateRef</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>模板引用</h1>
+    <span>&commat;useTemplateRef</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>HTML 原生开发中，经常需要获取元素|节点，并进一步处理；更多信息，请访问 <a href="../web/js/dom.html">HTML - DOM</a></div>
+      <div>早期流行的 JQuery 也是通过操作 DOM 实现</div>
+      <div>Vue 中更多的是通过数据驱动的方式实现交互，但有时候避免不了仍然需要操作 DOM</div>
+      <div>通过 ref 标识获取/引用 DOM 节点或组件实例，如本地或第三方组件库</div>
+      <div>需引入包 <a href="https://cn.vuejs.org/api/composition-api-helpers.html#usetemplateref">useTemplateRef</a>
+        创建浅层 ref；其值将与模板中的具有匹配 ref attribute 的元素或组件同步</div>
+      <!-- <div>多组件情况下，普通的DOM获取容易产生冲突</div> -->
+      <div>早期版本使用 ref 包；注意两者使用方式的区别</div>
+      <div>更多使用，请访问 <a href="https://cn.vuejs.org/guide/essentials/template-refs">模板引用 - Template Refs</a>、<a
+          href="https://cn.vuejs.org/api/built-in-special-attributes.html#ref">API - ref</a></div>
+      <pre>import { useTemplateRef } from 'vue'</pre>
+    </dd>
+    <dt>Application</dt>
+    <dd>
+      <div> 焦点管理：当需要自动聚焦到输入框或其它表单元素时</div>
+      <div> 与第三方库交互：例如集成某些需要直接 DOM 节点的 JavaScript 库（如Chart.js）</div>
+      <div> 执行动画：当需要对元素执行复杂的动画效果，而这些效果难以通过 CSS 实现时</div>
+      <div> 文件上传：触发文件选择器等原生控件的操作</div>
+      <div> 测量尺寸：获取元素的宽度、高度等信息用于布局调整</div>
+    </dd>
+    <dd class="tips">
+      <div>直接获取会失败，应在组件 <span class="warn">挂载完毕 onMounted</span> 再获取</div>
+      <div>使用时，应判断是否为空</div>
+      <div>该属性并不显示在结构中，F12 检查元素时，不可见</div>
+    </dd>
+    <dt>获取普通 DOM 节点</dt>
+    <dd>
+      <div>拿到 DOM 节点，就拿到了该元素的所有信息</div>
+      <pre>
+&lt;div ref="dom" 
+  class="base active"  
+  style="color: #f40;padding: 10px;"
+  data-ind="100" &gt;
+    hi,there 
+    &lt;span&gt;88&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <pre>
+import { useTemplateRef, onMounted } from 'vue'
+let dom = useTemplateRef('dom')
+onMounted(() =&gt; {
+  console.log(dom);
+  console.log(dom.value);
+  console.log(dom.value.innerText);
+  console.log('nodes', dom.value.childNodes[0]);
+  console.log('children', dom.value.children[0]);
+  console.log('classList', dom.value.classList);
+  console.log('className', dom.value.className);
+  console.log('style', dom.value.style);
+  console.log('getAttribute', dom.value.getAttribute('data-ind'));
+  console.log('getAttribute', dom.value.getAttribute('style'));
+  console.log('getAttribute', dom.value.getAttribute('class'));
+})</pre>
+    </dd>
+    <dt>获取组件</dt>
+    <dd>
+      <div>返回组件实例</div>
+      <div>默认情况下，组件内部的属性和方法对外部不公开，所以获取到的 ref 仅仅是一个代理对象，看不到组件的内部细节</div>
+      <div>组件需要显示的暴露属性或方法 <a href="https://cn.vuejs.org/api/sfc-script-setup.html#defineexpose">defineExpose</a>
+      </div>
+      <div>defineExpose 应该写在暴露的对象后面</div>
+      <pre>
+&lt;template&gt;
+    &lt;div @click="getTitle"&gt;only for test - {{ title }}&lt;/div&gt;
+&lt;/template&gt;
+    
+&lt;script setup&gt;
+    import { ref } from 'vue';
+    let title = ref(18)
+    function getTitle() {
+        console.log(title.value);
+    }
+    defineExpose({
+        title,
+        getTitle
+    })
+&lt;/script&gt;</pre>
+      <div class="tips">
+        <div>refs can be useful in certain situations where direct access to a child component's internal state
+          or methods is necessary.</div>
+        <div>尽量避免通过 ref 引用组件，请使用组件的通信机制 props 和emit；详见后续组件内容</div>
+        <div>Remember that accessing a child component's data directly using refs can make your components
+          tightly coupled. Consider using props and events for communication between components</div>
+      </div>
+    </dd>
+    <dt>多ref</dt>
+    <dd>
+      <div>列表渲染中指定 ref，将获取多个元素</div>
+      <div>必须声明为数组 [] 形式，否则无法遍历</div>
+      <div>不建议每个子节点都标注 ref 属性</div>
+      <div>建议获取父节点，再根据节点关系获取子节点</div>
+      <pre>&lt;div v-for="(item,index) in 10" ref="navRef"&gt;{{item}}&lt;/div&gt;</pre>
+      <pre>
+const navRef = useTemplateRef('navRef')
+onMounted(() => {
+    navRef.value.forEach(item => {
+    console.log(item.innerHTML);
+    })
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./lifecycle.html">焦点管理</a></dd>
+    <dd>
+      <div>页面加载时自动聚焦；注册、登录的第一个表单域</div>
+      <div>完成上述焦点管理案例并分析下述代码的特点</div>
+      <!-- <p>如果 ipt.value 为 null 或 undefined，则不会调用 focus()，也不会报错</p> -->
+      <pre>const focus = () => ipt.value?.focus()</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 视频播放</dd>
+    <dd>
+      <pre>
+&lt;video src="@/assets/v0.mp4" ref="videoRef"&gt;&lt;/video&gt;
+&lt;button @click="play"&gt;play&lt;/button&gt;</pre>
+      <pre>
+import { useTemplateRef } from 'vue';
+const videoRef = useTemplateRef('videoRef');
+const play = () => {
+  console.log(videoRef.value);
+  videoRef.value?.play();
+};</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary</div>
+  <dl>
+    <dt></dt>
+    <dd class="sn">
+      <div>用于获取 DOM 节点实例 或 组件实例</div>
+      <div>需引入 ref/useTemplateRef</div>
+      <div>使用时，应判定元素是否就绪</div>
+    </dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击打开弹窗；更多信息，请访问 <a href="./drill_modal.html">实操 - Modal</a>
+    </dd>
+    <dd>
+      <div>父组件获取子组件|弹窗组件实例，执行弹窗的方法</div>
+      <div>子组件|弹窗组件定义方法并暴露；方法利用 bool 将弹窗组件的隐藏状态变为显示</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./lifecycle.html">页面滚动控制</a></dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

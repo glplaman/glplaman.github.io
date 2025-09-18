@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件 Component</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>组件</h1>
+    <span>&commat;Component</span>
+  </header>
+  <dl>
+    <dt>SFC</dt>
+    <dd>
+      <div>单文件组件 <a href="https://cn.vuejs.org/api/sfc-spec">SFC</a>：Single-File Components，每个文件都是一个组件</div>
+      <div>文件名后缀名为 .vue；采用大驼峰命名格式，如 HomeView.vue</div>
+      <div>将一个 Vue 组件的模板、逻辑与样式封装在单个文件；遵循：结构 - 样式 - 逻辑 <span class="warn">"三分离"</span> 原则</div>
+      <div>基于 SFC 开发的应用程序，称为单页面应用 <span class="warn">SPA</span> - Single Page Application；所有的业务都在一个页面内完成</div>
+      <pre>
+&lt;template&gt;
+  //结构
+&lt;/template&gt;
+
+&lt;script&gt;
+  //逻辑
+&lt;/script&gt;
+
+&lt;style&gt;
+  //样式
+&lt;/style&gt;</pre>
+    </dd>
+    <dd>Vue3 提供两种 <a href="https://cn.vuejs.org/api/">API</a>：选项式 Options API 和 组合式 Composition API</dd>
+    <dd>
+      <div>1. 选项式 Options API</div>
+      <pre>
+&lt;script&gt;
+  export default {
+    data() {
+      return {
+      }
+    },
+    methods: {
+    },
+    mounted() {
+    }
+  }
+&lt;/script&gt;</pre>
+      <div>2. 组合式 Composition API；按需导入，并采用 setup 语法糖 - 推荐使用</div>
+      <pre>
+&lt;script setup&gt;
+import { ref, reactive, computed, watch, onMounted } from 'vue'
+
+&lt;/script&gt;</pre>
+    </dd>
+    <dt>Usage</dt>
+    <dd>
+      <div>Vue 中每个组件都是以 SFC 的形式存在</div>
+      <div>每个组件可以被其它组件导入|引入并多次使用</div>
+      <div>适合模块化开发和团队协作</div>
+      <div>位置：普通组件放在 components 目录，并根据需要进一步分类；如视图类组件放在 views 目录</div>
+      <div>命名：普通组件根据功能命名；视图类组件采用前缀或后缀的形式加以区分</div>
+    </dd>
+    <dd>
+      <div>1. 创建</div>
+      <div>创建组件/子组件，后缀名为 .vue，如 HelloWorld.vue</div>
+      <div>借助扩展 <a href="../web/vscode.html">Vs Code - Vue Vscode Snippets</a> 快速生成组件结构 vb3-s...；注意观察代码提示并选择 setup 语法糖结构
+      </div>
+      <div>可以根据需要定制模板 - 调整三个部分的前后顺序；如把 &lt;script&gt; 调整到前面</div>
+      <div>不使用 CSS 预处理</div>
+      <pre>
+&lt;script setup&gt;
+&lt;/script&gt;
+    
+&lt;template&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+&lt;/template&gt;
+
+&lt;style scoped&gt;
+&lt;/style&gt;</pre>
+      <div>2. 引入</div>
+      <div>父组件在 &lt;script&gt; 引入子组件</div>
+      <div>引入时，输入组件部分或全名，IDE会自动获取组件及补充相对路径；注意看代码提示</div>
+      <div>不能省略后缀名 .vue</div>
+      <div>可以使用相对路径</div>
+      <div>也可以使用路径别名 @ 从 src 开始引用</div>
+      <pre>
+&lt;script setup&gt;
+    import HelloWorld from '@/components/HelloWorld.vue'
+&lt;/script&gt;</pre>
+      <div>为了按需引入，减少加载时间，特别是首屏加载，通常采用 <a href="https://cn.vuejs.org/guide/components/async.html">异步组件</a>
+        的形式引入</div>
+      <div>采用了异步组件，打包的时，会拆分成多个 .js 文件</div>
+      <pre>
+import { defineAsyncComponent } from 'vue'
+
+const HelloWorld = defineAsyncComponent(() =>
+  import('./components/HelloWorld.vue')
+)</pre>
+      <div>3. 使用</div>
+      <div>父组件在结构 &lt;template&gt; 中使用组件/子组件</div>
+      <div>怎么引入就怎么使用；可以使用单标签或双标签</div>
+      <div>可以多次使用</div>
+      <div>使用 PascalCase 格式以保持一致性，有助于区分原生元素</div>
+      <pre>
+&lt;template&gt;
+    &lt;h1&gt;Here is a child component!&lt;/h1&gt;
+    &lt;HelloWorld /&gt;
+    &lt;HelloWorld&gt;&lt;/HelloWorld&gt;
+&lt;/template&gt;</pre>
+      <div class="tips">按住 Ctrl，单击 &lt;script&gt; 或 &lt;template&gt; 中的组件名或标签，可以快速打开组件对应的 .vue 文件</div>
+    </dd>
+  </dl>
+  <div class="chap" id="global">Global Registration</div>
+  <dl>
+    <dt>组件方式</dt>
+    <dd>
+      <div>使用 Vue 应用实例的 .component() 方法，让组件在当前 Vue 应用中全局可用</div>
+      <div>通常在 main.js 中引入/注册并声明</div>
+      <div>其它组件直接使用，<span class="warn">无需引入</span></div>
+      <div>更多信息，请访问 <a href="https://vuejs.org/guide/components/registration.html">组件注册 - Component
+          Registration</a></div>
+      <pre>
+import Footer from '@/components/Footer.vue';
+
+app.component('Footer', Footer)</pre>
+    </dd>
+    <dt>中间件方式</dt>
+    <dd>使用 use() 实现；多见于中间件和组件库的使用</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="/web/framework/vant.html">Vant</a> 组件库的使用</dd>
+  </dl>
+  <div class="chap">Homework</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 版权组件</dd>
+    <dd>请使用学号和姓名信息封装组件，其它内容和样式不限</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 轮播组件</dd>
+    <dd>请使用在线图片资源完成封装，其它内容和样式不限</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

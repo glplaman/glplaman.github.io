@@ -1,0 +1,1 @@
+import{_ as o,e as t,c,d as r,a as s}from"./index-CjcobUH4.js";const a={},n={class:"other"};function _(d,f){const e=t("router-view");return s(),c("div",n,[r(e)])}const p=o(a,[["render",_],["__scopeId","data-v-cafd953b"]]);export{p as default};

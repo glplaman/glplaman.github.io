@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类 class</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>类</h1>
+    <span>&commat;class</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>类 class 和内联样式 style 都是元素的属性 attribute，使用 v-bind 将它们和动态的 <span class="warn">字符串</span> 绑定</div>
+      <div>除了字符串外，表达式的值还可以使用 <span class="warn">对象 Object</span> 或 <span class="warn">数组 Array</span></div>
+      <div>更多类的绑定，请访问 <a
+          href="https://cn.vuejs.org/guide/essentials/class-and-style.html#binding-html-classes">:class</a>
+      </div>
+    </dd>
+    <dt>绑定字符串</dt>
+    <dd>
+      <div>1. 简单字符串：由字符串变量决定使用哪个类 - 较少使用</div>
+      <pre>&lt;div :class="bold"&gt;hi,there&lt;/div&gt;</pre>
+      <pre>let bold='bold'</pre>
+      <pre>
+.bold {
+  font-weight: 600;
+}</pre>
+      <div>2. 使用三元表达式：实现2选1；isActive 为真，使用 bold 类；否则使用 underline 类</div>
+      <div>三元表达式的结果是一个字符串，所以直接写就可以，不需要 {}</div>
+      <pre>&lt;div :class="isActive ? 'bold' : 'underline'"&gt;hi,there&lt;/div&gt;</pre>
+    </dd>
+    <dt>绑定对象</dt>
+    <dd>
+      <div>使用一个或多个值对 key-value pair 来应用一个或多个类 - 开关类</div>
+      <div>1. 使用布尔变量：如果 isActive 为真，使用 bold 类；为假，不使用</div>
+      <pre>&lt;div :class="{ 'bold': isActive }"&gt;hi,there&lt;/div&gt;</pre>
+      <div>2. 使用普通表达式：ind 等于 1，使用 active 类</div>
+      <pre>&lt;div :class="{ 'active': ind == 1 }"&gt;hi,there.&lt;/div&gt;</pre>
+      <div>3. 多个值对</div>
+      <pre>&lt;div :class="{ active: false, done: true;}"&gt;hi,there.&lt;/div&gt;</pre>
+      <div>4. 使用字符串变量和对应的对象结合起来运用</div>
+      <pre>&lt;div :class="isOn"&gt;hi,there.&lt;/div&gt;</pre>
+      <pre>
+let isOn = {
+    active: false,
+    done: true
+}</pre>
+    </dd>
+    <dt>绑定数组</dt>
+    <dd>
+      <div>使用多个类</div>
+      <div>同时使用静态类和动态类</div>
+      <div>数组中可以使用字符串、对象和三元表达式指定类</div>
+      <div>集中方式</div>
+      <pre>
+&lt;div :class="[ 'item', isActive ? 'bold' : 'underline' ]"&gt;hi,there&lt;/div&gt;
+&lt;div :class="[ 'item', { 'active': isActive } ]"&gt;hi,there&lt;/div&gt;
+&lt;div :class="[ 'item', { 'active': isActive, 'done': isDone } ]"&gt;hi,there&lt;/div&gt;</pre>
+      <div>分离方式 - 绑定类和静态添加的类不会冲突，最终会叠加在一起进行渲染，可读性更好 - 建议</div>
+      <pre>&lt;div class="item" :class=" flag == 0 ? 'active' : 'normal' "&gt;hi,there&lt;/div&gt;</pre>
+
+      <!-- <div>1.简单字符串：对应的类由字符串表示</div> -->
+      <!-- <pre>&lt;div :class="tips"&gt;hi,there&lt;/div&gt;</pre> -->
+    </dd>
+    <dd class="tips">
+      <div>类一定是字符串，所以类应该用括号括起来，否则会被当作绑定的变量；而变量不用</div>
+      <div>注意单引号和双引号的匹配</div>
+      <div>复合 CSS 属性使用小驼峰方式</div>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 主题切换</dd>
+    <dd class="sn">
+      <div>使用字符串变量</div>
+      <pre>
+&lt;span 
+  @click="darkMode = !darkMode" 
+  class="iconfont" 
+  :class="darkMode ? 'icon-Sun' : 'icon-Moon-Star'"&gt;
+&lt;/span&gt;</pre>
+      <div>使用布尔变量</div>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>字符串：三元表达式</div>
+      <div>对象</div>
+      <div>数组</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd id="tabcard">[<span class="iconfont icon-keyboard"></span>] 导航/标签页 TabCard</dd>
+    <dd>
+      <div>效果：单击导航列表，对应的导航项高亮</div>
+      <div>要求：分别设计静态类和动态类，综合使用上述各种方式实现</div>
+      <div>这里使用响应式数据 ref()</div>
+      <pre>
+&lt;div class="test"&gt;
+  &lt;div class="btn" :class="{ 'active': ind == 0 }" @click="ind = 0"&gt;Lorem.&lt;/div&gt;
+  &lt;div class="btn" :class="{ 'active': ind == 1 }" @click="ind = 1"&gt;Labore!&lt;/div&gt;
+  &lt;div class="btn" :class="{ 'active': ind == 2 }" @click="ind = 2"&gt;Quos.&lt;/div&gt;
+  &lt;div class="btn" :class="{ 'active': ind == 3 }" @click="ind = 3"&gt;Doloremque.&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+import { ref } from 'vue'
+const ind = ref(0)</pre>
+      <pre>
+.test {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 4px;
+}
+
+.active {
+  background-color: #f40;
+  color: #fff;
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

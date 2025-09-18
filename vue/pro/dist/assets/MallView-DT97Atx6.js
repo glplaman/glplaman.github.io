@@ -1,0 +1,1 @@
+import{_ as e,c,o as a}from"./index-Cf4dD-qy.js";const o={},s={class:"mall-view"};function t(_,n){return a(),c("div",s)}const l=e(o,[["render",t],["__scopeId","data-v-4a543184"]]);export{l as default};

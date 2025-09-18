@@ -1,0 +1,1 @@
+import{o as t,c as s,D as c,b as a}from"./index-Jl-AZRRS.js";const n={class:"test"},i={__name:"Test",setup(_){const o=c("axios");return t(()=>{o.get("/api/get").then(e=>{console.log(e)}).catch(e=>{console.log(e)})}),(e,l)=>(a(),s("div",n))}};export{i as default};

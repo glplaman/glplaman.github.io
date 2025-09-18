@@ -1,0 +1,1 @@
+import{r as o,c as s,a as r,o as a}from"./index-DL_gLCUF.js";const n={class:"test"},u={__name:"Test",setup(c){return o(1),(t,e)=>(a(),s("div",n,[r("button",{onClick:e[0]||(e[0]=m=>t.$router.push("/demo"))},"to demo")]))}};export{u as default};

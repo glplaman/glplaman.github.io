@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 产品列表页</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>产品列表页</h1>
+    <h4>Server</h4>
+    <dl>
+      <dt>实验目的</dt>
+      <dd>
+        <div>掌握条件渲染的使用</div>
+        <div>掌握列表渲染的使用</div>
+        <div>掌握响应式数据的基本使用</div>
+        <div>进一步熟悉掌握服务器的搭建和使用</div>
+        <div>Axios安装和基本使用</div>
+      </dd>
+      <dt>实验内容</dt>
+      <dd>
+        <div>服务器端：在前续静态资源服务器搭建的基础上：准备json数据并处理；响应用户路由请求</div>
+        <div>客户端：从资源服务器拉取数据并渲染</div>
+      </dd>
+      <dt>实验步骤</dt>
+      <dd>第一阶段：直接从大树小站拉取数据并渲染</dd>
+      <dd>
+        <pre>https://glpla.github.io/utils/data/good.json</pre>
+      </dd>
+      <dd>第二阶段：创建服务器，从服务器拉取数据并渲染；包括全部拉取和分页拉取；接口如下表；可根据需要自己定制</dd>
+      <dd>服务器IP地址视局域网环境临时获取</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>参考接口</caption>
+          <tr>
+            <th>接口</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>/good</td>
+            <td>全部拉取</td>
+          </tr>
+          <tr>
+            <td>/good/page?page=xx&pageSize=yy</td>
+            <td>分页拉取</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="sn">
+        <div>准备json数据文件；位置、格式和内容自定；节点数据参考如下</div>
+        <pre>
+{
+  "id": 79,
+  "name": "桂二酸菜鱼",
+  "desc": 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
+  "img": "/imgs/coffee2.jpg",
+  "priceOrignal": 32,
+  "price": 20,
+  "discount": 0.4,
+  "flavour": "清爽"
+}        </pre>
+        <div>在服务器脚本中，引入文件系统fs处理文件 - 这里采用同步阻塞方式解析json数据文件</div>
+        <p>注意文件的路径关系</p>
+        <p>建议多使用log查看数据的变化情况</p>
+        <pre>
+const fs = require('fs')
+
+const file = fs.readFileSync('./public/data/good.json')
+const jsonFile = JSON.parse(file)</pre>
+        <div>增加路由，响应用户的GET请求</div>
+        <pre>
+app.get('/good', (req, res) => {
+  res.json(jsonFile)
+})</pre>
+        <div>启动服务，利用FeHelper或Postman调试服务器和接口是否正常；如无安装，可以略</div>
+        <div>创建Vue项目，修改项目，仅保留主入口组件App.vue</div>
+        <div>逻辑设计：请求资源服务器，拉取数据；必要时，进行代理proxy处理</div>
+        <div>结构设计：根据拉取的数据综合运用响应式数据、条件渲染和列表渲染完成商品列表页；参考效果如下图</div>
+      </dd>
+      <dt>参考效果</dt>
+      <dd>
+        <img src="./imgs/list0.png" alt="">
+      </dd>
+      <dt>拓展</dt>
+      <dd>
+        <div>数据分页</div>
+        <!-- <pre>
+//请求格式 url?page=1&pageSize=10
+app.get('/good/page', (req, res) => {
+  console.log('page', req.query);
+  let arr = [...jsonFile.cont]
+  let start = (req.query.page - 1) * req.query.pageSize;
+  let result = arr.splice(start, req.query.pageSize)
+  res.setHeader('X-Total-Count', jsonFile.cont.length);
+  res.json({
+    msg: 'ok',
+    data: result
+  });
+});          </pre> -->
+      </dd>
+    </dl>
+  </div>
+</body>
+
+</html>

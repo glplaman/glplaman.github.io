@@ -1,0 +1,1 @@
+import{_ as r,c as t,a as n,b as s,o as a,r as c}from"./index-CsISKw4a.js";const _={};function l(u,e){const o=c("router-view");return a(),t("div",null,[e[0]||(e[0]=n("h2",null,"work",-1)),s(o)])}const f=r(_,[["render",l]]);export{f as default};

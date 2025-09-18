@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>条件渲染 Conditional </title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>条件渲染</h1>
+    <span>&commat;Conditional Rendering</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>根据条件渲染不同的内容</dd>
+    <dd>也可以使用动态类/开关类实现</dd>
+    <dd>更多信息，请访问 <a href="https://cn.vuejs.org/guide/essentials/conditional">条件渲染 - Conditional Rendering</a></dd>
+    <dt>v-if</dt>
+    <dd>
+      <div>控制 <span class="warn">1个或多个DOM</span> 的条件渲染：只有指令的表达式为真/返回真值才渲染DOM</div>
+      <div>检查元素，查看渲染情况</div>
+      <div>可以使用 v-else 或 v-else-if 实现多种条件的视图渲染</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 根据加载数据长度相应的渲染页面；如果为0，提示当前数据为0；否则渲染数据</dd>
+    <dd>
+      <pre>
+&lt;div v-if="!list.length">列表为空&lt;/div&gt;
+&lt;div v-else&gt;
+  &lt;!-- 列表内容/渲染 --&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dt>v-show</dt>
+    <dd>控制 <span class="warn">一个DOM</span> 的条件显示</dd>
+    <dd>和 v-if 的不同之处在于：v-show 会在 DOM 渲染中保留该元素；v-show 仅切换了该元素上名为 display 的 CSS 属性</dd>
+    <dd>v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要频繁切换，则使用 v-show 较好；如果在运行时绑定条件很少改变，则 v-if 会更合适</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] isAdult 为真，显示；为假，其 display 为 none</dd>
+    <dd>
+      <pre>&lt;div v-show="isAdult"&gt;18 year +&lt;/div&gt;</pre>
+    </dd>
+    <dd class="tips">
+      <div>v-if：解决渲染不渲染|有没有的问题；控制单个或多个元素</div>
+      <div>v-show：解决显示不显示的问题；控制单个元素</div>
+      <div>任何使用布尔值的地方都可以使用表达式实现</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分析以下场景，使用 v-if 还是 v-show；并通过开发工具调试数据变化时，页面的渲染情况</dd>
+    <dd>场景1：根据年龄 age，显示成年和未成年；</dd>
+    <dd>场景2：根据积分 credit，显示会员等级</dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>v-if</div>
+      <div>v-show</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 自动轮播 Swiper.vue</dd>
+    <dd>
+      <div>使用静态数据渲染诺干图片</div>
+      <div>如果图片分配的 ind 和轮播活动图片索引 imgInd 一致，则显示当前图片，否则隐藏</div>
+      <div>使用开发者工具查看并调试数据</div>
+      <div>后期使用 <a href="./vfor.html#swiper">列表渲染</a> 遍历图片数组</div>
+      <div>样式略</div>
+      <pre>
+&lt;div class="swiper-static"&gt;
+  &lt;img src="@/assets/swiper/swiper0.jpg" alt="" v-show="ind == 0"&gt;
+  &lt;img src="@/assets/swiper/swiper1.jpg" alt="" v-show="ind == 1"&gt;
+  &lt;img src="@/assets/swiper/swiper2.jpg" alt="" v-show="ind == 2"&gt;
+  &lt;img src="@/assets/swiper/swiper3.jpg" alt="" v-show="ind == 3"&gt;
+  &lt;img src="@/assets/swiper/swiper4.jpg" alt="" v-show="ind == 4"&gt;
+  &lt;img src="@/assets/swiper/swiper5.jpg" alt="" v-show="ind == 5"&gt;
+  &lt;img src="@/assets/swiper/swiper6.jpg" alt="" v-show="ind == 6"&gt;
+&lt;/div&gt;</pre>
+      <pre>
+import { ref } from 'vue';
+const ind = ref(0);
+let timer = setInterval(() => {
+    ind.value = (ind.value + 1) % 7;
+  }, 3000);</pre>
+      <div>改进1：使用 <a href="./lifecycle.html">生命周期函数</a> 优化系统资源</div>
+      <pre>
+import { ref, onMounted, onUnmounted } from 'vue';
+onMounted(() => {
+  timer = setInterval(() => {
+    ind.value = (ind.value + 1) % 7;
+  }, 3000);
+})
+onUnmounted(() => {
+  timer && clearInterval(timer);
+})</pre>
+      <div>改进2：图片增加异常处理</div>
+      <pre>&lt;img src="@/assets/swiper/swiper0.jpg" alt="" v-show="ind == 0" @error="errImg"&gt;</pre>
+      <pre>
+const errImg = (event) => {
+  console.error('Image failed to load:', event.target.src);
+  event.target.src = '@/assets/logo.png';
+};</pre>
+    </dd>
+    <!-- <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">商品详情页 DetailsView.vue</a> → 价格说明
+      price</dd>
+    <dd>
+      <div>默认显示一部分价格说明内容</div>
+      <div>单击价格部分定位在右上侧的箭头，展开所有内容 - 高度发生变化</div>
+      <pre>
+&lt;div class="cont cont-price" :class="{ 'show-cont-all': isShow }"&gt;
+  &lt;ul&gt;
+    //
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.cont-price ul {
+  height: 10rem;
+  overflow: hidden;
+}
+
+.cont-price.show-cont-all ul {
+  height: auto;
+}</pre>
+    </dd> -->
+    <!-- <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">菜单 MenuView.vue</a> → 购物车
+      Cart.vue → 商品内容 cont</dd>
+    <dd>
+      <div>始终显示底部 footer 购物车</div>
+      <div>点击购物车，为购物车商品内容 cont 指定最大高度为 50vh，显示完整内容；否则 cont 最大高度为0，不显示</div>
+      <pre>
+&lt;div class="cart" :class="{ 'show-cont-all': isShowCartDetail }"&gt;
+  &lt;div class="cont"&gt;
+        //
+  &lt;/div&gt;
+  &lt;footer class="footer"&gt;
+        //
+  &lt;/footer&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.cont {
+  background-color: var(--bg-color);
+  overflow: hidden;
+  max-height: 0;//不显示
+  padding: 0 var(--p-m-g) var(--p-m-g);
+}
+
+.show-cont-all .cont {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  max-height: 50vh;//显示完整内容，超过 50vh，出现滚动条
+  padding-bottom: calc(6rem + var(--p-m-g));
+  overflow-y: auto;
+}</pre>
+    </dd> -->
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">商品列表页 Goods.vue</a></dd>
+    <dd>
+      <div>1. 商品数据不为 0 时，渲染商品项组件 GoodsItem.vue</div>
+      <div>2. 购物车 Cart.vue：使用 <a href="./pinia_case.html">状态管理 - 仓库</a> 实现；如果购物车商品数量不为0，则显示购物车组件；否则不显示</div>
+      <pre>&lt;Cart class="cart" v-if="cartStore.cart.length" /&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./pro/dist/index.html">登录页 LoginView.vue</a> →
+      提示信息的显示与隐藏；实现请访问 <a href="./vmodel.html#login">表单双向绑定</a></dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

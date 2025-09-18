@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播图 Swiper</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>轮播图</h1>
+    <span>&commat;Swiper</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div><a href="https://swiperjs.com/">Swiper.js</a> 提供多种应用方式，如 Swiper Vue、Swiper React 和 Swiper Element</div>
+      <div>Swiper Vue 后期可能被移除；建议使用 <a href="https://swiperjs.com/element">Swiper Element</a></div>
+      <div>更多使用请参考 <a href="../web/framework/swiper.html">Web - Swiper</a></div>
+    </dd>
+    <dt>安装 Installation </dt>
+    <dd>
+      <pre>npm i swiper --save</pre>
+    </dd>
+    <dt>注册 Register</dt>
+    <dd>
+      <pre>
+import { register } from 'swiper/element/bundle';
+register();</pre>
+    </dd>
+    <dt>结构 Template</dt>
+    <dd class="sn">
+      <p>使用自定义元素构建</p>
+      <div>&lt;swiper-container&gt;</div>
+      <div>&lt;swiper-slide&gt;</div>
+    </dd>
+    <dt>使用 Usage</dt>
+    <dd>
+      <div>1.以 <span class="warn">属性</span> 方式传递 <a href="https://swiperjs.com/swiper-api#parameters">Parameters</a> As
+        Attributes</div>
+      <div>.以 kebab-case 的形式，特别是对象类的参数</div>
+      <div>.布尔类型不能简写，如仅仅指定 loop 无效，必须指定 loop = "true"</div>
+      <div>.建议为图片指定懒加载 - loading="lazy"</div>
+      <div>.适合参数少的情况</div>
+      <pre>
+&lt;swiper-container slides-per-view="3" loop="true"&gt;
+    &lt;swiper-slide&gt;  1  &lt;/swiper-slide&gt;
+    &lt;swiper-slide&gt;  3  &lt;/swiper-slide&gt;
+    &lt;swiper-slide&gt;
+        &lt;img loading="lazy" src='https://cdn.pixabay.com/photo/2019/10/30/16/22/message-4589929_640.jpg' alt=""&gt;
+    &lt;/swiper-slide&gt;
+&lt;/swiper-container&gt;</pre>
+      <table>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>autoplay-delay="1000"</td>
+          <td>自动播放延迟；单独指定autoplay无效</td>
+        </tr>
+        <tr>
+          <td>mousewheel-invert="true"</td>
+          <td>鼠标滚轮控制正向|反向切换；单独指定mousewheel无效</td>
+        </tr>
+        <tr>
+          <td>grabCursor</td>
+          <td>显示小手鼠标</td>
+        </tr>
+        <tr>
+          <td>keyboard-enabled="true"</td>
+          <td>水平轮播使用左右方向键控制切换；垂直轮播使用上下方向键控制切换</td>
+        </tr>
+        <tr>
+          <td>direction</td>
+          <td>滚动方向水平horizontal还是垂直vertical。默认horizontal</td>
+        </tr>
+        <tr>
+          <td>thumbs-swiper=".my-thumbs"</td>
+          <td>为当前轮播指定缩略轮播；如二级导航</td>
+        </tr>
+        <tr>
+          <td>pagination="true" </td>
+          <td>分页器</td>
+        </tr>
+        <tr>
+          <td>navigation="true" </td>
+          <td>导航按钮</td>
+        </tr>
+        <tr>
+          <td>scrollbar="true"</td>
+          <td>滚动条</td>
+        </tr>
+        <tr>
+          <td>slidesPerView</td>
+          <td>轮播时可以查看幻灯片的个数；默认1张；可以是小数，如 2.2</td>
+        </tr>
+        <tr>
+          <td>spaceBetween</td>
+          <td>幻灯片间隔px；不要为幻灯片再额外指定margin</td>
+        </tr>
+        <tr>
+          <td>effect</td>
+          <td>滚动效果 slide | fade | cube | flip | ...更多效果细节需要额外配置</td>
+        </tr>
+      </table>
+      <div>2.以 <span class="warn">原型参数</span> 方式传递 Parameters As Props</div>
+      <div>.获取轮播元素 → 创建配置参数 → 将参数分配给轮播元素</div>
+      <div>.适合参数多的情况</div>
+    </dd>
+    <dt>样式 Style</dt>
+    <dd>
+      <div>使用伪类选择器 :part 实现</div>
+      <div>仅适合 Swiper 元素和其子元素：container、button-prev、button-next、pagination、bullet、bullet-active、scrollbar</div>
+      <pre>
+swiper-container::part(bullet-active) {
+  background-color: #fff;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 轮播图 Swiper.vue</dd>
+    <dd>
+      <div>除了基本框架外，使用图片展示内容</div>
+      <div>为图片指定大小，撑开轮播图</div>
+      <div>通过调整定位 position，使分页器 pagination 定位到右侧</div>
+      <div>利用弹性盒子 flex，使指示器 bullet 水平垂直居中</div>
+      <div>进一步定制指示器 bullet 的静态样式和激活样式；初始化属性使用 initial</div>
+      <pre>
+img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+swiper-container::part(bullet) {
+  width: 6px;
+  height: 15px;
+  border-radius: var(--p-m-g);
+  background-color: #fff;
+  opacity: 0.4;
+  transition: 0.4s;
+}
+
+swiper-container::part(bullet-active) {
+  width: 6px;
+  height: 15px;
+  border-radius: var(--p-m-g);
+  background-color: #fff;
+}
+
+swiper-container::part(pagination) {
+  width: var(--p-m-g);
+  height: 100%;
+  top: 0;
+  right: var(--p-m-g);
+  left: initial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--p-m-g);
+}</pre>
+      <img src="./imgs/swiper0.png" alt="">
+    </dd>
+    <dt>事件 Events</dt>
+    <dd>
+      <div>切换时 swiperprogress</div>
+      <div>改变后 swiperslidechange</div>
+      <pre>
+&lt;swiper-container 
+    loop="true"
+    @swiperprogress="onProgress"
+    @swiperslidechange="onSlideChange"&gt;
+    ...
+&lt;/swiper-container&gt;</pre>
+    </dd>
+    <dt>注意 Tips</dt>
+    <dd>
+      <div>
+        Failed to resolve component: swiper-container
+        If this is a native custom element, make sure to exclude it from component resolution via
+        compilerOptions.isCustomElement.
+      </div>
+      <div>解决方法：在 vite.config.js 中配置 vue 节点</div>
+      <pre>
+vue({
+  template: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag.startsWith("swiper-"),
+    },
+  },
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+import{_ as e,c,b as a}from"./index-ageAeHN-.js";const s={},t={class:"mall-view"};function o(_,n){return a(),c("div",t)}const l=e(s,[["render",o],["__scopeId","data-v-4a543184"]]);export{l as default};

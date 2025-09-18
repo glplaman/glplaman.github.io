@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态组件 Dynamic</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>动态组件</h1>
+    <span>&commat;Dynamic</span>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div><a href="https://cn.vuejs.org/guide/essentials/component-basics#dynamic-components">Dynamic
+          Components</a>：使用特殊元素 <a
+          href="https://cn.vuejs.org/api/built-in-special-elements.html#component">&lt;component&gt;</a> 和配合 :is
+        属性实现多组件选一/两个或多个组件间来回切换 - dynamically switch between components</div>
+      <div>被切换掉的组件会被卸载。通过 <a href="./component_keeplive.html">&lt;KeepAlive&gt;</a> 组件强制被切换掉的组件仍然保持“存活”的状态</div>
+      <div>应用：标签页、导航页</div>
+      <pre>&lt;component v-else :is=""&gt;&lt;/component&gt;</pre>
+    </dd>
+    <dt>&lt;component&gt;</dt>
+    <dd>
+      <div>特殊元素</div>
+      <div>一个用于渲染动态组件或元素的“元组件”</div>
+      <div>要渲染的实际组件由属性 is 决定</div>
+    </dd>
+    <dt>:is</dt>
+    <dd>
+      <div>is：要渲染的组件</div>
+      <div>. HTML 标签名、注册/导入的组件名</div>
+      <div>. 直接绑定到组件的定义</div>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 基本使用 - 使用注册的组件名</dd>
+    <dd>
+      <div>根据条件判断并切换组件</div>
+      <pre>
+import Work from './components/Work.vue';
+import Team from './components/Team.vue';</pre>
+      <pre>
+&lt;component v-if="flag" :is="Work">&lt;/component&gt;
+&lt;component v-else :is="Team"&gt;&lt;/component&gt;</pre>
+      <div>使用三元表达式优化代码</div>
+      <pre>&lt;component v-else :is="flag ? Work : Team"&gt;&lt;/component&gt;</pre>
+    </dd>
+    <dd id="tabcard">[<span class="iconfont icon-keyboard"></span>] 标签页组件 Tabcard.vue - 动态组件静态数据版</dd>
+    <dd class="sn">
+      <div>创建组件：除了基本信息外，为每个组件指定2个生命周期函数/钩子</div>
+      <pre>
+onMounted(() => {
+  console.log('TabGoods onMounted');
+})
+onUnmounted(() => {
+  console.log('TabGoods unmounted');
+})</pre>
+      <div>逻辑：导入组件；定义为静态数组</div>
+      <pre>
+import TabGoods from './components/TabGoods.vue';
+import TabCup from './components/TabCup.vue';
+const index = ref(0)
+const tabs = [{
+  id: 0,
+  label: '随享瑞幸',
+  component: TabGoods
+}, {
+  id: 1,
+  label: '颜值水杯',
+  component: TabCup
+}]</pre>
+      <div>结构：列表渲染；根据索引 index 访问组件</div>
+      <pre>
+&lt;span v-for="(tab, ind) in tabs" @click="index = ind"&gt;{{ tab.label }}&lt;/span&gt;
+&lt;component :is="tabs[index].component"&gt;&lt;/component&gt;</pre>
+      <div>查看组件切换时，控制台的输出</div>
+    </dd>
+    <dd class="hint">分析上述2个案例的特点</dd>
+    <!-- <dd>2个 & 多个</dd> -->
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>&lt;component&gt;</div>
+      <div>is</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 标签页组件 Tabcard.vue - 动态组件版其它方案</dd>
+    <dd>
+      <div>方案1：定义为响应式数组；根据索引 index 访问组件</div>
+      <div>ref 默认是深层响应；为了避免性能上的消耗，使用 <a href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowref">浅响应
+          shallowRef</a></div>
+      <div>浅响应 shallowRef 创建一个浅响应式对象，数据的深层改变不会触发视图更新，减少性能上的消耗；并不对其中的数据进行响应，仅仅对对象的名字响应</div>
+      <pre>
+import { ref, shallowRef } from 'vue'
+import TabGoods from '@/components/TabGoods.vue'
+import TabCup from '@/components/TabCup.vue'
+
+const index = ref(0)
+const tabs = shallowRef([{
+  id: 0,
+  label: '随享瑞幸',
+  component: TabGoods
+}, {
+}, {
+  id: 1,
+  label: '颜值水杯',
+  component: TabCup
+}])</pre>
+      <pre>
+&lt;span v-for="(tab, ind) in tabs" @click="index = ind"&gt;{{ tab.label }}&lt;/span&gt;
+&lt;component :is="tabs[index].component"&gt;&lt;/component&gt;</pre>
+      <div>方案2：定义为静态对象；<a href="./vfor.html">遍历对象</a>，根据 key 访问组件；相对简洁</div>
+      <pre>
+import TabGoods from '@/components/TabGoods.vue'
+import TabCup from '@/components/TabCup.vue'
+
+const currentTab = ref('随享瑞幸')
+const tabs = {
+  "随享瑞幸": TabGoods,
+  "颜值水杯": TabCup
+}</pre>
+      <pre>
+&lt;span v-for="(value, key) in tabs" @click="currentTab = key"&gt;{{ key }}&lt;/span&gt;
+&lt;component :is="tabs[currentTab]"&gt;&lt;/component&gt;</pre>
+    </dd>
+    <div>不用 value；也可以使用_表示省略；非标准语法</div>
+    <pre>
+&lt;span v-for="(_, key) in tabs" @click="currentTab = key"&gt;{{ key }}&lt;/span&gt;
+&lt;component :is="tabs[currentTab]"&gt;&lt;/component&gt;</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
