@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubntu - Linux</title>
+  <link rel="stylesheet" href="../css/common_202406.css">
+</head>
+
+<body>
+  <header></header>
+  <div class="header">
+    <h1>Ubuntu</h1>
+    <span>&commat;2022-06-05</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item"><span>概述</span><span>Overview</span></a>
+      <a href="" style="--delay:2" class="nav-item"><span>设置</span><span>Setting</span></a>
+      <a href="" style="--delay:2" class="nav-item"><span>终端</span><span>Terminal</span></a>
+      <a href="" style="--delay:3" class="nav-item"><span>网络</span><span>Network</span></a>
+      <a href="" style="--delay:4" class="nav-item"><span>关机</span><span>Power</span></a>
+      <a href="" style="--delay:5" class="nav-item"><span>帮助</span><span>Man</span></a>
+      <a href="" style="--delay:6" class="nav-item"><span>命令</span><span>Command</span></a>
+    </nav>
+  </div>
+  <div class="chap">概述 Overview</div>
+  <dl class="nav-cont">
+    <dt>任务栏/启动器 Launcher</dt>
+    <dd>调整位置：拖动</dd>
+    <dd>删除</dd>
+    <dd>增加：锁定到启动器/任务栏</dd>
+  </dl>
+  <div class="chap">设置 Settings</div>
+  <dl class="nav-cont">
+    <dt>背景 Background</dt>
+    <dt>外观 Appearance</dt>
+    <dt>应用 Applications</dt>
+    <dt>显示 Displays</dt>
+    <dt>日期 Date & Time</dt>
+    <dt>关于 About</dt>
+    <dd>设备名 device name：在终端窗口中体现</dd>
+  </dl>
+  <div class="chap">终端 Terminal</div>
+  <dl class="nav-cont">
+    <dt>打开</dt>
+    <dd>. 快捷键：CTRL + ALT + T</dd>
+    <dd>. 空白处右键 → 打开终端Open In Terminal</dd>
+    <dt>调整</dt>
+    <dd>
+      <div>.更多设置，终端窗口空白处右键鼠标 → Preference</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>CTRL + SHIFT + =</td>
+          <td>窗口放大</td>
+        </tr>
+        <tr>
+          <td>CTRL + -</td>
+          <td>窗口缩小</td>
+        </tr>
+        <tr>
+          <td>clear</td>
+          <td>清屏</td>
+        </tr>
+        <tr>
+          <td>reset</td>
+          <td>重启 shell</td>
+        </tr>
+        <tr>
+          <td>CTRL + l</td>
+          <td>清屏[实际上是向上推屏]</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>命令提示符</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>username</td>
+          <td>@</td>
+          <td>hostname</td>
+          <td>:</td>
+          <td>workdirectory</td>
+        </tr>
+        <tr>
+          <td colspan="5">cnplaman@pla:~$</td>
+        </tr>
+      </table>
+      <div>默认会创建一个和主机名同名的用户：</div>
+      <pre>cnplaman@cnplaman-virtual-machine:~/Desktop$</pre>
+    </dd>
+    <dt>修改主机名 Hostname</dt>
+    <dd class="sn">
+      <p>. 文件位置：/etc/hostname</p>
+      <p>. 建议以集群+ip的方式命名，如web101</p>
+      <div>Hostname</div>
+      <pre>
+cnplaman@cnplaman-virtual-machine:~/Desktop$ hostname
+cnplaman-virtual-machine
+cnplaman@cnplaman-virtual-machine:~/Desktop$ vi /etc/hostname
+cnplaman-virtual-machine</pre>
+      <div>hostnamectl set-hostname your_name</div>
+      <pre>
+cnplaman@cnplaman-virtual-machine:~/Desktop$ hostnamectl
+ Static hostname: cnplaman-virtual-machine
+...</pre>
+      <p>. 修改并查看[实际上已经生效了]</p>
+      <pre>
+cnplaman@cnplaman-virtual-machine:~/Desktop$ hostnamectl set-hostname cnplaman
+cnplaman@cnplaman-virtual-machine:~/Desktop$ hostnamectl
+ Static hostname: pla
+...</pre>
+      <p>. 重启终端</p>
+      <pre>cnplaman@pla:~/Desktop$</pre>
+    </dd>
+    <dt>查看主机配置文件hosts</dt>
+    <dd>
+      <p>各主机名和ip地址的对应关系</p>
+      <p>.window系统位于：C:\Windows\System32\drivers\etc</p>
+      <pre>cnplaman@pla:~/Desktop$ vi /etc/hosts</pre>
+    </dd>
+  </dl>
+  <div class="chap">网络 Network</div>
+  <dl class="nav-cont">
+    <dt>查看网络连接</dt>
+    <dd>. 确保物理机和虚拟机网络互联</dd>
+    <dd>. 安装完毕后，window系统会多出来2个网络适配器/网卡；其中：</dd>
+    <dd>以太网的ip地址为：<span class="warn">172.23.163.39</span>；v8的ip地址为：<span
+        class="warn">192.168.227.1</span>；v1的ip地址为：<span class="warn">192.168.209.1</span></dd>
+    <dd><img class="ob-img" src="./imgs/network0.png" alt=""></dd>
+    <dd><img class="ob-img" src="./imgs/network1.png" alt=""></dd>
+    <dd>1. 获取物理机ip地址[方法很多... ...]；当前为：<span class="warn">172.23.163.39</span></dd>
+    <dd>2. 虚拟机ping物理机：打开一个终端，结果如下，说明虚拟机到物理机网络正常</dd>
+    <dd>
+      <pre>
+cnplaman@pla:~/Desktop$ ping 172.23.163.39
+PING 172.23.163.39 (172.23.163.39) 56(84) bytes of data.
+64 bytes from 172.23.163.39: icmp_seq=1 ttl=128 time=0.825 ms
+64 bytes from 172.23.163.39: icmp_seq=2 ttl=128 time=0.541 ms
+64 bytes from 172.23.163.39: icmp_seq=3 ttl=128 time=1.05 ms
+... ...</pre>
+    </dd>
+    <dd>3. 获取虚拟机ip地址：设置Settings→网络Network；当前为：<span
+        class="warn">192.168.227.128</span>；也可以使用命令ifconfig查看[默认情况下，Ubuntu需要先安装网络工具包再使用]；注意：不是ipconfig</dd>
+    <dd><img class="ob-img" src="./imgs/network2.png" alt=""></dd>
+    <dt>安装网络工具包</dt>
+    <dd>
+      <pre>
+cnplaman@pla:~/Desktop$ ifconfig
+Command 'ifconfig' not found, but can be installed with:
+sudo apt install net-tools</pre>
+    </dd>
+    <dd>. 查看</dd>
+    <dd>
+      <pre>
+cnplaman@pla:~/Desktop$ ifconfig
+ens33: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.227.128  netmask 255.255.255.0  broadcast 192.168.227.255
+        ...</pre>
+    </dd>
+    <dd>. 物理机ping虚拟机：打开一个终端win+R，结果如下，说明物理机到虚拟机网络正常</dd>
+    <dd><img class="ob-img" src="./imgs/network3.png" alt=""></dd>
+    <dd>. 网络拓扑</dd>
+    <dd><img class="ob-img" src="./imgs/network4.png" alt=""></dd>
+  </dl>
+  <div class="chap">关机 Power</div>
+  <dl class="nav-cont">
+    <dt>关机 shutdown </dt>
+    <dd>shutdown [-c][-r] time</dd>
+    <dd>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>-c</td>
+          <td>取消关闭</td>
+        </tr>
+        <tr>
+          <td>-r</td>
+          <td>关闭并重启；reboot</td>
+        </tr>
+        <tr>
+          <td>time</td>
+          <td>now:立即关闭；+n:n分钟后关闭；hh:mm:ss：指定时间关闭</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>. 如果不指定时间和参数，默认1min后关机</dd>
+    <dd>. 请谨慎关机，特别是服务器</dd>
+    <dd class="tips">为什么默认是延迟1min才关闭？</dd>
+    <dt>挂起 halt</dt>
+    <dd>. 挂起系统，处于待机状态</dd>
+    <dt>重启 reboot</dt>
+    <dd>. 重启系统，相当于shutdown -r now</dd>
+    <dt>关机 poweroff</dt>
+    <dd>. 关闭系统和电源</dd>
+    <dt>数据同步 sync</dt>
+    <dd>. 将内存中的数据同步到硬盘</dd>
+    <dd>. 关闭系统必须要做的操作，避免数据丢失</dd>
+  </dl>
+  <div class="chap">帮助 man</div>
+  <dl class="nav-cont">
+    <dt>man</dt>
+    <dd>. 获取某个命令/配置文件的帮助信息</dd>
+    <dd>. 实际开发中，更倾向于使用百度，但还是推荐利用这个命令查阅信息</dd>
+    <dd>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>space</td>
+          <td>向下翻页</td>
+        </tr>
+        <tr>
+          <td>f</td>
+          <td>forward</td>
+        </tr>
+        <tr>
+          <td>b</td>
+          <td>backward</td>
+        </tr>
+        <tr>
+          <td>q</td>
+          <td>退出quit</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>help</dt>
+    <dd>. 部分命令是内置命令built-in，直接内嵌在shell；系统加载时，会随shell一起加载</dd>
+    <dd>. 常用内置命令：cd、exit、history</dd>
+    <dt>type</dt>
+    <dd>. 判断一个命令的类型</dd>
+    <dd>
+      <pre>
+$ type cd
+cd is a shell builtin</pre>
+    </dd>
+    <dt>command --help</dt>
+    <dd>. 适用所有命令</dd>
+    <dd>
+      <pre>
+$ ls --help
+Usage: ls [OPTION]... [FILE]...
+List information about the FILEs (the current directory by default).
+Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
+... ...</pre>
+    </dd>
+    <dd>
+      <pre>
+$ cd --help
+cd: cd [-L|[-P [-e]] [-@]] [dir]
+    Change the shell working directory.
+... ...</pre>
+    </dd>
+  </dl>
+  <div class="chap">命令 Command</div>
+  <dl class="nav-cont">
+    <dt>日期 date</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>date</td>
+          <td>2022年 06月 13日 星期一 19:38:25 CST</td>
+        </tr>
+        <tr>
+          <td>date +%Y-%m-%d</td>
+          <td>2022:12:23</td>
+        </tr>
+        <tr>
+          <td>date +%y</td>
+          <td>22；年份短表示</td>
+        </tr>
+        <tr>
+          <td>date +%H:%M:%S</td>
+          <td>21</td>
+        </tr>
+        <tr>
+          <td>date +%D</td>
+          <td>12/23/22</td>
+        </tr>
+        <tr>
+          <td>date +%h</td>
+          <td>12月</td>
+        </tr>
+        <tr>
+          <td>date +%s</td>
+          <td>stamp时间戳，秒数</td>
+        </tr>
+        <tr>
+          <td>date -s</td>
+          <td>设置系统时间</td>
+        </tr>
+      </table>
+      <pre>
+$ date "+%Y:%m:%d %H:%M:%S"//使用字符串的形式，否则中间的空格不能识别
+2022:12:23 21:29:03</pre>
+    </dd>
+    <dt>日历 cal</dt>
+    <dd>
+      <div>calendar</div>
+      <div>首次使用需要安装：sudo apt install ncal</div>
+      <div>git shell不支持</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>cal</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>cal -y</td>
+          <td>查看本年度日历</td>
+        </tr>
+        <tr>
+          <td>cal -n</td>
+          <td>查看n个月份的日历</td>
+        </tr>
+        <tr>
+          <td>cal year_num</td>
+          <td>查看某年的日历</td>
+        </tr>
+        <tr>
+          <td>cal -m</td>
+          <td>从星期一到星期日显示日历</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>df -h</dd>
+    <dd>磁盘剩余空间，disk free；-h：以更可读human的方式显示；重点关注/的使用情况</dd>
+    <dd>du -h 目录</dd>
+    <dd>磁盘使用空间，disk usage；-h：以更可读的方式显示</dd>
+    <dd>free</dd>
+    <dd>内存使用情况</dd>
+    <dd>ps aux</dd>
+    <dd>process status；默认只显示当前用户通过终端启动的应用程序；a：all，所有；u：user，哪个用户启动的，更为详细；x：没有控制终端；退出只使用au</dd>
+    <dd>top</dd>
+    <dd>持续显示进程排序；按q或ctrl+c退出</dd>
+    <dd>kill -9 pid</dd>
+    <dd>杀死进程；-9：强行杀死；不要杀死root开启的进程</dd>
+    <dd>find 目录 -name ""</dd>
+    <dd>查找文件：在指定目录下查找符合条件的文件；如果不指定目录，就在当前目录下查找；可以使用通配符</dd>
+    <dd>ln -s</dd>
+    <dd>软链接；快捷方式；s：shortcut；todo</dd>
+    <dd>tar -cvf 包名.tar 目录|文件<br>
+      tar -xvf 包名.tar</dd>
+    <dd>分别是打包和解包；打包过程不负责压缩；-cvf和-xvf固定搭配使用；打包多个文件，请使用空格分隔</dd>
+    <dd>tar -zcvf 包名.tar.gz 目录|文件<br>
+      tar -zxvf 包名.tar 目录</dd>
+    <dd>指定-z选项可以实现压缩或解压缩；执行过程：先压缩再打包；先解压缩再解包</dd>
+    <dd>gzip</dd>
+    <dd>压缩；压缩后的文件名字通常是xxx.tar.gz，表示先打包再压缩</dd>
+    <dd>压缩前后对比如下：</dd>
+    <dd>
+      <pre>
+cnplaman@pla:~/Desktop$ tar -cvf c.tar 01.c 02.c 03.c 
+01.c
+02.c
+03.c
+cnplaman@pla:~/Desktop$ ls -lh
+total 12K
+-rw-rw-r-- 1 cnplaman cnplaman   0  6月 13 20:32 01.c
+-rw-rw-r-- 1 cnplaman cnplaman   0  6月 13 20:32 02.c
+-rw-rw-r-- 1 cnplaman cnplaman   0  6月 13 20:32 03.c
+-rw-rw-r-- 1 cnplaman cnplaman 10K  6月 13 20:32 c.tar
+cnplaman@pla:~/Desktop$ tar -zcvf c.tar.gz 01.c 02.c 03.c 
+01.c
+02.c
+03.c
+cnplaman@pla:~/Desktop$ ls -lh
+total 16K
+-rw-rw-r-- 1 cnplaman cnplaman   0  6月 13 20:32 01.c
+-rw-rw-r-- 1 cnplaman cnplaman   0  6月 13 20:32 02.c
+-rw-rw-r-- 1 cnplaman cnplaman   0  6月 13 20:32 03.c
+-rw-rw-r-- 1 cnplaman cnplaman 10K  6月 13 20:32 c.tar
+-rw-rw-r-- 1 cnplaman cnplaman 134  6月 13 20:33 c.tar.gz
+            </pre>
+    </dd>
+    <dd>apt install package<br>
+      apt remove package<br>
+      apt upgrade package</dd>
+    <dd>软件安装、卸载和更新；apt：advanced package tool高级包工具；需要sudo权限</dd>
+    <dd class="example-sn">跑个小火车吧</dd>
+    <dd>
+      <pre>
+sudo apt install sl
+sl</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>

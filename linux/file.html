@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件 File</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3831034_3kt0z1vo8a5.css">
+  <link rel="stylesheet" href="../css/linux/linux.css">
+  <style>
+    .flex-item {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .txt-center {
+      text-align: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <nav>
+    <ul>
+      <li class="nav-item active">
+        <span class="iconfont icon-fenlei title-icon"></span>
+        <span class="title-txt">简介</span>
+      </li>
+      <li class="nav-item">
+        <span class="iconfont icon-wenjianjia title-icon"></span>
+        <span class="title-txt">目录</span>
+      </li>
+      <li class="nav-item">
+        <span class="iconfont icon-gengduowenjian title-icon"></span>
+        <span class="title-txt">文件</span>
+      </li>
+      <li class="nav-item">
+        <span class="iconfont icon-xinwenzixunbeifen title-icon"></span>
+        <span class="title-txt">进阶</span>
+      </li>
+      <li class="nav-item">
+        <span class="iconfont icon-shezhi title-icon"></span>
+        <span class="title-txt">设置</span>
+      </li>
+      <li class="hot-spot"></li>
+    </ul>
+  </nav>
+  <div class="cont-wrap">
+    <div class="inner-box">
+      <dl class="inner-cont">
+        <dd class="txt-center">一切皆文件</dd>
+        <dt>系统架构 Architect</dt>
+        <dd>/：根目录</dd>
+        <dd>/home：用户目录；自己的东西，放在自己的家目录中</dd>
+        <dd>/bin：二进制/可执行文件目录</dd>
+        <dd>/sbin：系统管理员专用的二进制/可执行文件目录；s：system</dd>
+        <dd>/usr/bin：用户安装的软件/可执行文件目录；usr：user</dd>
+        <dd>/usr/sbin：超级用户安装的软件/可执行文件目录；s：super</dd>
+        <dd>/etc：配置文件目录</dd>
+        <dt>命令格式</dt>
+        <dd>command [-options] [parameter]</dd>
+        <dd>. 区分大小写!!!</dd>
+        <dd>. 选项以-开头；参数不需要；[]表示可选的；选项一定在参数前面</dd>
+        <dt>查看命令帮助</dt>
+        <dd>command --help</dd>
+        <dd>man command</dd>
+        <dd>. man是manual/手册</dd>
+        <dt>别名</dt>
+        <dd>. 使用alias可以查看常用命令的别名/简写</dd>
+        <dd>
+          <pre>
+$ alias
+alias ll='ls -l'
+alias ls='ls -F --color=auto --show-control-chars'
+alias node='winpty node.exe'</pre>
+        </dd>
+        <dt>操作小贴士</dt>
+        <dd>. 命令补全：输入开头部分字母，按tab自动补全</dd>
+        <dd>. 历史命令：利用↑、↓方向键选择历史命令</dd>
+        <dd>. CTRL+c返回命令状态</dd>
+        <dd>. 更多使用，请查看帮助</dd>
+        <dd>. Found a swap file by the name "xxxxxx.swp"：文件操作不当，如强行关闭terminal，会有一个后缀为.swp的隐藏文件存在。利用ls
+          -a查看并删除对应的隐藏文件</dd>
+      </dl>
+      <dl class="inner-cont">
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">pwd</td>
+              <td>输出/查看当前绝对目录</td>
+            </tr>
+            <tr>
+              <td>cd</td>
+              <td>更改/切换工作目录</td>
+            </tr>
+            <tr>
+              <td>mkdir</td>
+              <td>创建目录</td>
+            </tr>
+            <tr>
+              <td>rmdir</td>
+              <td>删除空工作目录</td>
+            </tr>
+            <tr>
+              <td>rm</td>
+              <td>删除工作目录/文件</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>pwd</dt>
+        <dd>. Print Working Directory</dd>
+        <dd>. 输出/查看当前绝对目录</dd>
+        <dd>. 使用最多；没有之一</dd>
+        <dd>
+          <pre>
+$ pwd
+/d/gl/C</pre>
+        </dd>
+        <dt>cd</dt>
+        <dd>. Change Directory</dd>
+        <dd>. 更改/切换工作目录</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">cd .</td>
+              <td>切换到当前目录</td>
+            </tr>
+            <tr>
+              <td>cd ..</td>
+              <td>切换到上级目录</td>
+            </tr>
+            <tr>
+              <td>cd -</td>
+              <td>在最近两次工作目录之间切换</td>
+            </tr>
+            <tr>
+              <td>cd ~</td>
+              <td>切换到家目录/用户主目录</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>$ cd ~/Desktop/：切换到用户主目录下某个文件夹</pre>
+        </dd>
+        <dt>mkdir</dt>
+        <dd>. make directory</dd>
+        <dd>. 创建工作目录；不允许同名</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-p</td>
+              <td>嵌套创建</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>$ mkdir -p a/b/c/d</pre>
+        </dd>
+        <dt>rmdir</dt>
+        <dd>. Remove Directory</dd>
+        <dd>. 删除工作目录，要求非空</dd>
+        <dt>rm</dt>
+        <dd>. Remove</dd>
+        <dd>. 删除工作目录/文件</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-r</td>
+              <td>强制删除，不管是否为空</td>
+            </tr>
+          </table>
+        </dd>
+      </dl>
+      <dl class="inner-cont">
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">ls</td>
+              <td>显示文件列表</td>
+            </tr>
+            <tr>
+              <td>touch</td>
+              <td>创建文件</td>
+            </tr>
+            <tr>
+              <td>rm</td>
+              <td>删除文件</td>
+            </tr>
+            <tr>
+              <td>cp</td>
+              <td>复制文件</td>
+            </tr>
+            <tr>
+              <td>mv</td>
+              <td>移动文件</td>
+            </tr>
+            <tr>
+              <td>cat</td>
+              <td>查看文件内容</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>ls</dt>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-l</td>
+              <td>long：长文件信息/显示详细信息</td>
+            </tr>
+            <tr>
+              <td>-a</td>
+              <td>all：所有文件，包括隐藏文件/文件夹[以.开始]</td>
+            </tr>
+            <tr>
+              <td>-h</td>
+              <td>更加直观的显示文件大小</td>
+            </tr>
+            <tr>
+              <td>-R</td>
+              <td>recursion递归显示 </td>
+            </tr>
+          </table>
+        </dd>
+        <dd>. 显示当前或指定目录文件列表</dd>
+        <dd>. 选项可以组合使用，如-l -h可以简化为-lh；注意先后顺序</dd>
+        <dd>. 配合通配符更加高效</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">*</td>
+              <td>任意个数的字符</td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>任意一个字符</td>
+            </tr>
+            <tr>
+              <td>[abc]</td>
+              <td>匹配abc中任意一个字符</td>
+            </tr>
+            <tr>
+              <td>[a-b]</td>
+              <td>-表示范围；匹配a到b中任意一个字符</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>
+$ ls *3.txt//显示以3结束的所有txt文件
+$ ls *3.*//显示以3结束的所有文件，类型不限
+$ ls ?2?.txt//文件名中间是2，长度为3的txt文件
+$ ls ?[123]?.txt//文件名中间是1或2或3，长度为3的txt文件
+$ ls ?[1-9]*.txt//文件名第2位是1-9某个数字的所有txt文件</pre>
+        </dd>
+        <dt>touch file_name</dt>
+        <dd>. 新建文件：文件不存在，则创建；文件存在，修改最近访问时间</dd>
+        <dd>. 也可以使用 <a class="warn" href="./vim.html" target="_blank">vim</a> 直接创建并打开编辑</dd>
+        <dd>. Linux系统中，文件的后缀名不是很关键；部分版本会要求确定的后缀，否则无法识别，如.c文件</dd>
+        <dd>. 鸿蒙系统的碰一碰</dd>
+        <dt>rm file_name</dt>
+        <dd>. Remove</dd>
+        <dd>. 删除文件，不能恢复哦！！！</dd>
+        <dd>[<span class="iconfont icon-jianpan warn"></span>]删库跑路</dd>
+        <dd>
+          <pre>$ rm -rf /*</pre>
+        </dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-f</td>
+              <td>强制删除，不给任何提示，即使不存在也会执行删除操作[简单粗暴型]</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>cp src dest</dt>
+        <dd>. 拷贝copy源文件/目录到目标位置</dd>
+        <dd>. 需要2个参数；第一个参数src为源文件，第二个参数dest为目标文件</dd>
+        <dd>. 通常会带上相应的目录；如果复制时不想改文件名字，只需指定目标目录</dd>
+        <dd>. 复制文件并不能改变文件的权限属性</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-i</td>
+              <td>information，如果有同名文件，则给出提示</td>
+            </tr>
+            <tr>
+              <td class="p30">-r</td>
+              <td>递归复制目录以及其中的内容，相当于整体复制文件夹</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>
+$ cp 123.txt ../b/321.txt：拷贝到上级目录下的b目录，并更改名字
+$ cp 123.txt ../b：拷贝到上级目录下的b目录，不更改名字
+$ cp -r ./b a/c：拷贝当前目录下目录b的内容到a目录里的c目录下；如果c目录不存在，则创建；如果c存在，则拷贝到c目录下</pre>
+        </dd>
+        <dt>mv src dest</dt>
+        <dd>. 移动move源文件src到目标位置[文件]；通常会带上相应的目录</dd>
+        <dd>. 移动文件的同时可以更改文件名</dd>
+        <dd>. 也可以重命名目录/文件</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-i</td>
+              <td>information，如果有同名文件，则给出提示</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>
+$ mv b/112.txt .：移动b目录的112.txt到当前目录
+$ mv b/122.txt 221.txt：移动b目录的122.txt到当前目录并改名221.txt
+$ mv -i 112.txt 114.txt：带上-i参数避免同名覆盖
+$ mv b bb：目录改名
+$ mv a.txt b.txt：文件改名</pre>
+        </dd>
+        <dt>cat file_name</dt>
+        <dd>. concatenate/catch</dd>
+        <dd>. 查看文件内容、创建文件、追加内容等</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-n</td>
+              <td>显示行号，包括空行</td>
+            </tr>
+            <tr>
+              <td>-b</td>
+              <td>仅非空行显示行号</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>$ cat 121.txt：显示文件121.txt内容</pre>
+        </dd>
+      </dl>
+      <dl class="inner-cont">
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">tree</td>
+              <td>树型显示</td>
+            </tr>
+            <tr>
+              <td>more</td>
+              <td>显示更多</td>
+            </tr>
+            <tr>
+              <td>grep</td>
+              <td>过滤</td>
+            </tr>
+            <tr>
+              <td>echo</td>
+              <td>输出</td>
+            </tr>
+            <tr>
+              <td>>/>></td>
+              <td>重定向</td>
+            </tr>
+            <tr>
+              <td>|</td>
+              <td>多级过滤</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>tree</dt>
+        <dd>. 树型显示当前或某个工作目录</dd>
+        <dd>. 如果不支持，请根据提示安装：sudo apt install tree</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-d</td>
+              <td>只显示目录</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>more file_name</dt>
+        <dd>. 内容较多时分页显示</dd>
+        <dd>. 配合以下热键控制显示效果</dd>
+        <dd>. 选项同man</dd>
+        <dd>. git shell不支持more</dd>
+        <dd>. 类似的还有 <span class="warn">less</span>，并不完全加载，而是看到哪里加载到哪里；适合动态查看大文件，如：追小说</dd>
+        <dd>. 更多查看文件方法，请查阅 <span class="warn">head</span>、<span class="warn">tail</span></dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">space</td>
+              <td>每按一次显示下一屏</td>
+            </tr>
+            <tr>
+              <td>enter</td>
+              <td>每按一次显示下一行</td>
+            </tr>
+            <tr>
+              <td>b</td>
+              <td>每按一次回滚一页</td>
+            </tr>
+            <tr>
+              <td>f</td>
+              <td>每按一次前滚一页</td>
+            </tr>
+            <tr>
+              <td>q</td>
+              <td>退出</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>grep</dt>
+        <dd>. 以高亮的形式显示文件中含有特定内容的行；相当于查找/搜索</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-n</td>
+              <td>匹配行并显示行号</td>
+            </tr>
+            <tr>
+              <td>-v</td>
+              <td>排除内容，即：不包括指定内容的行，相当于取反搜索</td>
+            </tr>
+            <tr>
+              <td>-i</td>
+              <td>忽略大小写</td>
+            </tr>
+            <tr>
+              <td>^a</td>
+              <td>以a开头的行</td>
+            </tr>
+            <tr>
+              <td>a$</td>
+              <td>以a结束的行</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>
+$ grep as 112.txt：搜索文件中包含as的行
+$ grep -vn as 112.txt：搜索文件中的不包括as的行并显示行号
+$ grep -n ^as 112.txt：搜索文件中以as开头的行并显示行号
+$ grep -n as$ 112.txt：搜索文件中以as结束的行并显示行号</pre>
+        </dd>
+        <dt>echo msg</dt>
+        <dd>. 在终端输出内容</dd>
+        <dd>. 原样输出，不会计算</dd>
+        <dd>. 多空格只会保留一个，所以输出字符串时，请使用""</dd>
+        <dd>
+          <table class="list">
+            <tr>
+              <td class="p30">-e</td>
+              <td>escape；在串中使用转义符</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>
+          <pre>
+$ echo 5*5
+$ echo -e "123\t234\t45"
+$ echo $//查看系统变量
+$ echo $USER//查看系统用户变量</pre>
+        </dd>
+        <dt>>/>></dt>
+        <dd>. 重定向，重新指定结果去向</dd>
+        <dd>. 将原本在终端显示的结果追加或覆盖到指定文件中，用于保存结果</dd>
+        <dd>. 如果文件不存在，则创建；可以不用空格分隔；相比touch创建文件，更加方便、直接</dd>
+        <dd>
+          <pre>
+$ echo hi,there > 221.txt：覆盖文件内容
+$ echo hi,there >> 221.txt：追加文件内容
+$ ls -lh > 112.txt：将查看的结果放到文件中
+$ tree >> 112.txt：将查看的结果追加到文件中</pre>
+        </dd>
+        <dt>|</dt>
+        <dd>. 管道</dd>
+        <dd>. 将一个命令的输出，作为另一个命令的输入，相当于多级过滤</dd>
+        <dd>. 通常配合more和grep命令使用</dd>
+        <dd>
+          <pre>
+$ ls -lha ~ | grep cc：在显示主目录的结果中查找包含cc的行
+$ ls -lha ~ | more：分屏显示主目录结果</pre>
+        </dd>
+        <dd>[<span class="iconfont icon-bangzhu"></span>] 查看IP地址</dd>
+      </dl>
+      <dl class="inner-cont">
+        <dt>概述</dt>
+        <dd>. 安全考虑，针对不同的用户，文件有不同的权限</dd>
+        <dd>. 对于用户：文件所有者、组用户、其它用户</dd>
+        <dd>. 对于文件：读/打开、写/修改[不代表删除。用户对文件所在目录有写的权限才可以删除]、运行/执行文件[前提是该文件是可执行文件]</dd>
+        <dd>. 对于目录：读/查看/打开、写/删除/修改、执行/目录切换</dd>
+        <dd class="mt2">
+          <table>
+            <tr>
+              <td>目录</td>
+              <td colspan="3">拥有者权限/权重 U</td>
+              <td colspan="3">组权限/权重 G</td>
+              <td colspan="3">其它用户权限/权重 O</td>
+            </tr>
+            <tr>
+              <td>- | d | l</td>
+              <td>r</td>
+              <td>w</td>
+              <td>x</td>
+              <td>r</td>
+              <td>w</td>
+              <td>x</td>
+              <td>r</td>
+              <td>w</td>
+              <td>x</td>
+            </tr>
+            <tr>
+              <td>d：目录</td>
+              <td>4</td>
+              <td>2</td>
+              <td>1</td>
+              <td>4</td>
+              <td>2</td>
+              <td>1</td>
+              <td>4</td>
+              <td>2</td>
+              <td>1</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>查看权限</dt>
+        <dd>使用 ll 或 ls -l 查看文件详细信息</dd>
+        <dd>. 0：目录</dd>
+        <dd>. 1-3：拥有者权限：创建者；通常称 U：user</dd>
+        <dd>. 4-6：组权限：组里的用户；通常称 G：group</dd>
+        <dd>. 7-9：其它用户权限；通常称 O：other</dd>
+        <dd>. 10：硬链接数：访问的方式有多少种；如果是文件夹，指的是子文件夹的个数</dd>
+        <dd>. 11：拥有者名称/文件属主：修改所有者，请使用 chown 命令</dd>
+        <dd>. 12：组名称/文件属组：修改组，请使用 chgrp 命令</dd>
+        <dd>. 13：文件大小；目录显示为0</dd>
+        <dd>. 14：文件创建/最后一次访问时间</dd>
+        <dd>. 15：文件/目录名称：普通文件：白色；<span style="color: #060;font-weight: 600;">可执行文件</span>：绿色；<span
+            style="color: #2d99e0;font-weight: 600;">文件夹</span>：蓝色</dd>
+        <dd class="mt2">[<span class="iconfont icon-jianpan warn"></span>]查看某个目录下的文件信息并分析每个数据项的含义</dd>
+        <dd>
+          <pre>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-rwxrwxr-x  1 bt bt 15960 12月 25 09:58 a.out*</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span></pre>
+        </dd>
+        <dt>修改权限 chmod</dt>
+        <dd>方式1：直接使用权限</dd>
+        <dd>chmod [ugoa][-+=][rwx] file</dd>
+        <dd class="mt2">
+          <table class="list">
+            <tr>
+              <td class="p30">-</td>
+              <td>减少权限</td>
+            </tr>
+            <tr>
+              <td>+</td>
+              <td>增加权限，之前没有</td>
+            </tr>
+            <tr>
+              <td>=</td>
+              <td>赋予权限；没有体现的就是-</td>
+            </tr>
+            <tr>
+              <td>u</td>
+              <td>所有者</td>
+            </tr>
+            <tr>
+              <td>g</td>
+              <td>用户组</td>
+            </tr>
+            <tr>
+              <td>o</td>
+              <td>其它用户</td>
+            </tr>
+            <tr>
+              <td>a</td>
+              <td>所有用户[默认]</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>. 权限变更时；文件图标/颜色有相应的变化</dd>
+        <dd>. 复制文件并不能改变文件的权限属性</dd>
+        <dd class="mt2">[<span class="iconfont icon-jianpan warn"></span>]修改a.out的权限[7、14、21、28]</dd>
+        <dd>
+          <pre>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-rwxrwxr-x  1 bt bt 15960 12月 25 09:58 a.out*</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span>
+<span>cnplaman@pla:~/Desktop$ chmod g-rwx a.out</span>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-rwx---r-x  1 bt bt 15960 12月 25 09:58 a.out*</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span>
+<span>cnplaman@pla:~/Desktop$ chmod o+w a.out</span>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-rwx---rwx  1 bt bt 15960 12月 25 09:58 a.out*</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span>
+<span>cnplaman@pla:~/Desktop$ chmod u=r-- a.out</span>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-r-----rwx  1 bt bt 15960 12月 25 09:58 a.out*</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span>
+<span>cnplaman@pla:~/Desktop$ chmod o=rw a.out</span>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-r-----rw-  1 bt bt 15960 12月 25 09:58 a.out</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span></pre>
+        </dd>
+        <dd>方式2. 使用权限对应的权重组合进行修改</dd>
+        <dd>chmod [421] file</dd>
+        <dd class="mt2">
+          <table class="list">
+            <tr>
+              <td>1</td>
+              <td>001</td>
+              <td>--r</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>010</td>
+              <td>-w-</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>011</td>
+              <td>-wr</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>100</td>
+              <td>r--</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>101</td>
+              <td>r-x</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>110</td>
+              <td>rw-</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>111</td>
+              <td>rwx</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>. 省略了对ugoa的引用</dd>
+        <dd>. 常用组合：777、700、644</dd>
+        <dd class="mt2">[<span class="iconfont icon-jianpan warn"></span>]接上例</dd>
+        <dd>
+          <pre>
+<span>cnplaman@pla:~/Desktop$ chmod 777 a.out</span>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-rwxrwxrwx  1 bt bt 15960 12月 25 09:58 a.out*</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span>
+<span>cnplaman@pla:~/Desktop$ chmod 644 a.out</span>
+<span>cnplaman@pla:~/Desktop$ ll</span>
+<span>total 28</span>
+<span>drwxr-xr-x  2 bt bt  4096 12月 25 10:00 ./</span>
+<span>drwxr-x--- 14 bt bt  4096 12月 25 09:58 ../</span>
+<span>-rw-r--r--  1 bt bt 15960 12月 25 09:58 a.out</span>
+<span>-rw-rw-r--  1 bt bt    75 12月 25 09:57 demo.c</span></pre>
+        </dd>
+        <dt>修改所有者 chown</dt>
+        <dd>chown [owner]:[group] file</dd>
+        <dd>. 更改文件的属主</dd>
+        <dd>. 可以同时修改文件的属组</dd>
+        <dd>. root或拥有sudo权限的用户才可以执行</dd>
+        <dd class="mt2">[<span class="iconfont icon-jianpan warn"></span>]修改a.out的属主</dd>
+        <dd>
+          <pre>
+<span>cnplaman@pla:~/Desktop$ chown plaman a.out</span> 
+<span>chown: changing ownership of 'a.out': Operation not permitted</span>
+<span>cnplaman@pla:~/Desktop$ sudo chown plaman a.out</span>
+<span>...</span>
+<span>-rwxrwxr-x  1 plaman   cnplaman 16000 12月 25 14:36 a.out*</span>
+<span>...</span>
+<span>cnplaman@pla:~/Desktop$ sudo chown bt:bt a.out</span>
+<span>...</span>
+<span>-rwxrwxr-x  1 bt       bt       16000 12月 25 15:21 a.out*</span></pre>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <iframe src="../common/footer.html" frameborder="0" scrolling="no"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <script>
+    window.onload = function () {
+      let navItems = document.querySelectorAll('.nav-item');
+      let inner = document.querySelector('.inner-box');
+      let w = inner.getBoundingClientRect().width / 5;
+      navItems.forEach((item, i) => {
+        item.addEventListener('click', () => {
+          navItems.forEach(itemInner => {
+            itemInner.classList.remove('active');
+          })
+          item.classList.add('active')
+          inner.style.left = -i * w + 'px'
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

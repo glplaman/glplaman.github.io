@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方法 Function</title>
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+
+<body>
+    <header>
+        <h1>方法 Function</h1>
+    </header>
+    <div class="chap">概述 Overview</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>. 完成特定功能的代码；也称函数</dd>
+        <dd>. 函数包含于类或对象中[位置]</dd>
+        <dd>. 一个函数只实现一个功能</dd>
+        <dd>. 函数只有值传递</dd>
+        <dt>声明</dt>
+        <dd>
+            <pre>
+[修饰符] 返回类型 函数名( [参数列表] ){
+    方法体
+    return [值];
+}</pre>
+        </dd>
+        <dd>修饰符：如何使用方法，如public、static、final；修饰符为static时，是静态方法，可以直接调用，无需实例化；其它非静态方法必须new后才可以调用</dd>
+        <dd>返回类型：如果不需要特定的类型，应声明为void</dd>
+        <dd>函数名：采用小驼峰；类名采用大驼峰；主函数main()也是一个函数</dd>
+        <dd>参数列表：形式参数的声明；占位符；形参为字符串数组</dd>
+        <dd>方法体：方法的功能实现</dd>
+        <dd>return：除了返回结果外，还可以终止方法的执行</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]Function.java</dd>
+        <dd>
+            <pre>
+<span>package base.class1;</span>
+<span></span>
+<span>public class Function {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        int res = add(2, 3);</span>
+<span>        System.out.println("res=" + res);</span>
+<span>    }</span>
+<span></span>
+<span>    public static int add(int a, int b) {</span>
+<span>        return a + b;</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+    </dl>
+    <div class="chap">重载</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>函数名相同，形参不同</dd>
+        <dd>适应更多需求</dd>
+        <dt>规则</dt>
+        <dd>.形参个数不同[常见]</dd>
+        <dd>.形参类型不同</dd>
+        <dd>.形参顺序不同</dd>
+        <dd>.函数仅仅返回类型不同，不构成重载</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]add</dd>
+        <dd>
+            <pre>
+public static int add(int a, int b) {
+    return a + b;
+}
+
+public static float add(float a, float b) {
+    return a + b;
+}
+
+public static int add(int a, int b, int c) {
+    return a + b + c;
+}</pre>
+        </dd>
+    </dl>
+    <div class="chap">命令行传参</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>运行程序的时候，给它传递参数</dd>
+        <dd>
+            <pre>
+<span>package base.class1;</span>
+<span></span>
+<span>public class Function {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        for (int i = 0; i < args.length; i++) {</span>
+<span>            System.out.println("args[" + i + "]" + args[i]);</span>
+<span>        }</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+        <dd>执行：注意路径的变化</dd>
+        <dd>
+            <pre>
+PS E:\JavaPro\Demo\Demo> javac .\src\base\class1\Function.java
+PS E:\JavaPro\Demo\Demo> cd src
+PS E:\JavaPro\Demo\Demo\src> java base.class1.Function hi 123
+args[0]hi
+args[1]123</pre>
+        </dd>
+    </dl>
+    <div class="chap">可变参数</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>在参数类型后以...表示,相当于传递了一个长度可变的数组参数</dd>
+        <dd>一个函数只能声明一个可变参数</dd>
+        <dd>可变参数只能是最后一个形参</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]max</dd>
+        <dd>
+            <pre>
+<span>package base.class1;</span>
+<span></span>
+<span>public class Function {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        max();</span>
+<span>        max(1, 2, 3);</span>
+<span>    }</span>
+<span></span>
+<span>    public static void max(int... num) {</span>
+<span>        int res = 0;</span>
+<span>        if (num.length == 0) {</span>
+<span>            System.out.println("para null");</span>
+<span>            return;</span>
+<span>        }</span>
+<span>        for (int i = 0; i < num.length; i++) {</span>
+<span>            if (num[i] > res) {</span>
+<span>                res = num[i];</span>
+<span>            }</span>
+<span>        }</span>
+<span>        System.out.println("max=" + res);</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+        <dd>执行</dd>
+        <dd>
+            <pre>
+para null
+max=3</pre>
+        </dd>
+    </dl>
+    <div class="chap">递归函数</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>自己调用自己</dd>
+        <dd>必须有一个出口</dd>
+        <dd>递归函数一般都有对应的非递归函数实现</dd>
+        <dd>对栈的资源占用比较大，所以大数据量运算不建议使用递归</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]n!</dd>
+        <dd>
+            <table>
+                <tr>
+                    <td>1</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2*1</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>3*2*1</td>
+                </tr>
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                </tr>
+                <tr>
+                    <td>n</td>
+                    <td>n*(n-1)*...3*2*1</td>
+                </tr>
+            </table>
+        </dd>
+        <dd>
+            <pre>
+<span>public static int fn(int n) {</span>
+<span>    if (n == 0) {</span>
+<span>        return 1;</span>
+<span>    } else {</span>
+<span>        return n * fn(n - 1);</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+    </dl>
+    <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight" title="links"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组 Array</title>
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+
+<body>
+    <header>
+        <h1>数组 Array</h1>
+    </header>
+    <div class="chap">概述 Overview</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>相同类型的数据的有序集合</dd>
+        <dd>每个数据是数组的一个元素，通过数组下标/索引快速访问；索引从0开始</dd>
+        <dd>数组是引用类型</dd>
+        <dd>数组元素必须是同一类型：可以是基本类型，也可以是引用类型</dd>
+        <dd>使用{}初始化数组</dd>
+        <dd>数组的大小是固定的；一旦创建，长度不能改变</dd>
+        <dd>超过数组分配的空间大小，编译时会报错</dd>
+        <dd>数值型的数组元素，未赋值时默认是0/0.0</dd>
+        <dt>声明</dt>
+        <dd>
+            <pre>数据类型[] 变量名;</pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]先声明再通过new分配大小，，也称动态初始化</dd>
+        <dd>
+            <pre>
+int[] score;
+score = new int[10];
+score[0] = 1;
+score[9] = 3;
+score[10] = 5;//Index 10 out of bounds for length 10</pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]声明并通过{}初始化，也称静态初始化</dd>
+        <dd>
+            <pre>
+int[] level = { 1, 2, 3 };
+level[3] = 5;//Index 3 out of bounds for length 3</pre>
+        </dd>
+    </dl>
+    <div class="chap">数组使用</div>
+    <dl>
+        <dt>遍历 For</dt>
+        <dd>根据数组索引依次访问每一个数据元素；[快捷输入 fori]</dd>
+        <dd>
+            <pre>
+int[] level = { 1, 2, 3, 4, 5 };
+for (int i = 0; i < level.length; i++) {
+    System.out.println(level[i]);
+}</pre>
+        </dd>
+        <dt>增强遍历 For-Each</dt>
+        <dd>不依赖数组索引即可依次访问每一个数据元素；不能单独操作某一个数据元素；[快捷输入 foreach]</dd>
+        <dd>
+            <pre>
+int[] level = { 1, 2, 3, 4, 5 };
+for (int i : level) {
+    System.out.println(i);
+}</pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]数组反转</dd>
+        <dd>
+            <pre>
+<span>package base.class1;<span></span>
+<span></span>
+<span>public class Function {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        int[] level = { 1, 2, 3, 4, 5 };</span>
+<span>        dis(level);</span>
+<span>        dis(reverse(level));</span>
+<span>    }</span>
+<span></span>
+<span>    public static int[] reverse(int[] arr) {</span>
+<span>        int[] res = new int[arr.length];</span>
+<span>        for (int i = 0; i < arr.length; i++) {</span>
+<span>            res[arr.length - 1 - i] = arr[i];</span>
+<span>        }</span>
+<span>        return res;</span>
+<span>    }</span>
+<span></span>
+<span>    public static void dis(int[] arr) {</span>
+<span>        for (int i : arr) {</span>
+<span>            System.out.println(i);</span>
+<span>        }</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+    </dl>
+    <div class="chap">多维数组</div>
+    <dl>
+        <dt>二维数组</dt>
+        <dd>第一个[]表示行；第二个[]表示列</dd>
+        <dd>
+            <pre>int[][] arr</pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]遍历二维数组3x4</dd>
+        <dd>使用for输出</dd>
+        <dd>
+            <pre>
+<span>int[][] arr = { { 1, 2, 3, 4 }, { 4, 5, 6, 7 }, { 7, 8, 9, 0 } };</span>
+<span>for (int i = 0; i < arr.length; i++) {</span>
+<span>    for (int j = 0; j < arr[i].length; j++) {</span>
+<span>        System.out.println(arr[i][j]);</span>
+<span>    }</span>
+<span>    System.out.println("---");</span>
+<span>}</span></pre>
+        </dd>
+        <dd>使用foreach格式化输出</dd>
+        <dd>
+            <pre>
+int[][] arr = { { 1, 2, 3, 4 }, { 4, 5, 6, 7 }, { 7, 8, 9, 0 } };
+for (int[] is : arr) {
+    for (int is2 : is) {
+        System.out.print(is2 + "\t");
+    }
+    System.out.println();
+}</pre>
+        </dd>
+        <dd>执行结果</dd>
+        <dd>
+            <pre>
+1       2       3       4
+4       5       6       7
+7       8       9       0</pre>
+        </dd>
+        <dt>多维数组</dt>
+        <dd>... ...</dd>
+    </dl>
+    <div class="chap">数组类 Arrays</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>封装了很多静态函数，不需要new就可以直接使用</dd>
+        <dd>主要是排序 sorting 和查找 searching</dd>
+        <dd>使用时需要导入工具包import java.util.Arrays;</dd>
+        <dd>查阅API文档，获取更多信息</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]数组排序</dd>
+        <dd>
+            <pre>
+<span>package base.class1;</span>
+<span></span>
+<span>import java.util.Arrays;</span>
+<span></span>
+<span>public class Function {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        int[] arr = { 1, 12, 3, 4, 11, 23, 4, 6 };</span>
+<span>        System.out.println(Arrays.toString(arr));</span>
+<span>        Arrays.sort(arr);</span>
+<span>        System.out.println(Arrays.toString(arr));</span>
+<span>    </span>
+<span>        char[] chars = { 'a', 'a', 'c', '1', 'm', 'd', '2', '0' };</span>
+<span>        System.out.println(Arrays.toString(chars));</span>
+<span>        Arrays.sort(chars);</span>
+<span>        System.out.println(Arrays.toString(chars));</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+        <dd>执行结果</dd>
+        <dd>
+            <pre>
+[1, 12, 3, 4, 11, 23, 4, 6]
+[1, 3, 4, 4, 6, 11, 12, 23]
+[a, a, c, 1, m, d, 2, 0]
+[0, 1, 2, a, a, c, d, m]</pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]数组填充</dd>
+        <dd>
+            <pre>
+int[] arr = new int[5];
+Arrays.fill(arr, 2);
+System.out.println(Arrays.toString(arr));</pre>
+        </dd>
+        <dd>执行结果</dd>
+        <dd>
+            <pre>[2, 2, 2, 2, 2]</pre>
+        </dd>
+    </dl>
+    <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight" title="links"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

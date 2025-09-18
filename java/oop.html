@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面向对象编程 OOP</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+    <header>
+        <h1>面向对象编程 OOP</h1>
+    </header>
+    <div class="chap">概述 Overview</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>OOP：Object-Oriented Programming</dd>
+        <dd class="warn">以类的方式组织代码；以对象的形式封装数据</dd>
+        <dd>类是抽象的，是对对象的抽象；是对象的模板</dd>
+        <dd>对象是具体的；是类的实例</dd>
+        <dd>类由属性和方法组成</dd>
+        <dd>一个项目应该只有一个主函数main；不要每个类都指定一个main；多个main会报错</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]类的使用</dd>
+        <dd>
+            <figure class="code">
+                <figcaption>Stu类：只有属性和方法</figcaption>
+                <pre>
+package base.class1;
+
+public class Stu {
+    String name;
+
+    public void greeting() {
+        System.out.println("hi,there.");
+    }
+}</pre>
+            </figure>
+        </dd>
+        <dd></dd>
+        <dd>
+            <figure class="code">
+                <figcaption>OOP类：主类main，并使用Stu类</figcaption>
+                <pre>
+package base.class1;
+
+public class OOP {
+    public static void main(String[] args) {
+        Stu stu = new Stu();
+        stu.name = "gl";
+        System.out.println(stu.name);
+        stu.greeting();
+    }
+}</pre>
+            </figure>
+        </dd>
+        <dt>特性</dt>
+        <dd>类是抽象的</dd>
+        <dd>.封装</dd>
+        <dd>.继承</dd>
+        <dd>.多态</dd>
+    </dl>
+    <div class="chap">构造器 Constructor</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>每个类默认都有一个 <span class="warn">同名</span> 的函数，即使你不显式的定义也会存在，这个函数就是类的构造器</dd>
+        <dd>构造器是<span class="warn">公有public</span>类型</dd>
+        <dd>构造器函数 <span class="warn">没有</span> 返回类型，即使void也不可以</dd>
+        <dd>作用：初始化对象</dd>
+        <dd>类的实例化new本质上就是调用类的构造器</dd>
+        <dd>构造器通常也以<span class="warn">重载</span>的方式给出</dd>
+        <dd>如果显式的声明了带参构造器，则无参new一个实例时，就会告错，必须同时显式的声明无参构造器/默认构造器</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]构造器的使用</dd>
+        <dd>
+            <figure class="code">
+                <figcaption>类的默认构造器 - 不写也有</figcaption>
+                <pre>
+package base.class1;
+
+public class Stu {
+    public Stu() { }
+}</pre>
+            </figure>
+        </dd>
+        <dd>
+            <figure class="code">
+                <figcaption>显式声明带参构造器</figcaption>
+                <pre>
+package base.class1;
+
+public class Stu {
+
+    public Stu(String str) {
+        this.name = str;
+    }
+}</pre>
+            </figure>
+        </dd>
+        <dd>[<span class="iconfont icon-bangzhu2 warn"></span>]如何快速生成/自定义构造器</dd>
+    </dl>
+    <div class="chap">封装 Constructor</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>对数据细节的隐藏：该暴露的暴露，该隐藏的隐藏；属性通常是私有private</dd>
+        <dd><span class="warn">高内聚</span>：类的内部细节自己完成，不允许外部干涉</dd>
+        <dd><span class="warn">低耦合</span>：暴露少量的方法[不是属性]给外部使用</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]getter/setter的使用</dd>
+        <dd>[<span class="iconfont icon-bangzhu2 warn"></span>]如何快速生成/自定义构造器</dd>
+    </dl>
+    <div class="chap">继承 Extends</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>一个类继承另外一个类的属性或方法</dd>
+        <dd>继承是 <span class="warn">类和类</span> 之间的关系：父类/基类、子类/派生类</dd>
+        <dd>子类继承父类，使用关键字extends</dd>
+        <dd>Object是所有类的父类</dd>
+        <dd>Java只有单继承；没有多继承：一个父类可以有一个或多个子类，但是一个子类只能有一个直接父类</dd>
+        <dd>子类可以继承父类的公有public属性和方法</dd>
+        <dd>final类不可以被继承</dd>
+        <dd>this：当前对象/调用者；没有继承也可以使用</dd>
+        <dd>super：只能存在子类中；代表父类对象，可以直接访问父类的属性和方法；只有存在继承的时候才可以使用；可以出现在任何地方</dd>
+        <dd>super([para,...])：调用父类的无参或有参构造方法，只能出现在子类的构造函数中，且只能是第一条语句 First Statement；注意sout也是语句</dd>
+        <dd>
+            <figure class="code">
+                <figcaption>extends继承</figcaption>
+                <pre>
+public class Stu extends Person {
+    // ... ...
+}</pre>
+            </figure>
+        </dd>
+        <dd>
+            <figure class="code">
+                <figcaption>super代表父类</figcaption>
+                <pre>
+public class Duck  extends  Ani{
+    String name="duck";
+    public  void  barking(){
+        String name="barking animal";
+        System.out.println("name: "+name);
+        System.out.println("name: "+this.name);
+        System.out.println("name: "+super.name);
+    }
+}</pre>
+            </figure>
+        </dd>
+        <dd>
+            <figure class="code">
+                <figcaption>子类实例化时会自动执行父类的构造函数：默认在子类构造函数第一行添加super()</figcaption>
+                <pre>
+package basic.superUse;
+
+class  Ani{
+    public  Ani(){
+        System.out.println("Ani()");
+    }
+}
+class  Bird extends  Ani{
+    public  Bird(){
+        System.out.println("Bird()");
+    }
+}
+public class SuperDemo {
+    public static void main(String[] args) {
+        Bird bird=new Bird();
+    }
+}</pre>
+            </figure>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-bangzhu2 warn"></span>]如何查看继承树</dd>
+    </dl>
+    <div class="chap">方法重写 Override</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>重写是方法的重写；属性没有重写</dd>
+        <dd>只能重写公有public方法，static、final和private方法不能被重写</dd>
+        <dd>重写需要继承关系：子类重写父类的方法</dd>
+        <dd>方法名必须相同</dd>
+        <dd>形参列表必须相同</dd>
+        <dd>仅仅方法体不同</dd>
+        <dd>使用范围可以扩大，但是不能缩小</dd>
+    </dl>
+    <div class="chap">多态 Polymorphism</div>
+    <dl>
+        <dt>说明</dt>
+        <dd>Java类的多态指的是 <span class="warn">成员方法</span> 的多态：同一个方法对不同的对象有不同的实现</dd>
+        <dd>同一个方法根据发送对象的不同而采用多种不同的行为方式</dd>
+        <dd>多态是方法的多态；属性没有多态</dd>
+        <dd class="mt2">[<span class="iconfont icon-example warn"></span>]吃</dd>
+        <dd>Animal动物类中：Bird鸟吃虫子；Cat猫吃老鼠；Panda熊猫吃竹子；</dd>
+        <dt>三要素</dt>
+        <dd>1. 多态需要继承关系，否则会出现ClassCastException/类调用异常</dd>
+        <dd>2. 多态需要重写方法；static、final和private方法不能被重写</dd>
+        <dd>3. 一个对象的实际类型是确定的，但是可以指向对象的引用类型有很多：父类引用指向子类对象</dd>
+        <dd>
+            <pre>
+Animal animal = new Cat();
+animal.eat();</pre>
+        </dd>
+        <dt>instanceof</dt>
+        <dd>判断一个对象实例instance是什么类型</dd>
+        <dd>
+            <pre></pre>
+        </dd>
+    </dl>
+    <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight" title="links"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

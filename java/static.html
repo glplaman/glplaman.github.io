@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静态 Static</title>
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+
+<body>
+    <header>
+        <h1>静态 Static</h1>
+    </header>
+    <dl>
+        <dt>说明</dt>
+        <dd>静态属于类；在其他类中使用时，采用类名.静态直接访问；当前类中使用可以省略类名</dd>
+        <dd>静态为所有实例共享</dd>
+        <dd>不需要实例化即可使用</dd>
+        <dt>主要应用</dt>
+        <dd>静态属性</dd>
+        <dd>静态方法</dd>
+        <dd>静态块</dd>
+        <dd>静态包</dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]静态属性 vs 静态方法</dd>
+        <dd>
+            <pre>
+<span>package base.class2;</span>
+<span></span>
+<span>public class Static {</span>
+<span>    public static int age;</span>
+<span>    public int unit;</span>
+<span></span>
+<span>    public static void run() {</span>
+<span>        System.out.println("static run");</span>
+<span>    }</span>
+<span></span>
+<span>    public void walk() {</span>
+<span>        System.out.println("walk");</span>
+<span>    }</span>
+<span></span>
+<span>    public static void main(String[] args) {</span>
+<span>        Static sta = new Static();</span>
+<span>        System.out.println(age);</span>
+<span>        System.out.println(Static.age);</span>
+<span>        System.out.println(sta.unit);</span>
+<span>        run();</span>
+<span>        Static.run();</span>
+<span>        sta.walk();</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]静态代码块</dd>
+        <dd>
+            <pre>
+<span>package base.class2;</span>
+<span></span>
+<span>public class Block {</span>
+<span>    static {</span>
+<span>        System.out.println("static block");</span>
+<span>    }</span>
+<span></span>
+<span>    {</span>
+<span>        System.out.println("normal block");</span>
+<span>    }</span>
+<span></span>
+<span>    public Block() {</span>
+<span>        System.out.println("constructor block");</span>
+<span>    }</span>
+<span></span>
+<span>    public static void main(String[] args) {</span>
+<span>        Block block0 = new Block();</span>
+<span>        Block block1 = new Block();</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+        <dd>执行结果：</dd>
+        <dd>1.先执行静态代码块</dd>
+        <dd>2.然后执行普通代码块/匿名代码块</dd>
+        <dd>3.最后执行构造函数</dd>
+        <dd>每次new一个对象时，都会执行普通代码块和构造函数，但静态代码块只执行一次</dd>
+        <dd>
+            <pre>
+static block
+normal block
+constructor block
+normal block
+constructor block</pre>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]静态包</dd>
+        <dd>传统方法</dd>
+        <dd>
+            <pre>
+<span>package base.class2;</span>
+<span></span>
+<span>public class Pack {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        System.out.println(Math.random());</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+        <dd>改进方法：导入静态包，可以直接使用</dd>
+        <dd>
+            <pre>
+<span>package base.class2;</span>
+<span></span>
+<span>import static java.lang.Math.random;</span>
+<span></span>
+<span>public class Pack {</span>
+<span>    public static void main(String[] args) {</span>
+<span>        System.out.println(random());</span>
+<span>    }</span>
+<span>}</span></pre>
+        </dd>
+    </dl>
+    <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight" title="links"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

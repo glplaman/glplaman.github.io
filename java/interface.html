@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>接口 Interface</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+    <header>
+        <h1>接口 Interface</h1>
+    </header>
+    <dl>
+        <dt>说明 overview</dt>
+        <dd>接口是特殊的类，抽象的，不能创建对象/实例化为对象</dd>
+        <dd><span class="warn">只有方法</span> 的定义，没有方法的实现|没有方法体</dd>
+        <dd>和抽象类不同，接口中的方法默认就是抽象方法，不需要关键字abstract修饰</dd>
+        <dd>接口是一种设计思想：<span class="warn">规范</span>和<span class="warn">实现</span>分离；抽象思维的训练与打磨</dd>
+        <dd>规范一旦制定好，必须遵守</dd>
+        <dd>接口是一种引用数据类型，又是一种特殊的类，编译后生成class文件</dd>
+        <dd class="mt2">[<span class="iconfont icon-example warn"></span>]USB接口</dd>
+        <dd>键盘、鼠标、U盘、移动硬盘、USB风扇、小夜灯、USB网口</dd>
+        <dt>定义 interface</dt>
+        <dd>使用关键字interface定义一个接口</dd>
+        <dd>接口主要用来定义方法，也可以定义属性[很少在接口中定义属性]</dd>
+        <dd>接口中所有的方法默认：public abstract</dd>
+        <dd>接口中所有的属性默认：public static final</dd>
+        <dd>接口可以定义默认方法default和静态方法static；还可以定义私有方法和私有静态方法</dd>
+        <dd>
+            <figure class="code">
+                <figcaption>定义</figcaption>
+                <pre>
+public interface interfaceName{
+
+}</pre>
+            </figure>
+        <dd>
+        <dt>实现 implements</dt>
+        <dd>接口如果实例化为对象需要使用一个实现类实现其中的定义</dd>
+        <dd>实现类使用关键字implements实现一个接口</dd>
+        <dd>接口的实现就是方法的重写</dd>
+        <dd>实现类必须实现接口类里的所有方法，否则应该定义为抽象类</dd>
+        <dd>一个实现类可以实现多个接口，以,区分</dd>
+        <dd>
+            <figure class="code">
+                <figcaption>实现</figcaption>
+                <pre>
+public class className implements interfaceName{
+
+}</pre>
+            </figure>
+        </dd>
+        <dd class="mt2">[<span class="iconfont icon-keyboard warn"></span>]接口的定义和实现</dd>
+        <dd>
+            <figure class="code">
+                <figcaption>定义</figcaption>
+                <pre>
+package base.class3;
+
+public interface SQL {
+    void add(String str);
+
+    void delete(int id);
+
+    void update(int id, String str);
+
+    void find(int id);
+}</pre>
+            </figure>
+        </dd>
+        <dd>
+            <figure class="code">
+                <figcaption>实现</figcaption>
+
+                <pre>
+package base.class3;
+
+public class ServiceImp implements SQL {
+
+    @Override
+    public void add(String str) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void delete(int id) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void find(int id) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void update(int id, String str) {
+        // TODO Auto-generated method stub
+
+    }
+
+}</pre>
+            </figure>
+        </dd>
+    </dl>
+    <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight" title="links"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

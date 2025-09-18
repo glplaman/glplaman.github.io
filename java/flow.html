@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流程控制 FlowControl</title>
+    <link rel="stylesheet" href="../css/normalizeNew.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        header {
+            background-color: #fed;
+            background-image: url(./imgs/idea.png);
+            background-position: right top;
+            justify-content: space-between;
+        }
+
+        .iconfont,
+        .warn {
+            color: #6fbe2e;
+        }
+
+        .p50 {
+            width: 50%;
+        }
+
+        .bgc-gray {
+            background: #fed;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <div class="w cont layout" id="top">
+        <header></header>
+        <nav>
+            <h1 class="logo">FlowControl</h1>
+            <ul class="nav-box">
+                <li class="nav-item">if-else</li>
+                <li class="nav-item">switch-case</li>
+                <li class="nav-item">for</li>
+                <li class="nav-item">while</li>
+                <li class="hot-spot"></li>
+            </ul>
+        </nav>
+        <div class="cont-wrap">
+            <div class="chap">基本概念</div>
+            <dl>
+                <dd>默认情况下，程序按照代码从上到下的顺序执行</dd>
+                <dd>使用流程控制语句可以改变程序的执行方向</dd>
+                <dd>分为：</dd>
+                <dd>. 顺序结构</dd>
+                <dd>. 分支结构：if-else、switch-case</dd>
+                <dd>. 循环结构：for、do-wihle、while-do</dd>
+                <dd>. 嵌套结构：多种结构的组合使用</dd>
+            </dl>
+        </div>
+        <div class="cont-wrap nav-cont">
+            <div class="chap">if-else</div>
+            <dl>
+                <dt>单分支结构 <span class="iconfont icon-conditional-flow warn"></span></dt>
+                <dd>. 单个条件判断</dd>
+                <dd>
+                    <pre>
+//伪代码
+if (关系表达式)
+    代码块</pre>
+                </dd>
+                <dt>双分支结构 <span class="iconfont icon-24gf-network2 warn"></span></dt>
+                <dd>. 两个条件判断</dd>
+                <dd>
+                    <pre>
+//伪代码
+if (关系表达式)
+    代码块1
+else
+    代码块2</pre>
+                </dd>
+                <dt>多分支结构 <span class="iconfont icon-24gf-branches warn"></span></dt>
+                <dd>. 多个条件判断</dd>
+                <dd>
+                    <pre>
+//伪代码
+if (关系表达式1)
+    代码块1
+else if(关系表达式2)
+    代码块2
+else
+    代码块3</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 成绩输出</dd>
+                <dd>
+                    <pre>
+if (score >= 90)
+    System.out.println("A");
+else if (score >= 80)
+    System.out.println("B");
+else if (score >= 60)
+    System.out.println("C");
+else
+    System.out.println("Fail");</pre>
+                </dd>
+                <dt>嵌套if-else结构</dt>
+                <dd>. 每个代码块都可以是一个if-else结构</dd>
+                <dd>. 条件的多重判断，请小心使用</dd>
+                <dd>. 嵌套结构中，else和最近的if匹配，不要迷信格式的结构</dd>
+                <dt>说明</dt>
+                <dd>. 代码块只有1行代码时，可以略去{}；但是为了增加代码可读性，建议使用{}</dd>
+                <dd>. 布尔型数据可以直接使用，无需使用==或!=判断</dd>
+                <dd>. 多分支结构因为可读性不好，尽量避免使用，而是使用switch-case结构</dd>
+                <dd>. 应合理安排条件，以提高执行效率</dd>
+            </dl>
+        </div>
+        <div class="cont-wrap nav-cont">
+            <div class="chap">switch-case</div>
+            <dl>
+                <dd>. 根据 <span class="warn">常量表达式</span> 来匹配不同的分支；不可以使用关系表达式</dd>
+                <dd>. 使用break结束逻辑，否则会出现case穿透，即判断多个逻辑</dd>
+                <dd>. 必须指定default分支；default分支可以不用break，但是不建议</dd>
+                <dd>. 应合理安排条件，以提高执行效率</dd>
+                <dd>
+                    <pre>
+switch (表达式) {
+    case val0:
+        break;
+    case val1:
+        break;
+    ...
+    case valN:
+        break;
+    default:
+        break;
+}</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 成绩输出</dd>
+                <dd>
+                    <pre>
+switch (score/10) {
+    case 7:
+    case 8:
+    System.out.println("B");
+    break;
+    case 9:
+    System.out.println("A");
+    break;
+    case 6:
+    System.out.println("C");
+    break;
+    default:
+    System.out.println("D");
+        break;
+}</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 工作日</dd>
+                <dd>
+                    <pre>
+switch (day) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+        System.out.println("Workday");
+        break;
+    case 6:
+    case 7:
+        System.out.println("Restday");
+        break;
+    default:
+        System.out.println("Wrongday");
+        break;
+}</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 根据输入判断每个月的天数</dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 根据月份判断当前季节</dd>
+            </dl>
+        </div>
+        <div class="cont-wrap nav-cont">
+            <div class="chap">for</div>
+            <dl>
+                <dd><span class="warn">所有</span>的循环结构都包括：</dd>
+                <dd>. 初始化循环语句</dd>
+                <dd>. 循环判断语句</dd>
+                <dd>. 循环迭代语句</dd>
+                <dd>. 循环体语句</dd>
+                <dd>
+                    <pre>
+for( 初始化循环语句; 循环判断语句; 循环迭代语句){
+    循环体语句;
+}</pre>
+                </dd>
+                <dd>快捷操作：输入fori按tab，可以快速生成以i为迭代的代码片段</dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 0-100的偶数</dd>
+                <dd>
+                    <pre>
+for (int i = 0; i &lt;= 100; i++) {
+    if (i % 2 == 0) {
+        System.out.println(i);
+    }
+}</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-mouse1 warn"></span>] 求0-100的和</dd>
+            </dl>
+        </div>
+        <div class="cont-wrap nav-cont">
+            <div class="chap">while</div>
+            <dl>
+                <dt>while</dt>
+                <dd>
+                    <pre>
+while( 循环条件语句){
+    循环体语句;
+}</pre>
+                </dd>
+                <dd>1. 执行循环条件语句</dd>
+                <dd>2. 如果假，结束while循环</dd>
+                <dd>3. 如果真，执行循环体语句，并重新判断循环条件语句，直到结束循环</dd>
+                <dt>do-while</dt>
+                <dd>. 先执行再判断，即：至少执行一次逻辑</dd>
+                <dd>. 实际开发中，使用并不多</dd>
+                <dd>
+                    <pre>
+do{
+    循环体语句;
+}while( 循环条件语句);</pre>
+                </dd>
+            </dl>
+        </div>
+        <a class="back" href="#top"><span class="iconfont icon-Arrowup"></span></a>
+        <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+            onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+        <iframe src="../common/footer.html" frameborder="0" scrolling="no"
+            onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    </div>
+    <script>
+        window.onload = function () {
+            let nav = document.querySelector("nav");
+            let navItems = document.querySelectorAll('.nav-item');
+            let navConts = document.querySelectorAll('.nav-cont');
+            let hotSpot = document.querySelector('.hot-spot');
+
+            navItems.forEach((item, i) => {
+                item.addEventListener('click', () => {
+                    hotSpot.style.width = item.getBoundingClientRect().width + 'px';
+                    let left = 0;
+                    for (let ind = 0; ind < i; ind++) {
+                        left += navItems[ind].getBoundingClientRect().width;
+                    }
+                    hotSpot.style.left = left + 'px';
+                    navConts[i].scrollIntoView()
+                })
+            })
+
+            window.addEventListener("scroll", () => {
+                nav.classList.toggle("hover", window.scrollY > 150);
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>装饰器模式 Decorator</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <header>
+    <h1>装饰器模式 Decorator</h1>
+  </header>
+  <dl>
+    <dt>说明</dt>
+    <dd>
+      <figure class="code">
+        <figcaption>Invoice</figcaption>
+        <pre>
+package basic;
+class  Invoice{
+    public  void  printInvoice(){
+        System.out.println("this is the content of the invoice");
+    }
+}
+class Deco extends Invoice{
+    protected  Invoice ticket;
+    public  Deco(Invoice t){
+        ticket=t;
+    }
+    public  void printInvoice(){
+        if(ticket!=null){
+            ticket.printInvoice();;
+        }
+    }
+}
+class  HeadDeco extends Deco{
+    public HeadDeco(Invoice t){
+        super(t);
+    }
+    public  void printInvoice(){
+        System.out.println("this is the head of the invoice");
+        super.printInvoice();
+    }
+}
+class  FootDeco extends Deco{
+    public FootDeco(Invoice t){
+        super(t);
+    }
+    public  void printInvoice(){
+        super.printInvoice();
+        System.out.println("this is the foot of the invoice");
+    }
+}
+public class InvoiceDemo {
+    public static void main(String[] args) {
+        Invoice t=new Invoice();
+        Invoice ticket;
+        ticket=new HeadDeco(new FootDeco(t)) ;
+        ticket.printInvoice();
+        System.out.println("----------------");
+        ticket=new FootDeco(new HeadDeco(new Deco(null)));
+        ticket.printInvoice();
+    }
+}        </pre>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>执行结果</figcaption>
+        <pre>
+this is the head of the invoice
+this is the content of the invoice
+this is the foot of the invoice
+----------------
+this is the head of the invoice
+this is the foot of the invoice        </pre>
+      </figure>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

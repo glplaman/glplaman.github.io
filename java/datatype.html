@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据类型 DataType</title>
+    <link rel="stylesheet" href="../css/common.css">
+</head>
+
+<body>
+    <header>
+        <h1>数据类型 Data Type</h1>
+    </header>
+    <div class="chap">基本数据类型 </div>
+    <dl>
+        <dt>字节型 byte</dt>
+        <dd>. 1个字节</dd>
+        <dd>. 取值范围：[-128, 127]</dd>
+        <dd>
+            <pre>
+class ByteType {
+    public static void main(String[] args) {
+        byte byteMin = Byte.MIN_VALUE;
+        byte byteMax = Byte.MAX_VALUE;
+        System.out.println(byteMin);
+        System.out.println(byteMax);
+    }
+}</pre>
+        </dd>
+        <dt>字符型 char</dt>
+        <dd>. 2个字节；可以存放中文；单引号''括住的单个字符；注意：String不是类型关键字，而是一个类</dd>
+        <dd>. 取值范围：[0, 35535]</dd>
+        <dd>
+            <pre>
+public class CharType {
+    public static void main(String[] args) {
+        char charMin = Character.MIN_VALUE;
+        char charMax = Character.MAX_VALUE;
+        System.out.println((int) charMin);
+        System.out.println((int) charMax);
+    }
+}</pre>
+        </dd>
+        <dt>短整型 short</dt>
+        <dd>. 2个字节；使用较少</dd>
+        <dd>. 取值范围：[-32768, 32767]</dd>
+        <dd>
+            <pre>
+class ShortType {
+    public static void main(String[] args) {
+        short shortMin = Short.MIN_VALUE;
+        short shortMax = Short.MAX_VALUE;
+        System.out.println(shortMin);
+        System.out.println(shortMax);
+    }
+}</pre>
+        </dd>
+        <dt>整型 int</dt>
+        <dd>. 4个字节</dd>
+        <dd>. 取值范围:[-2147483648, 2147483647]</dd>
+        <dd>
+            <pre>
+public class IntChange {
+    public static void main(String[] args) {
+        int intMin = Integer.MIN_VALUE;
+        int intMax = Integer.MAX_VALUE;
+        System.out.println(intMin);
+        System.out.println(intMax);
+    }
+}</pre>
+        </dd>
+        <dt>长整型 long</dt>
+        <dd>. 8个字节，需带上后缀L[大写避免被视为1]</dd>
+        <dt>浮点型 float</dt>
+        <dd>. 4个字节，需带上后缀F[大写]，表示单精度，否则会被看作双精度</dd>
+        <dd>. 取值范围：[4E-45, 3.4028235E38]</dd>
+        <dd>
+            <pre>
+class FloatType {
+    public static void main(String[] args) {
+        Float floatMin = Float.MIN_VALUE;
+        Float floatMax = Float.MAX_VALUE;
+        System.out.println(floatMin);
+        System.out.println(floatMax);
+    }
+}</pre>
+        </dd>
+        <dt>双精度 double</dt>
+        <dd>. 8个字节，双精度</dd>
+        <dt>布尔型 boolean</dt>
+        <dd>. only取值：true或false</dd>
+    </dl>
+    <div class="chap">变量 Variable</div>
+    <dl>
+        <dd>变量名表示一块内存空间；变量值是存放在内存空间的数据</dd>
+        <dd>三要素：数据类型、变量名、变量值</dd>
+        <dd>可以定义的时候同时赋值；也可以先声明，等到使用的时候再赋值</dd>
+        <dd>同一个作用域scope[通常指{}]内不可以重名</dd>
+        <dd>可以定义/声明多个变量，以,分隔</dd>
+        <dd>. 数据类型 变量名=变量值; 如：int a = 10;</dd>
+        <dd>. 数据类型 变量名; 如：float f;</dd>
+        <dd>. 数据类型 变量名, 变量名, 变量名; 如：float a, b, c;</dd>
+    </dl>
+    <div class="chap">常量 Final</div>
+    <dl>
+        <dd>程序执行过程不改变，否则：Cannot assign a value to final variable 'age'</dd>
+        <dd>使用关键字final修饰常量</dd>
+        <dd>必须声明的时候同时赋值：final 数据类型 常量名 = 常量值; 如：final int = 40;</dd>
+        <dt>字面常量</dt>
+        <dd>字符常量：'c'</dd>
+        <dd>字符串常量："hi,there"</dd>
+        <dd>整数常量：18</dd>
+        <dd>浮点数常量：3.14</dd>
+        <dd>布尔常量：true, false</dd>
+        <dd>空常量：null；基本数据类型不可以赋值为null；引用数据类型可以，如 String str=null;</dd>
+    </dl>
+    <div class="chap">数据类型转换</div>
+    <dl>
+        <dt>自动类型转换</dt>
+        <dd>规则1：byte → short → int → long → float → double</dd>
+        <dd>规则2：char → int → long → float → double</dd>
+        <dd class="warn">char和short不能转换</dd>
+        <dd>char：0-65535</dd>
+        <dd>short：-32768-32767</dd>
+        <dt>强制类型转换</dt>
+        <dd>. 使用强转符()</dd>
+        <dd>. 大空间数值类型转换为小空间数值类型</dd>
+        <dd>. 如long型转为int：(int)100L</dd>
+        <dd>. 如非必须，尽量不要使用强制转换；建议从优化代码角度入手解决需求</dd>
+        <dd>. 布尔类型不能和其它7种数据类型转换</dd>
+        <dd>. 精度可能损失</dd>
+        <dd>
+            <pre>
+class Precious {
+    public static void main(String[] args) {
+        byte a = 10;
+        byte b = 20;
+        byte res = (byte)(a + b);
+        System.out.println(res);
+    }
+}</pre>
+        </dd>
+        <dd>. 数据溢出</dd>
+        <dd>
+            <pre>
+class Loss {
+    public static void main(String[] args) {
+        int num = 128;
+        byte b = (byte) num;
+        System.out.println(num);
+        System.out.println(b);//-128
+    }
+}</pre>
+        </dd>
+        <dd>. 算术运算时，byte、short、char首先提升为int再运算；相反的，对这些数据类型的赋值，也是直接将int类型转换为对应的数据类型，如 byte=10；而不需要 byte =
+            (byte)10</dd>
+        <dd>
+            <pre>
+class ToInt {
+public static void main(String[] args) {
+    byte b = 10;
+    char c = 46;
+    short s = 100;
+    int res = b + c + s;//如果res为其它类型就报错
+    System.out.println(res);
+}
+}</pre>
+        </dd>
+        <dd>[<span class="iconfont icon-jingshi warn"></span>] 原码、反码、补码</dd>
+    </dl>
+    <div class="chap">引用数据类型 DaReferenced Type</div>
+    <dl>
+        <dd><a href="./array.html">数组</a></dd>
+        <dd>类</dd>
+        <dd>接口</dd>
+        <dd>...</dd>
+    </dl>
+    <iframe src="../common/hotlinksJava.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本编辑器 vim</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3835779_06amun88qpxt.css">
+    <link rel="stylesheet" href="../css/linux/linux.css">
+    <style>
+        .flex-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .icon-box {
+            position: relative;
+        }
+
+        .icon-box .iconfont {
+            font-size: 3rem;
+            color: #f46;
+        }
+
+        .icon-in {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .list tr td:first-child {
+            text-align: right;
+        }
+
+        .list tr td:last-child {
+            text-align: left;
+        }
+
+        .txt-right {
+            text-align: right;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <nav>
+        <ul>
+            <li class="nav-item active">
+                <span class="iconfont icon-home-8-fill title-icon"></span>
+                <span class="title-txt">简介</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-collage-fill title-icon"></span>
+                <span class="title-txt">一般</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-edit-fill title-icon"></span>
+                <span class="title-txt">插入</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-terminal-box-fill title-icon"></span>
+                <span class="title-txt">命令</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-stack-fill title-icon"></span>
+                <span class="title-txt">总结</span>
+            </li>
+            <li class="hot-spot"></li>
+        </ul>
+    </nav>
+    <div class="cont-wrap">
+        <div class="inner-box">
+            <dl class="inner-cont">
+                <dt>vim在哪里</dt>
+                <dd>. Ubuntu 22.04.1 LTS默认是vi，vim需要单独安装</dd>
+                <dd>
+                    <pre>
+$ vim --verstion
+ommand 'vim' not found, but can be installed with:
+sudo apt install vim         # version 2:8.2.3995-1ubuntu2.1</pre>
+                </dd>
+                <dt>使用</dt>
+                <dd>
+                    <pre>vim file_name</pre>
+                </dd>
+                <dd>. 如果文件存在，就打开</dd>
+                <dd>. 如果文件不存在，就创建并打开</dd>
+                <dt>模式</dt>
+                <dd>. 一般模式：删除、复制、粘贴</dd>
+                <dd>. 插入模式：编辑文本</dd>
+                <dd>. 命令模式：保存、退出、查找、替换</dd>
+                <dt>模式转换</dt>
+                <dd>
+                    <table>
+                        <tr>
+                            <td rowspan="2">插入模式</td>
+                            <td class="icon-box"><span class="iconfont icon-Left-"></span><span class="icon-in">i</span>
+                            </td>
+                            <td rowspan="2">一般模式</td>
+                            <td class="icon-box"><span class="iconfont icon-Right-"></span><span
+                                    class="icon-in">:</span></td>
+                            <td rowspan="2">命令模式</td>
+                        </tr>
+                        <tr>
+                            <td class="icon-box"><span class="iconfont icon-Right-"></span><span
+                                    class="icon-in">esc</span></td>
+                            <td class="icon-box"><span class="iconfont icon-Left-"></span><span
+                                    class="icon-in">esc</span></td>
+                        </tr>
+                    </table>
+                </dd>
+            </dl>
+            <dl class="inner-cont">
+                <dd>作用：查看、编辑文本；是vim的入口</dd>
+                <dd>[<span class="iconfont icon-information-fill"></span>]窗口底部的提示信息</dd>
+                <dt>移动光标</dt>
+                <dd class="mt2">
+                    <table class="list">
+                        <tr>
+                            <td class="p30">gg</td>
+                            <td>最开始</td>
+                        </tr>
+                        <tr>
+                            <td>G</td>
+                            <td>文末</td>
+                        </tr>
+                        <tr>
+                            <td>n+G</td>
+                            <td>移动到指定行</td>
+                        </tr>
+                        <tr>
+                            <td>$</td>
+                            <td>移动到行末</td>
+                        </tr>
+                        <tr>
+                            <td>^/0</td>
+                            <td>移动到行首</td>
+                        </tr>
+                        <tr>
+                            <td>w</td>
+                            <td>按词后移到单词头</td>
+                        </tr>
+                        <tr>
+                            <td>e</td>
+                            <td>按词后移到单词尾/end</td>
+                        </tr>
+                        <tr>
+                            <td>b</td>
+                            <td>按词前移到单词头/back</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dt>操作文本</dt>
+                <dd>操作行；操作单词；操作字符</dd>
+                <dd>d:删除/delete; y:复制/yank; p:粘贴/paste; u:撤销/undo; r:替换/replace</dd>
+                <dd>^：头/首；$：尾/末；通用的表示，如正则表达式</dd>
+                <dd class="mt2">
+                    <table class="list">
+                        <tr>
+                            <td class="p30">yy</td>
+                            <td>复制光标所在行</td>
+                        </tr>
+                        <tr>
+                            <td>n+yy</td>
+                            <td>复制光标所在行开始的n行</td>
+                        </tr>
+                        <tr>
+                            <td>y+$</td>
+                            <td>复制光标所在位置到行末</td>
+                        </tr>
+                        <tr>
+                            <td>y+^</td>
+                            <td>复制光标所在位置到行首</td>
+                        </tr>
+                        <tr>
+                            <td>y+w</td>
+                            <td>复制光标所在的单词</td>
+                        </tr>
+                        <tr>
+                            <td>dd</td>
+                            <td>删除光标所在行</td>
+                        </tr>
+                        <tr>
+                            <td>n+dd</td>
+                            <td>删除光标所在行开始的n行</td>
+                        </tr>
+                        <tr>
+                            <td>d+$</td>
+                            <td>删除光标所在位置到行末</td>
+                        </tr>
+                        <tr>
+                            <td>d+^</td>
+                            <td>删除光标所在位置到行首</td>
+                        </tr>
+                        <tr>
+                            <td>d+w</td>
+                            <td>删除光标所在位置开始的词，包括后续的空格</td>
+                        </tr>
+                        <tr>
+                            <td>p</td>
+                            <td>粘贴到光标所在位置下一行/下一个位置</td>
+                        </tr>
+                        <tr>
+                            <td>n+p</td>
+                            <td>粘贴n次</td>
+                        </tr>
+                        <tr>
+                            <td>u</td>
+                            <td>撤销操作</td>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>删除/剪切光标所在位置字符</td>
+                        </tr>
+                        <tr>
+                            <td>r+char</td>
+                            <td>替换光标所在位置字符</td>
+                        </tr>
+                    </table>
+                </dd>
+            </dl>
+            <dl class="inner-cont">
+                <dd>作用：编辑文本</dd>
+                <dd>进入：普通模式下，按i；也可以根据需要使用下面的字母快速定位并开始编辑</dd>
+                <dd>退出：按esc</dd>
+                <dd class="mt2">
+                    <table class="list">
+                        <tr>
+                            <td class="p30">i</td>
+                            <td>当前光标前/insert</td>
+                        </tr>
+                        <tr>
+                            <td>a</td>
+                            <td>当前光标后/append</td>
+                        </tr>
+                        <tr>
+                            <td>I</td>
+                            <td>当前光标行最前/行首</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>当前光标行末尾/最后</td>
+                        </tr>
+                        <tr>
+                            <td>o</td>
+                            <td>当前光标下一行</td>
+                        </tr>
+                        <tr>
+                            <td>O</td>
+                            <td>当前光标上一行</td>
+                        </tr>
+                    </table>
+                </dd>
+            </dl>
+            <dl class="inner-cont">
+                <dd>作用：保存、退出文档的编辑和查看，是vim的出口；因为所有的命令都是在窗口底部，也叫底行模式</dd>
+                <dd>进入：按:或/；:多用于保存退出等操作；/多用于查找替换等操作</dd>
+                <dd>退出：按esc</dd>
+                <dd class="mt2">
+                    <table class="list">
+                        <tr>
+                            <td class="p30">:w</td>
+                            <td>写入/保存，write</td>
+                        </tr>
+                        <tr>
+                            <td class="p30">:wq</td>
+                            <td>保存退出；quit</td>
+                        </tr>
+                        <tr>
+                            <td>:q</td>
+                            <td>退出，没有编辑的情况下</td>
+                        </tr>
+                        <tr>
+                            <td>:q!</td>
+                            <td>强制退出，有编辑也不保存</td>
+                        </tr>
+                        <tr>
+                            <td>:set nu</td>
+                            <td>显示行号；number</td>
+                        </tr>
+                        <tr>
+                            <td>:set nonu</td>
+                            <td>取消显示行号</td>
+                        </tr>
+                        <tr>
+                            <td>:n</td>
+                            <td>定位到某一行</td>
+                        </tr>
+                        <tr>
+                            <td>/word</td>
+                            <td>查找单词word；按n向后查找；N向前查找</td>
+                        </tr>
+                        <tr>
+                            <td>:<span class="warn">s</span>/src/des</td>
+                            <td>将当前行的第一个src替换为des；substitute</td>
+                        </tr>
+                        <tr>
+                            <td>:<span class="warn">s</span>/src/des/<span class="warn">g</span></td>
+                            <td>将当前行的所有src替换为des；g：全局/global</td>
+                        </tr>
+                        <tr>
+                            <td>:<span class="warn">%</span>s/src/des</td>
+                            <td>全文替换每行第一个src为des</td>
+                        </tr>
+                        <tr>
+                            <td>:<span class="warn">%</span>s/src/des/<span class="warn">g</span></td>
+                            <td>全文全部替换所有src为des</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dd class="mt2">[<span class="iconfont icon-question-fill"></span>]如何替换某几行的目标？</dd>
+            </dl>
+            <dl class="inner-cont">
+
+            </dl>
+        </div>
+    </div>
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <script>
+        window.onload = function () {
+            let navItems = document.querySelectorAll('.nav-item');
+            let inner = document.querySelector('.inner-box');
+            let w = inner.getBoundingClientRect().width / 5;
+            navItems.forEach((item, i) => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(itemInner => {
+                        itemInner.classList.remove('active');
+                    })
+                    item.classList.add('active')
+                    inner.style.left = -i * w + 'px'
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>

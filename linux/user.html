@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户 User</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3831271_5sf00aqtdq.css">
+    <link rel="stylesheet" href="../css/linux/linux.css">
+    <style>
+        .flex-item {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <header></header>
+    <nav>
+        <ul>
+            <li class="nav-item active">
+                <span class="iconfont icon-home title-icon"></span>
+                <span class="title-txt">简介</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-user1 title-icon"></span>
+                <span class="title-txt">单个</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-user-friends title-icon"></span>
+                <span class="title-txt">群组</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-user-cog title-icon"></span>
+                <span class="title-txt">管理</span>
+            </li>
+            <li class="nav-item">
+                <span class="iconfont icon-users title-icon"></span>
+                <span class="title-txt">总结</span>
+            </li>
+            <li class="hot-spot"></li>
+        </ul>
+    </nav>
+    <div class="cont-wrap">
+        <div class="inner-box">
+            <dl class="inner-cont">
+                <dt>命令提示符</dt>
+                <dd>
+                    <table>
+                        <tr>
+                            <td colspan="5">cnplaman@pla:~$</td>
+                        </tr>
+                        <tr>
+                            <td>username</td>
+                            <td>@</td>
+                            <td>hostname</td>
+                            <td>:</td>
+                            <td>workdirectory</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]查看当前命令提示符</dd>
+                <dt>用户类型</dt>
+                <dd>1. 超级用户</dd>
+                <dd>. root</dd>
+                <dd>. 权限最大，用于管理和维护系统</dd>
+                <dd>. 安全起见，不推荐使用该用户登陆系统</dd>
+                <dd class="mt2">2. 标准用户</dd>
+                <dd>. home家里的用户，由系统创建</dd>
+                <dd class="mt2">3. sudo用户</dd>
+                <dd>. substitute user</dd>
+                <dd>. 替代用户，允许普通用户替代超级用户root执行某些操作</dd>
+                <dd>. 使用时必须先输入密码；只有5分钟的有效期，过期则需要重新输入密码</dd>
+                <dd class="mt2">4. 系统用户</dd>
+                <dd>. 为了维护系统正常运行而由系统自动创建的用户</dd>
+            </dl>
+            <dl class="inner-cont">
+                <dt>增加用户</dt>
+                <dd>
+                    <table class="list">
+                        <tr>
+                            <td class="p30">adduser user_name</td>
+                            <td>增加新用户</td>
+                        </tr>
+                        <tr>
+                            <td>adduser -g group_name user_name</td>
+                            <td>增加新用户并指定组</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dd>. 只有root或具备sudo权限的用户才能创建用户</dd>
+                <dd>. 用户创建时，会创建同名的用户组，该用户组是用户默认的用户组；也可以创建时指定用户组</dd>
+                <dd>. 每个用户都在/etc/home下有对应的家目录</dd>
+                <dd>. 一般情况下，家目录和用户名保持一致；也可以创建的时候使用-d指定额外的家目录名字，但是不推荐</dd>
+                <dd>. 创建的提示，会设置密码和用户基本信息；对应的用户信息位于/etc/passwd；说是密码，其实是看不到密码信息的</dd>
+                <dd>
+                    <pre>
+cnplaman@pla:~/Desktop$ sudo adduser glboy
+Adding user `glboy' ...
+Adding new group `glboy' (1002) ...
+Adding new user `glboy' (1002) with group `glboy' ...
+Creating home directory `/home/glboy' ...
+Copying files from `/etc/skel' ...
+New password: 
+Retype new password: 
+passwd: password updated successfully
+Changing the user information for glboy
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] y
+cnplaman@pla:~/Desktop$ ls /home
+cnplaman  glboy  plaman</pre>
+                </dd>
+                <dt>删除用户</dt>
+                <dd>. 只有root或具备sudo权限的用户才能删除用户</dd>
+                <dd>. 默认保留用户目录和用户拥有的文件；[<span class="iconfont icon-question-circle warn"></span>]为什么？</dd>
+                <dd>. 使用--remove-all-files就不需要指定--remove-home</dd>
+                <dd>
+                    <table class="list">
+                        <tr>
+                            <td class="p30">--remove-home</td>
+                            <td>删除用户的家目录</td>
+                        </tr>
+                        <tr>
+                            <td>--remove-all-files</td>
+                            <td>删除用户所拥有的文件</td>
+                        </tr>
+                        <tr>
+                            <td>--group</td>
+                            <td>删除组</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dd>
+                    <pre>
+root@pla:/home/cnplaman# deluser --remove-all-files glboy
+Looking for files to backup/remove ...
+...
+Removing files ...
+Removing user `glboy' ...
+Warning: group `glboy' has no more members.
+Done.
+root@pla:/home/cnplaman# id glboy
+id: ‘glboy’: no such user
+root@pla:/home/cnplaman# ls /home/
+cnplaman  plaman</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-exclamation-circle warn"></span>]常见错误提示</dd>
+                <dd>. Only root may remove a user or group from the system.：非root用户不能删除</dd>
+                <dd>. superman is not in the sudoers file. This incident will be reported.：非sudo权限用户不能删除</dd>
+                <dd>. user stu20221001 is currently used by process
+                    32675：用户还在系统进程中，应退出当前用户状态，返回到root或具有sudo权限的用户再删除；如果还是删除不了，说明利用用户切换命令登陆过该用户。切换到该用户，退出登陆log
+                    out，再使用root或具备sudo权限的用户删除</dd>
+                <dt>修改用户</dt>
+                <dt>查看用户</dt>
+                <dd>
+                    <table class="list">
+                        <tr>
+                            <td class="p30">who</td>
+                            <td>查看当前登陆的所有用户[0表示本机用户，其它为用户对应IP地址]</td>
+                        </tr>
+                        <tr>
+                            <td>whoami</td>
+                            <td>查看当前登陆的用户</td>
+                        </tr>
+                        <tr>
+                            <td>id [username]</td>
+                            <td>查看用户UID和GID；如果不指定用户，则查看当前用户</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dd>
+                    <pre>
+cnplaman@pla:~$ who
+cnplaman tty2         2022-12-24 09:32 (tty2)
+cnplaman@pla:~$ whoami 
+cnplaman
+cnplaman@pla:~$ id
+uid=1000(cnplaman) gid=1000(cnplaman) groups=1000(cnplaman),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),122(lpadmin),134(lxd),135(sambashare)
+cnplaman@pla:~$ id glboy
+uid=1002(glboy) gid=1002(glboy) groups=1002(glboy)                       
+cnplaman@pla:~/Desktop$ id glpla
+id: ‘glpla’: no such user</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-keyboard warn"></span>]查看所有用户</dd>
+                <dd>
+                    <pre>
+cnplaman@pla:~/Desktop$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+...
+cnplaman:x:1000:1000:cnplaman,,,:/home/cnplaman:/bin/bash
+plaman:x:1001:1001:,,,:/home/plaman:/bin/bash
+glboy:x:1002:1002:,,,:/home/glboy:/bin/bash</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-question-circle warn"></span>]如果whoami拆开为who am i执行会如何？</dd>
+            </dl>
+            <dl class="inner-cont">
+                <dd>. 要使用系统，必须是合法用户；每个用户拥有的权限不同；为了高效管理用户[权限]，通常将用户划分到不同的组</dd>
+                <dd>. 系统的组信息存放于etc/group目录</dd>
+                <dd class="mt2">
+                    <table class="list">
+                        <tr>
+                            <td class="p30">groups</td>
+                            <td>查看组</td>
+                        </tr>
+                        <tr>
+                            <td>groupadd</td>
+                            <td>添加组</td>
+                        </tr>
+                        <tr>
+                            <td>usermod</td>
+                            <td>修改组</td>
+                        </tr>
+                        <tr>
+                            <td>groupdel</td>
+                            <td>删除组</td>
+                        </tr>
+                        <tr>
+                            <td>chgrp</td>
+                            <td>修改组</td>
+                        </tr>
+                    </table>
+                </dd>
+                <dt>查看组 groups</dt>
+                <dd>. 查看当前/其它用户所属组；通常不至一个</dd>
+                <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]查看当前用户所属组：当前用户具有sudo权限</dd>
+                <dd>
+                    <pre>
+<span>cnplaman@pla:~/Desktop$ groups</span>
+<span>cnplaman adm cdrom sudo dip plugdev lpadmin lxd sambashare</span></pre>
+                </dd>
+                <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]查看当前用户所属组：当前用户不具有sudo权限</dd>
+                <dd>
+                    <pre>
+<span>bt@pla:/home/cnplaman/Desktop$ groups</span>
+<span>bt</span></pre>
+                </dd>
+                <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]查看其它用户所属组</dd>
+                <dd>
+                    <pre>
+<span>cnplaman@pla:~/Desktop$ groups bt</span>
+<span>bt : bt</span></pre>
+                </dd>
+                <dt>添加组 groupadd</dt>
+                <dd>. root或sudo权限才可以</dd>
+                <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]创建web组</dd>
+                <dd>
+                    <pre>
+<span>nplaman@pla:~/Desktop$ sudo groupadd web</span>
+<span>...</span>
+<span>web:x:1003:</span></pre>
+                </dd>
+                <dt>修改用户组 usermod</dt>
+                <dd>. 修改用户所在组</dd>
+                <dd>. 指定的用户组必须存在，否则：usermod: group 'xxx' does not exist</dd>
+                <dd>
+                    <table>
+                        <tr>
+                            <td class="p30">-g</td>
+                            <td>改变用户primary group组</td>
+                        </tr>
+                        <tr>
+                            <td>-G</td>
+                            <td>添加多个组；以,区分</td>
+                        </tr>
+                    </table>
+                </dd>
+            </dl>
+            <dl class="inner-cont">
+                <dt>用户切换</dt>
+                <dd>su username</dd>
+                <dd>. su：switch user</dd>
+                <dd>. 换个身份，默认还在当前目录</dd>
+                <dd>. 切换用户需要提供对应用户的密码</dd>
+                <dd>. 参数-表示同时切换至用户家目录；不带用户名，则切换到root[不推荐]</dd>
+                <dd>. 使用exit命令返回上一次用户；类似套娃；最外层用户使用exit将退出终端</dd>
+                <dd>
+                    <pre>
+<span>cnplaman@pla:~/Desktop$ su bt</span>
+<span>Password: </span>
+<span>bt@pla:/home/cnplaman/Desktop$ exit</span>
+<span>exit</span>
+<span>cnplaman@pla:~/Desktop$ su - bt</span>
+<span>Password: </span>
+<span>bt@pla:~$ </span></pre>
+                </dd>
+                <dt>设置用户密码</dt>
+                <dd>passwd username</dd>
+                <dd>. 设置其它用户密码需要sudo权限或更高级权限root</dd>
+                <dd>. 密码长度原则上要求不少于8位；可以不用理会</dd>
+                <dd>. 密码不能同旧密码相同：BAD PASSWORD: The password is the same as the old one</dd>
+                <dd>. 安全起见，root没有指定密码；每次开机都有一个随机密码；也不建议用户使用root登陆系统；可以通过sudo设置root密码</dd>
+                <dd>[<span class="iconfont icon-keyboard warn"></span>]设置root密码</dd>
+                <dd>
+                    <pre>
+nplaman@pla:~/Desktop$ sudo passwd
+[sudo] password for cnplaman: 
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-keyboard warn"></span>]设置自己密码</dd>
+                <dd>
+                    <pre>
+cnplaman@pla:~$ passwd cnplaman
+Changing password for cnplaman.
+Current password: 
+New password: 
+Retype new password: 
+passwd: password updated successfully</pre>
+                </dd>
+                <dd>[<span class="iconfont icon-keyboard warn"></span>]设置其它用户密码</dd>
+                <dd>
+                    <pre>
+cnplaman@pla:~$ passwd plaman
+passwd: You may not view or modify password information for plaman.
+cnplaman@pla:~$ sudo passwd plaman
+[sudo] password for cnplaman: 
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully</pre>
+                </dd>
+            </dl>
+            <dl class="inner-cont">
+                <dt>一句话要点</dt>
+                <dd>. 用户信息在/etc/passwd</dd>
+                <dd>. 组信息在/etc/group</dd>
+            </dl>
+        </div>
+    </div>
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"
+        onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <script>
+        window.onload = function () {
+            let navItems = document.querySelectorAll('.nav-item');
+            let inner = document.querySelector('.inner-box');
+            let w = inner.getBoundingClientRect().width / 5;
+            navItems.forEach((item, i) => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(itemInner => {
+                        itemInner.classList.remove('active');
+                    })
+                    item.classList.add('active')
+                    inner.style.left = -i * w + 'px'
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
