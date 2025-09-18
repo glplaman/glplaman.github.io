@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信息表示 Data</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/tbl.css">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1 class="txt-center mt2">信息表示</h1>
+    <h3 class="txt-center sub-title">Data</h3>
+    <dl>
+      <dt>内容</dt>
+      <dd class="number">
+        <div>概述 - 自学</div>
+        <div>系统组成</div>
+        <div>信息表示<i class="ri-flag-fill"></i></div>
+        <div>微型计算机系统 - 自学</div>
+        <div>发展 - 自学</div>
+      </dd>
+    </dl>
+    <div class="chap">二进制信息</div>
+    <dl>
+      <dd>. 计算机中信息编码的基本元素是0和1两个数码，称为二进制码</dd>
+      <dd>. 计算机存储器中存储的都是由0和1组成的信息编码，它们分别代表各自不同的含义，有的表示计算机指令与程序，有的表示二进制数据，有的表示英文字母，有的表示汉字，还有的可能是表示色彩与声音</dd>
+      <dt>特点</dt>
+      <dd>电路简单：二进制数中只有0和1两个数码，易于用两种对立的物理状态表示 </dd>
+      <dd>可靠性高：计算机中实现双稳态器件的电路简单，而且两种状态所代表的两个数码在数字传输和处理中不容易出错，因而电路可靠性高 </dd>
+      <dd>运算简单：在二进制中算术运算特别简单，可以大大简化计算机中运算电路的设计 </dd>
+      <dd>易于运算：二进制数码的1和0与逻辑命题的两个值"真"（True）与"假"（False）相对应，使<span class="warn">逻辑</span>运算成为计算机电路设计的数学基础</dd>
+      <dt>数据存储</dt>
+      <dd>位 bit：一个二进制位称为比特，用b表示，是计算机中存储数据的最小单位。一个二进制位只能表示0或1两种状态</dd>
+      <dd>字节Byte：八个二进制位称为字节，通常用B表示，字节是计算机数据处理和存储的基本单位</dd>
+      <dd>字Word：一个字由若干个字节组成，通常取字节的整数倍，是计算机一次存取、加工和传送的数据长度。常用的字长有8位、16位、32位和64位等</dd>
+      <dd>
+        <table class="tbl-sn tbl-ale">
+          <caption>换算关系</caption>
+          <tr>
+            <th>单位</th>
+            <th>单位</th>
+            <th>换算</th>
+          </tr>
+          <tr>
+            <td>字节</td>
+            <td>B</td>
+            <td>1B = 8bit</td>
+          </tr>
+          <tr>
+            <td>千字节</td>
+            <td>KB</td>
+            <td>1KB = 1024B = 2<sup>10</sup>B</td>
+          </tr>
+          <tr>
+            <td>兆字节</td>
+            <td>MB</td>
+            <td>1MB = 1024KB = 2<sup>10</sup>KB = 2<sup>20</sup>B</td>
+          </tr>
+          <tr>
+            <td>吉字节</td>
+            <td>GB</td>
+            <td>1GB = 1024MB = 2<sup>10</sup>MB = 2<sup>20</sup>KB = 2<sup>30</sup>B</td>
+          </tr>
+          <tr>
+            <td>太字节</td>
+            <td>TB</td>
+            <td>1TB = 1024GB = 2<sup>10</sup>GB = 2<sup>20</sup>MB = 2<sup>30</sup>KB = 2<sup>40</sup>B</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="tips">
+        <div>Tips</div>
+        <div>表示容量时，1K=2<sup>10</sup></div>
+        <div>表示速率时，1K=10<sup>3</sup></div>
+      </dd>
+    </dl>
+    <div class="chap">基本运算</div>
+    <dl>
+      <dt>算术运算</dt>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>加法 + 真值表：满2进1</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="4">+</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>减法 - 真值表：不足借位</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="4">-</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>乘法 * 真值表</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="4">*</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>除法 \ 真值表</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="4">\</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="warn">0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>溢出</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>逻辑运算</dt>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>逻辑与真值表：全真，结果才为真；否则为假</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="4">and &&</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>逻辑或真值表：有一个真，结果就为真</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="4">|| or</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>逻辑非真值表：非真为假；非假为真</caption>
+          <tr>
+            <th>运算符</th>
+            <th>位</th>
+            <th>结果</th>
+          </tr>
+          <tr>
+            <td rowspan="2">! not</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <div class="chap">数制和转换</div>
+    <dl>
+      <dt>数制</dt>
+      <dd>. 表示一个数的计数方法称为进位计数制；常见有：二进制 binary、八进制 octal、十进制 decimal、十六进制 hexadecimal</dd>
+      <dd>. 构成数制有两个要素：基数和位权</dd>
+      <dd>. 基数：在一个数中的每一个数位上可能出现的不同数字的个数。例如：二进制数基数是2，十进制数基数为10</dd>
+      <dd>. 位权：某个位置上的数代表的数量大小。表示此数在整个数中所占的份量(权重)</dd>
+      <dd>
+        <table class="tbl-sn tbl-ale">
+          <caption>不同进制的数码表示</caption>
+          <tr>
+            <th>进制</th>
+            <th>表示</th>
+            <th>权值</th>
+            <th>数码</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>二进制</td>
+            <td>0b</td>
+            <td>2</td>
+            <td>0 1</td>
+            <td>逢二进一</td>
+          </tr>
+          <tr>
+            <td>八进制</td>
+            <td>0o</td>
+            <td>8</td>
+            <td>0 1 2 3 4 5 6 7</td>
+            <td>逢八进一</td>
+          </tr>
+          <tr>
+            <td>十进制</td>
+            <td>默认</td>
+            <td>10</td>
+            <td>0 1 2 3 4 5 6 7 8 9</td>
+            <td>逢十进一</td>
+          </tr>
+          <tr>
+            <td>十六进制</td>
+            <td>0x</td>
+            <td>16</td>
+            <td>0 1 2 3 4 5 6 7 8 9 A B C D E F</td>
+            <td>逢十六进一</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>X进制 → 十进制</dt>
+      <dd>. 使用多项式，按照对应的权展开</dd>
+      <dd>. 小数点前面是正数幂，小数点后面是负数幂</dd>
+      <dd class="example-sn">(101.01)<sub>2</sub></dd>
+      <dd>＝1×2<sup>2</sup>
+        ＋0×2<sup>1</sup>＋1×2<sup>0</sup>＋0×2<sup>-1</sup>＋1×2<sup>-2</sup> ＝ (5.25)<sub>10</sub></dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>2的n次幂</caption>
+          <tr>
+            <td>2 <sup>0</sup></td>
+            <td>1</td>
+            <td>2 <sup>5</sup></td>
+            <td>32</td>
+          </tr>
+          <tr>
+            <td>2 <sup>1</sup></td>
+            <td>2</td>
+            <td>2 <sup>6</sup></td>
+            <td>64</td>
+          </tr>
+          <tr>
+            <td>2 <sup>2</sup></td>
+            <td>4</td>
+            <td>2 <sup>7</sup></td>
+            <td>128</td>
+          </tr>
+          <tr>
+            <td>2 <sup>3</sup></td>
+            <td>8</td>
+            <td>2 <sup>8</sup></td>
+            <td>256</td>
+          </tr>
+          <tr>
+            <td>2 <sup>4</sup></td>
+            <td>16</td>
+            <td>2 <sup>9</sup></td>
+            <td>512</td>
+          </tr>
+          <tr>
+            <td>2 <sup>10</sup></td>
+            <td>1024</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">(365.2)<sub>8</sub></dd>
+      <dd>= 3×8<sup>2</sup>＋6×8<sup>1</sup>＋5×8<sup>0</sup>＋2×8<sup>-1</sup> = (245.25)<sub>10</sub>
+      </dd>
+      <dd class="example-sn">(F5.4)<sub>16</sub></dd>
+      <dd>=15×16<sup>1</sup>＋5×16<sup>0</sup>＋4×16<sup>-1</sup> = (245.25)<sub>10</sub></dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Python中各进制转10进制 - 部分开发环境仅限于整数之间的转换，浮点数的转换需要自定义函数实现</figcaption>
+          <pre>
+>>> int('0b1011',2)
+11
+>>> int('1011',2)
+11
+>>> int('0o1011',8)
+521
+>>> int('1011',8)
+521
+>>> int('0x1011',16)
+4113
+>>> int('1011',16)
+4113</pre>
+        </figure>
+      </dd>
+      <dt>十进制 → X进制</dt>
+      <dd>. 方法1：除X求余法 - 余数逆序|从后往前排列</dd>
+      <dd>. 方法2：最大凑整法</dd>
+      <dd class="example-sn">(97)<sub>10</sub>转二进制</dd>
+      <dd>[求余法]</dd>
+      <dd>
+        <table>
+          <tr>
+            <th>数</th>
+            <th>商</th>
+            <th>余 ↑</th>
+          </tr>
+          <tr>
+            <td>97</td>
+            <td>48</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>48</td>
+            <td>24</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td>12</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>6</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>3</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>&there4; (1100001)<sub>2</sub></dd>
+      <dd>[最大凑整法]</dd>
+      <dd>97 <br>= 64 + 32 + 1 <br>= 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>0</sup></dd>
+      <dd>&there4; (1100001)<sub>2</sub></dd>
+      <dd>
+        <figure class="code">
+          <figcaption>十进制转二进制</figcaption>
+          <pre>
+>>> bin(97)
+'0b1100001'
+>>> oct(97)
+'0o141'
+>>> hex(97)
+'0x61'</pre>
+        </figure>
+      </dd>
+      <dt>八进制 → 二进制</dt>
+      <dd>.每1位八进制对应3位二进制</dd>
+      <dd class="example-sn">(652.307)<sub>8</sub></dd>
+      <dd>= (6 5 2.3 0 7)<sub>8</sub> <br>= (110 101 010.011 000 111)<sub>2</sub></dd>
+      <dt>二进制 → 八进制</dt>
+      <dd>.每3位二进制对应1位八进制</dd>
+      <dd>.不足3位的，整数部分前面|高位补0；小数部分后面|低位补0</dd>
+      <dd class="example-sn">(11010101.0100101)<sub>2</sub></dd>
+      <dd>= (11 010 101.010 010 1)<sub>2</sub> <br>= (<span class="warn">0</span>11 010 101.010 010
+        1<span class="warn">00</span>)<sub>2</sub> <br>= (325.224)<sub>8</sub></dd>
+      <dt>十六进制 → 二进制</dt>
+      <dd>.每1位十六进制对应4位二进制</dd>
+      <dd class="example-sn">(1C5.1B)<sub>16</sub></dd>
+      <dd>= (1 C 5.1 B)<sub>16</sub><sub>2</sub> <br>= (0001 1100 0101.0001 1011)<sub>2</sub></dd>
+      <dd></dd>
+      <dt>二进制 → 十六进制</dt>
+      <dd>.每4位二进制对应1位十六进制</dd>
+      <dd>.不足4位的，整数部分前面|高位补0；小数部分后面|低位补0</dd>
+      <dd class="example-sn">(1011010101.0111101)<sub>2</sub></dd>
+      <dd>= (10 1101 0101.0111 101)<sub>2</sub> <br>= (<span class="warn">00</span>10 1101 0101.0111
+        101<span class="warn">0</span>)<sub>2</sub> <br>= (2 D 5.7 A)<sub>16</sub></dd>
+      <dd>
+        <figure class="code">
+          <figcaption>进制之间的转换</figcaption>
+          <pre>
+>>> bin(int('652',8))
+'0b110101010'
+>>> oct(int('110101010',2))
+'0o652'
+>>> hex(int('110101010',2))
+'0x1aa'
+>>> bin(int('1aa',16))
+'0b110101010'          </pre>
+        </figure>
+      </dd>
+      <dt>十进制小数 → 二进制小数</dt>
+      <dd>. 小数部分不断乘2，结果取整，直到小数部分为0</dd>
+      <dd>. <span class="warn">顺序</span>排列取整的值</dd>
+      <dd>. 转其它进制小数类似</dd>
+      <dd class="example-sn">(0.3125)<sub>10</sub></dd>
+      <dd>
+        <table>
+          <tr>
+            <th>数</th>
+            <th>*2</th>
+            <th>取整 ↓</th>
+          </tr>
+          <tr>
+            <td>0.3125</td>
+            <td>0.625</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0.625</td>
+            <td>1.25</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>0.25</td>
+            <td>0.5</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0.5</td>
+            <td>1.0</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>&there4; (0.3125)<sub>10</sub> = (0.0101)<sub>2</sub></dd>
+      <dd class="example-sn">(0.8125)<sub>10</sub></dd>
+      <dd>
+        <table>
+          <tr>
+            <th>数</th>
+            <th>*2</th>
+            <th>取整 ↓</th>
+          </tr>
+          <tr>
+            <td>0.8125</td>
+            <td>1.625</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>0.625</td>
+            <td>1.25</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>0.25</td>
+            <td>0.5</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0.5</td>
+            <td>1.0</td>
+            <td>1</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>&there4; (0.8125)<sub>10</sub> = (0.1101)<sub>2</sub></dd>
+      <dt>十进制小数 → 八进制小数</dt>
+      <dd>. 小数点后面部分乘8取整</dd>
+      <dd class="example-sn">(58.5)<sub>10</sub>转8进制</dd>
+      <dd>
+        <div>整数部分：72（略）</div>
+        <div>0.5*8=4.0，小数部分为0，已经乘完</div>
+        <div>&there4; (58.5)<sub>10</sub> = (72.4)<sub>8</sub></div>
+      </dd>
+      <dt>十进制小数 → 十六进制小数</dt>
+      <dd>. 小数点后面部分乘16取整</dd>
+      <dd>. 通常有位数要求，如保留4位</dd>
+      <dd class="example-sn">(4586.32)<sub>10</sub>转16进制</dd>
+      <dd>
+        <div>整数部分：11EA（略）</div>
+        <div>32*16 = 5.12，取整5，留.12</div>
+        <div>12*16 = 1.92，取整1，留.92</div>
+        <div>92*16 = 14.72，取整14，留.72</div>
+        <div>72*16 = 14.52，取整11，留.52</div>
+        <div>小数部分正序排列：51EB</div>
+        <div>&there4; (4586.32)<sub>10</sub> = (11EA.51EB)<sub>16</sub></div>
+      </dd>
+    </dl>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/digit.png" alt="">
+        <figcaption>Window系统自带的计算器 - 程序员模式</figcaption>
+      </figure>
+    </dd>
+  </main>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

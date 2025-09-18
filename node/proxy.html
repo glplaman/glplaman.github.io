@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代理</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>代理</h1>
+    <span>&commat;Proxy</span>
+  </header>
+  <dl>
+    <dd>
+      <div>从一个服务域请求另外一个服务器域的资源</div>
+    </dd>
+    <dt>同域</dt>
+    <dd>
+      <div>协议相同</div>
+      <div>IP 相同</div>
+      <div>端口相同</div>
+    </dd>
+    <dt>跨域</dt>
+    <dd>
+      <div>CORS，Cross-Origin Resource Sharing
+        出于安全考虑，浏览器限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互</div>
+      <div>当从一个域名或端口请求另一个域名或端口的资源时，浏览器会阻止这种请求，除非服务器明确允许这种跨域访问</div>
+      <div>协议、IP和端口任一不相同，都为跨域</div>
+      <div>协议不同 - https 和 http 属于不同域</div>
+      <div>IP 不同 - localhost 和 127.0.0.1 属于不同域</div>
+      <div>端口不同 - 3000 和 5173</div>
+    </dd>
+    <dt>解决方案</dt>
+    <dd>
+      <div>可以由前端或后端解决</div>
+      <div>解决跨域的冲突；注意调整接口的使用</div>
+      <div>更多信息，请访问 <a href="https://cn.vitejs.dev/config/server-options.html">vite-server</a></div>
+      <div class="tips">
+        <div>localhost：本地服务器，不经过网卡传输的，它不受网络防火墙和网卡相关的限制</div>
+        <div>127.0.0.1：本机地址是域名访问，通过网卡传输的，依赖网卡，并受到网络防火墙和网卡相关的限制</div>
+        <div>静态文件托管服务（如 GitHub Pages）。这类服务通常已经正确配置 CORS，允许来自任何域的请求。因此，在大多数情况下，你不需要额外处理跨域问题</div>
+      </div>
+    </dd>
+    <dt>前端处理</dt>
+    <dd>
+      <div>为开发服务器配置自定义代理规则。期望接收一个 { key: options } 对象。任何请求路径以 key 值开头的请求将被代理到对应的目标</div>
+      <pre>
+proxy: {
+  "key": "options"
+}</pre>
+      <div>修改项目 vite.config.js 中的服务器 server 配置，增加对访问接口的代理 - 将所有以 /api 开头的请求，代理到 http://127.0.0.1:3000</div>
+      <!-- <div>开启重写 rewrite，请求时要 <span class="warn">额外</span> 指定请求路径前缀串，但是会被替换为空；主要起到 <span class="warn">分类</span> 的作用</div> -->
+      <div>rewrite：将请求路径中的 /api 前缀去掉，然后再转发到目标服务器。</div>
+      <pre>
+server: {
+  // open: false,
+  // host: '127.0.0.1',
+  // port: '5173',
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1:3000',
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api/, '')
+    }
+  }
+}</pre>
+    </dd>
+    <dd>
+      <div>请求为：</div>
+      <pre>/api</pre>
+      <div>拼接为</div>
+      <pre>http://127.0.0.1:3000/api/</pre>
+      <div>替换掉/api后，解析为</div>
+      <pre>http://127.0.0.1:3000/</pre>
+      <div>请求为：</div>
+      <pre>/api/detail</pre>
+      <div>拼接为</div>
+      <pre>http://127.0.0.1:3000/api/detail</pre>
+      <div>替换掉/api后，解析为</div>
+      <pre>http://127.0.0.1:3000/detail</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 大树小站咖啡数据获取</dd>
+    <dd></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="https://lbs.qq.com/">腾讯地图服务</a> WebService API 使用</dd>
+    <dd>
+      <div>直接请求，提示跨域</div>
+      <pre>axios.get('https://apis.map.qq.com/ws/location/v1/ip?ip=&key=your_key')</pre>
+      <div>代理</div>
+      <pre>
+"/map-api": {
+  target: "https://apis.map.qq.com",
+  changeOrigin: true,
+  rewrite: (path) => path.replace(/^\/map-api/, ""),
+}</pre>
+      <pre>axios.get('/map-api/ws/location/v1/ip?ip=&key=your_key')</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 王者荣耀英雄资料数据抓取代理</dd>
+    <dd>
+      <div>添加一个代理</div>
+      <pre>
+'/api': {
+  target: 'https://pvp.qq.com',
+  changeOrigin: true,
+  rewrite: (path) => path.replace(/^\/api/, '')
+}</pre>
+      <div>网络请求</div>
+      <pre>
+axios.get('/api/web201605/js/herolist.json').then(res => {
+  console.log(res);
+})</pre>
+    </dd>
+    <dt>后端处理</dt>
+    <dd>
+      <div>简单粗暴的设置响应头 Access-Control-Allow-Origin为所有*</div>
+      <pre>
+router.get('/all', (req, res) => {
+  // console.log('hi', req);
+  res.header('Access-Control-Allow-Origin', '*')
+  res.send(food.cont)
+})</pre>
+      <div>或设置指定的地址</div>
+      <pre>res.header('Access-Control-Allow-Origin', 'localhost:3000')</pre>
+      <div>为了避免在每个请求中设置响应头，可以使用中间件，统一处理</div>
+      <pre>
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+})</pre>
+    </dd>
+    <dt>使用第三方库 cors</dt>
+    <dd>
+      <div>安装</div>
+      <pre>npm install cors</pre>
+      <div>引入</div>
+      <pre>const cors = require('cors')</pre>
+      <div>使用</div>
+      <pre>app.use(cors());</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网络请求 Axios</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    #dog {
+      width: 100%;
+      max-width: 300px;
+      aspect-ratio: 16/9;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Axios</h1>
+    <span>网络请求</span>
+  </header>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>异步请求；基于 <a href="../node/promise.html">Promise</a> 的 HTTP 库，广泛应用于浏览器和 Node.js</div>
+      <div>通用、主流的第三方库；用于获取本地和远程资源，如 JSON 数据、图片等</div>
+      <div>默认是 Promise 用法；支持 async/await 用法</div>
+      <div>自动转换 JSON 数据</div>
+      <div>资源服务器应<span class="warn">提前开启</span>，并严格按照接口使用</div>
+      <div>更多信息，点击访问 <a href="https://www.axios-http.cn/">Axios 中文网</a>、<a
+          href="https://codilime.com/blog/axios-vs-fetch/">Axios vs Fetch</a></div>
+    </dd>
+    <dt>安装 Installment</dt>
+    <dd>
+      <div>在项目目录安装</div>
+      <pre>npm i axios</pre>
+      <div>也可以使用CDN方式，如 <a href="https://cdnjs.com/">cdnjs</a>、<a href="https://www.bootcdn.cn/">bootcdn</a> -
+        适合浏览器环境；建议将库下载到本地使用。。。CDN网络经常。。。</div>
+      <div>保留 crossorigin="anonymous" 避免浏览器提示</div>
+      <pre>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">基本使用 Usage</div>
+  <dl>
+    <dd>
+      <div>先引入后使用 - 哪个组件需要就在哪个组件内操作</div>
+      <pre>import axios from 'axios'</pre>
+    </dd>
+    <dt>承诺方式 <a href="./promise.html">Promise</a></dt>
+    <dd>
+      <div>链式调用：axios().then().catch().finally()</div>
+      <div>通过配置使用，语法比较统一 - get 使用 data 传递参数；post 使用 params 传递参数</div>
+      <pre>
+axios({
+  method: 'get',
+  url: '',
+  params: {  }
+})
+// 履行处理器 fulfillment handle：处理成功情况
+.then(res=>{
+  console.log(res);
+})
+// 拒绝处理器 rejection handle：处理错误情况
+.catch(err=>{
+  console.log(err);
+})
+// 解决处理器：无论成功失败都执行
+.finally(()=>{
+  console.log('finally');
+})</pre>
+      <pre>
+axios({
+  method: 'post',
+  url: '',
+  data: {  }
+})
+.then(res)
+.catch(err)
+.finally()</pre>
+      <div>或根据已经封装好的请求使用，如 get</div>
+      <pre>
+axios.get(url)
+  .then((res) => {    
+    console.log(res);
+  })
+  .catch((err) => {    
+    console.log(error);
+  })
+  .finally(() => {
+    console.log('finally');
+})</pre>
+    </dd>
+    <dt>异步等待方式 <a href="./asynawait.html"> async - await</a>；可以有效避免回调地狱</dt>
+    <dd>
+      <div>需要声明为异步函数</div>
+      <div>1. 不捕获异常</div>
+      <pre>
+async function getUser() {
+    const response = await axios.get(url);
+    console.log(response);
+}</pre>
+      <div>2. 捕获异常：try{}catch(){}finally{}</div>
+      <pre>
+async function getUser() {
+  try {
+    const response = await axios.get(url);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  } finally {    
+    console.log('finally');
+  }
+}</pre>
+      <div>或：函数表达式</div>
+      <pre>
+let getUser = async () =>{
+  try {
+    const response = await axios.get(url);
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  } finally {    
+    console.log('finally');
+  }
+}</pre>
+    </dd>
+    <!-- <dd>
+      <div>2. 全局使用 - main.js</div>
+      <div>引入并配置；一次引入，多次使用</div>
+      <div>早期以 Vue 实例属性的形式使用</div>
+      <div>Vue2</div>
+      <pre>
+import axios from 'axios'
+Vue.protoType.axios = axios;</pre>
+      <div>使用</div>
+      <pre>this.axios()</pre>
+      <div>Vue3</div>
+      <pre>
+import axios from 'axios'
+app.config.globalProperties.axios = axios;</pre>
+      <div>使用 - Vue3 如果采用 setup 语法，丢失 this，需要通过获取实例方法，逐步拿到全局属性</div>
+      <pre>
+const instance = getCurrentInstance();
+const axios = instance.appContext.config.globalProperties.axios;</pre>
+      <div>现在通过 <a href="../vue/component_provide.html">Provide & Inject</a> 实现 - 推荐</div>
+      <div>所有组件注入 inject 后直接使用</div>
+    </dd> -->
+    <dd class="tips">
+      <div>需要通过 <a href="./proxy.html">代理</a> 解决跨域的问题</div>
+      <div>静态网站托管平台通常已经做了跨域处理，可以直接使用</div>
+    </dd>
+  </dl>
+  <!-- <div class="chap">配置 Configuration</div>
+  <dl>
+    <dd>
+      <div><span class="warn">根据需要</span>配置|指定默认参数，如 baseURL、params、method、header、timeout；baseURL 应和数据服务器的地址保持一致</div>
+      <div>企业级的开发，还需要指定不同的环境变量使用相应的URL；如开发环境变量文件 .env 中指定</div>
+      <pre>VITE_BASE_URL=http://127.0.0.1:5173</pre>
+      <table>
+        <caption>环境变量</caption>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>.env</td>
+          <td>默认环境变量，所有环境都会加载</td>
+        </tr>
+        <tr>
+          <td>.env.development</td>
+          <td>开发环境变量</td>
+        </tr>
+        <tr>
+          <td>.env.test</td>
+          <td>测试环境变量</td>
+        </tr>
+        <tr>
+          <td>.env.production</td>
+          <td>生产环境变量</td>
+        </tr>
+      </table>
+      <div class="tips">代码托管时，确保在 .gitignore 文件中添加 .env* 以避免敏感信息被提交暴露</div>
+      <pre>
+axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.timeout = 3000</pre>
+      <div>如果配置了环境变量</div>
+      <pre>axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 请求 json 数据；详细操作请参考<span class="iconfont icon-video"></span> <a
+        href="https://www.bilibili.com/video/BV1xc93YnEok/?spm_id_from=333.1387.homepage.video_card.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">Axios
+        with json</a>
+    </dd>
+    <dd>
+      <pre>
+axios.get('/api/data/coffee.json')
+.then(res => {
+  console.log(res);
+})</pre>
+
+
+    </dd>
+  </dl> -->
+  <!-- <div class="chap">常用 API</div>
+  <dl>
+    <dt>获取 GET</dt>
+    <dd>可以传递参数；S端使用 req.query 获取</dd>
+    <dd class="sn">
+      <div>无参</div>
+      <pre>
+axios.get(baseURL + '/test')
+  .then(res => {
+    console.log('res', res.data);
+  })
+  .catch(err => {
+    console.log('err', err);
+  })
+  .finally(() => {
+    console.log('done for log');
+  })</pre>
+      <div>有参</div>
+      <p>使用 ? 拼接提交；S端使用 req.query 获取</p>
+      <pre>
+axios.get(baseURL + '/test?id=123')
+.then(res => {
+  console.log(res.data)
+})</pre>
+      <div>使用路径参数 / 拼接提交；S端使用 req.params 获取</div>
+      <pre>
+axios.get(baseURL + '/test/123')
+.then(res => {
+  console.log(res.data)
+})    </pre>
+      <p>使用 params 提交；S端 <span class="warn">仍然</span> 使用 req.query 获取</p>
+      <p>适合传递多个数据，避免拼接错误</p>
+      <pre>
+axios.get(baseURL + '/test', {
+  params: { id: 112233 }
+})
+.then(res => {
+  console.log(res.data)
+})</pre>
+      <div>S端</div>
+      <pre>
+router.get('/', (req, res) => {
+  console.log(req.query);
+  res.json({
+    code: 'ok',
+    type: 'get query',
+    data: req.query.id || 'hi, there.'
+  })
+})
+
+router.get('/:id', (req, res) => {
+  console.log('params', req.params);
+  res.json({
+    code: 'ok',
+    type: 'get params',
+    data: req.params.id || 'hi, there.'
+  })
+})    </pre>
+    </dd>
+    <dt>增加 POST</dt>
+    <dd>直接传递参数</dd>
+    <dd class="sn">
+      <div>C端</div>
+      <p>传递JSON - <span class="warn">默认是 JSON 格式的数据</span>，可以略去请求头 header 中的 content-type 设置</p>
+      <pre>
+axios.post(baseURL + '/test', {
+  id: 1,
+})
+  .then(res => console.log('res', res))</pre>
+      <p>传递键值对key-value - 需要；略</p>
+      <p>现在都是通过数据绑定的形式传递对象|JSON</p>
+      <div>S端</div>
+      <pre>
+router.post('/', (req, res) => {
+  console.log('req body', req.body);
+  res.json({
+    code: 'ok',
+    type: 'post',
+    data: req.body.id || 'hi, there.'
+  })
+})  </pre>
+    </dd>
+    <dt>删除 DELETE</dt>
+    <dd>根据 id 删除</dd>
+    <dd>参数传递方式同 GET：支持3种形式</dd>
+    <dd class="sn">
+      <div>C端</div>
+      <pre>
+axios.delete(baseURL + '/test?id=123')
+  .then(res => console.log(res.data))</pre>
+      <pre>
+axios.delete(baseURL + '/test/123')
+  .then(res =>console.log(res.data))</pre>
+      <pre>
+axios.delete(baseURL + '/test', {
+  params: {
+    id: 123321
+  }
+})
+  .then(res => console.log(res.data))  </pre>
+      <div>S端</div>
+      <pre>
+router.delete('/', (req, res) => {
+  console.log('query', req.query);
+  res.json({
+    code: 'ok',
+    type: 'delete query',
+    data: req.query.id || 'hi, there.'
+  })
+})
+
+router.delete('/:id', (req, res) => {
+  console.log('params', req.params);
+  res.json({
+    code: 'ok',
+    type: 'delete',
+    data: req.params.id || 'hi, there.'
+  })
+})  </pre>
+    </dd>
+    <dt>修改 PUT</dt>
+    <dd>同 POST，根据 id 和数据完成修改；路径方式传递 id</dd>
+    <dd class="sn">
+      <div>C端</div>
+      <pre>
+axios.put(baseURL + '/test/2147', {
+  id: 123
+})
+  .then(res => console.log(res))</pre>
+      <div>S端</div>
+      <pre>
+router.put('/:id', (req, res) => {
+  console.log('req body', req.body);
+  console.log('req params', req.params);
+  res.json({
+    code: 'ok',
+    type: 'put',
+    data: req.body.id || 'hi, there.'
+  })
+})  </pre>
+    </dd>
+  </dl> -->
+  <div class="chap">封装 Encapsulation / Modulation</div>
+  <dl>
+    <!-- <dd>
+      以上配置存在问题：<br>
+      修改的是全局默认配置，可能会影响其他使用 Axios 的模块 <br>
+      没有使用拦截器进行请求/响应统一处理 <br>
+      缺乏错误处理和接口抽象
+    </dd> -->
+    <dt>1. 配置</dt>
+    <dd>
+      <div>创建文件 request.js：指定请求URL、响应时间、拦截器等</div>
+      <pre>
+import axios from "axios";
+
+const request = axios.create({
+  baseURL: "https://glpla.github.io/utils/data/", // 设置基础 URL
+  timeout: 5000, // 请求超时时间
+});
+
+// interceptors 拦截器，见后续内容
+
+export default request;</pre>
+    </dd>
+    <dt>2. 封装</dt>
+    <dd>
+      <div>封装请求方法，仅仅是请求，响应放在使用中处理</div>
+      <div>创建文件 goods.js：引入配置文件、处理商品数据的加载等事件</div>
+      <pre>
+import requset from "./request";
+
+export const getGoods = () => requset.get("coffee.json");
+// 示例
+export const getGoodByid = (id) => requset.get();
+</pre>
+      <div>用户类的封装 user.js</div>
+      <pre>
+import requset from "./request";
+
+// 示例
+export const login = (data) => requset.post();
+export const register = (data) => requset.post();
+export const update = (data) => requset.patch();</pre>
+    </dd>
+    <dt>3. 使用</dt>
+    <dd>
+      <div>引入商品封装文件，使用其中的方法发起请求并处理结果</div>
+      <div>如在某个组件的生命周期函数中，请求数据 - 这里使用异步等待方式，也可以使用回调方式</div>
+      <pre>
+import { getGoods } from '../assets/api/goods.js';
+
+onMounted(async () => {
+  const res = await getGoods()
+  console.log(res);
+})</pre>
+      <div>改进1：加入错误控制</div>
+      <pre>
+onMounted(async () => {
+  try {
+    const res = await getGoods()
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+})</pre>
+      <div>改进2：加入进度指示器</div>
+      <pre>
+onMounted(async () => {
+  console.log('loading start');
+
+  try {
+    const res = await getGoods()
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    console.log('laoding done');
+  }
+})</pre>
+    </dd>
+    <dd class="tips">在 src 下创建 api 文件夹管理相关文件</dd>
+  </dl>
+  <div class="chap">拦截器 interceptor</div>
+  <dl>
+    <dd>
+      <figure>
+        <img style="border: none;" src="./imgs/axios0.png" alt="">
+        <figcaption>拦截器</figcaption>
+      </figure>
+    </dd>
+    <dt>请求拦截器 request</dt>
+    <dd>
+      <div>目的：限制访问；发出去的请求是经过处理后的请求；如配置请求，如请求头、指定 Token 用来验证身份</div>
+      <div>在请求发送前：</div>
+      <div>. 对 <span class="warn">请求参数</span> 进行拦截，修改参数</div>
+      <div>. 对 <span class="warn">请求头</span> 进行拦截，修改请求头</div>
+      <div>. 对 <span class="warn">请求体</span> 进行拦截，修改请求体</div>
+      <pre>
+axios.interceptors.request.use( 
+  (config) => {
+    // ...
+    // config.headers.Authorization = 'Bearer ' + token;
+    return config;
+  },
+  (error) => {
+    // ...
+    return Promise.reject(error)
+  }
+)</pre>
+    </dd>
+    <dt>响应拦截器 response</dt>
+    <dd>
+      <div>目的：过滤响应数据；接受到的响应是经过处理后的响应</div>
+      <div>在请求返回后：</div>
+      <div>. 对 <span class="warn">响应数据</span> 进行拦截，修改响应数据</div>
+      <div>. 对 <span class="warn">响应头</span> 进行拦截，修改响应头</div>
+      <div>. 对 <span class="warn">响应头</span> 进行拦截，修改响应体</div>
+      <pre>
+axios.interceptors.response.use( 
+  (response) => {
+    // ...
+    return response;
+  },  
+  (error) => {
+    // ...
+    return Promise.reject(error);
+  }
+)</pre>
+    </dd>
+  </dl>
+  <div class="chap">趣味应用 application</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 获取远程数据 - <button id="getDog">点击获取小狗</button></dd>
+    <dd>
+      <div>https://dog.ceo/api/breed/pembroke/images/random</div>
+      <div id="dog">
+        <img src="" alt="">
+      </div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 获取本地数据 - <button id='axios'>点击获取WEB知识体系</button></dd>
+    <dd>
+      <div>1. 如何渲染获取到的数据？使用新节点？使用innerHtml？</div>
+      <div>2. 表格&lt;table&gt;的使用：使用默认表格还是特别指定表头&lt;thead&gt;和表体&lt;tbody&gt;？</div>
+      <div class="tbl-box">
+        <table class="tbl" cellpadding='6'>
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>内容</th>
+              <th>难度</th>
+            </tr>
+          </thead>
+          <tbody id="axios-local"></tbody>
+        </table>
+      </div>
+      <pre>
+//使用节点
+for (let i = 0; i &lt; res.data.length; i++) {
+let tr = document.createElement('tr')
+for (let item in res.data[i]) {
+    let td = document.createElement('td')
+    td.innerHTML = res.data[i][item]
+    tr.appendChild(td)
+}
+axiosLocal.appendChild(tr)
+}</pre>
+      <pre>
+//使用innerHtml
+for (let i = 0; i &lt; res.data.length; i++) {
+let tr = '<tr>'
+for (let item in res.data[i]) {
+    tr += '<td>' + res.data[i][item] + '</td>'
+}
+tr += '</tr>'
+axiosLocal.innerHTML += tr
+}</pre>
+    </dd>
+    <!-- <dt>推荐资源 links</dt>
+    <dd>1. <a href="https://picsum.photos/">随机图片</a></dd>
+    <dd>2. http://ajax-base-api-t.itheima.net/api</dd>
+    <dd>/getbooks</dd>
+    <dd>/addbook</dd> -->
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.5.0/axios.min.js"></script>
+  <script>
+    // remote - dog
+    let getDog = document.querySelector('#getDog')
+    let dog = document.querySelector('#dog img')
+    getDog.addEventListener('click', getDogFn)
+    async function getDogFn() {
+      let res = await axios('https://dog.ceo/api/breed/pembroke/images/random')
+      dog.src = res.data.message
+    }
+    getDogFn()
+
+    // local
+    let axiosL = document.querySelector('#axios')
+    let axiosLocal = document.querySelector('#axios-local')
+    axiosL.addEventListener('click', () => {
+      axiosLocal.innerHTML = ''
+      axios
+        .get('/utils/data/data2021/stu.json')
+        .then(res => {
+          for (let i = 0; i < res.data.length; i++) {
+            let tr = document.createElement('tr')
+            for (let item in res.data[i]) {
+              let td = document.createElement('td')
+              td.innerHTML = res.data[i][item]
+              tr.appendChild(td)
+            }
+            axiosLocal.appendChild(tr)
+          }
+          // for (let i = 0; i < res.data.length; i++) {
+          //   let tr = '<tr>'
+          //   for (let item in res.data[i]) {
+          //     tr += '<td>' + res.data[i][item] + '</td>'
+          //   }
+          //   tr += '</tr>'
+          //   axiosLocal.innerHTML += tr
+          // }
+        })
+    })
+  </script>
+</body>
+
+</html>

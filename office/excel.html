@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>电子表格处理 Excel</title>
+  <link rel="stylesheet" href="./css/demo.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1 class="txt-center mt2">电子表格处理</h1>
+      <h3 class="txt-center sub-title">Excel</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>内容</dt>
+        <dd class="number">
+          <div>单元格</div>
+          <div>工作表</div>
+          <div>样式</div>
+          <div>图表</div>
+        </dd>
+      </dl>
+      <div class="chap">单元格 Cell</div>
+      <dl>
+        <dt>定位</dt>
+        <dd class="number">
+          <div>单击定位</div>
+          <div>↑↓←→：一次移动一个单元格</div>
+          <div>CTRL + ↑↓←→：移动到列首、列尾、行首、行尾</div>
+          <div>TAB：向后移动</div>
+          <div>SHIFT + TAB：向前移动</div>
+        </dd>
+        <dt>选择</dt>
+        <dd class="number">
+          <div>单选：鼠标单击</div>
+          <div>多选</div>
+          <p>. 连续选择：鼠标拖到选择、SHIFT+单击</p>
+          <p>. 断续选择：CTRL+单击</p>
+          <div>全选数据区</div>
+          <p>. 数据区任一单元格，按Ctrl + A</p>
+          <p>. 第一个单元格，CTRL + Shift + → + ↓：先选择到行尾，再选择到列尾</p>
+        </dd>
+        <dt>数据录入</dt>
+        <dd class="grid2">
+          <div>
+            <div>1. 手动录入</div>
+            <div>. 单个单元格录入</div>
+            <div>. 区域录入：选择单元格区域（连续或断续），输入数据，按Ctrl + Enter，选择区域被数据填充</div>
+            <div>2. 自动录入</div>
+            <div>. 拖动填充：选择若干个已有数据的单元格，拖到鼠标，可以根据单元格数据的特点自动填充，如递增、递减、等差等等；要求单元格数值是可以序列化的，如1、2、3或表1、表3、表5或no1、no2、no3</div>
+            <div>. 自动填充："编辑"组→填充→序列，可以指定更多的填充方式，特别适合需要填充数量多的区域</div>
+            <div>3. 外部导入</div>
+          </div>
+          <figure class="img-sn">
+            <img src="./imgs/sheet1.png" alt="">
+            <figcaption>自动填充</figcaption>
+          </figure>
+        </dd>
+        <dt>自定义序列</dt>
+        <dd>. 文件 → 选项 → 高级 → 编辑自定义列表（最下面）</dd>
+        <dd>. 可手动输入；也可从单元格导入数据项</dd>
+        <dt>调整列宽|行高</dt>
+        <dd class="number">
+          <div>单独调整：<span class="em">双击</span> 两列|两行连接线，根据当前列|行的内容自动调整</div>
+          <div>同时调整：全选单元格区域，<span class="em">拖动</span> 某列|行连接线，调整所有列|行宽度、高度一致</div>
+        </dd>
+        <dt>单元格样式</dt>
+        <dd class="grid2">
+          <div>
+            <div>打开方式</div>
+            <div class="number">
+              <div>CTRL + 1</div>
+              <div>选择单元格→右键→设置单元格样式</div>
+              <div>"单元格"组→格式→设置单元格样式</div>
+            </div>
+            <div>设置内容</div>
+            <div class="number">
+              <div>数字</div>
+              <div>对齐</div>
+              <div>字体</div>
+              <div>边框</div>
+              <div>填充</div>
+              <div>保护</div>
+            </div>
+          </div>
+          <figure class="img-sn">
+            <img src="./imgs/cell0.png" alt="">
+            <figcaption>单元格样式</figcaption>
+          </figure>
+        </dd>
+        <dt>地址</dt>
+        <dd>. 使用公式时，要特别注意</dd>
+        <dd>. 使用F4转换地址类别</dd>
+        <dd>. 反复按F4，可以在行、列、行列之间切换</dd>
+        <dd>. 可以选择多个地址同时转换</dd>
+        <dd class="number">
+          <div>相对地址|相对引用：地址随引用不断发送变化；A1</div>
+          <div>绝对地址|绝对引用：地址固定不变；$A$1</div>
+          <div>混合地址|混合引用：列固定或行固定；$A1；A$1</div>
+          <div>跨表引用：前面是表名，后面是单元格地址；=原始数据!G35</div>
+        </dd>
+      </dl>
+      <div class="chap">工作表 Sheet</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 一个excel文件可以有多张工作表sheets；可以根据需要将业务内容相近的工作表放在不同的excel文件或同一个excel文件</dd>
+        <dd>. 可以同时操作多张表：按住Shift，点击其它工作表，然后操作某个工作表，如设置样式，则其它工作表也会生效</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/sheet0.png" alt="">
+            <figcaption>工作表</figcaption>
+          </figure>
+        </dd>
+        <dt>保护工作表</dt>
+        <dd>. 保护工作表：限制当前工作表的操作，如编辑，需要设置密码；请 <span class="em">牢记密码，谨慎操作</span></dd>
+        <dd>. 部分单元格取消锁定：如果仅仅指定部分区域允许操作，应先在"单元格格式"对话框"保护"选项卡中，取消"锁定"，再执行保护工作表</dd>
+        <dd>. 隐藏公式：同样需要执行单元格的"隐藏"操作再执行保护工作表操作</dd>
+        <dd>. 部分区域允许凭密编辑：没有密码，不允许编辑；可以设置多个区域；如信息收集表中，仅仅允许用户操作数据字段，文字等提示字段不允许操作</dd>
+        <dd>. 保护工作簿：也可以在"文件" → "信息" → "保护工作簿"，设置整个excel文件的访问</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/sheet3.png" alt="">
+            <figcaption>保护工作表</figcaption>
+          </figure>
+        </dd>
+        <dd class="grid2">
+          <figure class="img-sn">
+            <img src="./imgs/sheet2.png" alt="">
+            <figcaption>保护工作表</figcaption>
+          </figure>
+          <figure class="img-sn">
+            <img src="./imgs/sheet4.png" alt="">
+            <figcaption>保护工作簿</figcaption>
+          </figure>
+        </dd>
+      </dl>
+      <div class="chap">样式 Style</div>
+      <dl>
+        <dt>套用表格样式</dt>
+        <dd>. 鼠标定位在工作表中某个数据单元格，再执行以下命令，系统会自动检查工作表范围并应用选定的表格样式</dd>
+        <dd class="number">
+          <div>"插入" → 表格</div>
+          <div>"开始" → 样式组 → 套用表格样式</div>
+        </dd>
+      </dl>
+      <div class="chap">图表 Diagram</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>. 创建图表需要数据支撑</dd>
+        <dd>. 框选数据时，记得行和列的标题将作为坐标，不要漏掉</dd>
+        <dd>. 图表是动态的；当数据发送变化时，图表也会相应的改变</dd>
+        <dd>. 选择图表后，excel标题会出现两个相应的动态选项卡：图表设计和设计，方便更多操作</dd>
+        <dd>. 还可以创建组合图表，方便比对更多数据</dd>
+      </dl>
+      <div class="chap">小贴士 Tips</div>
+      <dl>
+        <dt>快速选择</dt>
+        <dd>CTRL + 方向键</dd>
+        <dd>CTRL + SHIFT + 方向键</dd>
+        <dt>插入多个空白行</dt>
+        <dd>先选择若干行，再执行"插入"</dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

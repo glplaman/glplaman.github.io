@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>会话 Session</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>会话</h1>
+    <span>&commat;Session</span>
+  </header>
+  <dl>
+    <dt>Overview</dt>
+    <dd>
+      <div>在服务器端保存一些数据便于识别用户</div>
+      <div>可看做数据存储的一种机制</div>
+      <div>确保挂在所有路由定义之前</div>
+      <div>会话失效：存的数据不会丢失，只是小票失效了，无法访问</div>
+      <div>大小：不限制</div>
+      <div>基于 cookie 实现，而 cookie 保存在浏览器端，存在 session 劫持风险</div>
+      <div class="tips">Node 每次服务重新启动都会导致原来 session 丢失</div>
+    </dd>
+    <dt>Deployment</dt>
+    <dd>
+      <div>1. 安装依赖</div>
+      <pre>npm i express-session --save</pre>
+      <div>2. 声明</div>
+      <pre>
+server.use(session({
+  //必填
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+    // cookie: {
+    //   secure: true
+    // }
+}))  </pre>
+      <div>3. 查看</div>
+      <div>network → response header</div>
+      <div>application → session</div>
+    </dd>
+    <dt>Usage</dt>
+    <dd class="sn">
+      <div>setItem(key,value)</div>
+      <div>getItem(key)</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 记住用户的浏览记录</dd>
+    <dd>
+      <div>用户浏览商品时，记住当前浏览的系列 id；如果页面刷新，则根据保留的 id 重新加载数据，否则加载第一条记录</div>
+      <div>要求用户每次切换不同的系列时，除了加载数据还要保存当前 id 到 session</div>
+      <pre>loadDate(session.getItem('seriesId')|| 0)</pre>
+      <pre>
+const loadDate = (seriesId) => {
+  session.setItem('seriesId', seriesId)
+  // 获取数据
+  // 渲染数据
+  // 保存数据
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

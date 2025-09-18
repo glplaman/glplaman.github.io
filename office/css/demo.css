@@ -1,0 +1,177 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css);
+@import url(../../css/sn.css);
+@import url(../../css/code.css);
+
+:root {
+  --main-color: #ff5d73;
+  --header-color: #4bc2ce;
+  --header-h: 20rem;
+  --bar-h: 10rem;
+  --tips-bg: #f9efd4;
+  --font-size: 62.5%;
+  --main-padding: 1rem;
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+footer,
+header,
+h1,
+h3,
+p,
+img,
+figure,
+iframe {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+i {
+  color: var(--main-color);
+}
+
+.col2 {
+  columns: 350px 2;
+  column-gap: 4rem;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 10px;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.txt-justify {
+  text-align: justify;
+}
+
+.em {
+  font-weight: 600;
+}
+
+.chap {
+  height: var(--bar-h);
+  line-height: calc(1.5*var(--bar-h));
+  font-size: 2rem;
+  letter-spacing: 2px;
+  color: #fff;
+  padding-left: var(--main-padding);
+  background-color: var(--header-color);
+}
+
+.tips {
+  text-indent: 2em;
+  border-left: 4px solid var(--main-color);
+  margin: 4rem auto;
+  background-color: var(--tips-bg);
+  padding: 1rem;
+}
+
+.tips>div:first-child {
+  font-weight: 600;
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: #f4f4f4;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr 150px;
+  width: 100%;
+  max-width: 120rem;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.container::before {
+  content: '';
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  box-shadow: -1px 0 2rem 1.6rem rgba(0, 0, 0, .1);
+}
+
+.container::after {
+  content: '';
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  box-shadow: 1px 0 2rem 1.6rem rgba(0, 0, 0, .1);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--main-padding);
+  color: #fff;
+  padding: var(--main-padding);
+  background: linear-gradient(180deg, #4bc2ce, #2980b9);
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+dl {
+  line-height: 2;
+  padding: 0 var(--main-padding);
+}
+
+dt {
+  font-weight: 600;
+}
+
+dd {
+  text-align: justify;
+}
+
+iframe {
+  width: 100%;
+}
+
+@media screen and (max-width:768px) {
+  :root {
+    --header-h: 12rem;
+  }
+}

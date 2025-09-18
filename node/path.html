@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路径 Path</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>路径</h1>
+    <span>&commat;Path</span>
+  </header>
+  <dl>
+    <dt>属性</dt>
+    <dd>
+    </dd>
+    <dt>方法</dt>
+    <dd>
+      <div>1. path.join()</div>
+      <div>用于将多个路径片段连接成一个完整的路径</div>
+      <pre>path.join(__dirname, 'public')</pre>
+      <div>其中：</div>
+      <div>__dirname: 是一个全局变量，表示当前模块的目录名，是一个绝对路径，指向包含当前执行文件的目录</div>
+      <div>'public': 是一个相对路径片段，表示 public 目录</div>
+      <div>结果：指向当前模块所在目录下的 public 子目录</div>
+      <pre>path.join('./public')</pre>
+      <div>结果：生成一个相对于当前工作目录的路径；通常是启动 Node.js 进程/服务时所在的目录</div>
+      <div>使用 __dirname 可以确保路径是相对于当前模块的，不会因为启动目录的变化而变化 - 推荐</div>
+      <div>使用 ./ 依赖于当前工作目录，如果工作目录发生变化，路径也会随之变化</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

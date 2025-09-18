@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>成绩处理 Score</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1 class="txt-center mt2">成绩处理</h1>
+    <h3 class="txt-center sub-title">Score</h3>
+    <dl>
+      <dd>. 资料下载<a href="./data/学生成绩.xlsx" download title="点击下载">学生成绩 <i class="ri-download-2-line"></i></a></dd>
+      <dt>目的</dt>
+      <dd>. 常见公式的使用</dd>
+      <dt>步骤</dt>
+      <dd class="number">
+        <div>考生个数、考勤率 - COUNT|COUNTA</div>
+        <div>平均成绩 - AVERAGE</div>
+        <div>平均成绩最高分 - MAX、最低分 - MIN</div>
+        <div>两级成绩判定：及格60+、不及格</div>
+        <p>. IF</p>
+        <p>. IFS</p>
+        <p>. VLOOKUP</p>
+        <div>五级成绩判定：优秀：90+；良好：80+；中：70+；及格：60+；不及格：60-</div>
+        <p>. IF</p>
+        <p>. IFS</p>
+        <p>. VLOOKUP</p>
+        <div>统计五级成绩评定中，不同档次的人数 - FREQUENCY</div>
+        <table>
+          <tr>
+            <td>边界值</td>
+            <td>59</td>
+            <td>69</td>
+            <td>79</td>
+            <td>89</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>实际分段</td>
+            <td>0-59</td>
+            <td>60-69</td>
+            <td>70-79</td>
+            <td>80-89</td>
+            <td>90+</td>
+          </tr>
+        </table>
+        <div>高亮显示前3名同学 - 条件格式</div>
+        <div>其他格式自行设置</div>
+      </dd>
+      <dt>提交</dt>
+      <dd>. 将处理后的Excel文档以学号+姓名的方式命名，如20231100张树彬，提交到学习通对应的作业</dd>
+      <dt>考核方式</dt>
+      <dd>. 随堂作业并提交</dd>
+    </dl>
+    <div class="chap">拓展练习</div>
+    <dl>
+      <dt>查询学生成绩 VLOOKUP</dt>
+      <dd>. 根据学号查询对应的信息；精确查找 FALSE</dd>
+      <dd>. 分别在当前表和新表实现查询学生的功能；如果在当前工作表，功能实现后，应该隐藏数据区域；如果在新工作表，应该隐藏数据表</dd>
+      <dt>排名 RANK</dt>
+      <dd>. 根据学生的平均成绩排名 - 绝对引用 F4</dd>
+      <dt>错误处理 IFERROR</dt>
+      <dd>. 如果输入异常，不符合学号格式，应给出提示：= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 2),"查无此人")</dd>
+      <dd>. 如果没有输入，应保持空白：= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 3), "")</dd>
+      <dd>. 也可以使用数据验证功能</dd>
+    </dl>
+  </main>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

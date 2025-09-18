@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>算法 Algorithm</title>
+  <link rel="stylesheet" href="../css/common2023.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/nav2023.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/tbl.css">
+  <base target="_blank">
+  <style>
+    .wirth-img {
+      float: right;
+      width: 200px;
+      aspect-ratio: 1/1;
+      background-color: #f40;
+      background-image: url(./imgs/wirth.png);
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>算法</h1>
+    <span>Algorithm</span>
+  </header>
+  <div id="main-nav">
+    <a id="logo">
+      <h1>算法</h1>
+    </a>
+    <span id="ham" class="iconfont icon-menu"></span>
+    <nav id="nav">
+      <a href="" class="nav-item" data-ind="0">概述</a>
+      <a href="" class="nav-item" data-ind="1">表示</a>
+      <a href="" class="nav-item" data-ind="2">基本方法</a>
+      <a href="" class="nav-item" data-ind="3">排序</a>
+      <a href="" class="nav-item" data-ind="4">查找</a>
+      <a href="" class="nav-item" data-ind="5">练习</a>
+      <a href="" class="nav-item" data-ind="6">复杂度</a>
+    </nav>
+  </div>
+  <dl class="nav-cont">
+    <dd class="wirth-img"></dd>
+    <dt>概述</dt>
+    <dd>.解决问题的方法和步骤</dd>
+    <dd>.算法是一个过程：由一些明确的规则组成</dd>
+    <dd>.通常和特定的数据结构联系在一起</dd>
+    <dd>.结构化算法</dd>
+    <dd class="tips">
+      <div>算法 + 数据结构 = 程序</div>
+      <div style="text-align: right;">- Pascal语言发明者沃思Wirth</div>
+    </dd>
+    <dt>要素</dt>
+    <dd>1.操作</dd>
+    <dd>2.控制结构</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>操作</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>算术运算</td>
+          <td>+ - * /</td>
+        </tr>
+        <tr>
+          <td>逻辑运算</td>
+          <td>&& || !</td>
+        </tr>
+        <tr>
+          <td>关系运算</td>
+          <td>&lt; >= &le;</td>
+        </tr>
+        <tr>
+          <td>传送运算</td>
+          <td>输入、输出、赋值</td>
+        </tr>
+      </table>
+      <table class="tbl-sn tbl-ale">
+        <caption>控制结构</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>顺序</td>
+          <td>按照先后顺序依次执行<br>最简单、最常用</td>
+        </tr>
+        <tr>
+          <td>条件</td>
+          <td>根据可能出现的情况进行分析和处理<br>IF-ELSE SWITCH-CASE</td>
+        </tr>
+        <tr>
+          <td>循环</td>
+          <td>当型：先判定后执行 WHILE-DO<br>直到型：先执行后判定，至少执行1次 DO-WHILE<br>按指定次数循环 FOR</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="grid2">
+      <figure class="code">
+        <figcaption>while-do [JavaScript]</figcaption>
+        <pre>
+let i = 0
+while (i &lt; 10) {
+  console.log(i)
+  i++
+}</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>do-while [JavaScript]</figcaption>
+        <pre>
+let i = 0
+do {
+  console.log(i);
+  i++
+} while (i &lt; 10);</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>For - 递增型 [JavaScript]</figcaption>
+        <pre>
+for (let i = 0; i &lt; 10; i++) {
+  console.log(i);
+}</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>For - 递减型 [JavaScript]</figcaption>
+        <pre>
+for (let i = 10; i > 0; i--) {
+  console.log(i);
+}</pre>
+      </figure>
+    </dd>
+    <dt>特征</dt>
+    <dd>唐纳德.克努斯Donald E.Knuth归纳为：</dd>
+    <dd class="number">
+      <div>有穷性 Finiteness</div>
+      <p>算法的执行步数是有限的</p>
+      <p>可以终止</p>
+      <p>不能出现死循环</p>
+      <div>确定性 Definiteness</div>
+      <p>相同的输入只能得到相同的输出</p>
+      <p>不能有二义性</p>
+      <div>可行性 Effectiveness</div>
+      <p>可以执行*</p>
+      <div>输入 Input</div>
+      <p>可以有1个输入或多个输入，也可以没有输入</p>
+      <div>输出 Output</div>
+      <p>有1个或多个输出</p>
+    </dd>
+    <dt>分类</dt>
+    <dd>1.数值型算法</dd>
+    <dd>算术运算占主导</dd>
+    <dd>2.非数值型算法</dd>
+    <dd>逻辑运算占主导</dd>
+    <dt>算法 vs 程序</dt>
+    <dd>.算法独立于程序</dd>
+    <dd>.程序不一定无穷</dd>
+    <dd>.程序的指令是机器可执行的</dd>
+    <dd>.程序由算法和相应的数据结构组成</dd>
+    <dd>.程序侧重于实现</dd>
+  </dl>
+  <div class="chap">表示</div>
+  <dl class="nav-cont">
+    <dt>自然语言</dt>
+    <dd>优点：熟悉、方便、易理解</dd>
+    <dd>缺点：有歧义、表达繁琐冗长、计算机不能处理</dd>
+    <dt>流程图 flowchart</dt>
+    <dd>采用框图、线条和文字描述算法</dd>
+    <dd>形象、直观</dd>
+    <dd>常用工具：<a href="https://www.processon.com/login">ProcessOn<span class="iconfont icon-link"></span></a>、<a
+        href="https://www.drawio.com/">Draw io<span class="iconfont icon-link"></span></a>
+      、<a href="https://openai.com/blog/chatgpt/">ChatGPT<span class="iconfont icon-link"></span></a></dd>
+    <dd>
+      <table class="tbl-sn">
+        <caption>流程图基本组成</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>终端 terminal</td>
+          <td>程序的开始和结束；圆角矩形</td>
+        </tr>
+        <tr>
+          <td>输入 Input/输出 Output</td>
+          <td>承接输入，展示输出；平行四边形</td>
+        </tr>
+        <tr>
+          <td>过程 Process</td>
+          <td>内部计算操作；矩形</td>
+        </tr>
+        <tr>
+          <td>决策 Decision</td>
+          <td>判断True/False；菱形</td>
+        </tr>
+        <tr>
+          <td>连接</td>
+          <td>圆形</td>
+        </tr>
+        <tr>
+          <td>控制流 Control Flow</td>
+          <td>展现流程的方向；带方向的箭头</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/flowchart.png" alt="">
+        <figcaption>流程图基本组成</figcaption>
+      </figure>
+    </dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/spd4.jpg" alt="">
+        <figcaption>输入10和20求他们的和</figcaption>
+      </figure>
+    </dd>
+    <dt>伪代码 pseudocode</dt>
+    <dd>使用介于自然语言和计算机语言之间符号和文字来描述算法</dd>
+    <dd>不拘泥于语法结构，比较灵活</dd>
+    <d>基本规则</d>
+    <dd class="number">
+      <div>begin表示开始；end表示结束</div>
+      <div>input表示输入；output表示输出；print表示打印</div>
+      <div>在伪代码中，每一条指令占一行</div>
+      <div>指令后不跟任何符号</div>
+      <div>用缩进表示程序的逻辑结构</div>
+      <div>赋值语句使用 ←</div>
+      <div>注释用双斜杠//</div>
+      <div>数组：数组名[下标, 上标]；数组项：数组名[序号]</div>
+      <div>其它：...</div>
+    </dd>
+    <dd>基本结构</dd>
+    <dd class="number">
+      <div>算法名称</div>
+      <div>指令序列</div>
+      <div>输入/输出</div>
+      <div>分支选择</div>
+      <div>赋值</div>
+      <div>循环</div>
+      <div>算法结束</div>
+    </dd>
+    <dd>优点：结构性强、容易书写和理解</dd>
+    <dd>缺点：计算机不能识别、执行</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>输入3个数，打印输出最大的数</figcaption>
+        <pre>
+BEGIN
+  MAX
+  INPUT A
+  INPUT B
+  INPUT C
+  IF A > B THEN
+    MAX ← A
+  ELSE
+    MAX ← B
+  IF C > MAC THEN
+    MAX ← C
+  PRINT MAX
+END</pre>
+      </figure>
+    </dd>
+    <dt>计算机语言</dt>
+    <dd>可以被计算机执行</dd>
+    <dd>必须严格遵守语法规则</dd>
+    <dd>1. 低级语言</dd>
+    <dd>机器语言、汇编语言</dd>
+    <dd>2. 高级语言</dd>
+    <dd>VBScript、c/c++、JavaScript、java、python</dd>
+  </dl>
+  <div class="chap">基本方法</div>
+  <dl class="nav-cont">
+    <dt>枚举法 enumerate</dt>
+    <dd>也叫穷举法或试凑法</dd>
+    <dd>根据部分条件确定大致范围，逐一验证，直到所有可能情况都都验证完毕</dd>
+    <dd>时间消耗较长，好在现在计算机的运行速度足够块</dd>
+    <dd>经典案例：百钱买百鸡、五家共井、谁做的好事、冒泡排序、选择排序</dd>
+    <dd class="example-sn">百钱买百鸡 - “鸡翁一值钱五，鸡母一值钱三，鸡雏三值钱一。百钱买百鸡，问鸡翁、鸡母、鸡雏各几何？” - 数学家张丘建·《算经》</dd>
+    <dd class="qa">
+      <div>设鸡翁x只，鸡母y只，鸡雏z只，根据条件有：</div>
+      <div>5x + 3y + z/3 = 100</div>
+      <div>x + y + z = 100</div>
+      <div>消去z，得：7x + 4y = 100</div>
+      <div>变形：4*(7x/4 + y) = 100，7x应该是4的倍数，也就是说，x是4的倍数</div>
+      <div>设 x = 4t</div>
+      <div>则 y = 25 - 7t</div>
+      <div>z = 75 + 3t</div>
+      <div>&there4; 鸡翁每增四，鸡母每减七，鸡雏每益三</div>
+      <div>
+        <table class="tbl-sn txt-center">
+          <caption>可能方案</caption>
+          <tr>
+            <th>t</th>
+            <th>鸡翁</th>
+            <th>鸡母</th>
+            <th>鸡雏</th>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>25</td>
+            <td>75</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>4</td>
+            <td>18</td>
+            <td>78</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>8</td>
+            <td>11</td>
+            <td>81</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>12</td>
+            <td>4</td>
+            <td>84</td>
+          </tr>
+        </table>
+      </div>
+      <div>去掉第1组数据，后面3组都是购买方案</div>
+    </dd>
+    <dd class="tips">
+      <div>五家共井，甲二绠不足，如乙一绠；乙三绠不足，如丙一绠；丙四绠不足，如丁一绠；丁五绠不足，如戊一绠；戊六绠不足，如甲一绠，皆及。</div>
+      <div class="txt-right">《九章算数》 - 张苍、耿寿昌</div>
+    </dd>
+    <dt>迭代法 iterator</dt>
+    <dd>又称递推法、递归法</dd>
+    <dd>利用问题本身某种递推关系求解问题的一种方法</dd>
+    <dd>不断用旧值去推导新值，将复杂过程简化为一个个重复的基本过程</dd>
+    <dd class="example-sn">猴子吃桃。猴子有若干个桃子。第一天吃了一半多一个；第二天吃了剩下的一半多一个；以后每天都吃剩下的一半多一个；第七天只吃了一个。问猴子共有多少桃子</dd>
+    <dd class="qa">
+      <div>从后往前推</div>
+      <div>第七天只有1个桃子，是第六天剩下的一半少一个。所以 +1再乘2就是第6天的桃子个数：(1 + 1)*2 = 4</div>
+      <div>第六天桃子个数的是第五天的一半少1。所以第五天的桃子个数：(4 + 1)*2 = 10</div>
+      <div>同理，第四天的桃子个数：(10 + 1)*2 = 22</div>
+      <div>同理，第三天的桃子个数：(22 + 1)*2 = 46</div>
+      <div>同理，第二天的桃子个数：(46 + 1)*2 = 94</div>
+      <div>同理，第一天的桃子个数：(94 + 1)*2 = 190</div>
+    </dd>
+    <dd class="tips">
+      <div>斐波那契数列 Fibonacci sequence</div>
+      <div>F(0)=1，F(1)=1, F(n)=F(n - 1)+F(n - 2)，（n ≥ 2，n ∈ N*）</div>
+    </dd>
+    <dd class="example-sn">求斐波那契数列F(5)</dd>
+    <dd class="qa">
+      <table>
+        <tr>
+          <td>F(0)</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>F(1)</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>F(2) = F(1) + F(0)</td>
+          <td>1 + 1 = 2</td>
+        </tr>
+        <tr>
+          <td>F(3) = F(2) + F(1)</td>
+          <td>2 + 1 = 3</td>
+        </tr>
+        <tr>
+          <td>F(4) = F(3) + F(2)</td>
+          <td>3 + 2 = 5</td>
+        </tr>
+        <tr>
+          <td>F(5) = F(4) + F(3)</td>
+          <td>5 + 3 = 8</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="tips">
+      <div>阶层 Factorial</div>
+      <div>fac(n) = n*fac(n - 1)，（n ≥ 2，n ∈ N*）</div>
+      <div>fac(n) = n*(n - 1)*(n-2)*...*2*1</div>
+      <div>fac(0) = 1</div>
+    </dd>
+    <dd class="example-sn">求阶层5!</dd>
+    <dd class="qa">
+      <div>5! = 5*4*3*2*1 = 120；代码实现过程如下</div>
+      <div>0! = 1</div>
+      <div>1! = 1*0! = 1</div>
+      <div>2! = 2*1! = 2</div>
+      <div>3! = 3*2! = 3* 2= 6</div>
+      <div>4! = 4*3! = 4*6 = 24</div>
+      <div>5! = 5*4! = 5*24 = 120</div>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>n的阶层</figcaption>
+        <pre>
+function fac(n) {
+if (n == 0) {
+  return 1
+} else {
+  return n * fac(n - 1)
+}
+}          </pre>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">排序 sort</div>
+  <dl class="nav-cont">
+    <dt>冒泡排序</dt>
+    <dd>不断两两比较，把：小的数据浮上来|放到序列前面；大的数据沉下去|放到序列后面</dd>
+    <dd>视频解析 <a href="../dataStruct/media/bubbleSort.mp4" download>bubbleSort <span
+          class="iconfont icon-download"></span></a>
+    </dd>
+    <dd>更多内容，请访问 <a href="../dataStruct/sort_bubble.html">冒泡排序<span class="iconfont icon-link"></span></a></dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="../dataStruct/imgs/bubblesort.jpg" alt="">
+        <figcaption>冒泡排序</figcaption>
+      </figure>
+    </dd>
+    <dt>选择排序</dt>
+    <dd>从无序序列中把小的数据项选择出来，放到有序序列的最后面</dd>
+    <dd>视频解析 <a href="../dataStruct/media/selectSort.mp4" download>selectSort <span
+          class="iconfont icon-download"></span></a>
+    </dd>
+    <dd>更多内容，请访问 <a href="../dataStruct/sort_select.html">选择排序<span class="iconfont icon-link"></span></a></dd>
+  </dl>
+  <dd>
+    <figure class="img-sn">
+      <img src="../dataStruct/imgs/selectsort.jpg" alt="">
+      <figcaption>选择排序</figcaption>
+    </figure>
+  </dd>
+  <div class="chap">查找 search</div>
+  <dl class="nav-cont">
+    <dt>顺序查找</dt>
+    <dd>从序列的一端开始，依次将记录的关键字和给定值进行比较：如果相等，查找成功；若查找整个表后，没有匹配的记录，查找失败</dd>
+    <dd>最少查找次数1；最多查找次数n；平均查找次数|比较长度 ASL = (n + 1)/2</dd>
+    <dd>适用于数据量小的情况；当序列特别多时，不适合顺序查找</dd>
+    <dd>时间复杂度 O(n)</dd>
+    <dd>更多内容，请访问 <a href="../dataStruct/search_sequence.html">顺序查找<span class="iconfont icon-link"></span></a></dd>
+    <dt>二分查找法</dt>
+    <dd>将序列看作一个区间，用low、high，mid = (low + high)/2 标识区间的下界、上界和中间位置；mid取整除结果</dd>
+    <dd>如果给定值小于中间记录值，则在前半段继续查找，high = mid - 1，low不变</dd>
+    <dd>如果给定值大于中间记录值，则在后半段继续查找，low = mid + 1，high不变</dd>
+    <dd>如果比较到最后，low > high ，查找结束</dd>
+    <dd>适合|必须有序表</dd>
+    <dd>查找范围每次都缩小一半，所以查找效率高</dd>
+    <dd>时间复杂度 O(lgn)</dd>
+    <dd>更多内容，请访问 <a href="../dataStruct/search_binary.html">二分查找法<span class="iconfont icon-link"></span></a></dd>
+  </dl>
+  <div class="chap">练习 drill</div>
+  <dl class="nav-cont">
+    <dd class="example-sn">对n个元素进行排序，使用冒泡法进行排序时，共需要比较（）次。</dd>
+    <dd class="alpha">
+      <div>n(n - 1)</div>
+      <div>n(n + 1)</div>
+      <div>n(n - 1)/2</div>
+      <div>n(n + 1)/2</div>
+    </dd>
+    <dd class="qa">
+      <div>C</div>
+      <div>n = 1，比较次数为0；排除B、D</div>
+      <div>n = 2，比较1次，排除A</div>
+    </dd>
+    <dd class="example-sn">从n个元素中顺序查找一个元素，最多的查找次数是（）。</dd>
+    <dd class="alpha">
+      <div>1</div>
+      <div>n</div>
+      <div>n/2</div>
+      <div>lgn</div>
+    </dd>
+    <dd class="qa">
+      <div>B</div>
+    </dd>
+    <dd class="example-sn">从n个元素中顺序查找一个元素，平均查找次数是（）。</dd>
+    <dd class="alpha">
+      <div>(n - 1)/2</div>
+      <div>(n + 1)/2</div>
+      <div>n(n - 1)/2</div>
+      <div>n(n + 1)/2</div>
+    </dd>
+    <dd class="qa">
+      <div>B</div>
+    </dd>
+    <dd class="example-sn">用选择排序法对数据7、6、3、9、2从大到小排序，共需经过（）数据对调。</dd>
+    <dd class="alpha">
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>10</div>
+    </dd>
+    <dd class="qa">
+      <div>选择最小的放前面</div>
+      <div>72交换：2放前面，2 6 3 9 7</div>
+      <div>63交换：3放前面，2 3 6 9 7</div>
+      <div>97交换：7放前面，2 3 6 7 9</div>
+      <div>A</div>
+    </dd>
+    <dd class="example-sn">用折半查找法从数3、6、7、10、12、16、25、30、75中查找数据10的最少查找次数是（）。</dd>
+    <dd class="alpha">
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>7</div>
+    </dd>
+    <dd class="qa">
+      <div>第1次：(0 + 8)/2 = 4, 12 > 10, 前半段</div>
+      <div>第2次：(0 + 3)/2 = 1, 6 &lt; 10, 后半段</div>
+      <div>第3次：(2 + 3)/2 = 2, 7 &lt; 10, 后半段</div>
+      <div>第4次：(3 + 3)/2 = 3, 10 = 10,查找成功</div>
+      <div>C</div>
+    </dd>
+  </dl>
+  <div class="chap">复杂度</div>
+  <dl class="nav-cont">
+    <dd>衡量算法的效率：执行的时间快慢|时间复杂度和消耗的内存空间|空间复杂度</dd>
+    <dd>更多的关注是时间快慢，即：时间复杂度</dd>
+    <dd>两个方面是互相制约的；很多情况下，需要"以时间换空间"或"以空间换时间"</dd>
+    <dt>时间复杂度 time complexity</dt>
+    <dd>算法是运行时间</dd>
+    <dd>除了和算法的优劣有关系外，还和计算机硬件、编程语言和编译器有关</dd>
+    <dd>很难精确统计执行时间</dd>
+    <dd>关注：输入的数据量和时间的关系</dd>
+    <dd>更多信息，请访问<a href="../dataStruct/chap1.html#tc">绪论<span class="iconfont icon-link"></span></a></dd>
+    <dt>空间复杂度 space complexity</dt>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../js/nav2023.js"></script>
+</body>
+
+</html>

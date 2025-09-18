@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单数据 formData</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>表单数据</h1>
+    <span>&commat;formData</span>
+  </header>
+  <dl>
+    <dd>构建表单数据；更多信息，请访问 <a href="../web/js/event_form.html" class="link">formData</a></dd>
+    <dd class="example-sn">上传文件</dd>
+    <dd>前端 - vue</dd>
+    <dd>
+      <pre>
+&lt;script setup&gt;
+  import axios from 'axios'
+  const getFile = (e) =&gt; {
+    let file = e.target.files[0]
+    let formData = new FormData()
+    formData.append('image', file)
+    axios.post('/upload/upload/image', formData)
+      .then(res =&gt; {
+        console.log(res);
+      })
+      .catch(err =&gt; {
+        console.log(err);
+      })
+  }
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;input type="file" name="file" @change="getFile"&gt;
+&lt;/template&gt;</pre>
+    </dd>
+    <dd>后端 - API</dd>
+    <dd>
+      <pre>
+router.post('/image', upload.single('image'), (req, res) => {
+  console.log(req.file, req.body);
+  res.send({
+    err: 0,
+    msg: 'ok',
+    data: req.body,
+    file: req.file
+  })
+})      </pre>
+    </dd>
+    <dd>改进：增加上传进度指示</dd>
+    <dd>在axios请求中，添加配置项，使用进度回调onUploadProgress；为了更直观的观察效果，将开发者工具中网络Network速度由无限制改为快速3G或慢速3G</dd>
+    <dd>
+      <pre>
+axios.post('/upload/upload/image', formData, {
+  onUploadProgress: (e) => {
+    console.log(Math.floor(e.loaded / e.total * 100) + '%');
+  }
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

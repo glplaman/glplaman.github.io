@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中间件 Middleware</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>中间件</h1>
+    <span>&commat;Middleware</span>
+  </header>
+  <dl>
+    <dd>本质是一个函数function</dd>
+    <dd>通过use挂载</dd>
+    <dd>每个中间件都可以处理请求或响应</dd>
+    <dd>数量不限制，但是按照use挂载的顺序执行，流水线执行，所以上一个中间件定义的数据可以被下一个中间件获取</dd>
+    <dd>不是按照定义的顺序</dd>
+    <dd>使用next才可以执行下一个中间件</dd>
+    <dd>针对所有路由</dd>
+    <dd>
+      <pre>
+server.user(fn)</pre>
+    </dd>
+    <dd>针对特定路由</dd>
+    <dd>
+      <pre>
+server.user('/xxx',fn)</pre>
+    </dd>
+    <dd>
+      <pre>
+function mw(req,res,next){
+  console.log('i am a middleware')
+  req.str='abc'
+  next();
+}
+function foo(req,res,next){
+  console.log(req.str)
+  next();
+}
+
+server.use(mw)
+
+server.use('/login', foo)
+
+server.use(()=>{
+  console.log('hi,there.')
+})      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模块 Module</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>模块</h1>
+    <span>&commat;Module </span>
+  </header>
+  <dl>
+    <dd>
+      <div>模块通常指的是一个单独的 JavaScript 文件，其中可以包含函数、对象、类或其他可重用的代码</div>
+      <div>每个模块都有自己的作用域 - 默认情况，外部没法访问这个模块里面的方法或者属性</div>
+      <div>Node 提供了很多模块 module，采用 CommonJS 模块规范</div>
+      <div>可以通过 require 或 import 语句来引入其他模块 - 使用哪个就 require 哪个</div>
+      <div>系统模块直接引入；自定义模块使用相对路径指定</div>
+      <div>便于：协作、共享、解耦</div>
+      <div>建议</div>
+      <div>.集中管理自定义模块，如统一存放在 module 文件夹</div>
+      <div>.把公共的功能抽离成为一个单独的 .js 文件作为一个模块</div>
+      <div>区分：系统模块和自定义模块；常见的系统模块有：</div>
+      <div>. os：operate system</div>
+      <div>. fs：file system</div>
+      <div>. path：目录/路径</div>
+      <div class="tips">
+        <div>Vue 项目中推荐使用 ES6 的 export 和 import 语法 - ESM；更符合现代 JavaScript 的标准，并且有更好的静态分析和树摇优化支持</div>
+        <div>ESM（ES6 模块系统）：基于静态分析的模块系统，语法上更简洁且功能更强大。它支持命名导出、默认导出以及按需导入</div>
+        <div>CommonJS：基于动态加载的模块系统，主要用于 Node.js 环境中。它通过 require 和 module.exports 来实现模块的导入和导出</div>
+      </div>
+    </dd>
+    <dt>基本步骤</dt>
+    <dd class="sn">
+      <div>创建模块文件</div>
+      <div>定制业务逻辑</div>
+      <div>导出模块：如果要让外部访问，必须在模块里面导出：使用 exports 单独导出或 module.exports 集中导出</div>
+      <div>引入模块：需要使用文件，使用 require 引入进来</div>
+      <div>使用模块</div>
+    </dd>
+  </dl>
+  <div class="chap" id="node">Node.js</div>
+  <dl>
+    <dd>模块 oper.js</dd>
+    <dt>多个逻辑 - 单独导出</dt>
+    <dd>
+      <pre>
+exports.add = () => {
+  console.log('hi, add');
+}
+exports.dec = () => {
+  console.log('hi, dec');
+}</pre>
+      <div>等同于</div>
+      <pre>
+module.exports = {
+  add: () => {
+    console.log('hi, add');
+  },
+  dec: () => {
+    console.log('hi, dec');
+  }
+};</pre>
+      <div>引入并使用</div>
+      <pre>
+const { add, dec } = require('./oper')
+console.log(add(), dec());</pre>
+    </dd>
+    <dt>多个逻辑 - 集中导出</dt>
+    <dd>
+      <pre>
+const add = () => {
+  console.log('hi, add');
+}
+const dec = () => {
+  console.log('hi, dec');
+}
+// 暴露2个 - 对象方式
+module.exports = {
+  add,
+  dec
+};</pre>
+      <div>引入并使用</div>
+      <pre>
+const oper = require('./module/oper')
+oper.add()
+oper.dec()</pre>
+      <div>多个逻辑通常解构引入并使用 - 更加灵活，需要哪个引入哪个</div>
+      <pre>
+const { add,dec } = require('./module/oper')
+add()
+dec()</pre>
+    </dd>
+    <dt>单个逻辑</dt>
+    <dd>
+      <div>模块 admin.js</div>
+      <pre>
+const admin = {
+  name: 'glpla',
+  url: 'https://glpla.github.io',
+  email: '1942194789@qq.com',
+  date: '2024-02-28',
+  version: '1.0.0',
+  desc: 'for drill'
+}
+// 暴露1个
+module.exports = admin</pre>
+      <div>引入并使用</div>
+      <pre>
+const admin = require('./module/admin')
+console.log('admin:\t', admin);</pre>
+    </dd>
+    <dd class="tips">
+      <div>require 引入</div>
+      <div>exports 导出</div>
+      <div>module 集中导出</div>
+      <div>exports==module.exports 为 true，说明是一个方法</div>
+      <div>定制多个逻辑，解构化引入</div>
+      <div>引入时，可以省略后缀名.js</div>
+      <div>引入时，不带路径加载的是系统模块；带了路径则根据路径加载用户自定义模块</div>
+    </dd>
+  </dl>
+  <div class="chap" id="vue">Vue.js</div>
+  <dl>
+    <dt>一般导出</dt>
+    <dd>以 oper.js 为例</dd>
+    <dd>一个文件可以有一个或多个逻辑</dd>
+    <dd>
+      <div>1. 导出</div>
+      <div>1.1 单独导出；在每个变量、函数或类的定义前加上 export 关键字</div>
+      <pre>
+export const inc = () => {
+  console.log('hi, inc');
+};
+
+export const dec = () => {
+  console.log('hi, dec');
+};</pre>
+    </dd>
+    <div>1.2 集中导出；先逐一声明，在末尾统一导出</div>
+    <dd>
+      <pre>
+const inc = () => {
+  console.log('hi, inc');
+};
+
+const dec = () => {
+  console.log('hi, dec');
+};
+
+export { inc, dec };</pre>
+      <div>2. 引用</div>
+      <pre>import { inc, dec } from '@/assets/utils/test';</pre>
+      <div>按需引用</div>
+      <pre>import { inc } from '@/assets/utils/test';</pre>
+    </dd>
+    <dt>默认导出</dt>
+    <dd>
+      <div>以 inc.js 为例</div>
+      <div>一个文件只能有一个逻辑</div>
+      <div>1. 导出 - 不需要指定类型和名字</div>
+      <pre>
+export default () => {
+  console.log("hi, inc");
+};</pre>
+      <div>2. 引入 - 必须指定模块名</div>
+      <pre>import inc from '@/assets/utils/inc';</pre>
+      <div>甚至可以修改模块名 - 不建议</div>
+      <pre>import add from '@/assets/utils/inc';</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

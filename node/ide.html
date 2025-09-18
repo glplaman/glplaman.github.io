@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>环境部署</h1>
+    <span>&commat;IDE</span>
+  </header>
+  <dl>
+    <dd>基于 JavaScript 的开源、跨平台开发环境</dd>
+    <dd>Node 没有 DOM BOM</dd>
+    <dt>下载 Download</dt>
+    <dd>点击 <a href="https://nodejs.org/en/" class="link">Node.js</a> 下载；默认是 msi 格式的安装版</dd>
+    <dt>安装 Installation</dt>
+    <dd>
+      <div>安装的同时，会安装包管理工具 NPM - Node Package Management</div>
+      <div>也可以在 NPM 下安装 <a href="https://yarn.bootcss.com/" class="link">中文 yarn</a> 或 <a href="https://yarnpkg.com/"
+          class="link">英文 yarn</a>
+        作为包管理工具</div>
+      <div>查看版本 Version - 按 Win + R，输入 CMD，打开控制台查看 - 小黑屋；最新版是 22</div>
+      <pre>
+> node -v
+v18.16.1
+
+> npm -v
+9.5.1</pre>
+    </dd>
+    <dt>切换镜像源 Registry</dt>
+    <dd>
+      <div>为了加快包的下载和使用，改善使用体验，需要切换镜像源</div>
+      <div>更多信息，请访问 <a href="https://npmmirror.com/">npmmirror</a></div>
+      <div>1. 查看 get - 安装镜像源，默认是：</div>
+      <pre>
+> npm config get registry
+https://registry.npmjs.org</pre>
+      <div>2. 设置 set - 为淘宝最新镜像源 - 感谢22软工刘钰钿同学及时反馈</div>
+      <pre>> npm config set registry https://registry.npmmirror.com</pre>
+      <div>3. 再次查看，确认镜像源已更改</div>
+      <pre>
+> npm config get registry
+https://registry.npmmirror.com</pre>
+    </dd>
+    <dt>开放脚本执行权限</dt>
+    <dd>
+      <div>以管理员方式打开PowerShell</div>
+      <div>查看权限 - 默认是禁止：Restricted</div>
+      <pre>
+> get-executionpolicy
+Restricted</pre>
+      <div>修改权限为远程 remotesigned，按Y确认</div>
+      <pre>> set-executionpolicy remotesigned</pre>
+      <div>再次查看权限，确认修改成功</div>
+      <pre>
+> get-executionpolicy
+RemoteSigned</pre>
+    </dd>
+  </dl>
+  <div class="chap" id="dep">依赖 Dependencies</div>
+  <dl>
+    <dd>开发过程中，除了自己封装模块外，更多的是使用第三方|依赖</dd>
+    <dd>Node自带的NPM就极大的方便了开发人员的使用 - 需要哪个就安装哪个；不需要了就卸载掉</dd>
+    <dt>安装依赖 Install</dt>
+    <dd>
+      <div>install 可以简写为 i</div>
+      <div>默认是生产环境</div>
+      <div>1. 生产环境依赖 dependencies：项目上线后，所必须的依赖，如网络请求 axios；使用 --S / --save 命令行参数</div>
+      <pre>> npm install package_name --save</pre>
+      <pre>> npm install package_name --S</pre>
+      <div>2. 开发环境依赖 devDependencies：开发过程中需要的依赖，发布上线后，不再需要，如CSS预处理；使用 --D / --save-dev 命令行参数</div>
+      <pre>> npm install package_name --save-dev</pre>
+      <pre>> npm install package_name --D</pre>
+      <div class="tips">
+        <div>安装时，指定任何参数 --S / --save / --save-dev / D 等，会更新对应的 package.json 文件</div>
+        <div>如果不指定，则不更新；适合临时使用</div>
+        <div>npm 5+，--save 参数可以省略，默认在安装包时自动将依赖添加到 package.json 文件中的 dependencies 字段</div>
+        <div>安装时，使用命令参数 -g，可以全局安装依赖，供所有项目使用</div>
+      </div>
+    </dd>
+    <dt>移除依赖 uninstall</dt>
+    <dd>
+      <pre>> npm uninstall package_name</pre>
+    </dd>
+    <dt>查看依赖 list</dt>
+    <dd>
+      <div>当前项目|目录安装的依赖</div>
+      <pre>
+> npm list
+sfc@0.0.0 E:\WEB\sfc
++-- @vitejs/plugin-vue@5.0.4
++-- axios@1.6.8
++-- nanoid@5.0.6
++-- sass@1.72.0
++-- vite@5.1.4
+`-- vue@3.4.19</pre>
+      <div>指定命令行参数 -g，可以查看安装的全局依赖</div>
+      <pre>
+> npm list -g
+C:\Users\cnplaman\AppData\Roaming\npm
++-- cnpm@9.2.0
++-- express@4.18.2
++-- json-server@1.0.0-alpha.23
++-- nodemon@3.0.3
++-- sass@1.69.5
+`-- typescript@5.3.2</pre>
+    </dd>
+    <dt>查看依赖信息 info</dt>
+    <dd>
+      <pre>> npm info axios</pre>
+    </dd>
+    <dt>查看依赖根目录 root</dt>
+    <dd>
+      <div>当前项目依赖根目录</div>
+      <pre>
+> npm root
+C:\Users\cnplaman\Desktop\server\node_modules</pre>
+      <div>指定命令行参数-g，可以查看全局依赖根目录</div>
+      <pre>
+> npm root -g
+C:\Users\cnplaman\AppData\Roaming\npm\node_modules</pre>
+      <div>.我的电脑 → c → 用户user → 当前用户 → 应用数据appdata → roaming → npm</div>
+      <pre>C:\Users\cnplaman\AppData\Roaming\npm\node_modules</pre>
+      <img src="../../vue/imgs/server1.png" alt="">
+    </dd>
+    <dd class="tips">
+      <div>^ 表示第一位版本号不变，后面两位取最新的</div>
+      <div>~ 表示前两位不变，最后一个取最新</div>
+      <div>* 表示全部取最新</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>Promise</h1>
+  </header>
+  <dl>
+    <dt>Overview</dt>
+    <dd>
+      <div>. Promise 是 JavaScript 语言的核心特性，适用于所有支持 ES6 或更高版本的 JavaScript 环境，包括浏览器和 Node.js</div>
+      <div>. 异步编程模型：Promise 提供了一种更清晰、更可控的方式来处理异步操作的结果，相比传统的回调函数 callback，它可以更好地避免<span class="warn">回调地狱</span>问题</div>
+      <div>. 函数类型，实际上是一个对象</div>
+      <div>. 承诺在未来某个时刻可能完成并返回结果：成功或失败</div>
+      <div>. 更多信息，请查看 <a href="https://mp.weixin.qq.com/s/kvMN1ckx0tEEVa0TaZcxMQ">8个Promise高级技巧，让你在前端开发中如虎添翼！</a></div>
+      <pre>
+console.log(typeof (Promise)); //function
+//或
+console.dir(Promise);</pre>
+      <img src="./imgs/promise.png" alt="">
+    </dd>
+    <dt>Constructor</dt>
+    <dd>
+      <div>. 构造函数接收一个 <span>执行器 Executor</span> 函数作为参数</div>
+      <div>. 执行器执行成功，调用 resolve()</div>
+      <div>. 执行器执行失败，调用 reject()</div>
+      <div>1. 独立写法</div>
+      <pre>
+let promise = new Promise((resolve, reject) => {
+  resolve('fulfilled')
+  reject('rejected')
+})
+
+promise.then(res => {
+  console.log(res);
+}, err => {
+  console.log(err);
+})
+
+promise.catch(err => {
+  console.log(err);
+})
+
+promise.finally(log => {
+  console.log('ending for log');
+})</pre>
+      <div>2. 链式写法</div>
+      <pre>
+let promise = new Promise((resolve, reject) => {
+  resolve('fulfilled')
+  reject('rejected')
+})
+  .then(res => {
+    console.log(res);
+  }, err => {
+    console.log(err);
+  })
+  .catch(err => {
+    console.log(err);
+  })
+  .finally(log => {
+    console.log('ending for log');
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 延时</dd>
+    <dd>
+      <pre>
+function loadData() {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      res([1, 2, 3, 4, 5])
+    }, 3000)
+  })
+}
+
+loadData().then(res => {
+  console.log(res);
+  return res
+})</pre>
+    </dd>
+    <dt>状态</dt>
+    <dd class="sn">
+      <div>pending</div>
+      <p>. 待处理 - 调用 Promise 时，初始状态为 pending，表示还没有开始</p>
+      <pre>
+let promise = new Promise((resolve, reject) => {
+})
+
+console.log(promise);</pre>
+      <div>fulfilled</div>
+      <p>. 执行成功时，调用 resolve，将 Promise 的状态改为 fulfilled</p>
+      <pre>
+let promise = new Promise((resolve, reject) => {
+  resolve('fulfilled')
+})
+
+console.log(promise);
+
+promise.then(res => {
+  console.log(res);
+})</pre>
+      <div>rejected</div>
+      <p>. Promise 执行过程中遇到错误或者无法完成预期操作时，Promise 的状态改为 rejected</p>
+      <pre>
+let promise = new Promise((resolve, reject) => {
+  reject('rejected')
+})
+
+console.log(promise);
+
+promise.catch(err => {
+  console.log(err);
+})</pre>
+      <pre>
+let flag = false
+let promise = new Promise((resolve, reject) => {
+  flag ? resolve('data: fulfilled') : reject('data rejected');
+})
+  .then(res => {
+    console.log(res);
+  }, err => {
+    console.log('then err', err); //拒绝后，如果这里处理过了，catch() 就不再处理
+  })
+  .catch(err => {
+    console.log('catch err', err);  //如果 then() 中没有处理异常，这里就必须处理
+  })
+  .finally(log => {
+    console.log('ending for log');
+  })</pre>
+    </dd>
+    <dt>Lifetime</dt>
+    <dd class="sn">
+      <div>待定状态 pending；还没有完成；未执行；状态不确定</div>
+      <div>履行状态 fulfilled；完成且执行成功</div>
+      <div>拒绝状态 rejected；完成且执行失败；被拒绝</div>
+      <p>. 访问错误</p>
+      <p>. 网络链接失败、请求超时</p>
+      <p>. 服务器返回 404 错误或非 2xx 或 3xx 状态码</p>
+      <p>. promise链中任何一个抛出的错误</p>
+    </dd>
+    <dt>then()</dt>
+    <dd>
+      <div>. 所有Promise对象都有的方法</div>
+      <div>. 使用两个参数处理结果，包括：成功和失败；第一个参数处理成功，第二个参数处理失败或异常</div>
+      <div>1. <span class="warn">履行处理器</span> fulfillment handle - 使用 resolve() 函数表示 Promise 处理成功，给出结果</div>
+      <div>2. <span class="warn">拒绝处理器</span> rejection handle - 使用 reject() 函数表示 Promise 处理失败，给出结果</div>
+      <div>. 都是可选的；可以选择性的监听履行、拒绝或全部</div>
+      <div>. 全部监听</div>
+      <pre>
+let promise = fetch(url)
+
+promise.then(resolve => {
+    //fulfillment handle
+}, reject => {
+    //rejection handle
+})  </pre>
+      <div>. 只监听成功</div>
+      <pre>
+let promise = fetch(url)
+
+promise.then(resolve => {
+//fulfillment handle
+})  </pre>
+      <div>. 只监听拒绝</div>
+      <pre>
+let promise = fetch(url)
+
+promise.then(null, reject => {
+    //rejection handle
+})  </pre>
+    </dd>
+    <dt>catch()</dt>
+    <dd>
+      <div>. 使用 catch() 分配 <span class="warn">拒绝处理器</span> - 处理失败/捕获异常，专门处理失败的情况；相当于上面只监听拒绝的情况</div>
+      <table>
+        <caption>常见异常捕获类型</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>运行时错误</td>
+          <td>程序执行过程中发生的错误，例如除以零、数组越界、空指针引用等</td>
+        </tr>
+        <tr>
+          <td>自定义异常</td>
+          <td>自定义异常来表示特定的错误条件或业务规则违反</td>
+        </tr>
+        <tr>
+          <td>系统异常</td>
+          <td>操作系统或编程语言环境可能会抛出一些系统级别的异常，比如文件未找到、权限不足等</td>
+        </tr>
+        <tr>
+          <td>库或框架异常</td>
+          <td>使用第三方库或框架时，如果调用的方法内部出现错误，这些库或框架可能会抛出异常</td>
+        </tr>
+        <tr>
+          <td>类型异常</td>
+          <td>在强类型语言中，类型不匹配或其他类型相关的错误也可能导致异常</td>
+        </tr>
+        <tr>
+          <td>逻辑错误</td>
+          <td>逻辑错误通常不会立即导致程序崩溃；某些情况下，可以选择通过抛出异常的方式来中断程序流程，便于调试和处理 </td>
+        </tr>
+      </table>
+      <pre>
+let promise = fetch(url)
+
+promise.catch(reject => {
+    //rejection handle
+})  </pre>
+      <div>. 除了处理拒绝处理器，还可以捕获履行处理器抛出的异常；这样仅仅使用一个拒绝处理器，就可以处理所有的失败或异常</div>
+      <div>. 当在 Promise 链上使用 catch 方法时，它会捕获前面的 Promise 链中任何未处理的 rejected 错误：可以不在 then() 中处理，而在 catch() 中处理</div>
+      <div>. 注意：履行状态和拒绝状态一旦确定，就不可以更改；所以履行状态抛出的错误不能被拒绝状态捕获，只能由 catch 捕获</div>
+      <div>. 因此，通常情况下，使用 then() 处理成功，使用 catch() 处理异常，更加符合 Promise 的语义和人们的思维习惯</div>
+      <pre>
+let promise = fetch(url)
+
+promise.then(resolve => {
+  //fulfillment handle
+})
+
+promise.catch(reject => {
+    //rejection handle
+}) </pre>
+    </dd>
+    <dt>finally()</dt>
+    <dd>
+      <div>. 使用 finally() 分配 <span class="warn">解决处理器</span> - 表示处理结束，不管处理结果如何</div>
+      <div>. 可以集中处理结束后的逻辑，而不用在成功和失败中分别处理；如进度条/加载指示器的处理，不管数据加载是否成功，最后都要隐藏进度条</div>
+      <div>. 解决处理器无法使用返回，return 将被忽略；所以如果后续继续使用 Promise，则得不到结果</div>
+      <pre>
+let promise = fetch(url)
+
+promise.finally(log => {
+  console.log('log', log);
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap">Mehtods</div>
+  <dl>
+    <dt>all()</dt>
+    <dd>
+      <div>. 以数组的形式监听多个 Promise</div>
+      <div>. 返回结果数组，一一对应</div>
+      <div>. 只有所有的结果都是履行状态，结果才是履行状态；如果有一个是拒绝状态，则结果为拒绝状态</div>
+      <div>. 全部成功：只有当所有的 Promise 都 resolve（成功）时，返回的 Promise 实例才会 resolve，并将每个输入 Promise 的 resolve 值组成一个数组 </div>
+      <div>. 任意失败则整体失败：如果传入的任何一个 Promise 变为 rejected（失败），或者传入的不是一个 Promise，则 Promise.all() 立即 reject，并将第一个错误原因作为其结果
+      </div>
+      <div>. 处理相互独立的任务时能显著提高效率</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 彼此无需依赖关系，如同时请求A、B、C，可以并行请求；如首页加载：轮播图、用户信息、商品列表、活动信息等诸多内容</div>
+      <pre>
+let promises = Promise
+  .all([f0(), f1(), f2()])
+  .then(e => {
+    console.log('all ok')
+    console.dir(e)
+  })
+  .catch(err => {
+    console.log('err', err)
+  })
+  .finally(() => {
+    console.log('all done')
+  })
+
+function f0() {
+  return fetch('/utils/data/cart.json')
+    .then(res => res.json())
+}
+
+function f1() {
+  return fetch('/utils/data/form.json')
+    .then(res => res.json())
+}
+
+function f2() {
+  return fetch('/utils/data/coffee.json')
+    .then(res => res.json())
+}</pre>
+    </dd>
+    <dt>any()</dt>
+    <dd>
+      <div>. 监听多个 Promise；一旦有一个确定是履行，则返回履行状态；只有所有都被拒绝，返回才是拒绝状态</div>
+      <div>. 任何一个被成功执行即可</div>
+    </dd>
+    <dt>race()</dt>
+    <dd>
+      <div>. 监听多个 Promise；最后的状态取决于最快确定状态的哪个</div>
+      <div>. 一旦有一个确定状态，则结束；如果是履行状态，则返回履行状态；如果是拒绝状态，则返回拒绝状态</div>
+    </dd>
+    <dd class="tips">then()、catch()、finally()、all() 等等都产生一个新的 Promise</dd>
+    <dt>链式</dt>
+    <dd>
+      <div>. 有利于捕获前面履行处理器或拒绝处理器的产生的错误</div>
+      <div>. 有利于数据从上一个 Promise 传递下一个 Promise</div>
+      <pre>
+let promise = fetch(url)
+
+promise.then(res => {
+    // fulfillment handle
+}).catch(err => {
+    // rejection handle
+}).finally(log => {
+    // finally handle
+})      </pre>
+      <div>. 彼此有制约关系，如先拿到A后才可以继续请求B，然后再请求C</div>
+      <pre>
+pa()
+.then(res => {  // 拿到的是pa的结果
+  console.log(res);
+  return pb()
+})
+.then(res => {  //拿到的是pb的结果
+  console.log(res);
+  return pc()
+})
+.then(res => {  //拿到的是pc的结果
+  console.log(res);
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let flag = false
+    let promise = new Promise((resolve, reject) => {
+      flag ? resolve('data: fulfilled') : reject('data rejected');
+    })
+      .then(res => {
+        console.log(res);
+      }, err => {
+        console.log('then err', err);
+      })
+      .catch(err => {
+        console.log('catch err', err);
+      })
+      .finally(log => {
+        console.log('ending for log');
+      })
+    // let p = new Promise((resolve, reject) => {
+    //   flag ? resolve('data: fulfilled') : reject('data rejected');
+    // })
+    // p.then(
+    //   res => console.log('res', res),
+    //   err => console.log('err', err))
+    // p.catch(err => {
+    //   console.log(err);
+    // })
+    // p.finally(log => {
+    //   console.log('ending for log');
+    // })
+  </script>
+</body>
+
+</html>

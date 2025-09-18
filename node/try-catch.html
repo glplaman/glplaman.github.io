@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>异常处理 Try-Catch</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>异常处理</h1>
+    <span>&commat;Try-Catch</span>
+  </header>
+  <section>
+    <h3>简洁 Introduction</h3>
+    <ul>
+      <li>错误处理的最佳编码体验</li>
+      <li>错误处理逻辑集中在一个地方</li>
+      <li>更接近同步代码的错误处理习惯</li>
+      <li>更易于维护的错误处理逻辑</li>
+      <li>更清晰的错误定位</li>
+      <li>更直观的错误处理语法</li>
+      <li>即使简单逻辑，也提倡使用：
+        <p>代码一致性</p>
+        <p>未来扩展性</p>
+        <p>错误处理</p>
+        <p>可读性</p>
+      </li>
+    </ul>
+    <h3>语法 Syntax</h3>
+    <ul>
+      <li>try：种处理数据，如发起1个或多个请求，可以用于同步代码和异步代码</li>
+      <li>catch：捕获整个代码块中的所有错误</li>
+      <li>finally：结束控制，如执行清理操作，如关闭文件、释放资源或记录日志</li>
+      <pre>
+try {
+  // your code
+} catch (err) {
+  console.error(err);
+} finally {
+  console.log('done');
+}</pre>
+    </ul>
+    <div class="tips">
+      <div>为了显式呈现错误，使用 console.error()</div>
+      <div>其它输出使用普通 console.log()</div>
+    </div>
+    <h3>使用 Usage</h3>
+    <ul>
+      <li>同步代码；如计算、解析文件等</li>
+      <pre>
+try {
+  const data = JSON.parse('{invalid json}');
+} catch (err) {
+  console.error('解析失败:', err);
+} finally {
+  console.log('done');
+}</pre>
+      <li>异步代码 - 通常封装为函数再执行</li>
+      <pre>
+// 封装函数
+async function getData() {
+  try {
+    const res = await fetch('https://glpla.github.io/utils/data/coffee.json');
+    const json = await res.json();
+    console.log(json);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    console.log('done');
+  }
+}
+
+// 调用
+getData();</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

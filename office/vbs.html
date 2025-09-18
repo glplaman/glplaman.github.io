@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>脚本 VBScript</title>
+  <link rel="stylesheet" href="../css/common2023.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/nav2023.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/tbl.css">
+  <style>
+    header {
+      background-image: url(https://cdn.pixabay.com/photo/2017/06/04/20/23/binary-2372130_1280.jpg);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>脚本</h1>
+    <span>VBScript</span>
+  </header>
+  <div id="main-nav">
+    <a id="logo">
+      <h1>脚本</h1>
+    </a>
+    <span id="ham" class="iconfont icon-menu"></span>
+    <nav id="nav">
+      <a href="" class="nav-item" data-ind="0">概述</a>
+      <a href="" class="nav-item" data-ind="1">编程基础</a>
+      <a href="" class="nav-item" data-ind="2">函数</a>
+      <a href="" class="nav-item" data-ind="3">流程控制</a>
+      <a href="" class="nav-item" data-ind="4">过程</a>
+      <a href="" class="nav-item" data-ind="5">函数</a>
+      <a href="" class="nav-item" data-ind="6">事件</a>
+      <a href="" class="nav-item" data-ind="7">实验</a>
+    </nav>
+  </div>
+  <dl class="nav-cont">
+    <dt>发展历程</dt>
+    <dd class="number">
+      <div>机器语言</div>
+      <p>使用二进制0 1</p>
+      <p>计算机可以直接识别</p>
+      <p>执行效率最高</p>
+      <p>用户可读性差</p>
+      <p>架构不同，指令系统也不同</p>
+      <div>汇编语言</div>
+      <p>使用符号代替指令</p>
+      <p>可读性得到增强</p>
+      <p>计算机不识别，需要汇编翻译代码</p>
+      <p>依赖硬件、可移植性不好</p>
+      <div>高级语言</div>
+      <p>接近自然语言，可读性好</p>
+      <p>不依赖计算机硬件；可移植性好</p>
+      <p>需要翻译或解释</p>
+      <p>执行效率相对低</p>
+      <p>C/C++、Java、Python、JavaScript...</p>
+      <p>早期多使用结构化程序设计，现在多使用面向对象的程序设计 OOP - Object-Oriented Programming</p>
+    </dd>
+    <dd class="tips">
+      <div>Fortran：第一个高级语言；1954年问世</div>
+    </dd>
+    <dt>未来程序设计语言特点</dt>
+    <dd class="number">
+      <div>简单</div>
+      <div>面向对象</div>
+      <p>对象</p>
+      <p>类</p>
+      <p>封装</p>
+      <p>继承</p>
+      <div>安全</div>
+      <div>平台无关</div>
+      <p>移植性好</p>
+    </dd>
+    <dt>VBScript</dt>
+    <dd>解释型脚本语言：由IE浏览器解释执行 - VBScript is supported <span class="warn">only</span> by browser Internet Explorer</dd>
+    <dd>可以作为客户端编程语言；也可以作为服务器端编程语言 - both server-side and client-side scripting language</dd>
+    <dd>不是默认的编程语言 - not a default scripting language</dd>
+    <dd>具备面向对象的特性，但不是面向对象编程语言 - not a true object-oriented scripting language</dd>
+    <dd>使用标记&lt;script&gt;&lt;/script&gt;嵌入到HTML</dd>
+    <dd>常见工具</dd>
+    <dd class="number">
+      <div>记事本</div>
+      <p>. 大佬级别</p>
+      <p>. 需要修改文件后缀名.txt为.vbs才能被浏览器识别</p>
+
+      <div>SPD2007</div>
+      <p>. 可视化开发</p>
+      <div>Microsoft Script Editor</div>
+      <p>. SPD内置脚本编辑器</p>
+    </dd>
+    <dd>更多信息，请访问 <a href="https://www.educba.com/javascript-vs-vbscript/">javascript vs vbscript<span
+          class="iconfont icon-link"></span></a>、<a href="https://www.tiobe.com/tiobe-index/">Tiobe Index<span
+          class="iconfont icon-link"></span></a></dd>
+    <dt>环境配置</dt>
+    <dd>VBScript仅限<span class="warn">IE8</span>以下支持，所以要确保或设置IE浏览器的版本为8 - 太高级的版本不行哦</dd>
+    <dd>方案1：预览网页的时候，按F12，点击"设置" → "F12开发人员工具" → "仿真"，选择文档模式为"8"，用户代理字符串选择Internet Explorer 8</dd>
+    <dd>方案2：每次新建文件，都在&lt;head&gt;区添加IE8的兼容代码 - <span class="warn">推荐</span></dd>
+    <dd>
+      <figure class="code">
+        <figcaption>兼容IE8的代码</figcaption>
+        <pre>&lt;meta http-equiv="X-UA-Compatible" content="IE=8,chrome="&gt;</pre>
+      </figure>
+    </dd>
+    <dt>基本规则</dt>
+    <dd class="number">
+      <div>所有标识符Identifier均为英文</div>
+      <div>不区分大小写 - not case sensitive</div>
+      <p>关键字|保留字|系统函数等采用<span class="warn">大驼峰</span>，如Dim、For、While、Do、InputBox、MsgBox</p>
+      <p>其它标识符采用小写，如age、gender</p>
+      <div>每行可以放多条语句；同一行多条语句使用:分隔；为了提高可读性，建议一行只放一条语句</div>
+      <div>注释：单引号'或Rem</div>
+    </dd>
+    <dd class="example-sn" id="demo1">第一个VBS程序：世界你好[例7-1/P308]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>第一个VBS程序：完整版</figcaption>
+        <pre>
+&lt;!DOCTYPE html PUBLIC ...>
+&lt;html xmlns="http://www.w3.org/1999/xhtml">
+    &lt;head>
+      &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;
+      &lt;meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"&gt;
+      &lt;title&gt;你好世界&lt;/title&gt;
+    &lt;/head>
+    &lt;body>
+        &lt;script type="text/vbscript"&gt;
+            document.write("hi, there" & "&lt;br&gt;")
+        &lt;/script&gt;
+    &lt;/body>
+&lt;/html>
+</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>请在"代码"视图中编写脚本</div>
+      <div>脚本可以放在任何地方；函数的声明在&lt;head&gt;，业务的处理在&lt;body&gt;</div>
+      <div>编辑中过程请注意查看代码提示</div>
+      <div>后续所有案例都基于此案例的模板</div>
+      <span class="iconfont icon-warning"></span>
+    </dd>
+  </dl>
+  <div class="chap">编程基础 Basic</div>
+  <dl class="nav-cont">
+    <dt>导引</dt>
+    <dd>有什么样的数可以使用？</dd>
+    <dd>如何输入|获取一个数？</dd>
+    <dd>如何输出|显示一个数？</dd>
+    <dd>数和数之间的关系是什么？</dd>
+    <dd>数和数之间有什么操作？</dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/data.drawio.png" alt="">
+        <figcaption>数</figcaption>
+      </figure>
+    </dd>
+    <dt>数据类型 Data Type</dt>
+    <dd>只有一种数据类型：Variant</dd>
+    <dd>根据使用的方式、场合、上下文环境，可以包含不同类别的信息，称为子类型：数字、字符串、日期、时间</dd>
+    <dd>自动类型转换</dd>
+    <dd>是所有函数的返回类型</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>子类型</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Empty</td>
+          <td>未初始化；0或''</td>
+        </tr>
+        <tr>
+          <td>Null</td>
+          <td>空</td>
+        </tr>
+        <tr>
+          <td>Boolean</td>
+          <td>布尔型；真True、假False</td>
+        </tr>
+        <tr>
+          <td>Byte</td>
+          <td>字节型；0-255的整数<br>1个字节8位<br>最小的数，全0：00000000，即：0<br>最大的数，全1：11111111，即：255</td>
+        </tr>
+        <tr>
+          <td>Integer</td>
+          <td>整型；2个字节的整数；-32768到32767<br>日常使用较多</td>
+        </tr>
+        <tr>
+          <td>Long</td>
+          <td>整型；4个字节的整数；-2147483648到2147483647</td>
+        </tr>
+        <tr>
+          <td>Single</td>
+          <td>单精度浮点数；带符号<br>3.14</td>
+        </tr>
+        <tr>
+          <td>Double</td>
+          <td>双精度浮点数；带符号<br>3.1415...</td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td>日期型；100.1.1到9999.12.31<br>日常使用较多<br>#2023-12-16#</td>
+        </tr>
+        <tr>
+          <td>String</td>
+          <td>字符串型<br>日常使用较多<br>"hi, there"</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>变量 Variable</dt>
+    <dd>变量用来标识内存中某个存储单元，以方便程序使用 - 楼栋的房号</dd>
+    <dd>可以给房间安排老师或同学居住 - 赋值；一个房间可以住张三，也可以住李四，但同时只能住1个人</dd>
+    <dd>也有查看|获取|访问房间里住了谁</dd>
+    <dd>一个变量包括3个要素：变量名、数据类型和值；这个房间的属性：房间号是多少？住的是男生还是女士？住的是谁？</dd>
+    <dd class="number">
+      <div>声明变量 Declaration</div>
+      <p>使用Dim - Dimension 声明一个变量</p>
+      <p>多个变量使用逗号,分隔</p>
+      <p>变量必须先声明再赋值；不支持声明的同时马上赋值</p>
+      <p>可以直接使用变量而不声明；不建议</p>
+      <div>变量赋值 Assignment</div>
+      <p>使用等号=，将右边的值或另外一个变量对应的值赋值给变量</p>
+      <p>可以声明的时候直接赋值；也可以先声明后面再根据需要赋值</p>
+      <div>变量名命名规则 Rules</div>
+      <p>第一个字符必须是字母；其它是字母、数字和下划线组成</p>
+      <p>不能包括小数点、空格</p>
+      <p>不能使用系统关键字</p>
+      <p>长度不超过255</p>
+      <div>变量的作用域 Scope</div>
+      <p>根据变量声明的位置，变量起作用的区域/程序的执行空间可分为：局部/过程作用域和脚本级/全局作用域；相应的变量是局部变量或全局变量</p>
+      <div>变量的生存周期 Lifetime</div>
+      <p>同变量的作用域相关</p>
+      <p>局部变量：过程开始，变量出现；过程结束，变量消失</p>
+      <p>全局变量：脚本开始，变量出现；脚本结束，变量消失</p>
+      <div>标量变量</div>
+      <p>只有一个值</p>
+      <div>数组变量</div>
+      <p>多个值</p>
+      <p>声明的时候，使用括号()和长度表示</p>
+      <p>数组变量可以是一维和多维；维度使用逗号,分隔</p>
+      <p>使用的时候，使用索引表示某个元素；第一个元素的索引是0，最后一个元素的索引是长度-1</p>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>变量使用</figcaption>
+        <pre>
+Dim age ' 声明一个变量
+Dim name, addr ' 声明多个变量
+age = 18 ' 给age赋值为18
+Dim students(88) ' 声明一个长度是 88+1 的一维数组
+students(0) = "23011100" ' 给第1个变量赋值
+students(87) = "23011187" ' 给倒数第2个变量赋值
+students(88) = "23011188" ' 给最后1个变量赋值
+Dim arr(2,3) ' 声明一个3行4列的二维数组</pre>
+      </figure>
+    </dd>
+    <dd class="example-sn" id="demo2">根据实际情况声明并赋值您的学号、姓名、年级、性别和出生日期并显示write到页面或使用弹出消息框msgBox显示</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>核心代码</figcaption>
+        <pre>
+'变量声明
+dim sn, name, grade, gender, birth
+
+'变量赋值
+sn = 20231021
+name = "cnplaman"
+grade = "2023级播音主持"
+gender = "male"
+birth=#2020-12-18#
+
+'变量使用
+document.write("sn: " & sn & "&lt;br>")
+document.write("name: " & name & "&lt;br>")
+document.write("grade: " & grade & "&lt;br>")
+document.write("gender: " & gender & "&lt;br>")
+document.write("birth: " & birth & "&lt;br>")        </pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>和变量相关的有：</div>
+      <div>变量的名字、变量的数据类型、变量的值、变量的作用域、变量的类型和变量的生存周期</div>
+    </dd>
+    <dt>常量 Const</dt>
+    <dd>在程序执行期间，值不发送变化</dd>
+    <dd class="warn">常量必须声明的时候立即赋值</dd>
+    <dd class="number">
+      <div>普通常量</div>
+      <p>也称文字常量；无需定义即可直接使用</p>
+      <p>数值常量，如12、字符串常量，如"hi, there"、日期常量#2023-12-16#</p>
+      <div>符号常量</div>
+      <p>使用标识符表示一个常量</p>
+      <p>包括：预定义/系统符号常量和自定义符号常量</p>
+      <p>自定义符号常量使用Const关键字声明</p>
+      <P>通常使用全部大写，以便和普通变量名、保留字区分</P>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>常量使用</figcaption>
+        <pre>
+Const PI = 3.14 ' 声明数值型符号常量PT并赋值；3.14是可以直接使用的普通常量
+Const SITE = "glpla.github.io" ' 声明字符串型符号常量SITE并赋值；"glpla.github.io"是可以直接使用的普通常量
+Const DEADLINE = #1-16-2024# ' 声明日期型符号常量DEADLINE并赋值；需使用#包裹日期</pre>
+      </figure>
+    </dd>
+    <dt>运算符 Operator</dt>
+    <dd>1. 算术运算符 Arithmetic Operator</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>算术运算符</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>^</td>
+          <td>乘方</td>
+        </tr>
+        <tr>
+          <td>* /</td>
+          <td>乘 除</td>
+        </tr>
+        <tr>
+          <td>\</td>
+          <td>整除</td>
+        </tr>
+        <tr>
+          <td>MOD</td>
+          <td>取模；也叫取余(数)</td>
+        </tr>
+        <tr>
+          <td>+ -</td>
+          <td>加 减</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="tips">
+      <div>优先级：先乘* 除/，再整除\ Mod，后加+ 减-</div>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>算术运算符</figcaption>
+        <pre>
+document.write(5 MOD 3 & "&lt;br>") ' 2
+document.write(5 / 3 & "&lt;br>") ' 1.66666666666667
+document.write(5 \ 3 & "&lt;br>") ' 1
+document.write(5 ^ 3 & "&lt;br>") ' 125
+1 + 2 * 14 Mod 17 \ 6 / 2 ' 4</pre>
+      </figure>
+    </dd>
+    <dd>2. 连接运算符 Concatenation Operator</dd>
+    <dd>连接字符串的操作</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>连接运算符</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>&</td>
+          <td>默认按照字符串拼接运算<br>将操作数转换为字符串再拼接；推荐使用<br>excel中连接单元格的值</td>
+        </tr>
+        <tr>
+          <td>+</td>
+          <td>默认按照算术相加运算<br>如果两个操作数都是字符串，则是字符串拼接<br>如果一个操作数是数字，一个操作数是非数字，则尝试将非数字操作数转换为数字再相加；如果无法转换，则提示"类型不匹配"</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>连接运算符</figcaption>
+        <pre>
+document.write("5" & "3" & "&lt;br>") ' 53
+document.write(5 & 3 & "&lt;br>") ' 53
+document.write("5" & 3 & "&lt;br>") ' 53
+document.write(5 & "3" & "&lt;br>") ' 53
+
+document.write(5 + 3 & "&lt;br>") ' 8
+document.write("5" + "3" & "&lt;br>") ' 53
+document.write("5" + 3 & "&lt;br>") ' 8
+document.write(5 + "3" & "&lt;br>") ' 8</pre>
+      </figure>
+    </dd>
+    <dd>3. 比较运算符 Comparison Operator</dd>
+    <dd>也叫关系运算符</dd>
+    <dd>结果是真或假</dd>
+    <dd>所有的比较运算符优先级都相同；按照从左向右运算</dd>
+    <dd>通常比较数值大小；也可以逐位按照ASCII码的值比较字符串</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>比较运算符</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>&lt;</td>
+          <td>小于</td>
+        </tr>
+        <tr>
+          <td>&lt;=</td>
+          <td>小于等于</td>
+        </tr>
+        <tr>
+          <td>&gt;</td>
+          <td>大于</td>
+        </tr>
+        <tr>
+          <td>&gt;=</td>
+          <td>大于等于</td>
+        </tr>
+        <tr>
+          <td>=</td>
+          <td>等于</td>
+        </tr>
+        <tr>
+          <td>&lt;&gt;</td>
+          <td>不等于</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>比较运算符</figcaption>
+        <pre>
+document.write((5 > 3) & "&lt;br>") ' True
+document.write((5 &lt; 3) & "&lt;br>") ' False
+document.write((5 = 3) & "&lt;br>") ' False
+document.write((5 &lt;> 3) & "&lt;br>") ' True</pre>
+      </figure>
+    </dd>
+    <dd>4. 逻辑运算符 Logical Operator</dd>
+    <dd>运算结果为真或假</dd>
+    <dd>优先级：Not > And > OR</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>逻辑运算符</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>And</td>
+          <td>与；全为真，结果才为真</td>
+        </tr>
+        <tr>
+          <td>OR</td>
+          <td>或；有一个为真，结果就为真</td>
+        </tr>
+        <tr>
+          <td>Not</td>
+          <td>非；非真为假；非假为真</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>逻辑运算符</figcaption>
+        <pre>
+document.write((true and true) & "&lt;br>") ' True
+document.write((true and false) & "&lt;br>") ' False
+document.write((false and false) & "&lt;br>") ' False
+document.write((true or false) & "&lt;br>") ' True
+document.write((true or true) & "&lt;br>") ' True
+document.write((false or false) & "&lt;br>") ' False
+</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>and和or具备短路特性</div>
+      <div>and运算中，如果第一项是false，则结果为false</div>
+      <div>or运算中，如果第一项是true，则结果为true</div>
+    </dd>
+    <dd>5. 赋值运算符 Assigning Operator</dd>
+    <dd>优先级最低</dd>
+    <dd>注意和比较运算符=的使用区别</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>赋值运算符</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>=</td>
+          <td>将表达式的值赋值给变量</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>表达式 Expression</dt>
+    <dd>使用运算符将常量、变量或函数连接起来就是表达式</dd>
+    <dd>表达式的结果是一个值</dd>
+    <dd>不可以使用上标或下标</dd>
+    <dd>运算符不能省略</dd>
+    <dt>优先级 Priority</dt>
+    <dd>多个运算符参与运算的先后顺序</dd>
+    <dd>优先级：() > 算术运算符 > 连接运算符 > 比较运算符 > 逻辑运算符 > 赋值运算符</dd>
+    <dd>所有运算符参与的运算中，括号()的优先级最高</dd>
+    <dd class="tips">
+      <div>合理使用括号()区分逻辑</div>
+    </dd>
+  </dl>
+  <div class="chap">函数 Function</div>
+  <dl class="nav-cont">
+    <dt>系统函数</dt>
+    <dd>内置函数；标准函数</dd>
+    <dd>分：输入输出函数、转换函数、字符串函数、数学函数、日期时间函数</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>输入输出函数</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>输入语句</td>
+          <td>InputBox()；获取用户输入</td>
+        </tr>
+        <tr>
+          <td>输出语句</td>
+          <td>Document.Write()；页面上直接显示</td>
+        </tr>
+        <tr>
+          <td>输出语句</td>
+          <td>MsgBox()；页面上弹窗显示</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>转换函数 - Convert</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Asc(string)</td>
+          <td>ASCII；字符串首字符的ASCII码</td>
+        </tr>
+        <tr>
+          <td>CStr(digit)</td>
+          <td>string；转换为字符串</td>
+        </tr>
+        <tr>
+          <td>CInt(digit)</td>
+          <td>integer；转换为整型；小数部分四舍五入</td>
+        </tr>
+        <tr>
+          <td>CLng(digit)</td>
+          <td>long；转换为长整型；小数部分四舍五入</td>
+        </tr>
+        <tr>
+          <td>CSng(digit)</td>
+          <td>single；转换为单精度</td>
+        </tr>
+        <tr>
+          <td>CDbl(digit)</td>
+          <td>double；转换为双精度</td>
+        </tr>
+        <tr>
+          <td>Chr(digit)</td>
+          <td>char；将ASCII码转换为字符</td>
+        </tr>
+        <tr>
+          <td>Fix(digit)</td>
+          <td>fix；舍弃小数部分；不四舍五入</td>
+        </tr>
+        <tr>
+          <td>Val(string)</td>
+          <td>value；将字符串转换为数值</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>转换函数示例</figcaption>
+        <pre>
+Asc("ABC") ' 65
+CStr(68) ' "68"
+CInt(256.57) ' 257
+CLng(726.2) ' 726
+CSng(89.541117) ' 89.54112
+CDbl(1234.5678914) ' 1234.5678914
+Chr(65) ' "A"
+Fix(12.69) ' 12
+Val("2023") ' 2023</pre>
+      </figure>
+    </dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>字符串函数</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        <tr>
+          <td>InStr(start, string1, string2)</td>
+          <td>在string1中，从start开始查找string2，返回其出现的索引/位置；默认从1开始</td>
+        </tr>
+        <tr>
+          <td>LCase(string)</td>
+          <td>lowercase；转换为小写</td>
+        </tr>
+        <tr>
+          <td>UCase(string)</td>
+          <td>uppercase；转换为大写</td>
+        </tr>
+        <tr>
+          <td>Left(string, length)</td>
+          <td>从左边截取长度length的字符串</td>
+        </tr>
+        <tr>
+          <td>Right(string, length)</td>
+          <td>从右边截取长度length的字符串</td>
+        </tr>
+        <tr>
+          <td>Len(string)</td>
+          <td>字符串的字符个数/长度</td>
+        </tr>
+        <tr>
+          <td>Trim(string)</td>
+          <td>去除字符串两侧/左右的空格</td>
+        </tr>
+        <tr>
+          <td>LTrim(string)</td>
+          <td>去除字符串左侧/前面的空格</td>
+        </tr>
+        <tr>
+          <td>RTrim(string)</td>
+          <td>去除字符串右侧/后面的空格</td>
+        </tr>
+        <tr>
+          <td>Mid(string, start, length)</td>
+          <td>在string中，从start开始截取长度length的字符串；如果没有长度length，则截取到串尾</td>
+        </tr>
+        <tr>
+          <td>String(number, character)</td>
+          <td>重复字符串中第一个字符</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>字符串函数示例</figcaption>
+        <pre>
+InStr("ABabc","ab") ' 3；位置从1开始！！！
+LCase("AbCd") ' abcd
+LCase("AbCd") ' ABCD
+Left("abcd", 2) ' ab
+Right("abcd", 2) ' cd
+Len("ABCD") ' 4
+Trim(" AB ") ' "AB"
+LTrim(" AB ") ' "AB "
+RTrim(" AB ") ' " AB"
+Mid("hi,there.", 3, 2)',t
+Mid("hi,there.", 3)',there.
+String(3, "abc") ' aaa
+String(3, "A") ' A</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>连续空格最终只会被渲染为1个空格</div>
+      <div>需要多个空格请使用实体符号&amp;nbsp;</div>
+    </dd>
+    <dd class="example-sn" id="demo3">将英文用户名转换成大写，并求其姓和名；假设姓和名以.分隔[例7-3/P318]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>参考代码</figcaption>
+        <pre>
+Dim name, uNmae, ind, first, last
+name = "gl.cn"
+uName = UCase(name)
+MsgBox(uName)
+ind = InStr(uName, ".")
+MsgBox(ind)
+first = Left(uName, ind - 1)
+MsgBox(first)
+last = Mid(uName, ind + 1)
+MsgBox(last)</pre>
+      </figure>
+    </dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>数学函数</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Int(digit)</td>
+          <td>取整；取不大于数的整数；不会四舍五入</td>
+        </tr>
+        <tr>
+          <td>Round(digit, n)</td>
+          <td>数的四舍五入；保留n位小数</td>
+        </tr>
+        <tr>
+          <td>Sqr(digit)</td>
+          <td>square root；数的平方根</td>
+        </tr>
+        <tr>
+          <td>Abs(digit)</td>
+          <td>absolute；数的绝对值</td>
+        </tr>
+        <tr>
+          <td>Sgn(digit)</td>
+          <td>sign；数的符号；正数1；负数-1；0为0</td>
+        </tr>
+        <tr>
+          <td>Rnd()</td>
+          <td>random；0-1之间的随机数，不包括1；半开区间</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>数学函数示例</figcaption>
+        <pre>
+Int(33.6)  ' 33
+Int(-33.6)  ' 34
+Round(1.35, 1)  ' 1.4
+Round(1.239, 2)  ' 1.24
+Sqrt(16)  ' 4
+Abs(-20.5)  ' 20.5
+Sgn(3)  ' 1
+Sgn(0)  ' 0
+Sgn(-3)  ' -1
+Rnd() '随机小数
+Int(Rnd()*10) ' 随机生成0-10之间的数字；刷新页面不会重新生成，需要重新打开一个浏览器才会更新</pre>
+      </figure>
+    </dd>
+    <dd class="example-sn" id="demo4">随机生成两个1-100的随机数，求其和[例7-4/P320]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>随机数求其和</figcaption>
+        <pre>
+dim rnd1, rnd2, sum
+rnd1 = int(rnd()*100)
+rnd2 = int(rnd()*100)
+document.write("第1个数字是" & rnd1 & "&lt;br>")
+document.write("第2个数字是" & rnd2 & "&lt;br>")
+sum = rnd1 + rnd2
+document.write("和是" & sum & "&lt;br>")        </pre>
+      </figure>
+    </dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>日期时间函数 - 当前系统</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Date()</td>
+          <td>日期；默认格式：<span class="warn">日/月/年</span> 年/月/日</td>
+        </tr>
+        <tr>
+          <td>Year(date)</td>
+          <td>年；4位：YYYY</td>
+        </tr>
+        <tr>
+          <td>Month(date)</td>
+          <td>月；1-12</td>
+        </tr>
+        <tr>
+          <td>Day(date)</td>
+          <td>天数；1-31</td>
+        </tr>
+        <tr>
+          <td>Weekday(date)</td>
+          <td>星期几；1-7：星期天-星期六</td>
+        </tr>
+        <tr>
+          <td>Time()</td>
+          <td>时间；时:分:秒</td>
+        </tr>
+        <tr>
+          <td>Hour(time)</td>
+          <td>小时；0-23</td>
+        </tr>
+        <tr>
+          <td>Minute(time)</td>
+          <td>分钟；0-59</td>
+        </tr>
+        <tr>
+          <td>Second(time)</td>
+          <td>秒；0-59</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>日期时间函数示例</figcaption>
+        <pre>
+Date() ' 2023/12/5
+Time() ' 22:55:32
+Day(#2023-12-04#) '4
+Month(#2023-12-04#) ' 12
+Year(#2023-12-04#) ' 2023
+Weekday(#2023-12-04#) ' 2
+Hour(#22:58:12 PM#) ' 22
+Minute(#22:58:12 PM#) ' 58
+Second(#22:58:12 PM#) ' 12</pre>
+      </figure>
+    </dd>
+    <dd class="example-sn" id="demo5">输出当前日期、时间和星期[例7-5/P321]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>输出当前日期、时间和星期</figcaption>
+        <pre></pre>
+      </figure>
+    </dd>
+    <dt>自定义函数</dt>
+    <dd>见"过程"一节的function</dd>
+  </dl>
+  <div class="chap">流程控制 Flow</div>
+  <dl class="nav-cont">
+    <dt>顺序结构</dt>
+    <dd>按程序中语句的先后顺序逐条执行</dd>
+    <dd class="example-sn" id="demo6">给定1个两位数，交换个位数和十位数，并把结果显示在页面上[例7-6/P322]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>交换个位数和十位数</figcaption>
+        <pre>
+dim digit, tmp0, tmp1, res
+digit=int(inputbox("请输入1个数字：1-100"))	
+document.write("输入的数字是" & digit & "&lt;br>")	
+tmp0 = digit\10
+tmp1 = digit mod 10	
+document.write("数字的个位是" & tmp0 & "&lt;br>")
+document.write("数字的十位是" & tmp1 & "&lt;br>")
+res = int(tmp1 & tmp0)
+document.write("个位和十位转换后的数字是" & res & "&lt;br>")        </pre>
+      </figure>
+    </dd>
+    <dd class="example-sn">输入用户名，使用MsgBox输出用户名[例7-7/P324]</dd>
+    <dt>选择结构</dt>
+    <dd class="number">
+      <div>条件语句 If</div>
+      <p>根据条件判断程序的走向</p>
+      <p>使用End If结束选择逻辑</p>
+      <figure class="code">
+        <figcaption>If</figcaption>
+        <pre>
+If 条件 Then
+    语句
+End If</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>If-Else</figcaption>
+        <pre>
+If 条件 Then
+    语句
+Else
+    语句
+End If</pre>
+      </figure>
+      <p class="example-sn" id="demo7">给定2个数，判断较大数并显示出来[例7-8/P325]</p>
+      <p class="example-sn">根据输入的年龄判断是否成年</p>
+      <figure class="code">
+        <figcaption>参考代码</figcaption>
+        <pre>
+Dim age
+age = InputBox("请输入您的年龄")
+If age > 18 Then
+    Document.write("成年")
+Else
+    Document.write("未成年")
+End If</pre>
+      </figure>
+      <div>多分支语句 Select-Case</div>
+      <p>根据表达式的值判断程序的走向；通常需要指定默认判断：case else</p>
+      <p>使用end select结束选择逻辑</p>
+      <figure class="code">
+        <figcaption>Select-Case</figcaption>
+        <pre>
+Select Case value
+Case value1
+    语句
+Case value2
+    语句
+Case value3
+    语句
+Case else
+    语句
+End Select</pre>
+      </figure>
+      <p class="example-sn" id="demo8">根据输入的成绩查询档次；使用弹出消息框MsgBox()给出结果[例7-10/P326、例7-11/P327]</p>
+      <figure class="code">
+        <figcaption>参考代码</figcaption>
+        <pre>
+Dim score
+score = InputBox("请输入您的成绩")
+Select Case score\10
+Case 6
+    MsgBox("及格")
+Case 7
+    MsgBox("中")
+Case 8
+    MsgBox("良")
+Case 9
+    MsgBox("优")
+Case Else
+    MsgBox("不及格")
+End Select</pre>
+      </figure>
+    </dd>
+    <dt>循环结构</dt>
+    <dd>反复执行多次的逻辑</dd>
+    <dd class="number">
+      <div>For-Next</div>
+      <p>按指定次数执行语句块</p>
+      <p>使用一个计数器充当循环变量；每执行1次，循环变量按照一定步长增加会减少</p>
+      <p>步长可以为负 - 递减循环，也可以为正 - 递增循环；默认是1</p>
+      <p>超过终值，循环结束</p>
+      <p>可以嵌套实现多重循环</p>
+      <figure class="code">
+        <figcaption>For-Next</figcaption>
+        <pre>
+For 变量 = 初值 To 终值 [Step 步长]
+    循环体语句
+Next</pre>
+      </figure>
+      <p class="example-sn">比较最终成绩；7个成绩，去掉最高分和最低分，其它求平均[例7-12/P329]</p>
+      <p class="example-sn" id="demo9">输出九九乘法表[例7-13/P330]</p>
+      <p>
+      <figure class="code">
+        <figcaption>99乘法表</figcaption>
+        <pre>
+dim i, j
+for i = 1 to 9
+    for j = 1 to i
+        document.write( i & "x" & j & " = " & i*j & "&nbsp;&nbsp;&nbsp;")
+    next
+    document.write("&lt;br>")
+next
+          </pre>
+      </figure>
+      </p>
+      <p class="example-sn" id="demo10">求s = 1 + 2 + 3 + ... + 10 的值[例7-14/P331]</p>
+      <p class="example-sn">求s = 1 x 2 x 3 x ... x 10 的值[例7-15/P331]</p>
+      <div>Do-Loop</div>
+      <p>按指定条件执行语句块</p>
+      <figure class="code">
+        <figcaption>Do While-Loop：先判断再执行</figcaption>
+        <pre>
+Do While 条件
+    循环体语句
+Loop</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>Do-Loop While：先执行再判断</figcaption>
+        <pre>
+Do
+    循环体语句
+Loop While 条件</pre>
+      </figure>
+      <p class="example-sn">检查用户输入密码是否正确；错误超过3次，结束程序[例7-15/P332]</p>
+    </dd>
+  </dl>
+  <div class="chap">过程 Procedure</div>
+  <dl class="nav-cont">
+    <dd>关键字：sub</dd>
+    <dd>完成某种特殊业务逻辑的一组独立的代码片段</dd>
+    <dd>任务分解</dd>
+    <dd>代码重用</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>定义Sub - 通常放在&lt;head&gt;</figcaption>
+        <pre>
+Sub 过程名[(参数)]
+  过程体
+End Sub</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>调用Sub - 在&lt;body&gt;调用|使用</figcaption>
+        <pre>
+Call Sub 过程名[(参数)]</pre>
+      </figure>
+    </dd>
+    <dd class="example-sn">封装过程[例7-17/P334]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>定义Sub - 通常放在&lt;head&gt;</figcaption>
+        <pre>
+&lt;script type=“text/VBScript”>
+  Sub putname(name)		       '定义过程
+      Document.Write(name & ", 您好！&lt;BR>")
+  End Sub
+&lt;/script></pre>
+      </figure>
+      <figure class="code">
+        <figcaption>调用Sub - 在&lt;body&gt;调用|使用</figcaption>
+        <pre>
+&lt;script type=“text/VBScript”>
+  Dim name
+  name = InutBox("请输入姓名：")
+  Call putname(name)		          '调用过程
+&lt;script></pre>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">Function</div>
+  <dl class="nav-cont">
+    <dd>关键字：function</dd>
+    <dd>Function有返回值；Sub没有返回值</dd>
+    <dd>Function必须提供()，即使参数为空</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>定义Function - 通常放在&lt;head&gt;</figcaption>
+        <pre>
+Function 函数名([参数])
+  函数体
+End Function</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>调用Function - 在&lt;body&gt;调用|使用</figcaption>
+        <pre>
+val = Function 函数名([参数])</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>[ ]：表示可选的部分；可以有，也可以没有</div>
+      <div>多个参数以逗号分隔</div>
+    </dd>
+    <dd class="example-sn">封装函数[P335]</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>在过程中使用函数</figcaption>
+        <pre>
+&lt;script type=“text/VBScript”>
+  Sub ConvertTemp()
+      temp = InputBox("请输入华氏温度。", 1)
+      MsgBox "温度为 " & Celsius(temp) & " 摄氏度。"
+  End Sub
+
+  Function Celsius(fDegrees)
+      Celsius = (fDegrees - 32) * 5 / 9
+  End Function
+&lt;/script>
+</pre>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">事件 Events</div>
+  <dl class="nav-cont">
+    <dt>鼠标事件</dt>
+    <dd>鼠标事件的发生顺序：</dd>
+    <dd>1. MouseMove：鼠标移动时，会连续触发MoouseMove事件</dd>
+    <dd>2. MouseDown：当鼠标按下时发生MouseDown事件</dd>
+    <dd>3. MouseUp：鼠标松开时发生MouseUp事件</dd>
+    <dd>4. Click：如果按住的是鼠标左键，则Click事件在MouseUp之后发生</dd>
+    <dd>最常用到的是Click事件和DblClcik事件</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>鼠标事件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Click</td>
+          <td>鼠标左键单击；按下并释放，在MouseUp之后触发</td>
+        </tr>
+        <tr>
+          <td>DblClick</td>
+          <td>鼠标双击 double click</td>
+        </tr>
+        <tr>
+          <td>MouseMove</td>
+          <td>鼠标移动</td>
+        </tr>
+        <tr>
+          <td>MouseDown</td>
+          <td>鼠标按下</td>
+        </tr>
+        <tr>
+          <td>MouseUp</td>
+          <td>鼠标释放</td>
+        </tr>
+        <tr>
+          <td>MouseOver</td>
+          <td>鼠标移入</td>
+        </tr>
+        <tr>
+          <td>MouseOut</td>
+          <td>鼠标移出</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>鼠标单击事件定义</figcaption>
+        <pre>
+Sub Click()
+  语句块
+End Sub</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>鼠标双击事件定义</figcaption>
+        <pre>
+Sub DblClick()
+  语句块
+End Sub</pre>
+      </figure>
+    </dd>
+    <dt>键盘事件</dt>
+    <dd>键盘的某个键按下去时触发</dd>
+    <dd>
+      <table class="tbl-sn tbl-ale">
+        <caption>鼠标事件</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>KeyPress</td>
+          <td>按键；按下并释放；使用较多</td>
+        </tr>
+        <tr>
+          <td>KeyDown</td>
+          <td>按键按下</td>
+        </tr>
+        <tr>
+          <td>KeyUp</td>
+          <td>按键释放</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <figure class="code">
+        <figcaption>KeyPress键盘事件定义</figcaption>
+        <pre>
+Private Sub Textl_KeyPress(KeyAscii As Integer)
+  语句块
+End Sub</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>Private：过程修饰符，表示私有过程</div>
+      <div>KeyAscii：被定义为整型变量，表示被按下去键的Ascii码，可以通过对变量KeyAscii值的判断来执行一些特殊操作</div>
+    </dd>
+    <dd class="example-sn">调整字体大小1-7[例7-18/P337]</dd>
+    <dd>单击字体变大，字体逐步变大</dd>
+    <dd>单击字体变小，字体逐步变小</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>参考代码 - 定义过程</figcaption>
+        <pre>
+Sub btn1_OnClick()
+  If myFont.size &lt; 7 Then
+    myFont.size = myFont.size + 1
+  End If
+End Sub
+
+Sub btn2_OnClick()
+  If myFont.size &gt; 1 Then
+    myFont.size = myFont.size - 1
+  End If
+End Sub</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>参考代码 - 使用</figcaption>
+        <pre>
+&lt;Font id="myFont" size="3" color="blue"&gt;VBScript程序设计&lt;/Font&gt;
+&lt;Form&gt;
+  &lt;Input type="button" name="btn1" value="字体变大"&gt;
+  &lt;Input type="button" name="btn2" value="字体变小"&gt;
+&lt;/Form&gt;</pre>
+      </figure>
+    </dd>
+    <dd class="tips">
+      <div>在Script标记内用Sub语句定义事件过程，并且要求过程名称必须由对象名称、下划线（＿）以及事件名称组合而成</div>
+    </dd>
+  </dl>
+  <div class="chap">实验 Drill</div>
+  <dl class="nav-cont">
+    <dt>内容</dt>
+    <dd class="number col2">
+      <div><a href="#demo1">世界你好[例7-1/P308] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo2">个人信息[] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo3">用户名处理[例7-3/P318] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo4">随机数[例7-4/P320] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo5">日期[例7-5/P321] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo6">个位十位互换[例7-6/P322] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo7">比较大小[例7-8/P325] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo8">成绩查询[例7-11/P327] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo9">乘法表[例7-13/P330] <span class="iconfont icon-code"></span></a></div>
+      <div><a href="#demo10">累加[例7-14/P331] <span class="iconfont icon-code"></span></a></div>
+    </dd>
+    <dt>要求</dt>
+    <dd>独立完成</dd>
+    <dd>每个实验案例一个htm文件</dd>
+    <dd>文件以学号姓名-案例编号命名，如23105418大树-1.htm</dd>
+    <dt>方式</dt>
+    <dd>随堂验收</dd>
+    <!-- <dd>在学习通作业中，作为附件依次插入各个htm页面并提交</dd> -->
+    <!-- <dd>未按要求开发、命名为无效作业</dd> -->
+    <!-- <dt>其它</dt>
+    <dd><a href="https://techlog360.com/prank-your-friends-with-these-vbscript-codings/">How To Prank Your Friends <span
+          class="iconfont icon-link"></span></a></a></dd> -->
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../js/nav2023.js"></script>
+</body>
+
+</html>

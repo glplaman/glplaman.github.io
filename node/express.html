@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express框架</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>Express框架</h1>
+    <span>&commat;Express</span>
+  </header>
+  <dl>
+    <dt>概述 overview</dt>
+    <dd>保留了node的原生功能</dd>
+    <dd>添加|增强了很多功能，如创建服务器</dd>
+    <dd>更多信息，请访问 <a href="https://www.expressjs.com.cn/">Express.js</a></dd>
+    <dt>扩展 node-snippets</dt>
+    <dd>安装：在Vs Code扩展中搜索并安装</dd>
+    <dd>使用：</dd>
+    <dd>1. node-express：快速创建基于express的nodejs服务器</dd>
+    <dd>
+      <pre>
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => res.send('Hello World!'))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))</pre>
+    </dd>
+    <dd>2. node-express-get：创建get路由</dd>
+    <dd>
+      <pre>
+app.get('/', (req, res) => {
+  res.send('GET request to the homepage')
+})      </pre>
+    </dd>
+    <dd>3. node-express-get-params：创建动态get路由</dd>
+    <dd>
+      <pre>
+app.get('/books/:bookId', (req, res) => {
+  res.send(req.params.bookId)
+})</pre>
+    </dd>
+    <dd>4. node-express-post：创建post路由</dd>
+    <dd>
+      <pre>
+app.post('/', function (req, res) {
+  res.send('POST request to the homepage')
+})      </pre>
+    </dd>
+    <dd>5. node-express-post-params：创建动态post路由</dd>
+    <dd>
+      <pre>
+app.get('/books/:bookId', (req, res) => {
+  res.send(req.params.bookId)
+})      </pre>
+    </dd>
+  </dl>
+  <div class="chap">请求 req</div>
+  <dl>
+    <dt>属性</dt>
+    <dd class="number">
+      <div>req.protocol</div>
+      <p>请求的协议 http 或 https</p>
+      <div>req.url</div>
+      <p>请求url地址</p>
+      <div>查询路由 query - 使用?拼接字符串；/detail?key=value&key=value&...</div>
+      <pre>
+server.get('/detail', (req, res) => {
+  res.send(req.query)
+})      </pre>
+      <div>动态路由 params - 拼接路径；/detail/:id</div>
+      <pre>
+server.get('/detail/:id', (req, res) => {
+  res.send(req.params)
+})      </pre>
+    </dd>
+    <dt>方法</dt>
+    <dd class="sn">
+      <div>get()</div>
+      <p>获取请求信息，如主机</p>
+      <pre>req.get('host')</pre>
+    </dd>
+  </dl>
+  <div class="chap">响应 res</div>
+  <dl>
+    <dt>属性</dt>
+    <dd class="sn">
+      <div>write() - 写回流时，需要显式指定结束 end()</div>
+      <p>argument: must be of type string or an instance of Buffer or Uint8Array</p>
+      <pre>
+res.write(data)
+res.end()</pre>
+      <div>send() - 发送HTTP响应；支持多种格式</div>
+      <pre>res.send('hi,there.') </pre>
+      <pre>res.send('&lt;h1&gt;hi,there.&lt;/h1&gt;') </pre>
+      <pre>res.send({ id: 10, name: 'gl' }) </pre>
+      <div>sendFile() - 发送文件；需要指定参考路径</div>
+      <p>直接传输文件，不需要将文件从用户空间拷贝到内核空间，文件传输效率提高；减少内存拷贝，减少CPU消耗，提高系统性能</p>
+      <p>只能用于发送静态文件，不能传输其他类型的数据</p>
+      <p>只能传输2GB以下的文件</p>
+      <pre>res.sendFile('./www/index.html', { root: __dirname })</pre>
+      <div>json() - 返回json数据；更常见</div>
+      <pre>
+res.json({
+  "errno": 0,
+  "data": {
+    "url": 'http://127.0.0.1:3000/upload/' + req.file.filename,
+  }
+})      </pre>
+      <div>render() - 渲染页面；页面路径依据配置的静态资源路径</div>
+      <pre>
+res.render('home/index', {
+  navIndex: 0
+})</pre>
+      <div>res.status()</div>
+      <p>设置 HTTP 响应的状态码。状态码是服务器返回给客户端的一个数字，用于表示请求的处理结果</p>
+      <p>成功的响应</p>
+      <pre>res.status(200).json({ 'msg': 'ok' });</pre>
+      <pre>res.status(200).json({ 'code': 200, 'msg': 'Success', 'data': jsonData });</pre>
+      <p>400 错误，并附带一个错误消息</p>
+      <pre>res.status(400).json({ 'msg': 'Bad Request' });</pre>
+      <pre>res.status(400).json({ 'code': 400, 'msg': 'Invalid request parameters' });</pre>
+    </dd>
+    <dt>方法</dt>
+  </dl>
+  <dl>
+    <dt>404</dt>
+    <dd>以中间件 use() 的形式实现</dd>
+    <dd>所有路由都匹配失败，则匹配 404；所以 404 中间件应该放在所有路由的 <span class="warn">后面</span></dd>
+    <dd>注意路径的拼接</dd>
+    <dd>
+      <pre>
+//其它路由
+
+server.use((req, res) => {
+  res.status(404).sendFile('./www//lost.html', { root: __dirname })
+})</pre>
+    </dd>
+    <dd>
+      <pre>
+//其它路由
+
+server.use((req, res) => {
+  res.status(404).sendFile('lost.html', { root: __dirname + '/www/' })
+})</pre>
+    </dd>
+    <dd class="tips">中间件在 req 和res 之间执行；拿到 res 后就没有必要了</dd>
+  </dl>
+  <div class="chap">中间件 Middleware</div>
+  <dl>
+    <dt>express.urlencoded({ extended: true })</dt>
+    <dd>解析值对类型的数据，如表单提交的数据；表单默认的编码形式</dd>
+    <dd>extended 使用哪种库来解析请求体。true，使用qs库，允许解析更复杂的对象和数组；false，使用querystring库，能力较弱，不支持数组和对象的嵌套结构
+    </dd>
+    <dd>请求成功后，在开发者工具 → 网络 Network → Fetch/XHR中选择请求，在 负载 Payload 中查看解析后的数据 Form Data</dd>
+    <dt>express.json()</dt>
+    <dd>解析json数据，无需手动解析：JSON.parse()</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

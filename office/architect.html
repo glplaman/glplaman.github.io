@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>体系结构 Architect</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <base target="_blank">
+  <style>
+    .em.txt-center {
+      margin: 4rem auto;
+      text-transform: capitalize;
+      font-size: 18px;
+    }
+
+    .em.txt-center span {
+      display: inline-block;
+    }
+
+    .em.txt-center span::first-letter {
+      color: var(--main-color);
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1 class="txt-center mt2">体系结构</h1>
+    <h3 class="txt-center sub-title">Architect</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>. 计算机网络体系结构是指计算机网络层次结构模型和各层协议的集合；也称为协议集或 <span class="em">协议栈</span></dd>
+      <dd>. 计算机网络采用 <span class="em">层次化</span> 设计方法，把通信过程划分为多个层次，并为每个层次设计一个单独的协议，这些协议通过分层结构进行组织</dd>
+      <dd>. 每层通过特定的协议完成一种功能；多层叠加完成整个信息的发送和接收过程</dd>
+      <dd>. 最著名的网络体系结构是OSI参考模型和TCP/IP协议</dd>
+      <dt>分层原则</dt>
+      <dd class="number">
+        <div>各层之间是相互独立的 </div>
+        <div>每一层需要有足够的灵活性 </div>
+        <div>各层之间完全解耦 </div>
+      </dd>
+      <dt>分层优点</dt>
+      <dd class="number">
+        <div>高层不需要知道低层是如何实现的，只需要知道低层所提供的服务，以及本层向上提供的服务，各层独立性强 </div>
+        <div>当任何一层发生变化时，只要层间接口不发生变化，那么这种变化就不会影响到其他的层，适应性强 </div>
+        <div>整个系统分解为若干易于处理的部分，这种结构使得一个庞大而又复杂的系统实现和维护起来更容易 </div>
+        <div>每层的功能与所提供的服务都有精确的定义和说明，有利于促进标准化</div>
+      </dd>
+    </dl>
+    <div class="chap">OSI参考模型</div>
+    <dl>
+      <dd>. 开放式系统互联参考模型 - Open System Interconnection Reference Model，OSI Model</dd>
+      <dd>. 开放：是指遵循OSI标准的任何系统之间均可通信</dd>
+      <dd>. 系统：是指各系统中与互联有关的部分</dd>
+      <dd>. 这一标准定义了网络互联的7层框架</dd>
+      <dd>. ISO开放系统互联模型实现了系统间的互联性、互操作性和可移植性</dd>
+      <dd class="em txt-center"><span>all</span> <span>people</span> <span>seem</span> <span>to</span> <span>need</span>
+        <span>data</span> <span>photo</span>
+      </dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/osi.png" alt="">
+          <figcaption>OSI参考模型</figcaption>
+        </figure>
+      </dd>
+      <dt>物理层 Physical Layer</dt>
+      <dd>协议数据单元PDU：<span class="warn">比特 bit</span></dd>
+      <dd>连接不同的物理设备，为上层协议提供了一个传输数据的可靠的物理媒体</dd>
+      <dd>主要内容：电路接口|机械特性、功能特性|引脚的高低电平、规程特性|事件的发生顺序、电气特性|传输信号的意义，如二进制定义 </dd>
+      <dd>主要设备：中继器 Repeater、集线器 Hub</dd>
+      <dd>信道的基本概念：信道是往一个方向传输信息的媒体，一条通信电路包含一个发送信道和一个接受信道</dd>
+      <dd class="number">
+        <div>单工通信信道 Single complex：只能一个方向通信，没有反方向反馈的信道 </div>
+        <div>半双工通信信道 Half- complex：双方都可以发送和接受信息，但不能同时发送也不能同时接收 </div>
+        <div>全双工通信信道 Full- complex：双方都可以同时发送和接收</div>
+      </dd>
+      <dt>数据链路层 Data Link Layer</dt>
+      <dd>协议数据单元PDU：<span class="warn">帧 Frame</span></dd>
+      <dd>在物理层提供的服务的基础上向网络层提供服务：将源自网络层的数据可靠地传输到相邻节点的目标机网络层。在不可靠的物理介质上提供可靠的传输</dd>
+      <dd>主要功能：封装成帧、透明传输、差错控制、流量控制、传输管理</dd>
+      <dd>经典协议：PPP协议</dd>
+      <dd>主要设备：交换机 Switch、网桥 Bridge</dd>
+      <dt>网络层 Network Layer</dt>
+      <dd>协议数据单元PDU：<span class="warn">数据包 Packet</span></dd>
+      <dd>实现两个端系统之间的数据透明传送，包括寻址和路由选择、连接的建立、保持和终止等</dd>
+      <dd>采用储存转发方式</dd>
+      <dd>主要功能：路由选择、规划IP地址、流量控制、差错控制、拥塞控制</dd>
+      <dd>经典协议：IP、ICMP、IGMP、ARP</dd>
+      <dd>主要设备：路由器 Router</dd>
+      <dt>传输层 Transport Layer</dt>
+      <dd>协议数据单元PDU：<span class="warn">用户数据报 UDP和报文段TCP</span></dd>
+      <dd>端到端，即主机到主机的层次</dd>
+      <dd>传输层负责将上层数据分段并提供端到端的、可靠的或不可靠的传输。此外，传输层还要处理端到端的差错控制和流量控制问题</dd>
+      <dd>网络层只是根据网络地址将源结点发出的数据包传送到目的结点，而传输层则负责将数据可靠地传送到相应的端口</dd>
+      <dd>主要功能：流量控制、差错控制</dd>
+      <dd>经典协议：TCP、UDP</dd>
+      <dd>主要设备：网关 Gateway</dd>
+      <dt>会话层 Session Layer</dt>
+      <dd>主要功能：利用传输层端到端的服务，来在网络设备之间建立连接并有序地传输数据。并建立同步信息</dd>
+      <dt>表示层 Representation Layer</dt>
+      <dd>主要功能：定义数据的编码格式、是否进行数据压缩、加密/解密等操作</dd>
+      <dt>应用层 Application Layer</dt>
+      <dd>主要功能：定义数据的编码格式、是否进行数据压缩、加密/解密等操作</dd>
+      <dt>设计缺陷</dt>
+      <dd class="number">
+        <div>过于理想化，无法实现 </div>
+        <div>先于网络产生，不符合网络实际发展 </div>
+        <div>每一层之间划分过于绝对，复杂，过度追求完美 </div>
+      </dd>
+      <dd class="tips">
+        <div>PDU - Protocol Data Unit</div>
+        <div>协议数据单元：每层协议规定的数据传输单位</div>
+      </dd>
+    </dl>
+    <div class="chap">TCP/IP4层模型</div>
+    <dl>
+      <dd>1. 标准模型</dd>
+      <dd>2. 对等模型</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/tcpip.png" alt="">
+          <figcaption>TCP/IP4层模型 - 标准模型</figcaption>
+        </figure>
+        <figure class="img-sn">
+          <img src="./imgs/flow.png" alt="">
+          <figcaption>数据流 - 对等模型</figcaption>
+        </figure>
+        <figure class="img-sn">
+          <img src="./imgs/packet.png" alt="">
+          <figcaption>数据打包</figcaption>
+        </figure>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>各层协议</caption>
+          <tr>
+            <td rowspan="2">应用层</td>
+            <td>HTTP/HTTPS</td>
+            <td>SMTP</td>
+            <td>FTP</td>
+            <td>DNS</td>
+          </tr>
+          <tr>
+            <td>RIP</td>
+            <td>POP3</td>
+            <td>SNMP</td>
+            <td>Telnet</td>
+          </tr>
+          <tr>
+            <td>传输层</td>
+            <td colspan="2">TCP</td>
+            <td colspan="2">UDP</td>
+          </tr>
+          <tr>
+            <td rowspan="3">网络层</td>
+            <td colspan="2"></td>
+            <td>IGMP</td>
+            <td>ICMP</td>
+          </tr>
+          <tr>
+            <td colspan="4">IP</td>
+          </tr>
+          <tr>
+            <td>ARP</td>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td>链路层</td>
+            <td>PPP</td>
+            <td>Ethernet</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>物理层</td>
+            <td colspan="4">...</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>应用层 Application Layer</dt>
+      <dd><a href="../network/chap6telnet.html">Telnet</a> - 远程登陆；基于TCP</dd>
+      <dd><a href="../network/chap6http.html">HTTP</a> - Hypertext Transfer Protocol，超文本传输协议；基于TCP</dd>
+      <dd>HTTPS - Hypertext Transfer Protocol Secure，安全的超文本传输协议；基于TCP</dd>
+      <dd><a href="../network/chap6ftp.html">FTP</a> - File Transfer Protocol，文件传输协议；基于TCP</dd>
+      <dd>SMTP - Simple Mail Transfer
+        Protocol，简单邮件传输协议，一种用于发送电子邮件的协议。它定义了电子邮件的传输方式，负责将邮件从发件人的电子邮件服务器发送到接收人的电子邮件服务器。SMTP负责处理邮件的路由和传输，确保邮件能够准确地传递到目标服务器
+        ；基于TCP</dd>
+      <dd>POP3 - Post Office Protocol 3，用于接收电子邮件的协议。它允许用户从邮件服务器上下载和接收邮件，如Outlook；基于TCP</dd>
+      <dd><a href="../network/chap6dns.html">DNS</a> - Domain Name System，域名系统</dd>
+      <dd><a href="../network/chap6dhcp.html">DHCP</a> - Dynamic Host Configuration Protocol，动态主机分配协议</dd>
+      <dd>SNMP - Simple Network Management
+        Protocol，简单网络管理协议；一种用于网络管理的应用层协议。它允许网络管理员监视和管理网络设备、服务器、路由器和其他网络设备的运行状态和性能；基于UDP协议</dd>
+      <dd><a href="../network/chap4rip.html">RIP</a> - Routing Information Protocol，路由信息协议，主要的路由协议之一；基于UDP协议</dd>
+      </dd>
+      <dt>传输层 Transport Layer</dt>
+      <dd><a href="../network/chap5tcp.html">TCP</a> - Transmission Control Protocol，传输控制协议；面向连接，可靠</dd>
+      <dd><a href="../network/chap5udp.html">UDP</a> - User Datagram Protocol，用户数据报协议；无连接、最大努力交付；直播流</dd>
+      <dd>两者都具备流量控制和拥塞控制</dd>
+      <dt>网络层 Network Layer</dt>
+      <dd><a href="../network/chap4ip.html">IP</a> - Internet Protocol，互联网协议</dd>
+      <dd><a href="../network/chap4arp.html">ARP</a> - Address Resolution Protocol，地址解析协议</dd>
+      <dd>RARP - Reverse Address Resolution Protocol，逆地址解析协议</dd>
+      <dd>ICMP - Internet Control Message Protocol，Internet控制报文协议</dd>
+      <dd>IGMP - Internet Group Management Protocol，Internet组管理协议</dd>
+      <dd><a href="../network/chap4ospf.html">OSPF</a> - Open Shortest Path First，开放的最短路径优先协议，基于IP协议，主要的路由协议之一</dd>
+      <dd class="tips">
+        <div>网络协议关系</div>
+        <div>ARP协议为IP协议提供服务，IP协议为ICMP协议提供服务，ICMP协议为IGMP协议提供服务。</div>
+      </dd>
+      <dt>物理层 Physical Layer</dt>
+    </dl>
+  </main>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

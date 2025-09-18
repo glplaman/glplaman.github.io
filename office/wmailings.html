@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>邮件 Mailings</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1 class="txt-center mt2">邮件</h1>
+    <h3 class="txt-center sub-title">Mailings</h3>
+    <dl>
+      <dt>内容 Contents</dt>
+      <dd>邮件</dd>
+      <dt>方法 Methods</dt>
+      <dd>示范 + 实操</dd>
+    </dl>
+    <div class="chap">邮件</div>
+    <dl>
+      <dt>说明</dt>
+      <dd>. 综合使用"开始邮件合并"和"编写和插入域"完成邮件的批量编辑</dd>
+      <dd>. 将一个Word文档与一个Excel数据源结合起来，快速生成一系列内容相同而收件人不同的输出文档的过程。相同的内容来自主文档，变化的内容来自数据源。</dd>
+      <dd>. 利用"规则"对数据进行区别操作，如根据性别调整称呼；或者过滤掉某些数据：信用低于3000的客户不在邀请范围等等</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/rules0.png" alt="">
+          <figcaption>使用规则"如果...那么...否则"加入称呼</figcaption>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/rules1.png" alt="">
+          <figcaption>使用规则"跳过记录条件"过滤掉信用小于80的记录</figcaption>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/rules2.png" alt="">
+          <figcaption>使用规则"跳过记录条件"过滤掉信用为空的记录</figcaption>
+        </figure>
+      </dd>
+
+    </dl>
+    <div class="chap">高级使用 - 图片</div>
+    <dl>
+      <dt>说明</dt>
+      <dd>. 需要配合文档部件中的域来实现，并使用绝对路径或相对路径拼接处完整的图片路径</dd>
+      <dt>环境介绍</dt>
+      <dd class="number">
+        <div>准备图片：图片最好放在一个文件夹内</div>
+        <div>准备数据源文件：Excel文件；仅仅给出图片的文字名，如gl.png，没有给出路径，需要后面修改域代码完成拼接</div>
+        <div>准备邮件文件：Word文件，并编辑好文案</div>
+      </dd>
+      <dd>注意：以上文件位置不做要求，尽量放在一起</dd>
+      <dt>使用步骤</dt>
+      <dd class="number">
+        <div>打开邮件文件，定位光标，插入"文档部件" → "域"，选择包含图片的域，并指定其路径；系统对外部的操作会给出警告信息，确认即可</div>
+        <figure class="img-sn">
+          <img src="./imgs/pic.png" alt="">
+          <caption>插入图片域</caption>
+        </figure>
+        <figure class="img-sn">
+          <img src="./imgs/pic1.png" alt="">
+          <caption>系统提示</caption>
+        </figure>
+        <div>按Alt + F9切换到域代码编辑状态，显示为：{INCLUDETEXT "E:\\OA\\imgs" \* MERGEFORMAT }</div>
+        <div>将光标定位在路径最后面imgs处，切换回"邮件"，插入图片域，此时的图片对应的域代码为：{INCLUDETEXT "E:\\OA\\imgs\\{MERGEFIELD 头像}" \* MERGEFORMAT }
+        </div>
+        <div>按Alt + F9，退出域代码编辑状态，按F9刷新，检查图片的加载情况</div>
+        <div>后续的完成合并同前；如果图片没有更新，请按F9</div>
+        <div>保存</div>
+      </dd>
+      <dd>
+        <table class="tbl-sn txt-center">
+          <caption>常见域的格式调整</caption>
+          <tr>
+            <th>格式</th>
+            <th>说明</th>
+            <th>示例</th>
+          </tr>
+          <tr>
+            <td>\# 0.00</td>
+            <td>指定小数位数</td>
+            <td>12→12.00</td>
+          </tr>
+          <tr>
+            <td>\# ￥####0.00</td>
+            <td>增加货币符号并指定宽度</td>
+            <td>2→￥&nbsp;&nbsp;&nbsp;&nbsp;2.00</td>
+          </tr>
+          <tr>
+            <td>\@ YYYY-MM-DD</td>
+            <td>数字显示</td>
+            <td>7/1/1995→1995-07-01</td>
+          </tr>
+          <tr>
+            <td>\@ EEEE年O月A日</td>
+            <td>中文显示</td>
+            <td>7/1/1995→一九九五七月一日</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+  </main>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态资源服务器 Dynamic</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>动态资源服务器</h1>
+    <span>&commat;Dynamic</span>
+  </header>
+  <section>
+    <div>. 在 <a href="./static.html">静态资源服务器</a> 的基础上，监听用户的请求，如：GET、POST、PATCH、DELETE等</div>
+    <h3>服务器需求</h3>
+    <ul>
+      <li>所有的数据处理在 JSON 文件中完成，需要文件系统 fs 库</li>
+      <pre>const fs = require('fs')</pre>
+      <li>处理提交的 JSON 数据，需要 json() 库</li>
+      <pre>app.use(express.json())</pre>
+    </ul>
+    <div class="tips">仅开放用户和商品接口，其它接口如留言、代办事项、问卷等请参照设计</div>
+  </section>
+  <h2>商品 goods</h2>
+  <section>
+    <ul>
+      <li>需要提交准备好商品数据文件。以 <a href="/utils/data/goods.json" download>大树小站 goods.json</a> 为例</li>
+      <li>商品数据应提前处理好，便于监听用户请求</li>
+      <pre>
+// 读取JSON数据
+const data = fs.readFileSync("./public/data/coffee.json");
+const coffee = JSON.parse(data).cont;
+</pre>
+      <li>1. 全部拉取 - GET</li>
+      <pre>
+app.get('/goods', (req, res) => {
+  res.json({
+    "errno": 0,
+    "msg": 'goods loading ok',
+    "data": coffee
+  })
+})</pre>
+      <li>优化后，还可以根据 id 获取数据</li>
+      <pre>
+app.get('/goods', (req, res) => {
+  const id = req.query.id;
+  if (id) { 
+    res.json({
+      "errno": 0,
+      "msg": 'good loading ok',
+      data: coffee.find((item) => item.id == id),
+    })
+  }else{
+    res.json({
+      "errno": 0,
+      "msg": 'goods loading ok',
+      "data": coffee
+    })
+  }
+})</pre>
+      <li>2. 分页拉取 - GET</li>
+      <li>适合数据较多的时候</li>
+      <li>请求格式 /goods/page?page=x&pageSize=y</li>
+      <pre>
+app.get('/goods/page', (req, res) => {
+  console.log('page', req.query);
+  let arr = [...jsonFile.cont]
+  let start = (req.query.page - 1) * req.query.pageSize;
+  let result = arr.splice(start, req.query.pageSize)
+  res.setHeader('X-Total-Count', jsonFile.cont.length);
+  res.json({
+    "errno": 0,
+    "msg": 'goods page loading ok',
+    "data": result
+  });
+});</pre>
+    </ul>
+  </section>
+  <h2>用户 users</h2>
+  <section>
+    <div>. 无须准备数据文件</div>
+    <h3>获取用户</h3>
+    <ul>
+      <li>GET</li>
+      <li>用户修改信息时使用</li>
+      <li>用户提交学号 usn</li>
+      <li>获取并解析对应的.json 文件，返回给用户</li>
+      <pre>
+app.get('/user', (req, res) => {
+  console.log(req.query);
+  let file = fs.readFileSync('./public/data/' + req.query.usn + '.json', 'utf8')
+  let jsonFile = JSON.parse(file)
+  console.log(jsonFile);
+  res.json({
+    "errno": 0,
+    "msg": 'get ok',
+    "data": jsonFile
+  })
+})</pre>
+    </ul>
+    <h3>用户登录</h3>
+    <ul>
+      <li>GET</li>
+      <li>用户提交学号 usn 、密码 upass</li>
+      <li>读取对应学号的.json 文件；如果不存在，提示用户不存在，需要登录</li>
+      <li>如果文件存在，则解析文件，获取密码，和提交的密码比较，相等，登录成功；否则登录失败</li>
+      <pre>
+app.get('/users/login', (req, res) => {
+  console.log('req.query', req.query);
+  let file = fs.readFile('./public/data/' + req.query.usn + '.json', 'utf8', (err, data) => {
+    if (err) {
+      res.json({
+        "errno": 2,
+        "msg": 'user not exist'
+      })
+    } else {
+      let jsonFile = JSON.parse(data)
+      if (req.query.upass === jsonFile.upass) {
+        res.json({
+          "errno": 0,
+          "msg": 'login ok',
+          "data": jsonFile
+        })
+      } else {
+        res.json({
+          "errno": 1,
+          "msg": 'pass not match'
+        })
+      }
+    }
+  })
+})</pre>
+    </ul>
+    <h3>用户注册</h3>
+    <ul>
+      <li>POST</li>
+      <li>用户提交学号 usn、姓名 uname 和密码 upass</li>
+      <li>检查对应学号的.json 文件是否存在；如果存在，则提示用户已存在，不允许注册</li>
+      <li>以学号为文件名创建用户文件，保存用户信息；如果成功则提示用户注册成功；否则提示用户稍后再试</li>
+      <pre>
+app.post('/users/register', (req, res) => {
+  console.log('req.body', req.body);
+  if (fs.existsSync('./public/data/' + req.body.usn + '.json')) {
+    res.json({
+      "errno": 2,
+      "msg": 'user exist'
+    })
+    return;
+  }
+  fs.writeFile('./public/data/' + req.body.usn + '.json', JSON.stringify(req.body), (err) => {
+    if (err) {
+      console.log('保存文件失败')
+      res.json({
+        "errno": 1,
+        "msg": 'try later'
+      })
+    } else {
+      console.log('保存文件成功')
+      res.json({
+        "errno": 0,
+        "msg": 'register ok'
+      })
+    }
+  })
+})</pre>
+    </ul>
+    <h3>修改用户信息</h3>
+    <ul>
+      <li>POST</li>
+      <li>按照用户信息字段修改</li>
+      <li>用户提交要修改的字段 ukey 和对应的值 uvalue</li>
+      <li>读取、解析、更新、覆写，完成用户信息的修改</li>
+      <pre>
+app.post('/users/modify', (req, res) => {
+  console.log('modify', req.body);
+  const data = JSON.parse(fs.readFileSync('./public/data/' + req.body.usn + '.json', 'utf8'));
+  data[req.body.ukey] = req.body.uvalue
+  fs.writeFile('./public/data/' + req.body.usn + '.json', JSON.stringify(data, null, 4), (error) => {
+    if (error) {
+      console.log('保存文件失败')
+      res.json({
+        "errno": 2,
+        "msg": 'try later'
+      })
+    } else {
+      console.log('保存文件成功')
+      res.json({
+        "errno": 0,
+        "msg": 'modify ok'
+      })
+    }
+  })
+})</pre>
+    </ul>
+  </section>
+  <h2>头像上传</h2>
+  <section>
+    <ul>
+      <li>用户上传头像，保存到服务器，并返回保存后的头像地址</li>
+      <li>详细操作，请查看 <a href="./multer.html">头像上传 - multer</a></li>
+      <li>这里按照学号 usn 命名图片，相应的存储配置如下</li>
+      <pre>
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __dirname + '/public/upload')
+  },
+  filename: (req, file, cb) => {
+    let ext = path.extname(file.originalname)
+    cb(null, req.body.usn + ext)
+  }
+})</pre>
+      <li>上传头像 - 提供学号 usn 和头像 avatar</li>
+      <pre>
+app.post('/avatar', upload.single('avatar'), (req, res) => {
+  console.log('req.file', req.file);
+  console.log('req.body', req.body);
+
+  let file = fs.readFileSync('./public/data/' + req.body.usn + '.json', 'utf8')
+  let jsonFile = JSON.parse(file);
+  jsonFile.imgUrl = 'http://127.0.0.1:3000/upload/' + req.file.filename
+  file = fs.writeFileSync('./public/data/' + req.body.usn + '.json', JSON.stringify(jsonFile, null, 4))
+
+  res.json({
+    "errno": 0,
+    "msg": "upload ok",
+    "data": {
+      "url": 'http://127.0.0.1:3000/upload/' + req.file.filename,
+    }
+  })
+})</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>库函数 Lib</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>库函数</h1>
+    <span>&commat;Lib </span>
+  </header>
+  <dl>
+    <dt>url</dt>
+    <dd>
+      <div>解析url，获取协议、主机、端口、路径、文件名和query等数据</div>
+      <div>选项如果为true，将解析query数据</div>
+      <div>1. 引入</div>
+      <pre>
+const fs = require('fs');</pre>
+      <div>2. 使用</div>
+      <pre>
+console.log(URL.parse('https://glpla.github.io/utils/wedding/p0.jpg?id=100&name=gl'));</pre>
+      <pre>
+Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'glpla.github.io',
+  port: null,
+  hostname: 'glpla.github.io',
+  hash: null,
+  search: '?id=100&name=gl',
+  query: 'id=100&name=gl',
+  pathname: '/utils/wedding/p0.jpg',
+  path: '/utils/wedding/p0.jpg?id=100&name=gl',
+  href: 'https://glpla.github.io/utils/wedding/p0.jpg?id=100&name=gl'
+}</pre>
+      <div>3. 解析query</div>
+      <pre>
+console.log(URL.parse('https://glpla.github.io/utils/wedding/p0.jpg?id=100&name=gl', true));</pre>
+      <pre>
+Url {
+  protocol: 'https:',
+  slashes: true,
+  auth: null,
+  host: 'glpla.github.io',
+  port: null,
+  hostname: 'glpla.github.io',
+  hash: null,
+  search: '?id=100&name=gl',
+  query: [Object: null prototype] { id: '100', name: 'gl' },
+  pathname: '/utils/wedding/p0.jpg',
+  path: '/utils/wedding/p0.jpg?id=100&name=gl',
+  href: 'https://glpla.github.io/utils/wedding/p0.jpg?id=100&name=gl'
+}      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON-Server</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>JSON-Server</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">Overview</a>
+      <a href="" style="--delay:1" class="nav-item">FeHelper</a>
+      <a href="" style="--delay:2" class="nav-item">Html</a>
+      <a href="" style="--delay:3" class="nav-item">Vue</a>
+      <a href="" style="--delay:4" class="nav-item">MP</a>
+    </nav>
+  </header>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 快速搭建 HTTP 服务；需要 <a href="./ide.html">Node.js</a> 环境支持</div>
+      <div>. 为应用提供 JSON 数据服务 - 仅仅是针对 .json 文件的解析和应用</div>
+      <div>. 更多信息，请访问 <a href="https://www.npmjs.com/package/json-server">NPM
+          Json-Server</a>、<a href="https://juejin.cn/post/7043424909472563208">从入门到膨胀</a>
+      </div>
+    </dd>
+    <dt>JSON</dt>
+    <dd>
+      <div>. 数据交换格式；早期数据交换多使用 XML</div>
+      <div>. 后缀名为 .json</div>
+      <div>. 由键值对 Key-Value Paris 组成</div>
+      <div>. Key 必须用 <span class="warn">双引号</span> 包裹</div>
+      <div>. Value 是值；可以使用任意数据类型；通常使用数值 Number、字符串 String、数组 Array 和对象 Object</div>
+      <div>. 每个节点数据应该指定 id，便于操作 - 增删改查</div>
+      <div>. 不允许有注释</div>
+      <pre>
+{
+  "info": {
+      "grade": 2023,
+      "major": "数字媒体技术",
+      "class": 1,
+      "course": "Web前端开发",
+      "state": true,
+      "members": [
+          {
+              "id": 1,
+              "name": "张三"
+          },
+          {
+              "id": 2,
+              "name": "李四"
+          },
+          {
+              "id": 3,
+              "name": "王五"
+          }
+      ]
+  }
+}</pre>
+    </dd>
+    <dt>API</dt>
+    <dd>
+      <div>. JSON-Server提供如下接口</div>
+      <div>. 严格按照文档接口使用</div>
+      <table>
+        <caption>Json-Server支持的请求方法</caption>
+        <tr>
+          <th>Item</th>
+          <th>Desc</th>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>查询 | 获取数据<br>还可以使用 id 查询指定记录</td>
+          <td>/posts <br>/posts/:id</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>新增|提交数据；会自动增加id，也可以提交时，手动指定</td>
+          <td>/posts</td>
+        </tr>
+        <tr>
+          <td>PUT</td>
+          <td>配合 id 使用，以覆盖 | 替换的方式修改数据</td>
+          <td>/posts/:id</td>
+        </tr>
+        <tr>
+          <td>PATCH</td>
+          <td>配合 id 使用，以更新 | 部分修改的方式修改数据</td>
+          <td>/posts/:id</td>
+        </tr>
+        <tr>
+          <td>DELETE</td>
+          <td>配合 id 使用，删除指定数据</td>
+          <td>/posts/:id</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>Install</dt>
+    <dd>
+      <div>. 任意位置打开 CMD 命令行窗口执行以下命令；确保已经安装了 Node</div>
+      <div>. 使用命令行参数 -g 全局安装 JSON-server：可以在任何位置监听 .json数据请求 - <span class="warn">指哪打哪</span></div>
+      <pre>npm install json-server -g</pre>
+      <div>. 如果 <span class="warn">临时</span> 使用，可以使用npx命令执行，不需要安装</div>
+      <pre>npx json-server --watch data/students.json --port 3000</pre>
+    </dd>
+    <dt>Usage</dt>
+    <dd class="sn">
+      <div>创建数据文件夹 - 集中存放数据文件，如在项目中某个位置创建 data 文件夹</div>
+      <div>在 data 文件夹内创建数据文件 - 如 20250603.json；根节点包括2个子节点|值对：info 和 cont</div>
+      <p>. 初始部分数据可能为空，后期通过操作如添加和修改逐步增加；具体数据根据需求添加和修改</p>
+      <p>. 图片的可以是完整路径，也可以是部分路径，数据加载后再2次处理</p>
+      <pre>
+{
+  "info": {
+    "grade": 2023,
+    "major": "数媒",
+    "class": 1,
+    "course": "Web前端开发"
+  },
+  "cont": [
+    {
+      "id": 2024020300,
+      "usn": "23054037",
+      "uavatar": "/avatar/avatar0.png",
+      "uname": "孔铠琳",
+      "ucredit": 1
+    },
+    {
+      "id": 2024020302,
+      "usn": "23054016",
+      "uavatar": "/avatar/avatar2.png",
+      "uname": "陈燕君",
+      "ucredit": 9
+    }
+  ]
+}</pre>
+      <div>监听数据文件 - 在数据文件夹内，<span title="Win + R">打开 CMD 终端</span> ，输入以下命令，监听文件，即开启数据服务</div>
+      <pre>json-server 20250603.json</pre>
+      <p>. 系统自动检测并给出接口的地址；这个地址就是提供给项目使用的 API 接口</p>
+      <pre>
+PS E:\glpla.github.io> json-server 20250603.json
+JSON Server started on PORT :3000
+Press CTRL-C to stop
+Watching 20250603.json...
+
+♡( ◡‿◡ )
+
+Index:
+http://localhost:3000/
+
+Static files:
+Serving ./public directory if it exists
+
+Endpoints:
+http://localhost:3000/info
+http://localhost:3000/cont</pre>
+      <div>按住 CTRL 单击对应的地址，可以在浏览器中访问其中的内容；或直接在浏览器输入对应的地址</div>
+      <p>. 默认端口 3000；也可以指定端口</p>
+      <pre>json-server 20240203.json --port=5173</pre>
+    </dd>
+    <dd class="tips">
+      <div>Vs Code 中使用，可以按 CTRL + ~ 快速打开 CMD 终端</div>
+      <div>注意当前 CMD 终端的位置和数据文件的位置</div>
+      <div>使用数据过程中，不能关闭 CDM 终端，保持服务始终开启</div>
+    </dd>
+  </dl>
+  <div class="chap">FeHelper</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 浏览器插件 FeHelper</div>
+      <div>. 用来模拟数据请求</div>
+      <div>. 深入学习，请下载更加专业的 Postman（最近官网一直打不开）</div>
+      <img src="../vue/imgs/server0.png" alt="">
+    </dd>
+    <dt>基本操作</dt>
+    <dd class="sn">
+      <div>获取数据 - GET</div>
+      <p>. 获取所有数据</p>
+      <pre>http://127.0.0.1:3000/cont</pre>
+      <p>. 根据 id 获取接口某个数据</p>
+      <pre>http://127.0.0.1:3000/cont/1001</pre>
+      <div>增加数据 - POST</div>
+      <div>修改数据 - PUT</div>
+      <div>根据 id 删除某个数据 - DELETE</div>
+      <pre>http://127.0.0.1:3000/cont/1001</pre>
+    </dd>
+  </dl>
+  <div class="chap">Html/fetch</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 通过事件操作数据，如单击某个按钮；以下测试代码请放在事件处理函数中</div>
+      <div>. 通常把数据服务器的地址声明为一个常量，使用时再拼接上具体的接口</div>
+      <pre>
+const baseURL = 'http://localhost:3000'
+// 或
+// const baseURL = 'http://127.0.0.1:3000'
+
+btn.addEventListener('click', () => {
+  // your code here
+})</pre>
+    </dd>
+    <dt>GET - 查</dt>
+    <dd>
+      <div>. 获取数据；默认方式是 GET</div>
+      <div>. 默认是接口下的所有数据，以 <span class="warn">数组</span> 的形式返回请求的数据</div>
+      <pre>
+fetch(baseURL + '/cont')
+    .then(res => res.json())
+    .then(res => {
+        console.log(res)
+    })
+    .catch(err => {
+        console.log(err);
+    })
+    .finally(() => {
+        console.log('get done');
+    })</pre>
+      <div>. 获取指定 id 的数据 - 拼接上数据的 id，以 <span class="warn">对象</span> 的形式返回对应的数据</div>
+      <pre>fetch(baseURL + '/cont/2024020302')</pre>
+      <div>. 可以使用表示 id 的变量</div>
+      <pre>fetch(baseURL + '/cont/' + id)</pre>
+      <div>. 或使用模板语法 - <span class="warn">推荐</span></div>
+      <pre>fetch(`${baseURL}/cont/${id}`)</pre>
+      <div>. 或使用 async-await 方式 - 更简洁，但是无法监测过程</div>
+      <pre>
+btn.addEventListener('click', async () => {
+  const res = await fetch(`${baseURL}/cont`)
+  const data = await res.json()
+  console.log(data)
+})</pre>
+    </dd>
+    <dt>POST - 增</dt>
+    <dd>
+      <div>. 提交数据</div>
+      <div>. 指定提交方式 POST</div>
+      <div>. 指定 body 和 headers：告诉服务器提交的数据是什么 - body 和对应的数据类型是什么 - headers</div>
+      <div>. fetch POST 方式下，默认提交的数据类型为 JSON，所以 <span class="warn">可以省略 headers</span>；其它数据请求如 Axios 要根据文档使用</div>
+      <div>. 不能直接提交数据，必须使用 JSON.stringify() <span class="warn">数据序列化</span>转化为普通字符</div>
+      <div>. Json-Server 提交数据时 <span class="warn">不会验证数据</span>，意味着你可以重复提交数据，所以适合作为开发环境测试，不适合用于生产环境</div>
+      <pre>
+fetch(baseURL + '/cont', {
+  // Must
+  method: 'POST',
+
+  // Better way
+  // headers: {
+  //     'Content-Type': 'application/json'
+  // },
+
+  // Must
+  body: JSON.stringify({
+      usn: '20241126',
+      uname: 'glpla',
+      ucredit: 1
+  })
+  
+  // Fail
+  // body: {
+  //     usn: '20241127',
+  //     uname: 'glpla1',
+  //     ucredit: 1
+  // }
+})
+  .then(res => {
+      console.log(res);
+  })
+  .catch(err => {
+      console.log(err);
+  })
+  .finally(() => {
+      console.log('post done');
+  })</pre>
+    </dd>
+    <dt>PATCH - 改</dt>
+    <dd>
+      <div>. 根据 id 更新数据</div>
+      <div>. 如果对应的值对不存在，则增加</div>
+      <pre>
+fetch(baseURL + '/cont/cd5c', {
+  method: 'PATCH',
+  headers: {
+      'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+      ucredit: 10
+  })
+})
+  .then(res => {
+      console.log(res);
+  })
+  .catch(err => {
+      console.log(err);
+  })
+  .finally(() => {
+      console.log('patch done');
+  })</pre>
+    </dd>
+    <dt>DELETE - 删</dt>
+    <dd>
+      <div>. 根据 id 删除数据</div>
+      <div>. 数据渲染时，会将 对应的 id 和元素绑定或作为参数传递给事件处理器，便于操作数据</div>
+      <pre>
+fetch(baseURL + '/cont/8503', {
+    method: 'DELETE',
+})
+    .then(res => {
+        console.log(res);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+    .finally(() => {
+        console.log('delete done');
+    })</pre>
+    </dd>
+  </dl>
+  <div class="chap">Vue/axios</div>
+  <dl class="nav-cont">
+    <dt>GET</dt>
+    <dd>请求数据；通常在挂载生命周期中触发</dd>
+    <dd>
+      <pre>
+onMounted(() => {
+  axios.get('http://127.0.0.1:5173/software')
+    .then(res => {
+      //赋值
+    })
+})</pre>
+    </dd>
+    <dd>可以封装函数</dd>
+    <dd>
+      <pre>
+onMounted(() => {
+  loadData()
+})
+func loadData(){
+  axios.get('http://127.0.0.1:5173/software')
+    .then(res => {
+      //赋值
+  })
+}</pre>
+    </dd>
+    <dd>数据渲染 - 判断数据是否为空</dd>
+    <dd>
+      <pre>
+&lt;div class="wrap"&gt;
+  &lt;template v-if="students.length"&gt;
+    &lt;div class="item" v-for="(item, ind) in students" :key="item.id"&gt;
+      &lt;div&gt;{{ ind + 1 }}&lt;/div&gt;
+      &lt;div&gt;{{ item.uid }}&lt;/div&gt;
+      &lt;div&gt;{{ item.uname }}&lt;/div&gt;
+      &lt;div&gt;
+        &lt;span class="iconfont icon-iconfontshoucang" v-for="star in item.rank"&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;button @click="mod(item.id, item.rank)"&gt;增加&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/template&gt;
+  &lt;template v-else&gt;数据为空&lt;/template&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dt>POST</dt>
+    <dd>增加数据；提交用户id，姓名和星数；完毕后重新拉取数据</dd>
+    <dd>
+      <pre>
+function add() {
+  axios.post('http://127.0.0.1:5173/software', {
+    uid: uid.value,
+    uname: uname.value,
+    rank: rank.value
+  })
+    .then(res => {
+      loadData()
+    })
+}</pre>
+    </dd>
+    <dt>PATCH</dt>
+    <dd>修改数据；根据id或uid</dd>
+    <dd>由事件对象获取结构中绑定的数据</dd>
+    <dd>
+      <pre>
+function mod(id, rank) {
+  axios.patch('http://127.0.0.1:5173/software/' + id, {
+    rank: rank + 1
+  })
+    .then(res => {
+      //更新完毕后，创新加载数据
+      loadData()
+    })
+}</pre>
+    </dd>
+    <dt>DELETE</dt>
+    <dd>删除数据；根据id或uid</dd>
+    <dd>
+      <pre>
+function del(id) {
+  axios.delete('http://127.0.0.1:5173/software/' + id)
+    .then(res => {
+      loadData()
+    })
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">微信小程序 MP</div>
+  <dl class="nav-cont">
+    <dt>GET</dt>
+    <dd>获取所有数据</dd>
+    <dd>
+      <pre>
+wx.request({
+  url: 'http://127.0.0.1:3000/msg',
+  success:res=>{
+    console.log(res);
+  }
+})</pre>
+    </dd>
+    <dd>根据用户id获取指定数据 - 用户提交前可以根据结果决定是不是已经提交；如果查询结果不为0，则已经提交，不允许再次提交</dd>
+    <dd>
+      <pre>url: 'http://127.0.0.1:3000/user?id='+this.data.id</pre>
+    </dd>
+    <dt>POST</dt>
+    <dd>提交数据；JSON-Server会自动增加id，类型字符串</dd>
+    <dd>
+      <pre>
+wx.request({
+  url: 'http://127.0.0.1:3000/msg',
+  method:'POST',
+  data:{
+    id:2,
+    uname:'nj'
+  },
+  success:res=>{
+    console.log(res);
+  }
+})</pre>
+    </dd>
+    <dt>DELETE</dt>
+    <dd>根据id删除数据；注意是直接拼接id</dd>
+    <dd>
+      <pre>
+wx.request({
+  url: 'http://127.0.0.1:3000/msg/'+e.currentTarget.dataset.id,
+  method: 'DELETE',
+  success: res => {
+    console.log(res);
+  },
+  fail: err => {
+    console.log(err);
+  },
+  complete: () => {
+    console.log('done log');
+  }
+})      </pre>
+    </dd>
+    <dt>PATCH - 修改部分数据</dt>
+    <dt>PUT - 覆盖数据</dt>
+    <dd class="tips">
+      <div>加入数据验证，如：提交数据是否符合要求，是否为空，等等</div>
+      <div>加入分页设计</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <!-- <script src="/utils/custom/star.js"></script> -->
+</body>
+
+</html>

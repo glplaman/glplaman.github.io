@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>依赖 Dependency</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>依赖</h1>
+    <span>&commat;Dependency</span>
+  </header>
+  <div class="tips">全局作用库通常需要在main.js中引入并使用</div>
+  <details>
+    <summary>Nodemon</summary>
+    <dl>
+      <dd>自动检测js文件变化，适合开发时使用</dd>
+      <dd>更多信息，请查看 <a href="https://www.npmjs.com/package/nodemon">GitHub - nodemon</a></dd>
+      <dd class="sn">
+        <div>安装 - 建议使用命令行参数-g全局安装</div>
+        <pre>npm i nodemon -g</pre>
+        <div>监听文件 - 注意当前工作目录和目标文件的路径关系</div>
+        <p>监听指定文件</p>
+        <pre>nodemon xx.js</pre>
+        <p>监听默认文件 - 自动监听配置文件 package.json 里 main 字段指定的文件；默认是 index.js</p>
+        <pre>nodemon</pre>
+        <p>也可以修改 scripts，执行特定命令</p>
+        <pre>
+"scripts": {
+  "server": "nodemon app.js"
+}</pre>
+        <pre>npm server</pre>
+      </dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Nano ID</summary>
+    <dl>
+      <dd>逐渐取代UUID；更多信息，请访问<a href="https://github.com/ai/nanoid/blob/main/README.zh-CN.md">GitHub - Nano ID</a></dd>
+      <dd class="sn">
+        <div>安装</div>
+        <pre>npm install nanoid -S</pre>
+        <div>引入</div>
+        <pre>import {nanoid} from 'nanoid'</pre>
+        <div>使用</div>
+        <pre>
+//默认长度 - 21
+nanoid()
+//指定长度 - 8
+nanoid(8)      </pre>
+      </dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Multer</summary>
+    <dl>
+      <dd>Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+      </dd>
+      <dd>Multer is a node.js middleware for handling <span class="warn">multipart/form-data</span>, which is
+        primarily used for uploading files. It is written on top of busboy for maximum efficiency.</dd>
+      <dd>Multer adds a body object and a file or files object to the request object:</dd>
+      <dd>The <span class="warn">body</span> object contains the values of the <span class="warn">text</span> fields
+        of the form.</dd>
+      <dd>the <span class="warn">file</span> or files object contains the <span class="warn">files</span> uploaded via
+        the form.</dd>
+      <dd>. upload.none()：only text field</dd>
+      <dd>. upload.single(file)：single file</dd>
+      <dd>. upload.array()：multiple files</dd>
+      <dd>安装依赖 - 推荐使用 npm；更多信息，请查看 <a href="https://www.npmjs.com/package/multer#readme">NPM - multer</a>
+      </dd>
+      <pre>npm install multer --save</pre>
+    </dl>
+  </details>
+  <details>
+    <summary>MD5</summary>
+    <dl>
+      <dd>信息摘要</dd>
+      <dd>更多信息，请查看 <a href="https://www.npmjs.com/package/md5js">NPM - md5js</a>；此外还有
+        <a href="https://www.npmjs.com/package/md5">NPM - MD5</a>、<a href="https://www.npmjs.com/package/crypto-js">NPM
+          -
+          crypto-js</a>
+      </dd>
+      <dd class="sn">
+        <div>安装</div>
+        <pre>npm install md5js</pre>
+        <div>引入</div>
+        <pre>import { md5 } from 'md5js';</pre>
+        <div>使用</div>
+        <pre>
+console.log(md5('message'));    //16位；默认
+console.log(md5('message',32)); //32位</pre>
+      </dd>
+    </dl>
+  </details>
+  <details>
+    <summary>XLSX</summary>
+    <dl>
+      <dd>电子表格的处理 - the Common Spreadsheet Format (CSF)</dd>
+      <dd>更多信息，请查看 <a href="https://www.npmjs.com/package/xlsx">NPM - SheetJS</a>、<a
+          href="https://github.com/rockboom/SheetJS-docs-zh-CN">GitHub - SheetJS js-xlsx</a></dd>
+      <dt>基本概念</dt>
+      <dd><a href="https://www.npmjs.com/package/xlsx#cell-object">单元格 - Cell Object</a></dd>
+      <dd><a href="https://www.npmjs.com/package/xlsx#sheet-objects">工作表 - Sheet Object</a></dd>
+      <dd>sheet[address] returns the cell object for the specified address</dd>
+      <dd><a href="https://www.npmjs.com/package/xlsx#workbook-object">工作簿 - Workbook Object</a></dd>
+      <dd>workbook.SheetNames is an ordered list of the sheets in the workbook</dd>
+      <dd>wb.Sheets[sheetname] returns an object representing the worksheet</dd>
+      <dt>基本过程</dt>
+      <dd class="sn">
+        <div>获取数据 Acquire Data</div>
+        <div>解析数据 Extract Data</div>
+        <div>处理数据 Process Data</div>
+        <div>输出数据 Package Data</div>
+        <div>释放数据 Release Data</div>
+      </dd>
+      <dt>高频API</dt>
+      <dd class="sn">
+        <div><a href="https://www.npmjs.com/package/xlsx#parsing-functions">Parsing functions</a></div>
+        <p>读取文件流 - XLSX.read(data, read_opts) attempts to parse data.</p>
+        <p>读取文件 - XLSX.readFile(filename, read_opts) attempts to read filename and parse.</p>
+        <div><a href="https://www.npmjs.com/package/xlsx#html-table-input">HTML Table Input</a></div>
+        <p>. 表格到表单 - XLSX.utils.table_to_sheet(table) - XLSX.utils.table_to_sheet takes a table DOM element and returns
+          a worksheet resembling the input table. Numbers are parsed. All other data will be stored as strings.</p>
+        <p>. 表格到工作簿 - XLSX.utils.table_to_book(table) - XLSX.utils.table_to_book produces a minimal workbook based on
+          the worksheet.</p>
+        <div><a href="https://www.npmjs.com/package/xlsx#json">JSON</a></div>
+        <p>. 表单到JSON - XLSX.utils.sheet_to_json</p>
+        <div><a href="https://www.npmjs.com/package/xlsx#writing-functions">Writing functions</a></div>
+        <p>. 工作簿到文件 - XLSX.writeFile(wb, filename, write_opts)</p>
+      </dd>
+      <dt>Node.js开发</dt>
+      <dd class="sn">
+        <div>安装依赖</div>
+        <pre>npm i xlsx -S</pre>
+        <div>引入包</div>
+        <pre>
+import { ref } from 'vue';
+import * as XLSX from 'xlsx/xlsx.mjs';</pre>
+        <p class="example-sn">使用&lt;input&gt;的file类型。读入excel文件并解析，最后渲染</p>
+        <pre>
+let order = ref([])
+const selExcel = (e) => {
+  const fr = new FileReader()
+  fr.readAsArrayBuffer(e.target.files[0])
+  fr.onload = (ev) => {
+    const res = ev.target.result
+    const workbook = XLSX.read(res, { type: "binary" })
+    const wsName = workbook.SheetNames[0]
+    const sheetJson = XLSX.utils.sheet_to_json(workbook.Sheets[wsName])
+    console.log(sheetJson);
+    order.value = sheetJson
+  }
+}</pre>
+        <p class="example-sn">使用ref模板引用获取表格，将其数据并导出为excel</p>
+        <pre>
+let tbl = ref(null)
+const outExcel = () => {
+  if (tbl.value) {
+    let workbook = XLSX.utils.table_to_book(tbl.value);
+    XLSX.writeFile(workbook, "user.xlsx");
+  } else {
+    console.log("tbl is null");
+  }
+}        </pre>
+      </dd>
+      <dt>HTML 原生开发</dt>
+      <dd>引入dist中的xlsx.full.min.js</dd>
+      <dd>
+        <pre>
+&lt;script src="js/xlsx.full.min.js">&lt;/script&gt;
+&lt;script src="js/export.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  function btn_export() {
+    var table1 = document.querySelector("#table1");
+    var sheet = XLSX.utils.table_to_sheet(table1);//将一个table对象转换成一个sheet对象
+    openDownloadDialog(sheet2blob(sheet), '下载.xlsx');
+  }
+&lt;/script&gt;</pre>
+      </dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Wangeditor</summary>
+    <dl>
+      <dd>富文本编辑器</dd>
+      <dd>建议示例代码调整为setup语法糖模式</dd>
+      <dd>根据项目，适当调整结构的内联样式高度height</dd>
+      <dd>更多信息，请查看 <a href="https://www.wangeditor.com/v5/for-frame.html#vue3">Wangeditor</a></dd>
+      <dd class="sn">
+        <div>安装 - 两个库一起安装</div>
+        <pre>npm install @wangeditor/editor @wangeditor/editor-for-vue@next --save</pre>
+        <div>引入 - 工具栏 Toolbar；编辑器 Editor</div>
+        <pre>
+import { onBeforeUnmount, shallowRef } from 'vue'
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'</pre>
+        <div>配置 - 模式配置 mode；工具栏配置 toolbarConfig；编辑器配置 editorConfig</div>
+        <p>还可以进一步对菜单配置，如配置图片上传</p>
+        <pre>
+const editorRef = shallowRef()  //MUST shallowRef
+
+const mode = 'default'  // 或 simple
+const toolbarConfig = {}
+const editorConfig = { 
+  placeholder: '请输入内容...',
+  //图片上传配置 - 指定接口、名称等属性
+  MENU_CONF: {
+    "uploadImage": {
+      server: '/upload/upload/image',
+      fieldName: 'image',
+      onSuccess(file, res) {
+        console.log(`${file.name} 上传成功`, res)
+      },
+      onFailed(file, res) {
+        console.log(`${file.name} 上传失败`, res)
+      }
+    }
+  }
+}
+
+// 记录 editor 实例，重要！
+const handleCreated = (editor) => {
+  editorRef.value = editor
+}
+
+// 组件销毁时，要及时销毁编辑器
+onBeforeUnmount(() => {
+  const editor = editorRef.value
+  if (editor == null) return
+  editor.destroy()
+})</pre>
+        <div>使用</div>
+        <pre>
+&lt;Toolbar 
+  :editor="editorRef" 
+  :defaultConfig="toolbarConfig" 
+  :mode="mode" /&gt;
+&lt;Editor 
+  v-model="valueHtml" 
+  :defaultConfig="editorConfig" 
+  :mode="mode"
+  @onCreated="handleCreated" /&gt;
+        </pre>
+        <div>样式 - 可以使用flex垂直布局；部分样式需要使用!important提权；略</div>
+        <div>封装为组件 - 建议</div>
+      </dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Silly-Datetime</summary>
+    <dl>
+      <dd>时间格式处理</dd>
+      <dd>更多信息，请查看 <a href="https://www.npmjs.com/package/silly-datetime">silly-datetime</a></dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Dayjs</summary>
+    <dl>
+      <dd>时间格式处理</dd>
+      <dd>更多信息，请查看 <a href="https://day.js.org/en/">Day.js</a></dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Moment</summary>
+    <dl>
+      <dd>时间格式处理</dd>
+      <dd>更多信息，请查看 <a href="https://www.npmjs.com/package/moment">moment.js</a></dd>
+    </dl>
+  </details>
+  <details>
+    <summary>NProgress</summary>
+    <dl>
+      <dd>切换时，使用进度条效果</dd>
+      <dd>更多信息，请查看 <a href="https://www.npmjs.com/package/nprogress">NPM - nprogress</a></dd>
+      <dd>
+        <pre>npm install nprogress</pre>
+      </dd>
+      <dd class="example-sn">路由切换时，指定进度条效果</dd>
+      <dd>1. 在路由文件 index.js 中引入库，其中一个是样式；注意看 node_modules 依赖中的文件关系</dd>
+      <dd>
+        <pre>
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'</pre>
+      </dd>
+      <dd>2. 使用路由守卫；进入时，开始；完成时，结束</dd>
+      <dd>
+        <pre>
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  next()
+})
+
+router.afterEach((to, from) => {
+  NProgress.done();
+})</pre>
+      </dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Formidable</summary>
+    <dl>
+      <dd>A Node.js module for parsing form data, especially <span class="warn">file uploads</span>.</dd>
+      <dd>Formidable是一个Node.js模块，用于解析表单数据，特别是文件上传；更多信息，请查看<a href="https://www.npmjs.com/package/formidable#readme">NPM
+          -
+          formidable</a></dd>
+    </dl>
+  </details>
+  <details>
+    <summary>Mock</summary>
+    <dl>
+      <dd>数据制造机</dd>
+    </dl>
+  </details>
+  <details>
+    <summary>MySql</summary>
+    <dl>
+      <dd>数据库</dd>
+    </dl>
+  </details>
+  <details>
+    <summary>CORS</summary>
+    <dl>
+      <dd>代理</dd>
+      <dd>更多信息，请访问 <a href="https://www.npmjs.com/package/cors">CORS</a></dd>
+    </dl>
+  </details>
+  <details>
+    <summary>QRCode</summary>
+    <dl>
+      <dd>二维码</dd>
+      <dd>更多信息，请访问 <a href="https://www.npmjs.com/package/qrcode">QRCode</a></dd>
+    </dl>
+  </details>
+</body>
+
+</html>

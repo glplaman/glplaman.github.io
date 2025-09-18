@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>异步等待 Async Await</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>异步等待</h1>
+    <span>&commat;Async Await</span>
+  </header>
+  <dl>
+    <dt>特点</dt>
+    <dd>
+      <div>. async/await: 基于 Promise 的语法糖，用于简化 Promise 的使用，使异步代码看起来更像同步代码，从而更容易阅读和维护</div>
+      <div>. 顶级作用域 - await is only valid in async functions and the top level bodies of modules</div>
+      <div>. 配对出现</div>
+      <div>. 使用 async 关键字定义的函数会自动返回一个 Promise</div>
+      <div>. 只能在 async 函数内部使用，用于等待一个 Promise 的解析</div>
+      <div>. 使用 try...catch 块来处理错误</div>
+      <div>. 多用于封装 Promise/fetch 请求</div>
+    </dd>
+    <dt>使用</dt>
+    <dd>
+      <div>1. 不处理异常；更简洁</div>
+      <pre>
+async function loadData(url) {
+  let res = await fetch('./data2021/'+url);
+  let json = await res.json();
+  console.log(json);
+}
+
+loadData('stu.json');</pre>
+      <div>2. 处理异常；更健壮</div>
+      <pre>
+async function getData() {
+  try {
+    let res = await fetch('./data2021/stu.json');
+    console.log(res);
+    let json = await res.json();
+    console.log(json);
+  } catch (err) {
+    console.log(err);
+  }
+}</pre>
+      <pre>
+async function addData() {
+  try {
+    let obj = {
+      author: 'cnplaman',
+      bookname: 'web',
+      publisher: 'cn',
+    }
+    let res = await fetch('http://ajax-base-api-t.itheima.net/api/addbook', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(obj)
+    });
+    console.log(res);
+    let json = await res.json();
+    console.log(json);
+  } catch (err) {
+    console.log(err);
+  }
+}</pre>
+      <div>. 可以使用 finally{} 控制过程，如执行清理操作，如关闭文件、释放资源或记录日志；或者使用加载器；注意和 Promise 的 finally() 区别开来，虽然作用一致</div>
+      <pre>
+async function getData() {
+  container.classList.add('loading')
+  try {
+
+  } catch (err) {
+
+  } finally{
+    container.classList.remove('loading')
+  }
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
