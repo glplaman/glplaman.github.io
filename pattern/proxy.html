@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代理模式 Proxy</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>代理模式</h1>
+    <h3 class="sub-title">Proxy</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>为其它对象提供一个代理以控制对这些对象的访问：代理控制具体对象的引用</dd>
+      <dd>代理可以是任何对象：文件、资源、内存中的对象或者一些难以复制的东西</dd>
+      <dd>用一个类去控制其它的类</dd>
+      <dt>应用</dt>
+      <dd>明星和经纪人：明星是对象，经纪人是代理</dd>
+      <dt>参考代码 - ES5</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Proxy：报酬合适才允许表演</figcaption>
+          <pre>
+class Star {
+  play() {
+    console.log('playing');
+  }
+}
+class Proxy {
+  constructor() {
+    this.star = new Star()
+  }
+  talk(price) {
+    if (price > 1000) {
+      this.star.play()
+    } else {
+      console.log('not allowed');
+    }
+  }
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>
+let proxy = new Proxy()
+proxy.talk(1000)
+proxy.talk(10000)</pre>
+        </figure>
+      </dd>
+      <dt>参考代码 - ES6 - Proxy</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Proxy：仿Vue数据驱动；news是一个DOM节点</figcaption>
+          <pre>
+let obj = {}
+let pro = new Proxy(obj, {
+  get(tar, key) {
+    return tar[key]
+  },
+  set(tar, key, val) {
+    if (key == 'data') {
+      tar[key] = val
+      news.innerHTML = val
+    } else {
+      console.log('not allowed');
+    }
+  }
+})</pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

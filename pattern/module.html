@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模块化模式 Module</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>模块化模式</h1>
+    <h3 class="sub-title">Module</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>最初被定义为在传统软件工程中为类提供私有和公共 <span class="warn">封装</span> 的一种方法</dd>
+      <dd>能够使一个单独的对象拥有公共|私有的方法和变量，从而屏蔽来自全局作用域的特殊部分</dd>
+      <dd>有助于 <span class="warn">减少</span> 函数名在页面中与其它脚本区域内定义的函数名 <span class="warn">冲突</span> 的可能性</dd>
+      <dd>使用该模式，只需返回|导出一个公有API，其它都维持在私有域中</dd>
+      <dt>应用</dt>
+      <dd>导出函数：每个业务逻辑对应一个js，避免把所有的业务逻辑集中到一个js </dd>
+      <dd>导出变量：很少单独导出一个变量，而是以json对象的形式给出，特别是配置文件 </dd>
+      <dd>推荐写法：js只有一个业务逻辑，采用默认导出 </dd>
+      <dd>引用时，请使用import；不要使用require </dd>
+      <dd>引用时，可以省略后缀名js - 需要检验</dd>
+      <dd>引用时注意路径的问题，大多数开发环境要求是相对路径</dd>
+      <dt>参考代码</dt>
+      <dd>默认导出，只能整体引入</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Module：test.js，默认导出全部</figcaption>
+          <pre>
+let count = 0;
+function dec() {
+  return --count;
+}
+function inc() {
+  return ++count;
+}
+export default {
+  dec, inc
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Module：全部导入，纯js需指定script的type为module</figcaption>
+          <pre>
+&lt;script type="module"&gt;
+  import test from './test.js'
+  console.log(test);
+  console.log(test.inc());
+  console.log(test.inc());
+  console.log(test.inc());
+&lt;/script&gt;</pre>
+        </figure>
+      </dd>
+      <dt>参考代码</dt>
+      <dd>普通导出，可以按需引入</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Module：test.js，普通导出</figcaption>
+          <pre>
+let count = 0;
+function dec() {
+  return --count;
+}
+function inc() {
+  return ++count;
+}
+export {
+  dec, inc
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Module：按需导入</figcaption>
+          <pre>
+&lt;script type="module"&gt;
+  import { inc } from './test.js'
+  console.log(inc());
+  console.log(inc());
+  console.log(inc());
+&lt;/script&gt;</pre>
+        </figure>
+      </dd>
+      <dt>定义配置信息</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Module：person.js，默认导出</figcaption>
+          <pre>
+export default {
+  "name": 'gl',
+  "age": 24
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Module：按需导入</figcaption>
+          <pre>
+&lt;script type="module"&gt;
+  import person from './person.js'
+  console.log(person);
+&lt;/script&gt;</pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽象工厂模式 AbstractFactory</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>抽象工厂模式</h1>
+    <h3 class="sub-title">Abstract Factory</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>不直接生成实例，而是创建不同的类 </dd>
+      <dd>每个类可以创建自己的方法 </dd>
+      <dd>实际前端开发中，一个简单工厂模式就够用了。哈哈</dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Abstract Factory</figcaption>
+          <pre>
+class User {
+  constructor(name, role, pages) {
+    this.name = name
+    this.role = role
+    this.pages = pages
+  }
+  greeting() {
+    console.log('hello,' + this.name);
+  }
+  dataShow() {
+    console.log('data');
+  }
+}
+
+class SuperAdmin extends User {
+  constructor(name) {
+    super(name, 'SuperAdmin', ['home', 'news', 'user', 'right'])
+  }
+  dataShow() {
+    console.log('your datashow');
+  }
+  addUser() {
+    console.log('you can add user');
+  }
+  addRight() {
+    console.log('you can add right');
+  }
+}
+
+class Admin extends User {
+  constructor(name) {
+    super(name, 'Admin', ['home', 'news', 'user'])
+  }
+  dataShow() {
+    console.log('your datashow');
+  }
+  addUser() {
+    console.log('you can add user');
+  }
+}
+
+class Editor extends User {
+  constructor(name) {
+    super(name, 'Editor', ['home', 'news'])
+  }
+  dataShow() {
+    console.log('your datashow');
+  }
+}
+
+function AbstractFactory(role) {
+  switch (role) {
+    case 'SuperAdmin':
+      return SuperAdmin;
+      break;
+    case 'Admin':
+      return Admin;
+      break;
+    case 'Editor':
+      return Editor;
+      break;
+    default:
+      return new Error('Wrong Para')
+      break;
+  }
+}          </pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>
+let fac = AbstractFactory('SuperAdmin')
+let user = new fac('glin')          </pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

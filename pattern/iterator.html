@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>迭代器模式 Iterator</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>迭代器模式</h1>
+    <h3 class="sub-title">Iterator</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>创建迭代器接口</dd>
+      <dd>ES5中自定义迭代器</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Iterator - 具体的业务逻辑由回调函数cb实现，如页面渲染</figcaption>
+          <pre>
+let iterator = function (arr, cb) {
+  arr.forEach((item, ind) => {
+    cb(ind, item)
+  })
+}
+iterator([1, 2, 3, 4, 5, 6, 7, 8, 9], (key, val) => {
+  console.log(key, val);
+})          </pre>
+        </figure>
+      </dd>
+      <dd>ES6中提供有迭代器 Iterator对象：Array、String、Set、Arguments、NodeLists，使用 <span class="warn">for-of</span> 即可迭代其中的数据</dd>
+      <dd>对象Object虽然可以使用 <span class="warn">for-in</span> 遍历，但是这个不是迭代；通过序列化和增加长度属性可以实现迭代</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Iterator - Object不支持迭代</figcaption>
+          <pre>
+let obj = {
+  name: 'gl',
+  age: 20,
+  gender: 'male'
+}
+//OK
+for (val in obj) {
+  console.log(obj[val]);
+}
+
+//Uncaught TypeError: obj is not iterable
+for (val of obj) {
+  console.log(val);
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Iterator - 改造后的obj</figcaption>
+          <pre>
+let obj = {
+  0: "gl",
+  1: 20,
+  2: "male",
+  length: 3,
+  [Symbol.iterator]: Array.prototype[Symbol.iterator]
+}
+for (val of obj) {
+  console.log(val);
+}</pre>
+        </figure>
+      </dd>
+      <dt>应用</dt>
+      <dd></dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Iterator</figcaption>
+          <pre></pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre></pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

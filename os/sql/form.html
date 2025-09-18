@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>范式 Form</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <link rel="stylesheet" href="../../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>范式</h1>
+      <h3>Form</h3>
+    </header>
+    <main>
+      <dl>
+        <dd>
+          <figure class="img-sn">
+            <img src="../imgs/egg.jpeg" alt="">
+            <figcaption>不要把所有鸡蛋放在同一个篮子</figcaption>
+          </figure>
+        </dd>
+        <dt>概述</dt>
+        <dd>. 是关系模式满足不同程度的规范化要求的标准，如建材的甲醛标准</dd>
+        <dd>. 满足最低程度要求的范式属于第一范式，简称1NF；在第一范式中进一步满足一些要求的关系属于第二范式，简称2NF；依次类推</dd>
+        <dd>. 对关系模式的属性间的函数依赖加以不同的限制就形成了不同的范式。这些范式是递进的，即如果一个关系是1NF的，它比不是1NF的关系要好；同样，2NF的关系比1NF的关系要好等等 </dd>
+        <dd>. 范式越高、规范化程度越高，关系模式就越好，数据库冗余越小 </dd>
+        <dd class="em txt-center">1NF &sup; 2NF &sup; 3NF &sup; BCNF &sup; 4NF &sup; 5NF</dd>
+        <dd class="tips">
+          <div>. 没有冗余的数据库未必是最好的数据库， 有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据 </div>
+          <div>. 一般说来，数据库只需满足第三范式3NF就行了 </div>
+          <div>. 尽量将依赖降低之最少 </div>
+          <div>. 尽量为每一个实体单独创建关系，通过外键和其它实体发生联系</div>
+        </dd>
+        <dt>1NF</dt>
+        <dd>. 关系模式R的每一个分量|每个列与行的交点处的取值，都是不可再分的数据项|原子性</dd>
+        <dd>. 属性值只有原子值 | 不可分解；强调的是列的原子性，即列不能够再分成其他的几列</dd>
+        <dd>. 存在问题：数据冗余、删除异常、更新异常、插入异常</dd>
+        <dd>. 级别最低</dd>
+        <dd>. 我们使用的Excel表单基本上都不符合1NF</dd>
+        <dd>
+          <table class="tbl-sn">
+            <caption>常见的可分解字段</caption>
+            <tr>
+              <th>字段</th>
+              <th>说明</th>
+            </tr>
+            <tr>
+              <td>工资</td>
+              <td>多个项目</td>
+            </tr>
+            <tr>
+              <td>家庭成员</td>
+              <td>多个成员</td>
+            </tr>
+            <tr>
+              <td>高级职称</td>
+              <td>副教授、教授</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>2NF</dt>
+        <dd>. 每一个非主属性都完全依赖于 <span class="em">任何</span> 一个候选码；即：消除非主属性对候选码的 <span class="em">部分</span> 依赖</dd>
+        <dd>. 只有在复合属性作主键时，才可能出现不满足2NF的情况</dd>
+        <dd>. 2NF要求：使用唯一主键，不能使用组合键|联合主键|复合键</dd>
+        <dd>. 2NF要求：一个表只描述一件事情</dd>
+        <dd>. 某个关系R中，AB是候选码，C是非主属性；如A &rarr; C，B &rarr; C，则存在非主属性C是对候选码的部分依赖，R &notin; 2NF</dd>
+        <dd>. 如果仅有A &rarr; C，则C完全依赖候选码A，R &in; 2NF</dd>
+        <dt>3NF</dt>
+        <dd>. 消除非主属性对候选码的 <span class="em">传递</span> 依赖，即： <span class="em">非主属性之间不存在函数依赖</span></dd>
+        <dd>. 如果非主属性存在函数依赖，而非主属性又完全依赖候选码，所以就存在非主属性到主属性之间的函数传递</dd>
+        <dd>. 表中的每一列只与主码直接相关而不是间接相关 | 表中的每一列只能依赖于主码 </dd>
+        <dd>. 断开传递链</dd>
+        <dd>. 某个关系R中，AB是候选码，C、D是非主属性；如AB &rarr; C，C &rarr; D，则存在非主属性D是对候选码的传递依赖，R &notin; 3NF</dd>
+        <dd class="grid2">
+          <table class="tbl-sn">
+            <caption>原始设计</caption>
+            <tr>
+              <th>字段名</th>
+              <th>说明</th>
+              <th>实例</th>
+            </tr>
+            <tr>
+              <td>orderId</td>
+              <td>订单编号</td>
+              <td>101</td>
+            </tr>
+            <tr>
+              <td>roductId</td>
+              <td>产品编号</td>
+              <td>1001</td>
+            </tr>
+            <tr>
+              <td>count</td>
+              <td>数量</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>price</td>
+              <td>单价</td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>total</td>
+              <td>金额</td>
+              <td>8000</td>
+            </tr>
+          </table>
+          <table class="tbl-sn">
+            <caption>优化设计</caption>
+            <tr>
+              <th>字段值</th>
+              <th>说明</th>
+              <th>实例</th>
+            </tr>
+            <tr>
+              <td>orderId</td>
+              <td>订单编号</td>
+              <td>101</td>
+            </tr>
+            <tr>
+              <td>roductId</td>
+              <td>产品编号</td>
+              <td>1001</td>
+            </tr>
+            <tr>
+              <td>count</td>
+              <td>数量</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>price</td>
+              <td>单价</td>
+              <td>80</td>
+            </tr>
+            <tr style="text-decoration: line-through;">
+              <td>total</td>
+              <td>金额</td>
+              <td>8000</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>巴斯-科德范式 BCNF</dt>
+        <dd>. 多值依赖</dd>
+        <dd>. 是第三范式的补充，且要满足： </dd>
+        <dd>. 主码之间不存在依赖|主码独立</dd>
+        <dd>. 在3NF的基础上消除主属性对于码的部分与传递函数依赖</dd>
+        <dd>. 给出R(A,B,C)，F{AB &rarr; C}，R &in; BCNF</dd>
+        <dd class="tips">
+          <div>. 2NF、3NF关注的重点都是非主属性的函数依赖</div>
+          <div>. BCNF关注的是主属性的函数依赖</div>
+          <div>. 如果没有非主属性，即全部都是主属性，则至少是3NF</div>
+          <div>. 判断某个属性是否存在依赖或是说明依赖，只需要看该属性在右部的情况</div>
+        </dd>
+        <dt>范式识别</dt>
+        <dd class="number">
+          <div>找候选码 </div>
+          <div>区分主属性、非主属性</div>
+          <div>找非主属性的部分函数依赖；如果主码是单属性，那只需要判断是否完全依赖；组合属性才需要判断部分依赖</div>
+          <div>找非主属性的传递函数依赖</div>
+          <div>判断第几范式</div>
+        </dd>
+        <dd class="example-sn">关系模式R（A1,A2,A3,A4,A5,A6），函数依赖集F={A1→A3, A1A2→A4, A5A6→A1, A3A5→A6, A2A5→A6}，其中，（）主键，R为（）。
+        </dd>
+        <dd class="grid2">
+          <div class="alpha">
+            <div>A1A4 </div>
+            <div>A2A5 </div>
+            <div>A3A4 </div>
+            <div>A4A5</div>
+          </div>
+          <div class="alpha">
+            <div>不存在传递依赖，是1NF </div>
+            <div>不存在传递依赖，是2NF </div>
+            <div>存在传递依赖，是3NF </div>
+            <div>每个非主属性完全依赖主键，是2NF</div>
+          </div>
+        </dd>
+        <dd class="qa">
+          <div>A4在R。肯定不是，排除ACD，&there4; B；A2在L，一定是，进一步确定</div>
+          <div>D</div>
+        </dd>
+        <dd class="example-sn">已知R&lt;U,F&gt;，U={A,B,C}，F={AC→B,B→C}，求候选码并判断其范式</dd>
+        <dd class="grid2">
+          <div class="alpha">
+            <div>A </div>
+            <div>AB </div>
+            <div>ABC </div>
+            <div>以上都不是</div>
+          </div>
+          <div class="alpha">
+            <div>1NF</div>
+            <div>2NF</div>
+            <div>3NF</div>
+            <div>BCNF</div>
+          </div>
+        </dd>
+        <dd class="qa">
+          <div>A在L部，A肯定在。BC都LR，可能是。只能是AB或AC，所以选B[实际上AC也是候选码，不存在非主属性，应该是3NF+]</div>
+          <div>主属性C部分依赖于候选码，所以不是BCNF，是3NF</div>
+        </dd>
+        <dd class="example-sn">已知R&lt;U,F&gt;，U={A,B,C}，F={B→C,B→A,A→BC}，判断其范式</dd>
+        <dd class="qa">
+          <div>直观的去分析：B能推出A、C，所以B是候选码；同样，A可以推出BC，A也是候选码</div>
+          <div>C在右部，不是候选码，只能是A、B</div>
+          <div>B可以推出A，还可以推出C，所以B是候选码</div>
+          <div>同理，A也可以推出BC，所以A也是候选码</div>
+          <div>主属性是AB，非主属性是C</div>
+          <div>非主属性C完全于候选码B，至少是3NF</div>
+          <div>候选码A、B都是单属性，不存在部分依赖，同样也不存在传递依赖，&there4; R &in; BCNF</div>
+        </dd>
+        <dd class="example-sn">已知R&lt;U,F&gt;，U={A,B,C}，F={A→C,A→B}，判断其范式</dd>
+        <dd class="qa">
+          <div>BCNF</div>
+          <div>模式合并后，A→BC，只有一个依赖，肯定是BCNF</div>
+          <div>另：A是主码；主码和非主码之间都没有部分和传递，&there4; BCNF</div>
+        </dd>
+        <dd class="example-sn">已知R&lt;U,F&gt;，U={A,B,C,D}，F={A→C,BC→D}，判断其范式</dd>
+        <dd class="qa">
+          <div>候选码是AB</div>
+          <div>AB是主属性；CD是非主属性</div>
+          <div>非主属性C依赖于A，是部分依赖于候选码AB，所以是1NF</div>
+        </dd>
+      </dl>
+      <div class="chap">模式分解</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>. 将一个低级范式的关系模式转换为若干个高级范式的关系模式的过程，称为规范化</dd>
+        <dd>. 通过分解后的模式达到第几范式来评价模式规范化的程度 </dd>
+        <dd>. 拆表：利用投影分隔列</dd>
+        <dd class="em txt-center">谁跟你好，就带谁走</dd>
+        <dd>. 基本过程</dd>
+        <dd class="number">
+          <div>找候选码 </div>
+          <div>找非主属性 </div>
+          <div>消除非主属性对候选码的部分依赖→2NF </div>
+          <div>消除非主属性对候选码的传递依赖→3NF </div>
+          <div>消除主属性对候选码的传递依赖→BCNF</div>
+        </dd>
+        <dd class="example-sn">S-L-C(Sno,Sdept,Sloc,Cno,Grade)，Sloc是学生的宿舍，一个系的学生住一起</dd>
+        <dd class="qa number">
+          <div>求码</div>
+          <p>S-L-C(Sno,Cno)</p>
+          <div>标记主属性和非主属性</div>
+          <p>主属性：Sno,Cno</p>
+          <p>非主属性：Sdept,Sloc,Grade</p>
+          <div>列出函数依赖</div>
+          <p>(Sno,Cno) &rarr; Grade</p>
+          <p>Sno &rarr; Sdept</p>
+          <p>Sno &rarr; Sloc</p>
+          <p>Sdept &rarr; Sloc</p>
+          <div>判断范式</div>
+          <p>非主属性 Sdept，Sloc部分依赖候选码|没有完全依赖于候选码：依赖Sno，但不依赖Cno</p>
+          <p>&there4; 不属于2NF，属于1NF</p>
+          <div>模式分解：S-L-C(Sno,Sdept,Sloc,Cno,Grade)</div>
+          <p>S-C(Sno,Cno) &rarr; Grade &in; 2NF</p>
+          <p>S-L(Sno,Sdept,Sloc) &in; 2NF</p>
+          <div>继续判断</div>
+          <p>S-L(Sno,Sdept,Sloc) 存在传递依赖</p>
+          <div>模式分解：S-L(Sno,Sdept,Sloc)</div>
+          <p>S-D(Sno,Sdept) &in; 3NF</p>
+          <p>D-L(Sdept,Sloc) &in; 3NF</p>
+        </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

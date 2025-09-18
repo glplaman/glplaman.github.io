@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>订阅发布模式 Subscriber</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>订阅发布模式</h1>
+    <h3 class="sub-title">Subscriber</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>和观察者一样，包括：观察者和观察目标</dd>
+      <dd>观察者模式下，两者互相知道，如要添加观察目标，并没有完全解耦</dd>
+      <dd>可以细分管控：区分订阅</dd>
+      <dd>订阅发布者模式下，发布者只管发布，谁订阅了，它不知道</dd>
+      <dd>通过第三方集中调度，相当于解耦的观察者模式</dd>
+      <dt>应用</dt>
+      <dd>面包屑</dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Subscriber：以方法test1、test2代替类的方法</figcaption>
+          <pre>
+const Center = {
+  message: {},
+  publich(type, data) {
+    if (!this.message[type]) return;
+    this.message[type].forEach(item => item(data))
+  },
+  subscribe(type, cb) {
+    if (!this.message[type]) {
+      this.message[type] = [cb]
+    } else {
+      this.message[type].push(cb)
+    }
+  },
+  unSubscribe(type, cb) {
+    if (!this.message[type]) return;
+    this.message = this.message[type].filter(item => item != cb)
+  }
+}
+function test1(data) {
+  console.log('test1', data);
+}
+function test2(data) {
+  console.log('test2', data);
+}          </pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>
+Center.subscribe('a', test1)
+Center.subscribe('b', test2)
+Center.subscribe('b', test1)
+Center.publich('a', 111)
+Center.publich('b', 222)</pre>
+        </figure>
+      </dd>
+      <dt>面包屑</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Subscriber</figcaption>
+          <pre>
+const Center = {
+  message: {},
+  publich(type, data) {
+    if (!this.message[type]) return;
+    this.message[type].forEach(item => item(data))
+  },
+  subscribe(type, cb) {
+    if (!this.message[type]) {
+      this.message[type] = [cb]
+    } else {
+      this.message[type].push(cb)
+    }
+  },
+  unSubscribe(type, cb) {
+    if (!this.message[type]) return;
+    this.message = this.message[type].filter(item => item != cb)
+  }
+}
+Center.subscribe('updateDOM', data => {
+  document.querySelector('#bread').innerHTML = data
+})
+news.addEventListener('click', (e) => {
+  if (e.target.tagName == 'LI') {
+    Center.publich('updateDOM', e.target.innerHTML)
+  }
+})          </pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

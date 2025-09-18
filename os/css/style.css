@@ -1,0 +1,244 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css);
+
+:root {
+  --main-color: #ff5d73;
+  --main-bg: #fff;
+  --header-color: #4bc2ce;
+  --tbl-border-color: #999;
+  --tbl-bg-color: #eff0f0;
+  --tbl-bg-active-color: #fbeadc;
+  --bg-exam-color: #e3f7ef;
+  --tips-bg: #f9efd4;
+  --header-h: 20rem;
+  --bar-h: 10rem;
+  --font-size: 62.5%;
+  --main-padding: 1rem;
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+footer,
+header,
+table,
+h1,
+h3,
+p,
+img,
+figure,
+iframe {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  font-family: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+figure {
+  margin: 2rem auto;
+}
+
+i {
+  color: var(--main-color);
+}
+
+th {
+  font-weight: normal;
+  font-weight: 600;
+}
+
+table {
+  max-width: 100%;
+  min-width: 350px;
+  border-top: 2px solid var(--tbl-border-color);
+  border-bottom: 2px solid var(--tbl-border-color);
+  margin: 2rem auto;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+table tr:has(th) {
+  border-bottom: 1px solid var(--tbl-border-color);
+}
+
+.tbl-cell-bg td {
+  background-color: var(--tbl-bg-color);
+}
+
+.tbl-cell-bg .active {
+  background-color: var(--tbl-bg-active-color);
+}
+
+.warn {
+  color: var(--main-color);
+}
+
+.col2 {
+  columns: 350px 2;
+  column-gap: 4rem;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 10px;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+.txt-justify {
+  text-align: justify;
+}
+
+.txt-indent {
+  text-indent: 2em;
+}
+
+.em {
+  font-weight: 600;
+}
+
+.em.txt-center {
+  margin: 4rem auto;
+  font-size: 120%;
+}
+
+.qa {
+  margin-bottom: 1rem;
+}
+
+.qa::before {
+  content: '[解]';
+}
+
+.qa>* {
+  text-indent: 2em;
+  background-color: var(--bg-exam-color);
+}
+
+.tips {
+  text-indent: 2em;
+  border-left: 4px solid var(--main-color);
+  margin: 4rem auto;
+  background-color: var(--tips-bg);
+  padding: 1rem;
+}
+
+.concept {
+  background-color: var(--bg-exam-color);
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 6px;
+  text-indent: 2em;
+}
+
+.chap {
+  height: var(--bar-h);
+  line-height: calc(1.5*var(--bar-h));
+  font-size: 2rem;
+  letter-spacing: 2px;
+  color: var(--main-bg);
+  padding-left: var(--main-padding);
+  background-color: var(--header-color);
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: #f4f4f4;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr 150px;
+  width: 100%;
+  max-width: 100rem;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--main-bg);
+}
+
+.container::before {
+  content: '';
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  box-shadow: -1px 0 2rem 1.6rem rgba(0, 0, 0, .1);
+}
+
+.container::after {
+  content: '';
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  box-shadow: 1px 0 2rem 1.6rem rgba(0, 0, 0, .1);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--main-padding);
+  color: #fff;
+  padding: var(--main-padding);
+  background: linear-gradient(180deg, #4bc2ce, #2980b9);
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+dl {
+  line-height: 2;
+  padding: 0 var(--main-padding);
+}
+
+dt {
+  font-weight: 600;
+  margin: 4rem auto 0rem;
+}
+
+dd {
+  text-align: justify;
+}
+
+iframe {
+  width: 100%;
+}
+
+@media screen and (max-width:768px) {
+  :root {
+    --header-h: 12rem;
+    --font-size: 50%;
+  }
+}

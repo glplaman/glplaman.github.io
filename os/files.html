@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件管理 File</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>文件管理</h1>
+      <h3>File</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>知识点 Keypoints</dt>
+        <dd class="number">
+          <div>文件</div>
+          <div>目录</div>
+          <div>文件分配方式</div>
+          <div>文件存储管理</div>
+        </dd>
+      </dl>
+      <div class="chap">文件 File</div>
+      <dl>
+        <dt>逻辑结构</dt>
+        <dt>物理结构</dt>
+      </dl>
+      <div class="chap">目录 Directory</div>
+      <dl>
+        <dt></dt>
+      </dl>
+      <div class="chap">文件分配方式</div>
+      <dl>
+        <dt>顺序分配</dt>
+        <dt>链式分配</dt>
+        <dt>索引分配</dt>
+        <dd>. 拿空间换时间</dd>
+        <dd>. 索引分配允许文件离散的分配在各个磁盘块中，系统会为每个文件建立一张<span class="em">索引表</span>：记录了文件的各个逻辑块对应的<span class="em">物理块</span>
+        </dd>
+        <dd>. 存放索引表的磁盘块称为 <span class="em">索引块</span> ，存放文件数据的磁盘块称为<span class="em">数据块</span></dd>
+        <dd>. 需要知道一个索引块放几个索引，从而更加多级索引求整体大小容量</dd>
+        <dd>. 可以创建单索引、多索引或混合索引</dd>
+        <dd class="example-sn">某文件系统采用多级索引结构。若磁盘块的大小为512B，每个块号需占3B，那么根索引采用一级索引时的文件最大长度为（）KB，采用二级索引时的文件最大长度为（）KB。</dd>
+        <dd class="qa">
+          <div>每个磁盘块有块号：512/3=170个。放不下171 </div>
+          <div>一级索引，满时：170*512B=85*1024B=85KB</div>
+          <div>二级索引，满时：170*170*512B=85*170KB=14450KB</div>
+        </dd>
+        <dd class="example-sn">
+          某文件系统存储文件采用索引节点法。磁盘快和索引块大小均为1KB，每个文件的索引节点有8个地址项add0-add7。每个地址项大小4B，其中add0-add5为直接索引，add6为一级索引，add7为二级索引。如果某文件的逻辑块号分别是0、260和518，则系统应分别采用（）。该文件系统可以表示的单个文件的最大程度是（）KB。
+        </dd>
+        <dd class="alpha">
+          <div>直接地址索引、一级间接地址索引和二级间接地址索引</div>
+          <div>直接地址索引、二级间接地址索引和二级间接地址索引</div>
+          <div>一级地址索引、一级间接地址索引和二级间接地址索引</div>
+          <div>一级地址索引、二级间接地址索引和二级间接地址索引</div>
+        </dd>
+        <dd class="alpha">
+          <div>518</div>
+          <div>1030</div>
+          <div>16516</div>
+          <div>65789</div>
+        </dd>
+        <dd class="qa">每个索引项对应的文件的逻辑块号
+          <div>每个块地址项个数 = 块大小1KB/地址项大小4B = 256个</div>
+          <figure class="img-sn">
+            <img src="./imgs/file0.png" alt="">
+            <figcaption>索引分配</figcaption>
+          </figure>
+          <div>&there4; 0、260和518逻辑块号分别采用直接地址索引、一节间接地址索引和二级间接地址索引，选A</div>
+          <div>单个文件最大为：6*1KB+256*1KB+256*256*1KB=65798KB，选D</div>
+        </dd>
+      </dl>
+      <div class="chap">文件存储管理</div>
+      <dl>
+        <dt>空闲表</dt>
+        <dt>空闲链</dt>
+        <dt>位示图</dt>
+        <dd>. 用来记录文件存储器的使用情况</dd>
+        <dd>. <span class="em">每一位bit对应文件存储器的一个物理块</span>：0、1表示空闲还是占用 </dd>
+        <dd>. 所有的空闲块使用指针指向下一个空闲块：以链表的形式形成空闲块链 </dd>
+        <dd>. 存储单位是 <span class="em">字长</span> ，如32位字长</dd>
+        <dd>. 物理块编号 / 字长 = 商 ... 余数；商是字数|第几字，余数是位数|第几位；均从0开始</dd>
+        <dd class="example-sn">某系统的字长为32位，物理块从0开始，第33号物理块位于第1字，第1位标记为1；33|32=1...1</dd>
+        <dd>
+          <table>
+            <tr>
+              <th></th>
+              <th>31</th>
+              <th>30</th>
+              <th>...</th>
+              <th>1</th>
+              <th>0</th>
+            </tr>
+            <tr>
+              <td>第0字</td>
+              <td>.</td>
+              <td>.</td>
+              <td>.</td>
+              <td>.</td>
+              <td>.</td>
+            </tr>
+            <tr>
+              <td>第1字</td>
+              <td>.</td>
+              <td>.</td>
+              <td>...</td>
+              <td class="em-cell">1</td>
+              <td>.</td>
+            </tr>
+          </table>
+        </dd>
+        <dd class="example-sn">某文件管理系统采用位示图Bitmap记录磁盘使用情况。计算机系统的字长为64位，磁盘容量为512GB，物理块大小为4MB，那么位示图的大小为多个字？</dd>
+        <dd class="qa">
+          <div>1. 从容量守恒入手</div>
+          <div>x * 64 * 4MB = 512GB</div>
+          <div>&there4; x = 512GB / 4MB /64 = 2K</div>
+          <div>2. 从编址入手</div>
+          <div>物理块数 = 512GB / 4MB = 128K</div>
+          <div>每个物理块对应个bit位，共需要128K个bit位</div>
+          <div>&becaus; 字长是64bit</div>
+          <div>&there4; 位示图共有：128K / 64 = 2K</div>
+        </dd>
+        <dd class="example-sn">
+          某文件管理系统采用位示图Bitmap记录磁盘使用情况。物理块依次编号为0，1，2...。系统字长为32位，每一位对应文件存储器上的一个物理块，使用01表示空闲或占用。问：第4195号物理快分配给某文件，其对应的位示图中第几个字描述？该字的第几位应该置1？
+        </dd>
+        <dd class="qa">
+          <div>4195 / 32 = 131余3</div>
+          <div>&there4; 对应第131个字第3位</div>
+          <div>可以使用特殊值推导</div>
+        </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

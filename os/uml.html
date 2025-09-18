@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>统一建模语言 UML</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>统一建模语言</h1>
+      <h3>UML</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>知识点 Keypoints</dt>
+        <dd class="number">
+          <div>类图 Class Diagram</div>
+          <div>用例图 Use Case Diagram</div>
+        </dd>
+      </dl>
+      <div class="chap">类图 Class Diagram</div>
+      <dl>
+        <dd>.展现了一组对象、接口和协作和他们之间的关系</dd>
+        <dt>类</dt>
+        <dd class="number">
+          <div>实体类：永久存在，名词</div>
+          <div>边界类：交互，对话框、窗口、二维码，名词</div>
+          <div>控制类：执行逻辑，业务逻辑，动词</div>
+        </dd>
+        <dt>属性</dt>
+        <dt>方法</dt>
+        <dt>接口</dt>
+        <dt>关系</dt>
+        <dd class="number">
+          <div>关联关系 Association</div>
+          <p>. <span class="warn">拥有</span> 关系</p>
+          <p>. 有时也使用实线直接连接</p>
+          <figure class="img-sn">
+            <img src="./imgs/cd2.png" alt="">
+            <figcaption>关联</figcaption>
+          </figure>
+          <div>依赖关系 Dependence</div>
+          <p>. <span class="warn">使用</span> 关系</p>
+          <p>. 尽量不要使用双向依赖，耦性太强</p>
+          <p>. 一个类A的方法中使用到了另外一个类B：或作为 <span class="em">局部变量</span> ，或作为方法的 <span class="em">参数</span>
+            ；即：类B作为类A的方法的参数或局部变量存在</p>
+          <p>. 这个使用是临时的、偶然的、弱关系</p>
+          <p>. 虚线箭头从使用类指向被使用类|被依赖类</p>
+          <figure class="img-sn">
+            <img src="./imgs/cd5.png" alt="">
+            <figcaption>依赖</figcaption>
+          </figure>
+          <div>聚合关系 Aggregation</div>
+          <p>. 是一种强关联关系：整体和部分的关系，一个类作为另外一个类的成员对象|属性 </p>
+          <p>. 通常包含多个 <span class="em">成员对象</span>；将多个部分聚合到一起 </p>
+          <p>. 但是部分可以脱离整体而独立存在，如系统由多个功能模块组成，每个模块都可以单独存在 </p>
+          <p>. 球队和多个球员、学校和多个老师、车和多个轮胎、一个发动机、电脑和CPU </p>
+          <p>. 实线空心菱形open diamond表示，指向聚合的地方|整体类</p>
+          <figure class="img-sn">
+            <img src="./imgs/cd3.png" alt="">
+            <figcaption>聚合</figcaption>
+          </figure>
+          <div>组合关系 Compostion</div>
+          <p>. 更强烈，整体和部分的关系；部分以成员变量的形式存在于整体</p>
+          <p>. 整体可以控制部分的生命周期，一旦整体不存在，部分也就不存在|部分不能脱离整体而单独存在；即：部分随着整体创建而创建，随着整体消亡而消亡</p>
+          <p>. 将多个部分有机组合到一起；整体部分不可分离</p>
+          <p>. 代码使用new去创建部分</p>
+          <p>. 办公楼和楼里的卫生间；办公楼被拆了，卫生间也就不存在了</p>
+          <p>. 实线实心菱形closed diamond表示，指向组合的地方|整体类</p>
+          <figure class="img-sn">
+            <img src="./imgs/cd4.png" alt="">
+            <figcaption>组合</figcaption>
+          </figure>
+          <div>泛化关系 Generalization</div>
+          <p>. 继承，实线空心箭头指向父类</p>
+          <p>. 如果是抽象类，这样使用&lt;&lt;ClassName&gt;&gt;</p>
+          <figure class="img-sn">
+            <img src="./imgs/cd0.png" alt="">
+            <figcaption>泛化-继承</figcaption>
+          </figure>
+          <div>实现关系 Realization</div>
+          <p>. 类和接口之间的关系 </p>
+          <p>. 一个类可以实现多个接口 </p>
+          <p>. 使用关键字implements声明一个接口</p>
+          <p>. 虚线空心箭头指向父类</p>
+          <figure class="img-sn">
+            <img src="./imgs/cd1.png" alt="">
+            <figcaption>实现</figcaption>
+          </figure>
+        </dd>
+      </dl>
+      <div class="chap">用例图 Use Case Diagram</div>
+      <dl>
+        <dt>参与者 Actor </dt>
+        <dd>. 名词</dd>
+        <dt>用例 Use Case </dt>
+        <dd>. 动名词</dd>
+        <dt>关系 </dt>
+        <dd>. 也有的教材只分为：包含、扩展和继承</dd>
+        <dd class="number">
+          <div>关联关系 Association</div>
+          <p>. 表示参与者和用例的关系</p>
+          <p>. 实线 solid line</p>
+          <div>泛化关系 Generalization</div>
+          <p>. 表示通用用例General Use Case和Specialized Use Case特殊用例的关系，也是被继承|Parent和继承Children的关系</p>
+          <p>. 每个自用例都共享父用例的行为，也可以有自己的特定行为</p>
+          <p>. 参与者也可能存在继承，如新客户、老客户</p>
+          <p>. 实线空心箭头，指向父用例</p>
+          <div>包含关系 Include</div>
+          <p>. 基本用例 Base Use Case和包含用例 Include Use Case的关系</p>
+          <p class="warn">. 每次基本用例执行，包含用例也会执行</p>
+          <p>. 表示一个用例包含另外一个用例作为子功能</p>
+          <p>. 必然要使用到</p>
+          <p>. 带箭头的虚线dashed line with an arrow指向包含用例</p>
+          <div>拓展关系 Extend</div>
+          <p>. 基本用例 Base Use Case执行时，扩展用例 Extend Use Case有时会执行，有时不执行</p>
+          <p>. 表示一个用例在某些条件下，扩展另外一个用例作为附加功能或可选条件</p>
+          <P>. 带箭头的虚线指向基本用例</P>
+          <p>. 业务延申，非必须；可选</p>
+          <p>. 案例：如早期POS取款必打凭条，现在是可选功能；登录提示信息</p>
+        </dd>
+        <dd class="example-sn">
+          <div>课程学习和权限：每次学习都必须检查权限</div>
+          <div>课程学习和充值：每次学习不一定都要充币</div>
+        </dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/uml1.png" alt="">
+            <figcaption>UML实例</figcaption>
+          </figure>
+        </dd>
+        <dt>注意事项</dt>
+        <dd class="number">
+          <div>方向不要指错</div>
+        </dd>
+      </dl>
+      <div class="chap">顺序图 Sequence Diagram</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 强调消息的时间次序</dd>
+      </dl>
+      <div class="chap">通信图 Communication Diagram</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 也叫协作图</dd>
+        <dd>. 通信图有路径、顺序号 </dd>
+        <dd>. 强调收发消息的对象或参加交互的组织机构</dd>
+      </dl>
+      <div class="chap">状态图 State Diagram</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 用来描述一个特定对象的所有可能状态，以及由于各种事件的发生而引起的状态之间的转移或变化</dd>
+        <dd>. 描述行为的 <span class="warn">结果</span></dd>
+      </dl>
+      <div class="chap">活动图 Activity Diagram</div>
+      <dl>
+        <dd>. 控制流和数据流并存</dd>
+        <dd>. 描述行为的 <span class="warn">动作</span></dd>
+        <dt>关键路径</dt>
+        <dd>. 耗时最长的路径</dd>
+        <dt>松弛时间</dt>
+        <dd>. 关键路径 - 当前路径耗时最长的路径</dd>
+        <dd>. 关键路径上所有的活动的松弛时间是0 </dd>
+        <dd class="number">
+        </dd>
+        <dd class="example-sn">活动A1之后，可能的活动序列为（）。</dd>
+        <dd class="alpha">
+          <div>A2、A3、A4和A5 </div>
+          <div>A3、A4和A5或A2、A4和A5 </div>
+          <div>A2、A4和A5 </div>
+          <div>A2或A3、A4和A5</div>
+        </dd>
+        <dd>
+          <figure>
+            <img src="./imgs/act0.png" alt="">
+          </figure>
+        </dd>
+        <dd class="qa">
+          <div>A2和A3几个是两条不同的路</div>
+        </dd>
+        <dd class="example-sn">某软件项目的活动图如下图所示，其中顶点表示项目里程碑，连接顶点的边表示包含的活动，边上的数字表示活动的持续时间(天)，则完成该项目的最少时间为（ ）天。活动F-G的松弛时间为（
+          ）天。</dd>
+        <dd>
+          <figure>
+            <img src="./imgs/act2.png" alt="">
+          </figure>
+        </dd>
+        <dd class="qa">
+          <div>关键路径 = ADFHJ = 37天</div>
+          <div>FG所在路径 = ADFGJ = 28天，其松弛时间 = 37 - 28 = 9天</div>
+        </dd>
+        <dd class="example-sn">某软件项目的活动图如下图所示，其中顶点表示项目里程碑，连接顶点的边表示包含的活动，边上的数字表示活动的持续时间(天)。活动E-H
+          最多可以晚开始（ ）天而不影响项目的进度。由于某种原因，现在需要同一个工作人员完成 BC和BD，则完成该项目的最少时间为（ ）天。</dd>
+        <dd>
+          <figure>
+            <img src="./imgs/act1.png" alt="">
+          </figure>
+        </dd>
+        <dd class="qa">
+          <div>关键路径有两条 = ABDGFJ = ABCEFJ = 18天</div>
+          <div>EH所在路径 = 16，所以可以晚 18 - 16 = 2天</div>
+          <div>先完成BC再完BD，总时间 = 3 + 18 = 21天</div>
+          <div>先完成BD再完BC，总时间 = 2 + 18 = 20天</div>
+          <div>&there4; 最少时间 20 天</div>
+        </dd>
+      </dl>
+      <div class="chap">组件图 Component Diagram</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 构件之间的组织和依赖</dd>
+        <dd>. 专注于系统的静态实现视图</dd>
+        <dd>. 是类图的物理实现</dd>
+      </dl>
+      <div class="chap">部署图 Deployment Diagram</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 显示系统中软件和硬件的物理结构</dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

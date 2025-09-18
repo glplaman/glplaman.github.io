@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设备管理 Devices</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>设备管理</h1>
+      <h3>Devices</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>IO控制器作用</dt>
+        <dd>. 接收并识别CPU命令</dd>
+        <dd>. 向CPU报告设备状态</dd>
+        <dd>. 数据交换</dd>
+        <dd>. 地址识别</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/io.png" alt="">
+            <figcaption>IO管理软件</figcaption>
+          </figure>
+        </dd>
+      </dl>
+      <div class="chap">控制方式</div>
+      <dl>
+        <dt>程序直接控制方式</dt>
+        <dd>. 程序直接对设备循环测试</dd>
+        <dd>. CPU频繁参与|轮询</dd>
+        <dd class="txt-center em">IO设备←→CPU←→内存</dd>
+        <dd>. 每次读写一个字</dd>
+        <dd>. 读写的数据需要经过数据寄存器中转</dd>
+        <dt>中断驱动方式</dt>
+        <dd>. 引入中断机制</dd>
+        <dd>. CPU将IO进程阻塞；去干别的事</dd>
+        <dd>. IO完成读写后，通知CPU回来</dd>
+        <dd>. IO前后CPU才干预</dd>
+        <dd class="txt-center em">IO设备←→CPU←→内存</dd>
+        <dd>. 每次读写一个字</dd>
+        <dd>. 读写的数据需要经过数据寄存器中转</dd>
+        <dt>DMA方式</dt>
+        <dd>. 基本单位是数据块，不是字</dd>
+        <dd>. IO设备和内存之间开启的数据交换通路 | 数据从设备直接送入内存或相反</dd>
+        <dd class="txt-center em">IO设备←→内存</dd>
+        <dd>. 数据的传送受DMA控制，不需要CPU参与，其它操作仍然需要CPU</dd>
+        <dt>通道控制方式</dt>
+        <dd>. 引入通道-专门负责IO的处理机</dd>
+        <dd>. 每次处理一组数据块</dd>
+        <dd class="txt-center em">IO设备←→内存</dd>
+        <dd class="tips">
+          <div>采用中断方式和 DMA 方式控制技术时， CPU 与外设可并行工作</div>
+        </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>建造者模式 Builder</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>建造者模式</h1>
+    <h3 class="sub-title">Builder</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>关注细节和过程 </dd>
+      <dd>将构架层和表示层相互分离 </dd>
+      <dd>一步一步创建一个复杂的对象</dd>
+      <dt>页面渲染</dt>
+      <dd>页面每个组成部分，特别需要数据支撑的部分，都需要经历初始化、获取数据、渲染数据的过程。整个过程统一由建造者完成</dd>
+      <dd>每部分都可以使用异步模式</dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Builder</figcaption>
+          <pre>
+class Navbar {
+  init() {
+    console.log('Navbar init');
+  }
+  getData() {
+    console.log('Navbar get data');
+  }
+  render() {
+    console.log('Navbar render');
+  }
+}
+class List {
+  init() {
+    console.log('List init');
+  }
+  getData() {
+    console.log('List get data');
+  }
+  render() {
+    console.log('List render');
+  }
+}
+class Builder {
+  startBuild(build) {
+    build.init()
+    build.getData()
+    build.render()
+  }
+}         </pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>
+let builer = new Builder()
+builer.startBuild(new Navbar())
+builer.startBuild(new List())          </pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

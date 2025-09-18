@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单例模式 Singleton</title>
+  <link rel="stylesheet" href="../css/style2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>单例模式</h1>
+    <h3 class="sub-title">Singleton</h3>
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd>创建型设计模式</dd>
+      <dd>一个类仅有一个实例 - single instance</dd>
+      <dd>提供一个全局访问点</dd>
+      <dd>避免全局使用的类频繁的创建和销毁，占用内存</dd>
+      <dt>特性 Feature</dt>
+      <dd>唯一实例</dd>
+      <dd>全局访问</dd>
+      <dd>延迟初始化 - 首次使用时候才实例化</dd>
+      <dt>应用 Application</dt>
+      <dd>弹出对话框</dd>
+      <dt>参考代码 - ES5</dt>
+      <dd>闭包实现</dd>
+      <dd>自执行函数：在函数内部返回函数，被外界变量引用，更多信息，请参考<a href="../web/js/closure.html">closure</a></dd>
+      <pre>
+const singleton = (function () {
+  let instance;
+
+  //创建函数也可以写在外面
+  function User(name, age) {
+    this.name = name
+    this.age = age
+  }
+  return function (name, age) {
+    if (!instance)
+      instance = new User(name, age)
+    return instance
+  }
+})()</pre>
+      <pre>
+singleton('gl', 30)
+singleton('gz', 40)</pre>
+      <dt>参考代码 - ES6</dt>
+      <pre>
+class Singleton {
+  constructor(name, age) {
+    if (!Singleton.instance) {
+      this.name = name
+      this.age = age
+      Singleton.instance = this
+    }
+    return Singleton.instance;
+  }
+}</pre>
+      <pre>console.log(new Singleton('gl', 30) == new Singleton('gz', 40));</pre>
+    </dl>
+    <div>[<span class="iconfont icon-keyboard"></span>] 弹出对话框</div>
+    <dl>
+
+      <dd>动态创建：需要时才创建；不可以先创建再隐藏</dd>
+      <dd>第一次单击打开，先创建，再显示</dd>
+      <dd>单击关闭，隐藏</dd>
+      <dd>后续再次单击时，显示</dd>
+      <dd>创建</dd>
+      <pre>
+let Modal = (() => {
+  let instance = null
+  return () => {
+    if (!instance) {
+      instance = document.createElement('div')
+      instance.innerHTML = 'Modal'
+      document.body.appendChild(instance)
+    }
+    return instance
+  }
+})()</pre>
+      <dd>使用</dd>
+      <pre>
+let open = document.querySelector('#open')
+let close = document.querySelector('#close')
+
+open.addEventListener('click', () => {
+  let singleton = Modal()
+  singleton.style.display = 'block'
+})
+
+close.addEventListener('click', () => {
+  let singleton = Modal()
+  singleton.style.display = 'none'
+})</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

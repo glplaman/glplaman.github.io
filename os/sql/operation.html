@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关系运算 Operation</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <link rel="stylesheet" href="../../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>关系运算</h1>
+      <h3>Operation</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>关系</dt>
+        <dd>. 列数|属性数</dd>
+        <dt>元组</dt>
+        <dd>. 行数</dd>
+        <dt>并 Union</dt>
+        <dd>. S1 &cup; S2 </dd>
+        <dd>. 属于S1或属于S2的元组组成的集合，但是重复的元组只保留1个</dd>
+        <dd>. 适合数据结构相同的关系</dd>
+        <dt>交 Intersection</dt>
+        <dd>. S1 &cap; S2</dd>
+        <dd>. 既属于S1又属于S2的元组组成的集合</dd>
+        <dd>. 适合数据结构相同的关系</dd>
+        <dt> 差 Except </dt>
+        <dd>. S1 - S2</dd>
+        <dd>. 属于S1但不属于S2的元组组成的集合</dd>
+        <dd>. 有方向；S1-S2和S2-S1结果不一样</dd>
+        <dd>. 适合数据结构相同的关系</dd>
+        <dt>笛卡儿积 Cartesian product </dt>
+        <dd>. S1 × S2 </dd>
+        <dd>. 结构可以相同；也可以不同 </dd>
+        <dd>. 属性列数：俩者属性列之 <span class="em">和</span></dd>
+        <dd>. 元组行数：两者元组行的 <span class="em">积</span></dd>
+        <dd>. 会修改表格</dd>
+        <dt>投影</dt>
+        <dd>. &prod; (S) </dd>
+        <dd>. 从列的角度出发，对 <span class="em">列</span> 的操作 </dd>
+        <dd>. 使用属性名或属性编号垂直方向选择列，形成新的关系；没有选中的不展示 </dd>
+        <dd>. 表示：&prod;属性列表( 表 )或 &prod;属性编号列表( 表 )，如&prod;sno,sname(S1)、&prod;1,2(S1) </dd>
+        <dd>. 会修改表格</dd>
+        <dt>选择 Selection</dt>
+        <dd>. &sigma; (S)</dd>
+        <dd>. 也称限制Restriction，水平方向选择行，对 <span class="em">行</span> 的操作</dd>
+        <dd>. 对元组按照逻辑条件筛选；值为真的元组将被选择|选择满足条件的元组</dd>
+        <dd>. 表示：&sigma; 属性值表达式( 表 )，如&sigma; sno==no0003(S1)</dd>
+        <dd>. 不会修改表格</dd>
+        <dt>连接Join</dt>
+        <dd>. S1⋈S2</dd>
+        <dd>. 使用⋈|2个相对的三角形符号|蝴蝶结表示；简便起见，也会用∞来表示</dd>
+        <dd>. 从两个关系的笛卡尔积中选取属性间满足一定条件的元组|由笛卡儿积和选择生成。记作：S1⋈S2</dd>
+        <dd>. 也称 &theta; 连接；&theta;是比较运算符，>、&lt;、=、≠；应该是俩个关系中可以进行比较的属性组；如S1.A&lt; S2.B</dd>
+        <dd>. 新关系中，应带上原来关系的名字，如S1.A以便区分，下例关系中C最好写为R.C</dd>
+        <dd>. 当R和S没有公共属性时，则R⋈S = RXS</dd>
+        <dd class="em txt-center">先选择、后连接</dd>
+        <dd class="number">
+          <div>等值连接 Equal join</div>
+          <p>. 当&theta;是=时，是等值连接</p>
+          <p>. 等值连接不会合并相同的记录</p>
+          <div>自然连接 Natural join</div>
+          <p>. 特殊的等值连接；但是等值连接不一定是自然连接</p>
+          <p>. 属性列表：先和，再减重复</p>
+          <p>. 元组行数：筛选同名属性列的取值，去取重复的属性</p>
+          <p>. 实际数据库中的操作中，应用最为广泛</p>
+        </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

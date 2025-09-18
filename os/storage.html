@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>存储管理 Storage</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>存储管理</h1>
+      <h3>Storage</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>知识点 Keypoints</dt>
+        <dd class="number">
+          <div>分区存储管理</div>
+          <div>分页存储管理</div>
+          <div>分段存储管理</div>
+          <div>段页存储管理</div>
+        </dd>
+      </dl>
+      <div class="chap">分区存储管理</div>
+      <dl>
+        <dt>概述</dt>
+      </dl>
+      <div class="chap">分页存储管理</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 页大小：固定；根据页面大小，推出对应的页内地址位数</dd>
+        <dd>. 逻辑地址 = 页号 + 页内地址</dd>
+        <dd>. 物理地址 = 块号 + 页内地址</dd>
+        <dd>
+          <table class="tbl-sn">
+            <caption>页表</caption>
+            <tr>
+              <th>页号</th>
+              <th>块号</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+          </table>
+        </dd>
+        <dd class="example-sn">分页存储系统中，逻辑地址由页号和页内地址组成，页面大小4KB，相应的页表转换如上表。现已知某10进制的逻辑地址位8644，求对应的物理地址</dd>
+        <dd class="qa">
+          <div> 页面大小4KB，页内地址编址为12bit </div>
+          <div>逻辑地址=8644=页号+页内地址 → <span class="warn">10</span> 0001 1100 0100 → 页号为2，对应的物理块为8 </div>
+          <div>物理地址=页号+页内地址 → <span class="warn">1000</span> 0001 1100 0100 → 33220</div>
+        </dd>
+      </dl>
+      <div class="chap">分段存储管理</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 段大小：不固定</dd>
+        <dd>. 逻辑地址 = 段号 + 段内地址|偏移</dd>
+        <dd>. 物理地址 = 基址 + 段内地址|偏移</dd>
+        <dd>. 需判断偏移是否超过段长</dd>
+        <dd>
+          <table class="tbl-sn">
+            <caption>段表</caption>
+            <tr>
+              <th>段号</th>
+              <th>长度</th>
+              <th>基址</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1K</td>
+              <td>6K</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>600</td>
+              <td>4K</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>500</td>
+              <td>8K</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>200</td>
+              <td>9200</td>
+            </tr>
+            <tr>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+          </table>
+        </dd>
+        <dd class="example-sn">已知物理地址的段号为2，段内偏移是100，段表如上，求物理地址</dd>
+        <dd class="qa">
+          <div>段号2对应的段长是500，大于段内100的偏移，所以地址有效</div>
+          <div>根据基址，可知物理地址为8K+100=8*1024+100=8292</div>
+        </dd>
+      </dl>
+      <div class="chap">段页存储管理</div>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 先分段再分页；通常段比页大</dd>
+        <dd>. 每个段划分|对应的页表在哪里？页表长度是多少？</dd>
+        <dd class="grid2">
+          <table class="tbl-sn">
+            <caption>段表</caption>
+            <tr>
+              <th>段号</th>
+              <th>页表长度</th>
+              <th>页表起始地址</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>30K</td>
+              <td>40K</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>20K</td>
+              <td>80K</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>15K</td>
+              <td>120K</td>
+            </tr>
+            <tr>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+          </table>
+          <table class="tbl-sn">
+            <caption>页表</caption>
+            <tr>
+              <th>页号</th>
+              <th>块号</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+          </table>
+        </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

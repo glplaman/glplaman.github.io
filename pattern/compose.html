@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组合模式 Compose</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>组合模式</h1>
+    <h3 class="sub-title">Compose</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>在对象间构建树形结构</dd>
+      <dd>对基本对象和组合对象的操作没有区别，一致对待，如深度优先遍历</dd>
+      <dd>对象可以有很多层</dd>
+      <dd>类似递归操作</dd>
+      <dt>应用</dt>
+      <dd>文件扫描：遍历</dd>
+      <dd>侧边栏：根据用户的权限区别创建</dd>
+      <dd>多级菜单</dd>
+      <dt>扫描文件夹</dt>
+      <dd>创建</dd>
+      <dd class="number">
+        <div>先创建根文件夹，再创建若干子文件夹</div>
+        <div>然后创建若干文件，并添加到不同的子文件夹</div>
+        <div>最后把子文件夹添加到根文件</div>
+      </dd>
+      <dd>扫描：从根文件夹开始扫描</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Compose</figcaption>
+          <pre>
+const Folder = function (folder) {
+  this.folder = folder
+  this.lists = []
+}
+
+Folder.prototype.add = function (file) {
+  this.lists.push(file)
+}
+
+Folder.prototype.scan = function () {
+  console.log('scan folder', this.folder);
+  this.lists.forEach(item => {
+    item.scan()
+  })
+}
+
+const File = function (file) {
+  this.file = file
+}
+
+File.prototype.scan = function () {
+  console.log('scan file ', this.file);
+}
+
+let rootFolder = new Folder('root')
+
+let htmlFolder = new Folder('html')
+let h0File = new File('h0')
+let h1File = new File('h1')
+let h2File = new File('h2')
+htmlFolder.add(h0File)
+htmlFolder.add(h1File)
+htmlFolder.add(h2File)
+
+let cssFolder = new Folder('css')
+let c0File = new File('c0')
+let c1File = new File('c1')
+let c2File = new File('c2')
+cssFolder.add(c0File)
+cssFolder.add(c1File)
+cssFolder.add(c2File)
+
+let jsFolder = new Folder('js')
+let j0File = new File('j0')
+let j1File = new File('j1')
+let j2File = new File('j2')
+jsFolder.add(j0File)
+jsFolder.add(j1File)
+jsFolder.add(j2File)
+
+rootFolder.add(htmlFolder)
+rootFolder.add(cssFolder)
+rootFolder.add(jsFolder)
+
+rootFolder.scan()</pre>
+        </figure>
+      </dd>
+      <dt>多级菜单</dt>
+      <dd>1. 在Folder的scan中创建一级菜单</dd>
+      <dd>2. 在File的scan中创建二级菜单</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>DOM挂载点</figcaption>
+          <pre>&lt;ul id="menu"&gt;&lt;/ul&gt;</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>
+const Folder = function (folder) {
+  this.folder = folder
+  this.lists = []
+}
+
+Folder.prototype.add = function (file) {
+  this.lists.push(file)
+}
+
+Folder.prototype.scan = function () {
+  console.log('scan folder: ', this.folder);
+  let oul = document.createElement('ul')
+  if (this.folder === 'root') {
+  } else {
+    let oli = document.createElement('li')
+    oli.innerHTML = this.folder
+    oli.appendChild(oul)
+    menu.appendChild(oli)
+  }
+  this.lists.forEach(item => {
+    item.scan(oul)
+  })
+}
+
+const File = function (file) {
+  this.file = file
+}
+
+File.prototype.scan = function (ul) {
+  console.log('scan file: ', this.file, ul);
+  let li = document.createElement('li')
+  li.innerHTML = this.file
+  ul.appendChild(li)
+}
+
+let rootFolder = new Folder('root')
+let htmlFolder = new Folder('html')
+let cssFolder = new Folder('css')
+let jsFolder = new Folder('js')
+
+let h0File = new File('h0')
+let h1File = new File('h1')
+let h2File = new File('h2')
+htmlFolder.add(h0File)
+htmlFolder.add(h1File)
+htmlFolder.add(h2File)
+
+let c0File = new File('c0')
+let c1File = new File('c1')
+let c2File = new File('c2')
+cssFolder.add(c0File)
+cssFolder.add(c1File)
+cssFolder.add(c2File)
+
+let j0File = new File('j0')
+let j1File = new File('j1')
+let j2File = new File('j2')
+jsFolder.add(j0File)
+jsFolder.add(j1File)
+jsFolder.add(j2File)
+
+rootFolder.add(htmlFolder)
+rootFolder.add(cssFolder)
+rootFolder.add(jsFolder)
+
+rootFolder.scan()</pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

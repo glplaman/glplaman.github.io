@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数依赖 Function Dependency</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <link rel="stylesheet" href="../../css/code.css">
+  <style>
+    table {
+      text-align: unset;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>函数依赖</h1>
+      <h3>Function Dependency</h3>
+    </header>
+    <main>
+      <div class="chap">函数依赖 Function Dependency</div>
+      <dl>
+        <dt>函数依赖</dt>
+        <dd class="concept">
+          <div>设关系R(U,F)，U是属性集，F是函数依赖集，令X、Y是U的两个子集；对于任意R的一个关系r，X的每一个具体值，Y都有唯一值与之对应，
+            则，X决定函数Y，或Y函数依赖于X，记作X→Y</div>
+        </dd>
+        <dd>. 对于定义域中任意 X ，有且只有一个 Y 与之对应。 </dd>
+        <dd>. 属性之间的依赖：对于相同的 X 属性值，有且只有一个 Y 属性值与之对应</dd>
+        <dd>. 本质就是反映了一个关系中属性之间的约束关系，或者依赖关系</dd>
+        <dd>. 是一种数据依赖</dd>
+        <dt>平凡依赖</dt>
+        <dd>. 你是我的子集，我能控制你当然没有问题</dd>
+        <dd class="em txt-center">X&rarr;Y，但Y&sube;X，称X&rarr;Y是平凡的函数依赖</dd>
+        <dt>非平凡依赖</dt>
+        <dd>. 你不是我的子集，我还能控制你，那才叫本身</dd>
+        <dd class="em txt-center">X&rarr;Y，但Y&nsube;X，称X&rarr;Y是非平凡的函数依赖</dd>
+        <dd>注意：如无说明，都是指非平凡依赖</dd>
+        <dt> 完全依赖 Full Functional Dependency</dt>
+        <dd class="concept">
+          <div>设R为任一给定关系，X、Y为其属性集，若 X→Y，且X中的任何真子集X'，都有 X'!→Y，则称 Y 完全函数依赖于 X。</div>
+        </dd>
+        <dd>. 属性组 X 的 <span class="em">所有属性</span> 一起（即完全）才能决定属性 Y，去掉任何一个子集|单独的属性都不行</dd>
+        <dd>. AB能得出C，但是单独的A、B得不出C，那么说C完全依赖于AB</dd>
+        <dd>. (学号，课名)->成绩，而单独的学号或者课名都不能确定成绩</dd>
+        <dt>部分函数依赖 Partial Functional Dependency</dt>
+        <dd class="concept">
+          设R为任一给定关系，X、Y为其属性集，若 X→Y，且X中存在一个真子集X'，满足 X'→Y，则称 Y 部分函数依赖于 X。
+        </dd>
+        <dd>. 属性组 X 中的 <span class="em">部分属性</span> 如A或B就可以决定 Y，用不着全部；所以会存在属性冗余</dd>
+        <dd>. 通过AB能得出C，通过A也能得出C，通过B也能得出C，那么说C部分依赖于AB</dd>
+        <dd>. 只有当决定因素是 <span class="em">组合属性</span> 时，讨论部分函数依赖才有意义；当决定因素是 <span class="em">单属性</span> 时，只能是完全函数依赖</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="../imgs/pfd.png" alt="">
+            <figcaption>部分函数依赖</figcaption>
+          </figure>
+        </dd>
+        <dt>传递函数依赖</dt>
+        <dd>A→B，B→C，则A→C；其中 <span class="em">B &nsub; A</span>，即B不能是A的子集</dd>
+        <dt>推理规则</dt>
+        <dd>增广律：若X→Y在R上成立，且Z &subseteq; U，则XZ→YZ</dd>
+        <dd>传递律：X→Y和Y→Z在R上成立，则X→Z</dd>
+        <dd>伪传递规则：若X→Y和YW→Z在R上成立，则XW→Z</dd>
+        <dd>合并规则：若X→Y和X→Z在R上成立，则X→YZ</dd>
+        <dd>复合规则：若X→Y和W→Z在R上成立，则XW→YZ</dd>
+        <dd class="example-sn">函数依赖为F={A→B,AE→H,BG→DC,E→C,H→E}，下列哪个函数依赖不成立?
+        </dd>
+        <dd class="alpha">
+          <div>A→AB</div>
+          <div>H→C</div>
+          <div>AEB→C</div>
+          <div>A→BH</div>
+        </dd>
+        <dd class="qa">
+          <div>ok A→A, A→B，所以AA→AB，即A→AB</div>
+          <div>传递</div>
+          <div>E→C推出AEB→ABC，ABC→C</div>
+          <div>&there4; D</div>
+        </dd>
+        <dd class="example-sn">对应关系模式R(X,Y,X)，下列结论错误的是（）
+        </dd>
+        <dd class="alpha">
+          <div>X→Y,Y→Z,则X→Z </div>
+          <div>X→Z，则XY→Z </div>
+          <div>XY→Z，则X→Z,Y→Z </div>
+          <div>X→Y,X→Z，则X→YZ </div>
+        </dd>
+        <dd class="qa">
+          <div>OK 传递</div>
+          <div>OK 小集合能推导出，大集合肯定也可以</div>
+          <div>&there4; C</div>
+          <div>OK 合并</div>
+        </dd>
+        <dd class="example-sn">关系R（A1,A2,A3）上的函数依赖F={A1→A2,A1→A3,A2→A3}，则（）。 </dd>
+        <dd class="alpha">
+          <div>A1→A2是多余的 </div>
+          <div>A1→A3是多余的 </div>
+          <div>A2→A3是多余的 </div>
+          <div>都不是多余的</div>
+        </dd>
+        <dd class="qa"> &there4; B </dd>
+      </dl>
+      <div class="chap">码 Keys</div>
+      <dl>
+        <dd class="tips">键字=码字，所以：主码=主码=主关键字，候选码=候选码=候选关键字</dd>
+        <dt>码 Key</dt>
+        <dd>. 码是数据库系统中的基本概念，也叫超码 </dd>
+        <dd>. 能唯一标识实体|元组|记录|的属性或<span class="em">属性的集合</span>，它是整个实体集的性质，而不是单个实体的性质 </dd>
+        <dd>. 只要能唯一确定一条记录，都被称为码 </dd>
+        <dd>. 如果K是一个码，那么所有包含K的集合也是码|即使有多余也是</dd>
+        <dd>. 标识性：一个数据表的所有记录都具有不同的码 </dd>
+        <dd>. 非空性：不能为空</dd>
+        <dt>候选码 Candidate Key</dt>
+        <dd>. 能够唯一标识一条记录的 <span class="em">最小属性集</span></dd>
+        <dd>. 没有冗余属性；候选码中的所有属性都是必须的，缺少了任何一个属性，就不能唯一标识一个元组 </dd>
+        <dd>. 不唯一，可以有多个</dd>
+        <dd>. 标识性：一个数据表的所有记录都具有不同的超键 </dd>
+        <dd>. 最小性：候选码是最小的码，它的任意真子集都不能成为码</dd>
+        <dd>. 非空性：不能为空</dd>
+        <dt>主码 Primary Key</dt>
+        <dd>. 从候选码里人为挑选的一个 </dd>
+        <dd>. 被数据库设计者选中的，用来在同一实体集中区分不同实体的候选码 </dd>
+        <dd>. 唯一性 </dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="../imgs/key0.png" alt="">
+            <figcaption>码、候选码、主码的关系</figcaption>
+          </figure>
+        </dd>
+        <dt>外键 Foreign key </dt>
+        <dd>. 其他关系的主键</dd>
+        <dd>. 子数据表中出现的父数据表的主键，称为子数据表的外键</dd>
+        <dt>全码 All Key</dt>
+        <dd>. 当所有的属性共同构成一个候选码时，这时该候选码为全码</dd>
+        <dd>. 整个属性组都是码</dd>
+        <dt>属性 Attribute</dt>
+        <dd>. 表中的一列为一个属性</dd>
+        <dt>主属性 Prime Attribute</dt>
+        <dd>. 包含在任一候选码中的属性称主属性</dd>
+        <dd>. 简单来说，主属性是 <span class="em">候选码所有属性的并集</span></dd>
+        <!-- <dd>. 将候选码的属性集全部拆分为单个属性</dd> -->
+        <dd>. 不单单指主码的属性；只要是候选码的属性就是主属性，不管你有没有入围主码</dd>
+        <dd>. 用实下划线表示 </dd>
+        <dd>. 不唯一</dd>
+        <dt>非主属性 Not-Prime Attribute</dt>
+        <dd>. 不包括在任何候选码中的属性 </dd>
+        <dd>. 用虚下划线表示或不特别表示 </dd>
+        <dd>. 不唯一</dd>
+      </dl>
+      <div class="chap">候选码的确定</div>
+      <dl>
+        <dd>
+          <table class="tbl-sn">
+            <caption>函数依赖中属性的位置</caption>
+            <tr>
+              <th>分类</th>
+              <th>位置</th>
+              <th>预判</th>
+            </tr>
+            <tr>
+              <td>L</td>
+              <td>仅出现在函数依赖左部</td>
+              <td>一定包含在任意一个候选码中</td>
+            </tr>
+            <tr>
+              <td>R</td>
+              <td>仅出现在函数依赖右部</td>
+              <td>不包含在任意一个候选码中</td>
+            </tr>
+            <tr>
+              <td>LR</td>
+              <td>在函数依赖左部和右部均出现</td>
+              <td>可能包含在某个候选码中</td>
+            </tr>
+            <tr>
+              <td>N</td>
+              <td>在函数依赖左部和右部均不出现</td>
+              <td>一定包含在任意一个候选码中</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>基本步骤</dt>
+        <dd class="number">
+          <div>求出每个属性的位置，根据位置划分到不同的集合，如L={}、LR={}、R={}、N={}</div>
+          <div>将所有的L类和N类组合起来 X = L&Union;N 求闭包，判断是否是全集U；如果是，则 X 就是唯一候选码，算法终止，不需要再验证其它组合</div>
+          <div>若构不成全集U，则 X 分别|依次和LR中的某1个属性结合，求闭包再判断；可能有多个候选码</div>
+          <div>若构不成全集U，则 X 分别|依次和LR中的某2个属性结合，求闭包再判断；可能有多个候选码</div>
+          <div>依次类型，通常和LR中某个1个属性结合就已经求出结果了</div>
+        </dd>
+        <dd class="example-sn">已知R&lt;U,F&gt;，U={A,B,C,D}，F={A→C,C→B,AD→B}，求候选码 </dd>
+        <dd>
+          <table class="tbl-sn">
+            <tr>
+              <th>属性</th>
+              <th>位置</th>
+              <th>闭包集</th>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>L</td>
+              <td rowspan="4">(AD)+→ACD→ACBD→U</td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>R</td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td>LR</td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td>L</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>&there4; 候选码是{AD}</dd>
+        <dd class="example-sn">已知R&lt;U,F&gt;，U={A,B,C}，F={AB→C,C→B}，求候选码</dd>
+        <dd>
+          <table class="tbl-sn">
+            <tr>
+              <th>属性</th>
+              <th>位置</th>
+              <th>闭包集</th>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>L</td>
+              <td rowspan="3">依次和B、C结合求闭包再判断 <br>(AB)+→ABC→U<br>(AC)+→ACB→U</td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>LR</td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td>LR</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>&there4; 候选码是{AB,AC}</dd>
+        <dd class="example-sn">已知已知R&lt;U,F&gt;，U={A,B,C,D,E}，F={B→A,D→A,A→E,AC→B}，求候选码</dd>
+        <dd>
+          <table class="tbl-sn">
+            <tr>
+              <th>属性</th>
+              <th>位置</th>
+              <th>闭包集</th>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>LR</td>
+              <td rowspan="5">CD结合求闭包再判断 <br>(CD)+→CDA→CDAE→CDAEB→U</td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>LR</td>
+            </tr>
+            <tr>
+              <td>C</td>
+              <td>L</td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td>L</td>
+            </tr>
+            <tr>
+              <td>E</td>
+              <td>R</td>
+            </tr>
+          </table>
+        </dd>
+        <dd>&there4; 候选码是{CD}</dd>
+        <dd class="tips">
+          <div>选择题的解答中，要学会筛选；比如某个属性在R，则它一定不是候选码；如某个属性是NLR，则一定是</div>
+        </dd>
+        <dd class="example-sn">某企业的培训关系模式R（培训科目，培训师，学生，成绩，时间，教室），R的函数依赖集
+          F={培训科目→培训师，（学生，培训科目）→成绩，（时间，教室）→培训科目，（时间，培训师）→教室，（时间，学生）→教室}。关系模式R的主键为 （请作答此空） ，其规范化程度最高达到 （ ） 。 </dd>
+        <dd class="alpha">
+          <div>（学生，培训科目） </div>
+          <div>（时间，教室） </div>
+          <div>（时间，培训师） </div>
+          <div>（时间，学生）</div>
+        </dd>
+        <dd>[参考答案]D；可以推出其它</dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

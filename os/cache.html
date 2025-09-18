@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高速缓存 Cache</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <style>
+    .blue {
+      color: #089;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>高速缓存</h1>
+      <h3>Cache</h3>
+    </header>
+    <main>
+      <dl>
+        <dt>概述</dt>
+        <dd>. 容量不大、速度很高的存储器，也叫高速缓存存储器</dd>
+        <dd>. 位于CPU和主存之间，解决主存与CPU速率不匹配</dd>
+        <dd>. 是主存内容的拷贝</dd>
+        <dd>. 由硬件实现 </dd>
+        <dd>. 对程序员来说是透明的 </dd>
+        <dd class="tips">
+          <div>. SRAM适合作为计算机的高速缓存存储器Cache</div>
+          <div>. DRAM适合作为计算机的主存</div>
+        </dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/cache0.png" alt="">
+            <figcaption>数据交换单位</figcaption>
+          </figure>
+        </dd>
+        <dt>局部性原理 </dt>
+        <dd>. 改善性能的依据：把可能再次使用或局部相关的数据读入Cache，这也是缓存的由来</dd>
+        <dd>. 防止数据存取抖动</dd>
+        <dd class="number">
+          <div>时间局部性：使用过的数据可能被再次使用；如循环的执行；如果只访问1次，时间局部性差，如普通数组的遍历 </div>
+          <div>空间局部性：使用过的数据，其相邻的数据可能被再次使用；因为指令都是按顺序执行的，如数组；如果访问顺序和存放顺序一致，则空间局部性好。如2维数组的遍历，按行列遍历的空间局部性优于按列行遍历</div>
+        </dd>
+        <dt>CPU的读写操作</dt>
+        <dd>读：如果Cache有，则命中；否则去主存中找，并把块读入Cache，以备下次使用；也有的，只读主存，并不装载到Cache</dd>
+        <dd>写：为了保持主存和Cache的一致，可以采用<span class="em">直达法</span>和<span class="em">写回法</span></dd>
+        <dd>
+          <table class="tbl-sn" style="text-align: unset;">
+            <caption>Cache的数据更新策略</caption>
+            <tr>
+              <th>分类</th>
+              <th>说明</th>
+            </tr>
+            <tr>
+              <td style="width: 20%;">直达法</td>
+              <td>同步更新Cache和主存</td>
+            </tr>
+            <tr>
+              <td>写回法</td>
+              <td>仅当数据被替换回主存时才更新，需标记为修改状态 - "脏位"</td>
+            </tr>
+          </table>
+        </dd>
+        <dt>结构 </dt>
+        <dd>. 按行|块存放主存的内容，一个行包含多个字</dd>
+        <dd>. 不是按字|存储单元存储。因为Cache太宝贵了，要尽量多准备一些数据供CPU使用</dd>
+        <dd>. 通常1行放64个byte </dd>
+        <dd>. 有多少缓存行，地址转换表|目录表就有多少行；地址转换表的容量|大小</dd>
+        <dd>. Cache除了数据本身外，还有控制位，其中 <span class="em">有效位总是存在</span>，算法位和脏位根据不同策略而定</dd>
+        <dd class="em txt-center">单个Cache位数 = 数据位|块大小 +（标记位 + 有效位 + 算法位 + 脏位）</dd>
+        <dt>命中率 Cache hit </dt>
+        <dd>. CPU读或者写的某一个字word是属于某个块的</dd>
+        <dd>. CPU把字的内存地址发给Cache，Cache就找自己里面有没有这个地址</dd>
+        <dd>. 如果有，则命中 hit：Cache再将这个块中的某个字给到CPU，完成一个高速存储访问；命中的是Cache中的一个块，而这个块是Cache从主存中取出|复制来的</dd>
+        <dd>. 如果没有，则Miss：CPU需要去访问主存。虽然这样会慢一点，但是没办法，毕竟Cache中没有，就只能去主存找了</dd>
+        <dd>. 如果主存全部放入Cache|大小一致，那么命中率就是100%，当然这是不可能的 </dd>
+        <dd>. 命中率 >= 85%，Cache的设计才算合理</dd>
+        <dd>. 命中率不随其容量增大线性地提高 </dd>
+        <dd>. 影响命中率的因素：Cache大小、Cache的组织形式、程序特性 </dd>
+        <dt>2. 其它关注
+        </dt>
+        <dd>. 放进去的数据如何替换，涉及到 <span class="em">数据替换策略</span> 问题 </dd>
+        <dd>. 未命中的情况下|放进去的数据是不是CPU需要的数据，涉及到 <span class="em">未命中策略</span>问题 </dd>
+        <dd>. Cache数据更新|写Cache，需要保持Cache和主存数据一致，涉及到 <span class="em">数据更新|一致性维护</span>问题 </dd>
+        <dd>. 作为中间角色，数据的交互格式不一样，这就涉及到 <span class="em">数据的分块</span>问题</dd>
+        <dt>地址映像</dt>
+        <dd>. 把主存地址映像为Cache地址；通俗来说，就是把主存中的内容和Cache对应起来</dd>
+        <dd>. 主存和Cache的存储空间必须划分为 <span class="em">大小相同</span> 的若干块[后续表达中，对行和块视为相同，不作区分]</dd>
+        <dd>. CPU拿到的是主存的全地址</dd>
+        <dd>. 需要知道</dd>
+        <dd class="number">
+          <div>主存大小、块大小、块数、块编址位数</div>
+          <div>Cache大小、行大小、行数、行编址位数</div>
+          <div>Cache某行是否可以放数据：有效位；0空闲；1占用</div>
+          <div>如果可以，主存的块放在Cache哪个行</div>
+        </dd>
+        <dd class="example-sn">已知主存容量1GB，Cache容量8MB，块大小为512KB；求主存和Cache分块情况</dd>
+        <dd class="qa">
+          <div>块大小512KB，块内编址需要 512 = 2<sup>19</sup>，19位</div>
+          <div>主存容量是为1GB，则块数 = 1GB/512KB = 2<sup>30</sup>/2<sup>19</sup>=2<sup>11</sup>（块），块编址需要11位</div>
+          <div>Cache容量为8MB，则块数 = 8MB/512KB = 8*2<sup>20</sup>/2<sup>19</sup>=2<sup>4</sup>（块），块编址需要4位
+          </div>
+          <div>&there4;</div>
+          <div>主存编址为 块地址 + 块内地址 = 11 + 19 =30位</div>
+          <div>Cache编址为 块地址 + 块内地址 = 4 + 19 =23位</div>
+          <div>另：</div>
+          <div>也可以由容量大小直接得出完整地址位数，再减去块内地址位数就是块地址位数，最后得出块数</div>
+          <div>主存容量是为1GB，地址为30位，块内地址19位，&there4;块地址11位，主存可以分块2<sup>11</sup></div>
+          <div>Cache容量是为8MB，地址为23位，块内地址19位，&there4;块地址4位，Cache可以分块2<sup>4</sup></div>
+        </dd>
+      </dl>
+      <div class="chap">全相联 </div>
+      <dl>
+        <dt>说明</dt>
+        <dd>. Cache <span class="em">分块</span>；主存 <span class="em">分块</span>，且块大小相同</dd>
+        <dd>. 主存任意block可以放到Cache任意一块block|空位任意放 </dd>
+        <dd>. 主存中的块在Cache中随意放（就是想放Cache中的哪一行就放哪一行，只要当前为空） </dd>
+        <dd class="em txt-center">主存物理地址 = 标记|区号 + 块内地址</dd>
+        <dd>. 需要目录表记录使用情况：缓存行是否占用；主存中第几个块|地址？放入缓存中第几行|地址？ </dd>
+        <dd>. 优点：冲突最小；命中率高；Cache利用率高|有空就可以放。停车 - 有空就可以随便停 </dd>
+        <dd>. 缺点：全比较Cache决定是哪个block；速度低。找车 - 一个挨一个找</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/cache3.png" alt="">
+            <figcaption>全相连</figcaption>
+          </figure>
+        </dd>
+        <dd>
+          <table class="tbl-sn tbl-cell-bg">
+            <caption>全相连目录表</caption>
+            <tr>
+              <th>主存地址块</th>
+              <th>Cache地址块</th>
+              <th>有效位</th>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td class="active">0</td>
+              <td class="active">1</td>
+              <td class="active">1</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td class="active">2</td>
+              <td class="active">3</td>
+              <td class="active">1</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>0</td>
+            </tr>
+          </table>
+        </dd>
+        <dd class="example-sn">主存地址位数32位；按字节编址。主存和Cache采用全相连映射。主存块大小为1个字，每个字32位，采用回写write
+          back方式和随机替换策略，则能存放32K字数据的Cache的总容量至少应该有多少位？</dd>
+        <dd class="qa">
+          <div>核心：每个Cache块的大小*Cache的块数就是Cache的总位数</div>
+          <div>块大小：1个字，32bit，4字节，按字节编址，&there4; 块内编址需要2bit</div>
+          <div>Cache块个数 = Cache容量/块大小=32K字/1字=32K</div>
+          <div>主存地址32位 = 标记30bit +块内地址2bit</div>
+          <div>单个Cache的位数 = 数据位32bit + 标记位30bit + 有效位1bit + 脏位1bit + 算法位0bit = 64bit</div>
+          <div>Cache的总位数 = 块的个数*每个字的位数 = 32K*64bit = 2<sup>11</sup>Kbit = 2048Kbit</div>
+        </dd>
+      </dl>
+      <div class="chap">直接相连</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>. Cache <span class="em">分块</span>；主存 <span class="em">分区</span></dd>
+        <dd>. 主存分区：主存按照Cache大小分区；每个区的块数=Cache的块数；所以主存容量一定是Cache的 <span class="em">整数倍</span></dd>
+        <dd>. 这个倍数就是 <span class="em">标记的长度</span> ；如主存是Cache的4096倍，则标记长度为12bit</dd>
+        <dd>. 主存中某个分区中的某一块，只能放入Cache对应的块号 </dd>
+        <dd>. 主存0区的0号块，只能放在Cache的0号位置；0区的1号块，只能放在Cache的1号位置 </dd>
+        <dd>. 同样的1区的第0块，只能放在Cace的0号位置，1区的第1块，只能放在Cache的1号位置 </dd>
+        <dd>. 所以直接映射的存储是有规律的。比如判断1区的第1个块是否在Cache中时，若在，则一定存放在Cache的1号位置 </dd>
+        <dd>. 如果知道主存块的编号|块号，则对应的 <span class="em">Cache块号 = 块号 % Cache块数</span></dd>
+        <dd>. 随之而来的问题是，利Cache用率低，命中率低，容易出现"抖动"：块反复被替换</dd>
+        <dd>. Cache中的块可以来自主存的 <span class="em">不同</span> 分区；根据局部性原理，大概率是来自主存同一个分区 </dd>
+        <dd>. Cache拿到CPU给的地址后，会优先判断该地址属于区中的第几块，进而可以判断存放在Cache中的哪一行</dd>
+        <dd class="em txt-center">主存物理地址 = 标记|区号 + Cache行号 + 块内地址 = 标记|区号 + Cache地址</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/cache2.png" alt="">
+            <figcaption>直接相连</figcaption>
+          </figure>
+        </dd>
+        <dd class="example-sn">主存地址位数32位；按字节编址。主存和Cache采用 <span class="warn">直接映射</span> 。主存块大小为4个字，每个字32位，采用回写write
+          back方式和随机替换策略，则能存放4K字数据的Cache的总容量至少应该有多少位？</dd>
+        <dd class="alpha">
+          <div>146k</div>
+          <div>147k</div>
+          <div>148k</div>
+          <div>158k</div>
+        </dd>
+        <dd class="qa">
+          <div>核心：每个Cache块的大小*Cache的块数就是Cache的总位数</div>
+          <div>Cache的大小 4字→4*32bit→16B，块内编址需要4bit</div>
+          <div>Cache的块数 4K字/4字 = 1K，块编址需要10bit</div>
+          <div>主存地址32bit = 标记位 + Cache行号 + 42bit，&there4; 标记位 = 32bit - 10bit - 4bit = 18bit</div>
+          <div>单个Cache位数 = 4*数据32bit + 标记位18bit + 有效位1bit + 脏位1bit + 算法位0bit = 148bit</div>
+          <div>Cache总容量 = Cache块数*单个Cache位数 = 1K * 148bit = 148Kbit</div>
+          <div>&there4; C</div>
+          <div>另：从倍数入手求标记位数</div>
+          <div>主存容量 2<sup>32</sup>*8bit</div>
+          <div>Cache容量 4K*32bit</div>
+          <div>倍数 = 主存容量/Cache容量 = 2<sup>18</sup>，&there4; 标记是18bit</div>
+          <div>有了标记位，就可以算出一个Cache的位数，进而算出所有的位数</div>
+        </dd>
+        <dd class="example-sn">32位计算机的Cache容量为16KB，Cache的块大小为16B。若主存和Cache采用直接相连映射，主存地址为0x1234E8F8的单元装入Cache的地址是多少？</dd>
+        <dd class="alpha">
+          <div>00010001001101</div>
+          <div>01000100011010</div>
+          <div>10100011111000</div>
+          <div>11010011101000</div>
+        </dd>
+        <dd class="qa">
+          <div>块内地址编址需要：lb16B/1B = 4bit</div>
+          <div>Cache的块数有：16KB/16B=1K，&there4; 块编址需要lb1K = 10bit</div>
+          <div>主存地址0x1234E8F8Z转化为2进制为0001 0010 0011 0100 11<span class="blue">10 1000 1111</span> <span
+              class="warn">1000</span></div>
+          <div>后面的（4+10）位是Cache地址：10 1000 1111 1000；前18位是主存的标记</div>
+          <div>&there4; 选择C</div>
+        </dd>
+        <dd class="example-sn">
+          主存容量是1MB，Cache容量是16KB，每块有8个字，每个字32bit。采用直接相连映射。Cache的起始字块为第0块；若主存地址为35301H，且访问CPU命中，则在Cache的第几个字块中？</dd>
+        <dd class="alpha">
+          <div>152</div>
+          <div>153</div>
+          <div>154</div>
+          <div>151</div>
+        </dd>
+        <dd class="qa">
+          <div>核心：求Cache行号</div>
+          <div>第几个Cache行；题干说起始字块为0</div>
+          <div>块大小 8*32bit = 32B，编址需要 5位</div>
+          <div>Cache块数 16KB/32B = 512，编址需要 9位</div>
+          <div>主存地址 35301H = 0011 01<span class="blue">01 0011 000</span><span class="warn">0 0001</span></div>
+          <div>&there4; Cache行号 010011000 = 128+16+8=152，选择A</div>
+        </dd>
+        <dd class="example-sn">某系统主存容量是Cache的4096倍；Cache分成64个块；采用直接相连映射，地址映射表的大小是多少？不考虑一致维护和替换算法。</dd>
+        <dd class="alpha">
+          <div>6×4097bit</div>
+          <div>64×12bit</div>
+          <div>6×4096bit</div>
+          <div>64×13bit</div>
+        </dd>
+        <dd class="qa">
+          <div>地址映射表也就是标记Tag阵列</div>
+          <div>Cache有64块，即64行，采用直接映射，一行相当于一组 </div>
+          <div>&there4; 标记阵列每行存储1个标记项</div>
+          <div>其中主存标记项为12bit(212=4096，是Cache容量的4096倍，那么就是地址长度比Cache长12位)，加上l位有效位</div>
+          <div>&there4; 为64×13bit，选择D</div>
+        </dd>
+        <dd class="example-sn">
+          某计算机采用主存--Cache存储层次结构，主存容量有8个块，Cache容量有4个块，采用直接映射方式。若主存块地址流为0,1,2,5,4,6,4,7,1,2,4,1,3,7,2，一开始Cache为空，此期间Cache的命中率为多少？
+        </dd>
+        <dd class="qa">
+          <div>主存块号%Cache块数就是对应的Cache块号</div>
+          <div>一次把主存块填入对应的Cache块中</div>
+          <div>&there4; 4/15=26.7%</div>
+        </dd>
+        <dd>
+          <table class="tbl-sn">
+            <caption>示例中的Cache流</caption>
+            <tr>
+              <th>Cache块号</th>
+              <th colspan="4">主存块号</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>4</td>
+              <td class="warn">4</td>
+              <td class="warn">4</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>5</td>
+              <td>1</td>
+              <td class="warn">1</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>2</td>
+              <td>6</td>
+              <td>2</td>
+              <td class="warn">2</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>7</td>
+              <td>3</td>
+              <td>7</td>
+            </tr>
+          </table>
+        </dd>
+      </dl>
+      <div class="chap">组相连</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>. Cache <span class="em">分组</span>；主存 <span class="em">分区</span></dd>
+        <dd>. Cache分组：分组大小相同，即分组的块数相同；如分为2组；物理上采用比较器实现 </dd>
+        <dd>. 主存分区：按Cache组数大小将各块分区，如每2块为一个区 </dd>
+        <dd>. Cache分几组，主存的区就分几块；注意Cache组内的块数和主存区内的块数不一定相同</dd>
+        <dd class="em">. 主存每个分区的第几块，进Cache的第几组，至于是该组的第几块则不一定</dd>
+        <dd>. 主存的块和分组直接相连映像；Cache分组内是全相连映像 </dd>
+        <dd>. 如果知道主存块的编号|块号，则对应的 <span class="em">Cache组号 = 块号 % 组数</span></dd>
+        <dd>. 冲突折中</dd>
+        <dd class="em txt-center">主存物理地址 = 标记|区号 + 组号 + 块内地址</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/cache4.png" alt="">
+            <figcaption>组相连</figcaption>
+          </figure>
+        </dd>
+        <dd class="example-sn">有效容量为128KB的Cache块，每块16B，采用8路组相连。字节地址为1234567H的单元调入该Cache，其标记Tag是多少？
+        </dd>
+        <dd class="qa">
+          <div>块大小16B，&there4; 块内编址需要 lb16 = 4bit</div>
+          <div>Cache块数为128KB/16B = 8K，再按8路划分组，共有 8K/8 = 1K个分组，&there4; 组编址需要lb1k = 10bit</div>
+          <div>地址1234567H = 0001 0010 0011 01<span class="warn">00 0101 0110</span> 0111；中间10位是组号，后4位是块内地址</div>
+          <div>&there4; 标记Tag为：0001 0010 0011 01= 00 0100 1000 1101 = 048DH</div>
+        </dd>
+        <dd class="example-sn">某计算机的Cache共有16块，采用二路组相联映射方式（即每组2块）。每个主存块大小为32Byte，按字节编址。主存129号单元所在主存块应装入到的Cache组号是什么？
+        </dd>
+        <dd class="qa">
+          <div>注意：这里是129号内存单元，不是主存的块号！！！真尼玛坑；其实题干也提到了该单元所在的主存块，那就说明129不是主存块号</div>
+          <div>地址法：</div>
+          <div>块大小32B，块内编址需要 lb32=5位 </div>
+          <div>组数为 16/2 = 8，组编址需要lb8=3位 </div>
+          <div>129对应着第129号内存单元 = <span class="warn">100</span> 00001 </div>
+          <div>&there4; 对应的Cache组为4</div>
+          <div>求模法：</div>
+          <div>129号对应的块数 = 129%32 = 4，第4个块</div>
+          <div>&there4; Cache组 = 块号 % 组数 = 4 % 8 = 4</div>
+        </dd>
+        <dd class="example-sn">
+          主存按字节编址；Cache共64行，采用4路组相连映射；主存块大小32字节，所有编号从0开始，则第2593号存储单元所在主存块的Cache组号是多少？Cache中 <span class="em">比较器</span>
+          的个数和位数分别是多少？</dd>
+        <dd class="qa">
+          <div>地址法：</div>
+          <div>主存块大小32字节，块内编址需要 lb32 = 5位</div>
+          <div>组数为 64/4=16组，组编址需要lb16 = 4位</div>
+          <div>2593 = 101<span class="warn">0 001</span>0 0001</div>
+          <div>&there4; 对应的Cache组为1</div>
+          <div>求模法：</div>
+          <div>2593号对应的块数 = 2593%32 = 81，第81个块</div>
+          <div>&there4; Cache组号 = 块号 % 组数 = 81 % 16 = 1</div>
+          <div>比较器的个数就是组大小：4路→4个</div>
+          <div>比较器的位数就是标记Tag的位数 3位</div>
+        </dd>
+        <dd class="tips">
+          <div>主存存储单元：按字节存储，一个字节编为1个地址；地址是多少，就对应着几号存储单元；反之亦然</div>
+        </dd>
+      </dl>
+      <div class="chap">替换算法</div>
+      <dl>
+        <dd>. 在Cache中找不到数据，需要查找主存：如何把数据替换进来</dd>
+        <dt>先进先出 FIFO</dt>
+        <dd>. 先进来的被替换</dd>
+        <dt>随机替换RAND</dt>
+        <dd>. 使用随机数发生器产生1个块，把它替换出去</dd>
+        <dt>近期很少使用LRU-Lately Rare Used</dt>
+        <dd>. 使用计数器统计Cache每个块的使用情况：没有访问，+1；访问或被替换，置0</dd>
+        <dd>. 把数字大的替换出去</dd>
+        <dd>. 计数器又称年龄计数器，老的被替换出去</dd>
+        <dd>. 需要额外开销</dd>
+        <dt>优化替换OPT</dt>
+        <dd>. </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开发原则 Principle</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>开发原则</h1>
+      <h3>Principle</h3>
+    </header>
+    <main>
+      <dl>
+        <dd>. 理想情况下，希望模块具有高内聚和低耦合，即模块内元素之间的功能联系紧密，同时与其他模块之间的依赖关系较弱</dd>
+        <dd>. 有助于提高代码的可维护性、重用性和扩展性</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/coupling.png" alt="">
+            <figcaption>高内聚和低耦合</figcaption>
+          </figure>
+        </dd>
+      </dl>
+      <div class="chap">内聚 Cohesion</div>
+      <dl>
+        <dd>. 内聚是从功能角度来度量模块内的联系，一个好的内聚模块应当恰好做一件事。它描述的是模块内的功能联系</dd>
+        <dd>. 内聚类型并不是绝对的，一个模块可能同时具有多种内聚类型的特点，但通常会有一种主导 </dd>
+        <dt>偶然内聚 Coincidental Cohesion</dt>
+        <dd>. 也叫巧合内聚</dd>
+        <dd>. 模块内的元素之间没有明确的功能联系，仅仅是因为某种偶然的原因而被组合在一起</dd>
+        <dd>. 最低级别的内聚，通常会导致代码<span class="em">难以维护和理解</span></dd>
+        <dd>. 举例：一个模块中包含了各种无关的函数，这些函数之间没有共享的数据或交互行为，它们只是被放在同一个模块中</dd>
+        <dt>逻辑内聚 Logical Cohesion</dt>
+        <dd>. 模块内的元素按照某种逻辑关系相关联，共同实现目标：一个或多个功能</dd>
+        <dd>. 较高级别的内聚，模块内的元素在逻辑上相互关联，共同解决某个问题</dd>
+        <dd>. 举例：一个处理订单的模块，包含创建订单、查询订单、修改订单等函数，它们在逻辑上都与订单处理相关</dd>
+        <dt>时间内聚 Temporal Cohesion</dt>
+        <dd>. 模块内部的各个组成部分所包含的处理动作必须在同一时间内执行</dd>
+        <dd>. 执行一系列与时间相关的操作。如初始化</dd>
+        <dt>过程内聚 Procedural Cohesion</dt>
+        <dd>. 模块内的元素按照某种执行顺序相关联，共同完成一项任务或处理一种情况</dd>
+        <dd>. 要求模块内的元素按照特定的过程顺序执行</dd>
+        <dd>. 举例：一个排序模块，包含选择排序、冒泡排序、插入排序等函数，它们按照不同的排序算法的过程顺序执行</dd>
+        <dt>通信内聚 Communicational Cohesion</dt>
+        <dd>. 模块内的元素通过共享数据进行交流和协作，彼此依赖于共享的数据或信息</dd>
+        <dd>. 要求模块内的元素在完成任务时通过通信实现协作</dd>
+        <dd>. 举例：一个用户管理模块，包含了添加用户、删除用户、更新用户信息等函数，它们通过共享的用户数据进行交流和协作</dd>
+        <dt>顺序内聚 Sequential Cohesion</dt>
+        <dd>. 顺序执行</dd>
+        <dd>. 通常一个处理元素的输出数据作为下一个处理惇元素的输入数据</dd>
+        <dt>功能内聚 Functional Cohesion</dt>
+      </dl>
+      <div class="chap">耦合</div>
+      <dl>
+        <dd>. 耦合是软件结构中各模块之间相互连接的一种度量</dd>
+        <dd>. 耦合强弱取决于模块间接口的复杂程度、进入或访问一个模块的点以及通过接口的数据</dd>
+        <dd>. 不同模块之间的关系就是耦合；根据耦合程度可以分为7种，耦合度依次变低</dd>
+        <dt>内容耦合</dt>
+        <dd>. A直接访问B的数据</dd>
+        <dd>. 内容耦合极易出现程序错误，大多高级语言在设计时已经禁止出现内容耦合</dd>
+        <dt>公共耦合 </dt>
+        <dd>. 多个模块共同访问同一个 <span class="em">公共|全局</span> 的数据环境</dd>
+        <dd>. 复杂度随着模块数量的增加显著增加</dd>
+        <dd>. 公共环境可以是：全局数据结构、共享的通信区、内存的公共覆盖区、任何存储介质上的文件、物理设备等</dd>
+        <dd>. 应用：几个模块对同一个数据库的查询、模块对配置文件的访问</dd>
+        <dt>外部耦合</dt>
+        <dd>. 多个模块共同访问同一个 <span class="em">全局简单变量</span> ，非全局数据结构，但不是通过参数表传递</dd>
+        <dd>. 应用：访问配置文件中某个变量、C语言中都访问被说明为extern类型的外部变量的各个模块</dd>
+        <dd class="tips">
+          <div>Tips</div>
+          <div>公共和外部的访问对象：全局的，一个是复杂的数据结构环境，一个是简单的数据变量</div>
+        </dd>
+        <dt>控制耦合 </dt>
+        <dd>. 模块间传递的不是数据信息，而是用做控制信号的开关值或标志值</dd>
+        <dd>. 一个模块控制了另一个模块的功能</dd>
+        <dt>标记耦合</dt>
+        <dd>. 通过参数表 <span class="em">传递数据结构信息</span> ；整个数据结构作为参数传递时，被调用的模块只需要使用其中一部分元素</dd>
+        <dd>. 通俗来讲，传递的参数包含多种数据，模块只用了其中一部分，并没有全部使用</dd>
+        <dd>. 相当于高级语言中的引用传递</dd>
+        <dt>数据耦合 </dt>
+        <dd>. 两个模块之间，通过参数表 <span class="em">传递简单数据信息</span></dd>
+        <dd>. 相当于高级语言中的值传递</dd>
+        <dd class="tips">
+          <div>Tips</div>
+          <div>标记和数据的访问对象：传递的参数，一个是引用传递|复杂的数据结构环境，一个是值传递|简单的数据变量</div>
+        </dd>
+        <dt>非直接耦合 </dt>
+        <dd>. 两模块间无直接关系</dd>
+        <dd>. 模块之间的联系完全是通过主模块的控制和调用来实现的</dd>
+        <dd>. 子模块之间无需知道对方的存在；子模块之间的联系，全部变成子模块和主模块之间的联系</dd>
+        <dd>
+          <figure class="img-sn">
+            <img src="./imgs/coup0.png" alt="">
+            <figcaption>耦合类型</figcaption>
+          </figure>
+        </dd>
+      </dl>
+      <div class="chap">基本开发原则</div>
+      <dl>
+        <dt>最终目标</dt>
+        <dd class="em">高内聚、低耦合</dd>
+        <dd>. 可读性 readable：规范、易读 </dd>
+        <dd>. 可维护性 maintaining </dd>
+        <dd>. 可复用性|可重用性 reuse </dd>
+        <dd>. 可扩展性 extendable </dd>
+        <dd>. 灵活性 flexibility </dd>
+        <dd>. OOA面向对象分析 | OOD面向对象设计</dd>
+        <dt>单一职责原则 SRP</dt>
+        <dd>.Single Responsibility Principle</dd>
+        <dd>. 一个类只负责一个职责 </dd>
+        <dd>. 目的单一 </dd>
+        <dt>开闭原则 OCP</dt>
+        <dd>. Open Close Principle</dd>
+        <dd>. 对扩展开放、对修改关闭 </dd>
+        <dd>. 使用 <span class="em">抽象类</span> 或 <span class="em">接口</span> 实现；需要变化时，派生一个类去实现即可 </dd>
+        <dt>李氏代换原则 Liskov Substitution Principle</dt>
+        <dd>. 所有使用基类的地方，必须能透明的使用其子类的对象 </dd>
+        <dd>. 基类出现的地方，子类一定出现：子类可以置换父类 </dd>
+        <dd>. 子类可以继承|扩展父类的功能，但是不能改变父类的功能：继承的目的就是想复用父类功能，你改了还继承啥 </dd>
+        <dd>. 尽量不要覆盖|重写父类的非抽象方法，而只实现父类的抽象方法 </dd>
+        <dt>依赖倒置原则 Dependence Inversion Principle</dt>
+        <dd>. spring框架 </dd>
+        <dt>接口隔离原则 ISP</dt>
+        <dd>. Interface Segregation Principle</dd>
+        <dd>. 对接口的细化 </dd>
+        <dd>. 用户不应该依赖不需要的接口[定义的接口必须由实现类全部实现 </dd>
+        <dt>组合重用原则 Composite Reuse Principle</dt>
+        <dd>. 核心机制：委派 </dd>
+        <dd>. 优先使用对象组合，而不是通过继承实现功能[通过继承去实现并不是一个最好的选择] </dd>
+        <dt>迪米特原则 Law of Demeter</dt>
+        <dd>. 又称最少知识原则 </dd>
+        <dd>. 对程序内部数据交互的限制 </dd>
+        <dd>. 一个对象应该尽可能的少了解其它对象；仅局限与和自己关系密切的那部分 </dd>
+        <dd>. 以降低耦合度为出发点 </dd>
+        <dd>. 参数使用时，若传递一个字符串就可以实现，就没有必要传递一个包含该字符串的对象 </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

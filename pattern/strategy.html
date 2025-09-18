@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>策略模式 Strategy</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>策略模式</h1>
+    <h3 class="sub-title">Strategy</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>对象行为模式</dd>
+      <dd>定义一系列算法，并将每个算法封装起来，使它们可以互相<span class="warn">替换|切换</span></dd>
+      <dd>算法的变化不会影响算法的客户：对客户是透明的</dd>
+      <dd>主要解决if-else分支过多带来的复杂和维护</dd>
+      <dd>具有良好的扩展，可以随时添加新的逻辑</dd>
+      <dt>应用</dt>
+      <dd>绩效考评：根据评定等级和工资计算最后奖励</dd>
+      <dd>路由开发</dd>
+      <dd>列表渲染</dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Strategy：根据实际制定策略对象</figcaption>
+          <pre>
+let Bonus = {
+  'A': (salary) => {
+    return salary * 2
+  },
+  'B': (salary) => {
+    return salary * 1.8
+  },
+  'C': (salary) => {
+    return salary * 1.6
+  },
+  'D': (salary) => {
+    return salary * 1
+  },
+  'E': (salary) => {
+    return salary * 0.8
+  }
+}
+function getBonus(level, salary) {
+  return Bonus[level](salary)
+}          </pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>
+console.log(getBonus('A', 8000));
+console.log(getBonus('B', 8000));
+console.log(getBonus('C', 8000));
+console.log(getBonus('D', 8000));
+console.log(getBonus('E', 8000)); </pre>
+        </figure>
+      </dd>
+      <dt>后台评论管理</dt>
+      <dd>根据帖子的不同状态，指定不同的类</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>列表区别渲染</figcaption>
+          <pre>
+// data
+let list = [{
+  title: 'gl',
+  type: 1
+}, {
+  title: 'cq',
+  type: 1
+}, {
+  title: 'sh',
+  type: 1
+}, {
+  title: 'nj',
+  type: 1
+}, {
+  title: 'gz',
+  type: 1
+}, {
+  title: 'xm',
+  type: 2
+}, {
+  title: 'fs',
+  type: 2
+}, {
+  title: 'hk',
+  type: 2
+}, {
+  title: 'dg',
+  type: 3
+}]
+
+// strategy
+let flag = {
+  1: {
+    className: 'pass'
+  },
+  2: {
+    className: 'fail'
+  },
+  3: {
+    className: 'todo'
+  }
+}
+
+// render
+news.innerHTML = list.map(item => {
+  return `&lt;li class='${flag[item.type].className}'&gt;${item.title}&lt;/li&gt;`
+}).join('')</pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

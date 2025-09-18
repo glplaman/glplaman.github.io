@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>校验码 Check digit</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <link rel="stylesheet" href="../../css/code.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>校验码</h1>
+      <h3>Check digit</h3>
+    </header>
+    <main>
+      <dl>
+        <dd>为信息码m增加冗余码|校验码r来校验信息，即：扩大码距实现校验</dd>
+        <dd>m信息码长度</dd>
+        <dd>r校验码个数</dd>
+        <dd>码距：两个码组对应位上数字不同的个数</dd>
+      </dl>
+      <div class="chap">循环冗余校验码 - CRC</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>r拼接在尾部</dd>
+        <dd>校验码由生成多项式G决定，通常不只1位； 生成多项式由双方决定，采用模2除法运算</dd>
+        <dd>检多位错</dd>
+        <dd>不可纠错</dd>
+      </dl>
+      <div class="chap">奇偶校验码 - parity check code</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>r拼接在头部</dd>
+        <dd>检1位错</dd>
+        <dd>不可纠错</dd>
+      </dl>
+      <div class="chap">海明校验码 - Hamming</div>
+      <dl>
+        <dt>说明</dt>
+        <dd>默认使用偶校验，即：模2|异或</dd>
+        <dd>每个校验位的位置是2n</dd>
+        <dd>可纠错</dd>
+        <dd class="em txt-center">2<sup>r</sup>>= m + r + 1</dd>
+        <dd class="example-sn">以10位数据为例，D9 D8 D7 D6 D5 D4 P4 D3 D2 D1 P3 D0 P2 P1，D0-D9是数据位；P1-P4是校验位</dd>
+        <dd>D9由P4、P3和P2，D9的位序是14，即14 = 8 + 4 + 2；问D5由谁校验？</dd>
+        <dd class="qa">
+          <div>D9 D8 D7 D6 D5 D4 P4 D3 D2 D1 P3 D0 P2 P1</div>
+          <div>14 13 12 11 10 9 8 7 6 5 4 3 2 1</div>
+          <div>D5的位序是10，应该由P4、P2校验</div>
+        </dd>
+      </dl>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

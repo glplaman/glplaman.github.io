@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工厂模式 Factory</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>工厂模式</h1>
+    <h3 class="sub-title">Factory</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>也称简单工厂模式 </dd>
+      <dd>由一个工厂对象决定创建某一种产品对象类的实例 </dd>
+      <dd>用来创建同一类对象 </dd>
+      <dd>适合：逻辑不复杂；管理对象数量少 </dd>
+      <dt>后台管理系统</dt>
+      <dd>不同的身份对应的权限不同 </dd>
+      <dd>身份类别少 </dd>
+      <dd>业务不复杂</dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>Factory</figcaption>
+          <pre>
+class User {
+  constructor(role, pages) {
+    this.role = role
+    this.pages = pages
+  }
+
+  static Factory(role) {
+    switch (role) {
+      case "superAdmin":
+        return new User("superAdmin", ['home', 'news', 'user', 'right'])
+        break;
+      case "admin":
+        return new User("admin", ['home', 'news', 'user'])
+        break;
+      case "editor":
+        return new User("editor", ['home', 'news'])
+        break;
+      default:
+        throw new Error('wrong para')
+        break;
+    }
+  }
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre>let user=User.Factory('admin')</pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

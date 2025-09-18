@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>职责链模式 Chain</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <main class="container">
+    <h1>职责链模式</h1>
+    <h3 class="sub-title">Chain</h3>
+    <dl>
+      <dt>概述</dt>
+      <dd>多个对象都有机会处理请求</dd>
+      <dd>避免请求的发送者和多个接收者之间直接的耦合</dd>
+      <dd>将接收者链条化，直到找到能够处理该请求的对象</dd>
+      <dt>应用</dt>
+      <dd>OA审批</dd>
+      <dd>注册登录过程中的异常处理</dd>
+      <dt>参考代码</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>HTML</figcaption>
+          <pre>
+&lt;input type="password" id="pw"&gt;
+&lt;button id="btn"&gt;sub&lt;/button&gt;</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>常规判断：长度不小于6的非空数字；扩展性不好</figcaption>
+          <pre>
+btn.onclick = function () {
+  if (pw.value.length == 0) {
+    console.log('pw is null');
+  } else if (isNaN(pw.value)) {
+    console.log('number required');
+  } else if (pw.value.length &lt; 6) {
+    console.log('length &lt; 6');
+  } else {
+    console.log(pw.value);
+  }
+}</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>Usage</figcaption>
+          <pre></pre>
+        </figure>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>
