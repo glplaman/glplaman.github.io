@@ -37,7 +37,7 @@
       <img src="https://www.hualixy.edu.cn/upload/main/site/logo/image/b86f05c1f67e40b992dd67022e4499b9.png" alt="">
       <div class="modal-code mt2" id="modal-code">
         <div>
-          <img src="./imgs/nf_glpla.github.io.png" alt="">
+          <img src="./imgs/hl_glplaman.github.io.png" alt="">
           <p class="mt2">试讲</p>
         </div>
         <div>
@@ -49,7 +49,7 @@
     </div>
   </div>
   <div class="modal-aside">
-    <img src="./imgs/nf_glpla.github.io.png" alt="">
+    <img src="./imgs/hl_glplaman.github.io.png" alt="">
     <img src="../imgs/qrcode_glplaman.github.io.png" alt="">
   </div>
   <header class="w">
@@ -265,7 +265,7 @@
           <p>设计模式</p>
         </div>
         <div class="icon-box">
-          <span class="iconfont icon-text"></span>
+          <span class="iconfont icon-function"></span>
         </div>
       </div>
       <div class="cont-wrap">
@@ -334,9 +334,9 @@
       <div class="cont-wrap">
         <div class="cont">
           <h3 class="border">学时 Duration</h3>
-          <p>0.3 - 理论</p>
-          <p>0.7 - 实操</p>
-          <p>1.0 - 练习</p>
+          <p>5 - 理论</p>
+          <p>10 - 实操</p>
+          <p>30 - 练习</p>
         </div>
         <div class="icon-box">
           <span class="iconfont icon-tiaoxiushenqing"></span>
@@ -424,11 +424,7 @@
     <h2 class="highlight">[ 理论讲解 Lecture on Theory ]</h2>
     <div class="mt2">1. 概述 Overview</div>
     <ul>
-      <li>创建型 <span class="warn">Creational </span> 设计模式
-        <p>灵活、解耦</p>
-        <p>避免直接使用 new</p>
-        <p>提高可维护性、可扩展性和复用性</p>
-      </li>
+      <li>创建型 <span class="warn">Creational </span> 设计模式</li>
       <li>一个类仅有一个实例 - <span class="warn">single instance</span></li>
       <li>提供一个全局访问点</li>
       <li>避免全局使用的类频繁的创建和销毁，占用内存</li>
@@ -454,13 +450,16 @@
       <li>音频/视频播放器控制器 Player</li>
       <li>其它...</li>
     </ul>
-    <div class="mt2">4. 实现 Implement</div>
+    <div class="mt2">4. 实现 Implementation</div>
     <ul>
-      <li>闭包 Closure + 立即执行函数 IIFE <span class="iconfont icon-doubt"></span>
+      <li>立即执行函数 IIFE + 闭包 Closure <span class="iconfont icon-doubt"></span>
+        <p>使用 IIFE(Immediately Invoked Function Expression) 创建私有作用域，使得其在的 变量 instance 成为<span
+            class="warn">真正的私有静态变量</span></p>
         <p>利用闭包保存 instance 变量，外部无法直接访问</p>
-        <p>使用 IIFE 创建私有作用域，instance 成为<span class="warn">真正的私有静态变量</span></p>
-        <p>返回一个函数（构造函数），每次调用都检查是否已创建实例</p>
-        <p>JavaScript支持较好；低版本也可以正常使用</p>
+        <p>每次调用都检查是否已创建实例</p>
+      </li>
+      <li>特点
+        <p>JavaScript 支持较好；低版本也可以正常使用</p>
         <p>语法略显复杂，可读性不如类</p>
         <p>返回的是函数，调用时是 Singleton()，不像构造函数 new Singleton() 直观</p>
         <p>如果初始化逻辑复杂，代码组织不如类清晰</p>
@@ -480,9 +479,11 @@ const Singleton = (() => {
         <p>在 constructor 中检查 Singleton.instance 是否存在</p>
         <p>若存在，直接返回已有实例，跳过初始化</p>
         <p>否则创建新实例并赋值给 Singleton.instance</p>
-        <p>语法清晰，符合现代 JS 风格（使用 class）</p>
+      </li>
+      <li>特点
+        <p>语法清晰，符合现代编码规范</p>
         <p>调用方式自然：new Singleton()</p>
-        <p>易于扩展，支持继承（但需小心处理单例逻辑）</p>
+        <p>易于扩展，支持继承</p>
         <p>Singleton.instance 是暴露的，可能被外部修改或重置。如何避免？<span class="iconfont icon-doubt"></span></p>
         <!-- <p>static instance = null;</p> -->
       </li>
@@ -500,17 +501,20 @@ class Singleton {
   // methods
   // ...
 }</pre>
-      <li>模块 Module - singleton.js
-        <p>天然单例：JS 模块系统保证了这一点</p>
+      <li>模块 Module
         <p>利用 ES Module 的特性：模块是单例的，import 多次也只加载一次</p>
         <p>直接<span class="warn">导出一个实例</span>，而不是类</p>
+        <p>天然单例：JS 模块系统保证了这一点</p>
+      </li>
+      <li>特点
         <p>最简单、最安全：没有手动检查实例的逻辑</p>
-        <p>易于测试（可通过 mock 模块替换）</p>
-        <p>无法延迟初始化（lazy initialization）：模块加载时就创建实例，即使还没用到</p>
-        <p>如果初始化依赖运行时参数（如配置），会受限</p>
-        <p>不适合需要“按需创建”的场景</p>
+        <p>易于测试；可通过 mock 模块替换</p>
+        <p>无法延迟初始化 lazy initialization：模块加载时就创建实例，即使还没用到</p>
+        <p>如果初始化依赖运行时参数，如配置，会受限</p>
+        <p>不适合需要"按需创建"的场景</p>
       </li>
       <pre>
+// singleton.js
 class Singleton {
   constructor() {
     this.data = [];
@@ -537,11 +541,14 @@ export default new Singleton();</pre>
     <h3 class="highlight">[ 案例实操 Drill ]</h3>
     <div class="mt2">[<span class="iconfont icon-black-keyboard-with-white-keys"></span>] 模态框</div>
     <ul>
-      <li>首次调用：创建DOM元素并添加到页面；后续调用：直接返回已创建的实例</li>
+      <li>首次调用：创建DOM元素并添加到页面；后续调用：直接返回/使用已创建的实例</li>
       <li>关闭操作：隐藏模态框而不是销毁</li>
-      <li>再次打开：直接显示已存在的模态框</li>
+      <li>再次打开：直接显示已创建的模态框实例</li>
       <li>性能提升：避免重复的DOM操作和事件绑定</li>
       <li>Vue框架中，哪些指令具备类似的特性？<span class="iconfont icon-doubt"></span></li>
+    </ul>
+    <ol>
+      <li>创建单例</li>
       <pre>
 let Modal = (() => {
   let instance = null
@@ -554,21 +561,21 @@ let Modal = (() => {
     return instance
   }
 })()</pre>
-      <li>打开</li>
+      <li>使用单例 - 虽然在打开和关闭的逻辑中，都声明并使用了 singleton，但是他们实质上就是一个对象 - 单例</li>
       <pre>
+// 打开
 let open = document.querySelector('#open')
 open.addEventListener('click', () => {
   let singleton = Modal()
   singleton.style.display = 'block'
-})</pre>
-      <li>关闭</li>
-      <pre>
+})
+// 关闭
 let close = document.querySelector('#close')
 close.addEventListener('click', () => {
   let singleton = Modal()
   singleton.style.display = 'none'
 })</pre>
-      <li>根据不同的情况传递不同的参数 - 指定形参</li>
+      <li>改进 - 根据不同的情况传递不同的参数</li>
       <pre>
 let Modal = (() => {
   let instance = null
@@ -581,12 +588,12 @@ let Modal = (() => {
     return instance
   }
 })()</pre>
-      <li>创建的时候，指定参数</li>
+      <li>实例化的时候，指定参数</li>
       <pre>let modal = Modal({ msg: 'hi,there.' })</pre>
-    </ul>
+    </ol>
     <div class="mt2">[<span class="iconfont icon-black-keyboard-with-white-keys"></span>] 模态框 - 进阶版</div>
     <ul>
-      <li>业务聚合</li>
+      <li>业务聚合 - 高内聚</li>
       <pre>
 class Modal {
     constructor() {
@@ -607,20 +614,28 @@ class Modal {
         this.element.style.display = 'none';
     }
 }
-
-// 使用
+</pre>
+      <li>验证</li>
+      <pre>
 const dialog1 = new Dialog();
 const dialog2 = new Dialog();
 console.log(dialog1 === dialog2); // true，同一个实例
-
-document.getElementById('btn').addEventListener('click', () => {
+</pre>
+      <li>使用</li>
+      <pre>
+btnOpen.addEventListener('click', () => {
     const dialog = new Dialog();
-    dialog.show(); // 始终操作同一个对话框
+    dialog.show();
+});
+btnClose.addEventListener('click', () => {
+    const dialog = new Dialog();
+    dialog.hide();
 });
 </pre>
     </ul>
     <div class="mt2">[<span class="iconfont icon-bell"></span>] 体会练习</div>
     <div class="">[<span class="iconfont icon-bell"></span>] 总结讲评</div>
+    <h3 class="highlight">[ 案例解读 Analysis ]</h3>
     <div class="mt2">[<span class="iconfont icon-black-keyboard-with-white-keys"></span>] 商品状态管理 - <a class="link"
         target="_blank" href="../vue/pinia.html">Pinia</a></div>
     <ul>
@@ -655,6 +670,37 @@ const store2 = useCounterStore();
 console.log(store1 == store2);
 
 store1.getAll()</pre>
+    </ul>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 汉堡菜单仓库</dd>
+    <ul>
+      <li>单击菜单项时
+        <p>折叠菜单</p>
+        <p>路由导航</p>
+      </li>
+      <li>运用
+        <p>路由守卫</p>
+        <p>状态管理</p>
+      </li>
+      <li>守卫中的两个 store 返回的是同一个 Pinia store 实例。虽然变量名相同，且在不同的作用域中，但是引用的都是同一个对象实例/单例，因此不会导致逻辑上的冲突</li>
+      <pre>
+import { useMenuStore } from '@/stores/menu'
+
+router.beforeEach((to, from, next) => {
+    // 其它逻辑
+
+    const store = useMenuStore();
+    store.flag = false;
+    next();
+})
+
+router.afterEach((to, from) => {
+    // 其它逻辑
+
+    if (to.path === from.path) {
+        const store = useMenuStore()
+        store.flag = false
+    }
+})</pre>
     </ul>
     <div class="mt2">[<span class="iconfont icon-black-keyboard-with-white-keys"></span>] 日志管理</div>
     <ul>
@@ -708,7 +754,7 @@ console.log(logger1 === logger2); // true</pre>
       <li>业务优化：完善模态框案例，根据不同的业务场景，展示不同的内容</li>
       <li>巩固提高：完成本节课单例模式实现的另外两种方式，并体会他们之际的差异</li>
       <li>独立思考：学以致用，结合以往或现在进行的课程实训，如何在实际开发中运用单例设计模式？</li>
-      <li>个人总结：补充并完善表格</li>
+      <li>个人总结：补充并完善下面表格</li>
       <table>
         <caption>单例实现比较</caption>
         <thead>
@@ -719,7 +765,7 @@ console.log(logger1 === logger2); // true</pre>
         </thead>
         <tbody>
           <tr>
-            <td>Closure + IIFE</td>
+            <td>IIFE + Closure</td>
             <td></td>
           </tr>
           <tr>
