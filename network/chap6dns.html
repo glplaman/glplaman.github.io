@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>域名解析系统 DNS</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>域名解析系统 DNS</h1>
+    </header>
+    <div class="chap">域名的组成</div>
+    <dl>
+      <dt>域名</dt>
+      <dd>. 域名是由一串用点"."分隔的、不同级别的标记字符组成的 Internet 上某一台计算机或计算机组的名称，用于在数据传输时对计算机的定位标识</dd>
+      <dt>组成</dt>
+      <dd class="txt-center em">计算机主机名·机构名·网络名·最高层域名</dd>
+      <dd>. 逻辑概念，不代表物理位置 </dd>
+      <dd>. 由标号序列组成；每个标号不超过63字符 </dd>
+      <dd>. 标号不区分大小写；总长度不超过255个字符 </dd>
+      <dd>. 域名是一个具有层次的结构，从上到下一次为根域名、顶级域名、二级域名、三级域名</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/dns0.png" alt="">
+          <figcaption>分层的域名</figcaption>
+        </figure>
+      </dd>
+      <dd>1. 根域名 .</dd>
+      <dd>系统为用户做了兼容，域名末尾的 <span class="em">根域名.</span> 一般不需要输入</dd>
+      <dd>2. 顶级域名 TLD - Top Lever Domain </dd>
+      <dd>. 国家顶级域名 nTLD - nation TLD：cn：中国；us：美国；uk：英国 </dd>
+      <dd>. 通用顶级域名 gTLD - general TLD：com：公司；net：网络服务机构；org：非盈利机构；gov：政府部门；mil：军事部门；edu：教育机构</dd>
+      <dd>. 基础结构域名：顶级域名只有一个，即arpa，用于反向域名解析，因此又称反向域名。</dd>
+      <dd>3. 二级域名</dd>
+      <dd>. 由国家自行制定，我国域名中心 <a href="https://www.cnnic.net.cn/">CNNIC</a> - China Internet Network Information
+        Center</dd>
+      <dd>. 类别域名：ac：科研机构；com：工商金融；net：网络服务机构；org：非盈利组织；gov：政府机构；mil：国防机构；edu：中国教育机构</dd>
+      <dd>. 行政区域名（34个省、自治区、直辖市等）：bj：北京；js：江苏；sh：上海</dd>
+      <dd class="example-sn">www.xxx.com，www为三级域名、xxx为二级域名、com为顶级域名</dd>
+    </dl>
+    <div class="chap">域名解析系统</div>
+    <dl>
+      <dt>说明</dt>
+      <dd>. DNS - Domain Name System</dd>
+      <dd class="warn">. 相当于一个翻译官，负责将域名翻译成IP地址</dd>
+      <dd>. 是互联网的一项服务。将域名和IP地址相互映射的一个分布式数据库，以便更方便地访问互联网</dd>
+      <dd>. 解决IP地址复杂难以记忆的问题，存储并完成自己所管辖范围内主机的域名到IP地址的映射</dd>
+      <dd>. 协议端口：53</dd>
+      <dt>DNS服务器</dt>
+      <dd>. 在域名的每一层都会有一个域名服务器</dd>
+      <dd>. 一个服务器所负责管辖的(或有权限的)范围称为 <span class="em">区</span> (不以“域”为单位)</dd>
+      <dd>. 每个区设置相应的权限域名服务器，用来保存该区中的所有主机的域名到IP地址的映射</dd>
+      <dd>. 还必须具有连向其他域名服务器的信息。当自己不能进行域名到IP地址的转换时，能够知道到什么地方去找其他域名服务器</dd>
+      <dd class="number">
+        <div>根域名服务器 root name server </div>
+        <p>. 共13个域名；区域不均衡</p>
+        <p>. 知道所有顶级域名服务器的域名和对应的IP地址</p>
+        <p>. 它 <span class="em">不直接解析</span> IP地址，而是告诉对方应该找哪个顶级域名服务器</p>
+        <div>顶级域名服务器</div>
+        <p>. 负责管理在该顶级域名服务器注册的所有二级域名 </p>
+        <p>. 收到DNS查询请求时，就给出相应的回答，可能是最后的结果，也可能是下一步应当查找的域名服务器的IP地址</p>
+        <div>权限域名服务器 authoritative name server </div>
+        <p>. 每台主机都必须在授权域名服务器处登记</p>
+        <p>. 实际上，许多域名服务器都同时充当本地域名服务器和授权域名服务器</p>
+        <p>. 授权域名服务器 <span class="em">总能</span> 将其管辖的主机名转换为该主机的IP地址；不在辖区的，向上级请求</p>
+        <div>本地域名服务器 local name server </div>
+        <p>. 本地域名服务器对域名系统非常重要。</p>
+        <p>. 也称默认域名服务器； 距离用户较近 </p>
+        <p>. 每个因特网服务提供者ISP， 或一所大学，甚至一所大学中的各个系，都可以拥有一个本地域名服务器</p>
+        <p>. 当一台主机发出DNS查询请求时，这个查询请求报文就发送给该主机的本地域名服务器</p>
+      </dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>根域名服务器</caption>
+          <tr>
+            <td>A 根</td>
+            <td>198.41.0.4</td>
+            <td>A.root-servers.net</td>
+            <td>美国加利福尼亚州洛杉矶</td>
+          </tr>
+          <tr>
+            <td>B 根</td>
+            <td>192.228.79.201</td>
+            <td>B.root-servers.net</td>
+            <td>美国弗吉尼亚州马里兰</td>
+          </tr>
+          <tr>
+            <td>C 根</td>
+            <td>192.33.4.12</td>
+            <td>C.root-servers.net</td>
+            <td>美国纽约州纽约市</td>
+          </tr>
+          <tr>
+            <td>D 根</td>
+            <td>199.7.91.13</td>
+            <td>D.root-servers.net</td>
+            <td>美国新泽西州贝德明斯特</td>
+          </tr>
+          <tr>
+            <td>E 根</td>
+            <td>192.203.230.10</td>
+            <td>E.root-servers.net</td>
+            <td>瑞典斯德哥尔摩</td>
+          </tr>
+          <tr>
+            <td>F 根</td>
+            <td>192.5.5.241</td>
+            <td>F.root-servers.net</td>
+            <td>美国加利福尼亚州棕榈泉</td>
+          </tr>
+          <tr>
+            <td>G 根</td>
+            <td>192.112.36.4</td>
+            <td>G.root-servers.net</td>
+            <td>荷兰阿姆斯特丹</td>
+          </tr>
+          <tr>
+            <td>H 根</td>
+            <td>198.97.190.53</td>
+            <td>H.root-servers.net</td>
+            <td>美国华盛顿州西雅图</td>
+          </tr>
+          <tr>
+            <td>I 根</td>
+            <td>192.36.148.17</td>
+            <td>I.root-servers.net</td>
+            <td>瑞士日内瓦</td>
+          </tr>
+          <tr>
+            <td>J 根</td>
+            <td>192.58.128.30</td>
+            <td>J.root-servers.net</td>
+            <td>日本东京</td>
+          </tr>
+          <tr>
+            <td>K 根</td>
+            <td>193.0.14.129</td>
+            <td>K.root-servers.net</td>
+            <td>美国密歇根州兰辛</td>
+          </tr>
+          <tr>
+            <td>L 根</td>
+            <td>199.7.83.42</td>
+            <td>L.root-servers.net</td>
+            <td>美国加利福尼亚州埃尔塞贡多</td>
+          </tr>
+          <tr>
+            <td>M 根</td>
+            <td>202.12.27.33</td>
+            <td>M.root-servers.net</td>
+            <td>美国弗吉尼亚州达勒姆</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">查看自己主机的DNS服务器</dd>
+      <dt>查询方式</dt>
+      <dd>1. 递归查询</dd>
+      <dd>. 如果请求者A请求接收者B，那么接收者B作为请求的接收者一定要给请求者A想要的答案；至于你直接得到还是间接得到，我不管</dd>
+      <dd>. 由于该方法给根域名服务造成的负载过大，所以在实际中几乎不使用</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/dns1.png" alt="">
+          <figcaption>递归查询</figcaption>
+        </figure>
+      </dd>
+      <dd>2. 迭代查询：如果接收者B没有请求者A所需要的准确内容，接收者B将告诉请求者A如何去获得这个内容，但是自己并不去发出请求</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/dns2.png" alt="">
+          <figcaption>迭代查询</figcaption>
+        </figure>
+      </dd>
+      <dt>域名缓存</dt>
+      <dd>在域名服务器解析的时候，使用缓存保存域名和IP地址的映射；计算机中DNS的记录也分成了两种缓存方式</dd>
+      <dd class="number">
+        <div>浏览器缓存：浏览器在获取网站域名的实际 IP 地址后会对其进行缓存，减少网络请求的损耗</div>
+        <div>操作系统缓存：操作系统的缓存其实是用户自己配置的hosts文件；C:\Windows\System32\drivers\etc</div>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>查看主机 DNS 缓存</figcaption>
+          <pre>ipconfig /displaydns</pre>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="code">
+          <figcaption>清空主机 DNS 缓存</figcaption>
+          <pre>ipconfig /flushdns</pre>
+        </figure>
+      </dd>
+      <dt>域名解析的顺序</dt>
+      <dd>当用户在地址栏键入并敲下回车键之后，域名解析就开始了</dd>
+      <dd class="number">
+        <div>浏览器缓存</div>
+        <div>找本机的hosts文件</div>
+        <div>路由缓存</div>
+        <div>找DNS服务器（本地域名、顶级域名、根域名）→迭代解析、递归查询</div>
+      </dd>
+      <dd>具体过程如下：假定某客户机想获知域名为http://y.abc.com主机的IP地址，域名解析的过程(共使用8个UDP报文)如下: </div>
+      <dd class="number">
+        <div>客户机向其本地域名服务器发出DNS请求报文</div>
+        <div>本地域名服务器收到请求后，查询本地缓存，若没有该记录，则以DNS客户的身份向根域名服务器发出解析请求</div>
+        <div>根域名服务器收到请求后，判断该域名属于.com域，将对应的顶级域名服务器http://dns.com的IP地址返回给本地域名服务器</div>
+        <div>本地域名服务器向顶级域名服务器http://dns.com发出解析请求报文</div>
+        <div>顶级域名服务器http://dns.com收到请求后，判断该域名属于http://abc.com域，因此将对应的授权域名服务器http://dns.abc.com的IP地址返回给本地域名服务器
+        </div>
+        <div>本地域名服务器向授权域名服务器http://dns.abc.com发起解析请求报文</div>
+        <div>授权域名服务器http://dns.abc.com收到请求后，将查询结果返回给本地域名服务器</div>
+        <div>本地域名服务器将查询结果保存到本地缓存，同时返回给客户机</div>
+      </dd>
+    </dl>
+    <div class="chap">PT仿真</div>
+    <dl>
+      <dt>说明</dt>
+      <dd>
+        <figure class="img-sn">
+          <img src="../imgs/network/app/dns.jpg" alt="">
+          <figcaption>服务器请求过程</figcaption>
+        </figure>
+      </dd>
+      <dd class="example-sn">
+        假设所有域名服务器均采用递归查询方式进行域名解析。当某台主机访问规范域名为www.abc.xyz.com的网站时，由某台域名服务器完成解析，则可能发出DNS查询的最少和最多次数分别是（）。</dd>
+      <dd class="alpha">
+        <div>0、3 </div>
+        <div>1、3 </div>
+        <div>0、4[本地缓存如果有，不需要查询；向根/、向com、向xyz.com、向abc.xyz.com] </div>
+        <div>1、4 </div>
+      </dd>
+      <dd class="example-sn">如果本地域名服务器没有缓存，采用递归方式解析某台主机域名时，用户主机、本地域名服务器发送的域名请求消息数为（）。</dd>
+      <dd class="alpha">
+        <div>一条、一条[递归只需请求1次就可以拿到结果]</div>
+        <div>一条、多条</div>
+        <div>多条、一条</div>
+        <div>多条、多条</div>
+      </dd>
+      <dd class="example-sn">有关域名服务器，说法错误的是（）。</dd>
+      <dd class="alpha">
+        <div>可分为：根域名服务器、顶级域名服务器、权限域名服务器和本地域名服务器</div>
+        <div>根域名服务器并不解析域名，而是把待查域名对应的顶级域名服务器的IP地址作为结果返回</div>
+        <div>除根域名服务器外，其它域名服务器均能返回待查域名对应的IP地址[顶级域名服务器除外]</div>
+        <div>本地域名服务器的IP地址应该直接配置在需要解析域名的主机中</div>
+      </dd>
+    </dl>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-05-17</span>
+    </footer>
+  </section>
+</body>
+
+</html>

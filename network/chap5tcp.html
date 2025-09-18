@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>传输控制协议 TCP</title>
+  <script src="../js/fastclick.js"></script>
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/linux.css">
+  <style>
+    header {
+      background-image: url(../imgs/network/network0.jpg);
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header class="w">
+    <!-- <h1>传输控制协议 TCP</h1> -->
+    <span class="timestamp">2022-06-10</span>
+  </header>
+  <nav id='nav' class="w">
+    <a class="logo" href="./chap5tcp.html">TCP</span><span class="reg">&reg;</span></a>
+    <div id="ham"><span class="iconfont">&#xe816;</span></div>
+    <ul id="menu" class="menu">
+      <li class="nav-item"><a id="tocont0" class="nav-link"><span>概述</span><span
+            class="top-sub-menu">Overview</span></a></li>
+      <li class="nav-item"><a id="tocont1" class="nav-link"><span>可靠传输</span><span
+            class="top-sub-menu">Reliable</span></a></li>
+      <li class="nav-item"><a id="tocont2" class="nav-link"><span>流量控制</span><span
+            class="top-sub-menu">Follow</span></a></li>
+      <li class="nav-item"><a id="tocont3" class="nav-link"><span>拥塞控制</span><span
+            class="top-sub-menu">Congestion</span></a></li>
+      <li class="nav-item"><a id="tocont4" class="nav-link"><span>三次握手</span><span
+            class="top-sub-menu">Handshake</span></a></li>
+      <li class="nav-item"><a id="tocont5" class="nav-link"><span>四次挥手</span><span
+            class="top-sub-menu">Farewell</span></a></li>
+    </ul>
+  </nav>
+  <div class="w cont">
+    <dl class="target-cont">
+      <dt class="chap">TCP-Transmission Control Protocol</dt>
+      <dd>1.面向连接</dd>
+      <dd>2.点对点</dd>
+      <dd>3.全双工通信</dd>
+      <dd>4.可靠交付</dd>
+      <dd>5.面向字节流</dd>
+      <dd>更多信息，请参考<a class="warn" href="https://www.rfc-editor.org/rfc/rfc793" target="_blank">RFC 793</a></dd>
+      <dt>TCP报文</dt>
+      <dd>序号：32bit；TCP报文数据部分第一个字节的序号；增加到最大值后，重新回到0；</dd>
+      <dd>确认号：32bit；对待发TCP报文数据部分的第一个字节序号的确认；增加到最大值后，重新回到0；控制字段ACK为1时才有效；如果确认号为n，则表示序号n-1之前的数据已经收到，现在希望接收序号为n的数据；
+      </dd>
+      <dd>数据偏移：4bit，以4B为单位；指的是TCP报文首部的长度；首部固定长度是20字节，所以该字段最小值为0101；相应的，最大值为1111，对应首部最大的长度为60字节；</dd>
+      <dd>窗口：16bit，指定数据发送方的发送能力，同时也表示了自己的接收能力；这种根据接收方的接收能力来控制发送方的发送能力，称为流量控制；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s4.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图1 TCP报文格式</dd>
+      <dt>端口应用</dt>
+      <dd>1.客户端在端口49155向目标主机80端口的应用[WEB]发起HTTP请求；</dd>
+      <dd>2.服务端在80端口处理请求后，回发一个响应给客户端；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s5.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图2 端口应用</dd>
+      <dt>序号和确认号应用</dt>
+      <dd>1.A发送序号为201开始的报文，长度是100；同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文；</dd>
+      <dd>2.B发送序号为800开始的报文，长度是200；同时对A发送的序号300之前的报文进行确认，并希望收到A序号301开始的报文；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s6.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图3 序号和确认号应用</dd>
+      <dd><span class="warn">[案例分析]</span>1.主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中，序号为[701]。</dd>
+      <dd><span class="warn">[案例分析]</span>2.已知发送窗口大小为500，某主机收到的确认号为201。如果已经发送了300B的数据，则还可以发送[400B]的数据。</dd>
+      <dd>[分析]发送了300B，对方确认了200B，确认过的数据报被移出缓存，窗口仅仅保留没有确认的数据报，即：还有100B没有确认；窗口大小是500，所以还可以发送400B；</dd>
+    </dl>
+    <dl class="target-cont">
+      <dt class="chap">可靠传输</dt>
+      <dd>可靠的本质是[确认]和[超时重传]；</dd>
+      <dd>以滑动窗口机制做保障；窗口大小以字节为单位；进入窗口的数据才可以发送；已确认的数据应移出窗口；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s7.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图4 可靠传输</dd>
+    </dl>
+    <dl class="target-cont">
+      <dt class="chap">流量控制</dt>
+      <dd>Follow control，接收方控制发送方的发送窗口大小，让发送方不要发太快，以便接收方能来得及接收；</dd>
+      <dd>利用滑动窗口机制实现；</dd>
+      <dd>发送方可以多次发送；直到把发送窗口已满；</dd>
+      <dd>接收方可以累计确认；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s8.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图5 流量控制</dd>
+      <dd><span
+          class="warn">[注意]</span>为避免0窗口导致双方无限等待下去，TCP为每个连接都创建了一个持续计时器。只要某一方收到0窗口，就启动计时器。计时到，就主动发送一个窗口探测报文，以便恢复正常数据通信；
+      </dd>
+    </dl>
+    <dl class="target-cont">
+      <dt class="chap">拥塞控制</dt>
+      <dd>慢开始slow start </dd>
+      <dd>拥塞避免congestion avoidance </dd>
+      <dd>快重传fast retransmit </dd>
+      <dd>快恢复fast recovery</dd>
+      <dd><a class="warn"
+          href="https://www.bilibili.com/video/BV1GY41157Ze/?spm_id_from=888.80997.embed_other.whitelist&t=20&vd_source=fe13480e1099e18e9d5f4e25467df4df">拥塞控制</a>
+      </dd>
+    </dl>
+    <dl class="target-cont">
+      <dt class="chap">连接管理</dt>
+      <dd>1.连接建立-三次握手</dd>
+      <dd>2.数据通信</dd>
+      <dd>3.连接释放-四次挥手</dd>
+      <dt>三次握手</dt>
+      <dd>第一次握手：C发送请求，同步位置1，该同步请求报文消耗一个序号x，但是不允许携带数据[why]；</dd>
+      <dd>第二次握手：S如果同意建立连接，则确认并回复同步响应报文，消耗一个序号y，同样不允许携带数据；</dd>
+      <dd>第三次握手：B对S的响应报文进行确认；可以携带报文；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s9.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图6 三次握手</dd>
+      <dt class="target-cont chap">四次挥手</dt>
+      <dd class="dd-img-item"><img src="../imgs/network/tcp/s10.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图7 四次挥手</dd>
+      <dt>关键点</dt>
+      <dd>1.发送方没有数据要发送，发送释放连接FIN请求；接收方确认后，可以继续发送自己还未发送完的数据；当前连接是半连接状态：发送方到接收方的连接是关闭的</dd>
+      <dd>2.接收方发完数据了，也向发送方发送释放连接FIN请求；等链路上所有的数据报都达到目标主机后，连接被彻底释放</dd>
+    </dl>
+  </div>
+  <footer>
+    <div class="copyright">
+      <span>&copy; All Copyrights Reserved, 2022-2024</span>
+      <img src="../imgs/avatar.jpg" alt="">
+      <span>Cnplaman from No 54414, PLA</span>
+    </div>
+  </footer>
+  <script>
+    window.onload = function () {
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+          FastClick.attach(document.body);
+        }, false);
+      }
+      let navItems = document.querySelectorAll(".nav-item")
+      let contItems = document.querySelectorAll(".target-cont")
+      let ham = document.querySelector("#ham")
+      let menu = document.querySelector("#menu")
+
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView();
+            navItems.forEach(item => {
+              item.style.color = "#ffffff";
+            })
+            navItems[index].style.color = "#e95420"
+          }, 100)
+          menu.classList.toggle('is-hide')
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+
+      ham.addEventListener('click', (e) => {
+        e.preventDefault()
+        menu.classList.toggle('is-hide')
+        if (document.documentElement.style.overflowY == 'auto') {
+          document.documentElement.style.overflowY = "hidden"
+        } else {
+          document.documentElement.style.overflowY = "auto"
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

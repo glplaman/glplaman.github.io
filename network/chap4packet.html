@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Packet</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>IP Packet</h1>
+    </header>
+    <dl>
+      <dt>基本组成</dt>
+      <dd>固定部分：首部，20字节；</dd>
+      <dd>可变部分：数据部分，最大为40字节；</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>IP数据报格式</caption>
+          <tr style="background-color: #c00;color:#fff;">
+            <td>4bit</td>
+            <td>4bit</td>
+            <td>8bit</td>
+            <td colspan="2">16bit</td>
+          </tr>
+          <tr>
+            <td>版本VER</td>
+            <td>首部长度THL</td>
+            <td>区分服务DSCP</td>
+            <td colspan="2">总长度TL</td>
+          </tr>
+          <tr>
+            <td colspan="3">标识ID</td>
+            <td>标志FLAG</td>
+            <td>片偏移FRAG OFFSET</td>
+          </tr>
+          <tr>
+            <td colspan="2">生存时间TTL</td>
+            <td>协议PRO</td>
+            <td colspan="2">首部校验和CHKSUM</td>
+          </tr>
+          <tr>
+            <td colspan="6">源地址SRC</td>
+          </tr>
+          <tr>
+            <td colspan="6">目标地址DST</td>
+          </tr>
+          <tr>
+            <td colspan="6">数据DATA[长度可变，最大40字节]</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>版本 VER</dt>
+      <dd>4个bit；0100，表示IP v4；</dd>
+      <dt>首部长度 THL</dt>
+      <dd>4个bit；以4字节为单位；</dd>
+      <dd>最小值为0101，所以最短首部长度为：5*4=20字节；</dd>
+      <dd>最大值为1111，所以最大首部长度为：(2<sup>4</sup>-1)*4=15*4=60字节；</dd>
+      <dt>总长度 TL</dt>
+      <dd>16bit；以字节位单位；</dd>
+      <dd>首部和数据部分总和；最大数值为1111 1111 1111 1111，所以最大长度为2<sup>16</sup>-1=65535字节</dd>
+      <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500字节；长度超过MTU就必须分片，单独封帧再传输</dd>
+      <dt>标识 ID、标记 FLAGS、片偏移部分 FRAG OFFSET</dt>
+      <dd>这3个字段用于IP数据报分片；</dd>
+      <dd>标识 ID：16bit；同一个数据报的不同分片应具有相同的标识；每产生一个数据报[不是数据分片]就加1，充当计算器的功能；</dd>
+      <dd>标记 FLAG：3bit，包括：MF+DF+保留位0；MF：More Fragment；1：还有分片；0：没有分片；DF：Don’t Fragment；1：不允许分片；0：允许分片；</dd>
+      <dd>片偏移部分 FRAG OFFSET：13bit，以<span class="warn">8字节</span>为单位，指出分片数据报的数据部分在原数据报中的偏移部分；必须为整数；</dd>
+      <dt>生存时间 TTL</dt>
+      <dd>8bit，以秒为单位，最大生存时间是255秒；</dd>
+      <dd>早期为时间；现在为可通过的路由数/跳数；每次转发时就减1；如果为0就丢弃，不转发；</dd>
+      <dd>防止IP数据报在网络中无限制的兜圈子；</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="../imgs/network/ip3.jpg" alt="">
+          <figcaption>TTL的重要性</figcaption>
+        </figure>
+      </dd>
+      <dt>协议 PRO</dt>
+      <dd>数据部分是何种协议，如ICMP、TCP、UDP、OSPF等</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>常用协议字段</caption>
+          <tr>
+            <td>协议名称</td>
+            <td>ICMP</td>
+            <td>IGMP</td>
+            <td>TCP</td>
+            <td>UDP</td>
+            <td>IPv6</td>
+            <td>OSPF</td>
+          </tr>
+          <tr>
+            <td>值</td>
+            <td>1</td>
+            <td>2</td>
+            <td>6</td>
+            <td>17</td>
+            <td>41</td>
+            <td>89</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>首部校验和</dt>
+      <dd>用来校验数据传输过程中，是否出现差错；</dd>
+      <dd>每经过一个路由器，都要重新计算；为加快转发速度，IPv6中不再计算</dd>
+      <dt>源地址 SRC、目标地址 DST</dt>
+      <dd>32bit；</dd>
+      <dt>数据部分 DATA</dt>
+      <dd>长度可变，最大40个字节；</dd>
+      <dd class="example-sn">已经某IP报首部字段THL为0101，总长度字段TL为0000 0011 1111 1100，求数据部分字段DATA的长度。</dd>
+      <dd>[解]</dd>
+      <dd>首部长度为(0101)<sub>2</sub>*4 = 5*4 = 20 字节</dd>
+      <dd>总长度为(0000 0011 1111 1100)<sub>2</sub> = 1020 字节</dd>
+      <dd>故：数据部分长度为：总长度-首部长度 = 1020-20 = 1000 字节</dd>
+      <dd class="example-sn">已知采用固定长度首部的数据报，数据部分位3800字节，如何分片？（分片不超过1420字节）</dd>
+      <dd>[分析]数据报长度=固定部分+可变部分=首部+数据=20+3800=3820字节；分片后不能超过1420字节，所以每片的数据部分为最大为1400字节；假设标识ID为12345；</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>IP数据报的分片</caption>
+          <tr>
+            <td></td>
+            <td>总长度TL</td>
+            <td>标识ID</td>
+            <td>更多分片MF</td>
+            <td>不要分片DF</td>
+            <td>FRAG OFFSET</td>
+          </tr>
+          <tr>
+            <td>原始数据报</td>
+            <td>20+3800</td>
+            <td>12345</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>分片1</td>
+            <td>20+1400</td>
+            <td>1234</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0/8</td>
+          </tr>
+          <tr>
+            <td>分片2</td>
+            <td>20+1400</td>
+            <td>1234</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1400/8</td>
+          </tr>
+          <tr>
+            <td>分片3</td>
+            <td>20+1000</td>
+            <td>1234</td>
+            <td>0</td>
+            <td>0</td>
+            <td>2800/8</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">采用固定首部的某IP数据报长度为1500B，目标网络的MTU是800B，求分片数量和偏移。</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>数据报</caption>
+          <tr>
+            <td>首部20B</td>
+            <td>数据部分1480B，编号为0-1479</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>改进方案</caption>
+          <tr>
+            <td colspan="2">分片1</td>
+            <td>片偏移</td>
+            <td colspan="2">分片2</td>
+            <td>片偏移</td>
+          </tr>
+          <tr>
+            <td>20B</td>
+            <td>780B：0-779</td>
+            <td>0/8=0</td>
+            <td>20B</td>
+            <td>700B：780-1479</td>
+            <td>780/8=<span class="warn">97.5</span></td>
+          </tr>
+          <tr>
+            <td colspan="6">偏移量不是整数；分片方案失败；</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>改进方案：调整分片长度为8给整倍数，即：[780/8]*8=776B</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>最终方案</caption>
+          <tr>
+            <td colspan="2">分片1</td>
+            <td>片偏移</td>
+            <td colspan="2">分片2</td>
+            <td>片偏移</td>
+          </tr>
+          <tr>
+            <td>20B</td>
+            <td>776B：0-775</td>
+            <td>0/8=0</td>
+            <td>20B</td>
+            <td>704B：776-1479</td>
+            <td>776/8=97</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-04-27</span>
+    </footer>
+  </section>
+</body>
+
+</html>

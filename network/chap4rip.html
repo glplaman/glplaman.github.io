@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>RIP 路由协议</title>
+  <script src="../js/fastclick.js"></script>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <style>
+    header {
+      background-image: url(../imgs/bt.jpg);
+    }
+
+    .top-logo {
+      background-image: url(../imgs/ty.png);
+    }
+
+    .mb4rem {
+      margin-bottom: 4rem;
+    }
+
+    .flex-h {
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .item-title {
+      font-size: 1.2rem;
+    }
+
+    .item-sub-title {
+      font-size: .8rem;
+    }
+
+    .item-title::before {
+      content: '[';
+      color: #c81623;
+    }
+
+    .item-title::after {
+      content: ']';
+      color: #c81623;
+    }
+
+    .item-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .item-desc {
+      flex: 1;
+    }
+
+    .item-pic {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 1rem;
+    }
+
+    .grid2>div {
+      min-height: 160px;
+    }
+
+    .grid3>div {
+      background-color: #f7f7f7;
+      padding: .6rem;
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header id="top" class="w">
+    <div class="timestamp">2022-06-05</div>
+  </header>
+  <nav id='nav' class="w">
+    <ul id="menu" class="menu">
+      <li class="nav-item"><a class="nav-link"><span>概述</span><span class="top-sub-menu">Overview</span></a></li>
+      <li class="nav-item"><a class="nav-link"><span>特点</span><span class="top-sub-menu">Features</span></a></li>
+      <li class="nav-item"><a class="nav-link"><span>规则</span><span class="top-sub-menu">Rules</span></a></li>
+      <li class="nav-item"><a class="nav-link"><span>实例</span><span class="top-sub-menu">Demo</span></a></li>
+      <li class="nav-item"><a class="nav-link"><span>命令</span><span class="top-sub-menu">Command</span></a></li>
+      <li class="nav-item"><a class="nav-link"><span>实操</span><span class="top-sub-menu">Operation</span></a></li>
+    </ul>
+    <a class="logo" href="./ch4rip.html">RIP</span><span class="reg">&reg;</span></a>
+    <div id="ham"><span class="iconfont">&#xe816;</span></div>
+  </nav>
+  <div class="w cont">
+    <div class="chap">概述 Overview</div>
+    <dl class="target-cont">
+      <dd>. RIP-Routing Information Protocol，路由信息协议，属于内部网关路由协议IGP；当前版本为RIP2；</dd>
+      <dd>. 基于距离矢量DV-distance vector的路由选择协议，使用跳数Hop count作为度量Metric到目标网络的距离，即：路由器到目标网络所经过的路由器个数；</dd>
+      <dd>. 特别的：路由器到直连网络不需要经过其它路由器，所以跳数是0，即：距离为0；</dd>
+      <dd>. 最大距离15；16表示不可达；</dd>
+      <dd>. 使用UDP协议，按照[固定时间]间隔，以广播RIP报文的方式，和[相邻]路由器交换[全部]路由信息；</dd>
+      <dd>. 路由交换基于直连路由；</dd>
+      <dd>. 更多信息，请访问<a class="link" href="https://www.rfc-editor.org/rfc/rfc1058" target="_blank">RFC 1058</a>；
+      </dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider14.jpg" alt=""></dd>
+      <dd class="dd-diag-item">图1 RIP的跳数count</dd>
+    </dl>
+    <div class="chap">特点 Features</div>
+    <dl class="target-cont">
+      <dd class="grid grid2">
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon0.png" alt=""></div>
+            <div class="item-title">简单</div>
+            <div class="item-sub-title">Simple</div>
+          </div>
+          <div class="item-desc">RIP简单的认为：距离越短，路由质量越高；</div>
+        </div>
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon1.png" alt=""></div>
+            <div class="item-title">小型</div>
+            <div class="item-sub-title">Mini</div>
+          </div>
+          <div class="item-desc">RIP最大支持15跳，适合小型网络；</div>
+        </div>
+      </dd>
+      <dd class="grid grid2">
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon2.png" alt=""></div>
+            <div class="item-title">均衡</div>
+            <div class="item-sub-title">Balance</div>
+          </div>
+          <div class="item-desc">RIP具备负载均衡：当路由等价时，轮流使用路由；</div>
+        </div>
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon3.png" alt=""></div>
+            <div class="item-title">动态</div>
+            <div class="item-sub-title">Dynamic</div>
+          </div>
+          <div class="item-desc">RIP通过3个定时器动态维护路由：</div>
+        </div>
+      </dd>
+      <dd class="grid grid3">
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon4.png" alt=""></div>
+            <div class="item-title">更新</div>
+            <div class="item-sub-title">Time1</div>
+          </div>
+          <div class="item-desc" style="font-size:0.8em ;">每30s更新一次；<br>通常会有一个[-5，+5]的随机偏移量；</div>
+        </div>
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon5.png" alt=""></div>
+            <div class="item-title">失效</div>
+            <div class="item-sub-title">Time2</div>
+          </div>
+          <div class="item-desc" style="font-size:0.8em ;">
+            最大时间180s；<br>每个条目被添加或被更新时，都会重新开始计时；<br>超时，该条目被标记为无效路由，但不会删除，只是不会被RIP广播出去；</div>
+        </div>
+        <div class="flex-h">
+          <div class="item-wrap">
+            <div class="item-pic"><img src="../imgs/network/rip/icon6.png" alt=""></div>
+            <div class="item-title">清除</div>
+            <div class="item-sub-title">Time3</div>
+          </div>
+          <div class="item-desc" style="font-size:0.8em ;">最大时间240s；<br>超过180s会被标记为无效条目；<br>再经过60s，就会被彻底删除；
+          </div>
+        </div>
+      </dd>
+    </dl>
+    <div class="chap">规则 Rules</div>
+    <dl class="target-cont">
+      <dd>1. 如果收到的路由条目对应的目标网络不在当前路由表中，则添加-发现新网络；</dd>
+      <dd>2. 如果路由表已有达到相同目标网络的路由条目，则：</dd>
+      <dd>.若来自相同的下一跳路由器，则更新-最新的路由信息；</dd>
+      <dd>.若来自不同的下一跳路由器，则比较距离：</dd>
+      <dd>情况1：新条目小于当前条目，则更新-新条目更具优势；</dd>
+      <dd>情况2：新条目等于当前条目，则添加新条目-负载均衡；</dd>
+      <dd>情况3：新条目大于当前条目，不做更新处理-新条目劣势；<span class="warn">[思考]</span>为什么不做更新处理？</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider13.jpg" alt=""></dd>
+      <dd class="dd-diag-item">图2 RIP路由更新规则</dd>
+    </dl>
+    <div class="chap">实例 Demo</div>
+    <dl class="target-cont">
+      <dd>已知路由器D的路由表为表1；路由器C的路由表为表2；分析：经过C的路由交换后，D的路由表信息。</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>N1</td>
+            <td>7</td>
+            <td>A</td>
+          </tr>
+          <tr>
+            <td>N2</td>
+            <td>2</td>
+            <td>C</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>8</td>
+            <td>F</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>4</td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>4</td>
+            <td>F</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表1 路由器D的路由表信息</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>N2</td>
+            <td>4</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N3</td>
+            <td>8</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>4</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>3</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>5</td>
+            <td>??</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表2 路由器C的路由表信息</dd>
+      <dd>[分析]路由器D收到C发送的RIP广播报文，并进行改造：所有的距离+1；且下一跳路由都是C；</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>N2</td>
+            <td>4+<span class="warn">1</span></td>
+            <td><span class="warn">C</span></td>
+          </tr>
+          <tr>
+            <td>N3</td>
+            <td>8+<span class="warn">1</span></td>
+            <td><span class="warn">C</span></td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>4+<span class="warn">1</span></td>
+            <td><span class="warn">C</span></td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>3+<span class="warn">1</span></td>
+            <td><span class="warn">C</span></td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>5+<span class="warn">1</span></td>
+            <td><span class="warn">C</span></td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表3 路由器D改造收到的路由器C的路由表信息</dd>
+      <dd>[分析]路由器D根据规则更新路由表信息；</dd>
+      <dd class="dd-item">N2路由条目：都是经过C转发；之前经过C到N2需要2跳；现在经过C到N2需要5跳，所以5跳是最新的路由：2-&gt;5；</dd>
+      <dd class="dd-item"><span class="warn">[思考]</span>路由跳数的可能变化</dd>
+      <dd class="mb4rem">
+        <table>
+          <tr>
+            <td colspan="3">旧路由</td>
+            <td colspan="3">新路由</td>
+            <td colspan="3">最终路由</td>
+          </tr>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>N2</td>
+            <td>2</td>
+            <td>C</td>
+            <td>N2</td>
+            <td>5</td>
+            <td>C</td>
+            <td>N2</td>
+            <td>5</td>
+            <td>C</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-item">N3路由条目：没有该路由，说明发现了新网络，添加新路由；</dd>
+      <dd class="mb4rem">
+        <table>
+          <tr>
+            <td colspan="3">旧路由</td>
+            <td colspan="3">新路由</td>
+            <td colspan="3">最终路由</td>
+          </tr>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>N3</td>
+            <td>9</td>
+            <td>C</td>
+            <td>N3</td>
+            <td>9</td>
+            <td>C</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-item">N6路由条目：之前经过F到N6需要8跳；现在经过C到N6只需要5跳，说明新路由更短，应更新旧路由；8-&gt;5，F-&gt;C；</dd>
+      <dd class="mb4rem">
+        <table>
+          <tr>
+            <td colspan="3">旧路由</td>
+            <td colspan="3">新路由</td>
+            <td colspan="3">最终路由</td>
+          </tr>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>8</td>
+            <td>F</td>
+            <td>N6</td>
+            <td>5</td>
+            <td>C</td>
+            <td>N6</td>
+            <td>5</td>
+            <td>C</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-item">N8路由条目：之前经过E到N8需要4跳；现在经过C到N8也需要4跳，所以是等价路由，应添加新路由以便均衡负载；</dd>
+      <dd class="mb4rem">
+        <table>
+          <tr>
+            <td colspan="3">旧路由</td>
+            <td colspan="3">新路由</td>
+            <td colspan="3">最终路由</td>
+          </tr>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td rowspan="2">N8</td>
+            <td rowspan="2">4</td>
+            <td rowspan="2">E</td>
+            <td rowspan="2">N8</td>
+            <td rowspan="2">4</td>
+            <td rowspan="2">C</td>
+            <td>N8</td>
+            <td>4</td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>4</td>
+            <td>C</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-item">N9路由条目：之前经过F到N9需要4跳；现在经过C到N9却需要6跳，所以新路由不好，保留旧路由；</dd>
+      <dd class="dd-item"><span class="warn">[注意]</span>原路由信息包括各计时器均保留；</dd>
+      <dd class="mb4rem">
+        <table>
+          <tr>
+            <td colspan="3">旧路由</td>
+            <td colspan="3">新路由</td>
+            <td colspan="3">最终路由</td>
+          </tr>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>4</td>
+            <td>F</td>
+            <td>N9</td>
+            <td>6</td>
+            <td>C</td>
+            <td>N9</td>
+            <td>4</td>
+            <td>F</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-item">路由器D的路由表最终结果为：</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>N1</td>
+            <td>7</td>
+            <td>A</td>
+            <td>原有路由</td>
+          </tr>
+          <tr>
+            <td>N2</td>
+            <td>2-&gt;5</td>
+            <td>C</td>
+            <td>最新路由</td>
+          </tr>
+          <tr>
+            <td>N3</td>
+            <td>9</td>
+            <td>C</td>
+            <td>添加路由</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>8-&gt;5</td>
+            <td>F-&gt;C</td>
+            <td>更新路由</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>4</td>
+            <td>E</td>
+            <td>最新路由</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>4</td>
+            <td>C</td>
+            <td>添加路由</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>4</td>
+            <td>F</td>
+            <td>保留路由</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表3 更新后路由器D的路由表信息</dd>
+      <dt>视频解读</dt>
+      <dd class="dd-iframe-item">
+        <iframe class="iframe"
+          src="//player.bilibili.com/player.html?aid=334692167&bvid=BV1YA411P7tm&cid=383708905&page=1&high_quality=1"
+          scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+      </dd>
+    </dl>
+    <div class="chap">命令 Commands</div>
+    <dl class="target-cont">
+      <dt>核心命令</dt>
+      <dd>
+        <pre>
+
+    Router(config)#router rip                   使用RIP路由协议；默认没有开启RIP路由；
+    Router(config-router)#version 2             使用版本2，支持CIDR；版本1不支持；
+    Router(config-router)#no auto-summary       取消路由聚合；
+    Router(config-router)#network x.x.x.x       设置与相邻网络的动态路由；
+    Router(config-router)#network y.y.y.y       设置与相邻网络的动态路由；
+                </pre>
+      </dd>
+      <dt>视频解读</dt>
+      <dd class="dd-iframe-item">
+        <iframe class="iframe"
+          src="//player.bilibili.com/player.html?aid=37915805&bvid=BV1yt411q77j&cid=66655104&page=1&high_quality=1"
+          scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+      </dd>
+    </dl>
+    <div class="chap">实操 Operation</div>
+    <dl class="target-cont">
+      <dt>一、实验目的</dt>
+      <dd>1. 了解RIP协议的基本原理；</dd>
+      <dd>2. 掌握RIP协议的配置方法；</dd>
+      <dd>3. 进一步熟悉PT的使用；</dd>
+      <dt>二、实验要求</dt>
+      <dd>1. 根据网络拓扑完成RIP的配置；</dd>
+      <dd>2. 测试网络的连通性；</dd>
+      <dd>3. 网络拓扑布局合理、标注信息清晰完整；</dd>
+      <dd>4. 关键配置有源码或截图；</dd>
+      <dd>5. 测试结果有截图；</dd>
+      <dt>三、实验需求</dt>
+      <dd>1. 3台2811路由器；</dd>
+      <dd>2. 2台PC；</dd>
+      <dt>四、实验过程</dt>
+      <dd>1.搭建拓扑并配置各主机IP地址；确保各路由连接的是不同的网络；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider15.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图3 RIP拓扑</dd>
+      <dd>2. 路由器0的配置</dd>
+      <dd>2.1 配置路由器端口，生成直连路由；主要配置命令参考如下：</dd>
+      <dd>
+        <pre>
+
+    Router(config)#interface fa0/0
+    Router(config-if)#ip address 192.168.1.254 255.255.255.0
+    Router(config-if)#no shutdown
+    Router(config)#interface fa0/1
+    Router(config-if)#ip address 192.168.2.1 255.255.255.0
+    Router(config-if)#no shutdown
+                </pre>
+      </dd>
+      <dd>2.2 配置路由器RIP协议；主要配置命令如下；</dd>
+      <dd>
+        <pre>
+
+    Router(config)#router rip
+    Router(config-router)#version 2
+    Router(config-router)#no auto-summary
+    Router(config-router)#network 192.168.1.0
+    Router(config-router)#network 192.168.2.0
+                </pre>
+      </dd>
+      <dd>3. 路由器1、路由器2的配置同路由器0；</dd>
+      <dd>4. 查看各路由器的动态路由信息；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider16.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图4 PT的监视工具</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider17.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图5 Router#show ip route</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider18.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图6 Router#show ip protocols</dd>
+      <dd>5. 测试网络的连通性；</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/rip/slider19.jpg" alt=""></dd>
+      <dd class="dd-diag-item">图6 ping对方主机</dd>
+      <dt>五、实验分析</dt>
+      <dd>1. 为什么第一次通信失败？</dd>
+      <dd>2. 再次ping对方，结果又如何？</dd>
+      <dd>3. 请发送简单PDU测试网络连通性；</dd>
+      <dd>4. 每个实验阶段的分析和异常处理。</dd>
+      <dt>六、作业</dt>
+      <dd>1. 根据实操部分的内容，完成RIP协议的配置和测试；</dd>
+      <dd>2. 以纸质的形式提交实验报告；</dd>
+      <dd>3. 论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a>。</dd>
+    </dl>
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  </div>
+  <script>
+    window.onload = function () {
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+          FastClick.attach(document.body);
+        }, false);
+      }
+      let navItems = document.querySelectorAll(".nav-item")
+      let contItems = document.querySelectorAll(".target-cont")
+      let ham = document.querySelector("#ham")
+      let menu = document.querySelector("#menu")
+
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView();
+            navItems.forEach(item => {
+              item.style.color = "#ffffff";
+            })
+            navItems[index].style.color = "#e95420"
+          }, 100)
+          menu.classList.toggle('is-hide')
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+
+      ham.addEventListener('click', (e) => {
+        e.preventDefault()
+        menu.classList.toggle('is-hide')
+        if (document.documentElement.style.overflowY == 'auto') {
+          document.documentElement.style.overflowY = "hidden"
+        } else {
+          document.documentElement.style.overflowY = "auto"
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

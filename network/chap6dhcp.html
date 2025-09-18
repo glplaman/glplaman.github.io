@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态主机配置协议 DHCP</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>DHCP</h1>
+    </header>
+    <dl>
+      <dd>动态主机配置协议</dd>
+      <dd>协议端口：67/68</dd>
+      <dt>基本过程</dt>
+      <dd>DHCP客户广播DHCP Discover报文：目的IP地址255.255.255.255，源地址0.0.0.0</dd>
+      <dd>所有DHCP服务器都会响应整个报文</dd>
+      <dd> DHCP服务器根据报文的源MAC地址查找该计算机的配置信息。如果有，则返回找到的信息；如果没有，则从IP地址池（address pool）中取一个地址分配给该计算机</dd>
+      <dd>DHCP服务器广播发送DHCP Offer报文（包含DHCP Server自己的IP地址）</dd>
+      <dd>DHCP客户处理最先收到的DHCP Offer报文，并广播DHCP Request报文； DHCP服务器处理DHCP Request报文。如果IP和自己的相同，则广播DHCP
+        ACK报文。其它DHCP服务器释放预分配资源</dd>
+    </dl>
+    <div class="chap">实操部分</div>
+    <dl>
+      <dt>实操目的</dt>
+      <dd>DHCP服务器配置和使用</dd>
+      <dt>设备需求</dt>
+      <dd>若干台PC</dd>
+      <dd>一台路由器</dd>
+      <dd>一台交换机</dd>
+      <dt>基本思路</dt>
+      <dd>先配置路由器；再配置DHCP服务器</dd>
+      <dt>步骤</dt>
+      <dd>1. 搭建拓扑</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/dhcp/幻灯片9.JPG" alt=""></dd>
+      <dd>2. 配置路由器IP地址</dd>
+      <figure class="code">
+        <figcaption>配置路由</figcaption>
+        <pre>
+Router(config)#interface GigabitEthernet0/0/0
+Router(config-if)#ip address 192.168.1.10 255.255.255.0
+Router(config-if)#no shutdown</pre>
+      </figure>
+      <dd>3. 服务器配置IP地址和网关</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/dhcp/幻灯片10.JPG" alt=""></dd>
+      <dd>4. 服务器开启DHCP</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/dhcp/幻灯片11.JPG" alt=""></dd>
+      <dd>5. 各PC使用DHCP</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/dhcp/幻灯片12.JPG" alt=""></dd>
+      <dt>拓展操作</dt>
+      <dd>增加一台PC；将操作模式调整为模拟通信；更改PC的地址分配方式为DHCP，单步调试查看DHCP数据报的发送过程</dd>
+      <dt class="dd-title-item">实验报告</dt>
+      <dd>1. 根据实操部分的内容，完成项目</dd>
+      <dd>2. 以纸质的形式提交实验报告</dd>
+      <dd>3. 论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a></dd>
+    </dl>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-05-30</span>
+    </footer>
+  </section>
+</body>
+
+</html>

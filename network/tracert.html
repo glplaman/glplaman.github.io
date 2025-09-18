@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracert</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>Tracert</h1>
+    </header>
+    <dl>
+      <dt>概述</dt>
+      <dd>路由追踪，用于测试本端主机到某个目标主机所经过的路由，即：确定 IP 数据包访问目标所采取的路径</dd>
+      <dd>多用于内部检测网络故障节点情况；处于安全，外网部分网络主机不允许被追踪，可能出现请求超时的情况</dd>
+      <dd>ICMP的体现</dd>
+      <dd>Ctrl+C强制退出测试状态</dd>
+      <dt>命令格式</dt>
+      <dd>
+        <figure class="code">
+          <figcaption>使用tracert /?查看完整命令</figcaption>
+          <pre>
+C:\Users\cnplaman>tracert /?
+
+用法: tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout]
+               [-R] [-S srcaddr] [-4] [-6] target_name
+
+选项:
+    -d                 不将地址解析成主机名。
+    -h maximum_hops    搜索目标的最大跃点数。
+    -j host-list       与主机列表一起的松散源路由(仅适用于 IPv4)。
+    -w timeout         等待每个回复的超时时间(以毫秒为单位)。
+    -R                 跟踪往返行程路径(仅适用于 IPv6)。
+    -S srcaddr         要使用的源地址(仅适用于 IPv6)。
+    -4                 强制使用 IPv4。
+    -6                 强制使用 IPv6。</pre>
+        </figure>
+      </dd>
+      <dd>-d：不解析主机名，只使用IP地址；命令的位置只能在host/IP前面；可以加快追踪时间</dd>
+      <dd>-h：指定最大跃点数追踪路由；查跟设备最近的几个连接点的问题，通常在网络问题中，先要排除前端跟设备直接连接的最近的几个设备是否有故障，如果这几个近点跟踪可以正常互通，那么问题可能就出现在后端</dd>
+      <dd>-w：当网络很慢，或者很卡时，要检测是哪个设备的反应速度比较慢，设个标准值|阈值，超过阈值的设备不显示</dd>
+      <dt>工作原理</dt>
+      <dd>Tracert通过向目标发送不同IP生存时间TTL值的ICMP，确定到目标所采取的路由；并要求路径上的每个路由器在转发数据包之前至少将数据包上的TTL减1。数据包上的TTL减为0时，路由器应该将“ICMP
+        已超时”的消息发回源系统</dd>
+      <dd>Tracert先发送TTL为1的回应数据包，并在随后的每次发送过程将TTL递增1，直到目标响应或TTL达到最大值，从而确定路由。通过检查中间路由器发回的“ICMP已超时”的消息确定路由</dd>
+      <dt>结果分析</dt>
+      <dd>发给路由器3个ICMP包，通过往返时间检测网络情况</dd>
+      <dd>如果返回的大多是*或请求超时，说明这个IP在各个路由节点都有问题</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>结果分析</caption>
+          <tr>
+            <td>参数1</td>
+            <td>参数2</td>
+            <td>参数3</td>
+            <td>参数4</td>
+            <td>参数5</td>
+          </tr>
+          <tr>
+            <td>跃点数</td>
+            <td>第1个ICMP往返时间</td>
+            <td>第2个ICMP往返时间</td>
+            <td>第3个ICMP往返时间</td>
+            <td>途经路由器的IP地址；如果有主机名，还会解析</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">本机到默认网关的路由情况</dd>
+      <dd>. 首先获取本机IP地址和网关，再测试到默认网关的路由情况：显然，只有一跳即可到达默认网关</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>本机到默认网关的路由</figcaption>
+          <pre>
+C:\Users\cnplaman>tracert 172.18.84.254
+
+通过最多 30 个跃点跟踪到 172.18.84.254 的路由
+
+  1     4 ms     2 ms     2 ms  172.18.84.254
+
+跟踪完成。</pre>
+        </figure>
+      </dd>
+      <dd class="example-sn">本机到大叔小站的路由</dd>
+      <dd>第一跳显然应该先到本机的默认网关；</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>本机到baidu的路由</figcaption>
+          <pre>
+C:\Users\cnplaman>tracert glpla.github.io
+
+通过最多 30 个跃点跟踪
+到 glpla.github.io [185.199.109.153] 的路由:
+
+  1     *        *        *     请求超时。
+  2    14 ms     5 ms     5 ms  4.4.4.209
+  3     7 ms     7 ms     3 ms  172.16.10.1
+  4     5 ms     3 ms     4 ms  121.13.237.33
+  5    25 ms    18 ms    18 ms  202.104.167.181
+  6     5 ms     3 ms     4 ms  117.176.37.59.broad.dg.gd.dynamic.163data.com.cn [59.37.176.117]
+  7     6 ms     5 ms     *     219.132.200.13
+  8     8 ms     *        9 ms  202.97.94.142
+  9     9 ms     *        *     202.97.12.45
+ 10    63 ms    49 ms    49 ms  202.97.35.134
+ 11   277 ms   304 ms   305 ms  183.91.56.122
+ 12     *      267 ms     *     ae-11.r22.sngpsi07.sg.bb.gin.ntt.net [129.250.2.75]
+ 13   301 ms   305 ms   306 ms  ae-6.r21.sydnau06.au.bb.gin.ntt.net [129.250.6.148]
+ 14   317 ms   306 ms   305 ms  ae-0.a00.sydnau06.au.bb.gin.ntt.net [129.250.3.159]
+ 15   313 ms   306 ms   305 ms  202.68.73.83
+ 16   345 ms   306 ms   304 ms  cdn-185-199-109-153.github.com [185.199.109.153]
+
+跟踪完成。</pre>
+        </figure>
+      </dd>
+      <dd class="example-sn">本机到baidu的路由情况</dd>
+      <dd>第一跳显然应该先到本机的默认网关</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>本机到baidu的路由</figcaption>
+          <pre>
+C:\Users\cnplaman>tracert -d www.baidu.com
+
+通过最多 30 个跃点跟踪
+到 www.a.shifen.com [14.119.104.254] 的路由:
+
+  1     *        *        *     请求超时。
+  2    13 ms     6 ms     5 ms  4.4.4.209
+  3     4 ms     4 ms     3 ms  172.16.10.1
+  4     *        *        *     请求超时。
+  5     5 ms     3 ms     3 ms  202.104.167.193
+  6     *        *        *     请求超时。
+  7     *        *        *     请求超时。
+  8     *        *        *     请求超时。
+  9    15 ms    15 ms    16 ms  113.96.11.78
+ 10     *        *        *     请求超时。
+ 11    13 ms    11 ms    12 ms  10.111.10.1
+ 12     *        *        *     请求超时。
+ 13    12 ms     9 ms    19 ms  14.119.104.254
+
+跟踪完成。</pre>
+        </figure>
+      </dd>
+      <dd class="example-sn">指定最大跃点数追踪路由</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>指定最大跃点数追踪百度路由</figcaption>
+          <pre>
+C:\Users\cnplaman>tracert -h 3 www.baidu.com
+
+通过最多 3 个跃点跟踪
+到 www.a.shifen.com [14.119.104.254] 的路由:
+
+  1     *        *        *     请求超时。
+  2    17 ms     6 ms     4 ms  4.4.4.209
+  3     6 ms     3 ms     4 ms  172.16.10.1
+
+跟踪完成。</pre>
+        </figure>
+      </dd>
+      <dd class="example-sn">追踪响应时间小于5ms的路由情况</dd>
+      <dd>
+        <figure class="code">
+          <figcaption>追踪响应时间小于5ms的路由情况</figcaption>
+          <pre>
+C:\Users\cnplaman>tracert -w 5 www.baidu.com
+
+通过最多 30 个跃点跟踪
+到 www.a.shifen.com [14.119.104.189] 的路由:
+
+  1     *        *        *     请求超时。
+  2    11 ms     4 ms     5 ms  4.4.4.209
+  3     6 ms     4 ms     4 ms  172.16.10.1
+  4     *        *        *     请求超时。
+  5     5 ms     3 ms     5 ms  202.104.168.201
+  6     *        3 ms     4 ms  125.176.37.59.broad.dg.gd.dynamic.163data.com.cn [59.37.176.125]
+  7    10 ms     *        *     61.142.26.77
+  8     *        *        *     请求超时。
+  9    15 ms    11 ms    12 ms  106.96.135.219.broad.fs.gd.dynamic.163data.com.cn [219.135.96.106]
+ 10    14 ms    12 ms    16 ms  121.14.67.178
+ 11     *        *        *     请求超时。
+ 12     *        *        *     请求超时。
+ 13    11 ms    10 ms    16 ms  14.119.104.189
+
+跟踪完成。</pre>
+        </figure>
+      </dd>
+    </dl>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2023-10-13</span>
+    </footer>
+  </section>
+</body>
+
+</html>

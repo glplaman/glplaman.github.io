@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字签名 Signature</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>数字签名 Signature</h1>
+    </header>
+    <dl>
+      <dt>场景需求</dt>
+      <dd>用户A向用户B发信息</dd>
+      <dd>用户B需要确认：信息是A发出的，且没有被篡改</dd>
+      <dt>技术支撑</dt>
+      <dd class="number">
+        <div>非对称加密</div>
+        <div>消息摘要</div>
+      </dd>
+    </dl>
+    <div class="chap">非对称加密</div>
+    <dl>
+      <dd>加密和解密使用不同的密钥</dd>
+      <dd>通常由接收方生成公开密钥和私有密钥密钥对，并发送公钥给发送方</dd>
+      <dd>用公钥加密，用私钥解密：私钥带有个人特征，可用于数字签名的验证</dd>
+      <dd>不存在密钥配送问题，容易导致中间人攻击</dd>
+      <dd>完整的通信过程，实际上需要2对密钥-4个密钥</dd>
+      <dt>加密过程</dt>
+      <dd>用户A向用户B发送消息</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/signature1.png" alt="">
+          <figcaption>加密过程</figcaption>
+        </figure>
+      </dd>
+      <dt>主要算法</dt>
+      <dd class="number">
+        <div>RSA：如X.509数字证书</div>
+        <p>. 名字由三位开发者：Ron Rivest、Adi Shamir和Leonard Adleman的姓氏的首字母组成</p>
+        <div>ECC椭圆曲线：如国密SM2</div>
+      </dd>
+      <dt>中间人攻击</dt>
+      <dd>Man in the Middle Attack</dd>
+      <dd>中间人攻击指的是在通信双方的通道上，混入攻击者：对接收方伪装成发送者，对放送放伪装成接收者 </dd>
+      <dd>他监听到双方发送公钥时，偷偷将消息篡改，发送自己的公钥给双方。然后自己则保存下来双方的公钥</dd>
+      <dd>双方通信时，加密使用的都是攻击者的公钥；攻击者都可以拦截后解密，并且篡改信息内容再用对方公钥加密并发送</dd>
+      <dd>接收方拿到的是篡改后的信息</dd>
+      <dd>发送方和接收方都是在和中间人通信</dd>
+      <dd>应对措施：要防范中间人，我们需要使用公钥证书</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/signature2.png" alt="">
+          <figcaption>中间人攻击</figcaption>
+        </figure>
+      </dd>
+    </dl>
+    <div class="chap">消息摘要</div>
+    <dl>
+      <dt>MD5 - Message Digest Algorithm</dt>
+      <dd>接受任意长度的消息作为输入，并返回一个固定长度|128bit的摘要值作为输出，用于验证原始消息</dd>
+      <dd>单向：由明文可以求除摘要；反过来，很难通过摘要反推出明文</dd>
+      <dd>防止篡改；用于完整性保护</dd>
+      <dd>场景：游戏客户端、用户登录</dd>
+      <dd>在线工具：<a href="https://www.md5ma.com/" title="单击打开">MD5MA</a></dd>
+      <dt>SHA - Secure Hash Algorithm</dt>
+      <dd>安全散列算法</dd>
+      <dd>美国国家安全局NSA设计，并由美国国家标准与技术研究院NIST发布</dd>
+      <dd class="number">
+        <div>SHA-1</div>
+        <p>. 160bit</p>
+        <p>. Google宣布攻破SHA-1</p>
+        <div>SHA-256</div>
+        <div>SHA-384</div>
+        <div>SHA-512</div>
+      </dd>
+    </dl>
+    <div class="chap">签名实现</div>
+    <dl>
+      <dd class="number">
+        <div>用户A采用摘要算法对消息计算得到摘要，用自己私钥加密，将加密的摘要和消息连同自己的公钥一起发给用户B</div>
+        <div>用户B先用用户A的公钥解密；如果能解密，则可以确定消息是用户A发出的；解密后得到摘要1</div>
+        <div>用户B再用同样的摘要算法对明文计算，得到摘要2；如果摘要1和摘要2相等，则能确定消息未被篡改</div>
+      </dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/signature0.png" alt="">
+          <figcaption>签名过程</figcaption>
+        </figure>
+      </dd>
+      <dd class="warn">[漏洞]</dd>
+    </dl>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2023-10-13</span>
+    </footer>
+  </section>
+</body>
+
+</html>

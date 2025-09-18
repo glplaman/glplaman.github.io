@@ -1,0 +1,299 @@
+@charset "utf-8";
+@import url(https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css);
+
+:root {
+  --main-color: #ff5d73;
+  --txt-wran-color: #c81623;
+  --nav-bg-color: #9f103a;
+  --w-width: 1024px;
+}
+
+html,
+body,
+ul,
+dl,
+dt,
+dd,
+a,
+img,
+table,
+tbody,
+thead,
+p,
+h1,
+div,
+aside,
+header,
+section,
+caption,
+figcaption,
+figure,
+nav,
+footer {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  line-height: 2;
+  background-color: rgb(244, 244, 244);
+  font-family: Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--main-color);
+  font-size: inherit;
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+h1 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+figure {
+  text-align: center;
+}
+
+figcaption {
+  counter-increment: fig-sn;
+}
+
+figcaption::before {
+  content: '图' counter(fig-sn)' ';
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+video {
+  width: 100%;
+  height: 50vh;
+  object-fit: cover;
+}
+
+dl {
+  padding: 1rem;
+}
+
+dt {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 2;
+  margin: 2rem auto 0;
+}
+
+dd {
+  text-align: justify;
+}
+
+i {
+  color: var(--main-color);
+}
+
+.chap {
+  height: 100px;
+  line-height: calc(1.5*100px);
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #fff;
+  padding-left: 1rem;
+  background-color: #4bc2ce;
+}
+
+.tips {
+  background-color: #e3f7ef;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 2rem auto;
+}
+
+.tips>div:first-child {
+  font-weight: 600;
+}
+
+.em {
+  font-size: 120%;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  border: 2px solid #666;
+  margin: 2rem auto;
+  font-size: 15px;
+}
+
+th {
+  font-weight: normal;
+  text-transform: capitalize;
+}
+
+th,
+td {
+  border: 1px solid #666;
+  padding-left: .4rem;
+  padding-right: .4rem;
+}
+
+.w {
+  position: relative;
+  max-width: var(--w-width);
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.w::before {
+  content: '';
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  box-shadow: -1px 0 2rem 1rem rgba(0, 0, 0, .1);
+}
+
+.w::after {
+  content: '';
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  box-shadow: 1px 0 2rem 1rem rgba(0, 0, 0, .1);
+}
+
+.top-nav {
+  background-color: var(--nav-bg-color);
+  color: #fff;
+  line-height: 40px;
+}
+
+#asideNav {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  margin-left: calc(var(--w-width)/2 + 10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all .5s ease-in-out;
+  z-index: 99;
+  line-height: 2;
+  background-color: #fff;
+  overflow: hidden;
+  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.2));
+  font-size: .8rem;
+}
+
+#asidetotop {
+  width: 45px;
+  height: 46px;
+  background-image: url(../imgs/back2top.png);
+  background-size: cover;
+  text-indent: -999px;
+}
+
+.warn {
+  color: var(--txt-wran-color);
+}
+
+header {
+  display: flex;
+  align-items: flex-end;
+  height: 200px;
+  color: #fff;
+  background: linear-gradient(180deg, #4bc2ce, #2980b9);
+  padding: 10px;
+}
+
+.txt-center {
+  text-align: center;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 6rem;
+  font-size: 12px;
+  color: #666;
+  margin-top: auto;
+}
+
+.copyright {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.copyright img {
+  flex-basis: 2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  justify-self: center;
+  margin: 0 1rem;
+}
+
+.copyright span:first-child {
+  flex: 1;
+  text-align: right;
+}
+
+.copyright span:last-child {
+  flex: 1;
+  text-align: left;
+}
+
+@media screen and (max-width:768px) {
+
+  .w::before,
+  .w::after {
+    display: none;
+  }
+
+  .copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .copyright img {
+    order: 1;
+  }
+
+  .copyright span:first-child {
+    text-align: center;
+    order: 2;
+  }
+
+  .copyright span:last-child {
+    text-align: center;
+    order: 2;
+  }
+}

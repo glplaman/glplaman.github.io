@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>远程登陆 Telnet</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>Telnet</h1>
+    </header>
+    <dl>
+      <dt>概述</dt>
+      <dd>Telnet（teletype network）协议是TCP/IP协议族中的一员；需要先通过3次握手建立连接，才能通信</dd>
+      <dd>协议服务默认端口：23</dd>
+      <dd>为用户提供了在本地计算机上操作远程主机的能力 </dd>
+      <dd>远程控制Web服务器：在终端使用者的电脑上使用Telnet程序连接到服务器。终端使用者可以在Telnet程序中输入命令，这些命令会在服务器上运行，就像直接在服务器的控制台上输入一样</dd>
+      <dd>也可用于端口检测</dd>
+      <dd>安全考虑，需要使用用户名和密码来登录远程主机</dd>
+      <dd>默认情况下，telnet是关闭的</dd>
+      <dd>开启：设置→应用和功能→程序和功能→启用或关闭window功能→Telnet Client；[win7之前的版本还需要专门开启服务]</dd>
+      <dd>更多信息，点击访问<a class="warn" href="https://www.telnet.org/" target="_blank">Telnet.org</a></dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="../imgs/network/app/t0.jpg" alt="">
+          <figcaption>开启telnet</figcaption>
+        </figure>
+      </dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="../imgs/network/app/t1.jpg" alt="">
+          <figcaption>命令格式</figcaption>
+        </figure>
+      </dd>
+      <dt>注意</dt>
+      <dd>所有命令都是明文clear text发送，不要在公共网络上使用</dd>
+      <dd>近距离请使用console口</dd>
+      <dd>使用前通常先ping下对方</dd>
+      <dd>CTRL+X或者quit/exit退出； 尽可能开少的端口</dd>
+      <dd>Telnet服务的23端口也是TTS（Tiny Telnet Server）木马的缺省端口，建议关闭</dd>
+      <dt>趣味应用</dt>
+      <dd class="example-sn">towel.blinkenlights.nl</dd>
+      <dd>欣赏不一样的星球大战Star War</dd>
+      <dd class="example-sn">freechess.org 5000</dd>
+      <dd>下个象棋吧</dd>
+      <dd class="example-sn">rainmaker.wunderground.com</dd>
+    </dl>
+    <div class="chap">实操部分</div>
+    <dl>
+      <dt>实操目的</dt>
+      <dd>PC远程登陆交换机</dd>
+      <dt>设备需求</dt>
+      <dd>一台PC</dd>
+      <dd>一台交换机</dd>
+      <dt>基本思路</dt>
+      <dd>先近距离配置交换机；再远距离操作交换机</dd>
+      <dt>操作步骤</dt>
+      <dd>1. 搭建拓扑</dd>
+      <dd class="dd-img-item"><img src="../imgs/network/app/t2.jpg" alt=""></dd>
+      <dd>2. 给PC配置IP地址：192.168.1.1，使用默认地址掩码</dd>
+      <dd>3. PC利用终端操作/配置交换机；相应密码请牢记！！！</dd>
+      <figure class="code">
+        <figcaption>修改主机名[非必须]，设置特权密码</figcaption>
+        <pre>
+Switch>en
+Switch#conf ter
+Switch(config)#hostname cnplaman
+cnplaman(config)#enable password en123
+cnplaman(config)#end</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>为默认VLAN1指定管理IP地址并开启端口[应和PC在用一网段]</figcaption>
+        <pre>
+cnplaman(config)#interface vlan 1
+cnplaman(config-if)#ip address 192.168.1.2 255.255.255.0
+cnplaman(config-if)#no shutdown</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>配置line口，启用密码登陆;0 4表示允许5个用户远程登陆</figcaption>
+        <pre>
+cnplaman(config)#line vty 0 4
+cnplaman(config-line)#password line123
+cnplaman(config-line)#login 
+cnplaman(config-line)#end</pre>
+      </figure>
+      <figure class="code">
+        <figcaption>查看当前配置信息</figcaption>
+        <pre>
+cnplaman#show running-config 
+Building configuration...
+
+Current configuration : 1137 bytes
+!
+version 15.0
+!
+hostname cnplaman
+!
+enable password en123
+...
+...
+interface Vlan1
+ip address 192.168.1.2 255.255.255.0
+!
+line con 0
+!
+line vty 0 4
+password line123
+login
+line vty 5 15
+login
+...</pre>
+      </figure>
+      <dd>4. PC使用CMD远程登陆交换机；第一次输入line登陆密码；第二次输入特权模式密码；密码输入均不显示</dd>
+      <dd class="code">
+        <pre>
+
+    C:\>telnet 192.168.1.2
+    Trying 192.168.1.2 ...Open
+
+
+    User Access Verification
+
+    Password: 
+    cnplaman>en
+    Password: 
+    cnplaman#
+                </pre>
+      </dd>
+      <dt>拓展思考</dt>
+      <dd>增加诺干主机，尝试同时远程登陆交换机。分析并验证结果</dd>
+      <dt>实验报告</dt>
+      <dd>1. 根据实操部分的内容，完成项目</dd>
+      <dd>2. 以纸质的形式提交实验报告</dd>
+      <dd>3. 论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a></dd>
+    </dl>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-05-30</span>
+    </footer>
+  </section>
+</body>
+
+</html>
