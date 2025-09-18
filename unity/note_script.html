@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>脚本 Script</title>
+  <link rel="stylesheet" href="./css/unityNormal.css">
+  <base target="_blank">
+  <style>
+    .banner {
+      display: flex;
+      justify-content: space-between;
+      background-image: url(../imgs/banner.png);
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header class="banner">
+    <h1>Script</h1>
+    <span class="timestamp">2022-09-23</span>
+  </header>
+  <div class="w cont">
+    <div class="target-cont chap">编辑器 Editor</div>
+    <dl>
+      <dt>脚本语言和编辑器</dt>
+      <dd>脚本语言：Unity开发可以使用C#语言和Javascript语言。我们采用C#作为开发语言。</dd>
+      <dd>编辑器：系统提供的编辑器功能表现一般。通常使用vs studio或vs code进行编辑。Edit -&gt; Pereferences打开设置面板进行选择，如下图。</dd>
+      <dd class="item-center">
+        <img src="./ide/Snipaste_2022-09-26_08-39-47.png" alt="">
+      </dd>
+      <dd>[温馨提示]</dd>
+      <dd>1. 如果只做Unity开发，安装vs studio时，请选择Unity游戏开发！</dd>
+      <dd>2. 如果vs studio安装时最开始用作其他语言开发，如C/C++，现在需要开发Unity，需要安装桌面生成工具，以便高效开发Unity；<a class="warn"
+          href="https://visualstudio.microsoft.com/zh-hans/downloads/">点击下载</a></dd>
+      <dd class="item-center">
+        <img src="./ide/Snipaste_2022-09-26_08-50-29.png" alt="">
+      </dd>
+      <dd>3. vs code主要作为前端编辑器，凭借强大的插件/扩展，可以灵活的用于其他开发。详情请参考<a class="warn"
+          href="https://code.visualstudio.com/docs/languages/csharp">Working with C#</a>；</dd>
+    </dl>
+    <div class="target-cont chap">使用 Usage</div>
+    <dl>
+      <dt>脚本的创建和挂载</dt>
+      <dd>创建：</dd>
+      <dd>在项目视图Project的资源目录Assets，右键单击空白处或某个文件夹，选择创建create -&gt; C# script，即可创建一个默认结构的脚本文件；</dd>
+      <dd>挂载：</dd>
+      <dd>方法1：选择游戏对象，在属性监视视图Inspectors中，添加组件add component，选择脚本scripts，选择需要的脚本文件；如果输入一个不存在的脚本，将会自动创建并添加到对象；</dd>
+      <dd>方法2：选择游戏对象，直接将脚本文件拖放到游戏对象的属性监视视图Inspectors中；</dd>
+      <dd class="grid grid2">
+        <div class="item-center"><img src="./ide/Snipaste_2022-09-26_09-37-59.png" alt=""></div>
+        <div class="item-center"><img src="./ide/Snipaste_2022-09-26_09-38-34.png" alt=""></div>
+      </dd>
+      <dt>脚本文件结构</dt>
+
+      <dd>下图中，左侧是创建脚本时的默认结构；右侧是根据业务需要，增加和自定义的结构；</dd>
+      <dd class="grid grid2">
+        <pre style="height: auto;">
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Demo : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}</pre>
+        <pre style="height: auto;">
+using System.Collections;//默认库
+using System.Collections.Generic;//默认库
+using UnityEngine;//默认库
+using UnityEditor;//默认库
+using UnityEngine.UI;//根据需要使用的库
+
+public class BirdFly : MonoBehaviour
+{
+    public Rigidbody2D rb;
+    public Text hpTxt;
+    float speed = 2f;
+    int hp = 100;
+    
+    void Awake()
+    {
+        //系统函数：变量初始化，更早执行
+    }
+
+    void Start()
+    {
+        //系统函数：变量初始化
+    }
+
+    void Update()
+    {
+        //系统函数：按照帧频更新
+    }
+
+    void FixedUpdate()
+    {
+        //系统函数：按照帧频更新，多用于物理属性
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //系统函数：碰撞检测
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //系统函数：碰撞触发检测
+    }
+    
+    void MoveBall()
+    {
+        //自定义函数
+    }
+
+}</pre>
+      </dd>
+      <dt>脚本控制的目标</dt>
+      <dd>将脚本挂载到某个游戏对象上后，就可以控制游戏对象和其中的组件，甚至是其他游戏对象和组件；</dd>
+      <dd>脚本可以控制游戏中的任何对象和组件；</dd>
+      <dd>游戏对象的属性监视视图Inspectors中每一项，都有对应的脚本API来控制；</dd>
+      <dd>1. 获取游戏对象：Find()、FindGameObjecWithTag()、GetChild()</dd>
+      <dd>2. 获取组件：GetComponent&lt;组件类型&gt;()</dd>
+      <dd>推荐：通过定义公有public变量，利用拖拽目标的方法进行傻瓜式编程；</dd>
+      <dd>[实操]</dd>
+      <dd class="grid grid2">
+        <div>
+          <p>1. 创建一个游戏对象；</p>
+          <p>2. 添加刚体组件；</p>
+          <p>3. 创建脚本并挂载；</p>
+          <p>4. 运行游戏，在控制台中查看执行结果；</p>
+        </div>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Demo : MonoBehaviour
+{
+    GameObject obj;
+    Transform tr;
+    Rigidbody2D rb;
+    void Start()
+    {
+        obj=GameObject.Find("bird");
+        //默认是获取当前脚本挂载对象的组件
+        tr = GetComponent&lt;Transform&gt;();
+        //也可以利用点的形式，获取指定游戏对象的组件
+        //tr = obj.GetComponent&lt;Transform&gt;();
+        rb = GetComponent&lt;Rigidbody2D&gt;();
+        rb = GetComponent&lt;Rigidbody2D&gt;();
+        print(obj.name);
+        print(tr.position.x);
+        print(rb.mass);
+    }
+}</pre>
+      </dd>
+      <dd class="grid grid2">
+        <div class="item-center"><img src="./ide/Snipaste_2022-09-26_10-56-14.png" alt=""></div>
+        <div class="item-center"><img src="./ide/Snipaste_2022-09-26_10-56-29.png" alt=""></div>
+      </dd>
+    </dl>
+    <div class="target-cont chap">流程控制语句</div>
+    <dl>
+      <dt>1. 条件语句 if-else</dt>
+      <dd>单条件的判断；也可以使用if-else if实现多条件判断。因为可读性不好，多条件判断请使用switch语句；</dd>
+      <dd>
+        <pre>
+//如果鼠标左键按下，给刚体一个向上的力或速度
+void Update()
+{
+    if (Input.GetMouseButtonDown(0))
+    {
+        rb.velocity = Vector3.zero;
+        rb.AddForce(new Vector3(0, up, 0));
+        //rb.velocity = Vector2.up * speed;
+        clip = Resources.Load&lt;AudioClip&gt;("fly");
+        audioSource.PlayOneShot(clip);
+    }
+}</pre>
+      </dd>
+      <dt>2. 多条件语句 witch</dt>
+      <dd>多个条件/情况的判断；可读性好；</dd>
+      <dd>
+        <pre>
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    switch (collision.gameObject.tag)
+    {
+        case "pipe":
+            hp -= 50;
+            hpTxt.text = hp.ToString();
+            clip = Resources.Load&lt;AudioClip&gt;("hit");
+            audioSource.PlayOneShot(clip);
+            if (hp &lt;= 0)
+            {
+                SceneManager.LoadScene("Menu");
+            }
+            break;
+        case "ground":
+            //print("silver");
+            SceneManager.LoadScene("Menu");
+            break;
+    }
+}</pre>
+      </dd>
+      <dt>3. 循环语句 for/foreach/while</dt>
+    </dl>
+    <div class="target-cont chap">常用类 Class</div>
+    <dl>
+      <dt>Time</dt>
+      <dt>Randowm</dt>
+      <dd>生成随机数</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>Random.value</td>
+            <td>0.0-1.0直接的随机数，不包含0.0和1.0这个端头</td>
+          </tr>
+          <tr>
+            <td>Random.Range</td>
+            <td>指定范围内的数；float和int</td>
+          </tr>
+
+        </table>
+      </dd>
+      <dd class="grid grid2">
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RandomCube : MonoBehaviour
+{
+    Quaternion[] qs;
+    Color[] color;
+    void Start()
+    {
+        qs = new Quaternion[30];
+        color = new Color[30];
+        int i = 0;
+        for (i = 0; i &lt; 30; i++)
+        {
+            qs[i] = Random.rotation;
+            color[i] = new Color(Random.value, Random.value, Random.value);
+            Transform child=transform.GetChild(i);
+            //老版本使用方法
+            //child.rotation=qs[i];
+            child.GetComponent&lt;Transform&gt;().rotation=qs[i];
+            child.GetComponent&lt;Renderer&gt;().material.color=color[i];
+        }
+    }
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(0, 0.4f, 0));
+    }
+}</pre>
+        <div class="item-center"><img src="./project2/Snipaste_2022-09-26_16-30-47.png" alt=""></div>
+      </dd>
+      <dt>Mathf</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>Repeat</td>
+            <td>在两个区间重复，有跳跃；</td>
+          </tr>
+          <tr>
+            <td>PingPong</td>
+            <td>在两个区间循环重复；</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="grid grid2">
+        <pre>
+float scale = 1f;
+//......
+void Update()
+{
+    transform.Rotate(new Vector3(0, 0.4f, 0));
+    scale = Mathf.Repeat(Time.time, 1);
+    //scale = Mathf.PingPong(Time.time, 1);
+    transform.localScale=new Vector3(1,scale,1);
+}</pre>
+      </dd>
+      <dt>Vector3</dt>
+      <dd>静态变量</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>forward</td>
+            <td>前，Vector3(0, 0, 1)</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>右，Vector3(1, 0, 0)</td>
+          </tr>
+          <tr>
+            <td>up</td>
+            <td>上，Vector3(0, 1, 0)</td>
+          </tr>
+          <tr>
+            <td>one()</td>
+            <td>Vector3(1, 1, 1)</td>
+          </tr>
+          <tr>
+            <td>zero()</td>
+            <td>Vector3(0, 0, 0)</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>静态方法</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>Dot()</td>
+            <td>俩个向量的点积</td>
+          </tr>
+          <tr>
+            <td>Cross()</td>
+            <td>俩个向量的叉积</td>
+          </tr>
+          <tr>
+            <td>Distance()</td>
+            <td>俩个向量的距离</td>
+          </tr>
+          <tr>
+            <td>Lerp()</td>
+            <td>俩个向量的插值</td>
+          </tr>
+          <tr>
+            <td>Normalize()</td>
+            <td>俩个向量的归一化</td>
+          </tr>
+          <tr>
+            <td>Min()</td>
+            <td>俩个向量的最小值</td>
+          </tr>
+          <tr>
+            <td>Max()</td>
+            <td>俩个向量的最大值</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>Input</dt>
+      <dd>系统输入类，包括鼠标、键盘、触碰等；</dd>
+      <dd>mousePosition：屏幕上的坐标，左下为0；右上为屏幕宽高</dd>
+      <dd>GetMouseButton()：0左键；1右键；</dd>
+      <dd>鼠标事件：GetMouseButtonDown/GetMouseButtonUp</dd>
+      <dd>键盘事件：GetKeyDown/GetKeyUp</dd>
+      <dd>轴向偏移：GetAxis，映射到键盘事件：AWSD和方向键；</dd>
+      <dd>[说明]鼠标事件和键盘事件及轴向偏移都属于输入类Input的方法</dd>
+      <dd>更多信息，请参考Unity帮助文档；</dd>
+      <dt>Physical</dt>
+      <dd>RayCast</dd>
+    </dl>
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+  </div>
+</body>
+
+</html>

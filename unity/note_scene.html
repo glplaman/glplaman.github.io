@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景 Scene</title>
+  <link rel="stylesheet" href="./css/unityNormal.css">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Scene</h1>
+    <span>2022-10-12</span>
+  </header>
+  <div class="chap">简介 Overview</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>.场景管理 SceneManager需要引入SceneManagement包</dd>
+    <dd>.用到的场景必须在Build Setting中指定</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>SceneManager.LoadScene( 场景索引 | 场景名字 [,加载模式] );</pre>
+    </dd>
+    <dd>.根据场景索引/buildIndex加载</dd>
+    <dd>.根据场景名字/name加载</dd>
+    <dd>[用法1]切换场景后销毁前场景</dd>
+    <dd>
+      <pre>
+SceneManager.LoadScene(0);
+SceneManager.LoadScene("Main");</pre>
+    </dd>
+    <dd>[用法2]切换场景后不销毁前场景</dd>
+    <dd>
+      <pre>
+SceneManager.LoadScene(0, LoadSceneMode.Additive);
+SceneManager.LoadScene("Main", LoadSceneMode.Additive);</pre>
+    </dd>
+    <dd>[用法3]获取当前加载场景信息</dd>
+    <dd>
+      <pre>
+name=GetActiveScene().name;
+ind=GetActiveScene().buildIndex;</pre>
+    </dd>
+    <dd>. 更多使用细节，请查阅<a href="https://docs.unity.cn/cn/current/ScriptReference/index.html" class="warn"
+        target="_blank">API</a></dd>
+  </dl>
+  <div class="chap">硬转 Direct</div>
+  <dl>
+    <dd>[说明]场景切换瞬间完成，没有过渡</dd>
+    <dd>1.创建多个场景，如s0、s1、s2</dd>
+    <dd>2.在File->Build Setting...中把用到的场景都拖入；每个场景有自己的索引index，从0开始</dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note12.png" alt="">
+      <span>添加场景</span>
+    </dd>
+    <dd>3.选择场景s0：</dd>
+    <dd>.创建一个空对象SM[使用场景现有的对象也可以，如相机、画布、按钮，仅仅需要一个脚本的载体]</dd>
+    <dd>.创建脚本SM.cs，声明场景跳转函数，并挂载到对象SM</dd>
+    <dd>.创建1个UI按钮，采用场景索引跳转到s1，增加按钮点击事件，分配函数LoadSceneByIndex()</dd>
+    <dd>.创建1个UI按钮，采用场景名字跳转到s2：增加按钮点击事件，分配函数LoadSceneByName()</dd>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+  using UnityEngine.SceneManagement;
+
+  public class SM : MonoBehaviour
+  {
+      public void LoadSceneByIndex(int ind)
+      {
+          SceneManager.LoadScene(ind);
+      }    
+      public void LoadSceneByName(string str)
+      {
+          SceneManager.LoadScene(str);
+      }    
+      public void onQuitGame()
+      {
+          Application.Quit();
+      }
+  }</pre>
+    </dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note10.png" alt="">
+      <span>分配函数</span>
+    </dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note11.png" alt="">
+      <span>分配函数</span>
+    </dd>
+    <dd>4. 运行游戏<span class="iconfont icon-play"></span>，查看场景跳转效果</dd>
+    <dd>[拓展练习]在s1、s2场景中分别创建按钮、对象，复用SM.cs脚本，实现返回场景s0</dd>
+    <dd>[<span class="iconfont icon-bomb"></span>]如果没有在发布设置Build Setting中添加场景，将会告警</dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note13.png" alt="">
+      <span>未添加场景</span>
+    </dd>
+  </dl>
+  <div class="chap">淡入淡出 Fade in-out</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 淡入fadeIn：进场；场景画面由黑暗模糊逐渐变得清晰明亮、完全进入/显现。表示新的情节的开始。从无→有</dd>
+    <dd>. 淡出fadeOut：退场；场景画面由清晰明亮逐渐变得模糊暗淡，以至完全出去/消失。表示剧情一个段落的结束。从有→无</dd>
+    <dt>思路</dt>
+    <dd>.结束时，先播放过场动画，再开始加载新场景</dd>
+    <dd>.切换到新场景时，先播放动画，再加载</dd>
+    <dd>.使用协程实现场景的延时加载</dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note16.png" alt="">
+      <span>转场思路</span>
+    </dd>
+    <dt>示例1：使用动画状态转换实现延迟转场</dt>
+    <dd>1.准备2个场景：S0、S1；在S0中完成：</dd>
+    <dd>2.创建画布Canvas</dd>
+    <dd>3.创建图像Image：</dd>
+    <dd>.铺满画布，填充黑色，透明度为0；取消Raycast Target；如果画布中有更多元素，请确保图像Image位于最上面，以便覆盖在所有元素之上</dd>
+    <dd>.创建从透明度0到不透明度255的过渡动画；取消动画循环Loop</dd>
+    <dd>.打开动画状态机，创建1个空状态Null，并设置为默认状态；创建Null状态和动画状态的过渡，条件设置为Bool:isOn；取消过渡等属性</dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note17.png" alt="">
+      <span>动画状态机</span>
+    </dd>
+    <dd>4.创建脚本Demo.cs，指定图像Image的动画状态机，实现状态转换和协程加载；协程延迟时间应该略短于动画时间；挂载到画布Canvas</dd>
+    <dd>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Demo : MonoBehaviour
+{
+    public Animator animator;
+    public void setAni()
+    {
+        StartCoroutine(loadSceneByName());
+    }
+    IEnumerator loadSceneByName()
+    {
+        animator.SetBool("isOn", true);
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("s1");
+    }
+}</pre>
+    </dd>
+    <dd>5.创建按钮Button，指定脚本事件setAni()</dd>
+    <dd>6.运行游戏<span class="iconfont icon-play"></span>，查看转场过渡效果</dd>
+    <dt>示例2：使用动画事件实现延迟转场</dt>
+    <dd>[核心]在图像Image过渡动画结束前若干帧处，<span
+        class="warn">添加动画事件</span>，指定为脚本中的loadSceneByName()方法；保留系统自动为对象添加的动画控制器组件Animator；为过渡图像Image指定animator变量；其它设置同上例
+    </dd>
+    <dd>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Demo : MonoBehaviour
+{
+    public Animator animator;
+    public void setAni()
+    {
+        animator.SetBool("isOn", true);
+    }
+    public void loadSceneByName(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+}</pre>
+    </dd>
+    <dt>示例3：使用Animation组件转场</dt>
+    <dd>[核心]给画布Canvas添加动画Animation组件，控制它播放动画；动画快结束时，触发动画事件，加载场景；其它设置同前例</dd>
+    <dd class="txt-center">
+      <img class="ob-img" data-src="./note/note9.png" alt="">
+      <span>Animation组件设置</span>
+    </dd>
+    <dd>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Demo : MonoBehaviour
+{
+    public Animation ani;
+    public void playAni()
+    {
+        ani.Play();
+    }
+    public void loadSceneByName(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">拓展 Extension</div>
+  <dl>
+    <dd>. <a href="https://www.bilibili.com/video/BV1C7411M73r/?vd_source=fe13480e1099e18e9d5f4e25467df4df"
+        target="_blank"><span class="iconfont icon-link"></span>Unity 如何制作转场动画</a></dd>
+    <dd>. <a href="https://www.bilibili.com/video/BV1po4y1m7VY/?vd_source=fe13480e1099e18e9d5f4e25467df4df"
+        target="_blank"><span class="iconfont icon-link"></span>制作场景切换过度效果</a></dd>
+  </dl>
+  <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+  <script src="../web/lib/lazyload.js"></script>
+</body>
+
+</html>

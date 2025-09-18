@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>塔防 TowerDefence</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <style>
+    header {
+      justify-content: space-between;
+      /* background-image: linear-gradient(rgba(255, 68, 102, 0), rgb(255, 68, 102)); */
+      background-image: url(./project4/banner.png);
+    }
+
+    .logo-img {
+      width: 80px;
+      height: 80px;
+    }
+
+    td {
+      width: 50%;
+    }
+
+    .chap,
+    .comment {
+      background-color: #f66020;
+      background-image: linear-gradient(45deg, #f66020, #fc8c4b);
+    }
+
+    .warn,
+    .nav-item:hover a,
+    .iconfont {
+      color: #f66020;
+    }
+
+    .item-center .iconfont {
+      font-size: 40px;
+    }
+
+    .flex-h {
+      justify-content: space-around;
+    }
+
+    .em-txt {
+      color: #f66020;
+      font-weight: 600;
+      font-size: 30px;
+      border: 1px solid #f66020;
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    @media screen and (max-width:768px) {
+      .grid4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header id="top" class="w">
+    <h1>TD</h1>
+    <div class="timestamp">2022-11-05</div>
+  </header>
+  <nav id='nav' class="w">
+    <ul id="menu" class="menu">
+      <li class="nav-item">
+        <a class="nav-link"><span>概述</span><span class="top-sub-menu">Overview</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>主场景</span><span class="top-sub-menu">Scenes</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>怪物</span><span class="top-sub-menu">Monster</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>炮塔</span><span class="top-sub-menu">Tower</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>攻击</span><span class="top-sub-menu">Attack</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>提高</span><span class="top-sub-menu">Promote</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>发布</span><span class="top-sub-menu">Publish</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>总结</span><span class="top-sub-menu">Summary</span></a>
+      </li>
+    </ul>
+    <div id="ham">
+      <span class="iconfont icon-list-ul open"></span>
+      <span class="iconfont icon-close close"></span>
+    </div>
+    <div class="logo">
+      <span class="reg">&reg;</span>
+      <img class="logo-img" src='' data-src="./project4/Missile.png" alt="pic">
+    </div>
+  </nav>
+  <div class="w cont">
+    <div class="chap">概述 Overview</div>
+    <dl>
+      <dt>1. 项目欣赏</dt>
+      <dd class="flex-h">
+        <a class="item-center" href="./tower1/index.html" target="_blank">
+          <span class="iconfont icon-HTML-5"></span>
+          <span>WebGL</span>
+        </a>
+        <a class="item-center" href="./project4/TD.rar" download>
+          <span class="iconfont icon-laptop"></span>
+          <span>Windows</span>
+        </a>
+        <a class="item-center" href="./project4/TD.apk" download>
+          <span class="iconfont icon-Android"></span>
+          <span>Android</span>
+        </a>
+      </dd>
+      <dt>2. 项目需求</dt>
+      <dd>. 开局3条命lives、500金币</dd>
+      <dd>. 选择炮塔，放在合适的位置，狙击敌人</dd>
+      <dd>. 成功消灭敌人，可以得到对应的金币奖励</dd>
+      <dd>. 未被消灭的敌人达到终点后，将损失1条命</dd>
+      <dd>. 创建炮塔需要消耗一定数量的金币</dd>
+      <dd>. 每种炮塔都有自己的攻击属性</dd>
+      <dt>3. 开发技能</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>项目 Project</td>
+            <td>视图 View</td>
+          </tr>
+          <tr>
+            <td>游戏对象 GameObject</td>
+            <td>刚体 Rigidbody</td>
+          </tr>
+          <tr>
+            <td>组件 Component</td>
+            <td>碰撞 Collide</td>
+          </tr>
+          <tr>
+            <td>预制件 Prefab</td>
+            <td>材质 Material</td>
+          </tr>
+          <tr>
+            <td>脚本 Script</td>
+            <td>资源商店 Asset Store</td>
+          </tr>
+          <tr>
+            <td>调试 Debug</td>
+            <td>音频 Audio</td>
+          </tr>
+          <tr>
+            <td>包 Package</td>
+            <td>发布 Publish</td>
+          </tr>
+          <tr>
+            <td class="warn">导航 Navigation</td>
+            <td class="warn">用户界面 Toggle</td>
+          </tr>
+          <tr>
+            <td class="warn">物理 Physical</td>
+            <td class="warn">线渲染 Line Renderer</td>
+          </tr>
+          <tr>
+            <td class="warn">协程 Coroutine</td>
+            <td class="warn">数据脚本 Data</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>4. 资源素材</dt>
+      <dd>. 项目完整资源包：<a href="./project4/TD.unitypackage" download><span class="iconfont icon-download"></span></a>
+      </dd>
+      <dd>. 炮塔建模素材：<a href="./project4/Tower.unitypackage" download><span class="iconfont icon-download"></span></a>
+      </dd>
+      <dd>. 音频素材：普通子弹 <a href="./project4/hit.wav" download><span class="iconfont icon-download"></span></a>、火箭炮
+        <a href="./project4/missile.wav" download><span class="iconfont icon-download"></span></a>、激光炮 <a
+          href="./project4/laser.wav" download><span class="iconfont icon-download"></span></a>、销毁 <a
+          href="./project4/bomb.wav" download><span class="iconfont icon-download"></span></a>
+      </dd>
+      <dd>. 字体素材：Cruiser Fortress Bevel <a href="../fonts/Cruiser Fortress Bevel.ttf" download><span
+            class="iconfont icon-download"></span></a>、禹为 <a href="../fonts/YuWei/YuWeiShuFaXingShuJianTi.ttf"
+          download><span class="iconfont icon-download"></span></a>、微软雅黑 <a href="../fonts/msyh.ttf" download><span
+            class="iconfont icon-download"></span></a></dd>
+      <dd>. 图片素材：另存为保存</dd>
+      <dd class="txt-center">
+        <img class="ob-img" data-src="./project4/Standard.png" src="" alt="pic">
+        <img class="ob-img" data-src="./project4/Missile.png" src="" alt="pic">
+        <img class="ob-img" data-src="./project4/Laser.png" src="" alt="pic">
+        <img class="ob-img" data-src="./project4/gold.png" src="" alt="pic">
+        <img class="ob-img" data-src="./project4/btn.png" src="" alt="pic">
+      </dd>
+      <dd>. 更多资源：Unity资源商店<a href="https://assetstore.unity.com/" target="_blank"><span
+            class="iconfont icon-link"></span></a>、精灵网sprite resource<a href="https://www.vg-resource.com/"
+          target="_blank"><span class="iconfont icon-link"></span></a></dd>
+      <dt>5. 思路</dt>
+      <dd class="txt-center">让怪物 <span class="iconfont icon-footprint-full"></span> <span class="em-txt">动</span>
+        <span class="iconfont icon-footprint-full"></span>
+        起来
+      </dd>
+      <dd class="txt-center">让炮塔 <span class="iconfont icon-icon_chess-rook"></span> <span class="em-txt">建</span>
+        <span class="iconfont icon-icon_chess-rook"></span>
+        起来
+      </dd>
+      <dd class="txt-center">让它们 <span class="iconfont icon-fighting-game"></span> <span class="em-txt">打</span>
+        <span class="iconfont icon-fighting-game"></span>
+        起来
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">主场景 Scenes</div>
+    <dl>
+      <dt>项目 Project</dt>
+      <dd>1. 创建3D项目</dd>
+      <dd>2. 调整游戏分辨率为16:9</dd>
+      <dd>3. 创建其它常用的文件夹</dd>
+      <dd>4. 修改当前场景为 main[若无说明，以下操作均位于当前场景]</dd>
+      <dt>地图 Map</dt>
+      <dd>1. 使用 Cube；建议生成预制件，通过复制，快速布局</dd>
+      <dd>2. 也可以使用平面 PLane代替；以掌握开发方法为主</dd>
+      <dt>道路 Path</dt>
+      <dd><span class="iconfont icon-mubiao"></span> 标记怪物的移动路线</dd>
+      <dd>1. 创建若干 Cube，根据设计拼接出道路的形状；道路宽带应大于2倍的导航代理半径Agent Radium</dd>
+      <dd>2. 创建导航 Navigation：Window→AI→Navigation</dd>
+      <dd>3. 指定道路为静态 Static、可行走 Walkable</dd>
+      <dd>4. 烘焙 Bake后自动生成导航网络</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p0.png" src='' alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p1.png" src='' alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p2.png" src='' alt="pic"></dd>
+      <dt>基座 Base</dt>
+      <dd><span class="iconfont icon-mubiao"></span> 用来放置炮塔</dd>
+      <dd>. 鼠标移入移出会有颜色变化，提醒用户可以操作；后续加入UI时，当鼠标不在UI上，才触发鼠标效果；不是必须功能</dd>
+      <dd>. 如果当前没有炮塔，则创建</dd>
+      <dd>. 如果当前已有炮塔，则删除或升级[预留功能]</dd>
+      <dd>1. 创建Cube作为基座Base，reset[主要取其位置中心]，添加材质；调整合适大小</dd>
+      <dd>2. 创建新层base，将基座Base放置于base层，投射的射线仅仅和该层做碰撞检测</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p14.png" src='' alt="pic"></dd>
+      <dd>3. 创建脚本Base.cs并挂载；最后生成预制件</dd>
+      <dd>4. 通过复制基座Base，沿着道路拼接成一定形状</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;//引入事件系统
+
+public class Base : MonoBehaviour
+{
+    MeshRenderer m_Renderer;
+    Color init_Color;
+    public Color hover_Color;
+    void Start()
+    {
+        m_Renderer = GetComponent&lt;MeshRenderer&gt;();
+        init_Color = m_Renderer.material.color;
+    }
+
+    private void OnMouseEnter()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())//增加判断：不在UI上
+        {
+            m_Renderer.material.color = hover_Color;
+        }
+    }
+    private void OnMouseExit()
+    {
+        m_Renderer.material.color = init_Color;
+    }
+}</pre>
+      </dd>
+      <dt>起点 Start</dt>
+      <dd>. 怪物孵化的位置</dd>
+      <dd>. 使用Cube或空游戏对象</dd>
+      <dd>. 非必须，也可以将后续的怪物孵化器对象Spawn当作起点</dd>
+      <dt>终点 End</dt>
+      <dd>. 怪物移动的终点</dd>
+      <dd>. 使用Cube或空游戏对象，添加并指定标签target便于动态创建的怪物获取；如果使用空对象，可以指定3D icon以便直观显示</dd>
+      <dd>. 怪物移动到终点时，玩家会受到减命lives的惩罚；lives为0时，游戏结束</dd>
+      <dd></dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 快速布局 Increment Snapping</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 预制件Prefab：创建、打散unpack</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 3D图标：3D icon</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 鼠标事件：OnMouseEnter、OnMouseExit
+      </dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 渲染器组件 Renderer：换肤</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">怪物 Monster</div>
+    <dl>
+      <dt>怪物设计</dt>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/Snipaste_2022-11-07_13-57-49.png" src=''
+          alt="pic"></dd>
+      <dd><span class="iconfont icon-mubiao"></span> 先创建一个怪物，生成预制件；最后通过复制和修改，完成其它怪物预制件的创建</dd>
+      <dd>1. 使用Sphere创建第一种怪物Mon0，默认大小1*1*1，指定材质，放置在起点Start位置</dd>
+      <dd>2. 选择怪物Mon0，创建画布，设为世界模式World Space；调整画布大小为1*0.2；位置高于怪物一定距离</dd>
+      <dd>3. 创建1个图像Image作为血槽背景hpBg；调整大小为全覆盖；颜色为白色，透明</dd>
+      <dd>4. 在血槽背景hpBg里再创建1个图像Image作为血槽hpBar；调整大小为全覆盖；材质选择金色素材；水平向右填充；拖动填充数量Fill
+        Amount，查看素材的填充情况；血槽初始是满的/填充为1，收到伤害后会逐步减少，直到为0/死亡</dd>
+      <dd>5. 将Mon0生成预制件；复制并修改：材质Material、贴图Texture、代理的速度Speed等，完成其它几种怪物的创建；创建过程和怪物预制件结构如下图：</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p100.png" src='' alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p101.png" src='' alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p102.png" src='' alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p103.png" src='' alt="pic"></dd>
+      <dt>单个怪物的移动</dt>
+      <dd><span class="iconfont icon-mubiao"></span> 为怪物指定导航网络代理，高度相同，统一调整为1，速度不同</dd>
+      <dd>1. 选中其中一个怪物，添加导航网络代理组件：Navigation→Nav Mesh Agent，高度调整为1，速度为3.5，其它使用默认参数</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p104.png" src='' alt="pic"></dd>
+      <dd>3. 创建怪物脚本Mon.cs，控制怪物从起点向终点移动；达到终点后销毁怪物；如果怪物成功达到终点，玩家生命减1</dd>
+      <dd>4. 指定相应的血量和对应的血槽，更新<span class="iconfont icon-update"></span>怪物预制件</dd>
+      <dd>5. 为其它几种怪物挂载脚本，指定相应的属性并更新预制件</dd>
+      <dd>6. 运行游戏<span class="iconfont icon-caret-square-right"></span>，测试几种怪物的移动情况</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+
+public class Mon : MonoBehaviour
+{
+    public GameObject explosion;
+    public float Hp;
+    public Image HpBar;
+    NavMeshAgent agent;
+    Transform tar;
+    float curHealth;
+    float oriSpeed;
+    void Start()
+    {
+        curHealth = Hp;
+        agent = GetComponent&lt;NavMeshAgent&gt;();
+        tar = GameObject.FindGameObjectWithTag("target").transform;
+        oriSpeed = agent.speed;
+    }
+
+    void Update()
+    {
+        agent.SetDestination(tar.position);
+        //请根据实际情况判断距离
+        if (Vector3.Distance(agent.destination, agent.nextPosition) &lt;= 0.5f)
+        {
+            Destroy(gameObject);//1
+            //每成功达到终点1个怪物，玩家生命减1；来自脚本GameManager.cs
+            GameManager.lives--;
+        }
+    }
+
+    //供子弹脚本的碰撞处理使用
+    public void GetDam(float dam)
+    {
+        curHealth -= dam;
+        HpBar.fillAmount = curHealth / Hp;
+        if (curHealth &lt;= 0)
+        {
+            Destroy(gameObject);//2
+            //播放死亡时的粒子特效，参见后面[提高]部分
+            GameObject exp = Instantiate(explosion);
+            Destroy(exp, 1);
+        }
+    }
+
+    //后期预留减速功能
+    public void getSlow(float factor)
+    {
+        agent.speed = oriSpeed * (1 - factor);
+        StartCoroutine(clearSlow());
+    }
+
+    public void resetSlow()
+    {
+        agent.speed = oriSpeed;
+    }
+
+    IEnumerator clearSlow()
+    {
+        yield return new WaitForSeconds(2);
+        resetSlow();
+    }
+
+    //业务整合或单独写在对象销毁所在的函数内1、2
+    private void OnDestroy()
+    {
+        Spawn.alive--;
+    }
+}
+</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-gantanhao-sanjiaokuang"></span> 获取对象]</dd>
+      <dd class="warn"><a href="https://docs.unity.cn/ScriptReference/Object.html"
+          target="_blank">Object.FindObjectOfType</a></dd>
+      <dd>. Returns the first active loaded object of Type type.</dd>
+      <dd>. this function is very slow...</dd>
+      <dd class="warn"><a href="https://docs.unity.cn/ScriptReference/GameObject.html"
+          target="_blank">GameObject.Find</a></dd>
+      <dd>. Finds a GameObject by name and returns it.</dd>
+      <dd>. it is recommended to not use this function every frame.</dd>
+      <dd class="warn"><a href="https://docs.unity.cn/ScriptReference/GameObject.html"
+          target="_blank">GameObject.FindWithTag</a></dd>
+      <dd>. Returns one active GameObject tagged tag.</dd>
+      <dd>. returns the first GameObject.</dd>
+      <dd>. 注意：版本之间的函数差异：FindGameObjectWithTag</dd>
+      <dt>怪物孵化</dt>
+      <dd><span class="iconfont icon-mubiao"></span> 创建怪物数据，据此孵化若干波不同类型的怪物；如果当前波的怪物没有被消灭，即alive&gt;0，则延迟下一波怪物的生成
+      </dd>
+      <dd>
+        1.创建怪物数据文件Data.cs，指定怪物种类monPrefab、数量monNum和每个怪物生成的时间间隔monInter；该文件仅仅提供数据，需要序列化类System.Serializable；但不需要继承默认的MonoBehaviour类
+      </dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+[System.Serializable]
+public class Data
+{
+    public GameObject monPrefab;
+    public int monNum;
+    public int monInter;
+}</pre>
+      </dd>
+      <dd>2. 创建空游戏对象作为怪物孵化器Spawn，调整至起点Start位置</dd>
+      <dd>3. 创建孵化脚本Spawn.cs并挂载，采用 <a class="warn" href="./note_coroutine.html" target="_blank">协程</a>，按照指定的参数孵化多波怪物；
+      </dd>
+      <dd>. 引入怪物数据文件Data</dd>
+      <dd>. 指定孵化起点startPos[移动终点由怪物自己获取]</dd>
+      <dd>. 指定每波怪物生成的时间间隔waveInter</dd>
+      <dd>. 创建静态的怪物个数alive，便于其它脚本共享</dd>
+      <dd>. 创建静态布尔变量isDone，用来表示怪物创建状态，配合后期游戏管理GameManager.cs中的lives，进行胜利判断</dd>
+      <dd>
+        <pre>
+//Spawn.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Spawn : MonoBehaviour
+{
+    public Data[] mons;
+    public float waveInter;
+    public static int alive = 0;
+    public static bool isDone=false;
+    void Start()
+    {
+        isDone = false;
+        StartCoroutine(MonSpawn());
+    }
+
+    IEnumerator MonSpawn()
+    {
+        for (int i = 0; i &lt; mons.Length; i++)
+        {
+            for (int j = 0; j &lt; mons[i].monNum; j++)
+            {
+                alive++;
+                GameObject mon = Instantiate(mons[i].monPrefab, transform.position, Quaternion.identity);
+                yield return new WaitForSeconds(mons[i].monInter);
+            }
+            while (alive > 0)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(waveInter);
+        }
+        isDone=true;
+    }
+}
+</pre>
+      </dd>
+      <dd>4. 为孵化脚本指定各个参数，运行游戏<span class="iconfont icon-caret-square-right"></span>，测试怪物孵化情况</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p105.png" src='' alt="pic"></dd>
+      <dd><span class="iconfont icon-wenq"></span>如何显示当前怪物波数和数量?</dd>
+      <dd><span class="iconfont icon-huidaa"></span>使用UI，在Spawn的Update中更新</dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-book"></span></span> 人工智能包
+        UnityEngine.AI</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 导航 Navigation</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 销毁 Destroy</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 销毁 OnDestroy</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 用户界面 UI</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 材质类型 Image Type</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 向量运算 Distance</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 协程 Coroutine</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">炮塔 Tower</div>
+    <dl>
+      <dd><span class="iconfont icon-mubiao"></span>
+        根据提供的素材，分别调整三种炮塔，主要是调整炮的底部位置，旋转位置和朝向；然后创建炮塔商店UI，用户可以选择不同的炮塔，放置于基座上，完成对怪物的击杀</dd>
+      <dt>第1部分 炮塔调整</dt>
+      <dd><span class="point"><span
+            class="iconfont icon-mouse1"></span></span>打散->调整中心->指定材质->调整朝向->创建发射点[->添加刚体]->添加碰撞->生成预制件；炮塔最终结构和效果如下图
+      </dd>
+      <dd class="mt2 point"><span class="iconfont icon-gantanhao-sanjiaokuang"></span>两个碰撞</dd>
+      <dd>. 炮塔利用碰撞检测敌人</dd>
+      <dd>. 子弹利用碰撞攻击敌人</dd>
+      <dd>. 碰撞的条件]双方都有碰撞组件且一方有刚体组件；所以：可以给敌人加上刚体；也可以给炮塔、子弹加上刚体</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p20.png" alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p21.png" alt="pic"></dd>
+      <dd class="mt2">1. 标准炮 Standard</dd>
+      <dd>1.1. 打散：拖动标准炮模型到场景并打散，改名为Standard；如果模型过大，请调整其缩放因子Scale Factor并应用Apply，以不超过base尺寸为宜</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p15.png" alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p16.png" alt="pic"></dd>
+      <dd>1.2.
+        调整中心：观察后发现：炮塔主要分为炮台Turret和底座Turret.0012部分；整体炮塔位于地面以下，且旋转炮台时并没有围绕炮台中心；因为后期炮塔要放在base上，所有要调整炮塔的中心和base保持一致。选择移动工具<span
+          class="iconfont icon-yidong"></span>，同时选中炮台Turret和底座Turret.0012，上下调整位置和地图base中心大概相同；为便于操作，可灵活调整导航器视图
+      </dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p17.png" alt="pic"></dd>
+      <dd>1.3. 指定材质：利用素材提供的材质调整炮塔；将材质拖动到炮塔的各个部分，选择一个满意的效果；可参照提供的Icon图标进行调整</dd>
+      <dd>1.4.
+        调整朝向：新建一个空对象head，<span class="warn">先</span>Y轴旋转-90°和炮管方向保持一致；将炮台Turret拖入，作为其子对象；<span
+          class="warn">再</span>还原head的Y轴旋转为0；底座的位置和朝向也是偏的，因为攻击时底座不动，所以无需调整
+      </dd>
+      <dd>1.5. 创建发射点：在炮台Turret里创建空游戏对象firePos，调整至炮口位置，作为子弹发射的参考位置</dd>
+      <dd>1.6. 为炮塔添加刚体Rigidbody组件，取消使用重力；仅仅使用其作为碰撞的条件</dd>
+      <dd>1.7. 为炮塔添加球形Sphere碰撞组件，采用触发碰撞检测；调整碰撞中心位于炮塔底部，并根据设计适当调整碰撞区域至能覆盖住一定范围</dd>
+      <dd>1.8. 生成预制件</dd>
+      <dd>2. 火箭炮 Missile：调整过程同标准炮；需要说明的是：打散Unpack后，将导弹头生先临时生成为预制件，然后从火箭炮中删除，等待后面[子弹部分]再进一步处理</dd>
+      <dd>3. 激光炮 Laser：调整过程同标准炮</dd>
+      <dt>第2部分 炮塔商店</dt>
+      <dd><span class="point"><span class="iconfont icon-mouse1"></span></span>利用Toggle组件的单选功能实现炮塔的选择</dd>
+      <dd>1. 创建画布storeCanvas，调整尺寸为跟随屏幕，设置为1280*720；扩展Expand匹配</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p8.png" alt="pic"></dd>
+      <dd>2. 创建空游戏对象store，高度150，定位于底部；增加布局组件Grid Layout Group、多选一组件Toggle
+        Group；内部对象高度为100，保证其距离底部有一定距离，便于用户操作；
+      </dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p9.png" alt="pic"></dd>
+      <dd>3. 创建1个Toggle，指定其组Group属性来源为store；分别设置：</dd>
+      <dd>. Background：尺寸铺满，贴图选择素材提供的标准炮</dd>
+      <dd>. CheckMark：尺寸铺满；贴图选择系统自带的白色Knob，适当降低透明度</dd>
+      <dd>. Label：尺寸铺满；字体大小30，白色；底部居中；文字为创建花费金币数量</dd>
+      <dd>4. 通过复制、修改，完成其它2个Toggle的创建，分别对应火箭炮和激光炮；静态效果如下图</dd>
+      <dd>5. 补充设计：怪物波数和数量的UI</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p10.png" alt="pic"></dd>
+      <dt>第3部分 炮塔放置</dt>
+      <dd><span class="point"><span class="iconfont icon-mubiao"></span>方案1：利用射线和指定层检测</span>：利用鼠标点击和base所在层进行 <a
+          class="warn" href="https://docs.unity.cn/cn/current/ScriptReference/Physics.Raycast.html">射线检测Rayast</a> 放置炮塔；
+      </dd>
+      <dd>0. 确保基座base位于指定层base[前期创建时已指定]</dd>
+      <dd>1. 创建空游戏对象GameManager作为游戏的全局管理对象</dd>
+      <dd>2. 创建放置脚本Build.cs并挂载到GameManager对象，主要完成：</dd>
+      <dd>. 塔的选择</dd>
+      <dd>. 塔的放置；生成炮塔时，请根据实际情况调整位置；也可以增加一个位置偏移进行补偿，如new Vector3(0, 1, 0)</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;//引入UI事件系统
+
+public class Build : MonoBehaviour
+{
+    public GameObject standard, missile, laser;
+    GameObject selected;
+    void Start()
+    {
+        selected = standard;
+    }
+
+    void Update()
+    {
+        //按下鼠标且不在UI上
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            //和指定层发射碰撞
+            //如果不指定距离，会放到路面上!!!
+            if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("base")))
+            {
+                GameObject obj = hit.collider.gameObject;
+                //如果当前对象没有炮塔/子对象；且金钱足够[功能预留]
+                if (obj.transform.childCount == 0)
+                {
+                    //动态生成并放置炮塔，成为基座base的子对象
+                    GameObject tower = Instantiate(selected, obj.transform.position, Quaternion.identity);
+                    tower.transform.parent = obj.transform;
+                }
+            }
+        }
+    }
+    public void selTowerStandard(bool isON)//选中第1种炮：标准炮
+    {
+        if (isON)
+        {
+            selected = standard;
+        }
+    }
+    public void selTowerMissile(bool isON)//选中第2种炮：火箭炮
+    {
+        if (isON)
+        {
+            selected = missile;
+        }
+    }
+    public void selTowerLaser(bool isON)//选中第3种炮：激光炮
+    {
+        if (isON)
+        {
+            selected = laser;
+        }
+    }
+}</pre>
+      </dd>
+      <dd>3. 为商店画布的3个Toggle分别指定改变事件：选择对应的炮塔</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p11.png" alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p12.png" alt="pic"></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p13.png" alt="pic"></dd>
+      <dd>4. 运行游戏<span class="iconfont icon-caret-square-right"></span>，查看炮塔的选择和放置效果；金钱消耗：预留功能，请自行完成</dd>
+      <dd class="mt2">[<span class="iconfont icon-gantanhao-sanjiaokuang"></span>放置无效]画布Canvas中，如果有铺满的UI，要取消Raycast
+        Target复选框，使其不要成为射线投射的目标；请尽量使用空游戏对象作为容器</dd>
+      <dd>[<span class="iconfont icon-gantanhao-sanjiaokuang"></span>炮塔悬空]调整炮塔预制件或调整场景中base的位置坐标</dd>
+      <dd>[<span class="iconfont icon-gantanhao-sanjiaokuang"></span>脚本对象]炮塔放置脚本Build.cs也可以直接挂在UI中的商店对象store</dd>
+      <dd class="mt2"><span class="point"><span
+            class="iconfont icon-mubiao"></span>方案2：利用射线和指定标签检测</span>：容易被其它碰撞体阻挡导致检测失败；核心代码如下</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/p18.png" alt="pic"></dd>
+      <dd>
+        <pre>
+Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+RaycastHit hit;
+if (Physics.Raycast(ray, out hit))
+{
+    GameObject obj = hit.collider.gameObject;
+    if (obj.tag == "base" && obj.transform.childCount == 0)
+    {
+        GameObject tar = Instantiate(curTower, obj.transform.position, Quaternion.identity);
+        tar.transform.parent = obj.transform;
+    }
+}</pre>
+      </dd>
+      <dd><span class="point"><span class="iconfont icon-mubiao"></span>方案3：利用base鼠标移入事件检测</span>：不利于分配Toggle事件；核心代码如下
+      </dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class Base : MonoBehaviour
+{
+    public GameObject towerFab;
+
+    private void OnMouseDown()
+    {
+        if (transform.childCount == 0 && !EventSystem.current.IsPointerOverGameObject())
+        {
+            GameObject obj = Instantiate(towerFab, transform.position, Quaternion.identity);
+            obj.transform.parent = transform;
+        }
+    }
+}</pre>
+      </dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-book"></span></span> 射线检测 Raycast</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 布局组件 Grid Layout Group</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 多选一组件 Toggle Group</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 鼠标事件 OnMouseDown</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">攻击 Attack</div>
+    <dl>
+      <dd class="point"><span class="iconfont icon-fixed"></span>开发要点</dd>
+      <dd>. 标准炮使用攻击脚本Standard.cs和Sphere自定义子弹</dd>
+      <dd>. 火箭炮使用攻击脚本Standard.cs和资源提供的导弹</dd>
+      <dd>. 激光炮使用光线组件创建激光武器使用专门的攻击脚本Laser.cs</dd>
+      <dd>. 根据触发碰撞检测获取到怪物，并定时更新</dd>
+      <dd>. 攻击时，锁定目标为距离炮塔最近的怪物[也可以只攻击第一个怪物]</dd>
+      <dd>. 根据设计自行调整炮塔的攻击属性，如攻击间隔、伤害等</dd>
+      <dd class="mt2 point"><span class="iconfont icon-gantanhao-sanjiaokuang"></span>两个朝向</dd>
+      <dd>1. 炮塔的炮台朝向目标</dd>
+      <dd>2. 子弹朝向目标</dd>
+      <dd class="mt2 point"><span class="iconfont icon-gantanhao-sanjiaokuang"></span>两个阶段</dd>
+      <dd>阶段1. 一击必杀</dd>
+      <dd>阶段2. 减血伤害</dd>
+      <dt>标准炮</dt>
+      <dd>1. 使用Sphere创建子弹Bullet，调整大小至合适；指定材质</dd>
+      <dd>2. 添加刚体组件Rigidbody，取消使用重力；使用刚体也是为了满足和敌人产生碰撞的条件</dd>
+      <dd>3. 采用触发碰撞；检测依据是怪物标签；使用普通碰撞会把敌人击退</dd>
+      <dd>4. 创建子弹脚本Bullet.cs并挂载到子弹</dd>
+      <dd>. 子弹飞行速度；结合怪物移动深度指定，通常要远大于移动怪物深度</dd>
+      <dd>. 获取攻击目标[由炮塔获取最近的怪物]</dd>
+      <dd>. 检测到触发碰撞，减血/销毁敌人，同时销毁子弹</dd>
+      <dd>. 如果一定时间后没有碰撞到怪物，则子弹自动销毁</dd>
+      <dd>. 如果子弹已经发射出去，但是在碰撞到怪物前，已经被其它子弹消灭，则销毁自己；即：目标为空时，销毁子弹</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bullet : MonoBehaviour
+{
+    public float damage = 10;
+    public float speed = 20;
+    Transform target = null;
+
+    void Update()
+    {
+        if (target == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.LookAt(target.position);
+    }
+
+    public void SetTarget(Transform tar)
+    {
+        target = tar;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "mon")
+        {
+            Destroy(gameObject);
+            target.GetComponent&lt;Mon&gt;().GetDam(damage);
+            //预留：粒子击中特效
+        }
+    }
+}
+</pre>
+      </dd>
+      <dd>5. 为标准炮创建脚本Standard.cs并挂载</dd>
+      <dd>. 采用列表List保存获取怪物对象</dd>
+      <dd>. 获取攻击目标：采用触发碰撞检测获取，并重复执行</dd>
+      <dd>. 旋转位置：跟随攻击目标旋转；且避免炮台后仰</dd>
+      <dd>. 发射/开火时间：倒计时实现</dd>
+      <dd>. 发射子弹：对标准炮来说，是自定义子弹；对火箭炮来说，是导弹</dd>
+      <dd>. 开火位置：跟随炮管</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Standard : MonoBehaviour
+{
+    public List&lt;GameObject&gt; list = new List&lt;GameObject&gt;();
+    public GameObject bullet;
+    public Transform firePos;
+    public Transform headRot;
+    Transform target;//也可以声明为GameObj，但是我们仅仅需要的是一个位置
+    public float attackInter = 1f;
+    float timer = 0;
+    private void Start()
+    {
+        InvokeRepeating("GetTarget", 0, 0.5f);
+    }
+
+    void Update()
+    {
+        if (target == null)
+        {
+            return;
+        }
+        //创建新的位置信息，主要是控制高度一致，避免后仰前俯；且让炮台始终朝向目标
+        Vector3 tarPos = target.position;
+        tarPos.y = headRot.position.y;
+        headRot.LookAt(tarPos);
+        timer += Time.deltaTime;
+        if (timer >= attackInter && list.Count > 0)
+        {
+            GameObject bulletObj = Instantiate(bullet, firePos.position, firePos.rotation);
+            bulletObj.GetComponent&lt;Bullet&gt;().SetTarget(target);
+            Destroy(bulletObj.gameObject, 5);
+            timer = 0;
+        }
+    }
+
+    void GetTarget()
+    {
+        float minDis = Mathf.Infinity;
+        //起始必须赋空值
+        Transform nearMon = null;
+        //MUST：每次获取前先把可能的空对象移出
+        list.RemoveAll(item => item == null);
+        foreach (GameObject item in list)
+        {
+            float dis = Vector3.Distance(transform.position, item.transform.position);
+            if (dis &lt; minDis)
+            {
+                minDis = dis;
+                nearMon = item.transform;
+            }
+        }
+        target = nearMon;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "mon")
+        {
+            list.Add(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "mon")
+        {
+            list.Remove(other.gameObject);
+        }
+    }
+}
+</pre>
+      </dd>
+      <dd>6. 运行游戏<span class="iconfont icon-caret-square-right"></span>，测试攻击效果并更新<span
+          class="iconfont icon-update"></span>标准炮预制件</dd>
+      <dt>火箭炮</dt>
+      <dd>素材提供的火箭炮导弹模型朝向不是前方，需要重新调整</dd>
+      <dd>1. 拖一个导弹预制件到场景并打散Unpack；删除导弹原来的预制件</dd>
+      <dd>2. 创建一个空游戏对象MissileBullet，<span class="warn">先</span>旋转使得Z轴方向和导弹一致，<span class="warn">再</span>将导弹拖入；<span
+          class="warn">最后</span>还原空对象旋转；[注意：导弹头缩放是100]</dd>
+      <dd>3. 为游戏对象MissileBullet添加刚体组件Rigidbody，取消使用重力</dd>
+      <dd>4. 为游戏对象MissileBullet添加胶囊碰撞组件，采用触发碰撞；检测依据是怪物标签</dd>
+      <dd>5. 为游戏对象MissileBullet挂载子弹脚本Bullet.cs，指定不同的速度speed和伤害damage</dd>
+      <dd>6. 将游戏对象MissileBullet生成预制件</dd>
+      <dd>7. 为火箭炮挂载攻击脚本Standard.cs，指定各个参数</dd>
+      <dd>8. 更新<span class="iconfont icon-update"></span>各个预制件，运行游戏<span
+          class="iconfont icon-caret-square-right"></span>，测试攻击效果</dd>
+      <dt>激光炮</dt>
+      <dd>线渲染器Line Renderer：</dd>
+      <dd>. 根据两个或多个顶点Vertex，在每个顶点之间绘制一条直线</dd>
+      <dd>. 通常以数组[]的形式提供点的集合</dd>
+      <dd>. 可以做为对象使用：GameObject→Effects→Line；也可以作为组件使用：Add Component→Effects→Line Renderer</dd>
+      <dd>. 2D精灵；默认情况下是没有材质，显示紫色；指定 Sprites-Default即可正常显示设置的颜色</dd>
+      <dd>. 更多信息，请访问<a class="warn"
+          href="https://docs.unity.cn/cn/current/ScriptReference/LineRenderer.html">LineRenderer</a></dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-mouse1"></span></span>辅助案例：绘制直角三角形</dd>
+      <dd>1. 创建新场景</dd>
+      <dd>2. 添加Line对象；在监视视图Inspector中设置并查看效果：</dd>
+      <dd>. size为4：(0, 0, 0)、(0, 0, 1)、(1, 0, 0)、(0, 0, 0)</dd>
+      <dd>. 宽度Width</dd>
+      <dd>. 颜色Color：起点颜色和结束颜色以及对应的透明度</dd>
+      <dd>. 尝试设置转角平滑Corner Vertices和结束端点圆角End Cap Vertices</dd>
+      <dd>. 尝试去掉最后一个顶点，并勾选Loop</dd>
+      <dd>. 尝试使用组件的形式绘制</dd>
+      <dd class="mt2">激光炮攻击步骤</dd>
+      <dd>1. 选中激光炮</dd>
+      <dd>2. 增加Line Renderer组件，设置宽度Width、颜色Color[使用默认材质Default-Line]、材质Material[自定义材质会覆盖颜色Color设置]；其它保持不变</dd>
+      <dd>3. 创建攻击脚本Laser.cs[和标准炮攻击脚本Standard.cs主要逻辑类似]并挂载</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Laser : MonoBehaviour
+{
+    public List&lt;GameObject&gt; list = new List&lt;GameObject&gt;();
+    public Transform firePos;
+    public Transform headRot;
+    Transform target;
+    public LineRenderer line;
+    public float damOverTime = 20f;
+    public float slowFactor = 0.6f;
+    private void Start()
+    {
+        InvokeRepeating("GetTarget", 0, 0.5f);
+    }
+
+    void Update()
+    {
+        if (target == null)
+        {
+            line.enabled = false;
+            return;
+        }
+        Vector3 tarPos = target.position;
+        tarPos.y = headRot.position.y;
+            line.enabled = true;
+        headRot.LookAt(tarPos);
+        line.SetPositions(new Vector3[] { firePos.position,target.position});
+        target.GetComponent&lt;Mon&gt;().GetDam(damOverTime*Time.deltaTime);
+        target.GetComponent&lt;Mon&gt;().getSlow(slowFactor);
+        //发射音效
+    }
+
+    void GetTarget()
+    {
+        float minDis = Mathf.Infinity;
+        Transform nearMon = null;
+        //MUST：每次获取前先把可能的空对象移出
+        list.RemoveAll(item => item == null);
+        foreach (GameObject item in list)
+        {
+            float dis = Vector3.Distance(transform.position, item.transform.position);
+            if (dis &lt; minDis)
+            {
+                minDis = dis;
+                nearMon = item.transform;
+            }
+        }
+        target = nearMon;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "mon")
+        {
+            list.Add(other.gameObject);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "mon")
+        {
+            list.Remove(other.gameObject);
+        }
+    }
+}</pre>
+      </dd>
+      <dd>4. 指定各个参数，运行游戏<span class="iconfont icon-caret-square-right"></span>，查看激光炮的攻击效果</dd>
+      <dd>5. 调整合适后，更新<span class="iconfont icon-update"></span>激光炮预制件</dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-book"></span></span> 列表 List</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 遍历 Foreach</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 排序 Sort</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 朝向 LookAt</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 碰撞检测 Collided</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 动态生成 Instantiate</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 线渲染器 Line
+        Renderer[SetPositions]</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">提高 Promote</div>
+    <dl>
+      <dt>一、多场景</dt>
+      <dd>1. 开始场景</dd>
+      <dd>. 单击start，播放透明到黑场的转场动画，并在动画结束前一帧，加载场景，实现过渡</dd>
+      <dd>. 单击option，打开2级菜单：选项菜单</dd>
+      <dd>. 单击quit，退出游戏；或按Escape退出游戏</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/401.png" alt="pic"></dd>
+      <dd><span class="point"><span class="iconfont icon-mouse1"></span></span>转场loading设计；逻辑图如下；详细步骤，请查阅 <a
+          class="warn" href="./note_scene.html">淡入淡出示例</a></dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/406.png" alt="pic"></dd>
+      <dd>
+        <pre>
+//Menu.cs
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Menu : MonoBehaviour
+{
+    public Animation ani;
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+    public void LoadScene(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    public void LoadAnim()
+    {
+        ani.Play();
+    }
+}</pre>
+      </dd>
+      <dd>2. 选项场景</dd>
+      <dd>. 包括：游戏简介、快捷键和设置</dd>
+      <dd>. 点击标签页Tab切换不同的选项页面</dd>
+      <dd>. 游戏简介为制作滚动区域的内容；快捷键是制作混音器的内容；两部分知识点的详细内容请参考提供的游戏，开发中请根据实际情况调整为对应的内容</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/405.png" alt="pic"></dd>
+      <dd>3. 胜利场景</dd>
+      <dd>. 玩家消灭完所有怪物，且生命不为0</dd>
+      <dd>. 利用协程和静态动画完成；详见后面的GameManager.cs</dd>
+      <dd>. 播放胜利音效</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/402.png" alt="pic"></dd>
+      <dd>4. 失败场景</dd>
+      <dd>. 玩家失去3条生命后，游戏结束</dd>
+      <dd>. 播放失败音效</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/403.png" alt="pic"></dd>
+      <dd>5. 暂停场景</dd>
+      <dd>. 按Escape，显示暂停菜单，暂停游戏；再按一次，退出暂停菜单，继续游戏</dd>
+      <dd class="txt-center"><img class="ob-img" data-src="./project4/404.png" alt="pic"></dd>
+      <dd>
+        <pre>
+//GameManager.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class GameManager : MonoBehaviour
+{
+    public static int lives = 3;
+    public GameObject failEnding;
+    public GameObject winEnding;
+    public GameObject pauseEnding;
+    bool isPause=false;
+    private void Start()
+    {
+        lives = 3;
+        Time.timeScale = 1;
+        failEnding.SetActive(false);
+        winEnding.SetActive(false);
+        pauseEnding.SetActive(false);
+    }
+    private void Update()
+    {
+        //失败
+        if (lives &lt;= 0)
+        {
+            failEnding.SetActive(true);
+            Time.timeScale = 0;
+        }
+        //胜利
+        if (lives > 0 && Spawn.isDone)
+        {
+            StartCoroutine(dis());
+        }
+        //按下Escape
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPause)
+            {
+                isPause = false;
+                Time.timeScale = 1;
+                pauseEnding.SetActive(false);
+            }
+            else
+            {
+                isPause = true;
+                Time.timeScale = 0;
+                pauseEnding.SetActive(true);
+            }
+        }
+    }
+    public void backToGame()
+    {
+        Time.timeScale = 1;
+        pauseEnding.SetActive(false);        
+        isPause = false;
+    }
+    public void LoadScene(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    //暂停1秒后显示winEnding
+    IEnumerator dis()
+    {
+        yield return new WaitForSeconds(1);
+        winEnding.SetActive(true);
+    }
+}</pre>
+      </dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-book"></span></span> 定制UI Toggle</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 轮廓组件 outline</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 滚动内容组件 Scroll Rect</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 遮罩组件 Mask</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 滚动条 Scrollbar</dd>
+      <dd><span class="point"><span class="iconfont icon-book"></span></span> 混音器 Mixer</dd>
+      <dt>二、光影特效</dt>
+      <dd>. Light组件</dd>
+      <dt>三、音效</dt>
+      <dd>. 发射音效/击中音效</dd>
+      <dd>. 销毁音效</dd>
+      <dd>. 游戏胜利音效</dd>
+      <dd>. 游戏失败音效</dd>
+      <dd class="mt2 point"><span class="iconfont icon-gantanhao-sanjiaokuang"></span>发射音效/击中音效加在哪里?</dd>
+      <dd>1. 加在子弹上，要延时销毁子弹或使用协程，否则会出现子弹销毁导致音效没来得及播放</dd>
+      <dd>2. 加在炮塔上[采用]</dd>
+      <dd>2. 分别设计发射音效和击中音效：需要分开设计</dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-mouse1"></span></span>炮塔发射音效</dd>
+      <dd>1. 选择炮塔的攻击脚本Standard.cs.声明AudioSource和AudioClip，在动态生成子弹逻辑中播放音效</dd>
+      <dd>2. 选择标准炮，添加AudioSource组件并指定clip</dd>
+      <dd>3. 选择火箭炮，挂载AudioSource组件并指定clip</dd>
+      <dd>
+        <pre>
+public AudioSource player;
+public AudioClip clip;
+//
+player.PlayOneShot(clip);</pre>
+      </dd>
+      <dd>4. 激光炮是连续输出的发射音效，修改Laser.cs，参考代码如下；挂载AudioSource组件并指定clip</dd>
+      <dd>
+        <pre>
+public AudioSource player;
+public AudioClip clip;                    
+//如果没有播放就播放，否则什么也不做
+if (player.isPlaying)
+{
+}
+else
+{
+    player.PlayOneShot(clip);
+}</pre>
+      </dd>
+      <dd class="mt2"><span
+          class="iconfont icon-mubiao"></span>集中由一个对象控制AudioCtrl，添加AudioSource，并创建单例AudioCtrl，共享方法playAudio；其它对象只需指定AudioClip就可使用；更多细节，请点击访问<a
+          class="warn" href="./note_audio.html" target="_blank">音频 Audio</a>
+      </dd>
+      <dd>1. 创建单例</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AudioCtrl : MonoBehaviour
+{
+    public static AudioCtrl instance;
+    AudioSource player;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        player = GetComponent&lt;AudioSource&gt;();
+    }
+
+    public void playAudio(AudioClip clip)
+    {
+        player.PlayOneShot(clip);
+    }
+}</pre>
+      </dd>
+      <dd>2. 对象使用</dd>
+      <dd>如在碰撞触发检测中使用</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class xxx : MonoBehaviour
+{
+    public AudioClip clip;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "mon")
+        {
+            //其它业务略
+            AudioCtrl.instance.playAudio(clip);
+        }
+    }
+}</pre>
+      </dd>
+      <dt>四、动画</dt>
+      <dd>. 开场动画</dd>
+      <dd>. 得分动画</dd>
+      <dd>. 减血数字动画</dd>
+      <dd>. 金币缺少动画</dd>
+      <dd>. 场景过渡动画</dd>
+      <dd>. 游戏胜利动画</dd>
+      <dd>. 游戏失败动画</dd>
+      <dt>五、粒子特效</dt>
+      <dd>. 发射特效</dd>
+      <dd>. 击中特效</dd>
+      <dd>. 销毁特效</dd>
+      <dd>. 建造特效</dd>
+      <dd class="mt2"><span class="point"><span class="iconfont icon-mouse1"></span></span>以销毁为例</dd>
+      <dd>1. 创建例子特效explosion；自由设计创作</dd>
+      <dd>2. 挂载AudioSource组件，指定爆炸音效clip；确保Play On Awake选中</dd>
+      <dd>3. 生成预制件</dd>
+      <dd>4. 在怪物脚本Mon.cs中声明并指定</dd>
+      <dd>5. 在怪物销毁业务中动态生成特效，1秒后销毁特效</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">发布 Publish</div>
+    <dl>
+      <dd>1. 添加场景</dd>
+      <dd>2. 平台选择</dd>
+      <dd>2.1 Window平台：设置全屏模式为FullScreen；因为游戏Game比例是16:9，且画布跟随屏幕，并且指定了1280*720且拓展，所以全屏下，仍然可以保持比例</dd>
+      <dd>2.2 WEBGL平台：设置和Game比例一致的大小；当全屏时，也可以保持比例，自动拓展；如果设置的尺寸大于当前显示器的屏幕，通过 <span class="warn">全屏</span>
+        操作也可以实现完美匹配；注意中文字体的使用</dd>
+      <dd>3. 发布预览</dd>
+      <dd>4. 将发布的Window平台应用打包压缩提交到<a class="warn"
+          href="http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com"
+          target="_blank">学习通</a>或<a class="warn" href="http://172.23.191.32/"
+          target="_blank">U+平台</a>(限内网用户或VPN用户)；详见作业要求</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">总结 Summary</div>
+    <dl>
+      <dt>实际操作技能</dt>
+      <dd>. 基本视图：场景Scene、层级Hierarchy、游戏Game、项目Project、调试Console</dd>
+      <dd>. 基本游戏物体：cube、sphere、plane</dd>
+      <dd>. 常见游戏组件：变换Transform、材质Material、刚体Rigidbody、碰撞Collide、音频Audio、线渲染LineRenderer、光Light、导航Navigation</dd>
+      <dd>. 常见生命周期函数：Awake()、Start()、Update()、OnDestroy()</dd>
+      <dd>. 预制件：open修改；override修改</dd>
+      <dd>. 脚本控制游戏对象/组件的基本思路、数据传递</dd>
+      <dd>. 常用方法：Translate()、addForce()、InvokeRepeating()、Destroy()</dd>
+      <dd>. UI：Text、Image、Panel、Button、Toggle</dd>
+      <dd>. 动画制作 Animation</dd>
+      <dd>. 布局调整Layout</dd>
+      <dd>. 静态变量、静态方法、静态类</dd>
+      <dd>. 发布Building：桌面端Window、安卓Android、移动端网页WEBGL</dd>
+      <dt>计算思维技能</dt>
+      <dd class="grid grid4">
+        <div class="item-center"><span class="iconfont icon-extension"></span><span>架构设计</span></div>
+        <div class="item-center"><span class="iconfont icon-callsplit"></span><span>流程控制</span></div>
+        <div class="item-center"><span class="iconfont icon-bugreport"></span><span>规范化开发</span></div>
+        <div class="item-center"><span class="iconfont icon-group"></span><span>团队合作</span></div>
+      </dd>
+      <dd class="item-center">
+        <img class="ob-img" data-src="../imgs/qrcode_glpla.github.io.png" alt="pic">
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <!-- <dl class="comment">
+            <dt>作业讲评</dt>
+            <dd>1. 未按要求开发：场景、业务缺失、错漏</dd>
+            <dd>1. 未按要求提交：格式错误；内容缺失</dd>
+            <dd>2. 文件、资源命名不规范；没有合理利用文件夹收纳归类</dd>
+            <dd>4. 逻辑混乱；设计感体现不够</dd>
+            <dd>5. 文字、文案使用错误、随意；API过时</dd>
+            <dd>6. 抄袭</dd>
+        </dl> -->
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <script src="../web//lib/lazyload.js"></script>
+  <script>
+    window.onload = function () {
+      let navItems = document.querySelectorAll(".nav-item")
+      let contItems = document.querySelectorAll(".chap")
+      let ham = document.querySelector("#ham")
+      let menu = document.querySelector("#menu")
+
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView({
+              behavior: "smooth"
+            });
+            navItems.forEach(item => {
+              item.style.color = "#ffffff";
+            })
+            navItems[index].style.color = "#f66020"
+          }, 100)
+          menu.classList.toggle('is-hide');
+          ham.classList.toggle('is-close');
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+
+      ham.addEventListener('click', (e) => {
+        e.preventDefault()
+        menu.classList.toggle('is-hide');
+        ham.classList.toggle('is-close');
+        if (document.documentElement.style.overflowY == 'auto') {
+          document.documentElement.style.overflowY = "hidden"
+        } else {
+          document.documentElement.style.overflowY = "auto"
+        }
+      })
+
+      // lazyload
+      // let scrollTop = window.scrollY;
+      // let imgs = Array.from(document.querySelectorAll('img'));
+      // lazyLoad();
+      // 采用了节流函数
+      // window.addEventListener('scroll', throttle(lazyLoad, 500, 1000));
+
+      // function throttle(fun, delay, time) {
+      //   let timeout,
+      //     startTime = new Date();
+      //   return function () {
+      //     let context = this,
+      //       args = arguments,
+      //       curTime = new Date();
+      //     clearTimeout(timeout);
+      //     // 如果达到了规定的触发时间间隔，触发 handler
+      //     if (curTime - startTime >= time) {
+      //       fun();
+      //       startTime = curTime;
+      //       // 没达到触发间隔，重新设定定时器
+      //     } else {
+      //       timeout = setTimeout(fun, delay);
+      //     }
+      //   };
+      // };
+
+      // 实际想绑定在 scroll 事件上的 handler
+      // 需要访问到imgs ,  scroll 
+      // function lazyLoad() {
+      //   scrollTop = window.scrollY;
+      //   imgs.forEach((item, index) => {
+      //     if (scrollTop === 0 && item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop) {
+      //       item.setAttribute('src', item.dataset.src)
+      //       item.setAttribute('data-src', '')
+      //     } else if (item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop && item.offsetTop > scrollTop) {
+      //       item.setAttribute('src', item.dataset.src)
+      //       item.setAttribute('data-src', '')
+      //     }
+      //   })
+      // }
+    }
+  </script>
+</body>
+
+</html>

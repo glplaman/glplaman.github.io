@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据 Data</title>
+  <link rel="stylesheet" href="./css/unityNormal.css">
+
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Data</h1>
+    <span>2022-10-22</span>
+  </header>
+  <div class="chap">游戏对象之间数据的访问</div>
+  <dl>
+    <dd>一个游戏对象访问另外一个游戏对象的数据，需要声明一个对目标游戏对象所挂载脚本类A.cs的公开public引用；</dd>
+    <dd>即：对象通过对象访问类中的数据；</dd>
+    <dd class="mt2">[<span class="iconfont icon-bijiben"></span>]脚本之间的数据访问</dd>
+    <dd>1. 创建游戏对象objA，并挂载脚本A.cs；</dd>
+    <dd>2. 创建游戏对象objB，并挂载脚本B.cs：通过public暴露一个对类A.cs的引用；</dd>
+    <dd>3. 将游戏对象objA拖动到游戏对象objB暴露的类A接口；虽然暴露的是类A.cs，但是赋值/拖进去的是游戏对象objA，系统会自动寻找游戏对象objA上挂载的类A.cs；</dd>
+    <dd>4. 运行游戏，查看数据调用情况；</dd>
+    <dd class="grid grid2">
+      <pre>
+//A.cs
+public class A : MonoBehaviour
+{
+    public void Greeting()
+    {
+        print("hello,world....");
+    }
+}</pre>
+      <pre>
+//B.cs
+public class B : MonoBehaviour
+{
+    public A a;
+    void Start()
+    {
+        a.Greeting();
+    }
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-bangzhu2"></span>] 既然暴露的是类A，可以直接把脚本A.cs拖进去吗?</dd>
+    <dd>[<span class="iconfont icon-bangzhu2"></span>] 如果暴露的是游戏对象objA，如何使用数据?</dd>
+    <dd>
+      <pre>
+public class B : MonoBehaviour
+{
+    public GameObject obj;
+    void Start()
+    {
+        //根据对象获取其加载的脚本
+        print(obj.GetComponent&lt;A&gt;().age);
+        obj.GetComponent&lt;A&gt;().greeting();
+    }
+}</pre>
+    </dd>
+    <dd>暴露的不同类型数据在监视视图的提示也不同：</dd>
+    <dd class="grid grid2">
+      <img class="ob-img" data-src="./script/s0.png" alt="">
+      <img class="ob-img" data-src="./script/s1.png" alt="">
+    </dd>
+  </dl>
+  <div class="chap">静态数据 Static Data</div>
+  <dl>
+    <dt>静态变量 Static Variables && 静态方法 Static Methods</dt>
+    <dd>为类创建静态static变量或方法，无需实例化即可通过类名 <span class="warn">直接</span> 使用，适合整个游戏/全局共同使用的场合；</dd>
+    <dd class="mt2">[<span class="iconfont icon-bijiben"></span>]静态变量和静态方法的使用</dd>
+    <dd>1. 创建脚本A.cs，定义一个静态变量age；</dd>
+    <dd>2. 创建一个对象b，创建脚本B.cs并挂载到b，访问脚本A.cs的静态变量和方法；</dd>
+    <dd class="grid grid2">
+      <pre>
+//A.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class A : MonoBehaviour
+{
+    public GameObject prefab;
+    public static int age = 0;
+    void Start()
+    {
+        age = 5;
+    }
+
+    void Update()
+    {
+        age = age + 1;
+    }
+    public static void greeting()
+    {
+        print("hi,there.");
+    }
+}</pre>
+      <pre>
+//B.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class B : MonoBehaviour
+{
+    void Start()
+    {
+        print(A.age);
+        A.greeting();
+    }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-wenq"></span>]为什么A.cs中的Start和Update没有执行?</dd>
+    <dd>[<span class="iconfont icon-huidaa"></span>]没有挂载到游戏对象。</dd>
+    <dd>[系统常见静态方法]</dd>
+    <dd>
+      <table>
+        <tr>
+          <td>对象销毁</td>
+          <td>Destroy</td>
+        </tr>
+        <tr>
+          <td>对象生成</td>
+          <td>Instantiate</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[常见静态变量]</dd>
+    <dd>比如数学库中的PI，更多变量，请查看：<a class="warn" target="_blank"
+        href="https://docs.unity.cn/cn/current/ScriptReference/Mathf.html">mathf</a></dd>
+    <dt>静态类 Static Class</dt>
+    <dd>. 单例模式；</dd>
+    <dd>. 将脚本类声明为一个静态类；</dd>
+    <dd>. 需要保证单例是唯一的；</dd>
+    <dd>. 通常在Awake()声明；</dd>
+    <dd>. 同样的，如需要在对象的生命周期函数内修改变量或方法，需要将静态类挂载到某个游戏对象；</dd>
+    <dd class="mt2">[<span class="iconfont icon-bijiben"></span>]不间断播放背景音乐</dd>
+    <dd>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AudioCtrl : MonoBehaviour
+{
+    public static AudioCtrl instance;
+    public AudioSource bgPlayer;
+    public AudioClip bgPlayerClip;
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            //return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">数据文件脚本 Data File</div>
+  <dl>
+    <dd>. 脚本仅仅是定义数据，对应的脚本类不需要继承游戏的MonoBehaviour，因此不需要挂载到游戏对象；也挂载不上：只有继承了MonoBehaviour的，才可以挂载到游戏对象；</dd>
+    <dd>. 需要序列化才能被其他脚本使用；序列化语句是对整个脚本类的序列化，不是对其中某一个变量的序列化；</dd>
+    <dd>. 数据通常指定一个初值，也可以不指定；</dd>
+    <dd>. 游戏对象通过公开声明数据文件类来使用其中的数据；因为是公开public，每个使用数据的游戏对象都可以根据自己的需求修改这些数据；</dd>
+    <dd class="mt2">[<span class="iconfont icon-bijiben"></span>]数据文件的使用</dd>
+    <dd>1. 创建数据文件Data.cs，并序列化；</dd>
+    <dd>2. 创建使用数据的文件C.cs，并声明数据文件对应的变量，在游戏对象的监视视图Inspectors中就可以看到数据；</dd>
+    <dd>3. 运行游戏，查看数据的使用情况；</dd>
+    <dd class="grid grid2">
+      <pre>
+//Data.cs
+[System.Serializable]
+public class Data
+{
+    public float speed;
+    public float inter;
+    public int num;
+}</pre>
+      <pre>
+//C.cs
+public class C : MonoBehaviour
+{
+    public Data data;
+    void Update()
+    {
+        data.speed++;
+        print(data.speed);
+    }
+}</pre>
+      <div class="item-center"><img class="ob-img" data-src="./script/Snipaste_2022-09-23_09-44-10.png" alt=""></div>
+      <div class="item-center"><img class="ob-img" data-src="./script/Snipaste_2022-09-23_10-04-00.png" alt=""></div>
+    </dd>
+  </dl>
+  <div class="chap">消息发送 SendMassage</div>
+  <dl>
+    <dd>. 组件方法：用于对象自身脚本之间、父级对子级、子级对父级的通信；不适合游戏对象之间的数据通信；</dd>
+    <dd class="mt2">1. Component.SendMessage</dd>
+    <dd>. 游戏对象挂载的所有组件中即兄弟脚本，只要定义了该方法都会执行；</dd>
+    <dd>. Every script attached to the game object that has a xxx function will be called.</dd>
+    <dd class="mt2">2. Component.BroadcastMessage </dd>
+    <dd>. <span class="warn">向兄弟脚本，同时</span> 向子对象脚本发送；</dd>
+    <dd>. Every script attached to the game object and all its children that has a xxx function will be called.
+    </dd>
+    <dd class="mt2">3. Component.SendMessageUpwards</dd>
+    <dd>. <span class="warn">向兄弟脚本，同时</span> 向父级对象脚本、祖先对象脚本发送；</dd>
+    <dd>. Every script attached to this game object and any ancestor that has a xxx function will be called.
+    </dd>
+    <dd>. 更多使用细节，请查阅<a href="https://docs.unity.cn/cn/current/ScriptReference/Component.html" class="warn"
+        target="_blank">API</a>；</dd>
+    <dd class="mt2">[<span class="iconfont icon-bijiben"></span>]SendMessage的使用</dd>
+    <dd>1. 创建一个游戏对象，分别挂载3个脚本：A.cs、B.cs、C.cs；</dd>
+    <dd>2. 脚本A：每次按下鼠标左键，就发送消息；脚本B、C接收消息并执行指定的函数；</dd>
+    <dd>3. 运行游戏<span class="iconfont icon-caret-square-right"></span>，查看函数的调用情况；</dd>
+    <dd>4. 如果A也有greeting函数，它也会执行：自己发给自己；</dd>
+    <dd>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class A : MonoBehaviour
+{
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            SendMessage("greeting","Cnplaman");
+        }
+    }
+}</pre>
+    </dd>
+    <dd class="grid grid2">
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class B : MonoBehaviour
+{
+    void greeting(string str)
+    {
+        print(str + " B, hi,there.");
+    }
+}</pre>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class C : MonoBehaviour
+{
+    void greeting(string str)
+    {
+        print(str + " C, hi,there.");
+    }
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-bijiben"></span>]BroadcastMessage的使用</dd>
+    <dd>1. 创建一个游戏对象GM，挂载脚本GM.cs向3个子对象发送消息；</dd>
+    <dd>2. 创建3个子对象a、b、c，分别挂载3个脚本：A.cs、B.cs、C.cs；每个脚本都定义了消息接受函数；</dd>
+    <dd>3. 运行游戏<span class="iconfont icon-caret-square-right"></span>，查看消息的发送情况：每个子对象都执行函数；</dd>
+    <dd class="grid grid2">
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GM : MonoBehaviour
+{
+    void Start()
+    {
+        BroadcastMessage("greeting","broadMsg");
+    }
+}</pre>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class A : MonoBehaviour
+{
+    void greeting(string str)
+    {
+        print(str + " A, hi,there.");
+    }
+}</pre>
+    </dd>
+    <dd class="grid grid2">
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class B : MonoBehaviour
+{
+    void greeting(string str)
+    {
+        print(str + " B, hi,there.");
+    }
+}</pre>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class C : MonoBehaviour
+{
+    void greeting(string str)
+    {
+        print(str + " C, hi,there.");
+    }
+}</pre>
+    </dd>
+    <dd>4. 如果将GM.cs的BroadcastMessage换成SendMessage，则会提示发送失败：无同级组件；也可以指定发送选项为不需要接受者DontRequireReceiver；</dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./script/s2.png" alt="">
+    </dd>
+    <dd>5. 如果在GM.cs也定义了消息接受函数，或者游戏对象GM又挂载了其它也定义了消息接受函数的脚本，则这些同级脚本和子对象脚本都会执行函数；</dd>
+  </dl>
+  <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+  <script src="../web/lib/lazyload.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音频 Audio</title>
+  <link rel="stylesheet" href="./css/unityNormal.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Audio</h1>
+    <span>2023-04-10</span>
+  </header>
+  <div class="chap">概述 Overview</div>
+  <dl>
+    <dd>.音乐、音效、配乐</dd>
+    <dd>.播放声音需要：监听器Audio Listener、音频源Audio Source，音频片段Audio Clip</dd>
+    <dd>.无论在编辑状态场景视图Scene还是在播放状态的游戏视图Game的都可以通过开关选项开启或关闭声音</dd>
+    <dd>.更多使用细节，请查阅<a href="https://docs.unity.cn/cn/current/ScriptReference/index.html" class="warn">API</a></dd>
+    <dt>监听器 Audio Listener</dt>
+    <dd>.一个场景只能有一个监听器</dd>
+    <dd>.默认情况下，主摄像机挂载一个监听器</dd>
+    <dd>.监听播放过程中的事件，如播放状态、播放时长、剩余时长等</dd>
+    <dt>音频源 Audio Source</dt>
+    <dd>.播放器；通常以组件的形式挂载到某个游戏对象；也可以作为游戏对象直接使用</dd>
+    <dd>.可以有多个；如一个播放背景，一个播放UI音效</dd>
+    <dd>.可以直接把声音文件拖给对象，系统会自动为对象添加音频源组件Audio Source，运行时能直接播放</dd>
+    <dd>.默认情况下，会自动播放</dd>
+    <dt>音频剪辑 Audio Clip</dt>
+    <dd>.为Audio Source 提供要播放的音频剪辑/片段</dd>
+    <dd>.格式多为.wav或.mp3</dd>
+  </dl>
+  <div class="chap">基本使用-无脚本使用</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 播放背景音乐</dd>
+    <dd>1.在层级视图Hierarchy创建一个Audio Source对象；指定clip，勾选loop和awake</dd>
+    <dd>2.运行游戏<span class="iconfont icon-play"></span>，查看效果</dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note0.png" alt="">
+    </dd>
+    <dd>.最快的播放：直接把声音文件拖到层级Hierarchy或场景Scene，系统会自动创建一个对象并添加音频源组件Audio Source</dd>
+  </dl>
+  <div class="chap">play()</div>
+  <dl>
+    <dd>. 通常会取消自动播放，再根据需要再使用脚本控制播放</dd>
+    <dd>. 每次播放都会清除前面的音效</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击鼠标，播放音频</dd>
+    <dd>1.创建对象player，添加Audio Source组件，取消自动播放，指定Audio clip</dd>
+    <dd>2.创建脚本Player1.cs并挂载到对象player</dd>
+    <dd>3.在对象player的监视Inspector中，为脚本指定Audio Source</dd>
+    <dd>4.运行游戏<span class="iconfont icon-play"></span>，单击鼠标，查看效果；如果连续单击鼠标呢？</dd>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+  
+  public class Player1 : MonoBehaviour
+  {
+      public AudioSource player;
+      private void Update()
+      {
+          if (Input.GetMouseButtonDown(0))
+          {
+              player.Play();
+          }
+      }
+  }</pre>
+    </dd>
+  </dl>
+  <div class="chap">PlayOneShot()</div>
+  <dl>
+    <dd>.多用作UI音效</dd>
+    <dd>.每次播放都新开一个音效，可以产生叠加的效果</dd>
+    <dd>.使用这个函数播放音效，不能为音频源组件指定音频剪辑，而应<span class="warn">单独指定</span></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击鼠标，播放音效</dd>
+    <dd>1.创建对象player，添加Audio Source组件，取消自动播放</dd>
+    <dd>2.创建脚本Player2.cs并挂载到对象player</dd>
+    <dd>3.在对象player的监视视图Inspector中，为脚本指定Audio Source、Audio clip</dd>
+    <dd>4.运行游戏<span class="iconfont icon-play"></span>，单击鼠标，查看效果；如果连续单击鼠标呢？</dd>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+
+  public class Player2 : MonoBehaviour
+  {
+      public AudioSource player;
+      public AudioClip clip;
+      private void Update()
+      {
+          if (Input.GetMouseButtonDown(0))
+          {
+              player.PlayOneShot(clip);
+          }
+      }
+  }</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 多音频Audio Clip播放</dd>
+    <dd>.定义一个clip数组，分别指定不同的clip；单击鼠标，随机获取一个index，根据index播放对应的clip</dd>
+    <dd>1. 创建对象player，添加Audio Source组件，取消自动播放</dd>
+    <dd>2. 创建脚本Player3.cs并挂载到对象player</dd>
+    <dd>3. 在对象player的监视视图Inspector中，为脚本指定Audio Source、多个Audio clip</dd>
+    <dd>4. 运行游戏<span class="iconfont icon-play"></span>，单击鼠标</dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note2.png" alt="">
+    </dd>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+
+  public class Player3 : MonoBehaviour
+  {
+      public AudioSource player;
+      public AudioClip[] clips;
+      int ind = 0;
+      private void Update()
+      {
+          if (Input.GetMouseButtonDown(0))
+          {
+              ind = Random.Range(0, clips.Length);
+              player.PlayOneShot(clips[ind]);
+          }
+      }
+  }</pre>
+    </dd>
+    <dt>Resources.Load()</dt>
+    <dd>.加载本地指定类型的资源，如音频</dd>
+    <dd>.加载的资源不需要后缀名，因为已经指定了类型</dd>
+    <dd>.系统默认会在Assets下的Resources文件夹中查找资源，所以资源文件必须存放在Resources文件夹中；Resources文件夹需提前建好</dd>
+    <dd>.可以使用多个Resources文件夹，请保持资源文件名唯一，不要重用</dd>
+    <dd>.使用正斜杠/路径；路径大小写敏感</dd>
+    <dd>.加载的音频资源可以使用Play或PlayOneShot播放；其它资源的加载和使用类似</dd>
+    <dd>.更多信息，请访问<a class="warn"
+        href="https://docs.unity.cn/cn/current/ScriptReference/Resources.Load.html">Resources.Load</a></dd>
+    <dd>
+      <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Test : MonoBehaviour
+{
+  AudioSource player;
+  AudioClip clip;
+  void Start()
+  {
+      player=gameObject.GetComponent&lt;AudioSource&gt;();
+      clip = Resources.Load&lt;AudioClip&gt;("wang");
+      player.clip = clip;
+      player.Play();
+  }
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">综合示例 Demo</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 多音源Audo Source播放：一个Audo Source播放背景；一个Audo Source播放音效</dd>
+    <dd>1. 创建对象player，添加2个Audio Source组件</dd>
+    <dd>2. 创建脚本Player4.cs并挂载到对象player</dd>
+    <dd>3. 在对象player的监视视图Inspector中，为脚本分别指定背景Audio Source、音频Audio clip</dd>
+    <dd>4. 运行游戏<span class="iconfont icon-play"></span>，查看背景音乐情况；单击鼠标，查看音效播放情况</dd>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+
+  public class Player4 : MonoBehaviour
+  {
+      public AudioSource bgplayer;
+      public AudioSource player;
+      public AudioClip bgClip;
+      public AudioClip clip;
+      private void Start()
+      {
+          bgplayer.clip = bgClip;
+          bgplayer.Play();
+      }
+      private void Update()
+      {
+          if (Input.GetMouseButtonDown(0))
+          {
+              player.PlayOneShot(clip);
+          }
+      }
+  }</pre>
+    </dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note3.png" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 调音台</dd>
+    <dd>.将音频源的输出引导至混音器，利用滑块控制输出音量大小</dd>
+    <dd>1. 在项目视图Project的资源Assets中创建混音器Audio Mixer</dd>
+    <dd>2. 按CTRL+8，打开混音器面板；混音器面板右上角是暴露Expose给外部脚本的参数，当前为0</dd>
+    <dd>3.
+      选择master，在监视视图Inspector中，右键单击音量Volume栏，暴露出去；在混音器面板右上角可以看到暴露出的参数，重命名为myVol；注意到Volume右侧出现一个箭头，表示当前参数已暴露；
+    </dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note4.png" alt="">
+    </dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note5.png" alt="">
+    </dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note6.png" alt="">
+    </dd>
+    <dd>4. 创建游戏对象player：</dd>
+    <dd>. 添加Audio Source，保留自动播放；指定音频clip；指定输出<span class="warn">Output</span>为混音器的master</dd>
+    <dd>. 创建脚本并挂载Mixer.cs，并指定脚本暴露的混音器；定义音量控制函数SetVol()，控制的对象就是混音器中暴露的音量myVol</dd>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+  using UnityEngine.Audio;
+
+  public class Mixer : MonoBehaviour
+  {
+      public AudioMixer audioMixer;
+
+      public void SetVol(float vol)
+      {
+          audioMixer.SetFloat("myVol", vol);
+      }
+  }</pre>
+    </dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note7.png" alt="">
+    </dd>
+    <dd>5. 创建UI组件滑块Slider：</dd>
+    <dd>. 利用定位框调整到屏幕中央</dd>
+    <dd>. 最小值Min Value、最大值Max Value保持和混音器一致：-80，20；当前值Value设为1</dd>
+    <dd>. 增加一个点击事件：player中定义的SetVol函数</dd>
+    <dd class="item-center">
+      <img class="ob-img" data-src="./note/note8.png" alt="">
+    </dd>
+    <dd>6. 运行游戏<span class="iconfont icon-play"></span>，拖动滑块，查看音效播放情况</dd>
+    <dd><span class="iconfont icon-wenhao-yuankuang"></span>为什么不是在层级视图Hierarchy中创建混音器？</dd>
+  </dl>
+  <dl class="comment">
+    <dt>切换场景时不间断背景音乐-参考逻辑</dt>
+    <dd>
+      <pre>
+  using System.Collections;
+  using System.Collections.Generic;
+  using UnityEngine;
+  
+  public class BGMCtl : MonoBehaviour
+  {
+      public static BGMCtl instance;
+      void Awake()
+      {
+          if (instance == null)
+          {
+              instance = this;
+          }
+          else if (instance != this)
+          {
+              Destroy(gameObject);
+          }
+          DontDestroyOnLoad(gameObject);
+      }
+  }</pre>
+    </dd>
+  </dl>
+  <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+  <script src="../web/lib/lazyload.js"></script>
+</body>
+
+</html>

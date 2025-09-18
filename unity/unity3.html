@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>见缝插针 Needle</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    .cont {
+      position: relative;
+    }
+
+    header {
+      background-color: #e0decc;
+      color: #333;
+      justify-content: space-between;
+    }
+
+    .dart-box {
+      position: fixed;
+      top: 0%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .dart {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      margin: 2px;
+      line-height: 30px;
+      border-radius: 50%;
+      text-align: center;
+      color: #fff;
+      background-color: #4bc2ce;
+      border: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .dart:hover::before {
+      content: attr(title);
+      position: absolute;
+      font-size: 14px;
+      color: #000;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      /* border: 1px solid #4bc2ce; */
+      box-shadow: 0 0 20px #ff0, 0 0 10px #ff5;
+      text-align: center;
+      line-height: 60px;
+      background-color: #fff;
+      top: 30px;
+      left: 50%;
+      transform-origin: top center;
+      transform: translateX(-50%);
+      animation: shake 1s linear 2;
+    }
+
+    @keyframes shake {
+      25% {
+        transform: translateX(-50%) rotate(-15deg);
+      }
+
+      50% {
+        transform: translateX(-50%) rotate(0deg);
+      }
+
+      75% {
+        transform: translateX(-50%) rotate(15deg);
+      }
+
+      100% {
+        transform: translateX(-50%) rotate(0deg);
+      }
+    }
+
+    .chap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chap::after {
+      content: attr(data-ind);
+      position: absolute;
+      right: -30px;
+      bottom: -30px;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
+      border-radius: 50%;
+      background-color: #000;
+      color: #fff;
+      font-size: 24px;
+      font-family: "flappybird";
+    }
+
+    .item-center .iconfont {
+      font-size: 40px;
+    }
+
+    .flex-h {
+      justify-content: space-around;
+    }
+
+    .iconfont,
+    .warn {
+      color: #4bc2ce;
+    }
+
+    .mt2 {
+      margin-top: 2rem;
+    }
+
+    @media screen and (max-width:768px) {
+      header {
+        height: 150px;
+      }
+
+      .dart {
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+      }
+
+      .chap::after {
+        width: 40px;
+        height: 40px;
+        right: -15px;
+        bottom: -15px;
+        line-height: 40px;
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <div class="dart-box" id="menu">
+      <div class="dart" title="概述">O</div>
+      <div class="dart" title="环境">E</div>
+      <div class="dart" title="靶子">T</div>
+      <div class="dart" title="飞镖">N</div>
+      <div class="dart" title="发射器">S</div>
+      <div class="dart" title="碰撞">C</div>
+      <div class="dart" title="UI">U</div>
+      <div class="dart" title="GM">G</div>
+      <div class="dart" title="完善">A</div>
+      <div class="dart" title="发布">P</div>
+    </div>
+    <header>
+      <h1>Needle</h1>
+      <span class="timestamp">2022-10-18</span>
+    </header>
+    <div class="chap chap-item" data-ind="0">概述 Overview</div>
+    <dl>
+      <dt>作品欣赏 Product</dt>
+      <dd class="flex-h">
+        <a class="item-center" href="./needle/index.html" target="_blank">
+          <span class="iconfont icon-HTML-5"></span>
+          <span>WebGL</span>
+        </a>
+        <a class="item-center" href="./project3/needle.rar" download>
+          <span class="iconfont icon-laptop"></span>
+          <span>Windows</span>
+        </a>
+      </dd>
+      <dt>简介 Introduction</dt>
+      <dd>. 单击鼠标，射出飞镖needle击中目标target；并跟随目标target一起旋转；</dd>
+      <dd>. 射出的飞镖如果碰到其它飞镖，游戏结束；</dd>
+      <dd>. 每正确击中目标，得1分；</dd>
+      <dd>. 飞镖的发射和击中有音效；</dd>
+      <dd>. 有背景音乐；</dd>
+      <dt>脑图 Mind</dt>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle6.png" alt="">
+      </dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>多排序使用：次序排序Order in Layer、层级排序
+        Sorting Layer；</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>多脚本使用：静态类、静态变量；</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>多UI元素使用：布局和联动；</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>多音频使用：背景音乐、游戏音效；</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>多场景使用：开始场景、主场景；</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>多碰撞使用：普通碰撞和触发碰撞；</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="1">环境 Environment</div>
+    <dl>
+      <dd>1. 创建2D项目；创建常用素材对应的文件夹，如Scripts、Prefabs；避免使用中文、特殊符号；</dd>
+      <dd>2. 开发环境选择竖版布局Tall或定制布局；</dd>
+      <dd>3. 设置游戏Game分辨率为9*16比例；</dd>
+      <dd>4. 调整摄像机背景颜色为土黄，如#cccfab；</dd>
+      <dd>5. 参考素材如下或自行准备；</dd>
+      <dd>. 音频素材：音效 <a href="./project3/hit.wav" download><span class="iconfont icon-download"></span></a>；背景音乐 <a
+          href="./project3/wang.mp3" download><span class="iconfont icon-download"></span></a>；</dd>
+      <dd>. 字体素材：禹为 <a href="../fonts/YuWei/YuWeiShuFaXingShuJianTi.ttf" download><span
+            class="iconfont icon-download"></span></a>、微软雅黑 <a href="../fonts/msyh.ttf" download><span
+            class="iconfont icon-download"></span></a>；</dd>
+      <dd>. 图片素材：另存为保存；</dd>
+      <dd class="txt-center">
+        <img class="ob-img" data-src="./project3/logo0.png" alt="">
+        <img class="ob-img" data-src="./project3/logo1.png" alt="">
+        <img class="ob-img" data-src="./project3/volume-off.png" alt="">
+        <img class="ob-img" data-src="./project3/volume-up.png" alt="">
+      </dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>项目创建 Project</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>摄像机背景调整 Camera</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>游戏分辨率调整 Resolution</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>布局调整 Layout</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="2">靶子 Target</div>
+    <dl>
+      <dd>1. 创建2D精灵Circle作为目标target，reset，黑色；上移一定距离；</dd>
+      <dd>2. 创建标签target并为目标target指定该标签；</dd>
+      <dd>3. 创建新的 <span class="warn">排序层</span>
+        front，将目标target置于该层，以确保该对象位于前面；排序层越靠后，层中的对象就越靠前；默认情况下，所有对象位于default层，需要使用order区分前后；</dd>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle0.png" alt="">
+      </dd>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle4.png" alt="">
+      </dd>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle1.png" alt="">
+      </dd>
+      <dd>4. 添加碰撞组件<span class="warn">[什么类型的?]</span> ，调整碰撞区域略小于对象本身；</dd>
+      <dd>5. 创建脚本Target.cs并加载到目标target，使其匀速<span class="warn">[如何实现?]</span>旋转，旋转速度约60；</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Target : MonoBehaviour
+{
+    public float speed;
+
+    void Update()
+    {
+        transform.Rotate(new Vector3(0, 0, speed * Time.deltaTime));
+    }
+}</pre>
+      </dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>排序层 SortingLayer</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>标签 Tag</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>碰撞 Collide</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>匀速转动</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="3">飞镖 Needle</div>
+    <dl>
+      <dd>飞镖由镖头head和镖身body组成，颜色棕色，如#762405；</dd>
+      <dd class="mt2">飞镖的创建有两种方案：</dd>
+      <dd>方案1：利用空对象包含镖头和镖身，镖头和镖身是兄弟关系；</dd>
+      <dd>方案2：利用镖头包含镖身，镖头和镖身是父子关系；</dd>
+      <dd class="mt2">飞镖的移动也有两种方案：</dd>
+      <dd>方案1：直接指定移动；可以使用静态动画Animation，也可以使用脚本动画；请参考项目《飞翔的小鸟》中柱子的设计；</dd>
+      <dd>方案2：由后续的发射器shooter指定移动；</dd>
+      <dd class="mt2">[<span class="iconfont icon-border-warn warn"></span>]均以方案2为例</dd>
+      <dd class="mt2">1. 镖头</dd>
+      <dd>. 2D精灵Circle，reset；</dd>
+      <dd>. 添加碰撞组件，调整碰撞区域略小于对象本身；</dd>
+      <dd>. 添加刚体组件，重力scale为0；引入刚体组件仅仅是为了受力，但是又不希望它在重力因素下掉落；</dd>
+      <dd>. 创建标签needle并指定；</dd>
+      <dd class="mt2">2. 镖身</dd>
+      <dd>. 在镖头head下创建2D精灵Square作为镖身，reset；细长；调整尺寸和位置；</dd>
+      <dd>. 添加碰撞组件，采用触发碰撞；为呈现扎入的效果，调整碰撞区域 <span class="warn">小于对象本身高度</span>； 镖身的碰撞组件也可以添加在镖头上；</dd>
+      <dd class="mt2">3. 创建脚本Needle.cs并挂载，预留-和靶子-以及-和其它飞镖-的碰撞处理业务；</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Needle : MonoBehaviour
+{
+    Rigidbody2D rb;
+    private void Start()
+    {
+        rb= GetComponent&lt;Rigidbody2D&gt;();
+    }
+
+    //死亡碰撞
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "needle")
+        {
+            print("collider");
+            //预留业务逻辑
+        }
+    }
+    
+    //有效碰撞
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "target")
+        {
+            print("hit");
+            //预留业务逻辑
+        }
+    }
+}</pre>
+      </dd>
+      <dd>4. 将飞镖生成预制件，便于后续发射器shooter使用，用来动态生成多个飞镖；</dd>
+      <dd class="mt2"><span class="warn">[<span class="iconfont icon-book"></span>]</span>标签 Tag</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>碰撞 Collide</dd>
+      <dd class="warn">这部分的设计非常灵活。。。</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="4">发射器 Shooter</div>
+    <dl>
+      <dd>单击鼠标时，生成飞镖并赋于一定速度，使其向上飞出去；</dd>
+      <dd class="mt2">1. 创建2D精灵Circle作为发射器shooter，reset，黑色；置于屏幕底部中间；</dd>
+      <dd>2. 添加音频源组件，每生成一个飞镖，就播放一次发射音效；如需精细化，还需要添加飞镖的扎入音效<span class="warn">[在哪里实现?]</span>；</dd>
+      <dd>3. 创建脚本Shooter.cs并挂载，指定暴露的每个参数；速度up约30；</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Shooter : MonoBehaviour
+{
+    public GameObject needlePrefab;
+    public AudioSource player;
+    public AudioClip shootClip;
+    public float up;
+    
+    void Update()
+    {
+        //预留时间缩放度的判断
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject needle = Instantiate(needlePrefab, transform.position, Quaternion.identity);
+            needle.GetComponent&lt;Rigidbody2D&gt;().velocity = Vector2.up * up;
+            player.PlayOneShot(shootClip);
+        }
+    }
+}</pre>
+      </dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>动态生成 Instantiate</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>获取组件 GetComponent</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>刚体 RigidBody</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>速度 Velocity</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>音效 Audio</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="5">碰撞 Collider</div>
+    <dl>
+      <dt>1. 有效碰撞 Credit</dt>
+      <dd>和目标target碰撞，击中目标，需要处理的业务逻辑有：</dd>
+      <dd>. 游戏得分/加分[加分涉及的UI见后续操作]；</dd>
+      <dd>. 飞镖速度为0；且成为目标target的一部分，跟随目标target一起转动；</dd>
+      <dd class="mt2">修改飞镖脚本Needle.cs的有效碰撞逻辑为：</dd>
+      <dd>
+        <pre>
+private void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.tag == "target")
+    {
+        print("hit");
+        rb.velocity = Vector2.zero;
+        transform.parent = collision.transform;
+        //预留加分逻辑
+    }
+}</pre>
+      </dd>
+      <dt>2. 死亡碰撞 Death</dt>
+      <dd>和其它飞镖碰撞后，游戏结束：</dd>
+      <dd>. 游戏停止/时间停止；</dd>
+      <dd>. 显示结束UI；</dd>
+      <dd>[说明] UI的制作和死亡碰撞逻辑见后续操作；</dd>
+      <dd class="mt2"><span class="warn">[<span class="iconfont icon-book"></span>]</span>速度 Velocity</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>调整父子关系 Parenting</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="6">用户界面 UI</div>
+    <dl>
+      <dd>1. 创建画布，修改画布缩放模式为跟随屏幕，在大小不同的分辨率中UI可以自动变大变小；<span class="warn">请使用标准分辨率</span>；</dd>
+      <dd>2. 指定匹配模式为扩展Expand；可以较好的适应window平台和WEBGL平台；</dd>
+      <dd>3. 创建传统Button为重玩按钮replay、返回按钮back，调整大小、文字颜色、字体等属性；利用定位框调整置屏幕中央；</dd>
+      <dd>4. 加入自己的其它设计；</dd>
+      <dd class="warn mt2">[<span class="iconfont icon-border-warn"></span>]</dd>
+      <dd>. 推荐：中心的UI元素请参考屏幕中心定位；上面的UI元素请参考顶部定位；下面的UI元素请参考屏幕底部定位；</dd>
+      <dd>. 如需使用中文，请使用中文字体；</dd>
+      <dd>. 按钮事件见后续；</dd>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle2.png" alt="">
+      </dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>画布设置 CanvasScale</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>元素定位 Position</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>按钮 Button</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="7">游戏管理 GameManagement</div>
+    <dl>
+      <dd>主场景中涉及到场景跳转和得分等业务逻辑，为了 <span class="warn">去耦</span> ，将业务分为俩个模块脚本，分别处理场景跳转和其它业务；</dd>
+      <dt>场景管理</dt>
+      <dd>.处理场景的跳转业务逻辑；这个模块还可以提供给其它场景使用如开始场景，增加了代码的重用度；</dd>
+      <dd>
+        <pre>
+//ScentCtrl.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class ScentCtrl : MonoBehaviour
+{
+    public void loadSecen(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+    public void quitApp()
+    {
+        Application.Quit();
+    }
+}</pre>
+      </dd>
+      <dt>主业务管理</dt>
+      <dd>. 处理得分的逻辑；</dd>
+      <dd>. 处理结束UI的显示；</dd>
+      <dd>. 按钮事件：重玩和返回；</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
+    public GameObject ending;
+    public Text scoreTxt;
+    int score;
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    void Start()
+    {
+        Time.timeScale = 1;
+        ending.SetActive(false);
+        score = 0;
+    }
+
+    public void showScore()
+    {
+        score++;
+        scoreTxt.text = score.ToString();
+    }
+
+    public void showEnding()
+    {
+        ending.SetActive(true);
+        Time.timeScale = 0;
+    }
+}</pre>
+      <dd class="mt2">[<span class="iconfont icon-border-warn"></span>] 为方便脚本直接数据的使用，采用静态Static类[单例]；</dd>
+      <dt>操作步骤</dt>
+      <dd>1. 创建空游戏对象为gameManager；reset；</dd>
+      <dd>2. 创建场景管理脚本ScentCtrl.cs并挂载；</dd>
+      <dd>3. 创建主业务管理脚本GameManager.cs并挂载；</dd>
+      <dd>. 引入UI的使用；</dd>
+      <dd>. 引入场景的使用；</dd>
+      <dd>. 暴露结束UI、得分文本框；</dd>
+      <dd>. 暴露公有函数：得分逻辑；结束UI显示逻辑；</dd>
+      <dd>. Start时的参数初始化；</dd>
+      <dd>4. 为脚本指定/拖入暴露的各个参数；</dd>
+      </dd>
+      <dd class="mt2"><span class="warn">[<span class="iconfont icon-book"></span>]</span>游戏管理</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>单对象多脚本使用</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="8">完善 Amendment</div>
+    <dl>
+      <dd>为预留的各部分指定游戏管理静态类GameManager声明的公用函数；</dd>
+      <dt>完善得分逻辑</dt>
+      <dd>修改飞镖脚本Needle.cs的得分逻辑为：</dd>
+      <dd>
+        <pre>
+private void OnTriggerEnter2D(Collider2D collision)
+{
+    if (collision.tag == "target")
+    {
+        print("hit");
+        rb.velocity = Vector2.zero;
+        transform.parent = collision.transform;
+        GameManager.instance.showScore();
+    }
+}</pre>
+      </dd>
+      <dt>完善死亡逻辑</dt>
+      <dd>修改飞镖脚本Needle.cs的死亡逻辑为：</dd>
+      <dd>
+        <pre>
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    print(collision.gameObject.tag);
+    if (collision.gameObject.tag == "needle")
+    {
+        GameManager.instance.showEnding();
+    }        
+}</pre>
+      </dd>
+      <dt>为重玩按钮replay指定事件</dt>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle3.png" alt="">
+      </dd>
+      <dt>为返回按钮back指定事件</dt>
+      <dd class="item-center">
+        <img class="ob-img" data-src="./project3/needle5.png" alt="">
+      </dd>
+      <dt>完善发射器shooter</dt>
+      <dd>修改发射器Shooter.cs中动态生成飞镖的条件如下，避免游戏结束仍然可以发射飞镖并播放音效；完整代码如下：</dd>
+      <dd>
+        <pre>
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Shooter : MonoBehaviour
+{
+    public GameObject needlePrefab;
+    public AudioSource player;
+    public AudioClip shootClip;
+    public float up;
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+        {
+            GameObject needle = Instantiate(needlePrefab, transform.position, Quaternion.identity);
+            player.PlayOneShot(shootClip);
+            needle.GetComponent&lt;Rigidbody2D&gt;().velocity = Vector2.up * up;
+        }
+    }
+}</pre>
+      </dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>静态类的使用：多脚本数据通信</dd>
+      <dd><span class="warn">[<span class="iconfont icon-book"></span>]</span>公有函数的使用</dd>
+    </dl>
+    <div class="chap chap-item" data-ind="9">发布 Publish</div>
+    <dl>
+      <dd>1. 添加场景；</dd>
+      <dd>2. 平台选择：</dd>
+      <dd>2.1 Window平台：设置全屏模式为FullScreen；因为游戏Game比例是9:16，且画布跟随屏幕，并且指定了360x640且拓展，所以全屏下，仍然可以保持比例，并自动拓展；</dd>
+      <dd>2.2 WEBGL平台：设置和Game比例一致的大小；当全屏时，也可以保持比例，自动拓展；如果设置的尺寸大于当前显示器的屏幕，通过 <span class="warn">全屏</span>
+        操作也可以实现完美匹配；注意中文字体的使用；</dd>
+      <dd>3. 发布预览；</dd>
+      <dd>4. 打包压缩提交到 <a class="warn"
+          href="http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com"
+          target="_blank">学习通</a>；详见作业要求；</dd>
+    </dl>
+    <div class="chap" data-ind="*">提高 Updating</div>
+    <dl>
+      <dd>1. 单场景多UI元素联动：选项、介绍等；</dd>
+      <dd>2. 多场景：增加开始场景，可以重复使用场景管理脚本；</dd>
+      <dd>3. 菜单动画；</dd>
+      <dd>4. 碰撞动画：粒子系统；</dd>
+      <dd>5. 背景音乐不间断、可调，可增加可视化的UI图标；参考代码如下：</dd>
+      <dd>
+        <pre>
+//BGM.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BGM : MonoBehaviour
+{
+    public static BGM instance;
+    //AudioSource必须是public
+    public AudioSource player;
+    public AudioClip bgm;
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+    void Start()
+    {
+        player.clip = bgm;
+        player.Play();
+    }
+}</pre>
+      </dd>
+      <dd>
+        <pre>
+//VolCtrl.cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class VolCtrl : MonoBehaviour
+{
+    public Image volumeImg;
+    public Sprite normalSprite;
+    public Sprite muteSprite;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            BGM.instance.player.mute = !BGM.instance.player.mute;
+            if (BGM.instance.player.mute)
+                volumeImg.sprite = muteSprite;
+            else
+                volumeImg.sprite = normalSprite;
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            BGM.instance.player.volume += 0.1f;
+            if (BGM.instance.player.volume > 0)
+            {
+                BGM.instance.player.mute = false;
+                volumeImg.sprite = normalSprite;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            BGM.instance.player.volume -= 0.1f;
+            if (BGM.instance.player.volume &lt;= 0)
+            {
+                BGM.instance.player.mute = true;
+                volumeImg.sprite = muteSprite;
+            }
+        }
+    }
+}</pre>
+      </dd>
+      <dd class="txt-center" style="color: unset;"><span class="iconfont icon-tree"></span> <span
+          class="iconfont icon-tree1"></span><span class="iconfont icon-tree2"></span><span
+          class="iconfont icon-tree4"></span><span class="iconfont icon-tree5"></span> <span
+          class="iconfont icon-tree6"></span><span class="iconfont icon-tree7"></span>...完结..撒花...<span
+          class="iconfont icon-flower4"></span><span class="iconfont icon-flower"></span> <span
+          class="iconfont icon-flower1"></span><span
+          class="iconfont icon-valentine_-flower-rose-love-heart"></span><span class="iconfont icon-bellflower"></span>
+        <span class="iconfont icon-cornflower"></span><span class="iconfont icon-flower2"></span>
+      </dd>
+      <dd class="item-center">
+        <img class="ob-img" data-src="../imgs/qrcode_glpla.github.io.png" alt="">
+      </dd>
+    </dl>
+    <dl class="comment">
+      <dt>思考</dt>
+      <dd>代码如何去耦/减少代码的耦合度？</dd>
+    </dl>
+    <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <script src="../web//lib/lazyload.js"></script>
+  <script>
+    window.onload = function () {
+      let navItems = document.querySelectorAll(".dart")
+      let contItems = document.querySelectorAll(".chap-item")
+      // let menu = document.querySelector("#menu")
+      console.log(navItems, contItems);
+
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView();
+            navItems.forEach(item => {
+              item.style.borderColor = "#ffffff";
+              item.style.backgroundColor = "#4bc2ce";
+              item.style.color = "#fff";
+            })
+            navItems[index].style.borderColor = "#ff0"
+            navItems[index].style.backgroundColor = "#ff0"
+            navItems[index].style.color = "#4bc2ce"
+          }, 100)
+          // menu.classList.toggle('is-hide')
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

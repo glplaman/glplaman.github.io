@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>协程 Coroutine</title>
+  <link rel="stylesheet" href="./css/unityNormal.css">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Coroutine</h1>
+    <span>2023-04-10</span>
+  </header>
+  <div class="chap">简介 Overview</div>
+  <dl>
+    <dd>.协同程序是一个可以暂停yield执行的函数，直到给定的暂停指令Yield Instruction完成</dd>
+    <dd>.和主程序/主进程同步执行，实现等待/延时效果</dd>
+    <dd>.使用IEnumerator声明一个协程函数</dd>
+    <dd>.使用yield return返回协程结果</dd>
+    <dd>.更多使用细节，请查阅<a href="https://docs.unity.cn/cn/current/ScriptReference/index.html" class="warn"
+        target="_blank">API</a></dd>
+    <dt>主要函数</dt>
+    <dd>
+      <table>
+        <tr>
+          <td>StartCoroutine</td>
+          <td>开启协程</td>
+        </tr>
+        <tr>
+          <td>StopCoroutine</td>
+          <td>停止协程</td>
+        </tr>
+        <tr>
+          <td>WaitForSeconds</td>
+          <td>等待时间，单位是秒</td>
+        </tr>
+        <tr>
+          <td>StopAllCoroutines</td>
+          <td>停止所有协程</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">示例 Demo</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 游戏一开始启动协程，5秒后执行对应代码</dd>
+    <dd>
+      <pre>
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
+    public class Demo : MonoBehaviour
+    {
+        void Start()
+        {
+            print("app start");
+            StartCoroutine(WaitToPrint());
+        }
+
+        IEnumerator WaitToPrint()
+        {
+            yield return new WaitForSeconds(5);
+            print("Coroutine:waiting for print");
+        }
+    }</pre>
+    </dd>
+    <dd class="item-center"><img src="./ide/Snipaste_2022-09-26_11-33-38.png" alt=""></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 多波敌人依次出现</dd>
+    <dd>代码1：数据文件</dd>
+    <dd>
+      <pre>
+    [System.Serializable]
+    public class Wave
+    {
+        public GameObject enemyprefab;
+        public int count;
+        public float inter;
+    }</pre>
+    </dd>
+    <dd>代码2：主业务逻辑</dd>
+    <dd>
+      <pre>
+    public class MonSpawn : MonoBehaviour
+    {
+        public Wave[] waves;
+        public Transform posFre;
+        public int waveInter;
+        void Start()
+        {
+            StartCoroutine(MonGer());
+        }
+        
+        IEnumerator MonGer()
+        {
+            foreach (Wave waveItem in waves)
+            {
+                for (int i = 0; i &lt; waveItem.count; i++)
+                {
+                    Instantiate(waveItem.enemyprefab, posFre.position, Quaternion.identity);
+                    yield return new WaitForSeconds(waveItem.inter);
+                }
+                yield return new WaitForSeconds(waveInter);
+            }
+        }
+    }</pre>
+    </dd>
+  </dl>
+  <iframe src="../common/footer.html" frameborder="0" scrolling="no"></iframe>
+</body>
+
+</html>
