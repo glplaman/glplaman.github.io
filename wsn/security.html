@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安全 security</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/ds.css">
+  <style>
+    header {
+      background-image: url(../imgs/wsn/wsn1.jpg);
+    }
+
+    ul li {
+      margin-bottom: 1rem;
+      box-shadow: 0 0 1rem #ddd;
+    }
+
+    ul li img {
+      object-fit: cover;
+    }
+
+    h3~p {
+      text-indent: 2em;
+      margin: .6rem auto;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>安全 Security</h1>
+    </header>
+    <ul>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s1.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s2.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s3.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s4.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s5.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s6.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s7.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s8.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s9.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s10.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s11.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s12.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s13.JPG" alt=""></li>
+      <li>
+        <h2>WSN面临的严峻形式</h2>
+        <h3></h3>
+        <p>分布的开放性</p>
+        <p>网络的动态性</p>
+        <p> 电源能量的有限性</p>
+        <p>计算能力的有限性</p>
+        <p>通信能力的有限性</p>
+        <p>存储空间的有限性</p>
+        <p>通信的开放性和不可靠性</p>
+        <p>技术不成熟及标准不统一性</p>
+        <h2>针对WSN的攻击种类</h2>
+        <h3></h3>
+        <p>对秘密和认证的攻击</p>
+        <p>对网络有效性的攻击</p>
+        <p>对服务完整性的攻击</p>
+        <h2>针对物理层的攻击</h2>
+        <h3>1. 人为干扰</h3>
+        <p>通过发出无线干扰射频信号，实现破坏无线通信的目的，分为全频段拥塞干扰和瞄准式拥塞干扰。传感器网络可采用诸如跳频、调节节点占空比等技术防范拥塞攻击</p>
+        <h3>2. 物理破坏</h3>
+        <p>
+          攻击者俘获一些节点，对它进行物理上的分析和修改，并利用其干扰网络的正常功能，甚至可以通过分析其内部敏感信息和上层协议机制，破坏网络安全性。攻击者直接停止俘获节点的工作，造成网络拓扑结构变化，如果是骨干节点被俘获，将造成网络瘫痪。对抗物理破坏可在节点设计时采用抗篡改硬件，同时增加物理损害感知机制
+        </p>
+        <h2>针对链路层的攻击</h2>
+        <h3>1. 碰撞攻击</h3>
+        <p>
+          攻击者通过公开算法伪造hash值来骗过电脑的密码验证，进入系统进行危险操作。我们可以采取冲突检测的方法确定恶意引发冲突，同时设置更加有效的退避算法，也可以采用纠错编码的方法在通信数据包中增加冗余信息来纠正数据包中的错误位。
+        </p>
+        <h3>2. 耗尽攻击</h3>
+        <p>
+          攻击者利用协议漏洞，通过持续通信的方式使节点能量资源耗尽，例如当有些算法试图重传分组时，攻击者将不断干扰其发送，直至节点耗尽资源。我们在协议实现的时候，制定一些执行策略，对过度频繁的请求不予理睬，或者对同一个数据包的重传数据进行限制，以免恶意节点无休止干扰导致能源耗尽。
+        </p>
+        <h3>3. 非公平竞争</h3>
+        <p>
+          非公平竞争指恶意节点滥用高优先级的报文占据信道，使其他节点在通信过程中处于劣势，从而导致报文传送的不公平，进而减低系统性能，但这种攻击方式需要完全了解传感器网络的MAC协议机制。我们可以采用短小帧格式的方法，这样就可以降低单个节点占用信道的时间；另一种方法采用竞争或者时分多址（TDMA）的方式实现数据传输
+        </p>
+        <h2>针对网络层的攻击</h2>
+        <h3>1. 虚假路由</h3>
+        <p>通过欺骗、篡改或重发路由信息，攻击者可以创建路由循环，引起或抵制网络传输，延长或缩短源路径，形成虚假错误消息，分割网络，增加端到端的延迟</p>
+        <h3>2. 选择性转发</h3>
+        <p>有选择性的转发或者不转发数据</p>
+        <p>
+          恶意性节点可以概率性的转发或者丢弃特定消息，使数据包不能到达目的地，导致网络陷入混乱状态。当攻击者确定自身在数据流传输路径上的时候，该攻击通常是最有效的。该种攻击的一个简单做法是恶意节点拒绝转发经由它的任何数据包，类似一个黑洞(即所谓“黑洞攻击”)
+        </p>
+        <h3>3. 污水池攻击 Sinkhole Attack</h3>
+        <p>攻击者通过声称自己电源充足、性能可靠且高效，使泄密节点在路由算法上对周围节点具有特别的吸引力，吸引周围的节点选择它作为路由路径中的节点。引诱该区域几乎所有的数据流通过该泄密节点，如：冒充汇聚节点
+        </p>
+        <h3>4. 女巫攻击 sybil attack</h3>
+        <p>攻击者利用单个节点来伪造多个身份存在于P2P网络中，从而达到削弱网络的冗余性，降低网络健壮性，监视或干扰网络正常活动等目的
+        </p>
+        <!-- <div class="iframe-box">
+          <iframe class="iframe"
+            src="//player.bilibili.com/player.html?aid=50804897&bvid=BV1M441187qg&cid=88951916&page=1" scrolling="no"
+            border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+        </div>
+        <div class="iframe-box">
+          <iframe class="iframe"
+            src="//player.bilibili.com/player.html?aid=673196476&bvid=BV1cU4y1L78u&cid=341967330&page=1" scrolling="no"
+            border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+        </div> -->
+        <h3>5. 蠕虫攻击 Wormhole Attack</h3>
+        <p>
+          又称为隧道攻击，两个相距很远的攻击节点间密谋建立一条高质量高带宽的私有隧道；攻击者在私有隧道一端上记录数据包或位信息，通过此私有隧道将窃取的信息传递到隧道另一端。因为私有隧道的距离一般远大于单跳无线传输半径，所以通过私用通道传递的数据包比通过正常多跳路径传递的数据包早到达目标节点。由于该隧道的高效特点，周围节点都选择该私有隧道进行数据传递
+        </p>
+        <h3>6. Hello 泛洪攻击</h3>
+        <p>同传统的泛洪攻击不一样，它是单次广播就可以达到攻击效果</p>
+        <p>部分路由协议在需要广播hello消息，以便其它节点确定所处位置，进而选择相应的转发路由。</p>
+        <h3>7. 确认哄骗</h3>
+        <p>利用无线通信的开放性，通过窃听发给其它节点的信息，冒充对方进行确认。</p>
+        <h2>针对传输层的攻击</h2>
+        <h3>1. 泛洪</h3>
+        <p>
+          攻击者利用TCP传输的三次握手机制，在攻击端利用伪造的IP地址向被攻击端发送大批请求，使被攻击端得不到响应，用来消耗服务器资源。正常的服务得不到处理甚至被拒绝。我们可以在服务器端引入入侵机制，基站限制这些洪泛报文的发送。
+        </p>
+        <p class="warn">谨防电信诈骗</p>
+        <h3>2. 失步/去同步</h3>
+        <p>攻击者向节点发送重放的虚假信息，导致节点请求重传丢失的数据帧。利用这种方式，攻击者能够削弱甚至完全削夺节点进行数据交换的能力，并浪费能量，缩短节点的生命周期</p>
+        <h2>针对应用层的攻击</h2>
+        <h3 class="warn">关注</h3>
+        <p>技术层面</p>
+        <p>管理层面</p>
+      </li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s14.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s15.JPG" alt=""></li>
+      <li><img class="ob-img" data-src="../imgs/wsn/chap5/s16.JPG" alt=""></li>
+    </ul>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img class="ob-img" data-src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-04-22</span>
+    </footer>
+  </section>
+  <script src="../web/lib/lazyload.js"></script>
+</body>
+
+</html>

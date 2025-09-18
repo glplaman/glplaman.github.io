@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WSN集成开发环境搭建</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/ds.css">
+  <base target="_blank">
+  <style>
+    header {
+      background-image: url(../imgs/wsn/wsn.jpg);
+      color: #333;
+      margin-bottom: 0;
+    }
+
+    header h1 {
+      padding-left: 1rem;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="w">
+    <header id="top">
+      <h1>WSN集成开发环境搭建</h1>
+    </header>
+    <nav class="top-nav">
+      <ul class="flex-h">
+        <li><a href="#cont0" id="tocont0">需求</a></li>
+        <li><a href="#cont1" id="tocont1">项目</a></li>
+        <li><a href="#cont2" id="tocont2">配置</a></li>
+        <li><a href="#cont3" id="tocont3">模板</a></li>
+      </ul>
+    </nav>
+    <dl>
+      <dt id="cont0">硬件 Hardware</dt>
+      <dd>包括但不限于：</dd>
+      <dd>1.个人PC</dd>
+      <dd>2.CC Debugger仿真器</dd>
+      <dd>3.mini USB线</dd>
+      <dd>4.开发板或集成开发套件</dd>
+      <dt>软件 Software</dt>
+      <dt>1.IAR <a href="https://www.iar.com/" title="https://www.iar.com/"><span class="iconfont">&#xe664;</span></a>
+      </dt>
+      <dd>IAR提供有：限制使用时间和限制项目大小两种免费方案；推荐使用后者；有钱的可以任性，花点美刀买个无限制的版本；</dd>
+      <dd>IAR<span class="warn">不支持</span>QQ邮箱；PS：QQ邮箱现在支持英文邮箱了，快登陆QQ邮箱申请一个foxmail邮箱吧。一个账号两个邮箱哦！</dd>
+      <dd>注册成功后，会给你发送一个邮件，包括：序列号和下载链接；下载安装并输入序列号即可使用；请妥善保存该邮件，不要删除；</dd>
+      <dd><span class="warn">[注意]</span>这个页面的下载链接对应当前序列号，请不要将这个序列号用到其它途径获取的IAR；</dd>
+      <dt>2.Zigbee协议栈</dt>
+      <dd>请使用最新版Z-Stack 3.0.2；<a class="warn" href="https://www.ti.com/"
+          title="https://www.ti.com/">打开TI官网</a>，搜索"Z-Stack"并下载；</dd>
+      <dt>3.SmartRF Flash Programmer烧写驱动</dt>
+      <dd>将程序烧写到芯片中；<a class="warn" href="https://www.ti.com/" title="https://www.ti.com/">打开TI官网</a>，搜索"smartrf
+        flash programmer"并下载；</dd>
+      <dd>The installation of SmartRF Flash Programmer <span class="warn">MUST</span> be executed with
+        administrator privileges.即：具有管理员权限；</dd>
+      <dd>SmartRF Flash Programmer 2是针对ARM系列的；</dd>
+      <dt>4.CC-DEBUGGER</dt>
+      <dd>在"设备管理器"，查看CC-DEBUGGER的驱动是否正常；</dd>
+      <dd>如果有感叹号标识，说明不能识别CC debugger，请打开TI官网</a>，搜索"CC-DEBUGGER"并下载；或直接下载<a class='warn'
+          href="../tool/swrc212a.zip">SmartRF
+          Drivers</a>并安装、更新驱动；</dd>
+      <dd>如果安装完毕还是不能识别CC debugger，请在"设备管理器"中，手动更新驱动。驱动程序从上面下载的SmartRF
+        Drivers中获取；</dd>
+      <dt>5.串口工具</dt>
+      <dd>串口驱动：个人笔记本通常会自动识别[免驱]；或点击下载<a class='warn' href="../tool/CP2102USBQD(非官方).zip">驱动</a>；</dd>
+      <dd>串口监视工具：网络上资源很多，可以自己查找，或点击下载<a class='warn' href="../tool/sscom.rar">工具1</a>；或<a class='warn'
+          href="../tool/sscom.rar">工具2</a>；</dd>
+      <dt>6.其它工具[根据项目需求而定]</dt>
+      <dd>拓扑显示工具；</dd>
+      <dd>抓包工具：PACKET-SNIFFER，<a class="warn" href="https://www.ti.com/"
+          title="https://www.ti.com/">打开TI官网</a>，搜索"packet sniffer"并下载；</dd>
+      <dt>说明</dt>
+      <dd>TI的提供的资源很多都是免费的，但是要注册才能下载，有。。。用户信息的嫌疑；</dd>
+      <dt id="cont1" class="dd-title-item">第一个项目：点灯</dt>
+      <dt>基本流程</dt>
+      <dd>创建工作空间(.eww)-&gt;创建项目(.ewp，可以指定环境，如基于C的项目)-&gt;配置项目-&gt;创建并编辑文件-&gt;添加文件到项目-&gt;调试-&gt;下载/烧写-&gt;执行/调试；
+      </dd>
+      <dd>注意：</dd>
+      <dd>一个工作空间.eww，只放一个工程.ewp；更多信息，请访问<a class="warn" href="./multiplePro.html">多工程使用</a></dd>
+      <dd>工作空间.eww和工作项目.ewp都需要保存；</dd>
+      <dt>一、创建项目</dt>
+      <dd>1.创建空间：打开IAR。默认情况下会创建一个新的工作空间；<span class="warn">[推荐]</span>显式的创建一个新空间Create new Workspace；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片2.JPG" alt="">
+      </dd>
+      <dd>2.创建项目：项目project-&gt;创建新项目create new project；或选择基于C的项目<span class="warn">[推荐]</span>；并保存；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片3.JPG" alt="">
+      </dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片4.JPG" alt="">
+      </dd>
+      <dd>3.创建文件，如main.c，并添加到项目；或者编辑完代码再添加到项目；系统会自动识别未添加的文件，并显示出来供你选择；如果创建项目时，选择的是基于C的项目，会自动生成main()主函数；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片5.JPG" alt="">
+      </dd>
+      <dt>二、配置项目</dt>
+      <dd>IAR支持的芯片很多。编译前，必须配置项目为相应的芯片。基本的配置主要有以下三项，可一次完成配置；</dd>
+      <dd>右键单击项目，选择选项options[参照上图]</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片6.JPG" alt="">
+      </dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片7.JPG" alt="">
+      </dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片8.JPG" alt="">
+      </dd>
+      <dt>三、编辑代码</dt>
+      <dd>没有自动缩进和代码提示、自动补全真的很无语啊！</dd>
+      <dd>可以添加插件实现，参考后面的"基本配置"一节。</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片9.JPG" alt="">
+      </dd>
+      <dt>四、调试</dt>
+      <dd>编译compile：单个文件的编译；快捷键CTRL+F7；</dd>
+      <dd>生成make：整个项目的编译；快捷键F7；</dd>
+      <dd>第一次编译时会提示再次保存空间和项目；输入并确认空间名字.eww和项目名字.ewp保存即可；</dd>
+      <dd>尽量完善代码到：0告警、0错误；</dd>
+      <dt>五、下载/烧写</dt>
+      <dd>使用mini USB线分别连接PC和CC Debugger仿真器，并将CC Debugger仿真器的另外一端和节点板的JTAG相连，按下CC
+        Debugger仿真器的复位键，绿灯表示连接成功，可以烧写程序；</dd>
+      <dd>连接时注意排线和插口的方向；</dd>
+      <dd>每次烧写时，最好按一次复位键，确保是就绪状态-绿灯；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片10.JPG" alt="">
+      </dd>
+      <dt>六、执行/调试</dt>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/debugger.jpg" alt="">
+      </dd>
+      <dd>按工具上的启动按钮开始调试，观察节点板上的LED灯开始间断闪烁；</dd>
+      <dt>附：测试源码</dt>
+      <dd class="dd-code-item">//请参照"编辑代码"部分中的代码，完成整个项目；</dd>
+      <dt id="cont2" class="dd-title-item">基本配置</dt>
+      <dt>字体设置</dt>
+      <dd>一般字体common Fonts；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片11.JPG" alt="">
+      </dd>
+      <dt>编辑器设置Editor</dt>
+      <dd>编辑器Editor中可以修改tab大小、行号等；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片12.JPG" alt="">
+      </dd>
+      <dt>格式化代码</dt>
+      <dd>1. 点击<a class="warn" href="../tool/AStyle_3.1_windows.zip">下载插件Artistic Style</a>或访问<a class="warn"
+          href="https://sourceforge.net/projects/astyle/">https://sourceforge.net/projects/astyle/</a>获取；</dd>
+      <dd>2. 解压到IAR安装目录；</dd>
+      <dd>3. 配置工具：根据下图完成插件的添加New和配置；</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片13.JPG" alt="">
+      </dd>
+      <dt>创建快捷键</dt>
+      <dd>Tools -&gt; Options，打开对话框，选择keybindings，选择对应的菜单和子菜单项，将光标定位在press shortcut
+        key对话框中，按你需要的键，最后单击右侧的set按钮确定。注意不要和其它热键冲突。</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片14.JPG" alt="">
+      </dd>
+      <dt id="cont3" class="dd-title-item">创建模板</dt>
+      <dt>说明</dt>
+      <dd>模板是IAR的强大功能；灵活利用模板可以提高开发效率；</dd>
+      <dd>可以创建注释、函数等模板；</dd>
+      <dt>创建模板</dt>
+      <dd>编辑Edit-&gt;代码模板Code template-&gt;编辑模板Edit Template，打开CodeTemplates.ENU.txt文件，在<span
+          class="warn">适当位置</span>添加如下模板；</dd>
+      <dd>模板以#TEMPLATE开头<span class="warn">[大写]</span>，后面是模板的名字和参数；使用&gt;创建多级模板；</dd>
+      <dd>模板用到的参数以,区分；如果参数带有默认值，以值对的形式呈现；</dd>
+      <dd>模板实现中，使用数值和参数一一对应；如果需要对齐，不要使用tab，使用空格；</dd>
+      <dd>同类模板<span class="warn">应</span>放在一起；</dd>
+      <dd>模板使用%c，可以在插入模板后，指定光标的位置；如果没有指定光标位置，则出现在插入模板的后面；</dd>
+      <dt>使用模板</dt>
+      <dd>在源文件中，编辑Edit-&gt;代码模板Code template-&gt;插入模板Insert Template，选择某个模板；填写对应的参数内容并确定，模板即可添加到源文件中；</dd>
+      <dt><span class="warn">[示例1 注释模板]</span></dt>
+      <dd>下面示例声明了一个2级注释代码，共4个参数，其中：第2个和第3个带有默认参数；</dd>
+      <dd>1. 创建模板</dd>
+      <dd>2. 使用模板</dd>
+      <dd>3. 插入模板后效果</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片15.JPG" alt="">
+      </dd>
+      <dt><span class="warn">[示例2 主函数模板]</span></dt>
+      <dd>下面示例声明了一个main主函数模板，没有参数，返回为0；IAR嵌入式开发中，main的类型为void；该函数模板放在了声明类模板Statement的最上面；插入光标后在mai函数的第一行；</dd>
+      <dd>1. 创建模板</dd>
+      <dd>2. 使用模板：因为没有函数，直接在源文件中插入</dd>
+      <dd class="dd-img-item">
+        <img class="ob-img" data-src="../imgs/wsn/WSN exp0/幻灯片16.JPG" alt="">
+      </dd>
+    </dl>
+    <aside id="asideNav" class="asideNav flex-v">
+      <a href="#cont0" id="asidetocont0">需求</a>
+      <a href="#cont1" id="asidetocont1">项目</a>
+      <a href="#cont2" id="asidetocont2">配置</a>
+      <a href="#cont3" id="asidetocont3">模板</a>
+      <a href="#top" id="asidetotop">back</a>
+    </aside>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img class="ob-img" data-src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-05-12</span>
+    </footer>
+  </section>
+  <script src="../web/lib/lazyload.js"></script>
+  <script src="../js/s2view_cnplaman.js"></script>
+  <script src="../js/back2top_js.js"></script>
+  <script>
+    window.onload = function () {
+      let cont0 = document.querySelector('#tocont0');
+      let cont1 = document.querySelector('#tocont1');
+      let cont2 = document.querySelector('#tocont2');
+      let cont3 = document.querySelector('#tocont3');
+
+      let asidecont0 = document.querySelector('#asidetocont0');
+      let asidecont1 = document.querySelector('#asidetocont1');
+      let asidecont2 = document.querySelector('#asidetocont2');
+      let asidecont3 = document.querySelector('#asidetocont3');
+
+      let asidetop = document.querySelector('#asidetotop')
+
+      let asideNav = document.querySelector('#asideNav');
+
+      s2view(cont0, "#cont0")
+      s2view(cont1, "#cont1")
+      s2view(cont2, "#cont2")
+      s2view(cont3, "#cont3")
+
+      s2view(asidecont0, "#cont0")
+      s2view(asidecont1, "#cont1")
+      s2view(asidecont2, "#cont2")
+      s2view(asidecont3, "#cont3")
+
+      s2view(asidetop, "#top")
+
+      backToTop(this, asideNav)
+    }
+  </script>
+</body>
+
+</html>

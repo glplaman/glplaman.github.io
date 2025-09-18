@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nixie tube</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/wsn exp.css">
+</head>
+
+<body>
+    <section class="w">
+        <nav class="main-nav sticky">
+            <ul class="flex-h">
+                <li class="logo">
+                    <h1><a href="./exp1.html">WSN <span>实验</span></a></h1>
+                </li>
+                <li class="ham-menu" id="menu"><span class="iconfont">&#xe816;</span></li>
+                <li class="main-nav-item"><a href="./exp1.html">点灯</a></li>
+                <li class="main-nav-item"><a href="./exp3.html">蜂鸣器</a></li>
+                <li class="main-nav-item main-nav-active"><a href="./exp4.html">数码管</a></li>
+                <li class="main-nav-item"><a href="./exp5.html">温湿度</a></li>
+                <li class="main-nav-item"><a href="./exp6.html">压力</a></li>
+                <li class="main-nav-item"><a href="./exp7.html">光照</a></li>
+                <li class="main-nav-item"><a href="./exp8.html">人体感应</a></li>
+                <li class="main-nav-item"><a href="./exp9.html">超声波</a></li>
+            </ul>
+        </nav>
+        <header>
+            <h1>数码管</h1>
+        </header>
+        <dl>
+            <dt>实验目的</dt>
+            <dd>1.了解数码管的工作原理；</dd>
+            <dd>2.掌握使用CC 2530 IO口控制数码管的显示和编程实现；</dd>
+            <dd>3.进一步熟悉IAR的使用；</dd>
+            <dt>实验需求</dt>
+            <dd class="dd-dot-item"><span>安装IAR和相关驱动的个人PC</span><span class="dot"></span><span>1台</span></dd>
+            <dd class="dd-dot-item"><span>迷你USB线mini USB</span><span class="dot"></span><span>1根</span></dd>
+            <dd class="dd-dot-item"><span>仿真器CC Debugger</span><span class="dot"></span><span>1根</span></dd>
+            <dd class="dd-dot-item"><span>ZigBee通用节点板</span><span class="dot"></span><span>1块</span></dd>
+            <dt>实验步骤</dt>
+            <dd>1.创建IAR工作空间；</dd>
+            <dd>2.创建基于C的IAR工程；</dd>
+            <dd>3.配置工程；</dd>
+            <dd>4.编辑代码并调试[无差错；无告警]；</dd>
+            <dd>5.试验箱上电；使用mini USB分别连接CC Debugger和PC；并将仿真器CC Debugger的另外一端和ZigBee通用节点板上的JTAG插座相连；按下仿真器CC
+                Debugger的复位按钮，绿灯常亮表示模块连接成功，可以往芯片中烧写程序；</dd>
+            <dd>6.在IAR中点击，download and debug(CTRL+D)烧写程序；</dd>
+            <dd>7.在IAR的调试窗口中，点击开始运行：观察数码管的显示；</dd>
+            <dd class="warn">开发过程中，请注意CTRL+S保存项目！</dd>
+            <dt>参考源码</dt>
+            <dd class="code">
+                <pre>
+
+    #include "ioCC2530.h"
+    #include "../lib/delay.h"
+
+    unsigned char seg7table[16] =
+    {
+        /* 0       1       2       3       4       5       6      7*/
+        0xc0,   0xf9,   0xa4,   0xb0,   0x99,   0x92,   0x82,   0xf8,
+        /* 8       9      A        B       C       D       E      F*/
+        0x80,   0x90,   0x88,   0x83,   0xc6,   0xa1,   0x86,   0x8e
+    };
+    
+    unsigned char i;
+    
+    void SegInit()
+    {
+        P1INP &= ~( 0x1 << 2 );     //P1.2上拉
+        P1SEL &= ~( ( 1 << 0 ) | ( 1 << 1 ) | ( 1 << 2 ) ); //P1.0,P1.1,P1.2为GPIO
+        P1DIR |= ( 1 << 0 ) | ( 1 << 1 ) | ( 1 << 2 );      //P1.0,P1.1,P1.2为OUTPUT
+        P0SEL &= ~( 1 << 4 );       //P0.4为GPIO
+        P0DIR |= ( 1 << 4 );        //P0.4为OUTPUT
+        //74HC595初始化
+        P1 |= ( 0x1 << 0 );         //P1.0 CLR, 复位
+        P1 |= ( 0x1 << 1 );         //P1.1 DATA,数据寄存器
+        P1 |= ( 0x1 << 2 );         //P1.2 CLK，位移寄存器时钟输入
+        P0 |= ( 0x1 << 4 );         //P0.4 LOCK，数据寄存器开始时钟
+    }
+    
+    void SendSeg7( unsigned char value )
+    {
+        unsigned char i;
+        P0 &= ~( 0x1 << 4 );        //P0.4 LOCK
+        P1 &= ~( 0x1 << 2 );        //P1.2 CLK
+        P1 &= ~( 0x1 << 1 );        //P1.1 DATA
+        //将数据value的8个bit按串行方式分时赋值P1.1，P1.2控制时钟值高时读取P1.1
+        for( i = 0; i < 8; i++ )
+        {
+            if( value & 0x80 )
+            {
+                P1 |= ( 0x1 << 1 );         //P1.1值1，DATA
+            }
+            else
+            {
+                P1 &= ~( 0x1 << 1 );        //P1.1值0，DATA
+            }
+            value <<= 1;
+            P1 &= ~( 0x1 << 2 );    //P1.2 CLK
+            P1 |= ( 0x1 << 2 );     //P1.2 CLK
+        }
+        P0 &= ~( 0x1 << 4 );        //P0.4 LOCK
+        P0 |= ( 0x1 << 4 );         //P0.4 LOCK
+    }
+    
+    void main( void )
+    {
+        SegInit();
+    
+        while( 1 )
+        {
+            for( int i = 0; i < 0x10; ++i )
+            {
+                SendSeg7( seg7table[i] ); //循环显示0-F
+                delay( 2000 );
+            }
+            SendSeg7( 0xff );
+            delay( 200 );
+        }
+    }                    
+                </pre>
+            </dd>
+            <dt>项目提升</dt>
+            <dd>请使用宏和函数优化代码，使其符合模块化开发，同时可读性更强；</dd>
+            <dd class="dd-title-item">实验报告</dd>
+            <dd>1. 根据实操部分的内容，完成数码管项目；</dd>
+            <dd>2. 以纸质的形式提交实验报告；</dd>
+            <dd>3. 论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a>。</dd>
+        </dl>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-06-17</span>
+        </footer>
+    </section>
+    <script src="/utils/lib/nav.js"></script>
+</body>
+
+</html>

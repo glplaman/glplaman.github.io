@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试 quiz</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/ds.css">
+    <style>
+        header {
+            position: relative;
+            background-image: url(../imgs/wsn/quiz.jpg);
+            margin-bottom: 0;
+        }
+
+        h1 {
+            text-align: left;
+            padding-left: 1rem;
+        }
+
+        .flag {
+            display: none;
+            color: #c00;
+        }
+
+        .dd-diag-item {
+            background-color: #c00;
+            color: #fff;
+            line-height: 30px;
+            cursor: pointer;
+            margin: 1rem auto;
+        }
+
+        .dd-diag-item:hover {
+            color: #ff0;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="w">
+        <header id="top">
+            <h1>CC2530 小测试</h1>
+        </header>
+        <dl>
+            <dt>1. 下面关于CC2530串行通信接口的说法中，正确的是（ <span class="flag">D</span> ）。</dt>
+            <dd>A: CC2530有2路串行通信接口，分别是：USART0和USART1。 </dd>
+            <dd>B: CC2530的2路串行通信接口具有相同的功能。 </dd>
+            <dd>C: CC2530的串行通信接口有2种工作模式：UART模式和SPI模式。 </dd>
+            <dd>D: 以上的说法都正确。</dd>
+            <dt>2. 下面关于CC2530串行通信接口的说法中，正确的是（ <span class="flag">C</span> ）。 </dt>
+            <dd>A: CC2530的串行通信接口只有UART一种模式。 </dd>
+            <dd>B: 在UART模式中只有接收数据中断。 </dd>
+            <dd>C: 在UART模式中提供全双工传送。 </dd>
+            <dd>D: 在UART模式中不能设置波特率。</dd>
+            <dt>3. 下面关于CC2530串行通信UART模式的说法中，错误的是（ <span class="flag">C</span> ）。</dt>
+            <dd>A: 在UART模式中，提供全双工传送。</dd>
+            <dd>B: 通过UxUCR寄存器设置UART模式中的控制参数。</dd>
+            <dd>C: 在UART模式中，数据发送和数据接收共用一个中断向量。</dd>
+            <dd>D: 在UART模式中，数据发送和数据接收分别有独立的中断向量。</dd>
+            <dt>4. 面关于CC2530串行通信UART模式的说法中，错误的是（ <span class="flag">B</span> ）。</dt>
+            <dd>A: 在UART模式中，可以同时进行数据发送和数据接收。</dd>
+            <dd>B: 在UART模式中，不能同时进行数据发送和数据接收。</dd>
+            <dd>C: 发送数据时，将字节数据放到UxDBUF寄存器中，便会自动发送。</dd>
+            <dd>D: 当完成一个字节的接收后，该字节数据会放到UxDBUF寄存器中。</dd>
+            <dt>5. C2530串行通信接口USART0的通用控制寄存器是（ <span class="flag">D</span> ）。</dt>
+            <dd>A: U0BAUD</dd>
+            <dd>B: U0CSR</dd>
+            <dd>C: U0BUF</dd>
+            <dd>D: U0GCR</dd>
+            <dt>6. C2530串行通信接口USART0的控制和状态控制寄存器是（ <span class="flag">B</span> ）。</dt>
+            <dd>A: U0BAUD</dd>
+            <dd>B: U0CSR</dd>
+            <dd>C: U0BUF</dd>
+            <dd>D: U0GCR</dd>
+            <dt>7. 置UART通信相关参数的寄存器是（ <span class="flag">C</span> ）。</dt>
+            <dd>A: UxBAUD</dd>
+            <dd>B: UxCSR</dd>
+            <dd>C: UxUCR</dd>
+            <dd>D: UxGCR</dd>
+            <dt>8. PERCFG寄存器的功能是（ <span class="flag">A</span> ）。</dt>
+            <dd>A: 指定USART串行通信接口的映射引脚</dd>
+            <dd>B: 选择USART串行通信接口的工作模式</dd>
+            <dd>C: 设置USART串行通信接口的波特率</dd>
+            <dd>D: 使能USART串行通信接口的中断控制</dd>
+            <dt>9. PERCFG &= ～0x01,将USART0的外设映I/O射到（ <span class="flag">C</span> ）。</dt>
+            <dd>A: P0_2和P0_3</dd>
+            <dd>B: P1_2和P1_3</dd>
+            <dd>C: P0_4和P0_5</dd>
+            <dd>D: P1_4和P1_5</dd>
+            <dt>10. 使用CC2530的UART0串口发送数据“0x52”的正确语句是（ <span class="flag">B</span> ）。</dt>
+            <dd>A: U0BUF = 0x52;</dd>
+            <dd>B: U0DBUF = 0x52;</dd>
+            <dd>C: U1BUF = 0x52;</dd>
+            <dd>D: U1DBUF = 0x52;</dd>
+            <dt>11. 将CC2530的UART1接收到的数据读取到变量dat中的正确语句是（ <span class="flag">C</span> ）。</dt>
+            <dd>A: dat = U1BUF;</dd>
+            <dd>B: dat = U0BUF;</dd>
+            <dd>C: dat = U1DBUF;</dd>
+            <dd>D: dat = U0DBUF;</dd>
+            <dt>12. 使能CC2530的UART0串口数的据发送完成中断，正确语句是（ <span class="flag">C</span> ）。</dt>
+            <dd>A: UTX0IE = 1;</dd>
+            <dd>B: URX0IE = 1;</dd>
+            <dd>C: UTX0IF = 1;</dd>
+            <dd>D: URX0IF = 1;</dd>
+            <dt>13. 使能CC2530的UART0串口的数据接收完成中断，正确语句是（ <span class="flag">D</span> ）。</dt>
+            <dd>A: UTX0IE = 1;</dd>
+            <dd>B: URX0IE = 1;</dd>
+            <dd>C: UTX0IF = 1;</dd>
+            <dd>D: URX0IF = 1;</dd>
+            <dt>14. 当CC2530的UART0串口完成一个字节的接收后，中断标志位（ <span class="flag">B</span> ）置1。</dt>
+            <dd>A: URX0IE</dd>
+            <dd>B: URX0IF</dd>
+            <dd>C: UTX0IE</dd>
+            <dd>D: UTX0IF</dd>
+            <dt>15. 当CC2530的UART0串口完成一个字节的发送后，中断标志位（ <span class="flag">D</span> ）置1。</dt>
+            <dd>A: URX0IE</dd>
+            <dd>B: URX0IF</dd>
+            <dd>C: UTX0IE</dd>
+            <dd>D: UTX0IF</dd>
+            <dd class="dd-diag-item" id="btn">查看答案</dd>
+        </dl>
+        <a href="#top" id="back2top"></a>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-05-23</span>
+        </footer>
+    </section>
+    <script>
+        window.onload = function () {
+            let flag = false
+            let options = document.querySelectorAll('.flag');
+            let btn = document.querySelector('#btn')
+            btn.addEventListener('click', () => {
+                options.forEach((item) => {
+                    flag ? item.style.display = 'none' : item.style.display = 'unset'
+                })
+                flag = !flag
+            })
+        }
+    </script>
+</body>
+
+</html>

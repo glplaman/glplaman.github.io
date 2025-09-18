@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zigbee route</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/wsn.css">
+</head>
+
+<body>
+    <section class="w">
+        <nav class="main-nav sticky">
+            <ul class="flex-h">
+                <li class="logo">
+                    <h1><a href="./wpan.html">WSN协议</a></h1>
+                </li>
+                <li class="ham-menu" id="menu"><span class="iconfont">&#xe816;</span></li>
+                <li class="main-nav-item"><a href="./wpan.html">ZigBee</a></li>
+                <li class="main-nav-item"><a href="./zigbeeAddress.html">ZigBee地址</a></li>
+                <li class="main-nav-item main-nav-active"><a href="./zigbeeRoute.html">ZigBee路由</a></li>
+                <li class="main-nav-item"><a href="./Bluetooth.html">蓝牙</a></li>
+                <li class="main-nav-item"><a href="./UWB.html">超宽带</a></li>
+            </ul>
+        </nav>
+        <header>
+            <h1>Zigbee之路由</h1>
+        </header>
+        <dl>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 routing/幻灯片1.JPG" alt=""></dd>
+            <dt>内容</dt>
+            <dd>1. 概述[自学]</dd>
+            <dd>2. 路由协议[自学]</dd>
+            <dd>3. 表存储</dd>
+            <dd>4. AODV</dd>
+            <dt>1. 概述</dt>
+            <dd>路由对应用层透明；</dd>
+            <dd>可以自愈、修复；</dd>
+            <dd>可靠性高；</dd>
+            <dt>2. 路由协议</dt>
+            <dd>2.1 路由发现和选择</dd>
+            <dd>2.2 路由保持和维护</dd>
+            <dd>2.3 路由期满</dd>
+            <dt>3. 表存储</dt>
+            <dd>[英文]The routing functions require the routers to maintain some tables. </dd>
+            <dd>[中文]路由函数[功能]要求路由器应该维护一些表，如：</dd>
+            <dd>3.1 路由表</dd>
+            <dd>[英文]Each ZigBee router, including the ZigBee coordinator, contains a routing table in which the device
+                stores information required to participate in the routing of packets. Each routing table entry contains
+                the destination address, the next hop node, and the link status. All packets sent to the destination
+                address are routed through the next hop node. Also entries in the routing table can expire in order to
+                reclaim table space from entries that are no longer in use.
+            </dd>
+            <dd>[中文]每个ZigBee路由器，包括协调器，都包含一个路由表，用来存储数据包参与路由时需要的信息；每个路由记录包含有目标地址、下一跳节点以及链路状态等信息；所有发往目标地址的数据包都由下一跳节点进行路由；路由表中所有的记录都会过期以便于从不再使用的条目中回收表空间。
+            </dd>
+            <dd>[英文]Routing table capacity indicates that a device routing table has a free routing table entry or it
+                already has a routing table entry corresponding to the destination address. The routing table size is
+                configured in f8wconfig.cfg. Set MAX_RTG_ENTRIES to the number of entries in the (default is 40). See
+                the section on Route Maintenance for route expiration details.</dd>
+            <dd>[中文]路由表容量指的是一个设备路由表拥有的[空闲]的路由表记录或者是和目标地址对应的路由表记录；f8wconfig.cfg可以配置MAX_RTG_ENTRIES设置路由表的大小，默认是40；</dd>
+            <dd>3.2 路由发现表</dd>
+            <dd>[英文]Router devices involved in route discovery, maintain a route discovery table. This table is used to
+                store temporary information while a route discovery is in progress. These entries only last for the
+                duration of the route discovery operation. Once an entry expires it can be used for another route
+                discovery operation. Thus this value determines the maximum number of route discoveries that can be
+                simultaneously performed in the network. This value is configured by setting the MAX_RREQ_ENTRIES in
+                f8wconfig.cfg.</dd>
+            <dd>[中文]参与路由发现的路由设备维护一个路由发现表，用来存储路由发现过程中的临时信息；这些记录仅仅存在于路由发现的过程；一旦过期，就可以用于另外一个路由发现；因此，该值决定了网络中可同时执行的最大路由发现数，可以配置f8wconfig.cfg中MAX_RREQ_ENTRIES字段进行修改。
+            </dd>
+            <dt>4. AODV</dt>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 routing/幻灯片2.JPG" alt=""></dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 routing/幻灯片3.JPG" alt=""></dd>
+            <dt>内容</dt>
+            <dd>1. 概述</dd>
+            <dd>2. 路由发现</dd>
+            <dd>3. 路由记录</dd>
+            <dd>4. 路由维护</dd>
+            <dt>1. 概述</dt>
+            <dd>[英文]The following explains many-to-one and source routing procedure for users' better understanding of
+                ZigBee routing protocol. In reality, all routings are taken care in the network layer and transparent to
+                the application. Issuing many to-one route discovery and route maintenance are application decisions.
+            </dd>
+            <dd>[中文]为了用户更好的理解ZigBee路由协议，下面介绍了多对一路由协议的过程。实际上，所有的路由[过程]只有网络层关心，对[上层的]应用来说是透明的；但是，路由发现的发起和维护则由应用来决定。</dd>
+            <dd>[英文]Many-to-one routing is adopted in ZigBee PRO to help minimize traffic particularly when centralized
+                nodes are involved. It is common for low power wireless networks to have a device acting as a gateway or
+                data concentrator.
+                All nodes in the networks shall maintain at least one valid route to the central node. To achieve this,
+                all nodes have
+                to initiate route discovery for the concentrator, relying on the existing ZigBee AODV based routing
+                solution. The
+                route request broadcasts will add up and produce huge network traffic overhead. To better optimize the
+                routing
+                solution, many-to-one routing is adopted to allow a data concentrator to establish routes from all nodes
+                in the
+                network with one single route discovery and minimize the route discovery broadcast storm. </dd>
+            <dd>[中文]ZigBee
+                PRO中采用的多对一路由协议有助于最小化网络上的流量，特别是当大量集中的节点参与进来的时候。通常有一个设备充当网关或者数据集中器[中心节点]；网络中的所有节点需要至少维护一条到中心节点的有效路由；为了实现这个[需求]，所有节点需要发起到中心节点的路由发现，[这个过程]它依赖于当前ZigBee路由解决方案采用的AODV路由协议。[显然]路由请求广播会持续增加并产生大量的网络流量开销。为了更好的优化路由方案，多对一路由使用一个简单的路由发现[报文]就可以创建到网络内所有节点的路由，[进而]将路由发现广播带来的广播风暴降到最低。
+            </dd>
+            <dd>[英文]Source routing is part of the many-to-one routing that provides an efficient way for concentrator to
+                send response or acknowledgement back to the destination. The concentrator places the complete route
+                information from the concentrator to the destination into the data frame which needs to be transmitted.
+                It minimizes the routing table size and route discovery traffic in the network.</dd>
+            <dd>[中文]源路由是多对一路由的一部分，为集中器向目标[节点]回发响应或确认提供了一个有效方法。集中器把从自己到目标[节点]的完整路由信息打包到数据帧并发送出去，[这样做可以]减少了路由表的体积和网络中路由发现的[产生的]流量
+            </dd>
+            <dt>2. 多对一路由发现</dt>
+            <dd>[英文]The following figure shows an example of the many-to-one route discovery procedure. To initiate
+                many-to-one
+                route discovery, the concentrator broadcast a many-to-one route request to the entire network. Upon
+                receipt of the
+                route request, every device adds a route table entry for the concentrator and stores the one hop
+                neighbor that relays
+                the request as the next hop address. No route reply will be generated.</dd>
+            <dd>[中文]多一路由的发现过程如下图所示。为了发起路由发现，集中器向整个网络广播一个多对一路由请求报文；收到路由请求后，所有的节点设备为集中器增加一条路由表记录，并且把转发路由请求的、距离自己只有一跳的邻居节点作为下一跳的[路由]地址。[整个过程]不需要路由回复。
+            </dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 routing/幻灯片4.JPG" alt=""></dd>
+            <dd class="dd-diag-item">图1 多对一路由发现过程</dd>
+            <dd>[英文]Many-to-one route request command is similar to unicast route request command with same command ID
+                and
+                payload frame format. The option field in route request is many-to-one and the destination address is
+                0xFFFC. The
+                following Z-Stack API can be used for the concentrator to send out many-to-one route request. Please
+                refer to the ZStack API [1] documentation for detailed usage about this API.</dd>
+            <dd>[中文]多对一路由请求命令和单播路由请求命令类似，使用相同的命令ID和帧结构；路由请求中的可选字段内容为多对一，目标地址为0XFFFC；集中器用下述的Z-Stack
+                API发送多对一路由请求。更多使用细节，请参考ZStack API开发文档。</dd>
+            <dd class="dd-code-item">ZStatus_t NLME_RouteDiscoveryRequest( uint16 DstAddress, byte options, uint8 radius
+                );</dd>
+            <dd>[英文]The option field is a bitmask to specify options for the route request. It can have the following
+                values. When the option field has value 0x01 or 0x03, the DstAddress field will be overwritten with the
+                many-to-one destination address 0xFFFC. Therefore, user can pass any value to DstAddress in the case of
+                many-to-one route request.</dd>
+            <dd>[中文]可选字段是一个位掩码，用于指定路由请求选项；取值范围如表1所示。如果可选字段是0x01或0x03，目标地址将被多对一目标地址0xFFFC覆盖。因此，在[发起]路由请求的情况下，用户可以传递任何值给目标地址；
+            </dd>
+            <dd class="dd-tbl-item">
+                <table>
+                    <tr>
+                        <td>value</td>
+                        <td>Description</td>
+                        <td>说明</td>
+                    </tr>
+                    <tr>
+                        <td>0x00</td>
+                        <td class="txt-align-left">Unicast route discovery</td>
+                        <td class="txt-align-left">单播路由发现</td>
+                    </tr>
+                    <tr>
+                        <td>0x03</td>
+                        <td class="txt-align-left">Many-to-one route discovery with route cache (the
+                            concentrator does not have memory constraints).</td>
+                        <td class="txt-align-left">使用路由缓存的多对一路由发现</td>
+                    </tr>
+                    <tr>
+                        <td>0x01</td>
+                        <td class="txt-align-left">Many-to-one route discovery with no route cache (the
+                            concentrator has memory constraints)</td>
+                        <td class="txt-align-left">不使用路由缓存的多对一路由发现</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表1 可选字段取值范围</dd>
+            <dt>3. 路由记录命令</dt>
+            <dd>[英文]The above many-to-one route discovery procedure establishes routes from all devices to the
+                concentrator. The reverse routing (from concentrator to other devices) is done by route record command
+                (source routing scheme). The procedure of source routing is illustrated in Figure 3. R1 sends data
+                packet DATA to the concentrator using the previously established many-to-one route and expects an
+                acknowledgement back. To provide a route for the concentrator to send the ACK back, R1 sends route
+                record command along with the data packet which records the routing path the data packet goes through
+                and offers the concentrator a reverse path to send the ACK back.</dd>
+            <dd>[中文]以上多对一路由发现过程建立了所有从[路由器]设备到集中器的路由。相反的路由[即从集中器到路由器设备]由路由记录命令完成(称之为源路由机制)，过程如图2所示。R1使用使用前面建立的多对一路由发送数据包给集中器，并且希望得到确认。为了给集中器提供一个回发确认的路由，R1发送数据包的同时，还要发送一个路由记录命令，它记录了数据包经过的路由[信息]，[相当于]给集中器提供了一个反向路由以回发确认ACK。
+            </dd>
+            <dd>[英文]Upon receipt of the route record command, devices on the relay path will append their own network
+                addresses to the relay list in the route record command payload. By the time the route record command
+                reaches the concentrator, it includes the complete routing path through which the data packet is relayed
+                to the concentrator. </dd>
+            <dd>[中文]中继转发路径上的[路由器]设备收到路由记录命令后，在路由记录命令载荷的中继列表中追加自己的网络地址；当路由记录命令达到集中器时，它就包含了数据包经过中继转发达到集中器的完整的路由路径。</dd>
+            <dd>[英文]When the concentrator sends ACK back to R1, it shall include the source route
+                (relay list) in the network layer header of the packet. All devices receiving the packet shall relay the
+                packet to the next hop device according to the source route. For concentrator with no memory
+                constraints, it can store all route record entries it receives and use them to send packets to the
+                source devices in the future. Therefore, devices only need to send route record command
+                once. However, for concentrator without source route caching capability, devices always need to send
+                route record commands along with data packets. The concentrator will store the source route temporarily
+                in the memory and then discard it after usage.</dd>
+            <dd>[中文]集中器回发ACK时，会在网络层数据包的头部包含源路由(即中继转发列表)。所有收到数据包的[路由]设备将根据源路由信息将数据包中继转发给下一跳[路由]设备。没有存储限制的集中器会存储收到的所有路由记录以便在将来向源路由设备发送数据包时使用。因此路由设备仅仅需要发送一次路径记录命令。然而，对于没有源路由缓存能力的集中器，[路由]设备[每次]需要发送数据包的时候，总是携带上路由记录命令；集中器[只是]临时存储源路由信息，使用完毕后即丢弃。
+            </dd>
+            <dd>[英文]In brief, many-to-one routing is an efficient enhancement to the regular ZigBee unicast routing when
+                most devices in the network are funneling traffic to a single device. As part of the many-to-one
+                routing, source routing is only utilized under certain circumstances. First, it is used when the
+                concentrator is responding to a request initiated by the source device. Second, the concentrator should
+                store the source route information for all devices if it has sufficient memory. If not, whenever devices
+                issue request to the concentrator, they should also send route record along with it.</dd>
+            <dd>[中文]简言之，多对一路由协议是对一般ZigBee单播路由的有效增强，[特别是]网络中大部分路由设备集中向一个设备发送流量时。作为多对一路由协议的一部分，源路由只应用于特定的场合。首先，仅当集中器回应由源路由设备发起的请求时才会使用；其次，如果集中器由充足的内存空间，应该存储所有路由设备的源路由信息；如果没有，路由设备发起请求时，应同时发送路由记录命令[方便集中器回发确认]。
+            </dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 routing/幻灯片5.JPG" alt=""></dd>
+            <dd class="dd-diag-item">图2 路由记录命令</dd>
+            <dt>4. 多对一路由维护</dt>
+            <dd>[英文]If a link failure is encountered while a device is forwarding a many-to-one routed frame (notice
+                that a many-to-one routed frame itself has no difference from a regular unicast data packet, however,
+                the routing table entry has a field to specify that the destination is a concentrator), the device will
+                generate a network status command with code “Many-to-one route failure”. The network status command will
+                be relayed to the concentrator through a random neighbor and hopefully that neighbor still has a valid
+                route to the concentrator. When the concentrator receives the route failure, the application will decide
+                whether or not to re-issue a many-to-one route request</dd>
+            <dd>[中文]如果路由设备转发多对一路由数据帧时，碰到一条失效的路由，将产生一个代码为"多对一路由失败"的网络状态命令，并经由随机邻居[路由设备]中继转发给集中器；当然希望这个邻居仍然有一条到集中器的有效路由。注意：多对一路由数据帧和一般的单播帧并没有什么不同，但是路由表记录有一个字段指明了目标地址是集中器。集中器收到路由失败信息后，将决定是否重新发起多对一路由请求。
+            </dd>
+            <dd>[英文]When the concentrator receives network status command indicating many-to-one route failure, it
+                passes the indication to the ZDO layer and the following ZDO callback function in ZDApp.c is called. By
+                default, this function will redo a many-to-one route discovery to recover the routes. You can modify
+                this function if you want a more complicated process other than the default. </dd>
+            <dd>[中文]集中器收到多对一路由失败的网络状态命令后，将之传递给ZOD层，调用ZDApp.c中的函数进行处理。默认情况下，该函数会重新执行多对一路由发现来恢复路由。可以修改这个函数完成比默认处理更为复杂的过程。
+            </dd>
+            <dd class="dd-code-item">void ZDO_ManytoOneFailureIndicationCB()</dd>
+            <dt class="warn">[思考]</dt>
+            <dd>1. 多对一路由协议many-to-one中，many指的是谁？one指的是谁？</dd>
+            <dd>2. 多对一路由协议many-to-one中，使用的是专门的帧结构吗？</dd>
+            <dd>3. 源路由机制source routing中，source指的是谁？</dd>
+            <dd>4. 路由记录命令route record command中，记录的是什么？谁记录？</dd>
+        </dl>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-05-12</span>
+        </footer>
+    </section>
+    <script src="/utils/lib/nav.js"></script>
+</body>
+
+</html>

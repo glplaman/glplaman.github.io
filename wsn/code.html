@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码示例 code</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/ds.css">
+    <style>
+        header {
+            position: relative;
+            background-image: url(../imgs/wsn/quiz.jpg);
+            margin-bottom: 0;
+        }
+
+        h1 {
+            text-align: left;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="w">
+        <header id="top">
+            <h1>示例代码 Code</h1>
+        </header>
+        <dl>
+            <dt>延时</dt>
+            <dd class="code">
+                <pre>
+
+    void delay( unsigned int duration )
+    {
+        unsigned int i;
+        unsigned char j;
+        for( i = 0; i < duration; i++ )
+        {
+            for( j = 0; j < 200; j++ )
+            {
+                asm( "NOP" );
+                asm( "NOP" );
+                asm( "NOP" );
+            }
+        }
+    }
+                </pre>
+            </dd>
+            <dd class="code">
+                <pre>
+
+    void delay( unsigned int duration )
+    {
+        unsigned int i, j;
+        for( i = 0; i < duration; i++ )
+            for( j = 0; j < 200; j++ );
+    }</pre>
+            </dd>
+            <dt>移位</dt>
+            <dd class="code">
+                <pre>
+
+    //定义：BV - bit move
+    #define BV(n) (1<<(n))
+    //使用：置1
+    P0DIR |= BV( 0 );
+    //使用：置0
+    P0SEL &= ~BV( 0 );
+                </pre>
+            </dd>
+        </dl>
+        <a href="#top" id="back2top"></a>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-05-24</span>
+        </footer>
+    </section>
+    <script>
+        window.onload = function () {
+            let flag = false
+            let options = document.querySelectorAll('.flag');
+            let btn = document.querySelector('#btn')
+            btn.addEventListener('click', () => {
+                options.forEach((item) => {
+                    flag ? item.style.display = 'none' : item.style.display = 'unset'
+                })
+                flag = !flag
+            })
+        }
+    </script>
+</body>
+
+</html>

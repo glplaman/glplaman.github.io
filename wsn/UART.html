@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UART</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/ds.css">
+  <style>
+    header {
+      background-image: url(../imgs/wsn/wsn1.jpg);
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="w">
+    <header id="top">
+      <h1>UART</h1>
+    </header>
+    <nav class="top-nav">
+      <ul class="flex-h">
+        <li><a href="#cont0" id="tocont0">简介</a></li>
+        <li><a href="#cont1" id="tocont1">寄存器</a></li>
+        <li><a href="#cont2" id="tocont2">实操1</a></li>
+        <li><a href="#cont3" id="tocont3">实操2</a></li>
+        <li><a href="#cont4" id="tocont4">实操3</a></li>
+      </ul>
+    </nav>
+    <dl>
+      <dt id="cont0">通信模式</dt>
+      <dd>CPU与外设之间的通信模式；</dd>
+      <dd>并行通信：一次传输多个比特； </dd>
+      <dd>串行通信：是将传输数据的每个字符一位接一位(例如先低位、后高位)地传送；</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片3.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图1 通信模式</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>RS232</td>
+            <td>Recommended Standard</td>
+          </tr>
+          <tr>
+            <td>UART</td>
+            <td>Universal Asynchronous Receiver/Transmitter</td>
+          </tr>
+          <tr>
+            <td>JTAG</td>
+            <td>Joint Test Action Group</td>
+          </tr>
+          <tr>
+            <td>Morse Code</td>
+            <td>莫尔斯电码 <a href="./morseCode.html" target="_blank"><span class="iconfont">&#xf14a;</span></a>
+            </td>
+          </tr>
+          <tr>
+            <td>SPI</td>
+            <td>Serial Peripheral Interface</td>
+          </tr>
+          <tr>
+            <td>MIDI</td>
+            <td>Musical Instrument Digital Interface</td>
+          </tr>
+          <tr>
+            <td>USB</td>
+            <td>Universal Serial Bus</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表1 常见串口通信协议 </dd>
+      <dt>UART</dt>
+      <dd>通用异步收发器，是一种通用的串行 <sup>[1]</sup>、异步<sup>[2]</sup>通信总线；</dd>
+      <dd>实现全双工<sup>[3]</sup>的发送和接收； </dd>
+      <dd>广泛应用于嵌入式系统中主机和外设之间的通信；</dd>
+      <dt>[1]串行通信</dt>
+      <dd>信号线少：分时使用同一传输通道，最少用一对线即可[收发]；全双工通信； </dd>
+      <dd>实现较容易：允许双方使用各自的时钟信号，且时钟频率可以有一定误差； </dd>
+      <dd>效率较低：每个字符都要独立确定起始位和结束位； </dd>
+      <dd>起始位为低电平；结束位为高电平；数据线空闲时默认是高电平； </dd>
+      <dt>[2]异步通信</dt>
+      <dd>
+        同步：所有设备使用同一个时钟信号；以数据块为单位传送数据，包括同步字符、数据块和校验字符。同步字符位于数据块的开头，用于确认数据字符的开始；接收时，接收设备连续不断地对传输线采样，并把接收到的字符与双方约定的同步字符进行比较，只有比较成功后才会把后面接收到的字符加以存储；同步通信的优点是数据传输速率高，缺点是要求发送时钟和接收时钟保持严格同步。对硬件结构要求较高；
+      </dd>
+      <dd>异步：每个设备使用自己的时钟信号；以字符为单位进行数据传送，每一个字符均按照固定的格式传送，又被称为帧，即异步串行通信一次传送一个帧；</dd>
+      <dt>[3]全双工通信</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>单工通信</td>
+            <td>半双工通信</td>
+            <td>全双工通信</td>
+          </tr>
+          <tr>
+            <td>单向通信 </td>
+            <td>双向通信，但是不能同时通信 </td>
+            <td>双向同时通信 </td>
+          </tr>
+          <tr>
+            <td>一根线 </td>
+            <td>二根线 </td>
+            <td>二根线</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表2 通信方式 </dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片16.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图2 通信方式</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片8.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图3 全双工通信过程</dd>
+      <dt>要求</dt>
+      <dd>接收方对于同一根线上一连串的数字信号，首先要分割成位，再按位组成字符； </dd>
+      <dd>为了恢复发送的信息，双方必须协调工作[使用时钟]； </dd>
+      <dd>逐位发送，消除累计误差；</dd>
+      <dt>帧格式 Frame </dt>
+      <dd>起始位 start bit </dd>
+      <dd>数据位 data bit：可以是5bit、6bit、7bit、8bit </dd>
+      <dd>可选的奇偶校验位 optional parity bit </dd>
+      <dd>终止位 stop bit </dd>
+      <dt>波特率 Baud </dt>
+      <dd>串口通信的速率，单位是每秒传输符号的个数； </dd>
+      <dd>用来正确区分/截断字符； </dd>
+      <dd>双方提前约定；不能随便指定，而应从规定的数字当中选择-programmable baud rates； </dd>
+      <dd> 常用波特率：1200、2400、4800、9600、19200、38400、57600、115200； </dd>
+      <dd>由专门的寄存器通过设置不同的分频实现波特率的选择；</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片5.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图4 帧格式和比特率</dd>
+      <dt>奇偶校验 parity check </dt>
+      <dd>通过增加冗余位使得代码中1的个数恒为奇数或偶数的编码方法，以确定代码传输的正确性，是一种检错码，不能纠错；现在网络环境比较好，一般不需要校验；</dd>
+      <dd>若1的个数是奇数，称为奇校验odd parity ；反之，称为偶校验even parity 需专门设置一个奇偶校验位；采用何种校验应事先约定好；</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片7.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图5 奇偶检验</dd>
+      <dt>RS-232C串行接口</dt>
+      <dd>美国电子工业协会EIA制定，全称是：数据终端设备( DTE)和数据通信设备(DCE)之间串行二进制数据交换接口技术标准；提供全双工通信；速率20Kbps；通信线长度15m；标准EIA电平，
+        PC使用的是TTL电平：需电平转换；</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片13.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图6 电平转换</dd>
+      <dd>RS-232C接口物理实现：早期使用DB25针连接；现在都是DB9针连接；实际只用了其中的GEN、TX、RX共3根线，其它为流控AFC–Auto Flow Control；
+        早期用来通信，现在多为调试使用，所以会禁掉流控；</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片11.JPG" alt=""></dd>
+      <dd class="dd-diag-item">图7 DB9接口和串口配置</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>Pin</td>
+            <td>Name</td>
+            <td>Desc</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>CD-Carrier Detect</td>
+            <td>载波检出，用以确认是否收到 Modem 的载波</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>RXD-Received Data</td>
+            <td>数据输入线</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>TXD-Transmitted Data</td>
+            <td>数据输出线</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>DTR-Data Terminal Ready</td>
+            <td>告知数据终端处于待命状态</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>SG/GND-Signal Ground</td>
+            <td>信号线的接地线（严格的说是信号线的零标准线）</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>DSR-Data Set Ready</td>
+            <td>告知本机在待命状态</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>RTS-Request to Send</td>
+            <td>要求发送数据</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>CTS-Clear to Send</td>
+            <td>回应对方发送的 RTS 的发送许可，告诉对方可以发送</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>RI-Ring Indicator</td>
+            <td>响铃指示</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="dd-diag-item">表3 DB9各接口定义 </dd>
+      <dt>几点考虑 </dt>
+      <dd>根据通信速率确定采用的接口标准，如通信距离、通信速率；</dd>
+      <dd>确定通信的波特率：通信双方一定要一致；</dd>
+      <dd>确定通信协议：是否需要校验；</dd>
+      <dd class="dd-img-item"><img class="ob-img" data-src="../imgs/wsn/WSN exp2/幻灯片24.JPG" alt=""></dd>
+      <dt id="cont1" class="dd-title-item">寄存器 </dt>
+      <dt>CC2530的USART串口通信，涉及到的寄存器有：</dt>
+      <dd>UxCSR：USARTx控制和状态寄存器 </dd>
+      <dd>UxUCR：USARTx UART控制寄存器 </dd>
+      <dd>UxGCR：USARTx 通用控制寄存器 </dd>
+      <dd>UxBAUD：USARTx 波特率控制寄存器</dd>
+      <dd>UxBUF：USARTx 接收/发送数据缓冲寄存器 </dd>
+      <dt>[1]UxCSR 控制状态寄存器</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>MODE</td>
+            <td>0</td>
+            <td>R</td>
+            <td>串口模式选择：0 SPI；1 UART</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>RE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>接收使能：0 关闭；1 允许接收</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>SLAVE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>SPI主从选择：0 SPI主；1 SPI从</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>FE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>串口帧错误状态：0 没有错误；1 出现错误</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>ERR</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>串口校验结果：0 没有校验错误；1 字节校验出错</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>RX_BYTE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>接收状态：0 没有收到数据；1 收到1字节数据</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>TX_BYTE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>发送状态：0 没有发送；1 最后一次写入U0BUF的数据已经发</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>ACTIVE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>串口忙标记：0 闲；1 忙</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>接收数据时，U0CSR |= 0X40，允许接收；</dd>
+      <dd>发送数据时，U0CSR &= 0X40，禁止接收；</dd>
+      <dd>[配置示例]使用串口0并准备接收</dd>
+      <dd>方法1</dd>
+      <dd>U0CSR |= 0x80;//1000 0000；打开串口 </dd>
+      <dd>U0CSR |= 0x40;//0000 0100；接收</dd>
+      <dd>方法2</dd>
+      <dd>U0CSR |= (1&lt;&lt;7);</dd>
+      <dd>U0CSR |= (1&lt;&lt;6);</dd>
+      <dd>方法3</dd>
+      <dd>U0CSR |= (0x80 | 0x40);</dd>
+      <dd>方法4</dd>
+      <dd>U0CSR |= (0x3&lt;&lt;6);</dd>
+      <dd>方法5</dd>
+      <dd>U0CSR |= 0xC0;</dd>
+      <dt>[2]UxUCR UART控制寄存器</dt>
+      <dd>通常无需设置该寄存器，采用默认值即可；</dd>
+      <dd>U0UCR |= 0x80；//1000 0000；无流控、8位数据位；清空缓冲区</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>FLUSH</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>冲刷单位。当设置将停止当前操作，返回空闲状态</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>FLOW </td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>流控制使能。硬件通过RTS和CTS控制流； 0：禁止； 1：使能 </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>D9</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>奇偶位；0： 奇校验；1： 偶校验</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>BIT9</td>
+            <td>0 </td>
+            <td>R/W</td>
+            <td>9-bit使能；0：8位传输；1：9位传输</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>PARITY</td>
+            <td>0 </td>
+            <td>R/W</td>
+            <td>奇偶使能；0：禁止； 1：允许</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>SPB</td>
+            <td>0 </td>
+            <td>R/W</td>
+            <td>停止位数； 0： 1位停止位； 1： 2位停止位</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>STOP</td>
+            <td>0 </td>
+            <td>R/W</td>
+            <td>停止位等级必须不同起始位等级； 0： 低停止位； 1： 高停止位</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>START</td>
+            <td>0 </td>
+            <td>R</td>
+            <td>USART起始位等级； 0： 低起始位； 1： 高起始位</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>[3]UxGCR 通用控制寄存器</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>CPOL </td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>SPI 时钟极性：0：低电平空闲；1：高电平空闲 </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>CPHA </td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>SPI 时钟相位<br>
+              0：由 CPOL 跳向非 CPOL 时采样，由非 CPOL跳向 CPOL 时输出<br>
+              1：由非 CPOL 跳向 CPOL 时采样，由 CPOL跳向非 CPOL 时输出
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>ORDER</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>传输位序：0：低位在先；1： 高位在先</td>
+          </tr>
+          <tr>
+            <td>4-0</td>
+            <td>BAUD_E[4:0] </td>
+            <td>0x00 </td>
+            <td>R/W</td>
+            <td>波特率指数值，BAUD_M 决定波特率</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>[4]UxBAUD 波特率控制寄存器</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7-0</td>
+            <td>BAUD_M[7:0]</td>
+            <td>0x00</td>
+            <td>R/W</td>
+            <td>波特率尾数，与 BAUD_E 决定波特率</td>
+          </tr>
+        </table>
+      </dd>
+      <dd><span class="warn">注意</span>：设置波特率，需要同时操作UxGCR和UxBAUD；</dd>
+      <dd>[配置示例]波特率设为57600</dd>
+      <dd>U0GCR |= 10 </dd>
+      <dd>U0BAUD |= 216</dd>
+      <dd>[配置示例]波特率设为115200 </dd>
+      <dd> U0GCR |= 11 </dd>
+      <dd>U0BAUD |= 216</dd>
+      <dt>[5]UxDBUF 收发缓冲寄存器</dt>
+      <dd>通过UxDBUF来发送和接收数据</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7-0</td>
+            <td>DATA[7:0]</td>
+            <td>0x00</td>
+            <td>R/W</td>
+            <td>UARTx收发缓存寄存器</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>PERCFG 外设配置寄存器</dt>
+      <dd>两个USART接口具有相同的功能，通过PERCFG寄存器可以设置两个USART接口对应外部I/O引脚的映射关系；0为默认位置1,1为默认位置2；</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>U1CFG</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>UART1的映射位置：0-&gt;alt 1；1-&gt;alt 2</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>U0CFG</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>UART0的映射位置：0-&gt;alt 1；1-&gt;alt 2</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>位置映射</dd>
+      <dd>
+        <table>
+          <tr>
+            <td colspan="2">UART0</td>
+            <td colspan="2">UART1</td>
+          </tr>
+          <tr>
+            <td>alt 1</td>
+            <td>TX：P0_3 RX：P0_2</td>
+            <td>alt 1</td>
+            <td>TX：P0_5 RX：P0_4</td>
+          </tr>
+          <tr>
+            <td>alt 2</td>
+            <td>TX：P1_5 RX：P1_4</td>
+            <td>alt 2</td>
+            <td>TX：P1_6 RX：P1_7</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>[配置实例]PERCFG = 0x00;//使用UART0的备用位置1(即P0_2,P0_3)</dd>
+      <dd>[配置实例]PERCFG |= 1;//使用UART0的备用位置2(即P1_4,P1_5)</dd>
+      <dt>CLKCONCMD 时钟控制命令寄存器</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>OSC32K </td>
+            <td>1</td>
+            <td>R/W</td>
+            <td>32Khz时钟源选择：<br>
+              0 32Khz的晶体振荡器； <br>
+              1 32Khz的RC振荡器 </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>OSC </td>
+            <td>1</td>
+            <td>R/W</td>
+            <td>系统主时钟源选择：<br>
+              0 32Mhz的晶体振荡器；<br>
+              1 16Mhz的RC振荡器</td>
+          </tr>
+          <tr>
+            <td>5-3</td>
+            <td>TICKSPD[2:0]
+            </td>
+            <td>001</td>
+            <td>R/W</td>
+            <td>计数时钟：不能超过系统时钟<br>
+              000 32Mhz； 100 2Mhz <br>
+              001 16Mhz； 101 1Mhz <br>
+              010 8Mhz； 110 500Khz <br>
+              011 4Mhz； 111 250Khz</td>
+          </tr>
+          <tr>
+            <td>2-0</td>
+            <td>CLKSPD</td>
+            <td>001</td>
+            <td>R/W</td>
+            <td>时钟速度：不能超过系统时钟；取值同TICKSPD</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>SLEEPSTA 睡眠模式控制状态寄存器</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>OSC32K_CALDIS </td>
+            <td>0</td>
+            <td>R</td>
+            <td>32Khz RC振荡器校准状态 </td>
+          </tr>
+          <tr>
+            <td>6:5 </td>
+            <td>- </td>
+            <td>00</td>
+            <td>R</td>
+            <td>保留</td>
+          </tr>
+          <tr>
+            <td>4-3</td>
+            <td>RST[1:0] </td>
+            <td>XX</td>
+            <td>R</td>
+            <td>状态位，表示上一次复位的原因；只保留最新的复位事件 <br>
+              00 上电复位和掉电探测；01 外部复位 <br>
+              10 看门狗定时器复位；11 时钟丢失复位</td>
+          </tr>
+          <tr>
+            <td>2-1</td>
+            <td>-</td>
+            <td>00</td>
+            <td>R</td>
+            <td>保留</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>CLK32K</td>
+            <td>0</td>
+            <td>R</td>
+            <td>32Khz时钟信号（与系统时钟同步） </td>
+          </tr>
+        </table>
+      </dd>
+      <dd><span class="warn">注意</span>：时钟切换必须等待稳定；</dd>
+      <dd>[配置示例]选择32Mhz</dd>
+      <dd>CLKCONCMD &= ~0x40; //或CLKCONCMD &= ~(1&lt;&lt;6)</dd>
+      <dd>while(!(SLEEPSTA & 0x40)); //等待 XSOC稳定 </dd>
+      <dd>CLKCONCMD = 0xb8; //1 0 111 000;TICHSPD[128分频]，CLKSPD[不分频]</dd>
+      <dt>IENx 中断使能寄存器</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>位号</td>
+            <td>位名</td>
+            <td>复位值</td>
+            <td>操作性</td>
+            <td>说明</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>EA</td>
+            <td>0</td>
+            <td>R</td>
+            <td>中断系统使能控制，即：总中断；0 禁止所有中断；1 允许所有中断</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>-</td>
+            <td>0</td>
+            <td>R</td>
+            <td>保留</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>STIE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>睡眠定时器中断使能：0 中断禁止；1 中断使能</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>ENCIE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>AES加密/解密中断使能：0 中断禁止；1 中断使能</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>URX1IE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>USART1接收中断使能：0 中断禁止；1 中断使能</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>URX0IE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>USART0接收中断使能：0 中断禁止；1 中断使能</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>ADCIE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>ADC中断使能：0 中断禁止；1 中断使能</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>RFERRIE</td>
+            <td>0</td>
+            <td>R/W</td>
+            <td>RF收发中断使能：0 中断禁止；1 中断使能</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>中断寄存器</dt>
+      <dd>UTX0IF来判断是否发送完成 ，为1则发送成功；</dd>
+      <dd>URX0IF来判断是否接受完成，为1则接收成功；</dd>
+      <dd>更多中断请点击访问 <a href="./interrupt.html" target="_blank" class="warn">Interrupt <span
+            class="iconfont">&#xf007;</span></a></dd>
+      <dd id="cont2" class="dd-title-item">实操1</dd>
+      <dt>发送字符串</dt>
+      <dd class="code">
+        <pre>
+
+    #include "ioCC2530.h"
+    #include "string.h"
+    #include "../lib/delay.h"
+    typedef unsigned char uchar;
+    typedef unsigned int  uint;
+    #define TX_SIZE    20
+    #define TX_STRING  "Hello Zigbee... "
+    
+    void Init32M( void )
+    {
+        CLKCONCMD &= ~0x40;               //设置系统时钟源为32MHZ晶振
+        while( CLKCONSTA & 0x40 );        //等待晶振稳定为32M
+        CLKCONCMD &= ~0x47;               //设置系统主时钟频率为32MHZ
+        SLEEPCMD |= 0x04;                   //关闭不用的RC振荡器
+    }
+    void InitUart( void )
+    {
+        PERCFG = 0x00;           //外设控制寄存器 USART 0的IO位置:0为P0口位置1
+        P0SEL = 0x0c;            //P0_2,P0_3用作串口（外设功能）
+        P2DIR &= ~0XC0;          //P0优先作为UART0
+    
+        U0CSR |= 0x80;           //设置为UART方式
+        U0GCR |= 11;
+        U0BAUD |= 216;           //波特率设为115200
+        UTX0IF = 0;              //UART0 TX中断标志初始置位0
+    }
+    void UartSendString( char *Data, int len )
+    {
+        uint i;
+        for( i = 0; i < len; i++ )
+        {
+            U0DBUF = *Data++;
+            while( UTX0IF == 0 );
+            UTX0IF = 0;
+        }
+    }
+    void main( void )
+    {
+        char TxData[TX_SIZE];
+        Init32M();
+        InitUart();                       //调置串口相关寄存器
+        memset( TxData, 0, TX_SIZE );     //数据清0
+        memcpy( TxData, TX_STRING, sizeof( TX_STRING ) ); //复制发送字符串到TxData
+    
+        while( 1 )
+        {
+            UartSendString( TxData, sizeof( TX_STRING ) ); //串口发送数据
+            delay( 1000 );
+        }
+    }
+                </pre>
+      </dd>
+      <dd id="cont3" class="dd-title-item">实操2</dd>
+      <dt>利用IO发送字符串</dt>
+      <dd class="code">
+        <pre>
+
+    #include "ioCC2530.h"
+    #include "../lib/delay.h"
+    char uart_buffer;
+
+    void InitIO( void );
+    void InitUART( void );
+    void Init32M( void );
+    void UartTX_Send_String( unsigned char *Data, int len );
+    void UartTX_Send_Data( unsigned char Data, int len );
+
+    #pragma vector=URX0_VECTOR
+    __interrupt void uart0( void )
+    {
+        URX0IF = 0;//清中断标志
+        P0_0 = ~P0_0;
+        uart_buffer = U0DBUF;
+        //UartTX_Send_String("welcome",10);
+        UartTX_Send_Data( uart_buffer, 1 );
+    }
+
+    void main( void )
+    {
+        unsigned char buf[4];
+
+        //InitIO();[NOT MUST]
+        Init32M();
+        InitUART();
+
+        buf[0] = '\t';
+        while( 1 )
+        {
+            P2_0 = ~P2_0;
+            delay( 1000 );
+            if( uart_buffer == 0x01 )               //按照16进制输入[cnplaman]
+            {
+                UartTX_Send_String( "welcome", 7 ); //串口接收要发送的数据
+                UartTX_Send_String( &buf[0], 1 );   //串口发送接收的数据
+            }
+        }
+    }
+    void InitIO( void )
+    {
+        P0DIR |= 0x01;  //设置P0.0为输出方式[P0.4和P0.5为输入方式???]
+        P2DIR |= 0x01;  //设置P2.0为输出方式
+        P0_0 = 1;     //高电平截至
+        P2_0 = 1;     //高电平截至
+    }
+    void InitUART( void )
+    {
+        PERCFG = 0x00;              //外设控制寄存器UART0：P0口位置1:RX0 - P0_2；TX0 - P0_3
+        P0SEL = 0x0C;               //0011 1100：P0_2，P0_3 用作串口(外设功能);[0x3c]
+        P2DIR &= ~0xC0;             //设置P0口优先为UART0,即串口0优先级最高；其次是串口1，再是计时器1；P2DIR[7-6]PRIP0:00
+
+        U0CSR |= 0x80;              //1000 0000；UART方式
+
+        U0GCR |= 10;                //baud_e = 10;
+        U0BAUD |= 216;              //波特率设为57600
+
+        UTX0IF = 0;                 //清除UART0 TX中断标志：置0
+        U0CSR |= 0x40;              //允许接收
+        IEN0 |= 0x84;               //1000 0100开总中断，允许接收中断
+    }
+    void Init32M( void )
+    {
+        CLKCONCMD &= ~0x40;                 //选择32M晶振
+        while( !( SLEEPSTA & 0x40 ) );      //等待XSOC稳定
+        CLKCONCMD = 0xb8;                   //TICHSPD 128分频，CLKSPD 不分频
+        SLEEPCMD |= 0x04;                   //关闭不用的RC 振荡器[cnplaman:not MUST]}
+    }
+    void UartTX_Send_String( unsigned char *Data, int len )
+    {
+        for( int j = 0; j < len; j++ )
+        {
+            U0DBUF = *Data++;
+            while( UTX0IF == 0 );
+            UTX0IF = 0;
+        }
+    }
+    void UartTX_Send_Data( unsigned char Data, int len )
+    {
+        for( int j = 0; j < len; j++ )
+        {
+            U0DBUF = Data;
+            while( UTX0IF == 0 );
+            UTX0IF = 0;
+        }
+    }
+                </pre>
+      </dd>
+      <dt id="cont4" class="dd-title-item">实操3</dt>
+      <dt>利用IO控制LED</dt>
+      <dd class="code">
+        <pre>
+
+    #include “ioCC2530.h”
+    #define uint unsigned int
+    #define uchar unsigned char
+    
+    #define LED1 P0_0       //定义P0_0为LED1的控制引脚
+    #define LED2 P2_0       //定义P2_0为LED2的控制引脚
+    
+    void InitIO();        //声明LED初始化函数
+    void InitUART();      //声明串口0初始化函数
+    void Init32M();    //声明初始化32M时钟初始化函数
+    void UR0SendByte( unsigned char Byte ); //声明发送一个字节初始化函数
+    void UR0SendString( unsigned char *str ); //声明发送字符串初始化函数
+    void Execute_CMD();     //声明执行上位机命令初始化函数
+    
+    char RxBuf;             //定义接收缓冲区
+    char Rx_flag;           //定义串口接收标志位
+    #pragma vector = URX0_VECTOR
+    __interrupt void URX0_ISR()
+    {
+        URX0IF = 0;           //清中断标志位
+        RxBuf = U0DBUF;       //将缓冲寄存器的数据给读出来
+        Rx_flag = 1;          //接收标志位置1
+    }
+    void main()
+    {
+        InitIO();           //初始化LED端口
+        InitUART();         //初始化串口0
+        Init32M();       //初始化32M晶振
+    
+        UR0SendString( "Hello ZigBee!\r\n" );
+    
+        while( 1 )
+        {
+            if( Rx_flag == 1 )  //是否接收到上位机指令
+            {
+                Execute_CMD();    //判断并执行上位机指令
+            }
+        }
+    }
+    /*===================LED初始化函数==================*/
+    void InitIO()
+    {
+        P0SEL &= ~0x01;       //将P1_0和P1_1设置为通用I/O端口功能
+        P0DIR |= 0x01;        //将P1_0和P1_1的端口设置为输出
+        P2SEL &= ~0x01;
+        P2DIR |= 0x01;
+        LED1 = 1;             //关闭LED1灯
+        LED2 = 1;             //关闭LED2灯
+    }
+    void Init32M()
+    {
+        CLKCONCMD &= ~0x40;       //系统时钟源选择：外部32MHz 。
+        while( !( SLEEPSTA & 0x40 ) ); //等待晶振稳定
+        CLKCONCMD &= ~0x47;       //128分频 CLKSPD不发分频
+        SLEEPCMD |= 0x04;         //关闭不用的RC振荡器
+    }
+    void InitUART()
+    {
+        PERCFG = 0x00;      //外设控制寄存器USART 0 的IO位置：
+        P0SEL  = 0x0C;      //设置P0_2,P_3为外设功能
+        P2DIR &= ~0xC0;     //设置P0口优先为UART0,即串口0优先级最高
+    
+        U0CSR |= 0xC0;      //设置为UART模式
+    
+        U0GCR |= 10;        //查表
+        U0BAUD |= 216;      //设置波特率为57600
+    
+        U0UCR |= 0x80;      //无流控，8位数据位，清空缓冲区
+    
+        UTX0IF = 0;         //串口0TX发送中断标志位清0：清除中断标记
+        URX0IF = 0;         //串口0RX接收中断标志位清0：清除中断标记
+    
+        URX0IE = 1;         //开串口0接收中断：使能串口0中断
+        EA = 1;             //开中断总开关
+    }
+    /*================串口0发送一个字节函数==============*/
+    void UR0SendByte( unsigned char Byte )
+    {
+        U0DBUF = Byte;        //将要发送的一个字节数据写入U0DBUF
+        while( !UTX0IF );     //等待TX中断标志，即数据发送完成
+        UTX0IF = 0;           //清除TX中断标志，准备下一次发送
+    }
+    /*================串口0发送字符串函数================*/
+    void UR0SendString( unsigned char *str )
+    {
+        while( *str != '\0' )
+        {
+            UR0SendByte( *str++ ); //逐个发送字符串中的字节
+        }
+    }
+    /*================执行上位机指令函数=================*/
+    void Execute_CMD()
+    {
+        Rx_flag = 0;      //清0接收标志位
+        switch( RxBuf )   //通过上位机发送的命令，判断并执行
+        {
+        case 0xF1:        //如果PC发送00xF1 则点亮LED1 并串口发送字符串
+            LED1 = 0;
+            UR0SendString( "The LED1 is Open!\r\n" );
+            break;
+        case 0xF2:        //如果PC发送0xF2 则熄灭LED1 并串口发送字符串
+            LED1 = 1;
+            UR0SendString( "The LED1 is Closed!\r\n" );
+            break;
+        case 0xF3:        //如果PC发送0xF3 则点亮LED2 并串口发送字符串
+            LED2 = 0;
+            UR0SendString( "The LED2 is Open!\r\n" );
+            break;
+        case 0xF4:        //如果PC发送0xF4 则熄灭LED2 并串口发送字符串
+            LED2 = 1;
+            UR0SendString( "The LED2 is Closed!\r\n" );
+            break;
+        default:
+            UR0SendString( "F1 F2 F3 F4!\r\n" );
+            break;
+        }
+    }
+                </pre>
+      </dd>
+      <dt>实验目的</dt>
+      <dd>1. 掌握CC 2530 UART串口寄存器设置；</dd>
+      <dd>2. 掌握UART串口中断函数程序的编程方法；</dd>
+      <dt>实验内容</dt>
+      <dd>在IAR集成开发环境中编写定时器中断程序；通过按键以串行方式发送指定数据；即：上位机PC通过串口助手向CC2530发送一个数据命令；
+        CC2530先接收，然后判断并执行相应的命令；</dd>
+      <dt>预备知识</dt>
+      <dd>1. 串口通信；</dd>
+      <dd>2. 了解C语言的基本知识；</dd>
+      <dd>3. 了解IAR中编写和调试程序的方法；</dd>
+      <dt>实验需求</dt>
+      <dd class="dd-dot-item"><span>安装IAR和相关驱动的个人PC</span><span class="dot"></span><span>1台</span></dd>
+      <dd class="dd-dot-item"><span>迷你USB线mini USB</span><span class="dot"></span><span>1根</span></dd>
+      <dd class="dd-dot-item"><span>仿真器CC Debugger</span><span class="dot"></span><span>1根</span></dd>
+      <dd class="dd-dot-item"><span>串并转换线USB to UART</span><span class="dot"></span><span>1根</span></dd>
+      <dd class="dd-dot-item"><span>ZigBee通用节点板</span><span class="dot"></span><span>1块</span></dd>
+      <dt>实验步骤</dt>
+      <dd>1.创建IAR工作空间；</dd>
+      <dd>2.创建基于C的IAR工程；</dd>
+      <dd>3.编辑代码并调试；可参考提供的源码，调试应无差错、无告警；</dd>
+      <dd>4.试验箱上电；使用mini USB分别连接CC Debugger和PC；并将仿真器CC Debugger的另外一端和ZigBee通用节点板上的JTAG插座相连；</dd>
+      <dd>5.按下仿真器CC Debugger的复位按钮RESET，绿灯常亮表示模块连接成功，可以往芯片中烧写程序；每次烧写程序都需要复位，确保仿真器是绿灯状态；</dd>
+      <dd>6.在IAR中点击下载并调试按钮download and debug(CTRL+D)烧写程序；</dd>
+      <dd>7.在IAR的调试窗口中，点击[全速]运行；</dd>
+      <dd>8.用串并转换线USB to UART线连接节点板串口和PC机某USB接口，在PC设备管理器中确认串口端口；</dd>
+      <dd>9.打开PC机上的串口调试助手，选择对应的串口、波特率及8位数据、1位停止、无校验、无流控；</dd>
+      <dd>10.利用串口调试助手操作串口发送数据；</dd>
+      <dd class="warn">开发过程中，请注意CTRL+S保存项目！</dd>
+      <dt class="warn">项目提升</dt>
+      <dd>1.修改波特率</dd>
+      <dd>2.修改控制字符</dd>
+      <dd>3.修改发送内容</dd>
+      <dd>4.修改时钟</dd>
+      <dd>5.按键发送消息</dd>
+      <dd>6.控制LED灯</dd>
+      <dd>7.完善项目</dd>
+      <dd class="dd-title-item">实验报告</dd>
+      <dd>1. 根据实操部分的内容，完成项目[三选一]；</dd>
+      <dd>2. 以纸质的形式提交实验报告；</dd>
+      <dd>3. 论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a>。</dd>
+    </dl>
+    <aside id="asideNav" class="asideNav flex-v">
+      <a href="#cont0" id="asidetocont0">简介</a>
+      <a href="#cont1" id="asidetocont1">寄存器</a>
+      <a href="#cont2" id="asidetocont2">实操1</a>
+      <a href="#cont3" id="asidetocont3">实操2</a>
+      <a href="#cont4" id="asidetocont4">实操3</a>
+      <a href="#top" id="asidetotop">back</a>
+    </aside>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img class="ob-img" data-src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-06-04</span>
+    </footer>
+  </section>
+  <script src="../web/lib/lazyload.js"></script>
+  <script src="../js/s2view_cnplaman.js"></script>
+  <script src="../js/back2top_js.js"></script>
+  <script>
+    window.onload = function () {
+      // top
+      let cont0 = document.querySelector('#tocont0');
+      let cont1 = document.querySelector('#tocont1');
+      let cont2 = document.querySelector('#tocont2');
+      let cont3 = document.querySelector('#tocont3');
+      let cont4 = document.querySelector('#tocont4');
+      // aside
+      let asidecont0 = document.querySelector('#asidetocont0');
+      let asidecont1 = document.querySelector('#asidetocont1');
+      let asidecont2 = document.querySelector('#asidetocont2');
+      let asidecont3 = document.querySelector('#asidetocont3');
+      let asidecont4 = document.querySelector('#asidetocont4');
+
+      let asidetop = document.querySelector('#asidetotop');
+
+      let asideNav = document.querySelector('#asideNav');
+
+      s2view(cont0, "#cont0")
+      s2view(cont1, "#cont1")
+      s2view(cont2, "#cont2")
+      s2view(cont3, "#cont3")
+      s2view(cont4, "#cont4")
+
+      s2view(asidecont0, "#cont0")
+      s2view(asidecont1, "#cont1")
+      s2view(asidecont2, "#cont2")
+      s2view(asidecont3, "#cont3")
+      s2view(asidecont4, "#cont4")
+
+      s2view(asidetop, "#top")
+
+      backToTop(this, asideNav)
+    }
+  </script>
+</body>
+
+</html>

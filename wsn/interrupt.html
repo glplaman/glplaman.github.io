@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interrupt</title>
+    <link rel="stylesheet" href="../css/reset.css">
+</head>
+
+<body>
+    <section class="w">
+        <header>
+            <h1>中断interrupt</h1>
+        </header>
+        <dl>
+            <dd>程序运行时，如果系统内部、系统外部或现行程序出现了需要特殊处理的”事件”，CPU立即终止当前程序的运行-中断，然后从一个新的存储器区域启动相应的程序来处理”事件”；处理完后，回到原来的程序继续运行；
+            </dd>
+            <dd>将不同的”事件”和相应的处理程序在内存中的地址对应起来，就构成中断向量表； </dd>
+            <dd>通常将存储器最低的1KB作为中断向量表区，即地址范围是：0x00000-0x003FF，假设是20根地址线；则最大寻址空间是1MB； </dd>
+            <dd>每个中断向量占4个字节，最大只能存储256个中断向量；</dd>
+            <dt>中断通信方式 </dt>
+            <dd>1.轮询模式 Polling mode：CPU不断查询接收队列，直到发现有数据存在； </dd>
+            <dd>2.中断模式 Interrupt mode：当接收到数据时，串口控制器以中断的方式通知CPU； </dd>
+            <dd>3.直接存储访问模式 DMA：不需要CPU参与，直接把数据送到内存中；多适合于频繁大量的数据交互； </dd>
+            <dd>由专门的寄存器负责[以收发快递为例]</dd>
+            <dt>中断向量表interrupt vector table </dt>
+            <dd class="dd-img-item"><img src="../imgs/wsn/WSN exp2/幻灯片18.JPG" alt=""></dd>
+            <dt>中断向量interrupt vector </dt>
+            <dd>以中断类型码或中断类型号区分；按大小顺序存放分：系统专用中断、保留中断、用户自定义中断 </dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/WSN exp2/幻灯片19.JPG" alt=""></dd>
+            <dt>中断寄存器 </dt>
+            <dd>以段+偏移的形式指定中断处理程序入口地址</dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/WSN exp2/幻灯片20.JPG" alt=""></dd>
+            <dt>中断处理过程 </dt>
+            <dd class="dd-img-item"><img src="../imgs/wsn/WSN exp2/幻灯片23.JPG" alt=""></dd>
+            <dt>中断实例</dt>
+            <dd>[实例1]若中断类型码为20H，则中断向量存放的地址是多少？如果对应的4个字节内容分别是10H、20H、30H、40H，则中断处理程序的入口地址是多少？</dd>
+            <dd>[解]： </dd>
+            <dd>中断向量从小到大存放，每个占4个字节，所以20H的中断类型码的地址为0000:0080H </dd>
+            <dd>对应的基地址CS和偏移地址IP分别是：2010H和4030H，中断处理程序的地址为4030:2010H</dd>
+            <dd>[实例2] 若中断类型码为17H，则中断向量存放的地址是多少？ 如果对应中断处理程序的入口地址是2340H:7890H，则中断向量各个字节的内容是多少？ </dd>
+            <dd>[解]</dd>
+            <dd>中断向量从小到大存放，每个占4个字节，所以17H的中断类型码的地址为0000:005CH开始的4个字节 </dd>
+            <dd> 对应的基地址CS和偏移地址IP分别对应中断处理程序地址的高地址和低地址</dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/WSN exp2/幻灯片21.JPG" alt=""></dd>
+        </dl>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-06-02</span>
+        </footer>
+    </section>
+</body>
+
+</html>

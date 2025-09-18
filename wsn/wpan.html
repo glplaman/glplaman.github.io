@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSN协议技术</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/wsn.css">
+</head>
+
+<body>
+    <section class="w">
+        <nav class="main-nav sticky">
+            <ul class="flex-h">
+                <li class="logo">
+                    <h1><a href="./wpan.html">WSN协议</a></h1>
+                </li>
+                <li class="ham-menu" id="menu"><span class="iconfont">&#xe816;</span></li>
+                <li class="main-nav-item main-nav-active"><a href="./wpan.html">ZigBee</a></li>
+                <li class="main-nav-item"><a href="./zigbeeAddress.html">ZigBee地址</a></li>
+                <li class="main-nav-item"><a href="./zigbeeRoute.html">ZigBee路由</a></li>
+                <li class="main-nav-item"><a href="./Bluetooth.html">蓝牙</a></li>
+                <li class="main-nav-item"><a href="./UWB.html">超宽带</a></li>
+            </ul>
+        </nav>
+        <header>
+            <h1>WSN协议技术</h1>
+        </header>
+        <h2>物联网中的通信技术</h2>
+        <dl>
+            <dt>广域网</dt>
+            <dd>WAN-Wide Area Network</dd>
+            <dt>城域网</dt>
+            <dd>MAN-Metropolitan Area Network</dd>
+            <dt>局域网</dt>
+            <dd>LAN-Local Area Network</dd>
+            <dt>个域网</dt>
+            <dd>PAN-Personal Area Network-&gt;无线个域网WPAN-Wireless PAN-&gt;低速无线个域网LR-WPAN-&gt;WSN</dd>
+            <dt>其它</dt>
+            <dd>蓝牙、WIFI、红外等等</dd>
+            <dd>授权使用或免费使用</dd>
+            <dt>特点</dt>
+            <dd>大部分通信技术都需要<span class="warn">[基础设施]</span>的支持；网络拓扑结构相对集中，容易出现<span class="warn">[单点故障]</span>导致网络瘫痪；
+            </dd>
+        </dl>
+        <h2>IEEE 802.15.4</h2>
+        <dl>
+            <dt>IEEE 802</dt>
+            <dd style="float: right;text-indent:unset">
+                <a href="https://www.ieee.org/" title="https://www.ieee.org/" target="_blank"><img
+                        src="../imgs/wsn/IEEE802.gif" alt=""></a>
+            </dd>
+            <dd>IEEE is the world's largest technical professional organization dedicated to advancing technology for
+                the benefit of humanity.</dd>
+            <dd>又称为LMSC（LAN /MAN Standards Committee，
+                局域网/城域网标准委员会），致力于研究局域网和城域网的物理层和MAC层中定义的服务和协议，对应OSI网络参考模型的最低两层（即物理层和数据链路层）；</dd>
+            <dt>IEEE 802.15.4</dt>
+            <dd>针对低速无线个域网LR-WPAN制定标准；</dd>
+            <dd>目标：低能量消耗、低速率传输、低成本；</dd>
+            <dd>内容：物理层协议和MAC层协议；</dd>
+            <dd>WSN的底层协议就是采用的IEEE 802.15.4；</dd>
+        </dl>
+        <h2>Zigbee/CSA连接标准联盟</h2>
+        <dl>
+            <dt>介绍</dt>
+            <dd style="float: right;text-indent:unset"><a href="https://csa-iot.org/" title="https://csa-iot.org/"
+                    target="_blank"><img src="../imgs/wsn/csa-logo-300x76.png" alt=""></a></dd>
+            <dd>成立于<span class="warn">[2002年8月]</span>，由英国Invensys公司、日本三菱电气公司、美国Motorola公司、荷兰飞利浦半导体公司发起，现成员已达四百余家；</dd>
+            <dd>成员最多的在美国；其次是中国；</dd>
+            <dd>2021年5月11日——由数百家公司组成，共同创建、维护和提供物联网(IoT)全球开放标准的Zigbee联盟宣布更名为 "CSA连接标准联盟"(CSA联盟)；</dd>
+            <dd>主要工作：完善标准、修订漏洞或缺陷，同时补充新的特性；促进行业发展，比如开展各种学术交流；会议；培训等；产品认证和平台认证；</dd>
+            <dd><span class="warn">[思考]</span>为什么要认证？</dd>
+            <dt>Zigbee协议</dt>
+            <dd style="float: right;text-indent:unset"><a href="https://csa-iot.org/all-solutions/zigbee/"
+                    title="https://csa-iot.org/all-solutions/zigbee/" target="_blank"><img
+                        src="../imgs/wsn/zb_logo-a_color_rgb-1.jpg" alt=""></a></dd>
+            <dd>CSA连接标准联盟下的一个技术分支；</dd>
+            <dd>最新版本是<span class="warn">[3.0]</span>，是一个强制标准；</dd>
+            <dt>目标</dt>
+            <dd>低功耗的前提下，开发易于部署、低复杂度、低成本、低速率、短距离、自组网的无线网络；</dd>
+            <dt>技术标准</dt>
+            <dd>4个层面：物理层、MAC层、网络层和应用层；</dd>
+            <dd>物理层和MAC层由 IEEE 802.15.4制定；</dd>
+            <dd>网络层和应用层由 Zigbee联盟负责定义；</dd>
+            <dt>Zigbee协议栈</dt>
+            <dd>德州仪器 Texas Instruments 的Z-stack：免费；半开源；配合IAR使用，适合初学者；</dd>
+            <dd>飞思卡尔 Freescale 的beestack：收费；不开源；</dd>
+            <dt>Zigbee芯片</dt>
+            <dd>CC2430/CC2431：首个单芯片的zigbee解决方案；首个真正意义上的片上系统-System on Chip；</dd>
+            <dd>CC2530/CC2531：24系列的升级版本；4个闪存版本-32/64/128/256KB；应用最为广泛；</dd>
+            <dd>CC2538：高端high-end芯片；通常作为WSN中协调器节点；其它节点采用2530系列；</dd>
+            <dt>技术特点</dt>
+            <dd>低功耗：发射功率仅为1mW；2节5号电池可以维持工作6个月到2年；</dd>
+            <dd>传输速率低：所以功耗小</dd>
+            <dd>成本低：协议免专利费；模块成本价钱已经跌破1美元；</dd>
+            <dd>时延短：适合时延苛刻的控制系统；设备搜索时延30ms；休眠激活时延15ms；接入信道时延15ms；</dd>
+            <dd>容量大： 1个星型网络：1个主设备；254个从设备；1个区域：100个zigbee网络；理论上，MESH网络中节点数目可达65536个；</dd>
+            <dd>可靠：<span class="warn">CSMA/CA碰撞避免</span>；完全确认传输模式；</dd>
+            <dd>安全：CRC；AED-128；</dd>
+            <dt>Zigbee体系结构</dt>
+            <dd class="img-box">
+                <table>
+                    <tr>
+                        <td>应用子层、安全、zigbee设备对象等</td>
+                        <td>应用层</td>
+                        <td rowspan="2">Zigbee联盟</td>
+                    </tr>
+                    <tr>
+                        <td>路由、路由维护、子节点管理</td>
+                        <td>网络层</td>
+                    </tr>
+                    <tr>
+                        <td>CSMA/CA、ACK、Retry、Scan</td>
+                        <td>链路层</td>
+                        <td rowspan="2">IEEE 802.15.4</td>
+                    </tr>
+                    <tr>
+                        <td>射频管理、调制、解调</td>
+                        <td>物理层</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表1 Zigbee体系结构</dd>
+            <dt>常见技术对比</dt>
+            <dd class="img-box">
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>距离</td>
+                        <td>速率</td>
+                        <td>功耗</td>
+                        <td>网关</td>
+                        <td>特点</td>
+                        <td>应用</td>
+                    </tr>
+                    <tr>
+                        <td>Bluetooth</td>
+                        <td>2-30m</td>
+                        <td>1Mbps</td>
+                        <td></td>
+                        <td>需要</td>
+                        <td>近距离；单节点</td>
+                        <td>通信、汽车、多媒体、工业、医疗、教育</td>
+                    </tr>
+                    <tr>
+                        <td>Zigbee</td>
+                        <td>50-300m</td>
+                        <td>250kbps</td>
+                        <td>5mA</td>
+                        <td>需要</td>
+                        <td>低速；低功耗；低成本；多节点</td>
+                        <td>远程控制、嵌入式</td>
+                    </tr>
+                    <tr>
+                        <td>WIFI</td>
+                        <td>100-300m</td>
+                        <td>300Mbps</td>
+                        <td>10-50mA</td>
+                        <td>否</td>
+                        <td>竞争网络资源</td>
+                        <td>无线上网、OA、PDA</td>
+                    </tr>
+                    <tr>
+                        <td>IR</td>
+                        <td>100-300m</td>
+                        <td>300Mbps</td>
+                        <td>10-50mA</td>
+                        <td>否</td>
+                        <td>点对点；近距离；LOS</td>
+                        <td>近距离遥控；万能遥控</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表2 常见技术对比</dd>
+            <dd class="iframe-box">
+                <iframe class="iframe"
+                    src="//player.bilibili.com/player.html?aid=887068279&bvid=BV1TK4y1n7MF&cid=308038974&page=1"
+                    scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+            </dd>
+            <dd class="dd-diag-item">Zigbee在智能家居中的应用</dd>
+        </dl>
+        <h2>物理层PHY协议</h2>
+        <dl>
+            <dt>信道</dt>
+            <dd>868Mhz：1个信道，ch0，868.3Mhz；</dd>
+            <dd>915Mhz：10个信道，ch1-ch10；频率间隔2Mhz；906Mhz + 2Mhz *（ k-1 ）， k=1,…,10；</dd>
+            <dd>2.4Ghz：16个信道，ch11-ch26；频率间隔5Mhz，2405Mhz + 5Mhz *（ k-11 ），k=11,…,26 <span class="warn">[同WIFI的冲突]</span>
+            </dd>
+            <dd class="dd-img-item">
+                <table>
+                    <tr style="background-color: rgb(71, 216, 245);">
+                        <td>频率</td>
+                        <td>速率</td>
+                        <td>信道</td>
+                        <td>地区</td>
+                    </tr>
+                    <tr>
+                        <td>868Mhz</td>
+                        <td>20Kbps</td>
+                        <td>ch0</td>
+                        <td>欧洲</td>
+                    </tr>
+                    <tr>
+                        <td>915Mhz</td>
+                        <td>40Kbps</td>
+                        <td>ch1-ch10</td>
+                        <td>北美</td>
+                    </tr>
+                    <tr>
+                        <td>2400Mhz</td>
+                        <td>250Kbps</td>
+                        <td>ch11-ch26</td>
+                        <td>全球范围</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表3 信道划分</dd>
+            <dt>帧结构</dt>
+            <dd>前导码：32个0；用于收发器/通信双方同步</dd>
+            <dd>SFD-Start Frame Delimiter，表示同步结束，数据报开始传输</dd>
+            <dd>PSDU-PHY service data unit，物理层服务数据单元，即数据</dd>
+            <dd>中间的物理帧头是1个字节，其中高7位表示物理帧的长度，以字节位单位</dd>
+            <dd><span class="warn">[思考]</span>物理帧的最大长度是多少字节？</dd>
+            <dd class="dd-img-item">
+                <table>
+                    <tr>
+                        <td>4 byte</td>
+                        <td>1 byte</td>
+                        <td colspan="2">1 byte</td>
+                        <td>变长</td>
+                    </tr>
+                    <tr>
+                        <td>前导码</td>
+                        <td>SFD</td>
+                        <td>帧长度 7 bit</td>
+                        <td>保留位1 bit</td>
+                        <td>PSDU</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">同步码</td>
+                        <td colspan="2">物理帧头</td>
+                        <td>PHY负载</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表4 物理层帧结构</dd>
+        </dl>
+        <h2>MAC层协议</h2>
+        <dl>
+            <dt>概述</dt>
+            <dd>处理所有对物理层的访问</dd>
+            <dd>提供：MAC数据服务、MAC管理服务</dd>
+            <dt>通用帧结构</dt>
+            <dd>帧控制域：帧类型定义和其它控制标志</dd>
+            <dd>序列号：帧唯一的标识号</dd>
+            <dd>目标PAN/源PAN：接收/发送设备的唯一标识</dd>
+            <dd>目标地址/源地址：接收/发送设备的地址；不同的寻找模式对应不同类型的地址</dd>
+            <dd>MHR：帧头</dd>
+            <dd>MFR：帧尾[帧的结构一般都由头、尾和数据构成；</dd>
+            <dt>帧类型：由帧控制决定</dt>
+            <dd>信标帧beacon</dd>
+            <dd>数据帧data</dd>
+            <dd>确认帧<span class="warn">ACK</span></dd>
+            <dd>MAC命令帧command</dd>
+            <dd class="dd-img-item">
+                <img style="width: 100%; box-shadow: 0 0 1rem #ddd;" src="../imgs/wsn/zigbee0.jpg" alt="">
+            </dd>
+            <dd class="dd-diag-item">图1 帧的确认</dd>
+            <dd class="dd-img-item">
+                <table>
+                    <tr>
+                        <td>2 byte</td>
+                        <td>1 byte</td>
+                        <td>2 byte</td>
+                        <td>2/8 byte</td>
+                        <td>2 byte</td>
+                        <td>2/8 byte</td>
+                        <td>变长数据</td>
+                        <td>2 byte</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">帧控制</td>
+                        <td rowspan="2">序列号</td>
+                        <td>目标PAN</td>
+                        <td>目标地址</td>
+                        <td>源PAN</td>
+                        <td>源地址</td>
+                        <td rowspan="2">帧负载</td>
+                        <td rowspan="2">FCS</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">地址域</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">MHR</td>
+                        <td>MAC负载</td>
+                        <td>MFR</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表5 MAC通用帧结构</dd>
+        </dl>
+        <h2>节点类型</h2>
+        <dl>
+            <dt>协调器节点 Coordinator - ZC</dt>
+            <dd>是网络的第一个设备；负责网络的创建维护、信道选择、节点地址分配、数据转发；是整个WSN的核心；</dd>
+            <dd>为网络选定信道和16 bit的PID(PAN ID)并启动网络；</dd>
+            <dd>为其它节点分配网络地址，节点间通过网络地址相互通信[DHCP]；</dd>
+            <dd><span class="warn">[思考]</span>协调器的地址由谁分配？</dd>
+            <dd><span class="warn">[思考]</span>既然已经有了信道了，为什么还需要PID？</dd>
+            <dt>路由器节点 Router - ZR</dt>
+            <dd>网络拓扑管理；扩大覆盖范围；</dd>
+            <dd>节点进/出网管理；</dd>
+            <dd>转发/路由数据包；</dd>
+            <dd>主电源供电；</dd>
+            <dd>也可作为普通节点使用；</dd>
+            <dt>终端节点 End-Device - ZED</dt>
+            <dd>网络的最末端；采集数据；不能转发数据；一般和父节点/路由器通信，不直接和协调器通信；</dd>
+            <dd>终端节点可以挂在路由器下，也可以挂在协调器下，根据实际通信情况而定；</dd>
+            <dd>睡眠或唤醒</dd>
+            <dd>电池供电</dd>
+            <dt>总结说明</dt>
+            <dd>一个WSN有一个协调器</dd>
+            <dd>一个协调器最多可以挂256个路由器节点</dd>
+            <dd>一个路由器节点最多可以挂256个终端节点</dd>
+            <dd>一个WSN最多可以有256*256个节点，即2<sup>16</sup>个节点；</dd>
+            <dd class="dd-img-item">
+                <table>
+                    <tr style="background-color: rgb(71, 216, 245);">
+                        <td>coordinator</td>
+                        <td>router</td>
+                        <td>end-device</td>
+                    </tr>
+                    <tr style="text-align: left;">
+                        <td>there can be only ONE</td>
+                        <td>message routing</td>
+                        <td>leaf nodes</td>
+                    </tr>
+                    <tr style="text-align: left;">
+                        <td>always 0x0000</td>
+                        <td>can also serve as end device</td>
+                        <td>can be sleepy node</td>
+                    </tr>
+                    <tr style="text-align: left;">
+                        <td>trust center,network manager</td>
+                        <td>cannot be sleepy</td>
+                        <td>must has a parent</td>
+                    </tr>
+                    <tr style="text-align: left;">
+                        <td>act as router</td>
+                        <td>live with the network</td>
+                        <td>parent responsibility</td>
+                    </tr>
+                    <tr style="text-align: left;">
+                        <td>FFD-full function device</td>
+                        <td>FFD-full function device</td>
+                        <td>RFD-reduced function device</td>
+                    </tr>
+                </table>
+            </dd>
+            <dd class="dd-diag-item">表6 brief summary</dd>
+        </dl>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-04-27</span>
+        </footer>
+    </section>
+    <script src="/utils/lib/nav.js"></script>
+</body>
+
+</html>

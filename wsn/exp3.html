@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buzzer</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/wsn exp.css">
+</head>
+
+<body>
+    <section class="w">
+        <nav class="main-nav sticky">
+            <ul class="flex-h">
+                <li class="logo">
+                    <h1><a href="./exp1.html">WSN <span>实验</span></a></h1>
+                </li>
+                <li class="ham-menu" id="menu"><span class="iconfont">&#xe816;</span></li>
+                <li class="main-nav-item"><a href="./exp1.html">点灯</a></li>
+                <li class="main-nav-item main-nav-active"><a href="./exp3.html">蜂鸣器</a></li>
+                <li class="main-nav-item"><a href="./exp4.html">数码管</a></li>
+                <li class="main-nav-item"><a href="./exp5.html">温湿度</a></li>
+                <li class="main-nav-item"><a href="./exp6.html">压力</a></li>
+                <li class="main-nav-item"><a href="./exp7.html">光照</a></li>
+                <li class="main-nav-item"><a href="./exp8.html">人体感应</a></li>
+                <li class="main-nav-item"><a href="./exp9.html">超声波</a></li>
+            </ul>
+        </nav>
+        <header>
+            <h1>蜂鸣器</h1>
+        </header>
+        <dl>
+            <dt>原理</dt>
+            <dd>Buzzer，发声器件，用于告警[警报]和提醒[哔]；</dd>
+            <dd>有源蜂鸣器和无源蜂鸣器[震荡源]；</dd>
+            <dd class="dd-title-item">实操部分</dd>
+            <dt>实验目的</dt>
+            <dd>1.了解蜂鸣器的工作原理；</dd>
+            <dd>2.掌握使用CC 2530 IO口控制蜂鸣器的方法和编程实现；</dd>
+            <dd>3.进一步熟悉IAR的使用；</dd>
+            <dt>实验内容</dt>
+            <dd>在IAR集成开发环境中编写蜂鸣器控制程序，配合节点板实现蜂鸣器的鸣叫与停止；</dd>
+            <dt>实验需求</dt>
+            <dd class="dd-dot-item"><span>安装IAR和相关驱动的个人PC</span><span class="dot"></span><span>1台</span></dd>
+            <dd class="dd-dot-item"><span>迷你USB线mini USB</span><span class="dot"></span><span>1根</span></dd>
+            <dd class="dd-dot-item"><span>仿真器CC Debugger</span><span class="dot"></span><span>1根</span></dd>
+            <dd class="dd-dot-item"><span>ZigBee通用节点板</span><span class="dot"></span><span>1块</span></dd>
+            <dt>实验现象</dt>
+            <dd>节点板上的蜂鸣器断续鸣叫；</dd>
+            <dt>实验步骤</dt>
+            <dd>1.创建IAR工作空间；</dd>
+            <dd>2.创建基于C的IAR工程；</dd>
+            <dd>3.配置工程；</dd>
+            <dd>4.编辑代码并调试[无差错；无告警]；</dd>
+            <dd>5.试验箱上电；使用mini USB分别连接CC Debugger和PC；并将仿真器CC Debugger的另外一端和ZigBee通用节点板上的JTAG插座相连；按下仿真器CC
+                Debugger的复位按钮，绿灯常亮表示模块连接成功，可以往芯片中烧写程序；</dd>
+            <dd>6.在IAR中点击，download and debug(CTRL+D)烧写程序；</dd>
+            <dd>7.在IAR的调试窗口中，点击开始运行：观察蜂鸣器鸣叫和停止鸣叫；当蜂鸣器鸣叫时， 节点板上发光二极管亮；当蜂鸣器停止鸣叫时，节点板上的发光二极管灭；</dd>
+            <dd class="warn">开发过程中，请注意CTRL+S保存项目！</dd>
+            <dt>参考源码</dt>
+            <dd class="code">
+                <pre>
+
+    #include "ioCC2530.h"
+    #include "../lib/delay.h"    
+    void main( void )
+    {
+        P0DIR = ( 0x01 << 0 ) | ( 0x01 << 5 ); //P0.0,P0.5 为输出方式
+        P2DIR |= 0x01;              // 设置 P2.0 为输出方式
+        while( 1 )
+        {
+            P0_5 = 1;               //打开蜂鸣器
+            P0_0 = 0;
+            P2_0 = 0;
+            delay( 5000 );
+            P0_5 = 0;               //关闭蜂鸣器
+            P0_0 = 1;
+            P2_0 = 1;
+            delay( 2000 );
+        }
+    }
+                </pre>
+            </dd>
+            <dt>项目提升</dt>
+            <dd>请使用宏和函数优化代码，使其符合模块化开发，同时可读性更强；</dd>
+            <dd class="dd-title-item">实验报告</dd>
+            <dd>1. 根据实操部分的内容，完成蜂鸣器项目；</dd>
+            <dd>2. 以纸质的形式提交实验报告；</dd>
+            <dd>3. 论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a>。</dd>
+        </dl>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-06-17</span>
+        </footer>
+    </section>
+    <script src="/utils/lib/nav.js"></script>
+</body>
+
+</html>

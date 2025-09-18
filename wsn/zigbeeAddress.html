@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zigbee address</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/wsn.css">
+</head>
+
+<body>
+    <section class="w">
+        <nav class="main-nav sticky">
+            <ul class="flex-h">
+                <li class="logo">
+                    <h1><a href="./wpan.html">WSN协议</a></h1>
+                </li>
+                <li class="ham-menu" id="menu"><span class="iconfont">&#xe816;</span></li>
+                <li class="main-nav-item"><a href="./wpan.html">ZigBee</a></li>
+                <li class="main-nav-item main-nav-active"><a href="./zigbeeAddress.html">ZigBee地址</a></li>
+                <li class="main-nav-item"><a href="./zigbeeRoute.html">ZigBee路由</a></li>
+                <li class="main-nav-item"><a href="./Bluetooth.html">蓝牙</a></li>
+                <li class="main-nav-item"><a href="./UWB.html">超宽带</a></li>
+            </ul>
+        </nav>
+        <header>
+            <h1>Zigbee地址</h1>
+        </header>
+        <dl>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 ZigBee/幻灯片1.JPG" alt=""></dd>
+            <dt>[英文]</dt>
+            <dd>ZigBee devices have two types of addresses. A 64-bit IEEE address (also called MAC address or Extended
+                address)
+                and a 16-bit network address (also called logical address or short address).</dd>
+            <dt>[中文]</dt>
+            <dd>ZigBee节点设备有两种类型的地址：一个64bit的MAC地址，也称扩展地址<span class="warn">[长地址]</span>；一个16bit的网络地址，也称逻辑地址或<span
+                    class="warn">[短地址]</span>；</dd>
+            <dt>[英文]</dt>
+            <dd>The 64-bit address is a globally unique address and is assigned to the device for its lifetime. It is
+                usually set by the manufacturer or during installation. These addresses are maintained and allocated by
+                the IEEE. The 16-bit address is assigned to a device when it joins a network and is intended for use
+                while it is on the network. It is only unique within that network. It is used for identifying devices
+                and sending data within the network.
+            </dd>
+            <dt>[中文]</dt>
+            <dd>64bit地址全球唯一，且终身使用；地址的设置通常由制造商生产时或安装时完成；而地址的维护和分配则由<span
+                    class="warn">[IEEE]</span>负责；16bit地址是在节点设备加入网络时获得，且只能用于该网络；地址在这个网络中应保持唯一；用来在网络中标识节点设备和发送数据；
+            </dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 ZigBee/幻灯片2.JPG" alt=""></dd>
+            <dt>[英文]</dt>
+            <dd>ZigBee PRO uses a stochastic (random) addressing scheme for assigning the network addresses. This
+                addressing scheme randomly assigns short addresses to new devices, and then uses the rest of the devices
+                in the network to ensure that there are no duplicate addresses.</dd>
+            <dt>[中文]</dt>
+            <dd>ZigBee使用随机地址方案分配地址。该方案<span class="warn">[随机]</span>为新节点设备分配一个短地址，以确保网络中没有重复的地址；</dd>
+            <dt>[英文]</dt>
+            <dd>When a device joins, it receives its randomly generated address from its parent. The new network node
+                then generates a “Device Announce” (which contains its new short address and its extended address) to
+                the rest of the network.</dd>
+            <dt>[中文]</dt>
+            <dd>当一个节点设备加入网络成为一个新的网络节点时，收到<span class="warn">[父级节点]</span>随机产生的一个地址；同时向网络其它节点发布一个包含自己短地址和长地址的"节点设备声明"。
+            </dd>
+            <dt>[英文]</dt>
+            <dd>If there is another device with the same short address, a node (router) in the network will send out a
+                broadcast “Network Status – Address Conflict” to the entire network and all devices with the conflicting
+                short address will change its short address. When the conflicted devices change their address, they
+                issue their own “Device Announce” to check their new address for conflicts within the network.</dd>
+            <dt>[中文]</dt>
+            <dd>如果另外一个节点设备的短地址和它相同，网络中的<span
+                    class="warn">[路由器节点]</span>将向全网广播一个"地址冲突"的网络状态报文；所有地址冲突的节点设备必须更改他的短地址；当地址更改完毕后，这些冲突节点也会发布一个他们自己的"节点设备声明"以检验新地址是否产生冲突；
+            </dd>
+            <dt>[英文]</dt>
+            <dd>End devices do not participate in the “Address Conflict”. Their parents do that for them. If an “Address
+                Conflict” occurs for an end device, its parent will issue the end device a “Rejoin Response” message to
+                change the end device’s short address and the end device issues a “Device Announce” to check their new
+                address for conflicts within the network.</dd>
+            <dt>[中文]</dt>
+            <dd>端节点设备并不参与地址冲突的检测，而是由父级节点完成。如果一个端节点设备发生了地址冲突，他的父级节点会发布一个"重新加入"的响应报文并改变它的新短地址；端节点设备在网络内发布"节点设备声明"以检验是否地址冲突；
+            </dd>
+            <dt>[英文]</dt>
+            <dd>When a “Device Announce” is received, the association and binding tables are updated with the new short
+                address, routing table information is not updated (new routes must be established). If a parent
+                determines that the “Device Announce” pertains to one of its end device children, but it didn't come
+                directly from the child, the parent will assume that the child moved to another parent.</dd>
+            <dt>[中文]</dt>
+            <dd>节点收到"节点设备声明"报文时，对应的关联绑定表进行更新，而路由信息表不更新，但是必须建立新的路由；如果一个父级节点发现这个"节点设备声明"属于他子级的端节点设备，但并不是由它直接发出，就假定这个子节点已经移动归属到了另外一个父级节点；
+            </dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 ZigBee/幻灯片3.JPG" alt=""></dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 ZigBee/幻灯片4.JPG" alt=""></dd>
+            <dt>概述</dt>
+            <dd>ZigBee应用程序通常使用AF_DataRequest( )函数向网络中的节点设备发送数据；接收数据报的目标节点设备应符合如下定义的数据类型；</dd>
+            <dd>
+                <pre class="code">
+
+    #define Z_EXTADDR_LEN   8
+    typedef byte ZLongAddr_t[Z_EXTADDR_LEN];
+                </pre>
+                <pre class="code">
+
+    typedef struct
+    {
+        union
+        {
+            uint16 shortAddr;
+            ZLongAddr_t extAddr;
+        } addr;
+        byte addrMode;
+    } zAddrType_t;       
+</pre>
+            </dd>
+            <dd>更多细节，请参看文档：…\Z-Stack 3.0.2\Components\osal\include\ZComDef.h；</dd>
+            <dd></dd>
+            <dd>除了网络地址外，还必须指定地址模式以区分数据的通信的方式：单播通信、组播通信、广播通信或未知地址通信；
+                <pre class="code">
+
+    typedef enum
+    {
+        afAddrNotPresent = AddrNotPresent,
+        afAddr16Bit      = Addr16Bit,
+        afAddr64Bit      = Addr64Bit,
+        afAddrGroup      = AddrGroup,
+        afAddrBroadcast  = AddrBroadcast
+    } afAddrMode_t;                
+</pre>
+            </dd>
+            <dd>更多细节，请参看文档：...\Z-Stack 3.0.2\Components\stack\af\AF.h；</dd>
+            <dt>单播地址 unicast</dt>
+            <dd>报文送给一个网络地址已知的节点设备；数据包中要携带目的网络地址；</dd>
+            <dd>最常见的寻址模式：地址模式addrMode设置为 Addr16Bit；</dd>
+            <dt>多播 multicast</dt>
+            <dd>报文送给一组节点设备；</dd>
+            <dd>地址模式addrMode设置为afAddrGroup；同时节点的短地址addr.shortAddr应设置为对应的组ID-group identifier；</dd>
+            <dd><span class="warn"> 注意</span>要使用组播，必须先在网络中定义；</dd>
+            <dt>声明</dt>
+            <dd>
+                <pre class="code">
+
+    [Prototype]
+    ZStatus_t aps_AddGroup( uint8 endpoint, aps_Group_t *group );
+
+    [Parameter Details]
+    endpoint – the endpoint that will receive messages sent to the group in the group field. 
+    group - group ID and group name to add into the group table.
+
+    [Return]
+    ZSuccess if add was successful. Errors are ZApsDuplicateEntry, ZApsTableFull, or ZMemError (all defined in ZComDef.h).</pre>
+            </dd>
+            <dd>更多细节，请参看文档：…\Z-Stack 3.0.2\Documents\API\Z-Stack API.pdf；</dd>
+            <dt>使用</dt>
+            <dd>
+                <pre class="code">
+
+    aps_Group_t group;
+    group.ID = 0x0001;
+    group.name[0] = 6;
+    osal_memcpy( &(group.name[1]), “Group1”, 6);
+    aps_AddGroup( SAMPLEAPP_ENDPOINT, &group );</pre>
+            </dd>
+            <dt>广播 broadcast</dt>
+            <dd>如果ZigBee应用程序想向网络中所有的节点设备发送报文时，可以采用广播模式；</dd>
+            <dd>地址模式addrMode 设置为AddrBroadcast；</dd>
+            <dd>目标地址可以设置为下面广播地址中的一种：</dd>
+            <dd>1. NWK_BROADCAST_SHORTADDR_DEVALL (0xFFFF)：数据报会被发给所有节点，包括睡眠节点设备；对于睡眠节点设备，数据报由父级保留，直到睡眠节点设备轮询时或者数据报超时丢弃；
+            </dd>
+            <dd>2. NWK_BROADCAST_SHORTADDR_DEVRXON (0xFFFD)：数据报发送给所有空闲时等待接收的节点设备，不包括睡眠节点设备；</dd>
+            <dd>3. NWK_BROADCAST_SHORTADDR_DEVZCZR (0xFFFC)：数据报发送给所有的路由器，包括协调器；</dd>
+            <dd>更多细节，请参看文档：…\Z-Stack 3.0.2\Projects\zstack\Tools\CC2530DB\f8wConfig.cfg；</dd>
+            <dt>间接交付 Indirect</dt>
+            <dd>ZigBee应用程序不清楚最终的目的节点设备在哪里时，可以使用这个模式；</dd>
+            <dd>地址模式addrMode设置为AddrNotPresent，目标节点设备地址不指定，而是在发送节点设备栈中的绑定表binding
+                table中寻找目标节点设备（因为节点设备绑定发生在源端，所以称源绑定Source
+                binding ）；</dd>
+            <dd>找到目标地址和对应的端节点设备后，就按照单播的形式发送数据报；</dd>
+            <dd>如果找到不只一个目标节点设备，就向每个目标节点设备都发送一份数据报拷贝；</dd>
+            <dd>如果找不到对应的绑定记录，数据报就不会发送；</dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 ZigBee/幻灯片5.JPG" alt=""></dd>
+            <dt>获取节点设备地址</dt>
+            <dd>如果一个ZigBee应用想要获取一个节点设备以及它的父级节点设备的地址，可以使用下面的函数；</dd>
+            <dt>获取节点设备地址</dt>
+            <dd>NLME_GetShortAddr() – 返回节点设备16bit网络地址；</dd>
+            <dd>NLME_GetExtAddr() – 返回节点设备64bit扩展地址；</dd>
+            <dt>获取父级节点设备地址</dt>
+            <dd>NLME_GetCoordShortAddr() –返回父级节点设备16bit的短地址；</dd>
+            <dd>NLME_GetCoordExtAddr() –返回父级节点设备64bit的扩展地址；</dd>
+            <dd><span class="warn">注意</span> 这里的coord不是协调器，而是父级节点设备；</dd>
+            <dd>更多细节，请参看文档：…\Z-Stack 3.0.2\Documents\API\Z-Stack API.pdf；</dd>
+            <dd class="dd-img-item"><img src="../imgs/wsn/chap6 ZigBee/幻灯片6.JPG" alt=""></dd>
+            <dd>绑定是控制一个应用和另外一个应用之间或多个应用之间消息流的机制。这种绑定机制部署于所有的节点设备，也称为源绑定。</dd>
+            <dd>绑定允许一个应用在不知道目标地址的情况发送数据报。节点设备的应用子层通过查询它的绑定表来决定目标地址，进而转发消息给相应的目标应用，可以是组播也可以是广播。</dd>
+            <dt>创建绑定表</dt>
+            <dd>可以通过4种途径创建绑定表：</dd>
+            <dd>1. ZDO委托绑定请求：通过委托或代理，通常是协调器，告知节点设备创建一个绑定记录；</dd>
+            <dd>2. ZDO端节点设备绑定请求：2个节点设备告知协调器，他们需要建立一个绑定；协调器通过匹配match进而在2个设备之间创建绑定记录；</dd>
+            <dd>3. 节点设备应用：由节点设备端的应用创建和管理绑定表；</dd>
+            <dd>4. 启动发现和绑定进程的节点设备可以创建绑定表；</dd>
+            <dt>ZDO绑定请求</dt>
+            <dd>任何节点设备和应用都可以通过空口向网络中另外一个节点设备发送ZDO消息来创建到该节点设备的绑定记录。这种方式称为辅助绑定，将为发送消息的节点设备创建一个绑定记录；</dd>
+            <dt>委托绑定应用</dt>
+            <dd>委托绑定应用以绑定记录所需的地址和端点以及簇头ID为参数，调用ZDP_BindReq()即可启动绑定的申请；</dd>
+            <dd>第一个参数目标地址dstAddr是绑定源节点的短地址（即保存绑定记录的节点设备地址)；使用相同的参数，调用ZDP_UnBindReq()，可以解除相应的绑定记录；</dd>
+            <dd>目标节点设备收到请求后，会发回一个ZDO绑定响应或解除响应；协调器解析后，返回以下状态信息：</dd>
+            <dd>对于绑定响应，协调器返回的状态将是ZDP_SUCCESS,ZDP_TABLE_FULL或者ZDP_NOT_SUPPORTED；</dd>
+            <dd>对于解除绑定响应，协调器返回的状态将是ZDP_SUCCESS,ZDP_NO_ENTRY或者ZDP_NOT_SUPPORTED；</dd>
+            <dd class="dd-img-box"><img src="../imgs/wsn/chap6 ZigBee/幻灯片7.JPG" alt=""></dd>
+            <dt>ZDO端节点设备绑定请求</dt>
+            <dd>这种绑定机制是指在一定时间内，通过按键或者其它类似的动作触发绑定。协调器在指定的时间内收集端节点设备的绑定请求，进而创建一个基于配置ID和簇头ID的绑定记录；端节点设备缺省的绑定时间(APS_DEFAULT_MAXBINDING_TIME，由nwk_globals.h定义)是16秒，也可以通过配置文件修改。
+            </dd>
+            <dd>绑定请求、绑定响应和绑定解除（在ZDApp.c的ZDApp_RegisterCBs()给出）先被协调器的ZD_RegisterForZDOMsg( )接收，进一步由ZDApp_ProcessMsgCBs(
+                )处理；</dd>
+            <dd class="dd-img-box"><img src="../imgs/wsn/chap6 ZigBee/幻灯片8.JPG" alt=""></dd>
+            <dd>这种处理是一个可以来回切换的过程；意味着，第一次执行，会在请求的节点设备中创建一个绑定记录；第二次再次执行时，就会清除节点设备中的绑定记录。这也是为什么在下面的处理中，会首先发送一个解除绑定，然后等待解除是否成功；如果解除绑定成功，则绑定记录必须是存在的且被清除了的，否则就发送一个绑定请求来创建一个记录。
+            </dd>
+            <dd>协调器收到2个匹配的端节点设备的绑定请求后，将按照以下步骤启动在请求节点设备中创建源地址绑定记录的进程：</dd>
+            <dd>1. 向第一个节点设备发送一个ZDO解除绑定请求；节点设备绑定是一个可以切换的过程，所以绑定解除首先被发送以清除一个存在的绑定记录；</dd>
+            <dd>2. 等待解除绑定响应。如果响应是查无记录ZDP_NO_ENTRY，则发送一个ZDO绑定请求以期在源节点设备中创建绑定记录；如果响应是成功 ZDP_SUCCESS，再前进到第一个节点设备的簇头ID；</dd>
+            <dd>3. 等待ZDO绑定响应。如果收到，继续前进到第一个节点设备的下一个簇头ID；</dd>
+            <dd>4. 第一个节点设备处理完成后，以同样的方式处理第二个节点设备；</dd>
+            <dd>5. 等第二个节点设备也完成处理后，向第一个节点设备和第二个节点设备都发送一个ZDO端节点设备绑定响应；</dd>
+            <dt>节点设备应用绑定管理器</dt>
+            <dd>在节点设备创建绑定记录的另外一种方式是由节点设备端的应用自己管理，即：通过调用下面的绑定表管理函数创建和清除绑定记录：</dd>
+            <dd>
+                <table>
+                    <tr>
+                        <td>函数</td>
+                        <td>说明</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindAddEntry()</td>
+                        <td>在绑定表中添加绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindRemoveEntry()</td>
+                        <td>从绑定表中清除绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindRemoveClusterIdFromList()</td>
+                        <td>从绑定表中清除指定ID的簇头绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindAddClusterIdToList()</td>
+                        <td>在绑定表中添加指定ID的簇头绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindRemoveDev()</td>
+                        <td>从绑定表中清除对应节点设备地址的所有绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindRemoveSrcDev()</td>
+                        <td>从绑定表中清除指定源节点设备地址的所有绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindUpdateAddr()</td>
+                        <td>更新指定节点设备地址的绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindFindExisting()</td>
+                        <td>从绑定表中查找记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindIsClusterIDinList()</td>
+                        <td>从绑定表中查找指定簇头ID的绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindNumBoundTo()</td>
+                        <td>绑定表中节点设备地址相同绑定记录</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindNumOfEntries()</td>
+                        <td>绑定表中绑定记录的数量</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>bindCapacity()</td>
+                        <td>绑定表的容量，最大的绑定记录数</td>
+                    </tr>
+                    <tr class="txt-align-left">
+                        <td>BindWriteNV()</td>
+                        <td>更新NV中的绑定表[non-volatile：可长久保存，非RAM存储]</td>
+                    </tr>
+                </table>
+            </dd>
+            <dt>发现和绑定</dt>
+            <dd>基本节点设备行为中定义了一个称之为发现和绑定的代理方法；对应的进程依赖于簇头和ZDO消息的使用，允许代理节点设备利用匹配的簇头去找寻节点设备。这种机制通常由用户指定的需要发现和绑定彼此的节点设备来触发；所以绑定后，这些节点设备可以更加有效的通信；
+            </dd>
+            <dt>源绑定配置</dt>
+            <dd>两个配置项：NWK_MAX_BINDING_ENTRIES和MAX_BINDING_CLUSTER_IDS；</dd>
+            <dd>NWK_MAX_BINDING_ENTRIES表示绑定表中允许的最大记录数；</dd>
+            <dd>MAX_BINDING_CLUSTER_IDS表示每一个绑定记录中允许的最大簇头ID数；</dd>
+            <dd>绑定表在系统的RAM中进行维护。因为绑定表的记录和每一个记录的簇头ID数确实会影响到RAM可使用的大小；</dd>
+            <dd>每个绑定表的记录数量是6个字节再加上2倍的最大簇头ID数；</dd>
+            <dd>除了绑定表使用的RAM那部分外，绑定配置项也会影响到地址管理器中记录的数量；</dd>
+        </dl>
+        <footer>
+            <div class="copyright">
+                <span>&copy; All Copyrights Reserved, 2022-2024</span>
+                <img src="../imgs/avatar.jpg" alt="">
+                <span>Cnplaman from No 54414, PLA</span>
+            </div>
+            <span>2022-05-10</span>
+        </footer>
+    </section>
+    <script src="/utils/lib/nav.js"></script>
+</body>
+
+</html>
