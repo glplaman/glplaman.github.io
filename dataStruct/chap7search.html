@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>查找 Search</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      background-image: url(./imgs/search.jpg);
+      background-position: center;
+      justify-content: space-between;
+      color: #333;
+    }
+
+    .iconfont,
+    .warn {
+      color: #f46;
+    }
+
+    .border-none {
+      border: none;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    .bgc {
+      background-color: #ddd;
+    }
+
+    .hash-box {
+      justify-content: center;
+    }
+
+    .p15 {
+      width: 15.5%;
+    }
+
+    .p13 {
+      width: calc(84.5%/13);
+    }
+
+    .p135 {
+      width: calc(84.5%/5);
+    }
+
+    .p10~td {
+      width: 8%;
+    }
+
+    .yes,
+    .no {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .yes::before {
+      content: 'Yes';
+      color: #f46;
+      font-size: 3rem;
+      font-weight: 600;
+      float: left;
+      margin-right: 1rem;
+      text-shadow: 1px 1px #ddd;
+    }
+
+    .no::before {
+      content: 'No';
+      color: #f46;
+      font-size: 3rem;
+      font-weight: 600;
+      float: left;
+      margin-right: 1rem;
+      text-shadow: 1px 1px #ddd;
+    }
+
+    .chap {
+      background-image: url(./imgs/chap.png);
+      background-size: auto 240px;
+      background-repeat: no-repeat;
+      background-position: right top;
+    }
+
+    dt.flex-h {
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    dt.flex-h span:last-child {
+      font-weight: normal;
+      font-size: 0.85;
+    }
+
+    .dot {
+      flex: 1;
+      height: 3px;
+      background-image: url(../imgs/dot.png);
+      background-repeat: repeat-x;
+    }
+
+    video {
+      width: 350px;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Search</h1>
+      <span class="timestamp">2022-12-05</span>
+    </header>
+    <div class="chap">基本概念 Concepts</div>
+    <dl>
+      <dt class="flex-h"><span>查找表</span><span class="dot"></span> <span>Set/Collections</span></dt>
+      <dd>. 同一类型的数据元素/记录的集合</dd>
+      <dd>. 简称表</dd>
+      <dt class="flex-h"><span>关键字</span> <span class="dot"></span><span>key</span></dt>
+      <dd>. 数据元素/记录中某个数据项的值，用来标识一个数据元素/记录</dd>
+      <dd>. 可以是唯一的，也可以是不唯一的，相应的，可以分为主关键字、次关键字</dd>
+      <dt class="flex-h"><span>查找</span> <span class="dot"></span><span>Search</span></dt>
+      <dd>. 根据给定值在查找表中<span class="warn">确定</span>一个关键字和给定值相等的数据元素或记录</dd>
+      <dd class="yes">如果存在，查找成功，给出相应的信息，如位置、值</dd>
+      <dd class="no">如果不存在，查找失败，给出空记录或空指针</dd>
+      <dt class="flex-h"><span>静态查找和动态查找</span><span class="dot"></span> <span>Static vs Dynamic</span></dt>
+      <dd>. 如果查找过程中，同时执行修改如删除、插入等操作，称为动态查找，否则为静态查找</dd>
+      <dd>. 一个精心设计的系统一定是动态的，以便更好的服务用户</dd>
+      <dd class="mt2">[<span class="iconfont icon-wenq warn"></span>] 图书检索</dd>
+      <dd>[<span class="iconfont icon-wenq warn"></span>] 社交APP新闻查询</dd>
+      <dd>[<span class="iconfont icon-wenq warn"></span>] 购物APP品搜索：黄桃罐头、莲花清瘟胶囊...</dd>
+      <dd class="txt-center">
+        <video src="./imgs/kongzi.mp4" controls muted preload=""></video>
+      </dd>
+      <dt class="flex-h"><span>平均查找长度</span><span class="dot"></span> <span>ASL</span></dt>
+      <dd>. Average Search Length</dd>
+      <dd>. 为了确定查找结果，需要和给定值比较的关键字个数的期望</dd>
+      <dd>. 用来衡量Evaluate查找算法的性能</dd>
+      <dd class="txt-center"><img src="./imgs/search2.png" alt=""></dd>
+      <dt class="flex-h"><span>主要分类</span><span class="dot"></span><span>Classification</span></dt>
+      <dd>1. 线性表的查找</dd>
+      <dd>2. 树表的查找</dd>
+      <dd>3. 散列表的查找</dd>
+      <dt class="flex-h"><span>总结</span><span class="dot"></span><span>Summary</span></dt>
+      <dd class="txt-center">去哪里找Where？找什么What？怎么找How？结果如何Evaluate？</dd>
+    </dl>
+    <div class="chap">练习 Quiz</div>
+    <dl>
+      <dd><span class="point warn"><span
+            class="iconfont icon-zanxinxingguanzhu"></span></span>如果在查找的同时对表执行修改操作，则称相应的表为静态查找表。(×)</dd>
+      <dd><span class="point warn"><span
+            class="iconfont icon-zanxinxingguanzhu"></span></span>适用于折半查找的表的存储方式及元素排列要求为（D）。</dd>
+      <dd>A. 链接方式存储，元素无序</dd>
+      <dd>B. 链接方式存储，元素有序</dd>
+      <dd>C. 顺序方式存储，元素无序 </dd>
+      <dd>D. 顺序方式存储，元素有序</dd>
+      <dd><span class="point warn"><span
+            class="iconfont icon-zanxinxingguanzhu"></span></span>对n个元素的表做顺序查找时，若查找每个元素的概率相同，则平均查找长度为（C）。
+      </dd>
+      <dd>A. (n-1)/2</dd>
+      <dd>B. n/2</dd>
+      <dd>C. (n+1)/2</dd>
+      <dd>D. n</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

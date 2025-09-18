@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>结构体 Struct</title>
+  <link rel="stylesheet" href="../css/datastruct.css">
+  <style>
+    td {
+      width: 20%;
+    }
+
+    header {
+      background-image: url(../imgs/banner.png);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    pre {
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Struct</h1>
+      <span class="timestamp">2022-10-10</span>
+    </header>
+    <div class="chap">简介 Overview</div>
+    <dl>
+      <dd>. struct是一个类型定义语句，所以以;结束</dd>
+      <dd>. 值的集合；每个值称为结构的成员变量；成员变量类型可以相同，也可以不同；也可以是结构体</dd>
+      <dd>. 通常定义在main <span class="warn">外面</span>；声明的变量则可以作为全局变量使用</dd>
+      <dd>. 定义只是描述结构，并不占用内存空间；只有实例化时才申请空间</dd>
+      <dd>. 和数组名同时也是数组地址不一样，结构体变量名 <span class="warn">不是</span> 结构体的地址，必须使用&获取结构体地址</dd>
+      <dd>. 传参时最好引用/地址传递，不要值传递。if a large structure is to be passed to a function, it is generally more
+        efficient to pass a pointer than to copy the whole structure.</dd>
+      <dt>定义 Definition</dt>
+      <dd>1. 具名定义</dd>
+      <dd>
+        <pre>
+struct tag{			
+    member_list;
+};
+//使用
+struct tag tt;
+
+//定义即声明变量
+struct tag{			
+    member_list;	
+}val_list;</pre>
+      </dd>
+      <dd>2. 不具名定义：没有结构体名，后续不能声明变量；只能使用这里声明的变量；变量列表,不可略</dd>
+      <dd>
+        <pre>
+struct {			
+    member_list;
+}val_list;</pre>
+        </pre>
+      </dd>
+      <dd>3. typedef定义：起个别名/类型名，注意不是变量名；后续声明变量可以直接使用别名，从而略去struct关键字</dd>
+      <dd>
+        <pre>
+typedef struct {	
+    member_list;
+}STR;
+
+//自引用定义：因为有指针指向自己，不能采用不具名定义
+typedef struct str
+{
+    member_list;
+    struct str *other;
+} STR;</pre>
+      </dd>
+      <dt>使用 Usage</dt>
+      <dd>直接引用：普通结构体使用点.</dd>
+      <dd class="txt-center">变量名 <span class="warn">.</span> 成员变量名</dd>
+      <dd>间接引用：指针结构体使用箭头-&gt;</dd>
+      <dd class="txt-center">变量名 <span class="warn">-&gt;</span> 成员变量名</dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+typedef struct
+{
+    int year;
+    int mon;
+    int day;
+} Birth;
+typedef struct
+{
+    int id;
+    char name[6];
+    Birth birth;
+} Stu;
+int main(void)
+{
+    Stu stu = {1, "guilin", {2022, 12, 20}};
+    printf("%d\t%s\t%d-%d-%d\n", stu.id, stu.name, stu.birth.year, stu.birth.mon, stu.birth.day);
+    Stu *p = &amp;stu;
+    printf("%d\t%s\t%d-%d-%d\n", p->id, p->name, (p->birth).year, (p->birth).mon, (p->birth).day);
+    //部分赋值
+    stu.id = 101;
+    strcpy(stu.name, "pla");
+    printf("%d\t%s\t%d-%d-%d\n", stu.id, stu.name, stu.birth.year, stu.birth.mon, stu.birth.day);
+    //使用IO修改
+    scanf("%d%s", &stu.id, stu.name);
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">内存对齐 Alignment</div>
+    <dl>
+      <dt>什么是内存对齐</dt>
+      <dt>为什么要内存对齐</dt>
+      <dd>. 方便数据访问</dd>
+      <dt>如何实现内存对齐</dt>
+      <dd>内存地址号/类型大小：</dd>
+      <dd>. 如果能整除，就从当前地址开始存储</dd>
+      <dd>. 如果不能整除，就+1个字节，直到可以整除</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>数据类型</td>
+            <td>地址倍数</td>
+          </tr>
+          <tr>
+            <td>char</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>int</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>float</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>double</td>
+            <td>8</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]A</dd>
+      <dd class="grid grid2">
+        <pre>
+typedef struct
+{
+    char a;
+    short b;
+    int c;
+} A;</pre>
+        <table>
+          <tr>
+            <td rowspan="3">A</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+          </tr>
+          <tr>
+            <td>char a</td>
+            <td></td>
+            <td colspan="2">short b</td>
+          </tr>
+          <tr>
+            <td colspan="4">int c</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]B</dd>
+      <dd class="grid grid2">
+        <pre>
+typedef struct
+{
+    int c;
+    short b;
+    char a;
+} B;</pre>
+        <table>
+          <tr>
+            <td rowspan="3">B</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+          </tr>
+          <tr>
+            <td colspan="4">int c</td>
+          </tr>
+          <tr>
+            <td colspan="2">short b</td>
+            <td>char a</td>
+            <td></td>
+          </tr>
+        </table>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]C</dd>
+      <dd class="grid grid2">
+        <pre>
+typedef struct
+{
+    char a;
+    int c;
+    short b;
+} C;</pre>
+        <table>
+          <tr>
+            <td rowspan="4">C</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+          </tr>
+          <tr>
+            <td>char a</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="4">int c</td>
+          </tr>
+          <tr>
+            <td colspan="2">short b</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]D</dd>
+      <dd class="grid grid2">
+        <pre>
+typedef struct
+{
+    char a;
+    char d;
+    short b;
+    int c;
+} D;</pre>
+        <table>
+          <tr>
+            <td rowspan="3">D</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+          </tr>
+          <tr>
+            <td>char a</td>
+            <td>char d</td>
+            <td colspan="2">short b</td>
+          </tr>
+          <tr>
+            <td colspan="4">int c</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]E</dd>
+      <dd class="grid grid2">
+        <pre>
+typedef struct
+{
+    char a;
+    short b;
+    char d;
+    int c;
+} E;</pre>
+        <table>
+          <tr>
+            <td rowspan="4">E</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+          </tr>
+          <tr>
+            <td>char a</td>
+            <td></td>
+            <td colspan="2">short b</td>
+          </tr>
+          <tr>
+            <td>char d</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="4">int c</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]F</dd>
+      <dd class="grid grid2">
+        <pre>
+typedef struct
+{
+    char a;
+    short b;
+    int c;
+    char d;
+    short f;
+    char e;
+} F;</pre>
+        <table>
+          <tr>
+            <td rowspan="5">F</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+            <td>Byte</td>
+          </tr>
+          <tr>
+            <td>char a</td>
+            <td></td>
+            <td colspan="2">short b</td>
+          </tr>
+          <tr>
+            <td colspan="4">int c</td>
+          </tr>
+          <tr>
+            <td>char d</td>
+            <td></td>
+            <td colspan="2">short f</td>
+          </tr>
+          <tr>
+            <td>char e</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </dd>
+      <dt>注意事项</dt>
+      <dd>. 不同的平台，对齐策略不尽相同</dd>
+      <dd>. 内存对齐会导致空间浪费，所以很少直接使用结构体作为形式参数，而是使用对应的结构体指针</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字符串 String</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      background-image: url(../imgs/banner.png);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    .iconfont {
+      color: #4bc2ce;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>String</h1>
+      <span class="timestamp">2022-11-18</span>
+    </header>
+    <div class="target-cont chap">基本使用 Usage</div>
+    <dl>
+      <dt>1. 如何声明一个串？</dt>
+      <dd>. 在C中，要使用一个串，可以使用字符指针或字符数组</dd>
+      <dd>. 长度需要事先指定或使用字符串库函数strlen获取</dd>
+      <dd>
+        <pre>
+//字符数组
+char arr[]="hello,world";
+//字符指针
+char *str = "hello, cnplaman.";</pre>
+      </dd>
+      <dd>实际过程：</dd>
+      <dd>步骤1. 分配内存给字符指针；</dd>
+      <dd>步骤2. 分配内存给字符串；</dd>
+      <dd class="mb2">步骤3. 将字符串首地址赋值给字符指针；</dd>
+      <dd>双引号做了什么？</dd>
+      <dd>步骤1. 在常量区申请空间，存放了字符串；</dd>
+      <dd>步骤2. 在字符串末尾加上结束标记'/0' ；</dd>
+      <dd>步骤3. 返回串存储的地址，赋值给指针变量；</dd>
+      <dd>[<span class="iconfont icon-tixing"></span>]将串的地址给字符指针</dd>
+      <dd>
+        <pre>
+char str[] = "hello, cnplaman.";//数组形式：容易获取空间大小(包括结束标记'\0')
+char str[100] = "hello, cnplaman.";//数组形式
+str="error";//错误：给常量赋值</pre>
+      </dd>
+      <dd>数组名既代表所有元素存储区域的内存地址；也代表首元素的地址；</dd>
+      <dd>数组名是常量！！！初始化的时候，可以将串直接赋值给数组；初始化完成再给数组赋值就是非法；</dd>
+      <dt>2. 如何获取/输入一个串？</dt>
+      <dd>在C中，要输入一个串，可以使用scanff或gets；</dd>
+      <dd>推荐使用scanf，因为gets：<span class="warn">the gets function is dangerous and should not be used.</span></dd>
+      <dt>3. 如何输出一个串？</dt>
+      <dd>在C中，要输出一个串，可以使用printf或puts；</dd>
+      <dd>
+        <pre>
+//方案1: 格式化函数
+printf("%s\n",str);
+//方案2: 格式化函数
+puts(str);
+//方案3: 遍历
+while (*str0)
+{
+    printf("%c", *str0);
+    str0++;
+}</pre>
+      </dd>
+      <dt>4. 综合示例</dt>
+      <dd>运行 <span class="iconfont icon-caret-square-right"></span> 并查看结果，分析串的声明和使用的区别</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+
+int main()
+{
+    char *c;
+    char *str0 = "hello, cnplaman.";
+    char str1[] = "hello, cnplaman.";
+    char str2[100] = "hello, cnplaman.";
+    char *str3 = NULL;
+    char str4[30];
+    puts(str0);
+    puts(str1);
+    puts(str2);
+
+    c = str0;
+    while (*c != '\0')
+    {
+        printf("%c\t", *c);
+        c++;
+    }
+    printf("\n");
+
+    c = str1;
+    while (*c != '\0')
+    {
+        printf("%c\t", *c);
+        c++;
+    }
+    printf("\n");
+
+    c = str2;
+    while (*c != '\0')
+    {
+        printf("%c\t", *c);
+        c++;
+    }
+    printf("\n");
+
+    //字符指针可以再赋值
+    str0 = "hi,again";
+    puts(str0);
+    //甚至可以把数组赋给字符指针：实际上是把数组的内存地址给了字符指针
+    str0 = str1;
+    puts(str0);
+
+    //数组初始化完成后，不可以再赋值
+    // str1="sorry";
+    // str2="sorry";
+
+    printf("please input the string str4:");
+    scanf("%s", str4);
+    puts(str4);
+    printf("\n");
+
+    return 0;
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jinggao"></span>]注意</dd>
+      <dd>. 防止串丢失</dd>
+      <dd>. 防止结束标记'\0'丢失</dd>
+      <dd>. 输出串时，应该判断是否是结束标记，而不是判断长度</dd>
+      <dt>5. 常见使用</dt>
+      <dd>demo1: 拷贝串</dd>
+      <dd>
+        <pre>
+char *str = "hi, there.";
+char str0[] = "hi, there.";
+puts(str);
+while (*str != '\0')
+{
+    printf("%c\n", *str);
+    str++;
+}
+puts(str0);
+int i = 0; //MUST
+while (str0[i] != '\0')
+{
+    printf("%c\n", str0[i]);
+    i++;
+}
+while (*(str0 + i) != '\0')
+{
+    printf("%c\n", *(str0 + i));
+    i++;
+}</pre>
+      </dd>
+      <dd>demo2: 逆序输出给定的字符串</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main(void)
+{
+    char str[] = "welcome";
+    int i = 0;
+    // int len = sizeof(str) / sizeof(char);8
+    int len = strlen(str);//7
+    for (int i = len - 1; i >= 0; i--)
+    {
+        //putchar(str[i]);忽略结束标记
+        printf("%c\n", str[i]);//输出结束标记
+    }
+    return 0;
+}</pre>
+      </dd>
+      <dd>demo3: 逆序输出输入的字符串</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#define N 20
+int main(void)
+{
+    char str[N];
+    int i = 0;
+    printf(">");
+    gets(str);
+    // int len = sizeof(str) / sizeof(char);
+    int len = strlen(str);
+    for ( i = len - 1; i >= 0; i--)
+    {
+        putchar(str[i]);
+    }
+    return 0;
+}</pre>
+      </dd>
+      <dd>demo4: 串的链接</dd>
+      <dd>
+        <pre>
+int main(void)
+{
+    char str[20] = "welcome";
+    char *p = "pla";
+    int len = 0;
+    while (str[len])
+    {
+        len++;
+    }
+    while (*p)
+    {
+        printf("%c\n", *p);
+        *(str + len) = *p;
+        len++;
+        p++;
+    }
+    printf("%s\n", str);
+    return 0;
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-border-warn"></span>]</dd>
+      <dd>. 需要拷贝结束标记吗？</dd>
+      <dd>. p指针是否丢失？</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">库函数 Functions</div>
+    <dl>
+      <dt>1. 头文件</dt>
+      <dd>&lt;string.h&gt;</dd>
+      <dt>2. 串长</dt>
+      <dd>strlen(str)：返回指针指向串的长度</dd>
+      <dt>3. 比较串</dt>
+      <dd>strcmp(str1,str2)：先转换成ASCII码再比较，直到遇到不同的或者结束符；返回0，表示相等；返回负数，表示s1小于s2；返回正数，表示s1大于s2</dd>
+      <dd>strncmp(str0,str1, n)：指定位数的比较</dd>
+      <dd>
+        <pre>
+"hap" &lt; "happy"         //3 &lt; 4
+"happy" > "happen"      //y(121) > e(101)</pre>
+      </dd>
+      <dt>4. 拷贝串</dt>
+      <dd>strcpy(des, src)：拷贝整串；不包括结束标记</dd>
+      <dd>strncpy(des, src, n)：拷贝n个字符/字串过去；不包括结束标记</dd>
+      <dt>5. 拼接串</dt>
+      <dd>strcat(des, src)：des应有足够的长度来容纳拼接后的总长度；返回拼接后des的地址</dd>
+      <dd>strncat(str0, str1, n)，表示拼接时取后面串的多少位</dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

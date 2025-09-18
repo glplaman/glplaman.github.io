@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>字符串 String</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/linux.css">
+  <style>
+    header {
+      background-image: url(../imgs/bt.jpg);
+    }
+
+    .top-logo {
+      background-image: url(../imgs/ty.png);
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header id="top" class="w">
+    <h1>String</h1>
+    <span class="timestamp">2022-10-05</span>
+  </header>
+  <nav id='nav' class="w">
+    <div class="logo">
+      <span>String</span>
+      <span class="reg">&reg;</span>
+    </div>
+    <div id="ham"><span class="iconfont icon-list-ul"></span></div>
+    <ul id="menu" class="menu">
+      <li class="nav-item">
+        <a class="nav-link"><span>简介</span><span class="top-sub-menu">Overview</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>抽象数据类型</span><span class="top-sub-menu">ADT</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>顺序串</span><span class="top-sub-menu">SeqString</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>链式串</span><span class="top-sub-menu">LinkedString</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>应用</span><span class="top-sub-menu">Application</span></a>
+      </li>
+    </ul>
+  </nav>
+  <div class="w cont">
+    <div class="target-cont chap">简介 Overview</div>
+    <dl>
+      <dt>1. 基本概念</dt>
+      <dd>. 0个或多个字符char组成的有限序列</dd>
+      <dd>. 是线性表的一个子集sub-set</dd>
+      <dd>. 以双引号""包裹</dd>
+      <dd class="txt-center" style="font-size:1.2rem;">s="a<sub>0</sub> a<sub>1</sub> a<sub>2</sub> a<sub>3</sub>
+        ... a<sub>n-1</sub>"</dd>
+      <dd>
+        <pre>
+"hi,there."//ok
+'hi,there.'//error</pre>
+      </dd>
+      <dt>2. 串长</dt>
+      <dd>. 字符的个数，不包括结束标记符号’\0’</dd>
+      <dd>. 空串:长度为0</dd>
+      <dd>
+        <pre>
+"hello,world"//11
+" "//1
+""//0</pre>
+      </dd>
+      <dt>3. 串相等</dt>
+      <dd>. 当且仅当两个串的长度相等，且对应的字符也相等</dd>
+      <dd>. 所有空串都相等</dd>
+      <dd>
+        <pre>
+"abc" ≠ "abcd"
+"abcd" ≠ "abcD"
+"abcde" = "abcde"</pre>
+      </dd>
+      <dt>4. 子串</dt>
+      <dd>. 串中任意个连续的字符组成的序列</dd>
+      <dd>. 空串是任何串的子串</dd>
+      <dd>
+        <pre>
+"hello,world"   //"h"   "hello" " " ""  "hello,world"
+"lover"         //"over"
+"believe"       //"lie"
+"friend"        //"end"</pre>
+      </dd>
+      <dd class="warn">[<span class="iconfont icon-border-warn"></span>]</dd>
+      <dd>. C中没有字符串类型</dd>
+      <dd>. 输出串时，应判断是否是结束标记，而不是判断串的长度</dd>
+      <dd>. 更多信息，请访问<a class="warn" href="./c_string.html" target="_blank">字符串 String</a></dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">抽象数据类型 ADT</div>
+    <dl>
+      <dt>关注</dt>
+      <dd>线性表关注的是元素的插入、删除；串更多的是关注字串的位置、查找和替换；</dd>
+    </dl>
+    <div class="target-cont chap">顺序串 SeqString</div>
+    <dl>
+      <dt>1. 顺序串特点</dt>
+      <dd>. 使用一组地址连续的存储单元[定长数组]存储字符序列</dd>
+      <dd>. 静态存储：编译的时候就决定了串空间的大小</dd>
+      <dd>. 修改慢：插入和删除需要移动大量元素</dd>
+      <dd>. 访问快：按照索引随机访问</dd>
+      <dd>. 使用比较灵活，没有栈、队列的使用约束</dd>
+      <dt>2. 数据结构</dt>
+      <dd>
+        <pre>
+    typedef struct
+    {
+        char data[maxSize];
+        int len;
+    } String;</pre>
+      </dd>
+      <dt>3. 参考代码</dt>
+      <dd>
+        <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+
+    #define maxSize 20
+    #define TRUE 1
+    #define FALSE 0
+    #define ERROR -1
+    
+    //串的数据结构
+    typedef struct
+    {
+        char data[maxSize];
+        int len;
+    } String;
+
+    //串的赋值
+    int assign(String *s, char *str)
+    {
+        int i;
+        for (i = 0; *(str + i) != '\0'; i++)
+        {
+            i++;
+        }
+        if (i > maxSize)
+        {
+            return ERROR;
+        }
+        i = 0;
+        while (*(str + i) != '\0')
+        {
+            s->data[i] = *(str + i);
+            i++;
+        }
+        // MUST
+        s->data[i] = '\0';
+        s->len = i;
+        return TRUE;
+    }
+
+    void display(String *s)
+    {
+        puts(s->data);
+    }
+
+    //获取子串
+    String *substr(String *s, int i, int len)
+    {
+        String *str = (String *)malloc(sizeof(String));
+        str->len = 0;
+        if (i &lt; 0 || i > s->len || len &lt; 0)
+        {
+            return str;
+        }
+        // 这个变量可以省略
+        int ind, j = 0;
+        for ( ind = i; ind &lt; i + len; ind++)
+        {
+            str->data[j] = s->data[ind];
+            j++;
+        }
+        // MUST
+        str->data[j] = '\0';
+        str->len = j;
+        return str;
+    }
+
+    //字符的位置
+    int indexOfCh(String *s, char ch)
+    {
+        if (!s->len)
+        {
+            return ERROR;
+        }
+        int ind, i;
+        for ( i = 0; i &lt; s->len; i++)
+        {
+            if (s->data[i] == ch)
+            {
+                return i;
+            }
+        }
+        return ERROR;
+    }
+
+    //串的匹配
+    int match(String *s, String *p, int s_start, int p_start, int *s_fail, int *p_fail)
+    {
+        int i = s_start, j = p_start;
+        // 从p串的第一位开始比较
+        for (; j &lt; p->len; i++, j++)
+        {
+            if (s->data[i] != p->data[j])
+            {
+                *s_fail = i;
+                *p_fail = j;
+                return FALSE;
+            }
+        }
+        return TRUE;
+    }
+
+    //串的位置
+    int indexOfStr(String *s, String *p, int pos)
+    {
+        int s_start = 0, p_start = 0, s_fail, p_fail;
+        for (s_start = pos; s_start &lt;= s->len - p->len; s_start++)
+        {
+            if (match(s, p, s_start, p_start, &s_fail, &p_fail))
+            {
+                return s_start;
+            }
+        }
+        return ERROR;
+    }
+
+    //主函数
+    int main(void)
+    {
+        char *str0 = "hi, there. boy";
+        char *str1 = "th";
+        int res;
+        String *s = (String *)malloc(sizeof(String));
+        String *p = (String *)malloc(sizeof(String));
+        assign(s, str0);
+        assign(p, str1);
+        display(s);
+        display(p);
+        res = indexOfStr(s, p, 0);
+        printf("res=%d\n", res); // res=4
+        free(s);
+        free(p);
+        return 0;
+    }</pre>
+      </dd>
+      <dt>4. 更多函数</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>赋值</td>
+            <td>assign()</td>
+          </tr>
+          <tr>
+            <td>串长</td>
+            <td>len()</td>
+          </tr>
+          <tr>
+            <td> 清空串</td>
+            <td>clear()</td>
+          </tr>
+          <tr>
+            <td>销毁串</td>
+            <td>destroy()</td>
+          </tr>
+          <tr>
+            <td>显示串</td>
+            <td>display()</td>
+          </tr>
+          <tr>
+            <td>连接串</td>
+            <td>concat()</td>
+          </tr>
+          <tr>
+            <td>插入子串</td>
+            <td>insertStrAt()</td>
+          </tr>
+          <tr>
+            <td>查找子串</td>
+            <td>indexOfStr()</td>
+          </tr>
+          <tr>
+            <td>获取子串</td>
+            <td>subStr()</td>
+          </tr>
+          <tr>
+            <td>删除串</td>
+            <td>delStr()</td>
+          </tr>
+          <tr>
+            <td>删除指定位置的串</td>
+            <td>delStrAt()</td>
+          </tr>
+          <tr>
+            <td>替换串</td>
+            <td>replaceStr()</td>
+          </tr>
+          <tr>
+            <td>指定位置插入字符</td>
+            <td>insertChAt()</td>
+          </tr>
+          <tr>
+            <td>查找字符</td>
+            <td>indexOfCh()</td>
+          </tr>
+          <tr>
+            <td>查找2个字符</td>
+            <td>indexOfChs()</td>
+          </tr>
+          <tr>
+            <td>删除字符</td>
+            <td>delCh()</td>
+          </tr>
+          <tr>
+            <td>删除指定位置字符</td>
+            <td>delChAt()</td>
+          </tr>
+          <tr>
+            <td>修改指定位置字符</td>
+            <td>modChAt()</td>
+          </tr>
+          <tr>
+            <td>替换字符</td>
+            <td>replaceCh()</td>
+          </tr>
+          <tr>
+            <td>替换指定位置字符</td>
+            <td>replaceChAt()</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">链式串 LinkedString</div>
+    <dl>
+      <dt>1. 链式串特点</dt>
+      <dd>. 节点存放的串可以是一个字符，也可以是多个字符</dd>
+      <dd>. 节点的数据大小问题：通常只存储1个字符，浪费空间；存放多个字符，考虑到节点的大小适配</dd>
+      <dd>. 节点的密度问题</dd>
+      <dt>2. 数据结构</dt>
+      <dd>
+        <pre>
+    //数据节点：以字符节点为例
+    typedef struct Node
+    {
+        char data;
+        struct Node *next;
+    } Node;
+
+    //串
+    typedef struct
+    {
+        Node *head;
+        int len;
+    } String;</pre>
+      </dd>
+      <dt>3. 参考代码</dt>
+      <dd>
+        <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+
+    //串的数据结构
+    typedef struct Node
+    {
+        char data;
+        struct Node *next;
+    } Node;
+
+    typedef struct
+    {
+        Node *head;
+        int len;
+    } String;
+
+    //串的赋值：遍历字符串赋值
+    void assign(String *s, char *str)
+    {
+        Node *p, *pre = s->head;
+        int i;
+        for (i = 0; *(str + i) != '\0'; i++)
+        {
+            p = (Node *)malloc(sizeof(Node));
+            p->data = *(str + i);
+            p->next = pre->next;
+            pre->next = p;
+            // MUST
+            pre = p;
+        }
+        s->len = i;
+    }
+
+    //遍历串
+    void display(String *s)
+    {
+        Node *p = s->head->next;
+        while (p)
+        {
+            printf("%c", p->data);
+            p = p->next;
+        }
+        printf("\n");
+    }
+    
+    //其它函数略
+
+    //主函数
+    int main(void)
+    {
+        String *s = (String *)malloc(sizeof(String));
+        s->head = (Node *)malloc(sizeof(Node));
+        //以#表示头节点
+        s->head->data = '#';
+        s->head->next = NULL;
+        s->len = 0;
+        assign(s, "hi, there.");
+        printf("%d\n", s->len);
+        display(s);
+        free(s);
+        return 0;
+    }</pre>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">应用 Application</div>
+    <dl>
+      <dd><img src="./string/幻灯片19.JPG" alt=""></dd>
+      <dd><img src="./string/幻灯片20.JPG" alt=""></dd>
+      <dd class="iframe-box">
+        <iframe class="iframe"
+          src="//player.bilibili.com/player.html?aid=670394789&bvid=BV1da4y1p7iZ&cid=260601529&page=1&high_quality=1"
+          scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"
+          sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"> </iframe>
+      </dd>
+      <dd><img src="./string/幻灯片21.JPG" alt=""></dd>
+      <dd><img src="./string/幻灯片22.JPG" alt=""></dd>
+      <dd><img src="./string/幻灯片23.JPG" alt=""></dd>
+      <dd><img src="./string/幻灯片24.JPG" alt=""></dd>
+      <dd><img src="./string/幻灯片25.JPG" alt=""></dd>
+      <dd><img src="./string/幻灯片26.JPG" alt=""></dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    window.onload = function () {
+      let navItems = document.querySelectorAll(".nav-item")
+      let contItems = document.querySelectorAll(".target-cont")
+      let ham = document.querySelector("#ham")
+      let menu = document.querySelector("#menu")
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView();
+            navItems.forEach(item => {
+              item.style.color = "#ffffff";
+            })
+            navItems[index].style.color = "#e95420"
+          }, 100)
+          menu.classList.toggle('is-hide')
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+
+      ham.addEventListener('click', (e) => {
+        e.preventDefault()
+        menu.classList.toggle('is-hide')
+        if (document.documentElement.style.overflowY == 'auto') {
+          document.documentElement.style.overflowY = "hidden"
+        } else {
+          document.documentElement.style.overflowY = "auto"
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

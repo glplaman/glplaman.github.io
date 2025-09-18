@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>快速排序</title>
+  <link rel="stylesheet" href="./css/sort.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>快速排序</h1>
+    <h5>quick Sort</h5>
+    <dl>
+      <dt>说明</dt>
+      <dd>. 采用分治 - Divide & Conquer 思想</dd>
+      <dt>基本过程</dt>
+      <dd class="number">
+        <div>选择一个记录作为基准|中心|轴|支点 Pivot，通常选择 <span class="warn">最后一个</span> 记录</div>
+        <div>依次比较其他记录，比基准小的，放前面；比基准大的，放后面</div>
+        <div>比较完毕后，基准记录已经位于正确位置</div>
+        <div>同样的方法，分别处理前面部分的记录和后面部分的记录</div>
+      </dd>
+      <dd class="example-sn">快速排序序列4、2、5、1、7、6、3</dd>
+      <dd>
+        <figure>
+          <img src="./imgs/quick0.png" alt="">
+          <figcaption>快速排序</figcaption>
+        </figure>
+      </dd>
+      <dt>参考代码</dt>
+      <dd>
+        <div>. j向后扫描序列，依次和p比较；如果小，就和i交换位置，同i、j后移，继续扫描、比较、交换</div>
+        <figure>
+          <img src="./imgs/quick1.png" alt="">
+          <figcaption>快速排序</figcaption>
+        </figure>
+        <pre>
+#include &lt;stdio.h>
+
+//辅助函数
+void dis(int arr[], int len){
+    int i = 0;    
+    for(; i &lt; len; i++){
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+//辅助函数
+void swap(int* a, int* b)
+{
+    int temp = *b;
+    *b = *a;
+    *a = temp;
+}
+
+int pivot(int arr[], int low, int high){
+    int p = arr[high];
+    int i = low, j;
+
+    // 从low开始，每个都和基准p比较
+    // 如果小于p，就换到前面，同时位置后移
+    for(j = low; j &lt; high; j++){
+        if(arr[j] &lt; p){
+            swap(&arr[j], &arr[i]);
+            i++;
+        }
+    }
+    swap(&arr[high], &arr[i]);
+    return i;
+}
+
+// 递归划分
+void sort(int arr[], int low, int high){
+    if(low &lt; high){
+        int mid = pivot(arr, low ,high);
+        sort(arr, low, mid - 1);
+        sort(arr, mid + 1, high);
+    }
+}
+
+// 排序入口
+void quickSort(int arr[], int len){
+    sort(arr, 0, len - 1);
+}
+
+//主函数
+int main () {
+    int arr[] = {9,5,2,7,12,4,3,1,11};
+    int len = 9;
+    dis(arr, len);
+    quickSort(arr, len);
+    dis(arr, len);
+    return 0;
+}</pre>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

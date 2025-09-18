@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>冒泡排序</title>
+  <link rel="stylesheet" href="./css/sort.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>冒泡排序</h1>
+    <h5>Bubble Sort</h5>
+    <dl>
+      <dt>说明</dt>
+      <dd>
+        <div>. 小的数据浮上来|到序列前面；大的数据沉下去|到序列后面</div>
+        <div>. 从0开始，比较相邻的2个数据项</div>
+        <div>. 如果前者大于后者，就 <span class="warn">立即</span> 交换位置；否则保持不动</div>
+        <div>. 后移1位，继续比较相邻的2个数据项</div>
+        <div>. 每趟比较结束后，将最大的数据放到最后</div>
+        <div>. 第1趟，比较次数为 n - 1；第2趟比较次数为 n - 2；依次类推</div>
+        <div>. 共需要 n - 1 趟排序</div>
+        <figure class="img-sn">
+          <img src="./imgs/bubble.gif" alt="">
+          <figcaption>Bubble Sort</figcaption>
+        </figure>
+      </dd>
+      <dd class="example-sn">求序列{8,6,9,2,3,7}的冒泡排序过程</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>冒泡排序过程</caption>
+          <tr>
+            <td>原始数据</td>
+            <td>8 6 9 2 3 7</td>
+          </tr>
+          <tr>
+            <td>第1轮比较</td>
+            <td>6 8 2 3 7 <span class="warn">9</span></td>
+          </tr>
+          <tr>
+            <td>第2轮比较</td>
+            <td>6 2 3 7 <span class="warn">8 9</span></td>
+          </tr>
+          <tr>
+            <td>第3轮比较</td>
+            <td>2 3 6 <span class="warn">7 8 9</span></td>
+          </tr>
+          <tr>
+            <td>第4轮比较</td>
+            <td>2 3 <span class="warn">6 7 8 9</span></td>
+          </tr>
+          <tr>
+            <td>第5轮比较</td>
+            <td>2 <span class="warn">3 6 7 8 9</span></td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">求序列{49,38,65,97,76,13,27,49}的冒泡排序过程</dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>初始序列</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>49</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49</td>
+          </tr>
+        </table>
+        <table class="tbl-sn">
+          <caption>第1趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>38</td>
+            <td>49</td>
+            <td>65</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>
+        <table class="tbl-sn">
+          <caption>第2趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>38</td>
+            <td>49</td>
+            <td>65</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49</td>
+            <td class="bg">76</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+        <table class="tbl-sn">
+          <caption>第3趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>38</td>
+            <td>49</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49</td>
+            <td class="bg">65</td>
+            <td class="bg">76</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+        <table class="tbl-sn">
+          <caption>第4趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>38</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49</td>
+            <td class="bg">49</td>
+            <td class="bg">65</td>
+            <td class="bg">76</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+        <table class="tbl-sn">
+          <caption>第5趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>27</td>
+            <td>38</td>
+            <td class="bg">49</td>
+            <td class="bg">49</td>
+            <td class="bg">65</td>
+            <td class="bg">76</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+        <table class="tbl-sn">
+          <caption>第6趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>27</td>
+            <td class="bg">38</td>
+            <td class="bg">49</td>
+            <td class="bg">49</td>
+            <td class="bg">65</td>
+            <td class="bg">76</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+        <table class="tbl-sn">
+          <caption>第7趟冒泡</caption>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td class="bg">27</td>
+            <td class="bg">38</td>
+            <td class="bg">49</td>
+            <td class="bg">49</td>
+            <td class="bg">65</td>
+            <td class="bg">76</td>
+            <td class="bg">97</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>代码实现</dt>
+      <dd>
+        <div>. 需要双重循环实现</div>
+        <pre>
+#include &lt;stdio.h&gt;
+void swap(int *a, int *b){
+    int temp;
+    if(*a > *b){
+        temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+}
+void dis(int arr[], int len){
+    int i = 0;    
+    for(; i &lt; len; i++){
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+int main () {
+    int arr[] = {49,38,65,97,76,13,27,49};
+    int index = 0, len = sizeof(arr)/sizeof(arr[0]);
+    dis(arr, len);
+    for(; index &lt; len-1; index++){
+        int j=0;
+        for(; j &lt; len-1-index; j++){
+            if(arr[j] > arr[j+1]){
+                swap(&arr[j], &arr[j+1]);
+            }
+        }
+        printf("第%d趟冒泡 ", index + 1);
+        dis(arr, len);
+    }
+    return 0;
+}</pre>
+      </dd>
+      <dt>性能分析 Analysis</dt>
+      <dd>. 正序情况：O(N)</dd>
+      <dd>. 反序情况：O(N<sup>2</sup>)</dd>
+      <dd>. 平均时间复杂度：O(N<sup>2</sup>)</dd>
+      <dd>. 更多信息，请查看 <a
+          href="https://www.bilibili.com/video/BV1kJ41187XQ/?spm_id_from=333.788&vd_source=fe13480e1099e18e9d5f4e25467df4df">懒猫老师</a>
+      </dd>
+      <dt>改进</dt>
+      <dd>. 使用一个标记flag来标记本趟有没有交换；如果没有，说明数据已经有序，提前推出外层循环</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

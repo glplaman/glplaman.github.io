@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sequence list (js)</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    pre {
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <div class="chap">顺序表(js)</div>
+    <dl>
+      <dd>
+        <pre>
+function List() {
+    this.items = []
+    List.prototype.init = function () {
+    this.items = []
+    }
+    List.prototype.clear = function () {
+    this.items = []
+    }
+    List.prototype.isEmpty = function () {
+    return this.items.length > 0
+    }
+    List.prototype.toString = function () {
+    return this.items.join(' ')
+    }
+    List.prototype.length = function () {
+    return this.items.length
+    }
+    List.prototype.insert = function (data) {
+    this.items.push(data)
+    }
+    List.prototype.insertAt = function (data, loc) {
+    this.items.splice(loc, 0, data)
+    }
+    List.prototype.delAt = function (loc) {
+    this.items.splice(loc, 1)
+    }
+    List.prototype.del = function (data) {
+    let loc = this.find(data)
+    if (loc > -1) {
+        this.delAt(loc)
+        return true
+    } else {
+        return false
+    }
+    }
+    List.prototype.updateAt = function (data, loc) {
+    this.items[loc] = data
+    }
+    List.prototype.find = function (data) {
+    for (let i = 0; i &lt; this.items.length; i++) {
+        if (this.items[i] == data) {
+        return i
+        }
+    }
+    return -1
+    }
+    List.prototype.findAt = function (loc) {
+    return this.items[loc]
+    }        
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">链式表(js)</div>
+    <dl>
+      <dd>
+        <pre>
+function LinkedList() {
+    function Node(data) {
+    this.data = data;
+    this.next = null;
+    }
+    this.head = null;
+    this.len = 0;
+
+    LinkedList.prototype.append = function (data) {
+    let node = new Node(data)
+    if (this.len) {
+        let cur = this.head;
+        while (cur.next) {
+        cur = cur.next;
+        }
+        cur.next = node
+    } else {
+        this.head = node;
+    }
+    this.len += 1;
+    }
+    LinkedList.prototype.insert = function (ind, data) {
+    if (ind &lt; 0 || ind > this.len) {
+        console.log('ind overflow, insert fail');
+        return false;
+    } else {
+        let node = new Node(data)
+        if (!ind) {
+        node.next = this.head
+        this.head = node
+        } else {
+        let cur = this.head
+        for (let i = 0; i &lt; ind - 1; i++) {
+            cur = cur.next
+        }
+        node.next = cur.next
+        cur.next = node
+        }
+        this.len += 1
+        return true
+    }
+    }
+
+    LinkedList.prototype.indexOf = function (data) {
+    let ind = 0
+    let cur = this.head
+    while (cur) {
+        if (cur.data == data) {
+        console.log(`item ${data} found at ${ind}`);
+        return ind
+        }
+        ind++
+        cur = cur.next
+    }
+    console.log(`item ${data} not found`);
+    return false
+    }
+
+    LinkedList.prototype.getItemAt = function (ind) {
+    if (ind &lt; 0 || ind > this.len - 1) {
+        console.log('ind overflow, item get fail');
+        return false;
+    } else {
+        let cur = this.head
+        for (let i = 0; i &lt; ind; i++) {
+        cur = cur.next
+        }
+        console.log('data at ', ind, 'found:', cur.data);
+        return cur.data
+    }
+    }
+
+    LinkedList.prototype.delItemAt = function (ind) {
+    if (ind &lt; 0 || ind > this.len) {
+        console.log('ind overflow, delete fail');
+        return false;
+    } else {
+        if (!ind) {
+        this.head = this.head.next
+        } else {
+        let cur = this.head
+        for (let i = 0; i &lt; ind - 1; i++) {
+            cur = cur.next
+        }
+        cur.next = cur.next.next
+        }
+        this.len -= 1
+        console.log(`item at index ${ind} deleted`);
+        return true
+    }
+    }
+
+    LinkedList.prototype.del = function (data) {
+    let ind = this.indexOf(data)
+    if (ind) {
+        this.delItemAt(ind)
+    } else {
+        console.log(`item ${data} not found`);
+        return false
+    }
+    }
+
+    LinkedList.prototype.toString = function () {
+    let cur = this.head
+    let str = ''
+    while (cur) {
+        str += cur.data + ' ';
+        cur = cur.next
+    }
+    console.log(this.len + ' item(s):', str);
+    return str
+    }
+}</pre>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    function List() {
+      this.items = []
+      List.prototype.init = function () {
+        this.items = []
+      }
+      List.prototype.clear = function () {
+        this.items = []
+      }
+      List.prototype.isEmpty = function () {
+        return this.items.length > 0
+      }
+      List.prototype.toString = function () {
+        return this.items.join(' ')
+      }
+      List.prototype.length = function () {
+        return this.items.length
+      }
+      List.prototype.insert = function (data) {
+        this.items.push(data)
+      }
+      List.prototype.insertAt = function (data, loc) {
+        this.items.splice(loc, 0, data)
+      }
+      List.prototype.delAt = function (loc) {
+        this.items.splice(loc, 1)
+      }
+      List.prototype.del = function (data) {
+        let loc = this.find(data)
+        if (loc > -1) {
+          this.delAt(loc)
+          return 0
+        } else {
+          return -1
+        }
+      }
+      List.prototype.updateAt = function (data, loc) {
+        this.items[loc] = data
+      }
+      List.prototype.find = function (data) {
+        for (let i = 0; i < this.items.length; i++) {
+          if (this.items[i] == data) {
+            return i
+          }
+        }
+        return -1
+      }
+      List.prototype.findAt = function (loc) {
+        return this.items[loc]
+      }
+      List.prototype.swap = function (m, n) {
+        let tmp = this.items[m]
+        this.items[m] = this.items[n]
+        this.items[n] = tmp
+      }
+      List.prototype.bubble = function () {
+        let start = new Date().getTime()
+        for (let i = this.items.length - 1; i >= 0; i--) {
+          for (let j = 0; j < i; j++) {
+            if (this.items[j] > this.items[j + 1]) {
+              this.swap(j, j + 1)
+            }
+          }
+        }
+        let end = new Date().getTime()
+        console.log('time take:', end - start);
+      }
+      List.prototype.bubbleUp = function () {
+        this.items.sort((a, b) => a - b)
+      }
+      List.prototype.bubbleDown = function () {
+        this.items.sort((a, b) => b - a)
+      }
+      List.prototype.selection = function () {
+        for (let i = 0; i < this.items.length - 1; i++) {
+          let min = i
+          for (let j = min + 1; j < this.items.length; j++) {
+            if (this.items[min] > this.items[j]) {
+              min = j
+            }
+          }
+          this.swap(min, i)
+          console.log('round', i, list.toString());
+        }
+      }
+      List.prototype.insertion = function () {
+        for (let i = 1; i < this.items.length; i++) {
+          let j = i - 1
+          while (j >= 0 && j < i) {
+            if (this.items[j] > this.items[j + 1]) {
+              this.swap(j, j + 1)
+            }
+            j--
+          }
+          console.log(i, this.toString());
+        }
+        // round 1
+        // let i = 1
+        // let j = i - 1;
+        // while (j >= 0 && j < i) {
+        //   if (this.items[j] > this.items[j + 1]) {
+        //     this.swap(j, j + 1)
+        //   }
+        //   j--
+        // }
+        // console.log(i, this.toString());
+        // round 2
+        // i = 2
+        // j = i - 1
+        // while (j >= 0 && j < i) {
+        //   if (this.items[j] > this.items[j + 1]) {
+        //     this.swap(j, j + 1)
+        //   }
+        //   j--
+        // }
+        // console.log(i, this.toString());
+        // round 3
+        // i = 3
+        // j = i - 1
+        // while (j >= 0 && j < i) {
+        //   if (this.items[j] > this.items[j + 1]) {
+        //     this.swap(j, j + 1)
+        //   }
+        //   j--
+        // }
+        // console.log(i, this.toString());
+        // round 4
+        // i = 4
+        // j = i - 1
+        // while (j >= 0 && j < i) {
+        //   if (this.items[j] > this.items[j + 1]) {
+        //     this.swap(j, j + 1)
+        //   }
+        //   j--
+        // }
+        // console.log(i, this.toString());
+      }
+    }
+    let list = new List()
+    list.insert(18)
+    list.insert(8)
+    list.insert(13)
+    list.insert(11)
+    list.insert(5)
+    console.log(list.toString());
+    list.del(5)
+    console.log(list.toString());
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack in Javascript</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    pre {
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <div class="chap">Stack With Array</div>
+    <pre>
+class StackArr {
+    constructor() {
+    this.items = [];
+    }
+    push(el) {
+    this.items.push(el)
+    }
+    pop() {
+    this.items.pop()
+    }
+    top() {
+    return this.items[this.items.length - 1]
+    }
+    isEmpty() {
+    return this.items.length == 0
+    }
+    size() {
+    return this.items.length
+    }
+    toString() {
+    return this.items.join('-')
+    }
+    clear() {
+    this.items = []
+    }
+}</pre>
+    <div class="chap">Stack With Object</div>
+    <pre>
+class Stack {
+    constructor() {
+        this.count = 0
+        this.items = {}
+    }
+    push(el) {
+        // 以count为key
+        this.items[this.count] = el
+        this.count++
+    }
+    pop() {
+        if (!this.count) {
+        return undefined
+        }
+        this.count--
+        let res = this.items[this.count]
+        delete this.items[this.count]
+        return res
+    }
+    peek() {
+        if (!this.count) {
+        return undefined
+        }
+        return this.items[this.count - 1]
+    }
+    isEmpty() {
+        return this.count == 0
+    }
+    size() {
+        return this.count
+    }
+    toString() {
+        if (!this.count) {
+        return ''
+        }
+        // let str = `${this.items[0]}`;
+        // for (let i = 1; i &lt; this.count; i++) {
+        //   str = `${str},${this.items[i]}`;
+        // }
+        let str = this.items[0]
+        for (let index = 1; index &lt; this.count; index++) {
+        str += ',' + this.items[index]
+        }
+        return str;
+    }
+    clear() {
+        this.items = {}
+        this.count = 0
+    }
+    }</pre>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    class StackArr {
+      constructor() {
+        this.items = [];
+      }
+      push(el) {
+        this.items.push(el)
+      }
+      pop() {
+        this.items.pop()
+      }
+      top() {
+        return this.items[this.items.length - 1]
+      }
+      isEmpty() {
+        return this.items.length == 0
+      }
+      size() {
+        return this.items.length
+      }
+      toString() {
+        return this.items.reverse().join('-')
+      }
+      clear() {
+        this.items = []
+      }
+    }
+    // old solution
+    function Stack() {
+      this.items = []
+      Stack.prototype.push = function (el) {
+        return this.items.push(el)
+      }
+      Stack.prototype.pop = function () {
+        return this.items.pop()
+      }
+      Stack.prototype.peek = function () {
+        return this.items[this.items.length - 1]
+      }
+      Stack.prototype.isEmpty = function () {
+        return this.items.length == 0
+      }
+      Stack.prototype.size = function () {
+        return this.items.length
+      }
+      Stack.prototype.toString = function () {
+        return this.items.join('-')
+      }
+      Stack.prototype.clear = function () {
+        return this.items = []
+      }
+    }
+    function dec2bin(s, num) {
+      let res;
+      while (num > 0) {
+        res = num % 2
+        s.push(res)
+        num = Math.floor(num / 2)
+      }
+      return s.toString()
+    }
+    let ss = new StackArr()
+    console.log(dec2bin(ss, 12))
+  </script>
+  <script>
+    class StackAdv {
+      constructor() {
+        this.count = 0
+        this.items = {}
+      }
+      push(el) {
+        // 以count为key
+        this.items[this.count] = el
+        this.count++
+      }
+      pop() {
+        if (!this.count) {
+          return undefined
+        }
+        this.count--
+        let res = this.items[this.count]
+        delete this.items[this.count]
+        return res
+      }
+      peek() {
+        if (!this.count) {
+          return undefined
+        }
+        return this.items[this.count - 1]
+      }
+      isEmpty() {
+        return this.count == 0
+      }
+      size() {
+        return this.count
+      }
+      toString() {
+        if (!this.count) {
+          return ''
+        }
+        // let str = `${this.items[0]}`;
+        // for (let i = 1; i < this.count; i++) {
+        //   str = `${str},${this.items[i]}`;
+        // }
+        let str = this.items[0]
+        for (let index = 1; index < this.count; index++) {
+          str += ',' + this.items[index]
+        }
+        return str;
+      }
+      clear() {
+        this.items = {}
+        this.count = 0
+      }
+    }
+    let sq = new StackAdv()
+    sq.push(1)
+    sq.push(11)
+    sq.push(111)
+    console.log(sq.toString());
+  </script>
+</body>
+
+</html>

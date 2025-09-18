@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组 Array</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      background-image: url(../imgs/banner.png);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    .matrix {
+      position: relative;
+      width: 30%;
+    }
+
+    .matrix td {
+      border: none;
+    }
+
+    .matrix::before,
+    .matrix::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      height: 100%;
+      width: 1rem;
+      border: 2px solid #666;
+      transform: translateY(-50%);
+    }
+
+    .matrix::before {
+      left: 0;
+      border-right: none;
+    }
+
+    .matrix::after {
+      right: 0;
+      border-left: none;
+    }
+
+    .bold {
+      font-weight: 600;
+    }
+
+    .warn,
+    .iconfont {
+      color: #4bc2ce;
+    }
+
+    .warn.bold {
+      font-size: 150%;
+    }
+
+    @media screen and (max-width:768px) {
+      .matrix {
+        width: 50%;
+      }
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Array</h1>
+      <span class="timestamp">2022-10-16</span>
+    </header>
+    <div class="chap">简介 Overview</div>
+    <dl>
+      <dt>定义 Definition</dt>
+      <dd>. 由 <span class="warn">类型相同</span> 的数据元素组成的 <span class="warn">有序</span> 集合；</dd>
+      <dt>特点 Features</dt>
+      <dd>. 线性表的特例</dd>
+      <dd>. 数量固定、类型相同、连续存储的数据序列</dd>
+      <dd>. 是随机存取的数据结构</dd>
+      <dd>. 存取元素时，依据的是每个元素在关系中的序号/索引/下标；从0开始</dd>
+      <dd>. 根据每个元素处于的相对关系，可以分为一维数组和多维数组；如一维数组可以看做数据元素是一维数组的一维数组[以一维数组为例]</dd>
+      <dd>. 数组一旦被定义，整个结构[维数、维界]就不再变化</dd>
+      <dd>. 更多信息，请访问<a class="warn" href="./c_array.html" target="_blank">数组 Array</a></dd>
+      <dt>抽象数据类型 ADT</dt>
+      <dd>. 数据对象</dd>
+      <dd class="txt-center">D={a1 ,a2, a3 , … , an}
+      </dd>
+      <dd>. 数据关系</dd>
+      <dd class="txt-center">R1={&lt;a0, a1&gt;, &lt;a1, a2&gt;, … , &lt;an-1, an&gt;}
+      </dd>
+      <dd>. 数据运算</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>Init( )</td>
+            <td>初始化</td>
+          </tr>
+          <tr>
+            <td>Destroy( )</td>
+            <td>销毁</td>
+          </tr>
+          <tr>
+            <td>Value( )</td>
+            <td>取值</td>
+          </tr>
+          <tr>
+            <td>Assign( )</td>
+            <td>赋值</td>
+          </tr>
+          <tr>
+            <td>Create( )</td>
+            <td>生成</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <div class="chap">一维数组的存储 Storage</div>
+    <dl>
+      <dd>. 利用数组首地址/基地址和数据的索引index，实现数据的随机存取；</dd>
+      <dd>
+        <pre>
+//使用数组名代表的地址配合索引
+loc( arr[i] )=loc( arr )+i*sizeof( elType )
+
+//使用首元素地址配合索引
+loc( arr[i] )=loc( arr[0] )+i*sizeof( elType )</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]遍历数组元素</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+
+int main() {
+    int arr[5];
+    printf("arr=%p\n", arr);
+    printf("arr[0]=%p\n", &arr[0]);
+    for (int i = 0; i &lt; 5; i++)
+    {
+        printf("item[%d]=%p\n", i, &arr[i]);
+    }
+    return 0;
+}
+//参考结果为：
+arr=0x7ffd5f830d80
+arr[0]=0x7ffd5f830d80
+item[0]=0x7ffd5f830d80
+item[1]=0x7ffd5f830d84
+item[2]=0x7ffd5f830d88
+item[3]=0x7ffd5f830d8c
+item[4]=0x7ffd5f830d90</pre>
+      </dd>
+    </dl>
+    <div class="chap">多维数组的存储 Storage</div>
+    <dl>
+      <dd>设m行n列的多维数组A<sub>mxn</sub>：</dd>
+      <dt>行优先存储</dt>
+      <dd>. 一行一行的存储</dd>
+      <dd>. 任一元素arr[i][j]位置为</dd>
+      <dd>
+        <pre>
+loc(arr[i][j])=loc(arr[0][0])+(i*n+j)*sizeof(elType)</pre>
+      </dd>
+      <dd>[示例]多维数组为A<sub>4x3</sub></dd>
+      <dd class="item-center">
+        <table class="matrix">
+          <tr>
+            <td>a00</td>
+            <td>a01</td>
+            <td>a02</td>
+          </tr>
+          <tr>
+            <td>a10</td>
+            <td>a11</td>
+            <td>a12</td>
+          </tr>
+          <tr>
+            <td>a20</td>
+            <td>a21</td>
+            <td>a22</td>
+          </tr>
+          <tr>
+            <td>a30</td>
+            <td>a31</td>
+            <td>a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>行优先存储结果为：</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>[a00 a01 a02]</td>
+            <td>[a10 a11 a12]</td>
+            <td>[a20 a21 a22]</td>
+            <td>[a30 a31 a32]</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>列优先存储</dt>
+      <dd>. 一列一列的存储</dd>
+      <dd>. 任一arr[i][j]元素位置为</dd>
+      <dd>
+        <pre>
+loc(arr[i][j])=loc(arr[0][0])+(j*m+i)*sizeof(elType)</pre>
+      </dd>
+      <dd>[示例]多维数组为A<sub>4x3</sub></dd>
+      <dd class="item-center">
+        <table class="matrix">
+          <tr>
+            <td>a00</td>
+            <td>a01</td>
+            <td>a02</td>
+          </tr>
+          <tr>
+            <td>a10</td>
+            <td>a11</td>
+            <td>a12</td>
+          </tr>
+          <tr>
+            <td>a20</td>
+            <td>a21</td>
+            <td>a22</td>
+          </tr>
+          <tr>
+            <td>a30</td>
+            <td>a31</td>
+            <td>a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>列优先存储结果为：</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>[a00 a10 a20]</td>
+            <td>[a01 a11 a21]</td>
+            <td>[a02 a12 a22]</td>
+            <td>[a03 a13 a23]</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <div class="chap">矩阵 Matrix</div>
+    <dl>
+      <dd>二维数组特别适合描述矩阵；实际应用中，矩阵的规模很大；为了加快运算速度，必须压缩。基本原则：</dd>
+      <dd>. 值重复的元素，只分配一个元素的存储空间</dd>
+      <dd>. 值为0的元素，不分配存储空间</dd>
+      <dd>. 可无损解压：没有分配存储空间的元素可以恢复</dd>
+      <dt>一、对称矩阵 Symmetric Matrix</dt>
+      <dd>满足以下条件的n阶矩阵</dd>
+      <dd class="txt-center">aij=aji (0≤I,j≤n)</dd>
+      <dd>. 存储时只需要存储上三角或下三角数据，包括对角线元素</dd>
+      <dd>. 需要的存储空间为：n(n+1)/2</dd>
+      <dd class="item-center">
+        <table class="matrix">
+          <tr>
+            <td class="bold">a00</td>
+            <td class="warn">a01</td>
+            <td class="warn">a02</td>
+            <td class="warn">a03</td>
+          </tr>
+          <tr>
+            <td>a10</td>
+            <td class="bold">a11</td>
+            <td class="warn">a12</td>
+            <td class="warn">a13</td>
+          </tr>
+          <tr>
+            <td>a20</td>
+            <td>a21</td>
+            <td class="bold">a22</td>
+            <td class="warn">a23</td>
+          </tr>
+          <tr>
+            <td>a30</td>
+            <td>a31</td>
+            <td>a33</td>
+            <td class="bold">a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>1. 上三角存储</dd>
+      <dd class="item-center">
+        <table>
+          <tr>
+            <td>a00</td>
+            <td>a01</td>
+            <td>a02</td>
+            <td>a03</td>
+            <td>a11</td>
+            <td>a12</td>
+            <td>a13</td>
+            <td>a22</td>
+            <td>a23</td>
+            <td>a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>2. 下三角存储</dd>
+      <dd class="item-center">
+        <table>
+          <tr>
+            <td>a00</td>
+            <td>a10</td>
+            <td>a11</td>
+            <td>a20</td>
+            <td>a21</td>
+            <td>a22</td>
+            <td>a30</td>
+            <td>a31</td>
+            <td>a32</td>
+            <td>a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>二、三角矩阵 Triangular Matrix</dt>
+      <dd>1. 下三角矩阵：满足下面条件的n阶矩阵</dd>
+      <dd>. 存储时，除了存储下三角区域的元素外，还要增加一个存储空间，存放常数C</dd>
+      <dd>. 存储空间为：n(n+1)/2</dd>
+      <dd class="txt-center">aij=C，(0≤i <span class="warn bold">&lt;</span> j≤n，C为常数，通常C=0)</dd>
+      <dd class="item-center">
+        <table class="matrix">
+          <tr>
+            <td class="bold">a00</td>
+            <td class="warn">C</td>
+            <td class="warn">C</td>
+            <td class="warn">C</td>
+          </tr>
+          <tr>
+            <td>a10</td>
+            <td class="bold">a11</td>
+            <td class="warn">C</td>
+            <td class="warn">C</td>
+          </tr>
+          <tr>
+            <td>a20</td>
+            <td>a21</td>
+            <td class="bold">a22</td>
+            <td class="warn">C</td>
+          </tr>
+          <tr>
+            <td>a30</td>
+            <td>a31</td>
+            <td>a33</td>
+            <td class="bold">a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="item-center">
+        <table>
+          <tr>
+            <td>a00</td>
+            <td>a10</td>
+            <td>a11</td>
+            <td>a20</td>
+            <td>a21</td>
+            <td>a22</td>
+            <td>a30</td>
+            <td>a31</td>
+            <td>a32</td>
+            <td>a33</td>
+            <td class="warn">C</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>2. 上三角矩阵：满足下面条件的n阶矩阵</dd>
+      <dd>. 存储时，除了存储上三角区域的元素外，还要增加一个存储空间，存放常数C</dd>
+      <dd>. 存储空间为：n(n+1)/2</dd>
+      <dd class="txt-center">aij=C，(0≤j <span class="warn bold">&lt;</span> i≤n，C为常数，通常C=0)</dd>
+      <dd class="item-center">
+        <table class="matrix">
+          <tr>
+            <td class="bold">a00</td>
+            <td>a01</td>
+            <td>a02</td>
+            <td>a03</td>
+          </tr>
+          <tr>
+            <td class="warn">C</td>
+            <td class="bold">a11</td>
+            <td>a12</td>
+            <td>a13</td>
+          </tr>
+          <tr>
+            <td class="warn">C</td>
+            <td class="warn">C</td>
+            <td class="bold">a22</td>
+            <td>a23</td>
+          </tr>
+          <tr>
+            <td class="warn">C</td>
+            <td class="warn">C</td>
+            <td class="warn">C</td>
+            <td class="bold">a33</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="item-center">
+        <table>
+          <tr>
+            <td>a00</td>
+            <td>a01</td>
+            <td>a02</td>
+            <td>a03</td>
+            <td>a11</td>
+            <td>a12</td>
+            <td>a13</td>
+            <td>a22</td>
+            <td>a23</td>
+            <td>a33</td>
+            <td class="warn">C</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>三、稀疏矩阵 Sparse Matrix</dt>
+      <dd>稠密度</dd>
+      <dd>. 非零元素占矩阵所有元素的比值</dd>
+      <dd>. 矩阵稠密度&lt;5%的矩阵，即：矩阵含有大量0元素，且分布没有规律；仅仅是0元素比较多</dd>
+      <dd class="mb2">. 主要应用于大规模集成电路、计算机图形、图像处理</dd>
+      <dd>存储</dd>
+      <dd>. 只存储非0元素的信息</dd>
+      <dd>. 为了不丢失信息，实现无损解压，不仅要存储元素本身，还要存储元素的位置</dd>
+      <dd>. 数据结构参考定义</dd>
+      <dd>
+        <pre>
+    typedef struct Arr
+    {
+        int row, col;
+        int data;
+    } Array;</pre>
+      </dd>
+      <dt>四、转置矩阵</dt>
+      <dd>. 将矩阵A的行列互换得到的新矩阵称为转置矩阵A<sup>T</sup></dd>
+      <dd>[示例]</dd>
+      <dd class="grid grid2">
+        <div class="txt-center">
+          <table class="matrix">
+            <tr>
+              <td>a00</td>
+              <td>a01</td>
+              <td>a02</td>
+              <td>a03</td>
+            </tr>
+            <tr>
+              <td>a10</td>
+              <td>a11</td>
+              <td>a12</td>
+              <td>a13</td>
+            </tr>
+            <tr>
+              <td>a20</td>
+              <td>a21</td>
+              <td>a22</td>
+              <td>a23</td>
+            </tr>
+            <tr>
+              <td>a30</td>
+              <td>a31</td>
+              <td>a33</td>
+              <td>a33</td>
+            </tr>
+          </table>
+          <div>原矩阵A</div>
+        </div>
+        <div class="txt-center">
+          <table class="matrix">
+            <tr>
+              <td>a00</td>
+              <td>a10</td>
+              <td>a20</td>
+              <td>a30</td>
+            </tr>
+            <tr>
+              <td>a01</td>
+              <td>a11</td>
+              <td>a21</td>
+              <td>a31</td>
+            </tr>
+            <tr>
+              <td>a02</td>
+              <td>a12</td>
+              <td>a22</td>
+              <td>a32</td>
+            </tr>
+            <tr>
+              <td>a03</td>
+              <td>a13</td>
+              <td>a33</td>
+              <td>a33</td>
+            </tr>
+          </table>
+          <div>转置矩阵A<sup>T</sup></div>
+        </div>
+      </dd>
+    </dl>
+    <div class="chap">应用 Application</div>
+    <dl>
+      <dd><span class="iconfont icon-fixed"></span> 串：模式匹配；</dd>
+      <dd><span class="iconfont icon-fixed"></span> 数组：存储；</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

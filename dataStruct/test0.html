@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>Exp1 C回顾精讲</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <dl class="target-cont">
+      <dd><img src="" data-src="./exp1c/幻灯片1.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片2.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片3.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片4.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片5.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片6.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片7.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片8.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片9.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片10.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片11.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片12.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片13.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片14.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片15.JPG" alt=""></dd>
+      <dd><img src="" data-src="./exp1c/幻灯片16.JPG" alt=""></dd>
+    </dl>
+    <dl class="target-cont">
+      <dt class="chap">Others</dt>
+      <dt>课程小结</dt>
+      <dd>1. C语言开发环境介绍；</dd>
+      <dd>2. C语言的基本语法；</dd>
+      <dd>3. C语言的基本语句；</dd>
+      <dt>课后作业</dt>
+      <dd>进一步熟悉自己的C语言开发环境IDE；</dd>
+      <dd>完成班级通信录的设计，下节课以宿舍为单位汇报；</dd>
+      <dt>拓展阅读</dt>
+      <dd>1. <a href="https://www.bilibili.com/video/BV1jW411K7yg?spm_id_from=333.999.0.0" target="_blank">小甲鱼</a>
+      </dd>
+      <dd>2. <a href="https://www.bilibili.com/video/BV1PJ411J7fk/?spm_id_from=333.788" target="_blank">懒猫老师</a>
+      </dd>
+      <dd>3. <a href="https://www.bilibili.com/video/BV1yD4y127vy?spm_id_from=333.999.0.0" target="_blank">小马哥</a>
+      </dd>
+      <dd class="end-line">[End]</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    window.onload = function () {
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+          FastClick.attach(document.body);
+        }, false);
+      }
+      // lazyload
+      let scrollTop = window.scrollY;
+      let imgs = Array.from(document.querySelectorAll('img'));
+      lazyLoad();
+      // 采用了节流函数
+      window.addEventListener('scroll', throttle(lazyLoad, 500, 1000));
+
+      function throttle(fun, delay, time) {
+        let timeout,
+          startTime = new Date();
+        return function () {
+          let context = this,
+            args = arguments,
+            curTime = new Date();
+          clearTimeout(timeout);
+          // 如果达到了规定的触发时间间隔，触发 handler
+          if (curTime - startTime >= time) {
+            fun();
+            startTime = curTime;
+            // 没达到触发间隔，重新设定定时器
+          } else {
+            timeout = setTimeout(fun, delay);
+          }
+        };
+      };
+
+      // 实际想绑定在 scroll 事件上的 handler
+      // 需要访问到imgs ,  scroll 
+      function lazyLoad() {
+        scrollTop = window.scrollY;
+        imgs.forEach((item, index) => {
+          if (scrollTop === 0 && item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop) {
+            item.setAttribute('src', item.dataset.src)
+            item.setAttribute('data-src', '')
+          } else if (item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop && item.offsetTop > scrollTop) {
+            item.setAttribute('src', item.dataset.src)
+            item.setAttribute('data-src', '')
+          }
+        })
+      }
+    }
+  </script>
+</body>
+
+</html>

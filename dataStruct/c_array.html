@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组 Array</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      background-image: url(../imgs/banner.png);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    .iconfont {
+      color: #4bc2ce;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Array</h1>
+      <span class="timestamp">2022-11-18</span>
+    </header>
+    <div class="chap">一维数组</div>
+    <dl>
+      <dt>定义</dt>
+      <dd class="txt-center warn">[存储类型] 数据类型 标识符[常量/常量表达式]</dd>
+      <dd>. 数组的初始化使用{}而不是[]</dd>
+      <dd>. 数组名是一个地址常量，不允许修改，表示数组的起始地址，指向数组中第一个元素</dd>
+      <dd>. 数组之间的不能直接整体复制，必须遍历逐个元素赋值</dd>
+      <dd>. 静态数组：创建时就分配空间；一旦分配存储空间，不能增加或减少存储空间</dd>
+      <dd>. 动态数组：运行时才分配空间；必须使用malloc函数；使用完毕，必须free空间</dd>
+      <dd>. 数组的访问可以使用数组名和下标；也可以使用数组名代表的指针；</dd>
+      <dd>. 字符串赋值时，实际存储空间要大于串的长度</dd>
+      <dd>
+        <pre>
+//静态数组
+int arr[5];
+
+//动态数组
+int *arr = (int *)malloc(5 * sizeof(int));
+
+//访问数组
+int arr[] = {1, 2, 3, 4, 5};
+printf("size=%ld\n", sizeof(arr));//???
+for (int i = 0; i &lt; 5; i++)//???
+{
+    printf("Item=%d\tItem=%d\n", arr[i], *(arr + i));
+}
+
+//实际串长和实际内存空间
+char str[N]="abc\0abc";
+printf("%d\n",strlen(str));
+printf("%d\n",sizeof(str));
+//3
+//10</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>] 数组长度</dd>
+      <dd>
+        <pre>
+char chs[12] = "hi,there";
+printf("%d\n", sizeof(chs) / sizeof(chs[0]));
+printf("%d\n", sizeof(chs) / sizeof(*chs));
+printf("%d\n", sizeof(chs) / sizeof(*(chs + 0)));</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-bangzhu2"></span>] sizeof获取的是什么?大小是d还是ld?</dd>
+      <dd>[<span class="iconfont icon-bangzhu2"></span>] for循环中的i如何定义?</dd>
+      <dd>[<span class="iconfont icon-editor"></span>] JavaScript的扩展运算符...</dd>
+    </dl>
+    <div class="chap">二维数组</div>
+    <dl>
+      <dt>声明</dt>
+      <dd>
+        <pre>
+//方案1
+int a[M][N] = {1, 2, 3, 7, 8, 9};OK
+//方案2
+int a[M][N] = &lbrace;{1, 2, 3}, {7, 8, 9}&rbrace;;</pre>
+      </dd>
+      <dt>遍历</dt>
+      <dd>. 二维数组数组名所表示的地址，既是二维数组的首地址，又是第一行的一维数组的地址，也是二维数组第一个元素的地址</dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>] 2维数组的存储：行优先？列优先？</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#define M 2
+#define N 3
+int main(void)
+{
+    //int a[M][N] = {1, 2, 3, 7, 8, 9};OK
+    int a[M][N] = &lbrace;{1, 2, 3}, {7, 8, 9}&rbrace;;
+    int i, j;
+    for (i = 0; i &lt; M; i++)
+    {
+        for (j = 0; j &lt; N; j++)
+        {
+            printf("%d-%p\t", a[i][j],&(a[i][j]));
+        }
+        printf("\n");
+    }
+    printf("\n");
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">字符数组</div>
+    <dl>
+      <dt>声明和赋值</dt>
+      <dd>. 只能在声明的时候给数组赋字串常量</dd>
+      <dd>. gets()比较危险，不做溢出检测</dd>
+      <dd>. scanf()获取字符串时会把空格、tab和回车换行当作分隔符</dd>
+      <dd>
+        <pre>
+char str[N] = {'a', 'b', 'c'};
+char chs[N] = "abc";
+gets(str);
+puts(str);
+scanf("%s", chs);
+printf("%s", chs);
+str="helloworld"//告警</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>] 字符数组赋值</dd>
+      <dd>
+        <pre>
+char chs[] = "hi,there";
+puts(chs);
+//告警：数组名chs是常量
+//chs="hello"
+strcpy(chs, "hello");
+puts(chs);</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>] 字符指针赋值</dd>
+      <dd>
+        <pre>
+char *ch = "hi,there";
+puts(ch);
+//字符指针指向一个串常量，不能被修改，只能重新指向别处
+// strcpy(ch, "hello");
+ch="hello";
+puts(ch);</pre>
+      </dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

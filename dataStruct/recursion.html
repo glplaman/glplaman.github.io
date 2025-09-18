@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursion</title>
+</head>
+
+<body>
+  <script>
+    // n的阶乘
+    function fac(n) {
+      if (n == 0) {
+        return 1
+      } else {
+        return n * fac(n - 1)
+      }
+    }
+    // a和b的最大公约数
+    function gcd(a, b) {
+      if (b == 0) {
+        return a;
+      } else {
+        return gcd(b, a % b)
+      }
+    }
+    // n阶台阶的走法：可以一次走1阶；也可以一次走2阶
+    function steps(n) {
+      switch (n) {
+        case 1: return 1;
+        case 2: return 2;
+        default: return steps(n - 1) + steps(n - 2)
+      }
+    }
+    // 兔子
+    // 1000!
+    let res = fac(100);
+    console.log(res);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>归并排序</title>
+  <link rel="stylesheet" href="./css/sort.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>归并排序</h1>
+    <h5>Merge Sort</h5>
+    <dl>
+      <dt>思路</dt>
+      <dd>
+        <div>. 将2个或多个有序的序列合并称为1个有序序列</div>
+        <div>. 先拆再合：将原始无序记录看作n个无序序列；依次两两合并；直到最后合并称为一个有序序列</div>
+        <div>. 归并时，每次都比较 <span class="warn">头部|第1个</span> 记录</div>
+        <div>. 采用了分治 - Divide & Conquer和递归 - Recursion的思想</div>
+        <div>. 更多信息，请查看<a
+            href="https://www.bilibili.com/video/BV1gx41117oL/?spm_id_from=888.80997.embed_other.whitelist&t=4&vd_source=fe13480e1099e18e9d5f4e25467df4df">哔哩哔哩-归并排序</a>、
+          <a href="https://www.hackerearth.com/practice/algorithms/sorting/merge-sort/tutorial/">Merge
+            Sort</a>
+        </div>
+      </dd>
+      <dd class="example-sn">已知待排序关键字为{49, 38, 65, 97, 76, 13, 27}，给出2-路合并过程</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>49</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+          </tr>
+          <tr>
+            <td>[49]</td>
+            <td>[38]</td>
+            <td>[65]</td>
+            <td>[97]</td>
+            <td>[76]</td>
+            <td>[13]</td>
+            <td>[27]</td>
+          </tr>
+          <tr>
+            <td colspan="2">[38, 49]</td>
+            <td colspan="2">[65, 97]</td>
+            <td colspan="2">[13, 76]</td>
+            <td>[27]</td>
+          </tr>
+          <tr>
+            <td colspan="4">[38, 49, 65, 97]</td>
+            <td colspan="3">[13, 27, 76]</td>
+          </tr>
+          <tr>
+            <td colspan="7">[13, 27, 38, 49, 65, 76, 97]</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>其中，[38,49]和[65,97]的归并过程为：</dd>
+      <dd>
+        <div>. 38和65比较，38小，取出38，余[49]和[65,97]</div>
+        <div>. 49和比65，49小，取出49，放在38后面，余[65,97]</div>
+        <div>. 将[65,97]放在49后面：[38，49，65，97]</div>
+        <div>. 其中，[13,76]和[27]的归并过程</div>
+        <div>. 13和27比较，13小，取出，余[76]和[27]</div>
+        <div>. 76和27比较，76大，取出27，放在13后面，余76</div>
+        <div>. 将76取出，放在27后面：13,27,76</div>
+        <pre>
+#include &lt;stdio.h>
+#include &lt;stdlib.h>
+void dis(int arr[], int len){
+    int i = 0;    
+    for(; i &lt; len; i++){
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void merge(int arr[],int temp[],int left,int mid,int right){
+    // 标记左半区第一个未排序
+    int l=left;
+    // 标记右半区第一个未排序
+    int r=mid+1;
+    // 临时记录
+    int pos=left;
+    while(l&lt;=mid && r&lt;=right){
+        if(arr[l]&lt;arr[r]){
+            temp[pos++]=arr[l++];
+        }else{
+            temp[pos++]=arr[r++];
+        }
+    }
+    // 合并左半区剩下的
+    while(l&lt;=mid){
+        temp[pos++]=arr[l++];
+    }
+    // 合并右半区剩下的
+    while(r&lt;=right){
+        temp[pos++]=arr[r++];
+    }
+    // 合并后的复制回原数组
+    while(left&lt;=right){
+        arr[left]=temp[left];
+        left++;
+    }
+}
+void ms(int arr[],int temp[],int left,int right){
+    if(left&lt;right){
+        int mid=(left+right)/2;
+        // 递归划分左半区
+        ms(arr,temp,left,mid);
+        // 递归划分右半区
+        ms(arr,temp,mid+1,right);
+        // 合并
+        merge(arr,temp,left,mid,right);
+    }
+}
+//主入口函数
+void mergeSort(int arr[],int len){
+    int* temp=(int*)malloc(len*sizeof(int));
+    if(temp){
+        ms(arr,temp,0,len-1);
+        free(temp);
+    }
+}
+int main () {
+    int arr[]={9,5,2,7,12,4,3,1,11};
+    int len=9;
+    dis(arr,len);
+    mergeSort(arr,len);
+    dis(arr,len);
+    return 0;
+}</pre>
+      </dd>
+      <dt>特点</dt>
+      <dd>
+        <div>. 稳定</div>
+        <div>. 可用于链式存储</div>
+        <div>. 时间复杂度：O(nlogn)</div>
+        <div>. 空间复杂度：O(n)：使用临时空间存储归并的记录</div>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

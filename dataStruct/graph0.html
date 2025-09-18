@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图 Graph</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/ds.css">
+  <style>
+    header {
+      position: relative;
+      background-image: url(../imgs/jiageng/jiageng1.jpg);
+      margin-bottom: 0;
+    }
+
+    .flex-h {
+      height: 30px;
+      line-height: 30px;
+      background-color: #c23523;
+    }
+
+    .flex-h li {
+      margin: unset;
+      transform: skewX(-30deg);
+      border-left-style: solid;
+      border-left-width: 4px;
+      border-left-color: #fff;
+    }
+
+    .flex-h li:last-child {
+      border-right-style: solid;
+      border-right-width: 4px;
+      border-right-color: #fff;
+    }
+
+    .flex-h li a {
+      color: #fff;
+      display: block;
+      padding: 0 1rem;
+      transform: skewX(30deg);
+    }
+
+    .logo {
+      position: absolute;
+      width: 45px;
+      height: 56px;
+      right: 1rem;
+      top: 1rem;
+      filter: brightness(10);
+    }
+  </style>
+</head>
+
+<body>
+  <section class="w">
+    <header id="top">
+      <img class="logo" src="../imgs/ds/graph_logo.png" alt="">
+    </header>
+    <nav>
+      <ul class="flex-h">
+        <li><a href="#con" id="tocon">概念</a></li>
+        <li><a href="#sto" id="tosto">存储</a></li>
+        <li><a href="#alg" id="toalg">算法</a></li>
+        <li><a href="#dis" id="todis">遍历</a></li>
+        <!-- <li><a href="#app" id="toapp">应用</a></li> -->
+      </ul>
+    </nav>
+    <dl>
+      <dd id="con" class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片1.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片2.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片3.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片4.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片5.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片6.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片7.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片8.JPG" alt=""></dd>
+      <dd id="sto" class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片9.JPG" alt=""></dd>
+      <dd id="sto" class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片10.JPG" alt=""></dd>
+      <dt>数据和关系</dt>
+      <dd>不仅要存储顶点本身的信息；还有存储和顶点关联的所有顶点的信息，包括对应边的权weigh[如果图带权]； </dd>
+      <dt>分类</dt>
+      <dd>1.邻接矩阵存储adjacent matrix：采用[邻接]矩阵数组表示顶点之间相邻关系的存储结构； </dd>
+      <dd>2.邻接表存储adjacent list：利用[顺序]存储和[链式]存储相结合的方式的存储；</dd>
+      <dt>邻接矩阵</dt>
+      <dd>若图G=(V,E)是含义n(n>0)个顶点的图，各顶点编号为0到n-1，则G的邻接矩阵A是[n阶方阵]；</dd>
+      <dd>[情况1]不带权无向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片11.JPG" alt=""></dd>
+      <dd>[情况2]不带权有向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片12.JPG" alt=""></dd>
+      <dd>[情况3]带权无向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片13.JPG" alt=""></dd>
+      <dd>[情况4]带权有向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片14.JPG" alt=""></dd>
+      <dt>邻接矩阵特点</dt>
+      <dd>.图的邻接矩阵是唯一的；</dd>
+      <dd>.存储空间复杂度为o(n2)，适合存储边较多的图；</dd>
+      <dd>.无向图G的邻接矩阵A是一个对称矩阵；</dd>
+      <dd>.注意图的方向性；</dd>
+      <dd>.对无向图，第i行（i列）非零/非∞的个数是顶点i的度；</dd>
+      <dd>.对有向图，第i行（i列）非零/非∞的个数是顶点i的出度（入度）；</dd>
+      <dt>邻接矩阵数据结构</dt>
+      <dd class="code">
+        <pre>
+    typedef struct
+    {
+        int no;        //顶点编号
+        InfoType info; //顶点其他信息
+    } VertexType;      //顶点类型
+
+    typedef struct
+    {
+        int edges[MAXV][MAXV]; //邻接矩阵数组
+        int n, e;              //顶点数，边数
+        VertexType vexs[MAXV]; //存放顶点信息
+    } MatGraph;                //完整的图邻接矩阵类型</pre>
+      </dd>
+      <dt>邻接表</dt>
+      <dd>顺序和链式结合的方式的存储； </dd>
+      <dd>为图G的每个顶点创建一个单链表；链表的每个节点是关联于顶点的所有[出边]；使用[一维]数组存放每个单链表的第一个边节点；</dd>
+      <dd>[举例说明]挂帘子</dd>
+      <dd>[情况1]不带权无向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片24.JPG" alt=""></dd>
+      <dd>[情况2]不带权有向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片25.JPG" alt=""></dd>
+      <dd>[情况3]带权无向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片26.JPG" alt=""></dd>
+      <dd>[情况4]带权有向图</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片27.JPG" alt=""></dd>
+      <dt>邻接表的特点</dt>
+      <dd>.不唯一；</dd>
+      <dt>邻接表的数据结构</dt>
+      <dd class="code">
+        <pre>
+    typedef struct ANode
+    {
+        int adjvex;            //该边的邻接点编号
+        int weight;            //该边的相关信息，如权值（用整型表示）
+        struct ANode *nextarc; //指向下一条边的指针
+    } ArcNode;                 //边结点类型
+
+    typedef struct Vnode
+    {
+        InfoType info;     //顶点其他信息
+        int count;         //存放顶点入度,仅仅用于拓扑排序
+        ArcNode *firstarc; //指向第一条边
+    } VNode;               //邻接表头结点类型
+
+    typedef struct
+    {
+        VNode adjlist[MAXV]; //邻接表头结点数组
+        int n, e;            //图中顶点数n和边数e
+    } AdjGraph;              //完整的图邻接表类型</pre>
+      </dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片23.JPG" alt=""></dd>
+      <dt>课后作业</dt>
+      <dd>1.判断图的类型，并给出对应的邻接矩阵。</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片15.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片16.JPG" alt=""></dd>
+      <dd>2.判断图的类型，并给出对应的邻接表。</dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片17.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片18.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片29.JPG" alt=""></dd>
+      <dd id="alg" class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片30.JPG" alt=""></dd>
+      <dt>邻接矩阵</dt>
+      <dd class="code">
+        <pre>
+    MatGraph *CreateMat(MatGraph *G, int A[MAXV][MAXV], int n, int e)
+    {
+        int i, j;
+        G->n = n;
+        G->e = e;
+        for (i = 0; i &lt; G->n; i++)
+            for (j = 0; j &lt; G->n; j++)
+                G->edges[i][j] = A[i][j];
+        return G;
+    }
+    void DispMat(MatGraph g)
+    {
+        int i, j;
+        for (i = 0; i &lt; g.n; i++)
+        {
+            for (j = 0; j &lt; g.n; j++)
+                if (g.edges[i][j] != INF)
+                    printf("%4d", g.edges[i][j]);
+                else
+                    printf("%4s", "∞");
+            printf("\n");
+        }
+    }</pre>
+      </dd>
+      <dt>邻接表</dt>
+      <dd class="code">
+        <pre>
+
+    AdjGraph *CreateAdj(AdjGraph *G, int A[MAXV][MAXV], int n, int e)
+    {
+        int i, j;
+        ArcNode *p;
+        G = (AdjGraph *)malloc(sizeof(AdjGraph));
+        printf("%p\n", G);
+        for (i = 0; i < n; i++)
+            G->adjlist[i].firstarc = NULL;
+        for (i = 0; i < n; i++)
+            for (j = n - 1; j >= 0; j--)
+                if (A[i][j] != 0 && A[i][j] != INF)
+                {
+                    p = (ArcNode *)malloc(sizeof(ArcNode));
+                    p->adjvex = j;
+                    p->weight = A[i][j];
+                    p->nextarc = G->adjlist[i].firstarc;
+                    G->adjlist[i].firstarc = p;
+                }
+        G->n = n;
+        G->e = n;
+        return G;
+    }
+    void DispAdj(AdjGraph *G)
+    {
+        int i;
+        ArcNode *p;
+        for (i = 0; i < G->n; i++)
+        {
+            p = G->adjlist[i].firstarc;
+            printf("%3d: ", i);
+            while (p != NULL)
+            {
+                printf("%3d[%d]->", p->adjvex, p->weight);
+                p = p->nextarc;
+            }
+            printf("^\n");
+        }
+    }
+                </pre>
+      </dd>
+      <dd id="dis" class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片31.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片32.JPG" alt=""></dd>
+      <dd class="dd-img-item"><img src="../imgs/ds/chap8 graph1/幻灯片33.JPG" alt=""></dd>
+      <dt>说明</dt>
+      <dd>不管是DFS还是BFS，都需要指定第一个访问的顶点；</dd>
+      <dd>DFS一查到底；</dd>
+      <dt>邻接表的DFS参考代码</dt>
+      <dd class="code">
+        <pre>
+
+    void DFS(AdjGraph *G, int v)
+    {
+        ArcNode *p;
+        visited[v] = 1;             //置已访问标记
+        printf("%d  ", v);          //输出被访问顶点的编号
+        p = G->adjlist[v].firstarc; // p指向顶点v的第一条弧的弧头结点
+        while (p != NULL)
+        {
+            if (visited[p->adjvex] == 0) //若p->adjvex顶点未访问,递归访问它
+                DFS(G, p->adjvex);
+            p = p->nextarc; // p指向顶点v的下一条弧的弧头结点
+        }
+    }
+                </pre>
+      </dd>
+      <dt class="dd-title-item">完整DFS项目</dt>
+      <dt class="warn"><a href="../dataStruct/graph/graph.rar">点击下载完整项目graph.rar</a></dt>
+      <dd class="code">
+        <pre>
+
+    #include "graph.c"
+    int visited[MAXV] = {0};
+    void DFS(AdjGraph *G, int v)
+    {
+        ArcNode *p;
+        visited[v] = 1;             //置已访问标记
+        printf("%d  ", v);          //输出被访问顶点的编号
+        p = G->adjlist[v].firstarc; // p指向顶点v的第一条弧的弧头结点
+        while (p != NULL)
+        {
+            if (visited[p->adjvex] == 0) //若p->adjvex顶点未访问,递归访问它
+                DFS(G, p->adjvex);
+            p = p->nextarc; // p指向顶点v的下一条弧的弧头结点
+        }
+    }
+    int main()
+    {
+        AdjGraph *G;
+        int A[MAXV][MAXV] = {{0, 1, 0, 1, 1}, {1, 0, 1, 1, 0}, {0, 1, 0, 1, 1}, {1, 1, 1, 0, 1}, {1, 0, 1, 1, 0}};
+        int n = 5, e = 8;
+        G = CreateAdj(G, A, n, e); // 8.1(a)的邻接表
+        printf("%p\n", G);
+        printf("图G的邻接表:\n");
+        DispAdj(G); //输出邻接表G
+        printf("深度优先序列(递归):");
+        DFS(G, 2);
+        printf("\n");
+        DestroyAdj(G); //销毁邻接表
+        return 0;
+    }
+                </pre>
+      </dd>
+      <dt>执行结果</dt>
+      <dd> 图G的邻接表: </dd>
+      <dd>0: 1[1]→ 3[1]→ 4[1]→∧ </dd>
+      <dd>1: 0[1]→ 2[1]→ 3[1]→∧ </dd>
+      <dd>2: 1[1]→ 3[1]→ 4[1]→∧ </dd>
+      <dd>3: 0[1]→ 1[1]→ 2[1]→ 4[1]→∧ </dd>
+      <dd>4: 0[1]→ 2[1]→ 3[1]→∧ </dd>
+      <dd>深度优先序列(递归):2 1 0 3 4</dd>
+    </dl>
+    <aside id="asideNav" class="asideNav flex-v">
+      <a href="#con" id="asidetocon">概念</a>
+      <a href="#sto" id="asidetosto">存储</a>
+      <a href="#alg" id="asidetoalg">算法</a>
+      <a href="#dis" id="asidetodis">遍历</a>
+      <a href="#top" id="asidetotop">back</a>
+    </aside>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-06-01</span>
+    </footer>
+  </section>
+  <script src="../js/s2view_cnplaman.js"></script>
+  <script src="../js/back2top_js.js"></script>
+  <script>
+    window.onload = function () {
+      // top
+      let con = document.querySelector('#tocon');
+      let sto = document.querySelector('#tosto');
+      let alg = document.querySelector('#toalg');
+      let dis = document.querySelector('#todis');
+      // aside
+      let asidecon = document.querySelector('#asidetocon');
+      let asidesto = document.querySelector('#asidetosto');
+      let asidealg = document.querySelector('#asidetoalg');
+      let asidedis = document.querySelector('#asidetodis');
+
+      let asidetop = document.querySelector('#asidetotop')
+
+      let asideNav = document.querySelector('#asideNav');
+
+      s2view(con, "#con")
+      s2view(sto, "#sto")
+      s2view(alg, "#alg")
+      s2view(dis, "#dis")
+
+      s2view(asidecon, "#con")
+      s2view(asidesto, "#sto")
+      s2view(asidealg, "#alg")
+      s2view(asidedis, "#dis")
+
+      s2view(asidetop, "#top")
+
+      backToTop(this, asideNav)
+    }
+  </script>
+</body>
+
+</html>

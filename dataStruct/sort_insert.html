@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>直接插入排序</title>
+  <link rel="stylesheet" href="./css/sort.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>插入排序</h1>
+    <h5>Insert Sort</h5>
+    <div class="chap">直接插入排序</div>
+    <dl>
+      <dt>思路</dt>
+      <dd>
+        <div>. Straight Insert Sort</div>
+        <div>. 将一个待排序的记录，按其关键字大小，插入到前面已经排好序的子序列适当位置，直到对象全部插入为止 </div>
+        <div>. 基本过程：将无序序列的第一个记录取出，放在哨兵处；无序序列空出一个存储位置，作为中转；从有序序列后面开始，依次和哨兵比较；如果比哨兵大，就后移一个位置，直到找到插入的位置</div>
+        <div>. 需要额外多1个空间作为哨兵，存放待插入的记录</div>
+        <div>. 把第一个记录当作有序序列，从第2个记录开始</div>
+        <div>. 有的UP主的数据从1号位置开始，空出来0号位置作为哨兵，从2号位置开始比较。</div>
+        <table>
+          <tr>
+            <td style="border: none">哨兵位</td>
+            <td style="border: none;background-color: #afd483;" colspan="4">有序序列</td>
+            <td style="border: none;" colspan="5">无序序列</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>e<sub>0</sub></td>
+            <td>e<sub>1</sub></td>
+            <td>...</td>
+            <td>e<sub>n-1</sub></td>
+            <td class="warn">d</td>
+            <td>...</td>
+            <td>d</td>
+            <td>...</td>
+            <td>d</td>
+          </tr>
+        </table>
+        <pre>
+#include &lt;stdio.h>
+void dis(int arr[], int len);
+void insertSort(int arr[], int len);
+int main()
+{
+    int arr[] = {1, 23, 4, 69, 25, 9};
+    int len=sizeof(arr)/sizeof(arr[0]);
+    printf("初始序列\t哨兵\t");
+    dis(arr, len);
+    insertSort(arr, len);
+    return 0;
+}
+
+void insertSort(int arr[], int len)
+{
+    int i, j, ref;
+    for (i = 1; i &lt; len; i++)
+    {
+        ref=arr[i];
+        j=i-1;
+        while(ref&lt;arr[j]){
+            arr[j+1]=arr[j];
+            j--;
+        }
+        arr[j+1]=ref;
+        printf("第%d次排序\t%d\t",i-1,ref);
+        dis(arr,len);
+    }
+}
+
+void dis(int arr[], int len)
+{
+    int i;
+    for (i = 0; i &lt; len; i++)
+    {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}</pre>
+        <figure>
+          <img src="./imgs/sort0.png" alt="">
+          <figcaption>编译结果</figcaption>
+        </figure>
+      </dd>
+      <dt>特点</dt>
+      <dd>
+        <div>. 稳定</div>
+        <div>. 简单，容易实现</div>
+        <div>. 多应用于线性表的顺序存储，也适合链式存储</div>
+        <div>. 时间复杂度：O(n<sup>2</sup>)：两层循环</div>
+        <div>. 空间复杂度：O(n<sup>2</sup>)</div>
+        <div>. 适合：基本有序的短序列</div>
+        <div>. 不适合：无序，且n比较大的序列</div>
+        <div>. 更多信息，请查看 <a href="https://www.hackerearth.com/practice/algorithms/sorting/insertion-sort/tutorial/"
+            class="warn" target="_blank">Insertion Sort</a></div>
+      </dd>
+      <dd class="example-sn">待排序序列如下表，给出简单插入排序过程</dd>
+      <dd>
+        <table>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>初始</td>
+            <td>49</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td class="warn">49</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td>65</td>
+            <td>97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td>97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td class="warn">97</td>
+            <td>76</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td class="warn">76</td>
+            <td class="warn">97</td>
+            <td>13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="warn">13</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td class="warn">76</td>
+            <td class="warn">97</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td class="warn">76</td>
+            <td class="warn">97</td>
+            <td>49*</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49</td>
+            <td class="warn">49*</td>
+            <td class="warn">65</td>
+            <td class="warn">76</td>
+            <td class="warn">97</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <div class="chap">折半插入排序</div>
+    <dl>
+      <dt>说明</dt>
+      <dd>. Binary Insert Sort</dd>
+      <dd>. 通过对半查找目标位置实现插入排序，包括对半查找和插入两个阶段</dd>
+      <dd>. 插入进行到中后期时，前面序列已经是有序序列，可以快速找到目标插入位置</dd>
+      <dd class="example-sn">直接插入排序中，查找13的位置：</dd>
+      <dd>
+        <table>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>38</td>
+            <td>49</td>
+            <td>65</td>
+            <td>76</td>
+            <td>97</td>
+            <td class="warn">13</td>
+            <td>27</td>
+            <td>49*</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>使用对半查找：</dd>
+      <dd>第1次 low=0, high=4, mid=(low+high)/2=2, loc(2)=65>13, 13应在前半段</dd>
+      <dd>第2次 low=0, high=1, mid=(low+high)/2=0, loc(0)=38>13, 13应在前半段, 即0号位置</dd>
+      <dd>只需2次就可以锁定目标位置</dd>
+      <dd>使用直接查找：</dd>
+      <dd>从前往后，需要比较2次；从后往前需要比较5次</dd>
+      <dt>特点</dt>
+      <dd>. 稳定</dd>
+      <dd>. 不适合链式存储</dd>
+      <dd>. 时间复杂度：O(n<sup>2</sup>)</dd>
+      <dd>. 空间复杂度：O(n<sup>2</sup>)</dd>
+      <dd>. 适合无序、n较大的序列</dd>
+      <dd>. 平均性能优于直接插入排序</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

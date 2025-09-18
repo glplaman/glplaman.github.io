@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选择排序</title>
+  <link rel="stylesheet" href="./css/sort.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>选择排序</h1>
+    <h5>Simple Selection Sort</h5>
+    <dl>
+      <dt>思路</dt>
+      <dd>
+        <div>. 从无序序列中选择关键特征最小的记录，放到有序序列的最后面或当前无序序列的第一个位置</div>
+        <div>. 重复操作直到无序序列只有1个时，排序结束</div>
+        <div>. 需要1个哨兵记录当前最小位置，并不断更新</div>
+        <div>. 每一趟先找到最小的索引，最后再交换；不需要每次都交换</div>
+        <div>. 更多信息，请访问 <a
+            href="https://www.bilibili.com/video/BV1kx411Q7Et/?spm_id_from=888.80997.embed_other.whitelist&t=9&vd_source=fe13480e1099e18e9d5f4e25467df4df">哔哩哔哩-选择排序</a>、<a
+            href="https://www.hackerearth.com/practice/algorithms/sorting/selection-sort/tutorial/">Selection
+            Sort</a></div>
+      </dd>
+      <dd class="example-sn">已知待排序序列{8,6,9,2,3,7}，给出简单选择排序过程</dd>
+      <dd>
+        <table>
+          <caption>简单排序过程</caption>
+          <tr>
+            <td></td>
+            <td>最小数据</td>
+            <td>8 6 9 2 3 7</td>
+          </tr>
+          <tr>
+            <td>第1轮交换</td>
+            <td>2</td>
+            <td><span class="warn">2</span> 6 9 8 3 7</td>
+          </tr>
+          <tr>
+            <td>第2轮交换</td>
+            <td>3</td>
+            <td><span class="warn">2 3</span> 9 8 6 7</td>
+          </tr>
+          <tr>
+            <td>第3轮交换</td>
+            <td>6</td>
+            <td><span class="warn">2 3 6</span> 8 9 7</td>
+          </tr>
+          <tr>
+            <td>第4轮交换</td>
+            <td>7</td>
+            <td><span class="warn">2 3 6 7</span> 9 8</td>
+          </tr>
+          <tr>
+            <td>第5轮交换</td>
+            <td>8</td>
+            <td><span class="warn">2 3 6 7 8</span> 9</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">已知待排序序列{49, 38, 65, 97, 49*, 13, 27, 76}，给出简单选择排序过程</dd>
+      <dd>
+        <table>
+          <caption>简单排序过程</caption>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>初始</td>
+            <td>49</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>49*</td>
+            <td>13</td>
+            <td>27</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">0</td>
+            <td>49</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>49*</td>
+            <td class="warn">13</td>
+            <td>27</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>49*</td>
+            <td>49</td>
+            <td>27</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">1</td>
+            <td>13</td>
+            <td>38</td>
+            <td>65</td>
+            <td>97</td>
+            <td>49*</td>
+            <td>49</td>
+            <td class="warn">27</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td>65</td>
+            <td>97</td>
+            <td>49*</td>
+            <td>49</td>
+            <td>38</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">2</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td>65</td>
+            <td>97</td>
+            <td>49*</td>
+            <td>49</td>
+            <td class="warn">38</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td>97</td>
+            <td>49*</td>
+            <td>49</td>
+            <td>65</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">3</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td>97</td>
+            <td class="warn">49*</td>
+            <td>49</td>
+            <td>65</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td>97</td>
+            <td>49</td>
+            <td>65</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">4</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td>97</td>
+            <td class="warn">49</td>
+            <td>65</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td class="warn">49</td>
+            <td>97</td>
+            <td>65</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">5</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td class="warn">49</td>
+            <td>97</td>
+            <td class="warn">65</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td>97</td>
+            <td>76</td>
+          </tr>
+          <tr>
+            <td rowspan="2">6</td>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td>97</td>
+            <td class="warn">76</td>
+          </tr>
+          <tr>
+            <td class="warn">13</td>
+            <td class="warn">27</td>
+            <td class="warn">38</td>
+            <td class="warn">49*</td>
+            <td class="warn">49</td>
+            <td class="warn">65</td>
+            <td class="warn">76</td>
+            <td>97</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="example-sn">设一组待排序的关键字序列为{12,5,16,21,10,3}，用简单选择排序法按关键字从小到大进行排序，写出每趟排序结束后关键字序列的状态
+      </dd>
+      <dd>
+        <table>
+          <caption>简单排序过程</caption>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>初始</td>
+            <td>12</td>
+            <td>5</td>
+            <td>16</td>
+            <td>21</td>
+            <td>10</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>12</td>
+            <td>5</td>
+            <td>16</td>
+            <td>21</td>
+            <td>10</td>
+            <td class="warn">3</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td class="green">3</td>
+            <td class="warn">5</td>
+            <td>16</td>
+            <td>21</td>
+            <td>10</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="green">3</td>
+            <td class="green">5</td>
+            <td>16</td>
+            <td>21</td>
+            <td class="warn">10</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td class="green">3</td>
+            <td class="green">5</td>
+            <td class="green">10</td>
+            <td>21</td>
+            <td>16</td>
+            <td class="warn">12</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="green">3</td>
+            <td class="green">5</td>
+            <td class="green">10</td>
+            <td class="green">12</td>
+            <td class="warn">16</td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="green">3</td>
+            <td class="green">5</td>
+            <td class="green">10</td>
+            <td class="green">12</td>
+            <td class="green">16</td>
+            <td class="warn">21</td>
+          </tr>
+        </table>
+        <div>. 参考代码：注意比较的范围</div>
+        <pre>
+#include &lt;stdio.h&gt;
+void dis(int arr[], int len);
+void selectionSort(int arr[], int len);
+int main()
+{
+    int arr[] = {1, 23, 4, 69, 25, 9};
+    int len=sizeof(arr)/sizeof(arr[0]);
+    dis(arr, len);
+    selectionSort(arr, len);
+    return 0;
+}
+
+void selectionSort(int arr[], int len)
+{
+    int i, j, min;
+    for (i = 0; i &lt; len - 1; i++)
+    {
+        int minInd = i;
+        for (j = i + 1; j &lt; len; j++)
+        {
+            if (arr[j] &lt; arr[minInd])
+            {
+                minInd = j;
+            }
+        }
+        // swap
+        //改进：如果没有变化，不应该交换
+        min = arr[minInd];
+        arr[minInd] = arr[i];
+        arr[i] = min;
+
+        printf("第%d次排序 ",i);
+        dis(arr, len);
+      }
+}
+
+void dis(int arr[], int len)
+{
+    int i;
+    for (i = 0; i &lt; len; i++)
+    {
+        printf("%d\t", arr[i]);
+    }
+    printf("\n");
+}</pre>
+      </dd>
+      <dt>特点</dt>
+      <dd>
+        <div>. 稳定</div>
+        <div>. 可用于链式存储</div>
+        <div>. 比直接插入排序快</div>
+        <div>. 时间复杂度：O(n<sup>2</sup>)</div>
+        <div>. 空间复杂度：O(1)，需要1个哨兵</div>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

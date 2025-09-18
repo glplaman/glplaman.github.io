@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banking</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      flex-direction: row;
+      background-image: url(./chap3/lab2header.JPG);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    pre {
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Banking</h1>
+      <span class="timestamp">2022-10-10</span>
+    </header>
+    <dl>
+      <dt>一、实验目的</dt>
+      <dd>1. 掌握队列的顺序存储结构—顺序队列和链式存储结构—链式队列；</dd>
+      <dd>2. 验证不同队列的存储结构和基本的实现；</dd>
+      <dd>3. 掌握不同队列的基本操作：初始化、建立、插入、删除、遍历等；</dd>
+      <dd>4. 在实际应用背景下能够合理地选择顺序队列和链式队列，并能根据实际情况灵活运用；</dd>
+      <dt>二、实验要求</dt>
+      <dd>用程序简单模拟一个单队列多窗口的排队模式：设某银行有一个固定能容纳N个顾客的等候区；</dd>
+      <dd>. 顾客想进银行，若等候区有空则可进，否则被拒绝进入；</dd>
+      <dd class="mb2">. 每当银行柜员叫号时，等候区中最先进入的顾客离开等候区前往柜台办理业务；若叫号时等候区无人，则此次叫号作废；</dd>
+      <dd>1. 输入格式</dd>
+      <dd>第一行输入一个不大于20的正整数N，表示银行等候区能容纳的人数，接下来用若干行表示依时间顺序先后发生的“顾客进入银行”或“叫号”事件，格式分别是：</dd>
+      <dd>. 顾客进入银行，输入：&lt;id&gt; In并回车；</dd>
+      <dd>. 叫号，输入：Calling并回车；</dd>
+      <dd class="mb2">. 结束，输入：#并回车；</dd>
+      <dd>2. 输出格式</dd>
+      <dd>对于输入的每个事件，按同样顺序在一行内输出事件的结果，格式分别是：</dd>
+      <dd>. 顾客进入银行，则输出：&lt;id&gt; joined. Total:&lt;total&gt;</dd>
+      <dd>. 若等候区满无法进入而被拒绝，则输出：Full, &lt;id&gt; rejected</dd>
+      <dd>. 若顾客被叫号前往柜台办理业务，则输出：&lt;id&gt; called. Total:&lt;total&gt;</dd>
+      <dd class="mb2">. 若叫号时，等候区无人，则输出：Empty, No one!</dd>
+      <dd>3. 输入示例</dd>
+      <dd>
+        <pre>
+    Queue size:5
+    in 101
+    in 102
+    in 103
+    In 104
+    In 105
+    In 106
+    calling
+    calling
+    calling
+    Calling
+    Calling
+    Calling
+    Empty, No one
+    #</pre>
+      </dd>
+      <dd>4. 输出样例</dd>
+      <dd>
+        <pre>
+    101 joined, total 1
+    102 joined, total 2
+    103 joined, total 3
+    104 joined, total 4
+    105 joined, total 5
+    Full, 106 rejected
+    101 called, total 4
+    102 called, total 3
+    103 called, total 2
+    104 called, total 1
+    105 called, total 0
+    Empty, No one
+    #</pre>
+      </dd>
+      <dd>5. 说明：</dd>
+      <dd>. &lt;id&gt;是顾客编号，为不大于100000的正整数；&lt;total&gt;是等候区人数；</dd>
+      <dd>. 顾客id唯一，即：不会出现进入银行的顾客与已经等候的顾客编号相同的情况；</dd>
+      <dd>. 后一个事件一定在前一个事件完成之后才发生，即：不考虑事件之间的“同步”问题；</dd>
+      <dt>三、实验过程与结果</dt>
+      <dd>按照实验要求编写相应程序代码；调试运行；</dd>
+      <dd>要求：<span class="warn">写出实验的具体流程和实验的结果，关键地方需要截图说明；</span></dd>
+      <dt>四、实验分析</dt>
+      <dd>程序调试运行中出现的错误信息原因分析；</dd>
+      <dt>五、心得体会</dt>
+      <dd>不少于200字；</dd>
+    </dl>
+    <div class="chap">顺序存储队列实现</div>
+    <dl>
+      <dd>
+        <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;string.h&gt;
+   
+    #define maxSize 20
+    typedef struct
+    {
+        int data[maxSize];
+        int rear;
+        int front;
+        int len;
+        int size;
+    } Queue;
+    
+    void enQueue(Queue *q, int data)
+    {
+        if ((q->rear + 1) % q->size == q->front)
+        {
+            printf("Full, %d rejected\n", data);
+            return;
+        }
+        q->rear = (q->rear + 1) % q->size;
+        q->data[q->rear] = data;
+        q->len++;
+        printf("%d joined, Total %d\n", data, q->len);
+    }
+    
+    void deQueue(Queue *q)
+    {
+        if (q->rear == q->front)
+        {
+            printf("Empty, No one\n");
+            return;
+        }
+        q->front = (q->front + 1) % q->size;
+        q->len--;
+        printf("%d called, total %d\n", q->data[q->front], q->len);
+    }
+    
+    int main(void)
+    {
+        int size, id;
+        char keywords[10];
+        Queue *q = (Queue *)malloc(sizeof(Queue));
+        q->front = 0;
+        q->rear = 0;
+        q->len = 0;
+        printf("Queue size:");
+        scanf("%d", &size);
+        q->size = (size + 1);
+        while (1)
+        {
+            scanf("%s", &keywords);
+            if (!strcmp("In", keywords) || !strcmp("in", keywords))
+            {
+                scanf("%d", &id);
+                enQueue(q, id);
+            }
+            if (!strcmp("Calling", keywords) || !strcmp("calling", keywords))
+            {
+                deQueue(q);
+            }
+            if (!strcmp("#", keywords))
+            {
+                free(q);
+                return 0;
+            }
+        }
+    }</pre>
+      </dd>
+    </dl>
+    <div class="chap">链式存储队列实现</div>
+    <dl>
+      <dd>[说明]理论意义上，链式队列不存在满队的情况，但是考虑到实际应用场景，我们指定了满队的情况；</dd>
+      <dd>
+        <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;string.h&gt;
+    
+    typedef struct Node
+    {
+        int data;
+        struct Node *next;
+    } Node;
+    
+    typedef struct
+    {
+        Node *rear;
+        Node *front;
+        int len;
+        int size;
+    } Queue;
+    
+    void enQueue(Queue *q, int data)
+    {
+        if (q->len == q->size)
+        {
+            printf("%d rejected\n", data);
+            return;
+        }
+        Node *node = (Node *)malloc(sizeof(Node));
+        node->data = data;
+        node->next = NULL;
+        if (q->len)
+        {
+            q->rear->next = node;
+            q->rear = node;
+        }
+        else
+        {
+            q->rear = node;
+            q->front = node;
+        }
+        q->len++;
+        printf("%d joined, total %d\n", data, q->len);
+        return;
+    }
+    
+    void deQueue(Queue *q)
+    {
+        if (!q->len)
+        {
+            printf("Empty, No one\n");
+            return;
+        }
+        int res = q->front->data;
+        q->front = q->front->next;
+        q->len--;
+        printf("%d called, Total %d\n", res, q->len);
+    }
+    
+    int main(void)
+    {
+        int id;
+        char keywords[10];
+        Queue *q = (Queue *)malloc(sizeof(Queue));
+        q->front = NULL;
+        q->rear = NULL;
+        q->len = 0;
+        printf("Queue size:");
+        scanf("%d", &q->size);
+        while (1)
+        {
+            scanf("%s", &keywords);
+            if (!strcmp("In", keywords) || !strcmp("in", keywords))
+            {
+                scanf("%d", &id);
+                enQueue(q, id);
+            }
+            if (!strcmp("Calling", keywords) || !strcmp("calling", keywords))
+            {
+                deQueue(q);
+            }
+            if (!strcmp("#", keywords))
+            {
+                free(q);
+                return 0;
+            }
+        }
+    }</pre>
+      </dd>
+    </dl>
+    <div class="chap">实验报告</div>
+    <dl>
+      <dd>1. 根据实操内容，完成实验报告；</dd>
+      <dd>2. 以电子形式提交实验报告；请发布为PDF格式再提交，避免格式错乱；</dd>
+      <dd>3. 论文格式请参照范文<a class="warn" href="./format.docx" download>[点击下载]</a>；</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

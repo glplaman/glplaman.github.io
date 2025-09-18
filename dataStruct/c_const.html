@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>常量 Const</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      background-image: url(../imgs/banner.png);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    .iconfont {
+      color: #F46;
+    }
+
+    .txt-center .iconfont {
+      font-size: 4rem;
+      text-shadow: 6px 6px #ddd;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Const</h1>
+      <span class="timestamp">2022-10-10</span>
+    </header>
+    <dl>
+      <dt>目的</dt>
+      <dd>常量是指程序执行过程中，值不发生改变</dd>
+      <dd class="txt-center"><span class="iconfont icon-security-shield-full"></span></dd>
+      <dt>分类</dt>
+      <dd>1. 直接常量：也称为字面常量，可以直接拿来使用</dd>
+      <dd>. 字符常量：'a'；字符常量以ASCII码来表示，本质上还是一个int数字，如符号常量'a'实际上是整型97</dd>
+      <dd>. 字符串常量："hello world"</dd>
+      <dd>. 整数常量：12</dd>
+      <dd>. 浮点数常量：-1.414</dd>
+      <dd>. 布尔常量：false</dd>
+      <dd>. 空常量：NULL</dd>
+      <dd class="mt2">2. 符号常量：宏，原样替换，注意使用()来区分运算的优先级；符号常量必须先定义define再使用</dd>
+      <dd>
+        <pre>
+#define unit 54414</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]其实还是可以修改的</dd>
+      <dd>. 使用变量名限制了内存中内容的修改，但是没有限制使用指针对内容的修改</dd>
+      <dd>
+        <pre>
+int main()
+{
+    const int a = 10;
+    printf("%d\n", a);
+    int *p = &amp;a;
+    *p = 12;
+    printf("%d\n", a);
+    exit(0);
+}
+//warning: initialization discards 'const' qualifier from pointer target type</pre>
+      </dd>
+      <dt>使用</dt>
+      <dd>[<span class="iconfont icon-bangzhu1"></span>]数据不变？指向不变？</dd>
+      <dd>[<span class="iconfont icon-tixing"></span>]修饰哪个就限制哪个；后面跟什么就限制什么；</dd>
+      <dd>[<span class="iconfont icon-tixing"></span>]特别的，对指针而言，先看到const就是常量指针；先看到指针就是指针常量</dd>
+      <dd>
+        <pre>
+//case 1：修饰的是a，不允许修改a的值
+const int a = 10;
+//error: assignment of read-only variable 'a'
+a = 11;
+           
+//case 2：修饰的是*p，不允许修改*p的值，也就是不允许使用指针变量修改数据；但是指针可以指向其它数据
+//常量指针：同普通常量一样，内容不可以变
+int a = 10;
+const int *p = &amp;a;
+a = 12;
+//error: assignment of read-only location '*p'
+//expression must be a modifiable lvalue
+*p = 10;
+            
+//case 3：修饰的是p，指针指向的地址不能变，只能在声明的时候给指针赋值，后面就不可乱指，指向NULL也不可以
+//指针常量：指针指向不可以变，始终指向某个存储单元，但是其中的内容可以变
+//指针指向固定，本质上是为了加快对数据的访问
+int a = 10;
+//声明即赋值OK
+int *const p = &amp;a;
+//error: assignment of read-only variable 'p'
+p = &amp;a;
+            
+//case 4：既不可以修改指向，也不可以修改内容
+//对数据上锁，提示安全
+int num = 100;
+int n = 200;
+const int *const p = &num;
+//地址修改告警
+p = &amp;n;
+//内容修改告警
+*p = 200;</pre>
+      </dd>
+      <dt>应用</dt>
+      <dd>1. 函数封装</dd>
+      <dd>. 不允许破坏用户参数</dd>
+      <dd>. 更多信息，请访问 <a class="warn" href="https://www.runoob.com/cprogramming/c-standard-library.html"
+          target="_blank">C 标准库 - 参考手册</a></dd>
+      <dd>
+        <pre>
+FILE *fopen(const char *filename, const char *mode)</pre>
+      </dd>
+      <dd>
+        <pre>
+char *strcpy(char *dest, const char *src)</pre>
+      </dd>
+      <dd>2. 保护数据</dd>
+      <dd>3. 保护指向</dd>
+      <dd>4. 限制操作</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

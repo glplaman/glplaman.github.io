@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据结构 Data Structure</title>
+  <link rel="stylesheet" href="../css/course2025.css">
+  <style>
+    header {
+      background-image: url(../imgs/ds.jpg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>DataStructure</h1>
+      <span>2022-04-23</span>
+      <div class="svg">
+        <svg t="1753529751256" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="15046" width="64" height="64">
+          <path
+            d="M312.31634697 378.62981123l156.4034335-92.08800264a6.74637364 6.74637364 0 0 0 0-11.63749482l-157.4716087-92.20044199a6.57771416 6.57771416 0 0 0-6.63393427 0L148.26702412 274.90431377a6.74637364 6.74637364 0 0 0 0 11.63749482l157.41538857 92.14422276a6.57771416 6.57771416 0 0 0 6.63393428 0z m408.15561709 0l156.40343261-92.08800264a6.74637364 6.74637364 0 0 0 1e-8-11.63749482l-157.41538946-92.20044199a6.57771416 6.57771416 0 0 0-6.6901535 0L556.42264033 274.90431377a6.74637364 6.74637364 0 0 0 0 11.63749482l157.41538946 92.14422276a6.57771416 6.57771416 0 0 0 6.69015351 0z m-20.18290166 34.63138565l-0.56219854 183.27648955a6.74637364 6.74637364 0 0 1-3.26074657 5.79063691 6.57771416 6.57771416 0 0 1-6.63393429 0L532.36057344 510.18410146a6.74637364 6.74637364 0 0 1-3.37318682-5.79063779l0.56219766-183.27648867c0-5.22844013 5.5657582-8.43296748 9.95090186-5.84685791l157.47160868 92.20044288a6.74637364 6.74637364 0 0 1 3.37318682 5.79063691z m-377.45961592 0l0.56219766 183.27648955c0 5.17222002 5.50953896 8.37674737 9.89468174 5.79063691L490.75793545 510.18410146a6.74637364 6.74637364 0 0 0 3.37318682-5.79063779l-0.56219854-183.27648867a6.74637364 6.74637364 0 0 0-3.37318681-5.84685791 6.57771416 6.57771416 0 0 0-6.57771416 0l-157.4716087 92.20044288a6.74637364 6.74637364 0 0 0-3.37318682 5.79063691z m371.50031865 259.51051318l2.19257139 0.78707724a6.74637364 6.74637364 0 0 1 3.31696758 5.7906378l0.56219765 183.27648867a6.74637364 6.74637364 0 0 1-3.37318681 5.84685703l-157.41538945 92.14422275a6.63393427 6.63393427 0 0 1-10.00712109-5.79063779l-0.56219766-183.27648867a6.74637364 6.74637364 0 0 1 3.37318681-5.84685703l157.41538945-92.14422276a6.57771416 6.57771416 0 0 1 6.69015352 0z m-361.09965849 0.78707724l157.47160869 92.200442a6.74637364 6.74637364 0 0 1 3.37318681 5.79063779l-0.56219765 183.27648867a6.74637364 6.74637364 0 0 1-3.37318681 5.79063779 6.57771416 6.57771416 0 0 1-6.57771505 0L326.03397383 868.4727708a6.74637364 6.74637364 0 0 1-3.37318682-5.7906378l0.56219766-183.27648867c0-5.22844013 5.5657582-8.43296748 9.95090186-5.84685703z m565.85210449-120.59143242l2.19257139 0.78707725a6.74637364 6.74637364 0 0 1 3.3169667 5.84685703L905.09772763 742.82155859a6.74637364 6.74637364 0 0 1-3.31696757 5.79063692l-157.41538946 92.20044287a6.63393427 6.63393427 0 0 1-10.00712109-5.84685791l-0.56219766-183.27648867c0-2.41745097 1.29305479-4.61002237 3.37318682-5.84685703l157.41538946-92.14422276a6.57771416 6.57771416 0 0 1 6.69015439 0zM128.47766065 553.75443213l157.47160868 92.20044199c2.08013203 1.12439531 3.37318682 3.37318682 3.3731877 5.7906378l-0.56219854 183.27648867a6.74637364 6.74637364 0 0 1-3.37318682 5.79063779 6.57771416 6.57771416 0 0 1-6.57771415 0L121.33774795 748.66841563A6.74637364 6.74637364 0 0 1 118.02078125 742.87777783l0.56219766-183.27648867c0-5.17222002 5.50953896-8.43296748 9.89468174-5.84685703z m383.98110995-16.13507783l2.24879151 0.78707724 157.41538945 92.200442a6.74637364 6.74637364 0 0 1 0 11.58127558l-156.34721338 92.08800263a6.74637364 6.74637364 0 0 1-6.63393427 1e-8L351.67019434 642.18814912a6.74637364 6.74637364 0 0 1-1e-8-11.63749482l156.34721338-92.08800264a6.57771416 6.57771416 0 0 1 6.63393429 0z m386.00502276-223.1925337l2.13635127 0.84329649a6.74637364 6.74637364 0 0 1 3.37318681 5.84685791l0.50597843 183.27648867a6.74637364 6.74637364 0 0 1-3.37318682 5.79063779l-157.41538946 92.14422188a6.63393427 6.63393427 0 0 1-9.95090098-5.79063691l-0.56219853-183.27648955c0-2.41745097 1.23683555-4.66624161 3.37318769-5.84685704l157.41538858-92.14422275a6.57771416 6.57771416 0 0 1 6.63393428 0zM129.15229766 315.32633721l157.41538945 92.20044199c2.13635214 1.12439531 3.37318682 3.37318682 3.37318682 5.7906378l-0.56219766 183.27648867a6.74637364 6.74637364 0 0 1-3.3169667 5.79063779 6.57771416 6.57771416 0 0 1-6.63393428 0l-157.41538945-92.14422276a6.74637364 6.74637364 0 0 1-3.37318682-5.79063779l0.56219766-183.27648867c0-5.22844013 5.50953896-8.43296748 9.95090098-5.84685703zM512.51499072 62.11243935l2.13635128 0.78707725 157.47160956 92.14422275a6.74637364 6.74637364 0 0 1 0 11.63749483L515.77573818 258.76923682a6.4652748 6.4652748 0 0 1-6.63393427 0L351.67019434 166.62501406a6.74637364 6.74637364 0 0 1-1e-8-11.63749482L508.01740771 62.89951661a6.57771416 6.57771416 0 0 1 6.63393429 0z"
+            fill="#ffffff" p-id="15047"></path>
+        </svg>
+      </div>
+    </header>
+    <nav class="cont-wrap" id="cont">
+      <a class="item" data-title="Opening" href="opening.html"> 开课啦 </a>
+      <a class="item" data-title="Ranking" href="../course/rank.html">积分榜</a>
+      <a class="item" data-title="Regulation" href="#">学籍管理</a>
+    </nav>
+    <div class="chap">General</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="Overview" href="./chap1.html"> 绪论</a>
+      <a class="item" data-title="List" href="./chap2list.html"> 线性表</a>
+      <a class="item" data-title="StackQueue" href="./chap3stackqueue.html"> 栈和队列</a>
+      <a class="item" data-title="String" href="./chap4string.html"> 字符串</a>
+      <a class="item" data-title="Array" href="./chap4array.html"> 数组</a>
+      <a class="item" data-title="Quiz 1" href="quiz0.html"> 单元测试 </a>
+    </nav>
+    <div class="chap">Tree</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="Tree" href="./chap5tree.html"> 树</a>
+      <a class="item" data-title="Binary" href="./tree_binary.html"> 二叉树</a>
+      <a class="item" data-title="Traverse" href="./tree_traverse.html"> 二叉树遍历</a>
+      <a class="item" data-title="Transform" href="./tree_transform.html"> 二叉树转换</a>
+      <a class="item" data-title="Huffman" href="./tree_Huffman.html"> 霍夫曼树</a>
+      <a class="item" data-title="Code" href="./tree_Huffman_code.html"> 霍夫曼编码</a>
+      <a class="item" data-title="Quiz 2" href="quiz1.html"> 单元测试 </a>
+    </nav>
+    <div class="chap">Graph</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="Graph" href="./chap6graph.html"> 图</a>
+      <a class="item" data-title="Storage" href="./graph_storage.html"> 图的存储</a>
+      <a class="item" data-title="Traverse" href="./graph_traverse.html"> 图的遍历</a>
+      <a class="item" data-title="SpanTree" href="./graph_span.html"> 最小生成树</a>
+      <a class="item" data-title="ShortestPath" href="./graph_path.html"> 最短路径</a>
+    </nav>
+    <div class="chap">Search</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="Search" href="./chap7search.html"> 查找</a>
+      <a class="item" data-title="Sequence" href="./search_sequence.html"> 顺序查找</a>
+      <a class="item" data-title="Binary" href="./search_binary.html"> 折半查找</a>
+      <a class="item" data-title="Block" href="./search_block.html"> 分块查找</a>
+      <a class="item" data-title="Tree" href="./search_tree.html"> 树表查找</a>
+      <a class="item" data-title="Hash" href="./search_hash.html"> 散列表查找</a>
+    </nav>
+    <div class="chap">Sort</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="Sort" href="./chap8sort.html"> 排序</a>
+      <a class="item" data-title="Bubble" href="./sort_bubble.html"> 冒泡排序</a>
+      <a class="item" data-title="Select" href="./sort_select.html"> 选择排序</a>
+      <a class="item" data-title="Insert" href="./sort_insert.html"> 插入排序</a>
+      <a class="item" data-title="Merge" href="./sort_merge.html"> 归并排序</a>
+      <a class="item" data-title="Heap" href="./sort_heap.html"> 堆排序</a>
+      <a class="item" data-title="Quick" href="./sort_quick.html"> 快速排序</a>
+    </nav>
+    <div class="chap">Homework</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="todo" href="#">todo</a>
+      <a class="item" data-title="todo" href="#">todo</a>
+      <a class="item" data-title="todo" href="#">todo</a>
+      <a class="item" data-title="todo" href="#">todo</a>
+      <a class="item" data-title="todo" href="#">todo</a>
+    </nav>
+    <div class="chap">Drill</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="IDE" href="./test0.html"> 实验一：集成开发环境</a>
+      <a class="item" data-title="Contact" href="./test1.html"> 实验二：通信录</a>
+      <a class="item" data-title="Banking" href="./test2.html"> 实验三：银行队列</a>
+      <a class="item" data-title="BinaryTree" href="./test3.html"> 实验四：二叉树</a>
+      <a class="item" data-title="HuffmanTree" href="./test4.html"> 实验五：霍夫曼树</a>
+      <a class="item" data-title="GraphDFS" href="./test5.html"> 实验六：图的深度遍历</a>
+    </nav>
+    <div class="chap">C</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="Overview" href="./c_overview.html"> 概述</a>
+      <a class="item" data-title="Const" href="./c_const.html"> 常量</a>
+      <a class="item" data-title="DataType" href="./c_dataType.html"> 数据类型</a>
+      <a class="item" data-title="Logical" href="./c_logical.html"> 逻辑运算</a>
+      <a class="item" data-title="Array" href="./c_array.html"> 数组</a>
+      <a class="item" data-title="String" href="./c_string.html"> 字符串</a>
+      <a class="item" data-title="Function" href="./c_function.html"> 函数</a>
+      <a class="item" data-title="Struct" href="./c_struct.html"> 结构体</a>
+    </nav>
+    <div class="chap">Links</div>
+    <nav class="cont-wrap">
+      <a class="item" data-title="todo" href="#">todo</a>
+    </nav>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

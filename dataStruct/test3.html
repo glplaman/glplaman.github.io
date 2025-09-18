@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>树 Tree</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <style>
+    header {
+      justify-content: space-between;
+      /* background-image: linear-gradient(rgba(255, 68, 102, 0), rgb(255, 68, 102)); */
+      background-image: url(./tree/tree.jpg);
+    }
+
+    .logo-img {
+      width: 60px;
+      height: 60px;
+    }
+
+    td {
+      width: 50%;
+    }
+
+    .chap,
+    .comment {
+      background-color: #f66020;
+      background-image: linear-gradient(45deg, #f66020, #fc8c4b);
+    }
+
+    .warn,
+    .nav-item:hover a,
+    .iconfont {
+      color: #f66020;
+    }
+
+    pre {
+      height: auto;
+    }
+
+    .item-center .iconfont {
+      font-size: 40px;
+    }
+
+    .flex-h {
+      justify-content: space-around;
+    }
+
+    .em-txt {
+      color: #f66020;
+      font-weight: 600;
+      font-family: "yuwei";
+      font-size: 30px;
+      border: 1px solid #f66020;
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    @media screen and (max-width:768px) {
+      .grid4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header id="top" class="w">
+    <h1>Tree</h1>
+    <div class="timestamp">2022-11-10</div>
+  </header>
+  <nav id='nav' class="w">
+    <div class="logo">
+      <span class="reg">&reg;</span>
+      <img class="logo-img" src="./tree/tree_logo.png" alt="">
+    </div>
+  </nav>
+  <div class="w cont">
+    <dl>
+      <dt>一、目的 Objective</dt>
+      <dd>通过实验强化对二叉树的理解；</dd>
+      <dt>二、内容 Contents</dt>
+      <dd>1. 执行并分析下面提供的源码，画出生成的二叉树，并验证遍历的准确性；</dd>
+      <dd>2. 利用源码，生成下图所示二叉树的创建，并分别通过：先序遍历、中序遍历、后序遍历得到输出序列并验证准确性；</dd>
+      <dd class="item-center"><img src="./tree/binarytree.png" alt=""></dd>
+      <dd>3. 根据二叉树的遍历序列，画出对应的二叉树，并通过代码验证准确性；</dd>
+      <dd>. 中序遍历：BDCEAFHG</dd>
+      <dd>. 后序遍历：DECBHGFA</dd>
+      <dt>三、参考代码 Source</dt>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct Node
+{
+    char data;
+    struct Node *leftChild;
+    struct Node *rightChild;
+} Tree;
+
+Tree *createNode(char data)
+{
+    Tree *node = (Tree *)malloc(sizeof(Tree));
+    node->data = data;
+    node->leftChild = NULL;
+    node->rightChild = NULL;
+    return node;
+}
+
+void insertNode(Tree *tree, Tree *l, Tree *r)
+{
+    tree->leftChild = l;
+    tree->rightChild = r;
+}
+
+void preOrder(Tree *tree)
+{
+    if (tree)
+    {
+        printf("%c", tree->data);
+        preOrder(tree->leftChild);
+        preOrder(tree->rightChild);
+    }
+}
+
+void inOrder(Tree *tree)
+{
+    if (tree)
+    {
+        inOrder(tree->leftChild);
+        printf("%c", tree->data);
+        inOrder(tree->rightChild);
+    }
+}
+
+void postOrder(Tree *tree)
+{
+    if (tree)
+    {
+        postOrder(tree->leftChild);
+        postOrder(tree->rightChild);
+        printf("%c", tree->data);
+    }
+}
+
+int main(void)
+{
+    Tree *A = createNode('A');
+    Tree *B = createNode('B');
+    Tree *C = createNode('C');
+    Tree *D = createNode('D');
+    Tree *E = createNode('E');
+    Tree *F = createNode('F');
+    Tree *G = createNode('G');
+    Tree *H = createNode('H');
+    Tree *I = createNode('I');
+    Tree *J = createNode('J');
+    insertNode(A, B, C);
+    insertNode(B, D, NULL);
+    insertNode(C, NULL, E);
+    insertNode(D, F, G);
+    insertNode(E, H, NULL);
+    insertNode(G, I, J);
+    preOrder(A);
+    printf("\n");
+    inOrder(A);
+    printf("\n");
+    postOrder(A);
+    printf("\n");
+    return 0;
+}</pre>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="chap">要求 Requirement</div>
+    <dl>
+      <dd>1. 利用 <a class="warn" href="https://www.bccn.net/run/" target="_blank">线上环境</a> 或线下环境，独立完成；</dd>
+      <dd>2. 写出实验的具体流程和实验的结果，相应的地方需要截图说明；</span></dd>
+      <dd>3. 程序调试运行中出现的错误信息原因分析；</dd>
+      <dd>4. 完成 <a class="warn" href="./format.docx" download>实验报告</a> 并提交到 <a class="warn"
+          href="http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com"
+          target="_blank">学习通</a>；详见作业要求；</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

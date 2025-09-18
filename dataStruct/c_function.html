@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数 Function</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      background-image: url(../imgs/banner.png);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    .iconfont {
+      color: #F46;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Function</h1>
+      <span class="timestamp">2022-10-10</span>
+    </header>
+    <div class="chap">概述 Overview</div>
+    <dl>
+      <dt>定义</dt>
+      <dd>. 降低代码重复率</dd>
+      <dd>. 可读性好</dd>
+      <dd>. 便于修改和完善</dd>
+      <dd>
+        <pre>
+类型标识符 函数名([形式参数类型 形式参数, ...]){
+    //函数逻辑
+    return 返回值;
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]加法函数</dd>
+      <dd>
+        <pre>
+int add(int i, int j)
+{
+    return i + j;
+}</pre>
+      </dd>
+      <dd>. 参数列表可以为空，是可选的，即无参函数</dd>
+      <dd>. 参数列表中的参数是形式参数，是函数使用中实际参数的一个代替/占位符</dd>
+      <dd>. 函数如果有返回类型，则必须有显示的返回return和返回值；没有返回类型的，函数结束后直接返回，故return可省略</dd>
+      <dt>使用</dt>
+      <dd>1. 先声明，后使用，最后定义</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+int add(int a,int b);
+int main() {
+    int d=8;
+    int e=4;
+    int res=add(d,e);
+    printf("%d\n",res);
+    return 0;
+}
+int add(int a,int b){
+    return a+b;
+}</pre>
+      </dd>
+      <dd>2. 声明并定义，然后使用</dd>
+      <dd>
+        <pre>
+//求和函数的定义
+#include &lt;stdio.h&gt;
+int Add(int a,int b){
+    return a+b;
+}
+int main() {
+    int d=8;
+    int e=4;
+    int res=Add(d,e);
+    printf("%d\n",res);
+    return 0;
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">参数传递 Parameter</div>
+    <dl>
+      <dt>传值</dt>
+      <dd>. 直接操作数据</dd>
+      <dd>. 适合简单的业务场景</dd>
+      <dt>传指针/引用</dt>
+      <dd>. 数据是放在内存中的，修改了指针指向的内存数据，也就间接修改了对应的数据</dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]数据交换</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+void swap(int *a, int *b) // 1.声明并定义
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+int main(void)
+{
+    int a = 2;
+    int b = 3;
+    printf("%d,%d\n", a, b);
+    swap(&a, &b); // 2.使用
+    printf("%d,%d\n", a, b);
+    return 0;
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">参数类型 Type</div>
+    <dl>
+      <dd>1. 简单数据类型</dd>
+      <dd>. 函数参数是简单数据类型，如int、char、float等</dd>
+      <dd class="mt2">2. 数组</dd>
+      <dd>. 传递指针和传递数组，本质是一样的</dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]2.1. 一维数组求和</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+int sum0(const int *arr, const int len);
+int sum1(const int *arr, const int len);
+int main(void)
+{
+    int str[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int res;
+    res = sum0(str, sizeof(str) / sizeof(int));
+    printf("sum=%d\n", res);
+    res = sum1(str, sizeof(str) / sizeof(int));
+    printf("sum=%d\n", res);
+    return 0;
+}
+int sum0(const int *arr, const int len)
+{
+    int sum = 0;
+    for (int i = 0; i &lt; len; i++)
+        sum += *(arr + i);
+    return sum;
+}
+int sum1(const int arr[], const int len)
+{
+    int sum = 0;
+    for (int i = 0; i &lt; len; i++)
+        // sum += arr[i];
+        sum += *(arr + i);
+    return sum;
+}</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]2.2. 二维数组遍历</dd>
+      <dd>. 当作1个大数组使用</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#define M 2
+#define N 3
+void dis(int *p, int len);
+int main(void)
+{
+    int a[M][N] = {1, 2, 3, 7, 8, 9};
+    int i, j;
+    dis(&(a[0][0]), M * N);
+    printf("\n");
+}
+void dis(int *p, int len)
+{
+    int i;
+    for (i = 0; i &lt; len; i++)
+    {
+        printf("%d\t", p[i]);
+    }
+}</pre>
+      </dd>
+      <dd>. 按照2维数组的行列显示[指针形式声明]</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#define M 2
+#define N 3
+void disM(int (*p)[N], int m, int n);
+int main(void)
+{
+    int a[M][N] = &lbrace;{1, 2, 3}, {7, 8, 9}&rbrace;;
+    disM(a, M, N);
+}
+void disM(int (*p)[N], int m, int n)
+{
+    int i, j;
+    for (i = 0; i &lt; m; i++)
+    {
+        for (j = 0; j &lt; n; j++)
+        {
+            printf("%d\t", p[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jinggao"></span>]函数声明的数组形式</dd>
+      <dd>void disM(int p[][N], int m, int n);</dd>
+      <dd>[<span class="iconfont icon-jinggao"></span>]函数错误声明</dd>
+      <dd>void disM(int *p, int m, int n);</dd>
+      <dd><span class="warn">note</span>: expected 'int *' but argument is of type 'int (*)[3]'</dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]2.3. 遍历二维数组某一行</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#define M 2
+#define N 3
+void disRow(int (*p)[N], int m);
+int main(void)
+{
+    int a[M][N] = &lbrace;{1, 2, 3}, {7, 8, 9}&rbrace;;
+    disRow(a, 0);
+}
+void disRow(int p[][N], int m)
+{
+    int i;
+    for (i = 0; i &lt; N; i++)
+    {
+        printf("%d\t", p[m][i]);
+    }
+    printf("\n");
+}</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]2.4. 自定义字符串拷贝函数</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+char *strcopy(char *dest, const char *src);
+int main(void)
+{
+    char strDest[128];
+    char strSrc[] = "helloworld";
+    strcopy(strDest, strSrc);
+    puts(strDest);
+}
+char *strcopy(char *dest, const char *src)
+{
+    while ((*dest++ = *src++) != '\0')
+        ;
+    return dest;
+}</pre>
+      </dd>
+      <dd class="mt2">3. 指针</dd>
+      <dd>. 函数参数除了是简单数据类型外，还是可以是指向它们的指针</dd>
+      <dd>. 使用指针可以将函数外部的地址传递到函数内部，便可以在函数内部操作函数外部的数据，并且这些数据不会随着函数的结束而被销毁</dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]统计小写字母</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+int lowerNum(const char *p); // 1.声明
+int main(void)
+{
+    char str[] = "helloMOTO.";
+    int len;
+    len = lowerNum(str); // 2.使用
+    printf("num=%d\n", len);
+    return 0;
+}
+int lowerNum(const char *p) // 3.定义
+{
+    int n = 0;
+    while (*p != '\0')
+    {
+        if (*p >= 'a' && *p &lt;= 'z')
+        {
+            n++;
+        }
+        p++; //注意位置
+    }
+    return n;
+}</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-jianpan"></span>]删除字符串中的空格</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+void spaceDel(char *str);
+int main(void)
+{
+    char str[] = "he llo, cn pla man"; //如果使用*str又如何？
+    printf("str=%s\n", str);
+    spaceDel(str);
+    printf("str=%s\n", str);
+    return 0;
+}
+void spaceDel(char *str)
+{
+    char *p = str;
+    while (*str)
+    {
+        if (*str == ' ')
+        {
+            str++;
+        }
+        else
+        {
+            *p = *str;
+            p++;
+            str++;
+        }
+    }
+    *p = '\0'; //如果没有，结果会是如何？
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">函数的返回类型 Return</div>
+    <dl>
+      <dd>函数的返回类型可以是简单数据类型，也可以是指针，称为指针函数。如可以把malloc申请的内存地址返回出去。声明如下：</dd>
+      <dd>
+        <pre>
+    类型标识符 *函数名(函数参数){
+        函数体;
+    }</pre>
+      </dd>
+      <dd class="grid grid2">
+        <pre>
+//指针函数
+#include &lt;stdio.h&gt;
+int *Max(int *a, int *b)
+{
+    return *a>*b? a : b;
+}
+void main()
+{
+    int a=10;
+    int b=20;
+    int *c=Max(&a,&b);
+    printf("%d\n",*c);
+}</pre>
+        <pre>
+//普通函数
+#include &lt;stdio.h&gt;
+int Max(int *a, int *b)
+{
+    return *a>*b? *a : *b;
+}
+void main()
+{
+    int a=10;
+    int b=20;
+    int c=Max(&a,&b);
+    printf("%d\n",c);
+}
+</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jinggao"></span>]</dd>
+      <dd>. 不要和函数指针混淆。函数指针是指向函数的指针。C语言规定：函数的指针就是函数的首地址，即函数的入口地址；调用函数实际上是调用函数名所指向的一块内存区域的代码</dd>
+      <dd>. 根据定语的使用规则进行甄别：指针函数，本质上就是一个函数；而函数指针，本质上是一个指针</dd>
+    </dl>
+    <div class="chap">函数分类 Classification</div>
+    <dl>
+      <dd>1. 主函数main()</dd>
+      <dd>. main函数是顶级函数top-level；是程序入口</dd>
+      <dd>. main函数实际上也可以接受参数的</dd>
+      <dd>. argc表示参数的个数：argument counter，参数计数器；argv表示指向参数的地址：argument vector，参数向量表</dd>
+      <dd>. 通常用于带选项的执行某个命令，如gcc的-o参数就是为编译结果指定文件名</dd>
+      <dd>
+        <pre>
+int main(int argc, char *argv[])
+{
+    int i = 0;
+    for (; i &lt; argc; i++)
+    {
+        printf("argc[%d]=%s\n", i, argv[i]);
+    }
+    return 1;
+}
+//执行
+PS D:\MinGW> .\a.exe aa bb cc dd
+argc[0]=D:\MinGW\a.exe	//	函数的调用也算是一个参数
+argc[1]=aa
+argc[2]=bb
+argc[3]=cc
+argc[4]=dd</pre>
+      </dd>
+      <dd class="mt2">2. 库函数</dd>
+      <dd>. 系统已经封装好的各种函数，通常以.h的形式呈现；使用库函数必须包含相应的头文件</dd>
+      <dd>. 常见库函数：标准输入输出库函数stdio.h、标准库函数stdlib.h、字符串库函数string.h等</dd>
+      <dd class="mt2">3. 自定义函数</dd>
+      <dd>. 为了满足开发需求而自己定义的函数</dd>
+      <dd>. 自定义函数通常放在main函数之前；如果放在main后面，要先声明</dd>
+      <dd>. 自定义函数，根据需要可以有参数；也可以没有参数；定义函数时使用的参数为形参；调用函数时使用的参数是实参；形参只在函数被调用时才分配空间，调用结束后，即释放空间</dd>
+      <dd>. 通常把函数单独定义在一个.h文件中，使用时，引入即可，方便重用</dd>
+    </dl>
+    <div class="chap">递归函数 Recursion</div>
+    <dl>
+      <dd>特点:</dd>
+      <dd>. 自己调用自己</dd>
+      <dd>. 必须有一个出口</dd>
+      <dd class="item-center">
+        <img src="./imgs/taowa.jpg" alt="">
+        <p>套娃</p>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]n的阶乘</dd>
+      <dd>
+        <pre>
+int nn(int num)
+{
+    int res ;
+    if (num > 0)
+    {
+        res = num * nn(num - 1);
+    }
+    else
+    {
+        res = 1;
+    }
+    return res;
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]猴子吃桃：每天吃前一天桃子数量的一半加1个桃子，第10天还剩一个桃子，问猴子一共有多少个桃子？</dd>
+      <dd>
+        <pre>
+int peach(int n)
+{
+    return n == 10 ? 1 : peach(n + 1) * 2 + 2;
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-jianpan"></span>]队列中每个人的年纪都比前一个人大2岁，已知第一个人10岁，问第5个人多少岁？</dd>
+      <dd>
+        <pre>
+int age(int n)
+{
+    return n == 1 ? 10 : age(n - 1) + 2;
+}</pre>
+      </dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

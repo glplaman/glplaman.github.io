@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>线性表 List</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/linux.css">
+  <!-- <link rel="stylesheet" href="../css/nav.css"> -->
+  <style>
+    header {
+      background-image: url(../imgs/bt.jpg);
+    }
+
+    .top-logo {
+      background-image: url(../imgs/ty.png);
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header id="top" class="w">
+    <div class="timestamp">2022-09-07</div>
+    <div class="top-logo"></div>
+  </header>
+  <nav id='nav' class="w">
+    <div class="logo">List</div>
+    <div id="ham"><span class="iconfont icon-list-ul"></span></div>
+    <ul id="menu" class="menu">
+      <li class="nav-item">
+        <a class="nav-link"><span>概述</span><span class="top-sub-menu">Overview</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>顺序表</span><span class="top-sub-menu">Sequence</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>链式表</span><span class="top-sub-menu">Linked</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>应用</span><span class="top-sub-menu">Application</span></a>
+      </li>
+      <li>
+        <a class="nav-link" href="./jslist.html" target="_blank"><span>线性表</span><span
+            class="top-sub-menu">Javascript</span></a>
+      </li>
+    </ul>
+  </nav>
+  <div class="w cont">
+    <div class="target-cont chap">概述 Overview</div>
+    <dl>
+      <dt>1. 线性结构的定义</dt>
+      <dd>若结构是非空有限集，则有且仅有一个开始结点和一个终端结点，并且所有结点都最多只有一个直接前趋和一个直接后继</dd>
+      <dd class="txt-big txt-center">(a<sub>0</sub>, a<sub>1</sub>, ... , a<sub>n-1</sub>)</dd>
+      <dt>2. 线性结构的特点</dt>
+      <dd>. 只有一个首结点和尾结点</dd>
+      <dd>. 除首尾结点外，其他结点只有一个直接前驱和一个直接后继</dd>
+      <dt>3. 常见的线性结构</dt>
+      <dd>
+        <table>
+          <tr>
+            <td>线性表</td>
+            <td>linear list</td>
+          </tr>
+          <tr>
+            <td>堆栈</td>
+            <td>stack</td>
+          </tr>
+          <tr>
+            <td>队列</td>
+            <td>queue</td>
+          </tr>
+          <tr>
+            <td>字符串</td>
+            <td>string</td>
+          </tr>
+          <tr>
+            <td>数组</td>
+            <td>array</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>4. 线性表的现实体现</dt>
+      <dd>. 排队（核酸检测、打饭、银行办理业务、买奶茶、公园检票、文件打印）</dd>
+      <dd>. 函数的调用</dd>
+      <dd>. 多项式的使用</dd>
+      <dd>. 各种管理系统和平台</dd>
+      <dt>5. 线性表的抽象数据类型ADT</dt>
+      <dd>. 数据对象</dd>
+      <dd class="txt-center txt-big">D={ a<sub>i</sub> | a<sub>i</sub>∈Set, i=0,1,2,...,n-1}</dd>
+      <dd>. 数据关系</dd>
+      <dd class="txt-center txt-big">R={&lt;a<sub>i</sub>, a<sub>i+1</sub>&gt; |
+        a<sub>i</sub>,a<sub>i+1</sub>∈Set, i=0,1,2,...,n-2} </dd>
+      <dd>. 数据运算</dd>
+      <dd>
+        <table>
+          <tr>
+            <td>init(&list)</td>
+            <td>初始化</td>
+          </tr>
+          <tr>
+            <td>clear(&list)</td>
+            <td>清空</td>
+          </tr>
+          <tr>
+            <td>destroy(&list)</td>
+            <td>销毁</td>
+          </tr>
+          <tr>
+            <td>isEmpty(&list)</td>
+            <td>是否为空</td>
+          </tr>
+          <tr>
+            <td>length(&list)</td>
+            <td>表长度</td>
+          </tr>
+          <tr>
+            <td>insertAt(&list, ind, el)</td>
+            <td>插入</td>
+          </tr>
+          <tr>
+            <td>get(&list, ind, &el)</td>
+            <td>获取元素</td>
+          </tr>
+          <tr>
+            <td>locate(&list, el)</td>
+            <td>获取元素索引</td>
+          </tr>
+          <tr>
+            <td>delAt(&list,ind)</td>
+            <td>删除指定位置的元素</td>
+          </tr>
+          <tr>
+            <td>delEl(&list,el)</td>
+            <td>删除指定元素</td>
+          </tr>
+          <tr>
+            <td>update(&list, ind, el)</td>
+            <td>更新指定位置元素</td>
+          </tr>
+          <tr>
+            <td>toString(&list)</td>
+            <td>输出</td>
+          </tr>
+          <tr>
+            <td>traverse(&list)</td>
+            <td>遍历</td>
+          </tr>
+        </table>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">顺序表 Sequence List</div>
+    <dl>
+      <dt>1. 顺序表的存储</dt>
+      <dd>定义：把逻辑上相邻的数据元素存储在物理上相邻的存储单元中的存储结构</dd>
+      <dd>方法：用一组地址连续的存储单元依次存储线性表的元素，通过数组来实现</dd>
+      <dd>特点：访问效率高：邻近存储；修改效率低：增加和删除需要移动大量数据节点</dd>
+      <dt>2. 顺序表的存储结构</dt>
+      <dd>
+        <table>
+          <tr>
+            <td colspan="4" style="border-top: none;">&lt;- length -&gt;</td>
+          </tr>
+          <tr>
+            <td>a0</td>
+            <td>a1</td>
+            <td>...</td>
+            <td>ai</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="10" style="border-bottom: none;">&lt;- MaxSize -&gt;</td>
+          </tr>
+        </table>
+      </dd>
+      <dt>3. 顺序表的数据结构</dt>
+      <dd>
+        <pre>
+//伪代码
+#define MaxSize 20
+
+typedef struct
+{
+    elementType *data;
+    int len;
+}List;</pre>
+      </dd>
+      <dd>
+        <pre>
+//实际代码
+#define MaxSize 20
+
+typedef struct
+{
+    int *data;
+    int len;
+}List;</pre>
+      </dd>
+      <dt>4. 顺序表的基本操作</dt>
+      <dd>4.0 几点说明</dd>
+      <dd>.函数的返回类型</dd>
+      <dd>.异常的处理</dd>
+      <dd>4.1 初始化</dd>
+      <dd><span class="iconfont icon-target warn"></span> 创建一个<span class="warn">总</span>长度为MaxSize的<span
+          class="warn">空</span>数组； </dd>
+      <dd><span class="iconfont icon-warning warn"></span> 内存管理：如何申请空间?? </dd>
+      <dd><span class="iconfont icon-warning warn"></span> 参数传递：如何把地址传出来???</dd>
+      <dd>
+        <pre>
+//[代码1]
+int Init(List *list)
+{    
+    list->data = (int *)malloc(sizeof(int) * MaxSize);
+    if (list->data)
+    {
+        list->len = 0;
+        return 0;
+    }
+    else
+    {
+        return -1;
+    }
+}</pre>
+      </dd>
+      <dd>
+        <pre>
+//[代码2]
+int Init(List *list)
+{    
+    list->data = (int *)malloc(sizeof(int) * MaxSize);
+    if (!list->data)
+    {
+        return -1;
+    }
+    list->len = 0;
+}</pre>
+      </dd>
+      <dd>
+        <pre>
+//[代码3]
+int Init(List *list)
+{
+    list->data = (int *)malloc(sizeof(int) * MaxSize);
+    if (list->data)
+    {
+        list->len = 0;
+        return 0;
+    }
+    return -1;
+}</pre>
+      </dd>
+      <dd>
+        <pre>
+//[代码4]
+int Init(List *list)
+{
+    list->data = (int *)malloc(sizeof(int) * MaxSize);
+    return list->data ? list->len : -1;
+}</pre>
+      </dd>
+      <dd>
+        <pre>
+//[代码5]
+void Init(List *list)
+{
+    list->data = (int *)malloc(sizeof(int) * MaxSize);
+    if (!list->data)
+    {
+        printf("init fail\n");
+        return;
+    }
+    list->len = 0;
+    printf("init ok\n");
+}</pre>
+      </dd>
+      <dd>4.2 赋值assign</dd>
+      <dd><span class="iconfont icon-target warn"></span> 为线性表的某个或某些元素赋值； </dd>
+      <dd class="grid grid2">
+        <pre>
+//利用数组名和地址偏移量赋值
+*(list->data +i) = val;</pre>
+        <pre>
+//利用数组元素索引赋值
+list->data[i] = val;</pre>
+        <pre>
+//利用数组对线性表整体赋值
+void assign(List *list, int arr[], int len)
+{
+    int i;
+    for (i = 0; i &lt; len; i++)
+    {
+        list->data[i] = arr[i];
+        list->len++;
+    }
+}</pre>
+        <pre>
+//利用输入scanf对线性表整体赋值</pre>
+      </dd>
+      <dd>4.3 读getAt</dd>
+      <dd><span class="iconfont icon-target warn"></span> 根据位置/索引index取值el； </dd>
+      <dd><span class="iconfont icon-warning warn"></span> 取到的值如何传递出去?</dd>
+      <dd class="grid grid2">
+        <pre>
+//赋值出去
+void getAt(List *list, int ind, int *res)
+{
+    if (ind &lt; 0 || ind &gt; list->len - 1)
+    {
+        printf("get-index overfollow.\n");
+        return;
+    }
+    *res = list-&gt;data[ind];
+}</pre>
+        <pre>
+//return出去
+int getAt(List *list, int ind)
+{
+    if (ind &lt; 0 || ind &gt; list-&gt;len - 1)
+    {
+        return -1;
+    }
+    return list-&gt;data[ind];
+}</pre>
+      </dd>
+      <dd>4.4 插入insertAt</dd>
+      <dd><span class="iconfont icon-target warn"></span> 在线性表某个位置插入元素；</dd>
+      <dd><span class="iconfont icon-warning warn"></span> 头插?尾插?</dd>
+      <dd>
+        <pre>
+void insertAt(List *list, int ind, int el)
+{
+    if (ind &lt; 0 || ind > list->len || ind > MaxSize)
+    {
+        printf("insert-index overfollow\n");
+        return;
+    }
+    int i;
+    for (i = list->len; i > ind; i--)
+    {
+        list->data[i] = list->data[i - 1];
+    }
+    list->data[ind] = el;
+    list->len++;
+}</pre>
+      </dd>
+      <dd>4.5 删除delAt</dd>
+      <dd><span class="iconfont icon-target warn"></span> 删除线性表的元素；</dd>
+      <dd><span class="iconfont icon-warning warn"></span> 需不需要返回被删除的元素?</dd>
+      <dd>
+        <pre>
+void delAt(List *list, int ind, int *el)
+{
+    if (ind &lt; 0 || ind > list->len)
+    {
+        printf("del-index overfollow\n");
+        return;
+    }
+    *el = list->data[ind];
+    int i;
+    for (i = ind; i &lt; list->len; i++)
+    {
+        list->data[i - 1] = list->data[i];
+    }
+    list->len--;
+}</pre>
+      </dd>
+      <dd>[<span class="warn">思考</span>]删除前和删除后，最后一个元素有什么变化?</dd>
+      <dd>4.6 输出</dd>
+      <dd><span class="iconfont icon-target warn"></span> 显示/遍历线性表的元素；</dd>
+      <dd><span class="iconfont icon-warning warn"></span> 如何个性化?</dd>
+      <dd><span class="iconfont icon-warning warn"></span> 如何更直观?</dd>
+      <dd class="grid grid2">
+        <pre>
+void tranverse(List *list)
+{
+    int i;    
+    for (i = 0; i &lt; list->len; i++)
+    {
+        printf("%d\t", list->data[i]);
+    }    
+}</pre>
+        <pre>
+void tranverse(List *list)
+{
+    int i;
+    for (i = 0; i &lt; list->len; i++)
+    {
+        printf("%d\t", i);
+    }
+    printf("\n");
+    for (i = 0; i &lt; list->len; i++)
+    {
+        printf("%d\t", list->data[i]);
+    }
+    printf("\n");
+    printf("-----------------------\n");
+}</pre>
+      </dd>
+      <dt>5. 顺序表参考代码</dt>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define MaxSize 5
+typedef struct
+{
+    int *data;
+    int len;
+} List;
+
+void Init(List *list)
+{
+    list->data = (int *)malloc(sizeof(int) * MaxSize);
+    if (!list->data)
+    {
+        printf("init fail\n");
+        return;
+    }
+    list->len = 0;
+    printf("init ok\n");
+}
+
+void assign(List *list, int arr[], int len)
+{
+    int i;
+    for (i = 0; i &lt; len; i++)
+    {
+        list->data[i] = arr[i];
+        list->len++;
+    }
+}
+
+void tranverse(List *list)
+{
+    int i;
+    for (i = 0; i &lt; list->len; i++)
+    {
+        printf("%d\t", i);
+    }
+    printf("\n");
+    for (i = 0; i &lt; list->len; i++)
+    {
+        printf("%d\t", list->data[i]);
+    }
+    printf("\n");
+    printf("--------------------------------------------------\n");
+}
+
+void getAt(List *list, int ind, int *res)
+{
+    if (ind &lt; 0 || ind > list->len - 1)
+    {
+        printf("get-index overfollow.\n");
+        return;
+    }
+    *res = list->data[ind];
+}
+
+void insertAt(List *list, int ind, int el)
+{
+    if (ind &lt; 0 || ind > list->len || ind > MaxSize)
+    {
+        printf("insert-index overfollow\n");
+        return;
+    }
+    int i;
+    for (i = list->len; i > ind; i--)
+    {
+        list->data[i] = list->data[i - 1];
+    }
+    list->data[ind] = el;
+    list->len++;
+}
+
+void delAt(List *list, int ind, int *el)
+{
+    if (ind &lt; 0 || ind > list->len)
+    {
+        printf("del-index overfollow\n");
+        return;
+    }
+    *el = list->data[ind];
+    int i;
+    for (i = ind; i &lt; list->len; i++)
+    {
+        list->data[i - 1] = list->data[i];
+    }
+    list->len--;
+}
+
+int main(int argc, char *argv[])
+{
+    int i, res;
+
+    List list;
+
+    Init(&list);
+
+    int val[10] = {10, 23, 4, 56, 26};
+    assign(&list, val, 5);
+
+    tranverse(&list);
+
+    getAt(&list, 3, &res);
+
+    insertAt(&list, 2, 11);
+    tranverse(&list);
+    delAt(&list, 2, &res);
+    tranverse(&list);
+
+    return 0;
+}</pre>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">链式表 Linked List</div>
+    <dl>
+      <dt>1. 链式表的存储</dt>
+      <dd>. 逻辑上相邻；存储上随意</dd>
+      <dd>. 存取效率低：只能通过头指针进入链表，根据每个结点的指针域访问其它结点：顺藤摸瓜/顺序存取法</dd>
+      <dd>. 修改效率高：节点增加、删除操作，只需要修改链接指针，不必移动数据</dd>
+      <dd>. 头指针：链表由头指针唯一确定； 不要弄丢头指针； 不要掉链子</dd>
+      <dd>. 存储密度小</dd>
+      <dt>2. 链式表的存储结构</dt>
+      <dd>. 除了数据元素外，借助指针实现数据之间的逻辑关系</dd>
+      <dd>. 根据指针的多少和指向，可以细分：单链表、双向链表、循环链表等</dd>
+      <dd class="grid grid2">
+        <div class="img-box">
+          <img src="./chap2/l0.png" alt="">
+        </div>
+        <div class="img-box">
+          <img src="./chap2/l1.png" alt="">
+        </div>
+      </dd>
+      <dd>
+        <div class="dd-img-box">
+          <img src="./chap2/list0.png" alt="">
+        </div>
+      </dd>
+      <dd>. 带头节点的单链表：为方便操作，通常在数据节点之前增加一个头节点，用来表示该链表；链表由指向头节点的头指针唯一确定</dd>
+      <dd>. 节点分类：头节点、数据节点[首节点、尾节点]</dd>
+      <dd>
+        <img src="./chap2/list.jpg" alt="">
+      </dd>
+      <dt>3. 单链表的数据结构</dt>
+      <dd class="grid grid2">
+        <pre>
+//节点和链表共享一个数据结构
+typedef struct LNode
+{
+    int data;
+    struct LNode *next;
+} Node, List;</pre>
+        <pre>
+//节点和链表单独定义数据结构
+typedef struct node
+{
+    int data;
+    struct node *next;
+} Node;
+
+typedef struct
+{
+    Node *head;
+    int n;
+} LinkList;</pre>
+      </dd>
+      <dt>4. 单链表的基本操作</dt>
+      <dd>4.1 初始化Init</dd>
+      <dd><span class="iconfont icon-target warn"></span>创建一个带有头节点的空链表；</dd>
+      <dd class="grid grid2">
+        <pre>
+Node *Init() {
+    Node *head=(Node *)malloc(sizeof(Node));
+    printf("%p\n",head);
+    head->next=NULL;
+    return head;
+}</pre>
+        <pre>
+Status Init(List *list)
+{
+    *list = (List *)malloc(sizeof(Node));
+    printf("insider %p\n", *list);
+    if (!(*list))
+    {
+        return ERROR;
+    }
+    (*list)->next = NULL;
+    return OK;
+}</pre>
+      </dd>
+      <dd>4.2 遍历Display</dd>
+      <dd><span class="iconfont icon-target warn"></span>遍历链表，个性化输出每个节点数据；</dd>
+      <dd class="grid grid2">
+        <pre>
+void Display(List *list) {
+    Node *head=list->next;
+    while(head) {
+        printf("%d\t",head->data);
+        head=head->next;
+    }
+    printf("\n");
+}</pre>
+        <pre>
+void Display(List *list){
+    printf("List->");
+    Node *head=list->next;
+    while(head){
+        printf("%d->",head->data);
+        head=head->next;
+    }
+    printf("NULL\n");
+}</pre>
+      </dd>
+      <dd>4.3 插入Insert</dd>
+      <dd><span class="iconfont icon-target warn"></span>头插：在链表头部插入数据节点；</dd>
+      <dd>
+        <pre>
+void InsertHead(List *list,int data) {
+    Node *p=list;
+    Node *node=(Node *)malloc(sizeof(Node));
+    node->data=data;
+    node->next=p->next;
+    list->next=node;
+}</pre>
+      </dd>
+      <dd class="txt-center">
+        <img src="./chap2/幻灯片1.JPG" alt="">
+      </dd>
+      <dd><span class="iconfont icon-target warn"></span>尾插：在链表尾部部插入数据节点；</dd>
+      <dd>
+        <pre>
+void InsertTail(List *list,int data){
+Node *p=list->next;
+while(p->next){
+    p=p->next;
+}	
+Node *node=(Node *)malloc(sizeof(Node));
+node->data=data;
+node->next=NULL;
+p->next=node;
+}</pre>
+      </dd>
+      <dd class="txt-center">
+        <img src="./chap2/幻灯片2.JPG" alt="">
+      </dd>
+      <dd><span class="iconfont icon-target warn"></span>在链表指定位置插入数据节点；</dd>
+      <dd>
+        <pre>
+void InsertByIndex(List *list, int ind, int data)
+{
+    int i = 0;
+    List *p = list;
+    if (ind &lt; 0 || ind > Len(list) - 1)
+    {
+        printf("index overfollow\n");
+        return;
+    }
+    while ( i &lt; ind)
+    {
+        p = p->next;
+        i++;
+    }
+    Node *node = (List *)malloc(sizeof(Node));
+    node->data = data;
+    node->next = p->next;
+    p->next = node;   
+}</pre>
+      </dd>
+      <dd class="txt-center">
+        <img src="./chap2/幻灯片3.JPG" alt="">
+      </dd>
+      <dd class="warn">[<span class="iconfont icon-border-warn"></span>]</dd>
+      <dd>. 获取插入位置的前一个位置；</dd>
+      <dd>. 头插、尾插是插入的特例；</dd>
+      <dd>4.4 表长Len</dd>
+      <dd><span class="iconfont icon-target warn"></span>获取链表数据节点的个数；</dd>
+      <dd>
+        <pre>
+int Len(List *list) {
+    int len=0;
+    Node *p=list->next;
+    while(p) {
+        len++;
+        p=p->next;
+    }
+    return len;
+}</pre>
+      </dd>
+      <dd>4.5 获取元素Get</dd>
+      <dd><span class="iconfont icon-target warn"></span>根据指定位置获取链表数据节点；</dd>
+      <dd>
+        <pre>
+void Get(List *list,int ind,int *res) {
+    int i=0;
+    int length=Len(list);
+    if( ind<0 || ind>length-1 ) {
+        printf("index overfollow\n");
+        return;
+    }
+    Node *p=list->next;
+    while(i<ind) {
+        p=p->next;
+        i++;
+    }
+    *res=p->data;
+}</pre>
+      </dd>
+      <dd>4.6 元素索引IndexOf</dd>
+      <dd><span class="iconfont icon-target warn"></span>获取数据节点在链表中的位置；</dd>
+      <dd>
+        <pre>
+int IndexOf(List *list, int data)
+{
+    int i = 0;
+    Node *p = list->next;
+    while (p && p->data != data)
+    {
+        p = p->next;
+        i++;
+    }
+    return p?i:-1;
+}</pre>
+      </dd>
+      <dd>4.7 删除Delete</dd>
+      <dd><span class="iconfont icon-target warn"></span>根据指定位置删除链表中的数据节点；</dd>
+      <dd>
+        <pre>
+void DeleteByIndex(List *list, int ind, int *res)
+{
+    int i = 0;
+    Node *p = list,*q;
+    if (ind &lt; 0 || ind>Len(list)-1)
+    {
+        printf("index overfollow\n");
+        return;
+    }
+    while (p->next && i &lt; ind)
+    {
+        printf("%d\t",i);
+        p = p->next;
+        i++;
+    }
+    q = p->next;
+    *res = q->data;
+    p->next = q->next;
+    free(q);
+}
+</pre>
+      </dd>
+      <dd class="warn">[<span class="iconfont icon-bangzhu2"></span>]</dd>
+      <dd>1. 为什么要使用2个指针?</dd>
+      <dd>2. 如何删除指定元素?</dd>
+      <dd>3. 如何利用IndexOf函数删除指定元素?</dd>
+      <dd class="warn">[<span class="iconfont icon-border-warn"></span>]</dd>
+      <dd>free()的节点必须通过malloc()申请的节点；即：如果节点是手动创建的，则无法free()，会导致函数结束异常；</dd>
+      <dd class="mt2">4.9 其它函数</dd>
+      <dd>根据业务需要，封装其它功能函数；</dd>
+      <dt>5. 单链表参考代码</dt>
+      <dd class="grid grid2">
+        <pre>
+    //头文件
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+
+    typedef struct node
+    {
+        int data;
+        struct node *next;
+    } Node, List;
+    
+    int Len(List *list);
+    Node *Init()
+    {
+        Node *head = (Node *)malloc(sizeof(Node));
+        printf("%p\n", head);
+        head->next = NULL;
+        return head;
+    }
+    
+    void Display(List *list)
+    {
+        printf("List->");
+        Node *head = list->next;
+        while (head)
+        {
+            printf("%d->", head->data);
+            head = head->next;
+        }
+        printf("NULL\n");
+    }
+    
+    void InsertHead(List *list, int data)
+    {
+        Node *p = list;
+        Node *node = (Node *)malloc(sizeof(Node));
+        node->data = data;
+        node->next = p->next;
+        p->next = node;
+    }
+    void InsertTail(List *list, int data)
+    {
+        Node *p = list;
+        while (p->next)
+        {
+            p = p->next;
+        }
+        Node *node = (Node *)malloc(sizeof(Node));
+        node->data = data;
+        node->next = NULL;
+        p->next = node;
+    }
+    void InsertByIndex(List *list, int ind, int data)
+    {
+        int i = 0;
+        List *p = list;
+        if (ind &lt; 0 || ind > Len(list) - 1)
+        {
+            printf("index overfollow\n");
+            return;
+        }
+        while (i &lt; ind)
+        {
+            p = p->next;
+            i++;
+        }
+        Node *node = (List *)malloc(sizeof(Node));
+        node->data = data;
+        node->next = p->next;
+        p->next = node;
+    }
+    
+    int Len(List *list)
+    {
+        int len = 0;
+        Node *head = list->next;
+        while (head)
+        {
+            len++;
+            head = head->next;
+        }
+        return len;
+    }
+    
+    void Get(List *list, int ind, int *res)
+    {
+        int i = 0;
+        int length = Len(list);
+        if (ind &lt; 0 || ind > length - 1)
+        {
+            printf("index overfollow\n");
+            return;
+        }
+        Node *p = list->next;
+        while (i &lt; ind)
+        {
+            p = p->next;
+            i++;
+        }
+        *res = p->data;
+    }
+    
+    int IndexOf(List *list, int data)
+    {
+        int i = 0;
+        Node *p = list->next;
+        while (p && p->data != data)
+        {
+            p = p->next;
+            i++;
+        }
+        return p ? i : -1;
+    }
+    
+    void DeleteByIndex(List *list, int ind, int *res)
+    {
+        int i = 0;
+        int length = Len(list);
+        Node *p = list;
+        Node *q = NULL;
+        if (ind &lt; 0 || ind > length - 1)
+        {
+            printf("index overfollow\n");
+            return;
+        }
+        while (p->next && i &lt; ind)
+        {
+            printf("%d\t", i);
+            p = p->next;
+            i++;
+        }
+        q = p->next;
+        *res = q->data;
+        p->next = q->next;
+        free(q);
+    }</pre>
+        <pre>
+    //主文件
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include "demo.h"
+    
+    int Len(List *list);
+    int main(int argc, char *argv[])
+    {
+        int res,tmp;
+        List *list = Init();
+        InsertHead(list, 10);
+        InsertHead(list, 20);
+        InsertHead(list, 30);
+        Display(list);
+        res = Len(list);
+        printf("len=%d\n", res);
+        Get(list, 5, &res);
+        printf("get res=%d\n", res);
+        Display(list);
+        InsertTail(list, 190);
+        InsertTail(list, 180);
+        InsertTail(list, 170);
+        // InsertHead(list,10);
+        InsertByIndex(list, 2, 222);
+        Display(list);
+        InsertByIndex(list, 5, 222);
+        Display(list);
+        tmp = 222;
+        res = IndexOf(list, tmp);
+        printf("index of %d is %d\n", tmp, res);
+        tmp = 8;
+        res = IndexOf(list, tmp);
+        printf("index of %d is %d\n", tmp, res);
+        tmp = 7;
+        DeleteByIndex(list, tmp, &res);
+        printf("delete index of %d \n", res);
+        Display(list);
+        return 0;
+    }</pre>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">应用 Application</div>
+    <dl>
+      <dt>1. 通信录</dt>
+      <dd>项目效果请参照 <a class="warn" href="./test1.html" target="_blank">通信录</a></dd>
+      <dd>参考代码；contact.h为定义的数据结构，请参照前面的数据结构和算法，根据实际情况灵活调整；</dd>
+      <dd>
+        <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include "contact.h"
+    
+    void menu(void);
+    
+    int main(void)
+    {
+    int option, len;
+    printf("\nWelcome\n");
+    Contact *contact = Init();
+    do
+    {
+        menu();
+        printf("Please make a choice->>>");
+        scanf("%d", &option);
+        switch (option)
+        {
+        case Add:
+            AddByHead(contact);
+            break;
+        case Delete:
+            DeleteByIndex(contact);
+            break;
+        case Update:
+            UpdateByIndex(contact);
+            break;
+        case Search:
+            SearchByName(contact);
+            break;
+        case Print:
+            Display(contact);
+            break;
+        case Sort:
+            SortByAge(contact);
+            break;
+        case Output:
+            OutputToFile(contact);
+            break;
+        case LengthOfContact:
+            len = Length(contact);
+            printf("lenght of current contact is %d\n", len);
+            printf("%s %s\n\n", __TIME__, __DATE__);
+            break;
+        case AddByTail:
+            OutputToFile(contact);
+            break;
+        case Exit:
+            printf("Bye Bye\n");
+            printf("%s %s\n\n", __TIME__, __DATE__);
+            exit(0);
+            break;
+        default:
+            printf("Bye Bye\n");
+            printf("%s %s\n\n", __TIME__, __DATE__);
+            exit(0);
+            break;
+        }
+    } while (1);
+
+    return 0;
+}
+void menu(void)
+{
+    printf("**********************************************\n");
+    printf("***   1.Insert                2.Delete     ***\n");
+    printf("***   3.Update                4.Search     ***\n");
+    printf("***   5.Display               6.Sort       ***\n");
+    printf("***   7.Output                8.Length     ***\n");
+    printf("***   9.InsertByTail          0.Exit       ***\n");
+    printf("**********************************************\n");
+    printf("&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;202012000001张树彬>>>>>>>>>>>>>\n\n");
+}</pre>
+      </dd>
+      <dt>2. 多项式加法</dt>
+      <dd>
+        <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+
+    typedef struct pNode
+    {
+        int coef;
+        int exp;
+        struct pNode *next;
+    } pNode;
+    
+    typedef struct
+    {
+        struct pNode *head;
+    } PolyExp;
+    
+    void createPlyExp(PolyExp *pe)
+    {
+        pe->head = (pNode *)malloc(sizeof(pNode));
+        pe->head->exp = -1;
+        pe->head->next = NULL;
+        pNode *pn, *pre, *p;
+        while (1)
+        {
+            pn = (pNode *)malloc(sizeof(pNode));
+            printf("conf:\n");
+            scanf("%d", &pn->coef);
+            printf("exp:\n");
+            scanf("%d", &pn->exp);
+            if (pn->exp &lt; 0)
+            {
+                break;
+            }
+            pre = pe->head;
+            p = pre->next;
+            // 已有数据大于新数据，后移
+            while (p && p->exp > pn->exp)
+            {
+                pre = p;
+                p = p->next;
+            }
+            pn->next = p;
+            pre->next = pn;
+        }
+    }
+    
+    void displayPolyExp(PolyExp *pe)
+    {
+        pNode *pn;
+        pn = pe->head->next;
+        while (pn)
+        {
+            printf("%dx^%d ", pn->coef, pn->exp);
+            pn = pn->next;
+        }
+        printf("\n");
+    }
+    
+    void addPolyExp(PolyExp *pe0, PolyExp *pe1)
+    {
+        pNode *pre0 = pe0->head;
+        pNode *p0 = pe0->head->next;
+        pNode *pre1 = pe1->head;
+        pNode *p1 = pe1->head->next;
+        pNode *tmp;
+        while (p0 && p1)
+        {
+            while (p1)
+            {
+                if (p1->exp > p0->exp)
+                {
+                    printf(">\n");
+                    // p1不掉链
+                    pre1->next = p1->next;
+                    // 移动p1的节点到p0里
+                    p1->next = p0;
+                    pre0->next = p1;
+                    p1 = pre1->next;
+                    // 因为p0加入了一个节点，所以要更新p0的指针域：p0不用动，pre0前移一个节点
+                    pre0 = pre0->next;
+                }
+                else if (p1->exp == p0->exp)
+                {
+                    printf("=\n");
+                    // 系数相加
+                    p0->coef = p0->coef + p1->coef;
+                    // p1不掉链
+                    pre1->next = p1->next;
+                    tmp = p1;
+                    // 释放空间
+                    free(tmp);
+                    p1 = pre1->next;
+                }
+                else if (p1->exp &lt; p0->exp)
+                {
+                    printf("&lt;\n");
+                    break;
+                }
+            }
+            pre0 = p0;
+            p0 = p0->next;
+        }
+    }
+    int main()
+    {
+        PolyExp *pe0, *pe1;
+        pe0 = (PolyExp *)malloc(sizeof(PolyExp));
+        pe1 = (PolyExp *)malloc(sizeof(PolyExp));
+        createPlyExp(pe0);
+        displayPolyExp(pe0);
+        createPlyExp(pe1);
+        displayPolyExp(pe1);
+        addPolyExp(pe0, pe1);
+        printf("res\n");
+        displayPolyExp(pe0);
+        return 0;
+    }</pre>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    window.onload = function () {
+      let navItems = document.querySelectorAll(".nav-item")
+      let contItems = document.querySelectorAll(".target-cont")
+      let ham = document.querySelector("#ham")
+      let menu = document.querySelector("#menu")
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView();
+            navItems.forEach(item => {
+              item.style.color = "#ffffff";
+            })
+            navItems[index].style.color = "#e95420"
+          }, 100)
+          menu.classList.toggle('is-hide')
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+
+      ham.addEventListener('click', (e) => {
+        e.preventDefault()
+        menu.classList.toggle('is-hide')
+        if (document.documentElement.style.overflowY == 'auto') {
+          document.documentElement.style.overflowY = "hidden"
+        } else {
+          document.documentElement.style.overflowY = "auto"
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

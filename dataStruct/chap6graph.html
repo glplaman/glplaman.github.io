@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图 Graph</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <style>
+    header {
+      justify-content: space-between;
+      height: 200px;
+      position: relative;
+      background-image: url(./graph/banner.jpg);
+      margin-bottom: 0;
+    }
+
+    .cont {
+      background-color: #fff;
+    }
+
+    .logo-img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .grid-item {
+      text-align: center;
+    }
+
+    pre {
+      height: auto;
+    }
+
+    .matrix {
+      position: relative;
+      width: unset;
+      margin: 0 auto;
+    }
+
+    .matrix td {
+      border: none;
+      width: 60px;
+    }
+
+    .matrix::before,
+    .matrix::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      height: 100%;
+      width: 1rem;
+      border: 2px solid #666;
+      transform: translateY(-50%);
+    }
+
+    .matrix::before {
+      left: 0;
+      border-right: none;
+    }
+
+    .matrix::after {
+      right: 0;
+      border-left: none;
+    }
+
+    .grid.grid2 {
+      background-color: #fff;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .grid.grid2 img {
+      margin: auto;
+    }
+
+    .border {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid #f46;
+      line-height: 120px;
+      text-align: center;
+      box-shadow: 4px 4px #f46;
+      margin-bottom: 1rem;
+      transition: 1s;
+    }
+
+    .border:hover {
+      box-shadow: -4px 4px #f46;
+    }
+
+    .border:hover+span {
+      color: #f46;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header id="top" class="w">
+    <h1>图</h1>
+    <div class="timestamp">2022-11-15</div>
+  </header>
+  <nav id='nav' class="w">
+    <ul id="menu" class="menu">
+      <li class="nav-item">
+        <a class="nav-link"><span>概述</span><span class="top-sub-menu">Overview</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>存储</span><span class="top-sub-menu">Storage</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>算法</span><span class="top-sub-menu">Algorithm</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>遍历</span><span class="top-sub-menu">Traverse</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"><span>应用</span><span class="top-sub-menu">Application</span></a>
+      </li>
+    </ul>
+    <div id="ham"><span class="iconfont icon-list-ul"></span></div>
+    <div class="logo">
+      <span class="reg">&reg;</span>
+      <img class="logo-img" src='' data-src="./graph/logo.png" alt="">
+    </div>
+  </nav>
+  <div class="w cont">
+    <dl class="target-cont">
+      <dd id="con"><img src="" data-src="./graph/chap6graph/幻灯片1.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片2.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片3.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片4.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片5.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片6.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片7.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片8.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片9.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片10.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片11.JPG" alt=""></dd>
+      <dd><img src="" data-src="./graph/chap6graph/幻灯片12.JPG" alt=""></dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">图的存储 Storage</div>
+    <div class="target-cont chap">图的算法 Algorithm</div>
+    <dl>
+      <dt>邻接矩阵</dt>
+      <dd>
+        <pre>
+MatGraph *CreateMat(MatGraph *G, int A[MAXV][MAXV], int n, int e)
+{
+    int i, j;
+    G->n = n;
+    G->e = e;
+    for (i = 0; i &lt; G->n; i++)
+        for (j = 0; j &lt; G->n; j++)
+            G->edges[i][j] = A[i][j];
+    return G;
+}
+void DispMat(MatGraph g)
+{
+    int i, j;
+    for (i = 0; i &lt; g.n; i++)
+    {
+        for (j = 0; j &lt; g.n; j++)
+            if (g.edges[i][j] != INF)
+                printf("%4d", g.edges[i][j]);
+            else
+                printf("%4s", "∞");
+        printf("\n");
+    }
+}</pre>
+      </dd>
+      <dt>邻接表</dt>
+      <dd>
+        <pre>
+AdjGraph *CreateAdj(AdjGraph *G, int A[MAXV][MAXV], int n, int e)
+{
+    int i, j;
+    ArcNode *p;
+    G = (AdjGraph *)malloc(sizeof(AdjGraph));
+    printf("%p\n", G);
+    for (i = 0; i &lt; n; i++)
+        G->adjlist[i].firstarc = NULL;
+    for (i = 0; i &lt; n; i++)
+        for (j = n - 1; j >= 0; j--)
+            if (A[i][j] != 0 && A[i][j] != INF)
+            {
+                p = (ArcNode *)malloc(sizeof(ArcNode));
+                p->adjvex = j;
+                p->weight = A[i][j];
+                p->nextarc = G->adjlist[i].firstarc;
+                G->adjlist[i].firstarc = p;
+            }
+    G->n = n;
+    G->e = n;
+    return G;
+}
+void DispAdj(AdjGraph *G)
+{
+    int i;
+    ArcNode *p;
+    for (i = 0; i &lt; G->n; i++)
+    {
+        p = G->adjlist[i].firstarc;
+        printf("%3d: ", i);
+        while (p != NULL)
+        {
+            printf("%3d[%d]->", p->adjvex, p->weight);
+            p = p->nextarc;
+        }
+        printf("^\n");
+    }
+}</pre>
+      </dd>
+      <dd class="end-line">[Section End]</dd>
+    </dl>
+    <div class="target-cont chap">图的遍历 Traverse</div>
+    <div class="target-cont chap">图的应用 Application</div>
+    <dl>
+      <dd class="grid grid2">
+        <a href="https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/"
+          class="item-center" target="_blank">
+          <span class="border">最小生成树</span>
+          <span>Minimum Spanning Tree</span>
+        </a>
+        <a href="https://www.hackerearth.com/practice/algorithms/graphs/shortest-path-algorithms/tutorial/"
+          class="item-center" target="_blank">
+          <span class="border">最短路径</span>
+          <span>Shortest Path</span>
+        </a>
+      </dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight" title="g"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    window.onload = function () {
+      const clickEvent = (function () {
+        if ('ontouchstart' in document.documentElement === true)
+          return 'touchstart';
+        else
+          return 'click';
+      })();
+
+      let navItems = document.querySelectorAll(".nav-item")
+      let contItems = document.querySelectorAll(".target-cont")
+      let ham = document.querySelector("#ham")
+      let menu = document.querySelector("#menu")
+
+
+      navItems.forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault()
+          setTimeout(function () {
+            contItems[index].scrollIntoView();
+            navItems.forEach(item => {
+              item.style.color = "#ffffff";
+            })
+            navItems[index].style.color = "#e95420"
+          }, 100)
+          menu.classList.toggle('is-hide')
+          document.documentElement.style.overflowY = "auto"
+        })
+      })
+
+      ham.addEventListener('click', (e) => {
+        e.preventDefault()
+        menu.classList.toggle('is-hide')
+        if (document.documentElement.style.overflowY == 'auto') {
+          document.documentElement.style.overflowY = "hidden"
+        } else {
+          document.documentElement.style.overflowY = "auto"
+        }
+      })
+
+      // lazyload
+      let scrollTop = window.scrollY;
+      let imgs = Array.from(document.querySelectorAll('img'));
+      lazyLoad();
+      // 采用了节流函数
+      window.addEventListener('scroll', throttle(lazyLoad, 500, 1000));
+
+      function throttle(fun, delay, time) {
+        let timeout,
+          startTime = new Date();
+        return function () {
+          let context = this,
+            args = arguments,
+            curTime = new Date();
+          clearTimeout(timeout);
+          // 如果达到了规定的触发时间间隔，触发 handler
+          if (curTime - startTime >= time) {
+            fun();
+            startTime = curTime;
+            // 没达到触发间隔，重新设定定时器
+          } else {
+            timeout = setTimeout(fun, delay);
+          }
+        };
+      };
+
+      // 实际想绑定在 scroll 事件上的 handler
+      // 需要访问到imgs ,  scroll 
+      function lazyLoad() {
+        scrollTop = window.scrollY;
+        imgs.forEach((item, index) => {
+          if (scrollTop === 0 && item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop) {
+            item.setAttribute('src', item.dataset.src)
+            item.setAttribute('data-src', '')
+          } else if (item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop && item.offsetTop > scrollTop) {
+            item.setAttribute('src', item.dataset.src)
+            item.setAttribute('data-src', '')
+          }
+        })
+      }
+    }
+  </script>
+</body>
+
+</html>

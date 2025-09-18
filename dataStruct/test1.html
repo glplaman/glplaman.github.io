@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通信录 Contact</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      flex-direction: row;
+      height: 200px;
+      background-image: url(./chap2/qq.jpg);
+      background-position: center;
+      justify-content: space-between;
+    }
+
+    pre {
+      height: auto;
+    }
+
+    @media screen and (max-width:768px) {
+      .chap {
+        height: 120px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Contact</h1>
+      <span class="timestamp">2022-10-10</span>
+    </header>
+    <dl>
+      <dt>一、实验目的</dt>
+      <dd>1. 加深理解线性表的顺序表示与链式表示的意义和区别，掌握用它们表示时各基本操作的设计与实现；</dd>
+      <dd>2. 学会定义线性表的顺序存储类型和链式存储类型，实现对线性表的一些基本操作和具体的函数定义；</dd>
+      <dd>3. 掌握线性表的基本操作（初始化、建立、插入、删除、遍历等）；</dd>
+      <dd>4. 在实际应用背景下能够适当选择顺序存储和链式存储；</dd>
+      <dt>二、实验内容和要求</dt>
+      <dd>请使用线性表的链表实现通信录，具备以下功能：</dd>
+      <dd>. 通信录的数据定义：每个同学都有名片，包含：学号、昵称、性别、年龄、生日、星座、所在地等信息；</dd>
+      <dd>. 通讯录的建立；</dd>
+      <dd>. 通讯录的增加和删除；</dd>
+      <dd>. 通信录的查询；</dd>
+      <dd>. 在此基础上实现你设计的其它附加功能；</dd>
+      <dt>三、实验环境及材料</dt>
+      <dd>见页面底部资源库，选择熟悉的开发环境完成；</dd>
+      <dt>四、实验方法和步骤</dt>
+      <dd>1. 开发：按照实验内容要求编写相应程序代码并调试运行，完成单链表的创建、插入、删除、显示、查找等操作；</dd>
+      <dd class="mt2">2. 演示：过程如下</dd>
+      <dd>2.1. 创建一个通信录群；默认有1个成员，你自己；</dd>
+      <dd>2.2. 显示该通讯录中所有同学；</dd>
+      <dd>2.3. 根据学号查找同学信息并显示；</dd>
+      <dd>2.4. 插入一个新同学；</dd>
+      <dd>2.5. 删除会员的信息；</dd>
+      <dd>2.6. 统计通讯录中同学的个数；</dd>
+      <dd>2.7. 退出；</dd>
+      <dt>五、实验结果</dt>
+      <dd>1. 程序功能是否完成；</dd>
+      <dd>2. 程序调试运行中出现的错误信息原因分析；</dd>
+      <dt>六、实验总结</dt>
+      <dd>从实验过程，体会链表的特点，不少于200字；</dd>
+    </dl>
+    <dt class="chap">执行结果部分示例</dt>
+    <dl>
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qq0.png" alt="">
+      </dd>
+      <dd class="dd-diag-item">↑ 欢迎界面 ↑</dd>
+
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qq1.png" alt="">
+      </dd>
+      <dd class="dd-diag-item">↑ 增加用户 ↑</dd>
+
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qq2.png" alt="">
+      </dd>
+      <dd class="dd-diag-item">↑ 显示用户 ↑</dd>
+
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qq3.png" alt="">
+      </dd>
+      <dd class="dd-diag-item">↑ 删除用户 ↑</dd>
+
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qq4.png" alt="">
+      </dd>
+      <dd class="dd-diag-item">↑ 删除用户 ↑</dd>
+
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qq5.png" alt="">
+      </dd>
+      <dd class="dd-diag-item">↑ 退出界面 ↑</dd>
+
+    </dl>
+    <div class="chap">参考代码-主文件</div>
+    <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include "contact.h"
+    
+    void menu(void);
+    
+    int main(void)
+    {
+        int option, len;
+        printf("\nWelcome\n");
+        Contact *contact = Init();
+        do
+        {
+            menu();
+            printf("Please make a choice->>>");
+            scanf("%d", &option);
+            switch (option)
+            {
+            case Add:
+                AddByHead(contact);
+                break;
+            case Delete:
+                DeleteByIndex(contact);
+                break;
+            case Update:
+                UpdateByIndex(contact);
+                break;
+            case Search:
+                SearchByName(contact);
+                break;
+            case Print:
+                Display(contact);
+                break;
+            case Sort:
+                SortByAge(contact);
+                break;
+            case Output:
+                OutputToFile(contact);
+                break;
+            case LengthOfContact:
+                len = Length(contact);
+                printf("lenght of current contact is %d\n", len);
+                printf("%s %s\n\n", __TIME__, __DATE__);
+                break;
+            case AddByTail:
+                OutputToFile(contact);
+                break;
+            case Exit:
+                printf("Bye Bye\n");
+                printf("%s %s\n\n", __TIME__, __DATE__);
+                exit(0);
+                break;
+            default:
+                printf("Bye Bye\n");
+                printf("%s %s\n\n", __TIME__, __DATE__);
+                exit(0);
+                break;
+            }
+        } while (1);
+    
+        return 0;
+    }
+    void menu(void)
+    {
+        printf("************************************************\n");
+        printf("****** 1. Insert*************** 2. Delete*******\n");
+        printf("****** 3. Update*************** 4. Search*******\n");
+        printf("****** 5. Display************** 6. Sort*********\n");
+        printf("****** 7. Output*************** 8. Length*******\n");
+        printf("****** 9. InsertByTail********* 0. Exit*********\n");
+        printf("************************************************\n");
+        printf("&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<202012000001张树彬>>>>>>>>>>>>>>>>\n\n");
+    }</pre>
+    <div class="chap">参考代码-头文件</div>
+    <pre>
+    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    
+    enum options
+    {
+        Exit,
+        Add,
+        Delete,
+        Update,
+        Search,
+        Print,
+        Sort,
+        Output,
+        LengthOfContact,
+        AddByTail
+    };
+    
+    //字符串成员变量请使用字符数组，最好不要使用指针，否则你要申请空间；
+    typedef struct
+    {
+        char name[8];
+        int age;
+        char gender;
+        char cell[12];
+        char address[12];
+    } Student;
+    
+    typedef struct stuNode
+    {
+        Student student;
+        struct stuNode *next;
+    } Node, Contact;
+    
+    //AddByHead函数使用到输出函数，所以要先声明该函数；
+    //如果没有函数使用，就可以不声明；
+    int Length(Contact *contact);
+    void Display(Contact *contact);
+    
+    Contact *Init()
+    {
+        Node *head = (Node *)malloc(sizeof(Node));
+        head->next = NULL;
+        printf("%s %s\n", __TIME__, __DATE__);
+        return head;
+    }
+    
+    int Length(Contact *contact)
+    {
+        int len = 0;
+        Node *head = contact->next;
+        while (head)
+        {
+            len++;
+            head = head->next;
+        }
+        return len;
+    }
+    
+    //头插法
+    void AddByHead(Contact *contact)
+    {
+        Node *node = (Node *)malloc(sizeof(Node));
+    
+        printf("please input the name->");
+    
+        // char[]可以直接输入，因为数组名就是地址
+        // int和char需要使用取地址符&，输入到地址对应的内存单元
+        scanf("%s", node->student.name);
+        //清空缓冲区：避免回车、换行、空格等空白字符被后面的数据获取；以下类似
+        fflush(stdin);
+        printf("please input the age:Number->>>");
+        scanf("%d", &(node->student.age));
+        fflush(stdin);
+        printf("please input your gender. m/M stand for male, f/F stand for female->>>");
+        scanf("%c", &(node->student.gender));
+        fflush(stdin);
+        printf("please input your cellphone number->>>");
+        scanf("%s", node->student.cell);
+        fflush(stdin);
+        printf("please input your address->>>");
+        scanf("%s", node->student.address);
+        //清空缓冲区，避免残留的内容被当作选项option的输入
+        fflush(stdin);
+    
+        //头插法
+        node->next = contact->next;
+        contact->next = node;
+    
+        printf("contact item add ok\n");    
+        printf("%s %s\n\n", __TIME__, __DATE__);
+        return;
+    }
+    
+    void Display(Contact *contact)
+    {
+        Node *node = contact->next;
+        int i = 0;
+        printf("contack list ------------------------------------------------------\n");
+        printf("%-3s\t%-8s\t%-3s\t%-3s\t%-15s\t%-30s\n", "Sn", "Name", "Age", "Gender", "Cell", "Address");
+        while (node)
+        {
+            printf("%-3d\t%-8s\t%-3d\t%-3c\t%-15s\t%-30s\n", i + 1, node->student.name, node->student.age, node->student.gender, node->student.cell, node->student.address);
+            node = node->next;
+            i++;
+        }
+        printf("contack list ------------------------------------------------------\n\n");
+        printf("%s %s\n\n", __TIME__, __DATE__);
+    }
+    void DeleteByIndex(Contact *contact)
+    {
+        int ind, i;
+        int len = Length(contact);
+        printf("item delete index is->>>");
+        scanf("%d", &ind);
+        fflush(stdin);
+        //为什么不用循环直到获取正确的index？？？
+        if (ind > len - 1 || ind &lt; 0)
+        {
+            printf("index overfollow\n\n");
+            return;
+        }
+        Node *p, *q;
+        p = contact;
+        while (p->next && i &lt; ind)
+        {
+            p = p->next;
+            i++;
+        }
+        q = p->next;
+        p->next = q->next;
+        free(q);
+        printf("delete ok\n");
+        printf("%s %s\n\n", __TIME__, __DATE__);
+    }
+    void UpdateByIndex(Contact *contact) { printf("UpdateByIndex\n"); }
+    void SearchByName(Contact *contact) { printf("SearchByName\n"); }
+    void SortByAge(Contact *contact) { printf("SortByAge\n"); }
+    void OutputToFile(Contact *contact) { printf("OutputToFile\n"); }
+    void InsertByTail(Contact *contact) { printf("InsertByTail\n"); }</pre>
+    <div class="chap">实验报告</div>
+    <dl>
+      <dd>1. 根据实验内容，完成实验报告；</dd>
+      <dd>2. 论文格式请参照范文<a class="warn" href="./format.docx" download>[点击下载]</a>；</dd>
+      <dd>3. 以电子文档形式，按组提交实验报告；请发布为PDF格式再提交U+平台，避免格式错乱；文件命名格式：第x组.pdf或第x组.docx；</dd>
+      <dd>4. U+平台内网地址：<a class="warn" href="http://172.23.191.32/"
+          target="_blank">http://172.23.191.32/</a>；外网访问需要使用VPN；</dd>
+      <dd>5. 更多信息，请扫码或点击访问<a class="warn" href="https://www.yuque.com/cnplaman/gk8kfd/dxa2qt#tIbOT"
+          target="_blank">线性表应用之通信录</a></dd>
+      <dd class="item-center">
+        <img src="" data-src="./chap2/qrcode_www.yuque.com.png" alt="">
+      </dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+  <script>
+    window.onload = function () {
+      // lazyload
+      let scrollTop = window.scrollY;
+      let imgs = Array.from(document.querySelectorAll('img'));
+      lazyLoad();
+      // 采用了节流函数
+      window.addEventListener('scroll', throttle(lazyLoad, 500, 1000));
+
+      function throttle(fun, delay, time) {
+        let timeout,
+          startTime = new Date();
+        return function () {
+          let context = this,
+            args = arguments,
+            curTime = new Date();
+          clearTimeout(timeout);
+          // 如果达到了规定的触发时间间隔，触发 handler
+          if (curTime - startTime >= time) {
+            fun();
+            startTime = curTime;
+            // 没达到触发间隔，重新设定定时器
+          } else {
+            timeout = setTimeout(fun, delay);
+          }
+        };
+      };
+
+      // 实际想绑定在 scroll 事件上的 handler
+      // 需要访问到imgs ,  scroll 
+      function lazyLoad() {
+        scrollTop = window.scrollY;
+        imgs.forEach((item, index) => {
+          if (scrollTop === 0 && item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop) {
+            item.setAttribute('src', item.dataset.src)
+            item.setAttribute('data-src', '')
+          } else if (item.dataset.src !== '' && item.offsetTop < window.innerHeight + scrollTop && item.offsetTop > scrollTop) {
+            item.setAttribute('src', item.dataset.src)
+            item.setAttribute('data-src', '')
+          }
+        })
+      }
+    }
+  </script>
+</body>
+
+</html>

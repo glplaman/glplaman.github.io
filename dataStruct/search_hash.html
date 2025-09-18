@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>散列表的查找</title>
+  <link rel="stylesheet" href="./css/sort.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <h1>散列表的查找</h1>
+    <h5>Hash Search</h5>
+    <dl>
+      <dt>特点 Features</dt>
+      <dd>. 散列，也称哈希 Hash</dd>
+      <dd>. 不是基于关键字查找；而是<span class="warn">先</span>利用散列函数处理关键字得到数据元素的地址，<span class="warn">再</span>根据地址查找</dd>
+      <dd class="warn">. 大脑是做索引的，不是做存储的</dd>
+      <dd class="txt-center">
+        <span>key </span>
+        <span> → </span>
+        <span> Hash(key) </span>
+        <span> → </span>
+        <span> Location</span>
+      </dd>
+      <dd class="txt-center">
+        <span>关键字空间 </span>
+        <span> → </span>
+        <span> 地址空间</span>
+      </dd>
+      <dt>基本术语 Items</dt>
+      <dd>. 散列地址：数据元素对应的存储地址</dd>
+      <dd>. 散列函数：处理关键字，建立起数据元素和存储地址确定的对应关系</dd>
+      <dd>. 散列表：地址连续的存储空间；通常使用数组表示，散列地址就是散列表数组的下标/索引</dd>
+      <dd>. 冲突/同义词：不同的关键字处理后可能得到同一个散列值</dd>
+      <dt>散列函树 Hash Function</dt>
+      <dd>1. 数字分析法</dd>
+      <dd>2. 平方取中法</dd>
+      <dd>3. 折叠法</dd>
+      <dd>4. 取余%</dd>
+      <dd>...</dd>
+      <dd class="example-sn">已知给定哈希函数Hash(key) =
+        key % 5，求关键字集合{3, 15, 22, 30}对应的哈希表</dd>
+      <dd>
+        <table>
+          <tr>
+            <td class="bgc p15">Hash</td>
+            <td class="p135">0</td>
+            <td class="p135">1</td>
+            <td class="p135">2</td>
+            <td class="p135">3</td>
+          </tr>
+          <tr>
+            <td class="bgc">key</td>
+            <td>15</td>
+            <td class="warn">30</td>
+            <td>22</td>
+            <td>3</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>关键字30的处理</dd>
+      <dd>1. 开发地址法；如果相邻单元 - 1为空，则存入</dd>
+      <dd>2. 链地址法；所有冲突的关键字以链表的形式挂载与当前地址；再根据关键字额外指定的标识进行查找</dd>
+      <dd class="example-sn">已知给定哈希函数Hash(key) =
+        key % 13，求关键字集合{19, 14, 23, 1, 68, 20, 84, 27, 55, 11, 10, 79}对应的哈希表</dd>
+      <dd>
+        <table>
+          <tr>
+            <td class="bgc p15">Hash</td>
+            <td class="p13">0</td>
+            <td class="p13">1</td>
+            <td class="p13">2</td>
+            <td class="p13">3</td>
+            <td class="p13">4</td>
+            <td class="p13">5</td>
+            <td class="p13">6</td>
+            <td class="p13">7</td>
+            <td class="p13">8</td>
+            <td class="p13">9</td>
+            <td class="p13">10</td>
+            <td class="p13">11</td>
+            <td class="p13">12</td>
+          </tr>
+          <tr>
+            <td class="bgc">key</td>
+            <td></td>
+            <td>14</td>
+            <td></td>
+            <td>68</td>
+            <td></td>
+            <td></td>
+            <td>19</td>
+            <td>20</td>
+            <td></td>
+            <td></td>
+            <td>23</td>
+            <td>11</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td>1</td>
+            <td class="border-none"></td>
+            <td>55</td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td>84</td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td>10</td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+          </tr>
+          <tr>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td>27</td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+          </tr>
+          <tr>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td>79</td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+            <td class="border-none"></td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </main>
+</body>
+
+</html>

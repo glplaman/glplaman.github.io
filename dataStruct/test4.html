@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>霍夫曼编码 Huffman Code</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <style>
+    header {
+      justify-content: space-between;
+      background-image: url(./tree/huffman0.jpg);
+    }
+
+    pre {
+      height: auto;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <div class="w cont">
+    <header>
+      <h1>Huffman</h1>
+      <span class="timestamp">2022-11-15</span>
+    </header>
+    <dl>
+      <dt>一、目的 Objective</dt>
+      <dd>1. 掌握霍夫曼树的生成</dd>
+      <dd>2. 掌握霍夫曼编码</dd>
+      <dt>二、内容 Contents</dt>
+      <dd>1. 以表格的形式构造霍夫曼树{2, 3, 6, 7}</dd>
+      <dd>2. 编写程序构造霍夫曼树{2, 3, 6, 7}并根据表格验证程序的正确性</dd>
+      <dd>3. 使用{9, 11, 5, 7, 8, 2, 3}再次完成霍夫曼树的生成和编码</dd>
+      <dd><img src="./tree/huffman1.jpg" alt=""></dd>
+      <dt>三、参考代码 Source</dt>
+      <dd>1. 头文件Huffman.h</dd>
+      <dd>
+        <pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define INIT -1
+typedef struct Node
+{
+    int w;
+    int left;
+    int right;
+    int parent;
+} Node, HTree;
+
+void sel(HTree htree[], int curInd, int *min1, int *min2)
+{
+    int i;
+    *min1 = *min2 = INIT;
+    for (i = 0; i &lt; curInd; i++)
+    {
+        // ignore those nodes with parents
+        if (htree[i].parent != INIT)
+        {
+            continue;
+        }
+        // init min1 and min2
+        if (*min1 == INIT)
+        {
+            *min1 = *min2 = i;
+        }
+        else
+        {
+            if (htree[i].w &lt;= htree[*min1].w)
+            {
+                *min2 = *min1;
+                *min1 = i;
+            }
+            else if (htree[i].w &lt; htree[*min2].w)
+            {
+                *min2 = i;
+            }
+            else if (htree[i].w > htree[*min2].w)
+            {
+                if (*min1 == *min2)
+                {
+                    *min2 = i;
+                }
+            }
+        }
+    }
+}
+
+void display(HTree htree[], int n)
+{
+    int i;
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("i=%d\tw=%d\tparent=%d\tleft=%d\tright=%d\t\n", i, htree[i].w, htree[i].parent, htree[i].left, htree[i].right);
+    }
+}
+
+void createTree(HTree htree[], int w[], int n)
+{
+    int i;
+    for (i = 0; i &lt; 2 * n - 1; i++)
+    {
+        htree[i].parent = INIT;
+        htree[i].left = INIT;
+        htree[i].right = INIT;
+    }
+    for (i = 0; i &lt; n; i++)
+    {
+        htree[i].w = w[i];
+    }
+    // create
+    for (i = n; i &lt; 2 * n - 1; i++)
+    {
+        int min1, min2;
+        sel(htree, i, &min1, &min2);
+        htree[i].w = htree[min1].w + htree[min2].w;
+        htree[i].left = min1;
+        htree[i].right = min2;
+        htree[min1].parent = htree[min2].parent = i;
+    }
+}
+
+void encode(HTree htree[], char *hcode[], int n)
+{
+    int i, start, cur, p;
+    // temp array
+    char temp[n];
+    temp[n - 1] = '\0';
+
+    for (i = 0; i &lt; n; i++)
+    {
+        start = n - 1;
+        cur = i;
+        p = htree[i].parent;
+        while (p != INIT)
+        {
+            start--;
+            if (htree[p].left == cur)
+            {
+                temp[start] = '0';
+            }
+            else
+            {
+                temp[start] = '1';
+            }
+            cur = p;
+            p = htree[p].parent;
+        }
+        // copy the code to hc[i] with size n-start
+        hcode[i] = (char *)malloc(sizeof(char) * (n - start));
+        strcpy(hcode[i], &temp[start]);
+        printf("inside: i=%d\thcode[%d]=%s\n", i, i, hcode[i]);
+    }
+}
+
+void displayCode(char *hcode[], int w[], int n)
+{
+    int i;
+    for (i = 0; i &lt; n; i++)
+    {
+        printf("i=%d\tw[%d]=%d\thcode=%s\n", i, i, w[i], hcode[i]);
+    }
+}</pre>
+      </dd>
+      <dd>2. 主文件Huffman.c</dd>
+      <dd>
+        <pre>
+#include "Huffman.h"
+
+void main(void)
+{
+    int i;
+    int n = 7;
+    // int w[] = {2, 4, 5, 3};
+    int w[] = {9, 11, 5, 7, 8, 2, 3};
+    HTree htree[2 * n - 1];
+    char *hcode[n];
+
+    createTree(htree, w, n);
+    display(htree, 2 * n - 1);
+    encode(htree, hcode, n);
+    displayCode(hcode, w, n);
+}</pre>
+      </dd>
+      <dd>源码来源: <a class="warn"
+          href="https://www.bilibili.com/video/BV1ke411s7Nk/?spm_id_from=333.788&vd_source=fe13480e1099e18e9d5f4e25467df4df"
+          target="_blank">懒猫老师</a></dd>
+      <dd class="txt-center"><img src="./tree/Huffman2.png" alt=""></dd>
+    </dl>
+    <div class="chap">要求 Requirement</div>
+    <dl>
+      <dd>1. 利用 <a class="warn" href="https://www.bccn.net/run/" target="_blank">线上环境</a> 或线下环境，独立完成</dd>
+      <dd>2. 写出实验的具体流程和实验的结果，相应的地方需要截图说明</span></dd>
+      <dd>3. 程序调试运行中出现的错误信息原因分析</dd>
+      <dd>4. 完成 <a class="warn" href="./format.docx" download>实验报告</a> 并提交到 <a class="warn"
+          href="http://passport2.chaoxing.com/login?fid=&newversion=true&refer=http://i.chaoxing.com"
+          target="_blank">学习通</a>；详见作业要求</dd>
+    </dl>
+    <iframe src="../common/hotlinks.html" frameborder="0" scrolling="no"
+      onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
