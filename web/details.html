@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>详情 Details</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .indent summary::marker {
+      content: '+ ';
+    }
+
+    .indent li {
+      display: flex;
+      align-items: center;
+    }
+
+    .indent li::before {
+      content: '';
+      width: 2em;
+      height: 1px;
+      background-color: #bdc3c7;
+    }
+
+    .indent[open] summary::marker {
+      content: '- ';
+    }
+
+    .indent[open] ul {
+      border-left: 1px solid #bdc3c7;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>详情</h1>
+    <span>&commat;&lt;details&gt;</span>
+  </header>
+  <dl>
+    <dd>. &lt;details&gt;详情|细节标签，配合摘要标签 &lt;summary&gt; 一起使用，构建折叠面板</dd>
+    <dd>. 内容可以使用任意标签呈现</dd>
+    <dd>. 内容可以展开或折叠起来；默认情况下，是折叠状态</dd>
+    <dd>. 可以指定属性 open 调整为默认展开状态</dd>
+    <dd>. 可以实现多级导航</dd>
+    <dd>. 更多信息，请访问<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN -
+        &lt;details&gt;</a>、<a href="https://www.w3school.com.cn/cssref/css_entities.asp#google_vignette">CSS实体</a></dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]基本使用</dd>
+    <dd>
+      <details open>
+        <summary>title</summary>
+        <ul>
+          <li>item1</li>
+          <li>item2</li>
+          <li>item3</li>
+          <li>item4</li>
+        </ul>
+      </details>
+    </dd>
+    <dd>
+      <pre>
+&lt;details open&gt;
+  &lt;summary&gt;title&lt;/summary&gt;
+  &lt;ul&gt;
+    &lt;li&gt;item1&lt;/li&gt;
+    &lt;li&gt;item2&lt;/li&gt;
+    &lt;li&gt;item3&lt;/li&gt;
+    &lt;li&gt;item4&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/details&gt;      </pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]定制样式</dd>
+    <dd>. 自定义标记</dd>
+    <dd>. 具备层级、缩进</dd>
+    <dd>
+      <details open class="indent">
+        <summary>title</summary>
+        <ul>
+          <li>item1</li>
+          <li>item2</li>
+          <li>item3</li>
+          <li>item4</li>
+        </ul>
+      </details>
+    </dd>
+    <dd>
+      <pre>
+.indent summary::marker {
+  content: '+ ';
+}
+
+.indent li {
+  display: flex;
+  align-items: center;
+}
+
+.indent li::before {
+  content: '';
+  width: 2em;
+  height: 1px;
+  background-color: #bdc3c7;
+}
+
+.indent[open] summary::marker {
+  content: '- ';
+}
+
+.indent[open] ul {
+  border-left: 1px solid #bdc3c7;
+}      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

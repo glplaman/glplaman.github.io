@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音频 &lt;audio&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+  <style>
+    table tr th:first-child {
+      width: 30%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>音频</h1>
+    <span>&lt;audio&gt;</span>
+  </header>
+  <section>
+    <h3>素材准备</h3>
+    <div><span class="iconfont icon-layer-group"></span> 点击下载素材 <a href="/utils/music/Alizee-LaIslaBonita.mp3"
+        download>Alizee-La Isla Bonita.mp3</a> 或自行准备</div>
+    <h3>简洁 Introduction</h3>
+    <ul>
+      <li>行盒 inline；<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Replaced_element">可替换元素 - replaced
+          element</a>，同 &lt;img&gt;；可以设置大小</li>
+      <li>播放音频文件，如 .mp3、.ogg、.wav</li>
+      <li>默认情况下，只有 src 属性，音频元素不可见，应该通过 JavaScript 访问控制</li>
+      <pre>&lt;audio src=""&gt;&lt;/audio&gt;</pre>
+      <li>指定播放控制属性 controls，则可以可视化控制</li>
+      <pre>&lt;audio src="" controls&gt;&lt;/audio&gt;</pre>
+      <li>可以使用多个 &lt;source&gt; 指定音频，浏览器自动选择并播放最合适的源</li>
+      <li>通用格式 vs 专有格式</li>
+      <pre>
+&lt;audio controls&gt;
+  &lt;source src="myAudio.mp3" type="audio/mpeg" /&gt;
+  &lt;source src="myAudio.ogg" type="audio/ogg" /&gt;
+&lt;/audio&gt;</pre>
+      <li>使用建议1：内嵌 &lt;a&gt; ；如果系统无法识别，触发下载</li>
+      <pre>
+&lt;audio src="AudioTest.ogg" autoplay&gt;
+  &lt;a href="AudioTest.ogg" download="AudioTest.ogg"&gt;Download OGG audio&lt;/a&gt;.
+&lt;/audio&gt;      </pre>
+      <li>使用建议2：使用提示文本；当浏览器不支持此标签时，显示提示内容</li>
+      <pre>
+&lt;audio src="AudioTest.ogg" autoplay&gt;  您的浏览器不支持audio标签 &lt;/audio&gt;      </pre>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio">MDN -
+          &lt;audio&gt;</a>、<a href="https://mp.weixin.qq.com/s/1mMEXKzXHTl2eHJEXi-8PA">HTML5 向网页嵌入视频和音频</a>、<a
+          href="https://css-tricks.com/lets-create-a-custom-audio-player/">custom-audio-player</a>
+      </li>
+    </ul>
+    <h3>标签属性 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#attributes">audio
+        attributes</a></h3>
+    <table>
+      <caption>标签属性 Attribute</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>src</td>
+          <td>音频的URL，推荐使用 MP3 格式</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>自动播放；布尔属性</td>
+        </tr>
+        <tr>
+          <td>controls</td>
+          <td>播放控制条；布尔属性</td>
+        </tr>
+        <tr>
+          <td>loop</td>
+          <td>重复播放；布尔属性</td>
+        </tr>
+        <tr>
+          <td>muted</td>
+          <td>静音播放；布尔属性</td>
+        </tr>
+        <tr>
+          <td>preload</td>
+          <td>预加载；如果使用 autoplay，则忽略该属性</td>
+        </tr>
+        <tr>
+          <td>hidden</td>
+          <td>隐藏；同 display: none;隐藏后，仍然可以使用 JavaScript 控制!!!</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] 自动背景音乐 - 页面加载后自动循环播放，且隐藏</div>
+    <ul>
+      <li>优点：简单直接</li>
+      <li>缺点：用户体验差，参与度低，不方便个性化定制</li>
+      <pre>
+&lt;audio src="./mp3/Alizee-La Isla Bonita.mp3" autoplay loop hidden&gt;您的浏览器不支持audio标签&lt;/audio&gt;</pre>
+    </ul>
+    <div class="tips">
+      <div>第一次打开页面：属于“首次加载”，浏览器允许自动播放</div>
+      <div>刷新页面：不属于首次加载，且没有用户交互，默认阻止自动播放</div>
+    </div>
+  </section>
+  <h2>Javascript</h2>
+  <section>
+    <ul>
+      <li>使用 JavaScript 控制音频对象实例</li>
+      <li>大多属性和HTML标签属性一一对应</li>
+      <li>没有停止方法</li>
+      <li>媒体在加载和使用中的各种事件，用于监听音频的播放</li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#events">audio
+          events</a>、<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement">MDN -
+          HTMLMediaElement</a>
+      </li>
+    </ul>
+    <table>
+      <caption>媒体属性 Properties</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>autoplay</td>
+          <td>设置或返回是否在就绪（加载完成）后随即播放音频</td>
+        </tr>
+        <tr>
+          <td>currentTime</td>
+          <td>设置或返回音频中的当前播放位置；以秒计）</td>
+        </tr>
+        <tr>
+          <td>duration </td>
+          <td>时长</td>
+        </tr>
+        <tr>
+          <td>ended</td>
+          <td>是否已结束</td>
+        </tr>
+        <tr>
+          <td>muted</td>
+          <td>是否关闭声音</td>
+        </tr>
+        <tr>
+          <td>paused</td>
+          <td>是否暂停</td>
+        </tr>
+        <tr>
+          <td>loop</td>
+          <td>是否循环</td>
+        </tr>
+        <tr>
+          <td>played</td>
+          <td>播放状态；返回表示音频已播放部分的 TimeRanges 对象</td>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>设置或返回音频的 src 属性的值</td>
+        </tr>
+        <tr>
+          <td>volume</td>
+          <td>设置或返回音频的音量： 0.0（静音）- 1.0（最大声）</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>媒体方法 methods</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause">pause()</a></td>
+          <td>暂停</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play">play()</a></td>
+          <td>播放</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>媒体事件 Events</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Audio()</td>
+          <td>构造方法；创建一个不可视的音频组件，如播放背景</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/loadstart_event">loadstart</a>
+          </td>
+          <td>浏览器开始加载资源 - browser has started to load a resource</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/progress_event">progress</a>
+          </td>
+          <td>媒体加载资源的过程中，周期性触发 - fired periodically as the browser loads a resource
+            <br>可以应用加载效果
+          </td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/durationchange_event">durationchange</a>
+          </td>
+          <td>时长发生变化触发；加载完毕后，从NaN变为实际的数值 - duration attribute has been updated</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/loadedmetadata_event">loadedmetadata</a>
+          </td>
+          <td>加载元数据：时长、尺寸大小（视频）、文本轨道、标题、艺术家、专辑等等</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/loadeddata_event">loadeddata</a>
+          </td>
+          <td>当前帧的数据加载完毕，下一帧还未就绪</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/canplay_event">canplay</a>
+          </td>
+          <td>媒体就绪，可以播放；需要缓冲</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/canplaythrough_event">canplaythrough</a>
+          </td>
+          <td>媒体就绪，可以正常播放且无需停顿和缓冲</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event">play</a></td>
+          <td>播放；暂停属性由真变为假的时候 - the paused property is changed from true to false
+            <br>同时触发 playing 事件
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/playing_event">playing</a>
+          </td>
+          <td>播放中；媒体属性 play 为真</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause_event">pause</a></td>
+          <td>暂停；媒体属性 pause 为真</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/ended_event">ended</a></td>
+          <td>播放结束
+            <br>先触发暂停 pause 事件
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/seeking_event">seeking</a>
+          </td>
+          <td>循迹中
+            <br>每次循迹过程都包括 seeking、durationchange、seeked、canplay、canplaythrough
+            <br>如果播放中循迹，还会触发 pause
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/seeked_event">seeked</a></td>
+          <td>循迹结束</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/volumechange_event">volumechange</a>
+          </td>
+          <td>改变音量</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <h2>案例 Cases</h2>
+  <section>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/player-bgm.html">背景音乐</a> - 用户可以停止或播放；标签版</div>
+    <ol>
+      <li>Html：显式的指定 hidden</li>
+      <pre>
+&lt;button id="ctrl"&gt;play/pause&lt;/button&gt;
+&lt;audio id="audio" src="Alizee.mp3" hidden&gt;&lt;/audio&gt;</pre>
+      <li>CSS：自行完成 UI 设计；如使用文字或字体图标、使用动画</li>
+      <li>JavaScript：在 &lt;body&gt; 区末尾添加 &lt;script&gt; 并完成 JavaScript 逻辑：获取元素；声明函数；添加事件点击播放或暂停</li>
+      <pre>
+const audio = document.getElementById('audio');
+const ctrlBtn = document.getElementById('ctrl');
+const play = () => {
+  audio.paused ? audio.play() : audio.pause();
+};
+ctrlBtn.addEventListener('click', play)</pre>
+      <li>监听媒体事件</li>
+      <pre>
+audio.addEventListener('loadstart', (e) => {
+    console.log('loadstart');
+})
+audio.addEventListener('progress', (e) => {
+    console.log('progress');
+})
+audio.addEventListener('durationchange', (e) => {
+    console.log('durationchange', audio.duration);
+})
+audio.addEventListener('loadedmetadata', (e) => {
+    console.log('loadedmetadata');
+})
+audio.addEventListener('loadeddata', (e) => {
+    console.log('loadeddata');
+})
+audio.addEventListener('canplay', (e) => {
+    console.log('canplay');
+})
+audio.addEventListener('canplaythrough', (e) => {
+    console.log('canplaythrough');
+})
+audio.addEventListener('timeupdate', (e) => {
+    console.log(audio.currentTime);
+})
+audio.addEventListener('play', (e) => {
+    console.log('play');
+})
+audio.addEventListener('pause', (e) => {
+    console.log('pause');
+})
+audio.addEventListener('waiting', (e) => {
+    console.log('waiting');
+})
+audio.addEventListener('playing', (e) => {
+    console.log('playing');
+})
+audio.addEventListener('ended', (e) => { 
+    console.log('ended');
+})</pre>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 背景音乐 - 用户可以停止或播放；对象版</div>
+    <ul>
+      <li>不使用 &lt;audio&gt; 标签</li>
+      <li>音频由 Audio 类构造函数 new 一个音频对象实例，并指定 src</li>
+      <pre>&lt;button id="ctrl"&gt;play/pause&lt;/button&gt;</pre>
+      <li>逻辑增加如下，其它保留</li>
+      <pre>
+const audio = new Audio();
+audio.src = 'Alizee.mp3'
+audio.pause();</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/player-simple.html">简单播放器</a></div>
+    <ol>
+      <li>使用 &lt;audio&gt; 元素构造函数创建音频对象并指定 src</li>
+      <li>根据设计创建播放列表样式，包括资源说明和控制按钮</li>
+      <li>根据播放状态切换控制按钮为播放按钮或暂停按钮</li>
+      <li>利用js事件控制 &lt;audio&gt; 的播放和暂停</li>
+      <li>根据当前播放时长 currentTime 和总时长 duration，获取播放进度百分比，设置元素的内联变量 --per 属性，并由其伪元素使用，设置相应的百分比进度条</li>
+      <li>利用控制按钮的类名[更改背景图片]判断播放状态，也可以通过定义 bool 变量判断</li>
+      <pre>
+const audio = document.getElementById('audio');
+audio.src = '/music/Alizee-La Isla Bonita.mp3';
+let tag = document.querySelector('.custom-audio');
+let ctrl = document.getElementById('ctrl');
+let cur = document.getElementById('cur');
+let dur = document.getElementById('dur');
+
+audio.addEventListener('durationchange', () => {
+  dur.innerHTML = time(audio.duration);
+})
+
+audio.addEventListener('timeupdate', () => {
+  let secs = audio.currentTime;
+  cur.innerHTML = time(audio.currentTime);
+  let per = (audio.currentTime / audio.duration) * 100 + '%';
+  tag.style.setProperty('--per', per);
+})
+
+ctrl.addEventListener('click', () => {
+  if (ctrl.className == 'play') {
+    audio.play()
+    ctrl.className = 'pause'
+  } else {
+    audio.pause()
+    ctrl.className = 'play'
+  }
+})</pre>
+      <li>获取的时间通常要转化为一定的格式，如 mm:ss，参考代码如下</li>
+      <pre>
+function time(secs) {
+  let min = Math.floor(secs / 60);
+  let sec = Math.floor(secs % 60);
+  let secRes = sec > 9 ? `${sec}` : `0${sec}`;
+  let minRes = min > 9 ? `${min}` : `0${min}`;
+  return `${minRes}:${secRes}`;
+}</pre>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/player_mini.html">MINI音乐播放器</a></div>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/player_html.html">播放器</a> - 无CSS</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 我超链接增加单击音效</div>
+    <ul>
+      <li>音效播放完毕再跳转</li>
+      <pre>
+const audio = new Audio('/utils/sound/click0.mp3')
+document.addEventListener('click', e => {
+  if (e.target.tagName == 'A') {
+    e.preventDefault()
+    audio.play()
+    audio.addEventListener('ended', () => {
+      window.location.href = e.target.href
+    })
+  }
+})</pre>
+    </ul>
+  </section>
+  <h2>总结与作业 Summary & Homework</h2>
+  <section>
+    <h3>总结 Summary</h3>
+    <div>. 音频的使用和定制</div>
+    <div class="tips">
+      <div>谨慎使用背景音乐</div>
+      <div>为了首页加载速度，通常不直接在主页放置音频/视频；而是通过超链接的方式转到单独的页面播放</div>
+      <div>JavaScript 控制时，不允许未经任何交互直接播放：play() failed because the user didn't interact with the document first.</div>
+    </div>
+    <h3>作业 Homework</h3>
+    <ol>
+      <li>分别使用可视化控制和js控制实现背景音乐的播放</li>
+      <li>定制音乐开关按钮</li>
+      <li>定制音乐播放列表</li>
+      <li>扩充并完善到个人网站</li>
+    </ol>
+  </section>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

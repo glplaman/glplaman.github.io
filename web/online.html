@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=No">
+  <title>CSS 3D - Transform</title>
+  <link rel="stylesheet" href="../css/online.css">
+  <link rel="stylesheet" href="../css/font_3468246_tjd5qsvz30r/iconfont.css">
+  <style>
+    body {
+      background-color: #eb2c58;
+    }
+
+    .color-box {
+      position: fixed;
+      top: 1rem;
+      right: 2rem;
+      display: flex;
+    }
+
+    .color {
+      width: 32px;
+      height: 18px;
+      border: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .red {
+      background-color: #eb2c58;
+    }
+
+    .blue {
+      background-color: #0c2461;
+    }
+
+    .gal {
+      color: #eb2c58;
+    }
+
+    .case0-img,
+    .case1-img {
+      background-color: #fff;
+    }
+
+    .banner {
+      background-color: #eb2c58;
+      background-image: url(../imgs/banner.jpg);
+      /* background-blend-mode: multiply; */
+      background-position: center;
+    }
+
+    .ack svg {
+      filter: drop-shadow(0 0 2rem #fff);
+    }
+
+    .svg-header {
+      width: 416px;
+    }
+
+    .svg-footer {
+      width: 320px;
+    }
+
+    .unit-box {
+      width: 80%;
+      height: 90%;
+      margin: auto;
+    }
+
+    .infor-box {
+      width: 100%;
+      height: 80%;
+      position: relative;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 1rem;
+      background-color: #f0f;
+      overflow: hidden;
+    }
+
+    .infos {
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+
+    .infor-box .infor-title {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .infor-box .infor-cont {
+      text-indent: 2em;
+      text-align: justify;
+      font-size: 1rem;
+      margin: 1rem;
+    }
+
+    .infor-box .infor-footer {
+      font-size: .8rem;
+    }
+
+    .logo-box {
+      width: 80%;
+      height: 70px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      place-items: center;
+      margin-top: 2rem;
+    }
+
+    .info-img {
+      width: 50px;
+      height: 50px;
+      padding: 6px;
+      border-radius: 50%;
+      transition: .5s;
+      cursor: pointer;
+    }
+
+    .active-cont {
+      display: block;
+      animation: show .5s ease-in forwards;
+    }
+
+    .active-img {
+      width: 70px;
+      height: 70px;
+      border: 3px solid #fff;
+    }
+
+    @keyframes show {
+      0% {
+        opacity: 0.4;
+        margin-top: 10%;
+      }
+
+      100% {
+        opacity: 1;
+        margin-top: 0%;
+      }
+    }
+
+    @media screen and (max-width:768px) {
+
+      .color-box {
+        right: 1rem;
+      }
+
+      .svg-header {
+        width: 312px;
+      }
+
+      .svg-footer {
+        width: 234px;
+      }
+
+      svg .title {
+        font-size: 2.5rem;
+      }
+
+      .qrcode {
+        width: 160px;
+        height: 160px;
+      }
+
+      .unit-box {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="color-box">
+      <div class="color red" data-color="#eb2c58"></div>
+      <div class="color blue" data-color="#0c2461"></div>
+    </div>
+    <ul>
+      <li class="banner">
+        <img class="logo shadow" src="../imgs/ty.png" alt="">
+        <svg class="svg-header" height="80"><text class="title banner-title" x="0" y="60">陆军特种作战学院</text></svg>
+        <span>2022-07-08</span>
+      </li>
+      <li class="introduction">
+        <div class="info-box">
+          <img class="img" src="../imgs/avatar_self.jpg" alt="">
+          <!-- info:height -->
+          <div class="info">
+            <div class="info-nav">
+              <!-- nav-active -->
+              <div class="info-nav-item big nav-active" data-rel="info-cont-basic">基本情况</div>
+              <div class="info-nav-item big" data-rel="info-cont-stu">教育背景</div>
+              <div class="info-nav-item big" data-rel="info-cont-work">工作经历</div>
+              <div class="info-nav-ind"></div>
+            </div>
+            <!-- info-cont-active -->
+            <div class="info-cont info-cont-basic info-cont-active">
+              <div class="info-item">
+                <div>姓名 <span class="sub-title">Name</span></div>
+                <div>张树彬</div>
+              </div>
+              <div class="info-item">
+                <div>出生日期 <span class="sub-title">Birthday</span></div>
+                <div>197x-08-xx</div>
+              </div>
+              <div class="info-item">
+                <div>专业 <span class="sub-title">Major</span></div>
+                <div>通信与信息系统</div>
+              </div>
+              <div class="info-item">
+                <div>求职意向 <span class="sub-title">Intention</span></div>
+                <div>软件工程</div>
+              </div>
+            </div>
+            <div class="info-cont info-cont-stu">
+              <div class="info-item">
+                <div>1995.08-1999.06</div>
+                <div>桂林电子科技大学</div>
+              </div>
+              <div class="info-item">
+                <div>2005.08-2008.03</div>
+                <div>上海交通大学</div>
+              </div>
+            </div>
+            <div class="info-cont info-cont-work">
+              <div class="info-item">
+                <div>1999.07-2004.12</div>
+                <div>广州军区通信训练大队</div>
+              </div>
+              <div class="info-item">
+                <div>2005.01-2017.7</div>
+                <div>广州军区综合训练基地</div>
+              </div>
+              <div class="info-item">
+                <div>2017.08-2018.12</div>
+                <div>陆军特种作战学院</div>
+              </div>
+              <div class="info-item">
+                <div>2020.07-2022.01</div>
+                <div>桂林学院</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="units">
+        <div class="unit-box">
+          <div class="infor-box">
+            <div class="infos active-cont">
+              <div class="infor-title">just do it</div>
+              <div class="infor-cont">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+                praesentium sequi voluptatem debitis in ratione fugit, veniam eligendi ipsum fuga
+                consequatur temporibus ipsam. Velit qui alias molestiae delectus eaque unde dolorum
+                veniam iure laborum amet numquam hic nemo cum magni error rerum maxime animi assumenda,
+                nostrum corrupti! Saepe, sit ipsa.</div>
+              <div class="infor-footer">2022-07-15</div>
+            </div>
+            <div class="infos">
+              <div class="infor-title">never give up</div>
+              <div class="infor-cont">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum
+                praesentium sequi voluptatem debitis in ratione fugit, veniam eligendi ipsum fuga
+                consequatur temporibus ipsam. Velit qui alias molestiae delectus eaque unde dolorum
+                veniam iure laborum amet numquam hic nemo cum magni error rerum maxime animi assumenda,
+                nostrum corrupti! Saepe, sit ipsa.</div>
+              <div class="infor-footer">2022-03-01</div>
+            </div>
+            <div class="infos">
+              <div class="infor-title">javascript</div>
+              <div class="infor-cont">
+                <pre>
+
+let unitCont = document.querySelectorAll('.infos')
+let unitImg = document.querySelectorAll('.info-img')
+unitImg.forEach(item => {
+    item.addEventListener('click', (e) => {
+        let ind = Array.from(unitImg).indexOf(e.target)
+        unitImg.forEach(item => {
+            item.classList.remove('active-img')
+        })
+        unitCont.forEach(item => {
+            item.classList.remove('active-cont')
+        })
+        unitImg[ind].classList.add('active-img')
+        unitCont[ind].classList.add('active-cont')
+    })
+})</pre>
+              </div>
+              <div class="infor-footer">2020-07-02</div>
+            </div>
+            <div class="infos">
+              <div class="infor-title">文字容器</div>
+              <div class="infor-cont">
+                <p>.指定溢出隐藏：避免文字上移时出现在容器外部。</p>
+                <p>.指定文字容器桌面端和移动端的不同高度。</p>
+              </div>
+              <div class="infor-title">图片容器</div>
+              <div class="infor-cont">
+                <p>.要显式指定高度为图片缩放的最大高度，避免图片缩放时引起垂直方向上的挤压。</p>
+                <p>.采用grid而不采用flex：避免图片缩放时，引起水平方向上的图片挤压。</p>
+              </div>
+              <div class="infor-footer">1999-07-01</div>
+            </div>
+          </div>
+          <div class="logo-box">
+            <img src="../imgs/gs/logo.jpg" class="info-img active-img" alt="">
+            <img src="../imgs/xit.png" class="info-img" alt="">
+            <img src="../imgs/glc.png" class="info-img" alt="">
+            <img src="../imgs/ty.png" class="info-img" alt="">
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="big">精彩内容，扫码开启</div>
+        <img class="qrcode" src="../imgs/qrcode.png" alt="">
+        <div style="text-align: center;">更多信息，请访问https://glpla.github.io/</div>
+      </li>
+      <li>
+        <div class="cube-box">
+          <div class="cube">
+            <div class="front"></div>
+            <div class="back"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="top"></div>
+            <div class="bottom"></div>
+          </div>
+        </div>
+        <div class="big mt4">CSS 3D</div>
+      </li>
+      <li>
+        <span class="iconfont icon-target mb4"></span>
+        <div>了解CSS 3D实现的基本原理</div>
+        <div>掌握CSS 3D实现的方法</div>
+      </li>
+      <li>
+        <span class="iconfont icon-file mb4"></span>
+        <div>CSS 3D实现的基本原理</div>
+        <div>CSS 3D实现的方法</div>
+      </li>
+      <li class="time">
+        <span class="iconfont icon-alarm-clock mb4"></span>
+        <div class="pie shadow"></div>
+        <div class="pie-info mt4">
+          <div class="pie1">理论5分钟</div>
+          <div class="pie2">示范10分钟</div>
+          <div class="pie3">实操30分钟</div>
+        </div>
+      </li>
+      <li class="req">
+        <span class="iconfont icon-alarm mb4"></span>
+        <div>[听]•[记]•[看]•[思]•[练]</div>
+      </li>
+      <li class="d2">
+        <span class="big mb4">CSS 2D</span>
+        <div class="person-box">
+          <div class="person shadow">
+            <div class="iconfont icon-shouyetianchong per-b"></div>
+            <div class="per-s">桂林•广西•中国</div>
+          </div>
+          <div class="person shadow">
+            <div class="iconfont icon-yonghutianchong per-b"></div>
+            <div class="per-s">张树彬•哥哥</div>
+          </div>
+          <div class="person shadow">
+            <div class="iconfont icon-shoujitianchong per-b"></div>
+            <div class="per-s">137xxxx5481</div>
+          </div>
+        </div>
+        <div class="mt4 d2-arr">
+          <span>•[移动translate]•</span>
+          <span>•[缩放scale]•</span>
+          <span>•[旋转rotate]•</span>
+          <span>•[倾斜skew]•</span>
+        </div>
+      </li>
+      <li class="case">
+        <div class="big mb8">[3D案例]-1</div>
+        <div class="card-box">
+          <div class="card">
+            <div class="card-f case0-img"><img src="../imgs/ty.png" alt=""></div>
+            <div class="card-b">忠诚<br>奉献</div>
+          </div>
+        </div>
+      </li>
+      <li class="case">
+        <div class="big mb8">[3D案例]-2</div>
+        <div class="gal-box">
+          <div class="gal">
+            <div class="gal-item" style="--deg:0">欢</div>
+            <div class="gal-item" style="--deg:1">迎</div>
+            <div class="gal-item" style="--deg:2">您</div>
+            <div class="gal-item" style="--deg:3">陆</div>
+            <div class="gal-item" style="--deg:4">军</div>
+            <div class="gal-item" style="--deg:5">特</div>
+            <div class="gal-item" style="--deg:6">种</div>
+            <div class="gal-item" style="--deg:7">作</div>
+            <div class="gal-item" style="--deg:8">战</div>
+            <div class="gal-item" style="--deg:9">学</div>
+            <div class="gal-item" style="--deg:10">院</div>
+            <div class="gal-item case1-img" style="--deg:11"><img src="../imgs/ty.png" alt=""></div>
+          </div>
+        </div>
+      </li>
+      <li class="case">
+        <div class="big mb8">[3D案例]-3</div>
+        <div class="cube3d-box">
+          <div class="cube3d">
+            <div class="item-b front3d-b"></div>
+            <div class="item-b back3d-b"></div>
+            <div class="item-b left3d-b"></div>
+            <div class="item-b right3d-b"></div>
+            <div class="item-b top3d-b"></div>
+            <div class="item-b bottom3d-b"></div>
+            <div class="item-s front3d-s"></div>
+            <div class="item-s back3d-s"></div>
+            <div class="item-s left3d-s"></div>
+            <div class="item-s right3d-s"></div>
+            <div class="item-s top3d-s"></div>
+            <div class="item-s bottom3d-s"></div>
+          </div>
+        </div>
+      </li>
+      <li class="3d">
+        <div class="big mb4">CSS 3D应用</div>
+        <div>
+          <div class="step">• 个人网站</div>
+          <div class="step">• 商务网站</div>
+          <div class="step">• 产品推介</div>
+          <div class="step">• 房地产营销</div>
+          <div class="step">• 游戏开发</div>
+        </div>
+      </li>
+      <li>
+        <div class="big mb4">关键点 keypoint</div>
+        <div class="quote">
+          <div class="step">
+            <div>1. 指定景深[构造天空盒]</div>
+            <div>perspective: 1000px;</div>
+          </div>
+          <div class="step">
+            <div>2. 指定3D变换</div>
+            <div>transform-style: preserve-3d;</div>
+          </div>
+          <div class="step">
+            <div>3. 综合运用transform属性</div>
+            <div>translate、rotate、scale、skew;</div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont icon-messages-people-person-bubble-oval"></span> 项目分析 R&D
+          </div>
+          <div>
+            <div class="step">1. 天空盒子放置卡片[sky-box]</div>
+            <div class="step">2. 卡片的两面：普通元素？伪元素？</div>
+            <div class="step">3. 叠放卡片的两面：绝对定位？相对定位？</div>
+            <div class="step">4. 隐藏卡片某一面？</div>
+            <div class="step">5. 触发卡片翻转：天空盒？卡片？</div>
+            <div class="step">6. 翻转卡片：过渡动画？帧动画？</div>
+          </div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li>
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont icon-mouse"></span> 项目开发步骤 Step</div>
+          <div class="step">1. 创建并初始化h5项目；</div>
+          <div class="step">2. 创建HTML架构；</div>
+          <div class="step">3. 创建对应的CSS，应用3D属性；</div>
+          <div class="step">4. 调试项目至完成；</div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li class="html">
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont">&lt;HTML&gt;</span> 参考源码</div>
+          <div class="code">
+            <pre>
+&lt;div class="card-box"&gt;
+    &lt;div class="card"&gt;
+        &lt;div class="card-f"&gt;&lt;/div&gt;
+        &lt;div class="card-b"&gt;忠诚•奉献•&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                        </pre>
+          </div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li>
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont">&lt;CSS&gt;</span> 参考源码 1/3</div>
+          <div class="code">
+            <pre>
+.card-box {
+    width: 180px;
+    height: 240px;
+    perspective: 1000px;
+}
+
+.card-box:hover .card {
+    transform: rotateY(180deg);
+}    
+                        </pre>
+          </div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li>
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont">&lt;CSS&gt;</span> 参考源码 2/3</div>
+          <div class="code">
+            <pre>
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: 1s;
+}    
+                        </pre>
+          </div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li>
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont">&lt;CSS&gt;</span> 参考源码 3/3</div>
+          <div class="code">
+            <pre>
+.card-f, .card-b {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-b {
+    transform: rotateY(180deg);
+}
+                        </pre>
+          </div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li class="qa">
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont icon-warning"></span> 常见问题</div>
+          <div>
+            <div class="step">1. 溢出隐藏 overflow</div>
+            <div class="step">2. 定位 position</div>
+            <div class="step">3. 选择器 selector</div>
+          </div>
+        </div>
+        <small>- 3D案例1：卡片翻转 -</small>
+      </li>
+      <li class="summary">
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont icon-folder-6"></span>课程小结</div>
+          <div>
+            <div class="step">1. 景深perspective的使用；</div>
+            <div class="step">2. transform的rotate属性；</div>
+            <div class="step">3. 相对定位和绝对定位的使用[父相子绝]；</div>
+            <div class="step">4. 后代选择器、并列选择器、伪类选择器；</div>
+            <div class="step">5. 过渡动画transition；</div>
+          </div>
+        </div>
+      </li>
+      <li class="homework">
+        <div class="pro">
+          <div class="big mb4"><span class="iconfont icon-keyboard"></span>课后作业</div>
+          <div>
+            <div class="step">1. 独立完成3D案例1；</div>
+            <div class="step">2. 尝试实现3D案例2和3D案例3；</div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="ack">
+          <svg class="svg-footer" height="80"><text class="title" x="5" y="60">敬请批评指正</text></svg>
+        </div>
+        <small>Thanks For Your Time</small>
+      </li>
+    </ul>
+  </div>
+  <script>
+    window.onload = function () {
+      // color
+      let colors = document.querySelectorAll('.color')
+      let banner = document.querySelector('.banner')
+      let gal = document.querySelector('.gal')
+      colors.forEach(color => {
+        color.addEventListener('click', (e) => {
+          console.log(e.target.dataset);
+          document.body.style.backgroundColor = e.target.dataset.color
+          banner.style.backgroundColor = e.target.dataset.color
+          gal.style.color = e.target.dataset.color
+        })
+      })
+      // nav
+      let navItems = document.querySelectorAll('.info-nav-item')
+      let ind = document.querySelector('.info-nav-ind')
+      function moveInd(tar) {
+        navItems.forEach(item => {
+          item.classList.remove('nav-active')
+          item.style = ''
+        })
+        tar.classList.add('nav-active')
+        ind.style.width = `${tar.offsetWidth}px`
+        ind.style.left = `${tar.offsetLeft}px`
+
+        let curCont = document.querySelector('.info-cont-active')
+        curCont.classList.remove('info-cont-active')
+
+        let newCont = document.querySelector(`.${tar.getAttribute('data-rel')}`)
+        newCont.classList.add('info-cont-active')
+      }
+
+      navItems.forEach(item => {
+        item.addEventListener('click', e => moveInd(e.target))
+        item.classList.contains('nav-active') && moveInd(item)
+      })
+      // units
+      let unitCont = document.querySelectorAll('.infos')
+      let unitImg = document.querySelectorAll('.info-img')
+      unitImg.forEach(item => {
+        item.addEventListener('click', (e) => {
+          let ind = Array.from(unitImg).indexOf(e.target)
+          unitImg.forEach(item => {
+            item.classList.remove('active-img')
+          })
+          unitCont.forEach(item => {
+            item.classList.remove('active-cont')
+          })
+          unitImg[ind].classList.add('active-img')
+          unitCont[ind].classList.add('active-cont')
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

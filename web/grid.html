@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网格 Grid</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/grid.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>网格</h1>
+    <span>&commat;Grid</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" class="nav-item">容器 Container</a>
+      <a href="" class="nav-item">子项 Item</a>
+      <a href="" class="nav-item">布局 Layout</a>
+      <a href="" class="nav-item">案例 Cases</a>
+      <a href="" class="nav-item">对齐 Align</a>
+    </nav>
+  </header>
+  <dl>
+    <dd class="tips">If it looks like a grid, then use CSS Grid.</dd>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>.更灵活：支持二维布局：对列和行进行布局</div>
+      <div>.类似早期的 table 布局；table 本来是做数据展示的，所以在布局上有明显的缺陷：非语义化、布局代码冗余，以及不好维护、渲染性能等问题，目前 table 布局已被抛弃</div>
+      <div>.更多网格布局实现，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid">MDN - grid</a>、<a
+          href="https://mp.weixin.qq.com/s/3cxv1y14OLcPJjEN4f_OiA">如何用一行 CSS 实现 10 种现代布局</a>、<a
+          href="./framework/isotope.html">Isotope</a>、<a href="https://getbootstrap.com/">Bootstrap</a></div>
+    </dd>
+    <dt>概念 Concept</dt>
+    <dd>
+      <div class="sn">
+        <div>容器 container</div>
+        <div>子项 item</div>
+        <div>单元格 cell</div>
+        <div>轨道 track</div>
+      </div>
+      <pre>
+&lt;div class="wrapper"&gt;
+    &lt;div&gt;Item One&lt;/div&gt;
+    &lt;div&gt;Item Two&lt;/div&gt;
+    &lt;div&gt;Item Three&lt;/div&gt;
+    &lt;div&gt;Item Four&lt;/div&gt;
+    &lt;div&gt;Item Five&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>.通过声明 grid 使得 .wrapper 成为一个 container；容器的直接后代|子元素 &lt;div&gt; 则变为 item</div>
+      <pre>
+.wrapper {
+    display: grid;
+}</pre>
+      <div>.通过划分列数 grid-template-columns 和行数 grid-template-rows，将容器 container 划分为一个一个格子
+        cell</div>
+      <div>.子项 item 就被放置这些格子中。每个格子被轨道 track 标记，行 row 从上到下为1，2，...；列 column 从左到右为1，2，...</div>
+      <img src="./imgs/grid15.png" alt="" loading="lazy">
+      <div class="fig-sn">网格轨道</div>
+      <div class="tips">
+        <div>F12查看</div>
+        <div>颜色随机</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">容器 Container</div>
+  <dl class="nav-cont">
+    <dd>.如何划分行列？</dd>
+    <dd>.如何填充子项？</dd>
+    <dt>grid-template-columns</dt>
+    <dd class="sn">
+      <p>.容器列的划分；单位可以是绝对的或相对的；可以<span class="warn">混合使用</span></p>
+      <pre>grid-template-columns: px | % | fr | auto | repeat() | minmax() | max-content | min-content;</pre>
+      <div>px：静态划分</div>
+      <pre>grid-template-columns: 100px 200px 300px;</pre>
+      <div>%：根据容器大小划分</div>
+      <pre>grid-template-columns: 10% 70% 20%;</pre>
+      <div>fr：根据份数划分；fraction，表示份数；容器整体被分隔成多少份，子项占的份数</div>
+      <pre>grid-template-columns: 1fr 2rem 1fr;</pre>
+      <pre>grid-template-columns: 1fr 2fr 1fr;</pre>
+      <div>auto：根据子项实际大小，占用空间，其它空间由划分的大小决定</div>
+      <pre>grid-template-columns: auto 1fr auto;</pre>
+      <pre>grid-template-columns: 1fr auto 1fr;</pre>
+      <pre>grid-template-columns: 2rem auto 1fr;</pre>
+      <div>repeat(n, length length)：根据指定大小 length，重复应用 n 次；可以指定多个 length</div>
+      <pre>grid-template-columns: repeat(3, 1fr);</pre>
+      <pre>grid-template-columns: repeat(12, 1fr);</pre>
+      <pre>grid-template-columns: repeat(3, 100px 200px);</pre>
+      <p>.如果想 <span class="warn">自适应</span> 划分，可以使用：auto-fill、auto-fit；其中，<a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax">minmax()</a>：格子最小和最大尺寸</p>
+      <p>.auto-fill：当容器有 <span class="warn">剩余闲置空间</span>，生成 <span class="warn">空轨道</span>；尽可能多地填充列，即使这些列是空的</p>
+      <pre>grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));</pre>
+      <img src="./imgs/grid16.png" alt="" loading="lazy">
+      <p class="fig-sn">auto-fill</p>
+      <p>.auto-fit：<span class="warn">不会生成</span> 轨道，剩余空间被分配到各个子项中；根据实际内容调整列的数量和宽度，收缩多余的列</p>
+      <pre>grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));</pre>
+      <img src="./imgs/grid17.png" alt="" loading="lazy">
+      <p class="fig-sn">auto-fit</p>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/max-content">max-content</a></div>
+      <p>.列宽由最大宽度子项绝对 - maximal content contribution will be defined by the size of the largest sentence</p>
+      <p>.让列尽可能宽以适应最长的内容，保证内容不会被截断</p>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/min-content">min-content</a></div>
+      <p>.列宽由子项中的某个最大单词宽度决定 - minimal content contribution will be defined by the size of the largest word</p>
+      <p>.让列尽可能窄，仅适应最窄的内容，可能导致较多剩余空间；紧凑的列布局</p>
+    </dd>
+    <dt>grid-template-rows</dt>
+    <dd>
+      <div>.容器行的划分；含义同容器列的划分</div>
+      <div>.通常不需要单独指定，由内容撑开，按照子项</div>
+      <pre>grid-template-rows: px | % | fr | auto | repeat() | minmax();</pre>
+    </dd>
+    <dt>grid-template</dt>
+    <dd>.复合属性；同时设置列 grid-template-column、行 grid-template-rows，多见于页面整体布局，见后续案例</dd>
+    <dt>grid-auto-rows、grid-auto-columns</dt>
+    <dd>
+      <div>.轨道 track 的高度宽度，而不是子项的高度宽度</div>
+      <div>.当容器中没有明确指定行列大小时，由子项的尺寸决定容器的行高或列宽 - 隐式的指定行的高度|列的宽度</div>
+      <pre>grid-auto-rows: &lt;length&gt; | &lt;percentage&gt; | min-content | max-content | auto;</pre>
+      <pre>grid-auto-columns: &lt;length&gt; | &lt;percentage&gt; | min-content | max-content | auto;</pre>
+      <div>.指定大小后，默认情况下，子项会撑满，即：</div>
+      <pre>align-items: strench;</pre>
+      <div>.如果指定了其它属性，如 center，则根据子项高度，在轨道垂直方向上居中</div>
+      <pre>align-items: center;</pre>
+    </dd>
+    <dt>grid-auto-flow</dt>
+    <dd>
+      <div>.子项自动放置的顺序和方式 - 指定 <span class="warn">工作流</span> 的方向</div>
+      <pre>grid-auto-flow: row | column | dense | row dense | column dense;</pre>
+      <div>.默认是按行 row 的顺序填充|行优先；逐行填充来排列，在必要时增加新行</div>
+      <div>.dense 表示密集填充还是宽松填充</div>
+      <div>.特别适合处理 <span class="warn">动态内容</span>，如数量或大小不一或未明确指定位置的网格项，如 <a href="./masonry.html">瀑布流 - Grid</a></div>
+      <div>.通常是 <span class="warn">划分好格子</span> 后再指定方向；如容器划分3行3列，10个子项的排列方式</div>
+      <img src="./imgs/grid0.png" alt="" loading="lazy">
+      <p class="fig-sn">默认 row 排列 - 划分列的行优先</p>
+      <img src="./imgs/grid5.png" alt="" loading="lazy">
+      <p class="fig-sn">column 排列 - 划分行的列优先</p>
+      <img src="./imgs/grid1.png" alt="" loading="lazy">
+      <p class="fig-sn">column 排列 - 未划分行的列优先</p>
+    </dd>
+    <dt>grid-template-areas</dt>
+    <dd>
+      <div>.按区域划分容器</div>
+      <div>.每个子项指定对应的区域 grid-area</div>
+      <div>.需配合 grid-template-columns 和 grid-template-rows 指定各区域大小，便于调整宽度和合并</div>
+      <div>.也可以由子项的跨行、跨列实现。见后续案例</div>
+    </dd>
+    <dt>justify-items、align-items、place-items</dt>
+    <dd>
+      <div>.子项在单元格的对齐：上中下</div>
+      <div>.默认水平垂直拉伸填满整个格子；对齐时，将使用子项的实际大小</div>
+      <div>.复合属性，同时指定 justify-items 和 align-items</div>
+      <img src="./imgs/grid0.png" alt="" loading="lazy">
+      <p class="fig-sn">默认拉伸填充</p>
+      <img src="./imgs/grid6.png" alt="" loading="lazy">
+      <p class="fig-sn">水平居中</p>
+      <img src="./imgs/grid7.png" alt="" loading="lazy">
+      <p class="fig-sn">垂直居中</p>
+    </dd>
+    <dt>justify-content、align-content、place-content</dt>
+    <dd>
+      <div>.格子如果 <span class="warn">没有占满</span> 容器，有剩余空间，还需要考虑子项在容器内的分布</div>
+      <div>.复合属性，同时指定 justify-content 和 align-content</div>
+      <div>.常用属性有：normal | start | end | flex-start | flex-end | center | space-between | space-around | space-evenly |
+        stretch</div>
+      <img src="./imgs/grid8.png" alt="" loading="lazy">
+      <p class="fig-sn">默认开始 normal/start/flex-start</p>
+      <img src="./imgs/grid9.png" alt="" loading="lazy">
+      <p class="fig-sn">水平居中 center</p>
+      <img src="./imgs/grid10.png" alt="" loading="lazy">
+      <p class="fig-sn">水平结束 end/flex-end</p>
+    </dd>
+    <dd class="tips">
+      <div>items 和 content 互相对应；有对子项的操作，就有对网格区内容的操作</div>
+      <div>行 rows 和列 columns 对应；有行方向的控制，一定有对应的列方向的控制</div>
+      <div>justify-items 和 align-items 控制的是每个子项在其所在单元格内的对齐方式</div>
+      <div>justify-content 和 align-content 控制的是整个容器内子项的整体对齐方式</div>
+      <div>如果容器不指定高度、不指定行的划分，由子项撑开/占满，则很多容器属性都可以不考虑</div>
+    </dd>
+    <dt>gap</dt>
+    <dd>
+      <div>.单元格间距；非常好用</div>
+      <div>.row-gap：行间距</div>
+      <div>.column-gap：列间距</div>
+      <div>.容器大小包含了 gap 的尺寸</div>
+    </dd>
+  </dl>
+  <div class="chap">子项 Item</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>子项如果不显示的指定尺寸，默认 <span class="warn">自动拉伸</span> 占满整个单元格</div>
+      <div>子项的排列是一个一个，根据所占的空间进行排列</div>
+      <div>子项如果跨行或跨列，尽量明确指定行、列位置时，否则它会自动放置在下一个可用的单元格中，有可能跑到前面</div>
+      <div>使用 -1 表示结束行/列号</div>
+    </dd>
+    <dt>grid-column: span number (建议)
+      <br>grid-column: start/end
+      <br>grid-column-start、grid-column-end
+    </dt>
+    <dd>
+      <div>.跨列；列的起始和结束 - specifies a grid item's size and location within a grid column by contributing a line, a span
+      </div>
+      <div>.也可以根据轨道线简写为1/4，表示单元格跨度从 track 1到 track 4 - separated by /</div>
+    </dd>
+    <dt>grid-row: span number (建议)
+      <br>grid-row: start/end
+      <br>grid-row-start、grid-row-end
+    </dt>
+    <dd>
+      <div>.跨行；行的起始和结束</div>
+      <div>.同样可以利用轨道线简写</div>
+    </dd>
+    <dd class="tips">
+      <div>Grid 布局引擎会尝试将这些子项放置在下一个可用的网格单元格；如果当前行没有足够的空间，子项将被放置在下一行的第一个可用单元格中</div>
+      <div>建议使用 grid-column/grid-row: span number 明确实现跨行跨列；避免漂移</div>
+      <div>尽量指定容器大小</div>
+      <div>尽量指定行划分</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 跨行/跨列；完整实现请参考后续九宫格案例</dd>
+    <dd class="sn">
+      <div>九宫格</div>
+      <img src="./imgs/grid2.png" alt="" loading="lazy">
+      <div>原始结构 - 5个子项</div>
+      <img src="./imgs/grid3.png" alt="" loading="lazy">
+      <div>第1个子项跨列</div>
+      <img src="./imgs/grid4.png" alt="" loading="lazy">
+      <pre>
+.box div:nth-child(1) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}</pre>
+      <pre>
+.box div:nth-child(1) {
+    grid-column: 1/3;
+}</pre>
+      <pre>
+.box div:nth-child(1) {
+    grid-column: span 2;
+}</pre>
+      <div>第2个子项跨行 - 漂移</div>
+      <img src="./imgs/grid11.png" alt="" loading="lazy">
+      <pre>
+.box div:nth-child(2) {
+    grid-row: 1/3;
+}</pre>
+      <div>应该同时指定列位置或扩展行</div>
+      <img src="./imgs/grid12.png" alt="" loading="lazy">
+      <pre>
+.box div:nth-child(2) {
+    grid-row: 1/3;
+    grid-column: 3/4;
+}</pre>
+      <pre>
+.box div:nth-child(2) {
+    grid-row: span 2;
+}</pre>
+    </dd>
+    <dt>grid-area</dt>
+    <dd>
+      <div>.通常配合 grid-template-areas 一起使用，指定划分的某一个区域</div>
+      <pre>grid-area: area-name;</pre>
+      <div>.也可以使用轨道指定；可以不使用定位就轻松将某些 cell 堆叠到一起；可以使用 z-index 调整前后顺序</div>
+      <pre>grid-area: row-start / col-start / row-end / col-end;</pre>
+    </dd>
+    <dt>justify-self、align-self、place-self</dt>
+    <dd>.设置自己的水平|垂直对齐方式</dd>
+    <dd>.place-self 复合属性；同时设置 justify-self 和 align-self</dd>
+  </dl>
+  <div class="chap">布局 Layout</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>.布局元素只做布局的事情；元素内部的样式由元素完成</dd>
+    <dd>.通常不显式指定容器高度，而由子项撑开</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 两列布局/左右布局</dd>
+    <dd>
+      <pre>
+.aside {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1rem;
+}</pre>
+      <div>.配合 minmax() 函数动态调整侧边栏宽度</div>
+      <pre>
+.aside {
+    display: grid;
+    grid-template-columns: minmax(150px, 25%) 1fr;
+    gap: 1rem;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 三列布局/圣杯布局/双飞燕布局</dd>
+    <dd>
+      <pre>
+.cup {
+    display: grid;
+    grid-template-columns: 8rem 1fr 4rem;
+    gap: 1rem;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 等分/不等分布局</dd>
+    <dd>
+      <pre>
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+}</pre>
+      <pre>
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 1rem;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 栈布局/煎饼布局</dd>
+    <dd>
+      <div>.不划分列而划分行</div>
+      <div>.需要指定容器高度</div>
+      <img src="./imgs/grid20.png" alt="" loading="lazy">
+      <pre>
+.grid {
+  width: 300px;
+  height: 200px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 全站布局；更多案例请访问 <a href="./demo/site.html">全站布局</a></dd>
+    <dd>
+      <div>.可以采用划分区域实现</div>
+      <div>.也可以使用跨列实现</div>
+      <div>.如果指定子项高度，当子项的内容超过子项大小时，默认情况仍然会撑开，并不能直接出现滚动条；解决的方案是为容器和子项都设置自动溢出</div>
+      <img src="./imgs/grid21.png" alt="" loading="lazy">
+      <pre>
+  .page {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-areas:
+          'header header header'
+          'nav nav nav'
+          'aside article article'
+          'footer footer footer';
+      min-height: 100vh;
+      gap: 1rem;
+  }
+
+  header {
+      grid-area: header;
+  }
+
+  nav {
+      grid-area: nav;
+  }
+
+  aside {
+      grid-area: aside;
+  }
+
+  article {
+      grid-area: article;
+  }
+
+  footer {
+      grid-area: footer;
+  }</pre>
+    </dd>
+  </dl>
+  <div class="chap">案例 Cases</div>
+  <dl class="nav-cont">
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/grid-sudoku.html">九宫格</a>、<a
+        href="./demo/up2u.html">个人网站 - 相册</a></dd>
+    <dd>
+      <img src="./imgs/grid19.png" alt="" loading="lazy">
+      <pre>
+.sudoku {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/grid-hybrid.html">异构布局</a>、<a
+        href="./demo/personal.html">个人网站 - 事迹</a></dd>
+    <dd>
+      <img src="./imgs/grid18.png" alt="" loading="lazy">
+      <pre>
+.item:nth-child(1),
+.item:nth-child(5) {
+  grid-column: span 2
+}
+
+.item:nth-child(2),
+.item:nth-child(3) {
+  grid-row: span 2;
+}      </pre>
+      <div>.使用轨道应显示指定、行列位置</div>
+      <pre>
+.item:nth-child(1) {
+  grid-column: 1/3;
+}
+
+.item:nth-child(2) {
+  grid-column: 3/4;
+  grid-row: 1/3;
+}
+
+.item:nth-child(3) {
+  grid-row: 2/4;
+}
+
+.item:nth-child(5) {
+  grid-column: 2/4;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./tabcard.html">标签页/手风琴</a>、<a
+        href="./demo/grid-nav.html">多级菜单</a></dd>
+    <dd>
+      <div>使用 <a href="./transition.html">过渡动画</a> 展开和折叠</div>
+      <div>使用 <a href="./js/event_mouse.html">鼠标单击事件</a> 切换动态类</div>
+      <div>结构：网格容器，如 wrap 有唯一子元素，如 ul，且子元素溢出隐藏；子元素可以有多个子元素，如 li</div>
+      <div>样式：高度从0份到1份</div>
+      <pre>
+&lt;div class="wrap"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Lorem.&lt;/li&gt;
+    &lt;li&gt;Sapiente.&lt;/li&gt;
+    &lt;li&gt;Placeat.&lt;/li&gt;
+    &lt;li&gt;Rem.&lt;/li&gt;
+    &lt;li&gt;Magnam.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.wrap {
+  display: grid;
+  grid-template-rows: 0fr;//MUST be 0fr, NOT 0
+  transition: .5s;
+}
+
+.wrap.active {
+  grid-template-rows: 1fr;
+}
+
+.wrap ul {
+  overflow: hidden;
+}
+</pre>
+    </dd>
+    <dd id="grid">[<span class="iconfont icon-keyboard"></span>] 万能自适应布局/响应式布局 -
+      根据容器宽度和子项最小宽度自动决定分成几列；如果可以放下，就放下；否则将各子项缩放至填满整个容器
+    </dd>
+    <dd>
+      <pre>
+.ale {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">对齐 Align</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>
+      <div>.默认情况下</div>
+      <div>1. 容器会全部划分完，没有剩余空间</div>
+      <div>2. 仅仅指定列的划分，行的划分由子项换行决定</div>
+      <div>3. 不用显式设置子项大小，会自动水平和垂直拉伸 stretch <span class="warn">占满</span> 整个格子</div>
+      <div>如果存在以下情况，就需要解决：容器划分的格子和子项两者之间的对齐</div>
+      <div>1. 容器没有划分完</div>
+      <div>2. 子项的大小和划分的格子大小不匹配</div>
+      <div>.对齐区分是子项 items 对齐还是内容 content 对齐</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 情况1：默认的对齐</dd>
+    <dd>
+      <div>.不指定容器高度：由子项撑开</div>
+      <div>.宽度上，全部划分完，且等分各列</div>
+      <div>.只需指定水平方向上的对齐；没有必要指定垂直方向的对齐</div>
+      <div>.除 stretch 外，其它对齐方式相当于为每个 item 指定 width 为 max-content，由其内容决定大小</div>
+      <pre>
+.case0 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}</pre>
+    </dd>
+    <dd>
+      <span>justify-items: </span>
+      <input type="radio" name="case0-items" id="case00" checked value="stretch">
+      <label for="case00">stretch</label>
+      <input type="radio" name="case0-items" id="case01" value="start">
+      <label for="case01">start</label>
+      <input type="radio" name="case0-items" id="case02" value="center">
+      <label for="case02">center</label>
+      <input type="radio" name="case0-items" id="case03" value="end">
+      <label for="case03">end</label>
+      <input type="radio" name="case0-items" id="case04" value="left">
+      <label for="case04">left[不推荐]</label>
+      <input type="radio" name="case0-items" id="case05" value="right">
+      <label for="case05">right[不推荐]</label>
+    </dd>
+    <dd class="case0" id="case0">
+      <div>你好</div>
+      <div>中国</div>
+      <div>通信大队</div>
+      <div>综合训练基地</div>
+      <div>特种作战学院</div>
+      <div>桂林学院</div>
+      <div>厦门工学院</div>
+      <div>广州工商学院</div>
+      <div>海口经济学院</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 情况2：指定容器尺寸的对齐</dd>
+    <dd>
+      <div>.指定容器高度；可以指定垂直方向上的对齐</div>
+      <div>.容器高度由子项换行撑满</div>
+      <div>.没有显式指定子项高度</div>
+      <figure>
+        <pre>
+.case1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 320px;
+}</pre>
+    </dd>
+    <dd>
+      <span>justify-items: </span>
+      <input type="radio" name="case1h-items" id="case10" checked value="stretch">
+      <label for="case10">stretch</label>
+      <input type="radio" name="case1h-items" id="case11" value="start">
+      <label for="case11">start</label>
+      <input type="radio" name="case1h-items" id="case12" value="center">
+      <label for="case12">center</label>
+      <input type="radio" name="case1h-items" id="case13" value="end">
+      <label for="case13">end</label>
+      <input type="radio" name="case1h-items" id="case14" value="left">
+      <label for="case14">left[不推荐]</label>
+      <input type="radio" name="case1h-items" id="case15" value="right">
+      <label for="case15">right[不推荐]</label>
+    </dd>
+    <dd>
+      <span>align-items: </span>
+      <input type="radio" name="case1v-items" id="case20" checked value="stretch">
+      <label for="case20">stretch</label>
+      <input type="radio" name="case1v-items" id="case21" value="start">
+      <label for="case21">start</label>
+      <input type="radio" name="case1v-items" id="case22" value="center">
+      <label for="case22">center</label>
+      <input type="radio" name="case1v-items" id="case23" value="end">
+      <label for="case23">end</label>
+    </dd>
+    <dd class="case1" id="case1">
+      <div>你好</div>
+      <div>中国</div>
+      <div>通信大队</div>
+      <div>综合训练基地</div>
+      <div>特种作战学院</div>
+      <div>桂林学院</div>
+      <div>厦门工学院</div>
+      <div>广州工商学院</div>
+      <div>海口经济学院</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 情况3：指定容器尺寸和单元格尺寸的对齐</dd>
+    <dd>.通常在容器有剩余空间的时候需要决定：各个子项放在容器哪个位置?</dd>
+    <dd>
+      <pre>
+.case2 {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    gap: 10px;
+    margin: 1rem auto;
+    width: 100%;
+    height: 320px;
+    background-color: #eee;
+}</pre>
+    </dd>
+    <dd>
+      <span>justify-content: </span>
+      <input type="radio" name="case2h-items" id="case30" checked value="start">
+      <label for="case30">start</label>
+      <input type="radio" name="case2h-items" id="case31" value="center">
+      <label for="case31">center</label>
+      <input type="radio" name="case2h-items" id="case32" value="end">
+      <label for="case32">end</label>
+      <input type="radio" name="case2h-items" id="case33" value="space-around">
+      <label for="case33">space-around</label>
+      <input type="radio" name="case2h-items" id="case34" value="space-between">
+      <label for="case34">space-between</label>
+    </dd>
+    <dd>
+      <span>align-content: </span>
+      <input type="radio" name="case2v-items" id="case40" checked value="start">
+      <label for="case40">start</label>
+      <input type="radio" name="case2v-items" id="case41" value="center">
+      <label for="case41">center</label>
+      <input type="radio" name="case2v-items" id="case42" value="end">
+      <label for="case42">end</label>
+      <input type="radio" name="case2v-items" id="case43" value="space-around">
+      <label for="case43">space-around</label>
+      <input type="radio" name="case2v-items" id="case44" value="space-between">
+      <label for="case44">space-between</label>
+    </dd>
+    <dd class="case2" id="case2">
+      <div>你好</div>
+      <div>中国</div>
+      <div>通信大队</div>
+      <div>综合训练基地</div>
+      <div>特种作战学院</div>
+      <div>桂林学院</div>
+      <div>厦门工学院</div>
+      <div>广州工商学院</div>
+      <div>海口经济学院</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 子项对齐</dd>
+    <dd>.单独设置每个子项的对齐方式</dd>
+    <dd class="self">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </dd>
+    <dd>
+      <pre>
+.self {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 320px;
+    height: 320px;
+    margin: 1rem auto;
+    background-color: #eee;
+}
+
+.self div:nth-child(1) {
+    justify-self: start;
+    align-self: start;
+}
+
+.self div:nth-child(2) {
+    justify-self: center;
+    align-self: start;
+}
+
+.self div:nth-child(3) {
+    justify-self: end;
+    align-self: start;
+}
+
+.self div:nth-child(4) {
+    justify-self: start;
+    align-self: center;
+}
+
+.self div:nth-child(5) {
+    justify-self: center;
+    align-self: center;
+}
+
+.self div:nth-child(6) {
+    justify-self: end;
+    align-self: center;
+}
+
+.self div:nth-child(7) {
+    justify-self: start;
+    align-self: end;
+}
+
+.self div:nth-child(8) {
+    justify-self: center;
+    align-self: end;
+}
+
+.self div:nth-child(9) {
+    justify-self: end;
+    align-self: end;
+}</pre>
+    </dd>
+    <dd class="tips">
+      <div>place-content：网格区域在容器里的位置</div>
+      <div>place-items：统一指定子项在单元格里的位置</div>
+      <div>place-self：单独设置某个子项在单元格里的位置</div>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>.网格布局的特性和使用</dd>
+    <dt>作业</dt>
+    <dd class="sn">
+      <div>尝试使用 float、position、flex 实现布局一节的内容，体会几种方式的区别</div>
+      <div>使用网格布局，优化个人网站，如：整体设计、导航设计等</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script>
+    window.onload = function () {
+      // case 1
+      let case0 = document.getElementsByName('case0-items')
+      case0.forEach(item => {
+        item.addEventListener('change', function () {
+          document.querySelector('#case0').style.justifyItems = this.value
+        })
+      })
+      // case 2
+      let case1 = document.querySelector('#case1')
+      let case1h = document.getElementsByName('case1h-items')
+      case1h.forEach(item => {
+        item.addEventListener('change', function () {
+          case1.style.justifyItems = this.value
+        })
+      })
+
+      let case1v = document.getElementsByName('case1v-items')
+      case1v.forEach(item => {
+        item.addEventListener('change', function () {
+          case1.style.alignItems = this.value
+        })
+      })
+      // case 3
+      let case2 = document.querySelector('#case2')
+      let case2h = document.getElementsByName('case2h-items')
+      case2h.forEach(item => {
+        item.addEventListener('change', function () {
+          case2.style.justifyContent = this.value
+        })
+      })
+      let case2v = document.getElementsByName('case2v-items')
+      case2v.forEach(item => {
+        item.addEventListener('change', function () {
+          case2.style.alignContent = this.value
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

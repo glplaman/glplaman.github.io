@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标签页 TabCard</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>标签页</h1>
+    <span>&commat;TabCard</span>
+  </header>
+  <dl>
+    <dd>单击标签，显示对应的内容；类似的应用还有 <a href="https://wow.techbrood.com/fiddle/11539">手风琴</a></dd>
+    <dd>可以使用纯 CSS 实现，也可以使用 JavaScript 实现</dd>
+    <dt>原理</dt>
+    <dd class="sn">
+      <p>一个元素的变化，触发目标元素/关联元素的联动变化</p>
+      <div>如何关联？</div>
+      <p>:target - 超链接</p>
+      <p>:hover - 鼠标悬停</p>
+      <p>:checked - 表单元素选中</p>
+      <p>:focus - 表单元素聚焦</p>
+      <p>JavaScript - 无所不能</p>
+      <div>如果变化？</div>
+      <p>宽度发生变化 - 如 flex-basis</p>
+      <p>高度发生变化 - 如 max-height</p>
+      <p>比例发生变化 - 如 1fr</p>
+      <p>其它属性变化</p>
+    </dd>
+    <dt>:target</dt>
+    <dd>
+      <div>配合 &lt;a&gt; 使用</div>
+      <div>初态，各锚点隐藏</div>
+      <div>锚点成为目标时，显示</div>
+      <div>案例实现，请访问 <a href="./demo/tabcard0.html#home">标签页1</a>、<a href="./demo/acc_target.html#item1">手风琴</a></div>
+    </dd>
+    <dt>:hover</dt>
+    <dd>
+      <div>属性悬停 :hover 时，触发目标元素变化</div>
+      <div>适合桌面端</div>
+      <div>案例实现，请访问 <a href="./demo/acc_flex.html">accordion flex</a></div>
+    </dd>
+    <dt>:checked</dt>
+    <dd>
+      <div>配合表单的单选按钮和 &lt;label&gt; 实现</div>
+      <div>每个 &lt;input&gt; 和 &lt;label&gt; 关联</div>
+      <div>初态：各 &lt;input&gt; 隐藏，其中一个默认选中</div>
+      <div>单击某个单选按钮，使用特定的选择器显示对应的内容</div>
+      <div>注意结构的设计</div>
+      <div>需要更多样式加持，可以使用普通选择器、属性选择器或结构伪类选择器</div>
+      <div>案例实现，请访问 <a href="./demo/tabcard1.html">标签页2</a>、<a href="./demo/accordion0.html">手风琴1</a>、<a
+          href="./demo/accordion1.html">手风琴2</a></div>
+    </dd>
+    <dt>JavaScript</dt>
+    <dd>
+      <div>初态时，各内容隐藏</div>
+      <div>单击时，为目标叠加激活样式，使其显示</div>
+      <div>操作 DOM：通过更换元素的 class 或样式 style 实现</div>
+      <div>因为操作 DOM，所以结构可以 <span class="warn">任意</span></div>
+      <div>每次单击时，需要分别：</div>
+      <div>. 遍历所有标题，移除 active，然后为当前标题添加活动类 active</div>
+      <div>. 遍历所有内容，移除 active，然后为当前内容添加活动类 active</div>
+      <div>案例实现，请访问 <a href="./demo/tabcard2.html">标签页3</a>、<a href="./demo/acc_grid.html">accordion grid</a>、<a
+          href="./demo/grid-nav.html">多级菜单</a>、<a href="https://codepen.io/glpla/full/ZEPbbQv">Codepen -
+          TabCard</a></div>
+    </dd>
+    <dd class="tips">
+      <div>以上方法通过元素的隐藏和显示实现，频繁更新 DOM 树，适合少量数据的展示，不适合全页使用</div>
+    </dd>
+    <dt>JavaScript API</dt>
+    <dd>
+      <div>使用 <a href="./js/element.html">Element - scrollIntoView()</a> </div>
+      <div>结构可以 <span class="warn">任意</span></div>
+      <div>内容可以 <span class="warn">任意</span></div>
+      <div>单击时，使得当前元素进入视图</div>
+      <div>要求容器具备滚动条</div>
+      <div>可以 <a href="./demo/tabcard-scrollIntoView.html">局部导航</a> 使用，也可以 <a href="./demo/personal.html">全页导航</a> 使用
+      </div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分栏 Columns</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>分栏</h1>
+    <span>&commat;Columns</span>
+  </header>
+  <section>
+    <ul>
+      <li>将大块文字分为若干栏，增加阅读性</li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/columns">MDN - columns</a></li>
+      <li>如果同时设置了 column-width 和 column-count，则 columns 属性会优先考虑 column-count</li>
+      <li>如果使用最小列宽，放不下预设的列数，则减少列数</li>
+    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>column-width</td>
+          <td><span class="warn">最小</span>列宽，由浏览器决定分成多少列；不能使用%</td>
+        </tr>
+        <tr>
+          <td>column-count</td>
+          <td><span class="warn">最大</span>列数/栏数</td>
+        </tr>
+        <tr>
+          <td>columns</td>
+          <td>复合属性：column-width column-count；根据宽度或列数布局；顺序任意</td>
+        </tr>
+        <tr>
+          <td>column-span</td>
+          <td>分列元素的跨度，all 通栏，如标题</td>
+        </tr>
+        <tr>
+          <td>column-gap</td>
+          <td>列间隔；默认是16px</td>
+        </tr>
+        <tr>
+          <td>column-rule</td>
+          <td>分隔符样式，同 border</td>
+        </tr>
+        <tr>
+          <td>column-fill</td>
+          <td>填充模式，默认是平均填充 balance，也可以指定 auto，逐列填充；通常需<span class="warn">指定容器高度</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div> [<span class="iconfont icon-keyboard"></span>] 分栏排版，请参考 <a href="./demo/paper.html">文章排版</a>、<a
+        href="./demo/personal.html">个人网站</a></div>
+    <ul>
+      <li>分2栏，并指定最小宽度</li>
+      <li>分栏后，应特别注意两侧的文字的对齐</li>
+      <li>部分内容跨栏显示</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./masonry.html">瀑布流 - Masonry</a>
+    </div>
+    <pre>
+.masonry-columns {
+  columns: 4 200px;
+  column-gap: 10px;
+}      </pre>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

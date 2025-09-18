@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>可缩放矢量图形 &lt;svg&gt;</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/svg.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
+      <path fill="#eab308" fill-rule="evenodd"
+        d="M16 8a8 8 0 0 1-7.022 7.94l1.902-7.098a3 3 0 0 0 .05-1.492A3 3 0 0 0 10.237 6h5.511A8 8 0 0 1 16 8M0 8a8 8 0 0 0 7.927 8l1.426-5.321a3 3 0 0 1-.723.255a3 3 0 0 1-1.743-.147a3 3 0 0 1-1.043-.7L.633 4.876A8 8 0 0 0 0 8m5.004-.167L1.108 3.936A8.003 8.003 0 0 1 15.418 5H8.066a3 3 0 0 0-1.252.243a2.99 2.99 0 0 0-1.81 2.59M8 10a2 2 0 1 0 0-4a2 2 0 0 0 0 4" />
+    </svg>
+    <svg t="1718511541455" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="4278" width="32" height="32">
+      <path
+        d="M142.135832 177.054476c226.645333-263.801905 646.972952-211.72419 804.08381 96.548572h-377.612191c-68.022857 0-111.957333-1.609143-159.548952 23.405714A225.182476 225.182476 0 0 0 296.223451 445.19619l-154.087619-268.04419V177.005714z"
+        fill="#EA4335" p-id="4279"></path>
+      <path
+        d="M349.764023 494.787048a162.279619 162.279619 0 0 0 162.084571 162.133333 162.230857 162.230857 0 0 0 162.03581-162.133333 162.279619 162.279619 0 0 0-162.03581-162.133334 162.230857 162.230857 0 0 0-162.084571 162.133334z"
+        fill="#4285F4" p-id="4280"></path>
+      <path
+        d="M574.751451 707.047619c-90.989714 27.014095-197.436952-2.925714-255.75619-103.619048a144821.394286 144821.394286 0 0 1-215.527619-374.832761c-187.245714 286.915048-25.84381 677.936762 313.977905 744.643047l157.257143-266.191238z"
+        fill="#34A853" p-id="4281"></path>
+      <path
+        d="M662.327832 332.702476a222.012952 222.012952 0 0 1 40.96 272.969143 75277.165714 75277.165714 0 0 1-221.866666 375.808c350.159238 21.552762 605.476571-321.584762 490.154666-648.825905h-309.248z"
+        fill="#FBBC05" p-id="4282"></path>
+    </svg>
+    <span class="ham iconfont icon-menu"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">overview</a>
+      <a href="" style="--delay:0" class="nav-item">attributes</a>
+      <a href="" style="--delay:1" class="nav-item">circle</a>
+      <a href="" style="--delay:2" class="nav-item">eclipse</a>
+      <a href="" style="--delay:3" class="nav-item">rect</a>
+      <a href="" style="--delay:4" class="nav-item">line</a>
+      <a href="" style="--delay:5" class="nav-item">polygon</a>
+      <a href="" style="--delay:6" class="nav-item">text</a>
+      <a href="" style="--delay:7" class="nav-item">path</a>
+      <a href="" style="--delay:8" class="nav-item">Cases</a>
+      <a href="" style="--delay:9" class="nav-item">icon</a>
+    </nav>
+  </header>
+  <dl class="nav-cont">
+    <dt>简介 overview</dt>
+    <dd>
+      <div>. inline</div>
+      <div>. Scalable Vector Graphics - 可缩放矢量图形</div>
+      <div>. 使用 XML 描述 2D 图形；是万维网联盟的标准</div>
+      <div>. SVG 基于 XML：每个元素都可用附加 JavaScript 事件处理器</div>
+      <div>. 每个绘制的 SVG 图形均被视为对象。如果 SVG 对象的属性发生变化，浏览器能够自动重绘</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG">MDN - SVG</a>、<a
+          href="https://svg-path-visualizer.netlify.app/">SVG Path Visualizer</a></div>
+    </dd>
+    <dt>特点 Features</dt>
+    <dd>
+      <div>可以使用SVG属性</div>
+      <div>也可以使用内联样式或外部CSS样式，更加方便js控制</div>
+    </dd>
+    <dt>SVG vs Canvas</dt>
+    <dd>
+      <div>Canvas 是HTML5 提供的新标签元素，而 SVG 存在的历史要比 Canvas 久远，已经有十几年</div>
+      <div>Canvas 绘制出来的图形或传入的图片都依赖分辨率，能够以 .png 和 .jpg格式保存存储图像，是位图|标量图；SVG绘制的是矢量图</div>
+      <div>Canvas 不支持事件处理器，SVG支持事件处理器</div>
+      <div>Canvas多用于统计用的图表、大型的网络游戏；SVG：地图、动态的小图标 icon</div>
+    </dd>
+    <dt>步骤 steps</dt>
+    <dd>1. 准备画布</dd>
+    <dd>2. 绘制内容</dd>
+  </dl>
+  <div class="chap">常见属性 Attributes</div>
+  <dl class="nav-cont">
+    <dt>坐标点 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x">x</a> <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y">y</a></dt>
+    <dd>坐标点</dd>
+    <dt>偏移 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dx">dx</a> <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dy">dy</a></dt>
+    <dd>偏移 shift</dd>
+    <dt>半径 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/r">r</a></dt>
+    <dd>圆的半径 radius for &lt;circle&gt; </dd>
+    <dt>圆角半径 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/rx">rx</a> <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/ry">ry</a></dt>
+    <dd>xy轴上的圆角半径 radius；适用于 &lt;ellipse&gt; &lt;rect&gt; </dd>
+    <dt>水平对齐 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-anchor">text anchor</a></dt>
+    <dd>
+      <div>文本<span class="warn">相对于中心点 - relative to a given point</span> 的对齐方式；默认start</div>
+      <pre>text-anchor: start | middle | end</pre>
+    </dd>
+    <dt>绘制 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d">d</a></dt>
+    <dd>
+      <div>绘制路径</div>
+      <div>每一个命令都用一个关键字母来表示</div>
+      <div>大写字母，表示采用绝对定位；另一种是用小写字母，表示采用相对定位</div>
+      <div>6类总共20个命令 - 6 types of path commands, for a total of 20 commands</div>
+      <table>
+        <caption>基本命令</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>M</td>
+          <td>移动</td>
+        </tr>
+        <tr>
+          <td>L</td>
+          <td>绘制线</td>
+        </tr>
+        <tr>
+          <td>H</td>
+          <td>简写命令；绘制水平线</td>
+        </tr>
+        <tr>
+          <td>V</td>
+          <td>简写命令；绘制垂直线</td>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>曲线</td>
+        </tr>
+        <tr>
+          <td>C</td>
+          <td>贝塞尔曲线；至少3个点</td>
+        </tr>
+        <tr>
+          <td>Q</td>
+          <td>quadratic Bézier curve 二次贝塞尔曲线<br>两组坐标 x1 y1 x y 分别是控制点和终点，控制点的作用是确定起点和终点的曲线斜率</td>
+        </tr>
+        <tr>
+          <td>Z</td>
+          <td>闭合路径</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="tips">
+      <div>以下属性建议使用CSS代替</div>
+      <div>CSS的优先级高于元素的属性</div>
+    </dd>
+    <dt>垂直对齐 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dominant-baseline">dominant-baseline</a>
+    </dt>
+    <dd>
+      <div>文本相对于基线的垂直对齐方式</div>
+      <div>文本基线 baseline：文本的底部边缘所在的水平线</div>
+      <div>middle：将文本的中部对齐到指定的基线位置。适用于将文本的中部与某个容器或行的中部对齐</div>
+      <div>central：将文本的中心对齐到指定的基线位置。适用于将文本整体居中于容器或行的高度内</div>
+      <pre>dominant-baseline: auto | hanging | ideographic | alphabetic | middle | central</pre>
+      <figure>
+        <img src="./imgs/svg-central.png" alt="">
+        <figcaption>middle vs central</figcaption>
+      </figure>
+      <div class="tips">对英文字体有影响</div>
+    </dd>
+    <dt>中心点坐标 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/cx">cx</a> <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/cy">cy</a></dt>
+    <dd>中心点坐标 - center point，如 &lt;circle&gt; &lt;eclipse&gt;</dd>
+    <dt>笔刷 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke">stroke</a></dt>
+    <dd>
+      <div>stroke：定义SVG元素的轮廓 outline 颜色</div>
+      <div>stroke-opacity：透明度</div>
+      <div>stroke-width：宽度</div>
+      <div>stroke-dashoffset：笔刷起点绘制偏移；</div>
+      <div>stroke-dasharray：笔刷点划线段大小分配/占空比：实线段、空线段；1个参数时，表示50%；当占空比发送变化时，可以利用这个特性，可以制作描边、加载等特效</div>
+      <pre>stroke-dasharray：length | percentage</pre>
+      <div>stroke-linecap：笔刷端点类型，子弹形、圆形、方形</div>
+      <pre>stroke-linecap：butt | round | square;</pre>
+      <div>fill：颜色填充；默认黑色；如果不需要，请显式指定为none</div>
+      <div>fill-opacity：透明填充</div>
+    </dd>
+    <dt>填充 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill">fill</a></dt>
+    <dd>
+      <div>默认是黑色 black</div>
+      <div>如不需要，可以设为none或transparent</div>
+    </dd>
+    <dt>颜色 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/color">color</a></dt>
+    <dd>
+      <div>定义间接 potential indirect value 的颜色，用于笔刷 stroke 和 填充 fill</div>
+      <div>不能直接用于SVG元素 - no direct effect on SVG elements</div>
+    </dd>
+    <dt>字体 <a href="">font</a></dt>
+    <dd>
+      <div>不支持复合属性，需要单独设置</div>
+      <div>font-family</div>
+      <div>font-size</div>
+      <div>font-weight</div>
+    </dd>
+  </dl>
+  <div class="chap">常见元素 Elements</div>
+  <dl>
+    <dd>
+      <div>参考画布样式</div>
+      <pre>
+.svg-basic {
+  width: 300px;
+  height: 300px;
+  margin: 1rem auto;
+  background-color: #ff0;
+}      </pre>
+    </dd>
+    <dt class="nav-cont">圆 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle">&lt;circle&gt;</a>
+    </dt>
+    <dd>
+      <div>圆点 cx、cy； 默认左上角(0, 0)</div>
+      <div>半径 r</div>
+      <pre>
+&lt;svg class="svg-basic"&gt;
+    &lt;circle cx=150 cy=150 r="150" fill="#f40"&gt;&lt;/circle&gt;
+&lt;/svg&gt;</pre> <svg class="svg-basic">
+        <circle cx=150 cy=150 r="150" fill="#f40"></circle>
+      </svg>
+    </dd>
+    <dt class="nav-cont">椭圆 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse">&lt;ellipse&gt;</a></dt>
+    <dd>
+      <div>位置：cx、cy；</div>
+      <div>圆角：x、y方向上的圆角 rx、ry</div>
+      <pre>
+&lt;svg class="svg-basic"&gt;
+    &lt;ellipse cx=150 cy=150 rx="100" ry="80" fill="#f40"&gt;&lt;/ellipse&gt;
+&lt;/svg&gt;</pre><svg class="svg-basic">
+        <ellipse cx=150 cy=150 rx="100" ry="80" fill="#f40"></ellipse>
+      </svg>
+    </dd>
+    <dt class="nav-cont">矩形 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect">&lt;rect&gt;</a>
+    </dt>
+    <dd>
+      <div>位置：x、y</div>
+      <div>宽高：width、height</div>
+      <div>圆角：x、y方向上的圆角 rx、ry</div>
+      <pre>
+&lt;svg class="svg-basic"&gt;
+    &lt;rect x=40 y=40 width=220 height=220 rx=0 ry=0 fill=#f40&gt;&lt;/rect&gt;
+&lt;/svg&gt;</pre> <svg class="svg-basic">
+        <rect x=40 y=40 width=220 height=220 rx=0 ry=0 fill=#f40></rect>
+      </svg>
+    </dd>
+    <dt class="nav-cont">线 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line">&lt;line&gt;</a>
+    </dt>
+    <dd>
+      <div>起点：(x1,y1)</div>
+      <div>终点：(x2,y2)</div>
+      <div>配合stroke-dasharray和stroke-dashoffset绘制更丰富的线条</div>
+      <div>stroke、stroke-width可以使用CSS指定</div>
+      <div>必须指定stroke，否则线条不可见</div>
+      <pre>
+&lt;svg class="svg-basic"&gt;
+    &lt;line class="svg-line" x1=0 y1=0 x2=300 y2=300&gt;&lt;/line&gt;
+&lt;/svg&gt;</pre>
+      <pre>
+.svg-line {
+    stroke: #f40;
+    stroke-width: 2px;
+}</pre> <svg class="svg-basic">
+        <line class="svg-line" x1=0 y1=0 x2=300 y2=300></line>
+      </svg>
+      <div>[<span class="iconfont icon-keyboard"></span>] 点划线：改变数字，查看点划线起点的偏移情况</div>
+      <pre>
+.svg-line-dash {
+    stroke: #f40;
+    stroke-width: 4px;
+    stroke-dasharray: 10 20;
+    stroke-dashoffset: 0;
+}</pre>
+      <div>stroke-dashoffset: <input type="number" name="dash-offset" id="dash-offset" min="0" max="30" value="0"></div>
+      <svg class="svg-basic">
+        <line class="svg-line-dash" x1=0 y1=0 x2=300 y2=300 id="dash-tar"></line>
+      </svg>
+      <div>[<span class="iconfont icon-keyboard"></span>] 加载器/进度条：stroke-dasharray的占空比从开始到较大的值</div>
+      <pre>
+#loader-circle {
+  fill: transparent;
+  stroke: #f40;
+  stroke-width: 2px;
+  stroke-dasharray: 0 1000;
+  animation: alternate loader 5s linear forwards;
+}
+
+@keyframes loader {
+  to {
+      stroke-dasharray: 1000;
+  }
+}      </pre>
+      <svg class="svg-basic loader">
+        <text x="150" y="150" text-anchor="middle" dominant-baseline="middle">hover</text>
+        <circle cx=150 cy=150 r="100" id="loader-circle"></circle>
+      </svg>
+    </dd>
+    <dt class="nav-cont">多边形 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/polygon">&lt;polygon&gt;</a></dt>
+    <dd>
+      <div>利用点的集合points和笔触颜色stroke和宽度stroke-width或填充fill绘制</div>
+      <div>填充fill默认黑色；如不需要，可以设置为none</div>
+      <pre>
+&lt;svg class="svg-basic"&gt;
+    &lt;polygon class="svg-polygon" points="0,0 50,50 50,100"&gt;&lt;/polygon&gt;
+&lt;/svg&gt;</pre>
+      <pre>
+.svg-polygon {
+    stroke: #f40;
+    stroke-width: 2px;
+    fill: none;
+}</pre>
+      <svg class="svg-basic">
+        <polygon class="svg-polygon" points="0,0 50,50 50,100"></polygon>
+      </svg>
+    </dd>
+    <dt class="nav-cont">文本 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text">&lt;text&gt;</a>
+    </dt>
+    <dd>
+      <div>SVG 允许您像图形一样修改文本并应用渐变、图案、剪切路径、蒙版或过滤器</div>
+      <div>默认情况下，text使用以下默认属性：颜色：黑色；字体大小：16px；不换行</div>
+      <div>x y：基线的起点 - the starting point of the text baseline；设置文本的起点</div>
+      <div>dx dy：用于指定每个字符或子字符串&lt;tspan&gt;相对于其父元素的额外偏移量，用来微调文本的位置，特别是在处理多行文本或特定字符的对齐时非常有用</div>
+      <div>结合水平对齐属性 text-anchor和垂直对齐属性 dominant-baseline，更加精准控制文本</div>
+    </dd>
+    <dd>SVG尺寸：300*60</dd>
+    <dd class="grid">
+      <div>
+        <svg class="svg-basic txt">
+          <text>遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="16" y="16">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="16" y="16"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="16" y="16" text-anchor="end">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="16" y="16" text-anchor="end"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="16" y="16" text-anchor="middle">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="16" y="16" text-anchor="middle"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" dominant-baseline="middle">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="150" y="30" dominant-baseline="middle"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" dominant-baseline="central">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="150" y="30" dominant-baseline="central"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" text-anchor="middle" dominant-baseline="central">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="150" y="30" 
+    text-anchor="middle" 
+    dominant-baseline="central"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" text-anchor="middle" dominant-baseline="middle">遇见最好的自己</text>
+        </svg>
+        <pre>&lt;text x="150" y="30" 
+    text-anchor="middle" 
+    dominant-baseline="middle"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" text-anchor="middle" dominant-baseline="middle">
+            <tspan>遇见</tspan>
+            <tspan>最好的</tspan>
+            <tspan>自己</tspan>
+          </text>
+        </svg>
+        <pre>&lt;text x="150" y="30" 
+    text-anchor="middle" 
+    dominant-baseline="middle"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      </div>
+    </dd>
+    <dt>子文本 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan">&lt;tspan&gt;</a></dt>
+    <dd>
+      <div>&lt;text&gt;的子文本 subtext，便于精准控制</div>
+    </dd>
+    <dd class="grid">
+      <div>
+        <svg class="svg-basic txt">
+          <text dx="16">默认00开始；偏移了16</text>
+        </svg>
+        <pre>&lt;text dx="16"&gt;默认00开始；偏移了16&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="16" y="16" dx="16">多偏移了16</text>
+        </svg>
+        <pre>&lt;text x="16" y="16" dx="16"&gt;多偏移了16&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="16" y="16">
+            <tspan>hi,</tspan>
+            <tspan>glpla；无偏移</tspan>
+          </text>
+        </svg>
+        <pre>
+&lt;text x="16" y="16"&gt;
+  &lt;tspan&gt;hi,&lt;/tspan&gt;
+  &lt;tspan&gt;glpla；无偏移&lt;/tspan&gt;
+&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="16" y="16">
+            <tspan>hi,</tspan>
+            <tspan dx="16" dy="16">glpla；相对父元素偏移</tspan>
+          </text>
+        </svg>
+        <pre>
+&lt;text x="16" y="16"&gt;
+  &lt;tspan&gt;hi,&lt;/tspan&gt;
+  &lt;tspan dx="16" dy="16"&gt;glpla；相对父元素偏移&lt;/tspan&gt;
+&lt;/text&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" dominant-baseline="middle" text-anchor="middle">
+            <tspan>hi,</tspan>
+            <tspan font-size="18">glpla</tspan>
+            <tspan font-size="20">小字体</tspan>
+            <tspan font-size="24">大字体</tspan>
+          </text>
+        </svg>
+        <pre>
+&lt;svg class="svg-basic txt"&gt;
+  &lt;text x="150" y="30" dominant-baseline="middle" text-anchor="middle"&gt;
+    &lt;tspan&gt;hi,&lt;/tspan&gt;
+    &lt;tspan font-size="18"&gt;glpla&lt;/tspan&gt;
+    &lt;tspan font-size="20"&gt;小字体&lt;/tspan&gt;
+    &lt;tspan font-size="24"&gt;大字体&lt;/tspan&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;</pre>
+      </div>
+      <div>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" dominant-baseline="central" text-anchor="middle">
+            <tspan>hi,</tspan>
+            <tspan font-size="18">glpla</tspan>
+            <tspan font-size="20">小字体</tspan>
+            <tspan font-size="24">大字体</tspan>
+          </text>
+        </svg>
+        <pre>
+&lt;svg class="svg-basic txt"&gt;
+  &lt;text x="150" y="30" dominant-baseline="central" text-anchor="middle"&gt;
+    &lt;tspan&gt;hi,&lt;/tspan&gt;
+    &lt;tspan font-size="18"&gt;glpla&lt;/tspan&gt;
+    &lt;tspan font-size="20"&gt;小字体&lt;/tspan&gt;
+    &lt;tspan font-size="24"&gt;大字体&lt;/tspan&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;</pre>
+      </div>
+    </dd>
+    <dt class="nav-cont">路径 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path">&lt;path&gt;</a>
+    </dt>
+    <dd>
+      <div>. SVG 基本形状中最强大的一个。通用绘图工具 - generic element to define a shape；可以创建线条、曲线、弧形等基本图形 - the basic shapes</div>
+      <div>. path 元素的形状是通过属性 d 定义的，属性 d 的值是一个“命令 + 参数”的序列</div>
+    </dd>
+  </dl>
+  <div class="chap">综合实例 Demo</div>
+  <dl class="nav-cont">
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./css.html">流程图</a></dd>
+    <dd>矩形 &lt;rect&gt;、文字 &lt;text&gt;、对齐</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 静态描边文字</dd>
+    <dd>
+      <div>. SVG容器为320*120，定位点为160*60；当水平居中middle垂直居中central时，文字位于容器正中间</div>
+      <div>. 在画布外，增加一个&lt;div&gt;放置背景图片</div>
+      <div>. 给text增加文字阴影[2重]</div>
+      <div>. 采用<a href="./text.html">自定义字体</a></div>
+      <div class="svg-txt-box">
+        <svg class="svg-txt">
+          <text class="title-static" x="160" y="60" text-anchor="middle" dominant-baseline="central">遇见最好的自己</text>
+        </svg>
+      </div>
+      <pre>
+&lt;svg class="svg-txt"&gt;
+    &lt;text class="title-static" x="160" y="60" text-anchor="middle" dominant-baseline="central"&gt;遇见最好的自己&lt;/text&gt;
+&lt;/svg&gt;</pre>
+      <pre>
+.svg-txt {
+    width: 320px;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.title-static {
+    height: 120px;
+    line-height: 120px;
+    font-size: 40px;
+    font-family: 'yuwei';
+    text-shadow: 0 0 10px #ff0, 0 0 10px #ff0;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 动态描边文字</dd>
+    <dd>
+      <div>. 借助<a href="./animation.html">帧动画</a>，改变stroke-dashoffset实现动态描边</div>
+      <div class="svg-txt-box">
+        <svg class="svg-txt">
+          <text class="title" x="160" y="60" text-anchor="middle" dominant-baseline="central">路在前方人在路上</text>
+        </svg>
+      </div>
+      <pre>
+&lt;svg class="svg-txt"&gt;
+  &lt;text class="title" x="160" y="60" text-anchor="middle" dominant-baseline="central"&gt;路在前方人在路上&lt;/text&gt;
+&lt;/svg&gt;</pre>
+      <pre>
+.svg-txt {
+    width: 320px;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.title {
+    height: 60px;
+    line-height: 60px;
+    font-size: 40px;
+    font-family: 'yuwei';
+    text-shadow: 0 0 10px #ff0, 0 0 10px #ff0;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1;
+    stroke-dasharray: 10 1000;
+    stroke-dashoffset: 10;
+    animation: draw 5s ease-in-out infinite;
+}
+
+@keyframes draw {
+    100% {
+        stroke-dasharray: 800;
+        stroke-dashoffset: 0;
+    }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 手机清理空间效果图</dd>
+    <dd style="text-align: center;"><img style="width: unset;" src="./imgs/svg.png" alt=""></dd>
+    <dt>设计思路</dt>
+    <dd class="sn">
+      <div>绘制一个fill为黑灰色、带轮廓stroke的圆circle</div>
+      <div>再绘制一个无填充、有轮廓stroke颜色和宽度，并指定一定占空比的同心圆</div>
+      <div>再绘制一个无填充、有轮廓stroke颜色和宽度、更大占空比的同心圆，并指定偏移offset</div>
+      <div>添加3个text，以中心为参考，分别是水平end对齐、水平start对齐和垂直hanging对齐</div>
+      <div>微调text坐标完成设计</div>
+      <svg class="svg-demo">
+        <circle class="inner" cx=150 cy=150 r="130"></circle>
+        <circle class="middle" cx=150 cy=150 r="130"></circle>
+        <circle class="outer" cx=150 cy=150 r="130"></circle>
+        <text class="txt1" x="150" y="150" text-anchor="end">5.3</text>
+        <text class="txt2" x="160" y="150" text-anchor="start">GB</text>
+        <text class="txt3" x="150" y="160" text-anchor="middle" dominant-baseline="hanging">QQ占手机存储9.4%</text>
+      </svg>
+      <pre>
+&lt;svg class="svg-demo"&gt;
+    &lt;circle class="inner" cx=150 cy=150 r="130"&gt;&lt;/circle&gt;
+    &lt;circle class="middle" cx=150 cy=150 r="130"&gt;&lt;/circle&gt;
+    &lt;circle class="outer" cx=150 cy=150 r="130"&gt;&lt;/circle&gt;
+    &lt;text class="txt1" x="150" y="150" text-anchor="end"&gt;5.3&lt;/text&gt;
+    &lt;text class="txt2" x="160" y="150"&gt;GB&lt;/text&gt;
+    &lt;text class="txt3" x="150" y="160" text-anchor="middle" dominant-baseline="hanging"&gt;QQ占手机存储9.4%&lt;/text&gt;
+&lt;/svg&gt;</pre>
+      <pre>
+.svg-demo {
+    width: 300px;
+    height: 300px;
+    margin: 2rem auto;
+
+}
+
+.svg-demo .inner {
+    fill: #2f2f2f;
+    stroke: #3d3d3d;
+    stroke-width: 40px;
+}
+
+.svg-demo .middle {
+    fill: none;
+    stroke: #f489f3;
+    stroke-width: 40px;
+    stroke-dasharray: 360 250;
+    stroke-linecap: round;
+}
+
+.svg-demo .outer {
+    fill: none;
+    stroke: #01b3fd;
+    stroke-width: 40px;
+    stroke-dasharray: 100 700;
+    stroke-dashoffset: 990;
+    stroke-linecap: round;
+}
+
+.txt1 {
+    font-size: 40px;
+    font-weight: 600;
+    fill: #ffffff;
+}
+
+.txt2 {
+    font-size: 20px;
+    font-weight: 600;
+    fill: #ffffff;
+}
+
+.txt3 {
+    font-size: 14px;
+    fill: #ffffff;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 绘制弧线</dd>
+    <dd>
+      <div>A rx ry x-axis-rotation large-arc-flag sweep-flag x y</div>
+      <div>rx：轴半径</div>
+      <div>ry：轴半径</div>
+      <div>弧形的旋转角度：x-axis-rotation</div>
+      <div>large-arc-flag：决定弧线是大于还是小于 180 度，0 表示小角度弧，1 表示大角度弧</div>
+      <div>sweep-flag：表示弧线的方向，0 表示从起点到终点沿逆时针画弧，1 表示从起点到终点沿顺时针画弧</div>
+      <div>sweep-flag：弧线方向</div>
+      <div>x y：弧形的终点</div>
+      <pre>
+&lt;svg width="400" height="200">
+  &lt;path d="M 0 -200 A 3 1 0 1 0 400 0 V 200  A 3 1 0 1 0 0 300 Z" fill="#f40" />
+&lt;/svg>        </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用SVG模拟<a href="./demo/clock.html">时钟</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 验证码</dd>
+  </dl>
+  <div class="chap">图标 icon</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 将图片转换成&lt;svg&gt;使用；从<span class="warn">结构</span> 上优化页面，使用方便</div>
+      <div>. 各主流图标网站，如 <a href="https://www.iconfont.cn/">iconfont</a>、<a href="https://yesicon.app/">yesicon</a>等，都提供
+        SVG
+        格式的图标</div>
+      <div>. <span class="warn">直接复制</span> 对应的 SVG 代码到 HTML中即可；见页面顶部谷歌浏览器图标</div>
+      <div>. 可以指定大小、颜色等常用属性</div>
+      <div>. 适合少量、小体积、装饰性图片</div>
+      <img src="./imgs/svg1.png" alt="">
+      <div class="fig-sn">iconfont</div>
+      <img src="./imgs/svg0.png" alt="">
+      <div class="fig-sn">yesicon</div>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. SVG 的各种使用</dd>
+    <dt>作业</dt>
+    <dd>. 分别完成以上案例</dd>
+    <dd>. 利用 SVG 优化个人网站</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script>
+    let dashOffset = document.querySelector('#dash-offset')
+    let dashTar = document.querySelector('#dash-tar')
+    dashOffset.addEventListener('change', (e) => {
+      console.log(dashOffset.value);
+      dashTar.style.strokeDashoffset = dashOffset.value
+    })
+  </script>
+</body>
+
+</html>

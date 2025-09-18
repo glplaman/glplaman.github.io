@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>内联框架 iframe</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .a-wrap {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem auto;
+    }
+
+    .a-wrap h2 {
+      margin-right: auto;
+    }
+
+    .a-wrap a {
+      color: #333;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .a-wrap a:hover {
+      color: #f40;
+    }
+
+    .iframe-b {
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>内联框架</h1>
+    <span>&commat;&lt;iframe&gt;</span>
+  </header>
+  <dl>
+    <dt>概述 Introduction</dt>
+    <dd>
+      <div>内联框架 inline frame；行盒 inline，同&lt;img&gt;一样，可以设置宽度</div>
+      <div>在当前H5网页中嵌入网内或网外其他页面，如各大邮箱门户网站；有利于页面集成/模块复用，如顶部的导航栏、底部的版权信息栏</div>
+      <div>除了嵌入页面，还可以嵌入PDF文件，实现在线预览的功能</div>
+      <div>Web开发中最古老、最简单的内容嵌入技术之一，时至今日仍被使用</div>
+      <div>默认大小是300*150；自适应大小请访问 <a href="http://www.divcss5.com/css3-style/c56794.shtml">CSS如何让iframe实现自适应高度</a>
+      </div>
+      <div>每个&lt;iframe&gt;元素形成自己的窗口，即有自己的window对象</div>
+      <div>重载页面时不需要重载整个页面，只需要重载页面中的一个框架页</div>
+      <div>超宽屏系统监测时，除了使用多信源，还可以使用&lt;iframe&gt;</div>
+      <div>框架开发中，由于广泛采用了组件策略，很少使用该技术</div>
+      <div>应提前制作好被嵌入的页面</div>
+      <pre>&lt;iframe src="" frameborder="0"&gt;&lt;/iframe&gt;</pre>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>内框架的目标地址</td>
+        </tr>
+        <tr>
+          <td>frameborder</td>
+          <td>是否显示边框，1|yes,0|no</td>
+        </tr>
+        <tr>
+          <td>name</td>
+          <td>框架名字，方便js操作；给&lt;a&gt;提供链接</td>
+        </tr>
+        <tr>
+          <td>scrolling</td>
+          <td>超过默认大小时，是否滚动，默认带滚动yes；no不带滚动</td>
+        </tr>
+        <tr>
+          <td>width</td>
+          <td>框架宽度，不带单位，建议使用css设置</td>
+        </tr>
+        <tr>
+          <td>height</td>
+          <td>框架高度，不带单位，建议使用css设置</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>框架提示信息，桌面端应用<span class="warn">建议</span>加上该属性</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]引用 <a href="https://www.bilibili.com/">B站视频</a> - 嵌入代码
+    </dd>
+    <dd class="sn">
+      <div>默认自动静音播放</div>
+      <iframe class="iframe-b"
+        src="//player.bilibili.com/player.html?aid=20762083&bvid=BV1TW411p7cv&cid=34000759&page=1" scrolling="no"
+        border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="bili"> </iframe>
+      <div>不自动播放 - 在 src 属性中拼接 autoplay=0</div>
+      <iframe class="iframe-b"
+        src="//player.bilibili.com/player.html?aid=20762083&bvid=BV1TW411p7cv&cid=34000759&page=1&autoplay=0"
+        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="bili"> </iframe>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]嵌入 <a href="https://xmind.ai/home">思维导图</a> - 嵌入代码
+    </dd>
+    <dd>
+      <div>默认嵌入；也可以使用CSS样式控制</div>
+      <pre>&lt;iframe src="https://xmind.ai/embed/Sl7plXJ1?sheet-id=a34d7a6d-c43e-4e19-ac74-b42e8dadaa63" 
+  width="900px"
+  height="540px" 
+  frameborder="0" 
+  scrolling="no" 
+  allow="fullscreen"&gt;&lt;/iframe&gt;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]嵌入PDF</dd>
+    <dd>
+      <div>适合桌面端；移动端会提示会自动下载</div>
+      <div>还可以使用专门的js库在线预览</div>
+      <pre>
+&lt;iframe src="xxx.pdf" frameborder="0"&gt;&lt;/iframe&gt;</pre>
+    </dd>
+    <dt>模块复用</dt>
+    <dd>
+      <div>多次使用某个功能模块，如导航、版权等重复性内容</div>
+      <div>可以和当前页面交换数据/动态复用；也可以单纯的复用模块/静态复用</div>
+      <div>为完整显示加载页面,避免出现滚动条，通常根据加载页面的大小，指定框架的高度；也使用onload动态获取高度；实际渲染效果，受页面加载影响</div>
+      <div>利用CSS指定高度加载；还应该考虑媒体自适应/适配不同终端的情况</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 复用底部footer</dd>
+    <dd>
+      <div>1.新建H5项目</div>
+      <div>2.准备底部 footer.html，使用&lt;footer&gt;展示版权信息或使用lorem占位符代替，并使用CSS水平居中</div>
+      <pre>
+footer {
+  text-align: center;
+}</pre>
+      <div>3.新建html页面，如index.html，添加&lt;iframe&gt;并指定src为footer.html；注意路径的使用</div>
+      <pre>&lt;iframe src="./footer.html" frameborder="1"&gt;&lt;/iframe&gt;</pre>
+      <div>4.设置&lt;iframe&gt;样式，如宽度100%，更加符合目标页面的需要</div>
+      <pre>
+iframe {
+  width: 100%;
+}</pre>
+      <div>5.在index.html中右键单击，选择open with live server，打开浏览器，查看页面渲染效果</div>
+      <div>6.改进</div>
+      <div>嵌入页面内容过多时，超过默认大小，出现滚动条，影响用户体验</div>
+      <div>取消&lt;iframe&gt;的默认滚动条[设置scrolling='no']</div>
+      <div>7.指定高度 - 在index.html中检查&lt;iframe&gt;实际高度并设置其CSS样式</div>
+      <pre>
+iframe {
+  width: 100%;
+  height: 300px;//
+}</pre>
+      <div>或：使用内联事件onload动态设置 - 推荐</div>
+      <pre>&lt;iframe src="xxx.html" name="cont" frameborder="0" scrolling="no"&gt;&lt;/iframe&gt;</pre>
+      <div>或：使用js动态设置 - 获取元素，设置样式；请参考上述内联事件完成</div>
+    </dd>
+    <dt>按需加载</dt>
+    <dd>&lt;a&gt;中，href属性指定的内容，可以设置target属性，指定内容打开的位置；可以在当前页面打开，也可以在新页面打开，还可以在&lt;iframe&gt;中打开</dd>
+    <dd>利用这个特点，可以动态/按需加载页面</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 按需加载</dd>
+    <dd>
+      <div>1.新建H5项目</div>
+      <div>2.创建诺干需要加载的.html测试页面，内容可以使用占位符lorem代替</div>
+      <div>3.新建index.html文件</div>
+      <div>4.添加&lt;iframe&gt;，指定name属性为cont，并设置其样式，如宽度、高度</div>
+      <pre>&lt;iframe src="xxx.html" name="cont" frameborder="0" scrolling="no"&gt;&lt;/iframe&gt;</pre>
+      <div>5.添加诺干&lt;a&gt;，分别指定href属性为对应的.html测试页面，指定target为&lt;iframe&gt;的name：cont</div>
+      <pre>
+&lt;a href="./table.html" target="cont">table&lt;/a&gt;</pre>
+      <div>6.调整各页面样式至合适</div>
+      <div>7.在index.html中，右键单击，选择open with live server，打开浏览器，单击&lt;a&gt;，查看页面动态加载效果</div>
+    </dd>
+    <dt>安全域 Domain</dt>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 跨域加载</dd>
+    <dd>加载百度到当前域名网站内，会提示如下信息，表示百度被设置为禁止内嵌</dd>
+    <dd>[ <span class="iconfont icon-bomb"></span> ]如果百度在其网站内部设置了恶意代码。。。</dd>
+    <dd>
+      <pre>
+&lt;iframe src="https://www.baidu.com" frameborder="0" scrolling="no" title="baidu"&gt;&lt;/iframe&gt;</pre>
+      <pre>Refused to display 'https://www.baidu.com/' in a frame because it set 'X-Frame-Options' to 'sameorigin'.</pre>
+      </figure>
+    </dd>
+    <dt>sandbox</dt>
+    <dd>
+      <div>&lt;iframe&gt;的安全属性，对其使用进行限制</div>
+      <div>script脚本不能执行</div>
+      <div>不能发送ajax请求</div>
+      <div>不能使用本地存储，即localStorage,cookie等</div>
+      <div>不能创建新的弹窗和window</div>
+      <div>不能发送表单</div>
+      <div>不能加载额外插件比如flash等</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>""</td>
+          <td>启用所有限制条件</td>
+        </tr>
+        <tr>
+          <td>allow-same-origin</td>
+          <td>允许将内容作为普通来源对待。如果未使用该关键字，嵌入的内容将被视为一个独立的源</td>
+        </tr>
+        <tr>
+          <td>allow-top-navigation</td>
+          <td>嵌入的页面的上下文可以导航（加载）内容到顶级的浏览上下文环境（browsing context）
+            <br> 如果未使用该关键字，这个操作将不可用
+          </td>
+        </tr>
+        <tr>
+          <td>allow-forms</td>
+          <td>允许表单提交</td>
+        </tr>
+        <tr>
+          <td>allow-scripts</td>
+          <td>允许脚本执行</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>同域-In/Same Domain</dt>
+    <dd>
+      <div>协议相同</div>
+      <div>域名相同</div>
+      <div>端口相同</div>
+      <div>目的：保证用户信息的安全，防止恶意的网站窃取数据</div>
+      <div>非常必需；否则 Cookie 可以共享，互联网就毫无安全可言</div>
+      <div>可以简单理解为是同一个网站/域名/网站内部</div>
+    </dd>
+    <dt>跨域-Cross Domain</dt>
+    <dd>
+      <div>不同的网站/域名</div>
+      <div>默认情况下，仅仅支持同域页面加载，跨越加载会告警</div>
+      <div>同域情况下，父窗口和子窗口可以互相通信；如果跨域，则无法通信</div>
+      <div>http://www.example.com/dir/page.html</div>
+      <div>协议：http</div>
+      <div>域名：www.example.com</div>
+      <div>端口：80（默认端口，可以省略）</div>
+      <pre>
+<span>http://www.example.com/dir2/other.html：同源</span>
+<span>http://example.com/dir/other.html：不同源（域名不同）</span>
+<span>http://v2.www.example.com/dir/other.html：不同源（域名不同）</span>
+<span>http://www.example.com:81/dir/other.html：不同源（端口不同）</span>
+<span>https://www.example.com/dir/page.html：不同源（协议不同）</span></pre>
+    </dd>
+    <dt>其它使用</dt>
+    <dd>
+      <div>当前页面可以访问加载页面的DOM和cookie</div>
+      <pre>
+let iframe = document.getElementById("footer");
+iframe.onload = function () {
+    let doc = iframe.contentWindow.document;
+    console.log(doc.getElementById('author').innerHTML);
+    console.log(document.cookie);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>&lt;iframe&gt;的同域使用</dd>
+    <dd class="quote">
+      <div>. 使用iframe要防止被iframe：页面被运行商劫持了，被挂上/注入不知名的野鸡广告</div>
+      <div>. 很多非法网站让人防不胜防的小广告，大多都是iframe实现的</div>
+    </dd>
+    <dt>作业</dt>
+    <dd>使用&lt;iframe&gt;制作底部版权信息来优化个人网站</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let iframe = document.getElementById("footer");
+    iframe.onload = function () {
+      let doc = iframe.contentWindow.document;
+      console.log(doc.getElementById('author').innerHTML);
+      console.log(document.cookie);
+    }
+  </script>
+</body>
+
+</html>

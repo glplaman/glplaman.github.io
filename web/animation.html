@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>帧动画 Animation</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/ani.css">
+  <!-- <link rel="stylesheet" href="../css/fade.css"> -->
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="mask"></div>
+  <header>
+    <h1>帧动画</h1>
+    <span>&commat;Animation</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">概述 Overview</a>
+      <a href="" style="--delay:1" class="nav-item">案例 Cases</a>
+      <a href="" style="--delay:2" class="nav-item">步进 Steps</a>
+      <a href="" style="--delay:3" class="nav-item">自定义属性 @Property</a>
+      <a href="" style="--delay:4" class="nav-item">事件 Events</a>
+    </nav>
+    <img class="plane" src="./imgs/plane.webp" alt="">
+  </header>
+  <dl>
+    <dt class="nav-cont">概述 Overview</dt>
+    <dd>
+      <div>.使用关键字 @keyframes 定义诺干个关键帧来表示元素的状态</div>
+      <!-- <div>.皮影戏和早期非常流行的 flash 动画也是采用关键帧实现</div> -->
+      <div>.更多高级动画，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation">MDN -
+          animation</a>、<a href="./framework/animate.html">Animate使用</a>、<a
+          href="https://animate.style/">animate.css</a>、<a href="https://animejs.com/">animejs</a>、<a
+          href="http://www.animate.net.cn/">Animate官方动画库</a>、<a href="https://scrollrevealjs.org/">scrollrevealjs</a>、<a
+          href="https://docs.fontawesome.com/web/style/animate">fontawesome</a>
+      </div>
+      <table>
+        <caption>animation vs transition</caption>
+        <tr>
+          <th>animation</th>
+          <th>transition</th>
+        </tr>
+        <tr>
+          <td>多个元素共享</td>
+          <td>当前元素</td>
+        </tr>
+        <tr>
+          <td>多个状态</td>
+          <td>两个状态</td>
+        </tr>
+        <tr>
+          <td>常规、步进、时间轴</td>
+          <td>常规、步进</td>
+        </tr>
+        <tr>
+          <td>关键字、百分比</td>
+          <td>属性</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>定义动画 Definition</dt>
+    <dd>
+      <div>.初始状态/initial：元素应用动画前的状态</div>
+      <div>.开始状态/start state/第一个关键帧状态：如果不指定0%或from，则元素初始状态就是开始状态/第一个关键帧状态</div>
+      <div>.结束状态/end state/最后一个关键帧状态：如果不指定100%或to，则元素初始状态就是结束状态/最后一个关键帧状态</div>
+      <div>.动画结束后，默认回到初始状态</div>
+      <div class="sn">
+        <div>利用关键字 from 和 to；通常省略 from，表示从初始状态开始；关键字只能定义2个状态</div>
+        <pre>
+@keyframes ani_name {
+    from {
+      /* 开始状态/第一个关键帧 */
+    }
+
+    to {
+      /* 结束状态/最后一个关键帧 */
+    }
+}</pre>
+        <div>利用百分比：可以定义多个百分比节点/状态，动画效果更为灵活细腻</div>
+        <pre>
+@keyframes ani_name {
+    0% {  
+      /* 开始状态/第一个关键帧 */    
+    }
+
+    50% {    
+      /* 中间状态/中间关键帧 */  
+    }
+
+    100% {  
+      /* 结束状态/最后一个关键帧 */    
+    }
+}</pre>
+      </div>
+    </dd>
+    <dt>使用动画 Usage</dt>
+    <dd class="sn">
+      <p>.可以使用复合属性语法；也可以使用单独属性语法</p>
+      <div>复合属性语法</div>
+      <pre>animation: name duration timing-function delay iteration-count direction fill-mode;</pre>
+      <div>单独属性语法</div>
+      <pre>
+animation-name:
+animation-duration:
+animation-timing-function:
+animation-delay:
+animation-iteration-count:
+animation-direction:
+animation-fill-mode:
+</pre>
+    </dd>
+    <dt>动画属性</dt>
+    <dd>
+      <table>
+        <caption>动画属性</caption>
+        <tr>
+          <th style="width: 30%;">类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>name</td>
+          <td>动画名称</td>
+        </tr>
+        <tr>
+          <td>duration</td>
+          <td>动画持续时间 - length of time that an animation takes to complete one cycle
+            <br>单位秒 s 或毫秒 ms
+            <br>必须是正值或0 - must be positive or zero
+            <br>必须指定单位 - unit is required
+          </td>
+        </tr>
+        <tr>
+          <td>timing-function</td>
+          <td>动画方式；见下表</td>
+        </tr>
+        <tr>
+          <td>delay</td>
+          <td>动画延迟时间，必须是第2个时间参数
+            <br>正值 positive value：推迟
+            <br>负值 negative value：提前
+          </td>
+        </tr>
+        <tr>
+          <td>iteration-count</td>
+          <td>动画播放次数
+            <br>数值：默认1
+            <br>infinite：无穷；重复播放
+          </td>
+        </tr>
+        <tr>
+          <td>direction</td>
+          <td>动画方向
+            <br>alternate：
+            <br>reverse：反向播放
+            <br>alternate-reverse：先反向播放，再正向播放
+          </td>
+          </td>
+        </tr>
+        <tr>
+          <td>fill-mode</td>
+          <td>动画<span class="warn">开始和结束</span>时如何应用状态/样式 - applies styles to its target before and after its execution
+            <br>none：不指定任何样式；从元素初始状态开始，结束后返回初始状态；默认值
+            <br>backwards：动画开始时，从第一个关键帧开始；如果有延迟，将始终保持在当前状态
+            <br>forwards：动画结束时，保持在最后一个关键帧 - retain the computed values set by the last keyframe；特别适合多个有延迟的动画
+            <br>both：从第一个关键帧开始，结束时保持在最后一个关键帧；不会返回初始状态
+          </td>
+        </tr>
+        <tr>
+          <td>animation-play-state</td>
+          <td>动画状态 - whether an animation is running or paused
+            <br> paused：暂停状态 - currently paused
+            <br>running：播放状态 - currently playing
+            <br>可以通过 :hover 或 JavaScript 来控制动画的播放状态
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline">animation-timeline</a></td>
+          <td>动画时间线</td>
+        </tr>
+      </table>
+      <table>
+        <caption>动画方式 animation-timing-function</擦【>
+        <tr>
+          <th style="width: 30%;">类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>ease</td>
+          <td>默认。动画以低速开始，然后加快，在结束前变慢</td>
+        </tr>
+        <tr>
+          <td>linear</td>
+          <td>动画从头到尾的速度是相同的</td>
+        </tr>
+        <tr>
+          <td>ease-in</td>
+          <td>动画以低速开始</td>
+        </tr>
+        <tr>
+          <td>ease-out</td>
+          <td>动画以低速结束</td>
+        </tr>
+        <tr>
+          <td>ease-in-out</td>
+          <td>动画以低速开始和结束</td>
+        </tr>
+        <tr>
+          <td>cubic-bezier(n,n,n,n)</td>
+          <td>使用 cubic-bezier 函数定义过程</td>
+        </tr>
+        <tr>
+          <td>steps()</td>
+          <td>步进动画方式；见后续内容</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 动画分析</dd>
+    <dd class="sn">
+      <div>鼠标悬停时，动画从红色#f40开始，变换到绿色#0a0；动画结束后，返回白色#fff</div>
+      <pre>
+.tmp {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;/* 初始状态 */
+}
+
+.tmp:hover {
+    animation: --color 1s;
+}
+
+@keyframes --color {
+    from {
+        background-color: #f40;/* 开始状态 */
+    }
+
+
+    to {
+        background-color: #0a0;/* 结束状态 */
+    }
+}</pre>
+      <div>鼠标悬停时，动画从红色#f40开始，变换到绿色#0a0；动画结束后，保持在绿色#0a0</div>
+      <pre>
+.tmp {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;/* 初始状态 */
+}
+
+.tmp:hover {
+    animation: --color 1s forwards;/* forwards*/
+}
+
+@keyframes --color {
+    from {
+        background-color: #f40;/* 开始状态 */
+    }
+
+
+    to {
+        background-color: #0a0;/* 结束状态 */
+    }
+}</pre>
+      <div>未指定开始状态；鼠标悬停时，动画从白色#fff开始，变换到绿色#0a0；动画结束后，返回白色#fff</div>
+      <pre>
+.tmp {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;/* 初始状态；也是开始状态 */
+}
+
+.tmp:hover {
+    animation: --color 1s;
+}
+
+@keyframes --color {
+
+    to {
+        background-color: #0a0;/* 结束状态 */
+    }
+}</pre>
+      <div>鼠标悬停时，动画从红色#f40开始，变换到白色#fff；动画结束后，返回白色#fff；不建议使用，应该显式的指定结束状态</div>
+      <pre>
+.tmp {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;/* 初始状态；也是结束状态 */
+}
+
+.tmp:hover {
+    animation: --color 1s;
+}
+
+@keyframes --color {
+
+    from {
+        background-color: #f40;/* 开始状态 */
+    }
+}</pre>
+      <div>鼠标悬停时，动画从红色#f40开始，变换到绿色#0a0；动画结束后，返回白色#fff；不使用 backwards，不指定 from，相当于第3种情况</div>
+      <pre>
+.tmp {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;/* 初始状态 */
+}
+  
+.tmp:hover {
+    animation: --color 1s backwards;
+}
+
+@keyframes --color {
+    from {
+        background-color: #f40;
+    }
+
+
+    to {
+        background-color: #0a0;
+    }
+}</pre>
+    </dd>
+    <dt>其他说明</dt>
+    <dd>
+      <div>.多个动画使用逗号,分隔，可以分别指定某个动画的属性</div>
+      <div>.先播放第一个动画 roll，接着播放第二个动画 zoom，然后一直循环播放第二个动画</div>
+      <pre>
+animation: 
+    roll 2s ease,
+    zoom 2s 2s ease infinite alternate;</pre>
+      <div>.先播放第一个动画 roll，接着播放第二个动画 zoom，最后一直循环播放第一个动画</div>
+      <pre>
+animation: 
+    roll 2s ease infinite alternate,
+    zoom 2s 2s ease;</pre>
+    </dd>
+  </dl>
+  <div class="chap">案例 Cases</div>
+  <dl class="nav-cont">
+    <dd>[<span class="iconfont icon-keyboard"></span>] 走马灯 - 查看顶部 banner</dd>
+    <dd>
+      <div>.使用margin-right实现</div>
+      <div>.请使用其它属性实现</div>
+      <pre>animation: mov 10s linear infinite;</pre>
+      <pre>
+@keyframes mov {
+  0% {
+    margin-right: -800px;
+  }
+
+  100% {
+    margin-right: 100%;
+  }
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 进度条</dd>
+    <dd>
+      <div>1. <a href="./demo/loading-line.html">平滑缩放</a></div>
+      <div>.宽度从0到100%，最后保持在100%</div>
+      <div>.可以使用伪元素节省元素</div>
+      <div>.可以使用变换缩放实现</div>
+      <pre>
+.per{
+    animation: --per 10s linear forwards;
+}    </pre>
+      <pre>
+@keyframes --per {
+    100% {
+        width: 100%;
+    }
+}</pre>
+      <div>2. 除了自动播放，也可以鼠标 :hover 时触发动画</div>
+      <pre>
+.per {
+  /* 暂停动画 */
+  animation-play-state: paused;
+}
+
+.loading:hover .per {
+    animation-play-state: running;
+}</pre>
+      <div>3. <a href="./demo/transform-loading-line.html">多彩进度条</a>、<a href="./demo/loading-ring.html">进度环</a></div>
+      <div>
+        <div>.延迟时间等分</div>
+        <div>.内联变量 --val</div>
+        <div>.取值函数 var()</div>
+        <div>.变换 transform</div>
+        <div>.滤镜 filter</div>
+      </div>
+      <div>4. <a href="./demo/transform-cell.html">蜂窝加载</a></div>
+      <div>
+        <div>.弹性盒子 flex</div>
+        <div>.定位 position</div>
+        <div>.变换 transform</div>
+        <div>.伪元素 ::before ::after</div>
+      </div>
+      </div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/anim-delay.html">延迟动画 - 迷你版</a> -
+      多个元素依次/延迟移入视口；更多案例，请访问
+      <a href="./demo/form-transition-bak.html">页面动画 - 简化版</a>、<a href="./demo/form-transition.html">页面动画 - 完整版</a>、<a
+        href="./demo/animPage.html">页面动画</a>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animBubble.html">气泡 bubble</a></dd>
+    <dd>
+      <div>.内联变量 style；结构要随机错开顺序</div>
+      <div>.滤镜 filter</div>
+      <div>.盒阴影 box-shadow</div>
+      <pre>animation: floating calc(100s/var(--i)) linear infinite;</pre>
+      <pre>
+@keyframes floating {
+    from {
+        transform: translateY(100vh) scale(0);
+    }
+
+    to {
+        transform: translateY(-10vh) scale(1);
+    }
+}      </pre>
+      <div>改进1. 使用 JavaScript 生成随机动画时长数</div>
+      <div>改进2. 使用 JavaScript 生成DOM节点和随机动画时长数</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-message1.html">边框动画</a></dd>
+    <dd>
+      <div>.盒阴影 box-shadow</div>
+      <div>.获取焦点 :focus 时重复播放</div>
+      <pre>
+input:focus,
+textarea:focus {
+  animation: --border 1s linear infinite alternate;
+}      </pre>
+      <pre>
+@keyframes --border {
+  from {
+    box-shadow: 0 0 0px var(--main-color);
+  }
+
+  to {
+    box-shadow: 0 0 8px var(--main-color);
+  }
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/avatar.html">头像背景动画</a></dd>
+    <dd>
+      <div>.渐变背景 linear-gradient()</div>
+      <div>.定位 Position</div>
+      <div>.变换 transform - rotate</div>
+      <pre>animation: roll 5s linear infinite;</pre>
+      <pre>
+@keyframes roll {
+    to {
+        transform: rotate(360deg);
+    }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/xxMBKdP">Text -
+        CodePen</a></dd>
+    <dd>
+      <div>.帧动画 animation</div>
+      <div>.内联变量 --val</div>
+      <div>.取值函数 var()</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animWave.html">线条动画</a>、<a
+        href="https://codepen.io/glpla/full/MWLLNvM">Wave - CodePen</a></dd>
+    <dd>
+      <div>.使用弹性盒子 flex或定位</div>
+      <div>.帧动画 animation</div>
+      <div>.内联变量 --val</div>
+      <div>.取值函数 var()</div>
+      <div>.变换 transform</div>
+      <div>.滤镜 filter</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/oNmOjzQ">科技环 - CodePen</a>
+    </dd>
+    <dd>
+      <div>.边框 border</div>
+      <div>.圆角边框 border-radius</div>
+      <div>.变换 transform</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./drill/drill_ide.html">背景变换</a>；也可以使用角度渐变实现，案例实现请访问 <a
+        href="./demo/clock.html">数字时钟</a></dd>
+    <dd class="sn">
+      <div>使用滤镜 filter；背景可以是任何形式的内容</div>
+      <pre>
+header {
+  height: 300px;
+  background-image: url(../web/imgs/coolbg.png);
+  background-size: cover;
+  animation: glow 10s linear infinite alternate-reverse;
+}
+
+@keyframes glow {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}      </pre>
+      <div>默认情况下，背景图片无法参与动画；使用自定义属性 @property 控制渐变背景属性，如角度</div>
+      <pre>
+@property --deg-r {
+  syntax: '&lt;angle&gt;';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.wrap {
+  --deg-r: 0deg;
+  width: 100px;
+  height: 200px;
+  background-image: linear-gradient(var(--deg-r), #f0f, #0ff);
+  margin: 100px auto;
+  animation: flash 2s linear infinite;
+}
+
+@keyframes flash {
+  to {
+    --deg-r: 360deg;
+  }
+}    </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 输入非数字时，边框抖动提示用户输入非法</dd>
+    <dd>
+      <input class="shaking-ipt" type="text" pattern="[0-9]*" placeholder="your age with number">
+      <pre>
+.shaking-ipt:invalid {
+    color: #f40;
+    animation: shaking .1s ease-in-out 3;
+    box-shadow: 0 0 2px #f40;
+}
+
+@keyframes shaking {
+    0% {
+        margin-left: 0;
+    }
+
+    25% {
+        margin-left: 4px;
+    }
+
+    75% {
+        margin-left: -4px;
+    }
+
+    75% {
+        margin-left: 0px;
+    }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 传送带</dd>
+    <dd class="tx-box">
+      <div class="tx">
+        <div class="tx-shadow"></div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">步进动画 steps()</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>
+      <div>.动画方式还可以按照指定的阶段数 steps 逐步完成</div>
+      <div>.由时间函数 steps() 指定分段过渡效果</div>
+      <div>.同过渡动画 transition</div>
+      <pre>steps(number_of_steps，direction)</pre>
+      <div>number_of_steps：数字，过渡分几个阶段完成</div>
+      <div>direction：start 和 end，默认是 end，指每个阶段过渡结束后才渲染；start 则是过渡开始前就渲染</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/loading-line.html">进度条 - 步进</a>、<a
+        href="./demo/loading.html">进度条 - 模拟加载页</a></dd>
+    <dd>
+      <div>.元素的宽度经过10次步进从0变换到100%</div>
+      <pre>
+.step {
+  width: 0;
+    background-image: linear-gradient(to right, #089, #0af);
+    box-shadow: 0 0 10px #08a, 0 0 20px #08a, 0 0 40px #08a;
+    animation: --per 5s steps(10) forwards;
+}
+
+@keyframes --per {
+    to {
+        width: 100%;
+    }
+}          </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animIcon.html">图标动画 - 3D Icon</a></dd>
+    <dd>
+      <div>.使用精灵图作为背景，包括24个icon</div>
+      <div>.每个icon大小为150*150，精灵图大小为150*3600；24*150 = 3600</div>
+      <div>.最上边位置为0 0，最下边位置为 0 -（3600 - 150）</div>
+      <div>.通过步进调整背景图片位置</div>
+      <div>.分别定义静态动画和鼠标悬停 hover 动画</div>
+      <div>.注意素材的设计和收集</div>
+      <div>.鼠标移出：从底部返回顶部</div>
+      <pre>
+@keyframes icon-leave {
+    from {
+        background-position: 0 -3450px;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+</pre>
+      <div>.鼠标移入：从顶部移动到底部</div>
+      <pre>
+@keyframes icon-enter {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 0 -3450px;
+    }
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animCountdown.html">倒计时 - Countdown</a></dd>
+    <dd>
+      <div>1. 使用4张背景图片</div>
+      <div>.从3依次减到0，分3段进行</div>
+      <div>.利用步进调整图片的水平位置</div>
+      <div>2. 使用精灵图</div>
+      <div>.精灵图大小50*500</div>
+      <div>.每个数字大小50*50</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/anim-swiper.html">轮播图 - swiper</a></dd>
+    <dd>
+      <div>.使用 flex；不换行</div>
+      <div>.初始定位在左侧 left 0</div>
+      <div>.采用步进 steps() 逐步设置swiper的左侧 left 位置</div>
+      <div>.循环</div>
+      <pre>
+animation: swiper 5s steps(5) infinite;
+</pre>
+      <pre>
+@keyframes swiper {
+  to {
+      left: -500%;
+  }
+}</pre>
+      <div>.不循环</div>
+      <pre>
+animation: swiper 4s steps(4) forwards;
+</pre>
+      <pre>
+@keyframes swiper {
+  to {
+      left: -400%;
+  }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/oNVjXLE">打字 typing -
+        CodePen</a>、<a href="./framework/typedjs.html">typed.js</a></dd>
+    <dd>
+      <div>.字体等宽</div>
+      <div>.多动画使用：移位动画和闪烁动画</div>
+      <div>.重复动画 infinite</div>
+      <div>.动画延迟 animation-delay</div>
+      <div class="tips">
+        <div>动画infinite时，最后一个字符会被忽略</div>
+        <div>动画forwards时，最后一个字符会显示</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">自定义属性动画 @Property</div>
+  <dl class="nav-cont">
+    <dd>1. 定义某个 CSS 属性以便参与动画运算</dd>
+    <pre>
+@property --deg {
+  syntax: "&lt;angle&gt;";
+  initial-value: 0deg;
+  inherits: false;
+}</pre>
+    <dd>2. 创建动画</dd>
+    <pre>
+@keyframes scroll {
+  from {
+    --deg: 0deg
+  }
+
+  to {
+    --deg: 360deg
+  }
+}</pre>
+    <dd>3. 使用动画</dd>
+    <pre>
+.box {
+  width: 300px;
+  height: 200px;
+  background-image: conic-gradient(from var(--deg), red, yellow, blue);
+  animation: scroll 1s linear infinite;
+}</pre>
+  </dl>
+  <div class="chap">动画事件 Events</div>
+  <dl class="nav-cont">
+    <dd>.可以使用 JavaScript 监测或控制动画的属性，如播放、暂停等</dd>
+    <dd>
+      <table>
+        <caption>动画事件</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>开始</td>
+          <td>animationstart </td>
+        </tr>
+        <tr>
+          <td>结束</td>
+          <td>animationend</td>
+        </tr>
+        <tr>
+          <td>重新播放</td>
+          <td>animationiteration</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/loading.html">个人网站加载</a>、<a href="/">转场动画</a>
+    </dd>
+    <dd>
+      <div>.页面加载完毕跳转到主页面</div>
+      <div>.先设计动画并应用到某元素，然后在 JavaScript 中监测元素的动画状态，结束时跳转到主页面</div>
+      <pre>
+let item = document.querySelector('.item')
+item.addEventListener('animationend', () => {
+  location.href = './index.html'
+})        </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/miniplayer.html">MINI音乐播放器</a>
+    </dd>
+    <dd>
+      <div>一开始动画暂停，监听播放状态。播放就执行动画；否则暂停</div>
+      <pre>
+audio.addEventListener('play', () => {
+  img.style.animationPlayState = `running`
+})
+audio.addEventListener('pause', () => {
+  img.style.animationPlayState = `paused`
+})        </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animHop.html">字节跳动</a></dd>
+    <dd>
+      <div>.变换 - 缩放动画</div>
+      <div>.每次鼠标滑过 mouseover 都触发3次动画 - 鼠标事件</div>
+      <pre>
+let spans = document.querySelectorAll("span");
+spans.forEach((span) => {
+    span.addEventListener("mouseover", () => {
+        span.classList.add("active");
+    });
+    span.addEventListener("animationend", () => {
+        span.classList.remove("active");
+    });
+});      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击后左移2次，结束后移除事件响应</dd>
+    <dd>
+      <div>.事先应创建好动画样式</div>
+      <pre>
+let btn = document.querySelector('.btn');
+btn.addEventListener('click', () => {
+    btn.style.animation = 'moveOut 1s 2 forwards'
+})
+btn.addEventListener('animationend', () => {
+    btn.style.pointerEvents = 'none'
+})
+btn.addEventListener('animationiteration', logging)
+function logging() {
+    console.log('animationiteration');
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd class="sn">
+      <div>帧动画的静态使用</div>
+      <div>帧动画的 JavaScript 使用</div>
+    </dd>
+    <dt>作业</dt>
+    <dd class="sn">
+      <div>独立完成上述案例</div>
+      <div>合理设计帧动画，完善个人网站</div>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <!-- <script src="/utils/custom/fade.js"></script> -->
+  <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>

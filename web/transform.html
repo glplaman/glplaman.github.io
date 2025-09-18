@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>变形 Transform</title>
+  <link rel="stylesheet" href="./css/transform.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <nav>
+    <a class="nav-item link-item active" href="">
+      <span class="icon">
+        <span class="iconfont icon-shouye_o"></span>
+      </span>
+      <span class="en">home</span>
+      <span class="cn">简介</span>
+    </a>
+    <a class="nav-item link-item" href="">
+      <span class="icon"><span class="iconfont icon-jiantou_xiangyou_o"></span></span>
+      <span class="en">translate</span>
+      <span class="cn">位移</span>
+    </a>
+    <a class="nav-item link-item" href="">
+      <span class="icon"><span class="iconfont icon-moduanzuoyouzhankai_o"></span></span>
+      <span class="en">scale</span>
+      <span class="cn">缩放</span>
+    </a>
+    <a class="nav-item link-item" href="">
+      <span class="icon"><span class="iconfont icon-jiazai_shuaxin_o"></span></span>
+      <span class="en">rotate</span>
+      <span class="cn">旋转</span>
+    </a>
+    <a class="nav-item link-item" href="">
+      <span class="icon"><span class="iconfont icon-jiantou_youxia_o"></span></span>
+      <span class="en">skew</span>
+      <span class="cn">倾斜</span>
+    </a>
+    <a class="nav-item link-item" href="">
+      <span class="icon"><span class="iconfont icon-baoguo_hezi_o"></span></span>
+      <span class="en">3d</span>
+      <span class="cn">三维</span>
+    </a>
+  </nav>
+  <dl class="nav-cont">
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>.变形 transform 允许您移动 translate、缩放 scale、旋转 rotate 和倾斜 Skew；综合使用，可以呈现3D效果</div>
+      <div>.分为2D变形和3D变形，分别有相应的CSS属性</div>
+      <div>.适用于 <span class="warn">block</span> 元素</div>
+      <div>.可以在不使用定位的情况下，移动元素，且提高层级</div>
+      <div>.每个变换都可以指定起点 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin">transform-origin</a>
+        ；默认是对象几何中心 - 50% 50% 0</div>
+      <div>.同时应用多个变换属性时，属性顺序不同，最后结果也不相同；建议先旋转 rotate 再平移 translate</div>
+      <div>.变换不会引用 reflow 重新布局</div>
+      <div>.更多变换，请访问 <a href="https://bennettfeely.com/ztext/" title="less than 10 chars">ztext.js</a></div>
+      <div class="tips">When possible, use transforms and opacity for animation rather than layout properties like
+        "top", "left" or
+        "margin". You'll get smoother animations!</div>
+    </dd>
+  </dl>
+  <div class="chap">位移 Translate</div>
+  <dl class="nav-cont">
+    <dt>位移 Translate</dt>
+    <dd>
+      <div></div>
+      <div>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/translate">MDN - translate</a></div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX">translateX(tx)</a>
+          </td>
+          <td>X轴位移 - horizontally on the 2D plane</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateY">translateY(ty)</a>
+          </td>
+          <td>Y轴位移 - vertically on the 2D plane</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateZ">translateZ(tz)</a>
+          </td>
+          <td>Z轴位移 - along the z-axis in 3D space</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate">translate(tx [,
+              ty])</a></td>
+          <td>1个参数，沿x轴；2个参数，分别沿着x轴、y轴 - in the horizontal and/or vertical directions</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate3d">translate3d(tx,
+              ty, tz)</a></td>
+          <td>3D位移 - in 3D space</td>
+        </tr>
+      </table>
+      <div class="tips">
+        <div>translateX(tx) = translate(tx, 0) = translate3d(tx, 0, 0)</div>
+        <div>translateY(ty) is equivalent to translate(0, ty) or translate3d(0, ty, 0).</div>
+        <div>translateZ(tz) is equivalent to translate3d(0, 0, tz)</div>
+        <div>translate(2px) = translate(2px, 0)</div>
+      </div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a
+        href="./demo/transform-translate.html">单个子元素居中</a>；更多居中，请访问 <a href="./center.html">居中专题</a></dd>
+  </dl>
+  <div class="chap">缩放 Scale</div>
+  <dl class="nav-cont">
+    <dt>缩放 Scale</dt>
+    <dd>
+      <div>.缩放不会影响元素尺寸；但是会影响/覆盖到周围其他元素</div>
+      <div>.缩放因子 factor：值大于1，放大；值小于1，缩小</div>
+      <div>.也可以取负值；-1可以实现镜像 symmetry</div>
+      <div>.更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scale">MDN - scale</a></div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX">scaleX(factor)</a>
+          </td>
+          <td>X轴缩放 - along the x-axis</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY">scaleY(factor)</a>
+          </td>
+          <td>Y轴缩放 - along the y-axis</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleZ">scaleZ(factor)</a>
+          </td>
+          <td>Z轴缩放 - along the z-axis</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale">scale(factorX[,
+              factorY])</a></td>
+          <td>2D平面缩放 - on the 2D plane / only scales in 2D</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale3d">scale3d(factorX,
+              factorY, factorZ)</a></td>
+          <td>3D缩放 - in 3D space</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-breath.html">呼吸灯 -
+        Breath</a></dd>
+    <dd>
+      <div>.过渡动画 transition</div>
+      <div>.缩放 scale</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/avatar.html">定制头像 -
+        Avatar</a>；更多实现请访问 <a href="https://codepen.io/glpla/full/yLwBgwN">头像 avatar - CodePen</a></dd>
+    <dd>
+      <div>.缩放 scale</div>
+      <div>.变换起点 transform-origin</div>
+      <div>.边框 border</div>
+      <div>.圆角边框 border-radius</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-loading-line.html">线性加载 -
+        Loading</a>、<a href="https://codepen.io/glpla/full/vYPBgvj">线性加载
+        Loading - CodePen</a></dd>
+    <dd>
+      <div>.弹性盒子 flex</div>
+      <div>.帧动画 animation</div>
+      <div>.内联变量 --var</div>
+      <div>.滤镜 filter</div>
+    </dd>
+  </dl>
+  <div class="chap">旋转 Rotate</div>
+  <dl class="nav-cont">
+    <dt>旋转 Rotate</dt>
+    <dd>
+      <div>.单位：度 deg、弧度 rad、圈 turn</div>
+      <div>.方向：正数为顺时针；负数为逆时针 - If positive, the movement will be clockwise; if negative, it will be
+        counter-clockwise.</div>
+      <div>.旋转 rotate 会改变默认的方向，后续的位移 translate 都会受影响；建议：<span class="warn">先旋转再位移</span>；旋转后再位移，位移是参照旋转后的坐标系 -
+        如，定位后，Z轴统一朝外</div>
+      <div>.更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/rotate">MDN - rotate</a></div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX">rotateX(angle)</a>
+          </td>
+          <td>X轴旋转 - around the x-axis</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY">rotateY(angle)</a>
+          </td>
+          <td>Y轴旋转 - around the y-axis</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ">rotateZ(angle)</a>
+          </td>
+          <td>Z轴旋转 - around the z-axis</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate">rotate(angle)</a>
+          </td>
+          <td>2D平面旋转 - on the 2D plane；相当于 rotateZ(angle)</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d">rotate3d(x, y, z,
+              a)</a>
+          </td>
+          <td>3D旋转 - specified by three numbers and one angle
+          </td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-translate.html">标签
+        Label</a></dd>
+    <dd>
+      <div>.旋转 rotate</div>
+      <div>.位移 translate</div>
+      <div>.定位 position</div>
+      <div>.单行居中 line-height</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/site.html">网站 LOGO</a></dd>
+    <dd>
+      <div>.定位 position</div>
+      <div>.边框 border</div>
+      <div>.边框圆角 border-radius</div>
+      <div>.过渡动画 transition</div>
+      <div>.鼠标悬停 :hover</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/avatar.html">网站 LOGO</a> </dd>
+    <dd>
+      <div>.缩放 scale</div>
+      <div>.旋转 rotate</div>
+      <div>.定位 position</div>
+      <div>.边框圆角 border-radius</div>
+      <div>.伪元素 ::before ::after</div>
+      <div>.背景图片 background-image</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/clock_adv.html">时钟 - Clock</a>、<a
+        href="./demo/clock_adv.html">时钟 - Clock</a></dd>
+    <dd>
+      <div>.正向旋转|反向旋转 rotate</div>
+      <div>.伪元素 ::after ::before</div>
+      <div>.父相子绝 relative absolute</div>
+      <div>.内联变量 --var</div>
+      <div>.盒阴影 box-shadow</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-lotus.html">心似莲花 -
+        Lotus</a></dd>
+    <dd>
+      <div>.旋转 rotate</div>
+      <div>.定位 position</div>
+      <div>.边框 border</div>
+      <div>.边框圆角 border-radius</div>
+      <div>.过渡动画 transition</div>
+      <div>.伪元素 ::before ::after</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/olympic.html">奥运五环 - Olympic
+        Rings</a></dd>
+    <dd>
+      <div>.弹性盒子 flex</div>
+      <div>.负边距 margin</div>
+      <div>.边框 border</div>
+      <div>.滤镜 filter 或盒阴影 box-shadow</div>
+      <div>.内联变量 --var</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-adv.html">动态加载 - Loading</a>、<a
+        href="https://codepen.io/glpla/full/jOJNmrG">动态加载 - CodePen</a></dd>
+    <dd>
+      <div>.定位 position</div>
+      <div>.弹性盒子 flex</div>
+      <div>.帧动画 animation</div>
+      <div>.盒阴影 box-shadow</div>
+      <div>.文本阴影 text-shadow</div>
+      <div>.定时器 setInterval</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/wvNZgGa">进阶
+        Loading - CodePen</a></dd>
+    <dd>
+      <div>.定位 position</div>
+      <div>.缩放 scale</div>
+      <div>.帧动画 animation</div>
+      <div>.滤镜 filter</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/gOqExYm">目标导引
+        - CodePen</a></dd>
+    <dd>
+      <div>.内联变量 --var</div>
+      <div>.旋转 rotate</div>
+      <div>.定位 position</div>
+      <div>.或 transform-origin</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/MWLxvjL">饼图 -
+        CodePen</a> </dd>
+    <dd>
+      <div>.适合大于50%的饼图；小于50%的需要另外设计</div>
+      <div>.伪元素 ::before ::after 实现</div>
+      <div>.旋转：利用圈 turn 实现</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/GRzevJW">表格
+        fieldset - CodePen</a></dd>
+    <dd>
+      <div>.通过定位和旋转使诺干 fieldset 有机组合</div>
+      <div>.定位 position</div>
+      <div>.内联变量 --var</div>
+      <div>.旋转 rotate</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/lottery copy.html">乐透 - Lottery</a>
+    </dd>
+    <dd>
+      <div>.定位 position</div>
+      <div>.旋转 rotate</div>
+      <div>.伪元素 ::befor</div>
+      <div>.路径剪切 clip-path</div>
+      <div>.内联变量 --var</div>
+      <div>.弹性盒子 flex</div>
+    </dd>
+  </dl>
+  <div class="chap">倾斜 Skew</div>
+  <dl class="nav-cont">
+    <dt>倾斜 Skew</dt>
+    <dd>
+      <div>.扭曲 distort/倾斜元素</div>
+      <div>.仅限在2D平面</div>
+      <div>.单位：度 deg、弧度 rad、圈 turn</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX">skewX(angleX)</a></td>
+          <td>X轴倾斜 - in the horizontal direction on the 2D plane</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY">skewY(angleY)</a></td>
+          <td>Y轴倾斜 - in the vertical direction on the 2D plane</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew">skew(angleX [,
+              angleY])</a></td>
+          <td>1个参数：沿x轴方向；2个参数，分别沿x轴、y轴方向</td>
+        </tr>
+      </table>
+      <div class="tips">
+        <div>skewX(a) is equivalent to skew(a)</div>
+      </div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/btns.html">按钮设计 - Button</a>、<a
+        href="./demo/parallax.html">个人网站 - 导航</a>、<a href="https://codepen.io/glpla/full/oNmObqL">伪3D导航 - CodePen</a>
+    </dd>
+    <dd>
+      <div>.定位 Position</div>
+      <div>.倾斜 skew：也可以使用变换起点 transform-origin调整倾斜参考位置</div>
+      <div>.伪元素 ::before 或 ::after</div>
+      <div>.过渡动画 transition：可以操作变换属性/translate；也可以操作定位属性/left</div>
+      <div>.鼠标悬停 :hover</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-sample.html">导航设计 - Nav</a>、<a
+        href="https://codepen.io/glpla/full/gOqEWoE">导航1 -
+        CodePen</a>、<a href="https://codepen.io/glpla/full/KKEPwWg">导航2 - CodePen</a></dd>
+    <dd>
+      <div>.导航项目倾斜</div>
+      <div>.文字内容反向倾斜</div>
+      <div>.优化：溢出隐藏</div>
+      <div>.弹性盒子 flex 或 网格 grid</div>
+    </dd>
+    <dd class="tips">
+      <div>其它方案</div>
+      <div>.使用渐变背景</div>
+      <div>.第一个和最后一个使用1个切角</div>
+      <div>.中间2个使用2个切角，注意指定大小和取消重复</div>
+      <div>.使用负边距拉近导航项目的距离</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a
+        href="./demo/transform-netflix.html">Netflix</a>、<a href="https://codepen.io/glpla/full/NWoJGyg">Netflix -
+        CodePen</a></dd>
+    <dd>
+      <div>.静态高度为0；左边和右边定位在底部；中间定位在顶部；方便应用高度动画</div>
+      <div>.变换起点 transform-origin - 中间变换起点调整至顶部</div>
+      <div>.盒阴影 box-shadow - 中间使用阴影，同时提升层级，覆盖在上面</div>
+      <div>.帧动画 animation - 高度从0到100%</div>
+      <div>.为观测方便，整体动画都延迟了1秒</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-logo.html">Logo制作</a>、<a
+        href="https://codepen.io/glpla/full/oNVvWGN">Logo
+        制作 - CodePen</a></dd>
+    <dd>
+      <div>.定位 position</div>
+      <div>.倾斜 skew</div>
+      <div>.伪元素 ::before ::after</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/cover.html">论文封面 -
+        Cover</a></dd>
+    <dd>
+      <div>.定位 position</div>
+      <div>.倾斜 skew</div>
+      <div>.伪元素 ::before ::after</div>
+    </dd>
+  </dl>
+  <div class="chap">三维变换</div>
+  <dl class="nav-cont">
+    <dt><span class="warn">&lt;section1&gt;</span> 天空盒 Sky Box</dt>
+    <dd>
+      <div>1. axis - 坐标轴；左手定则：大拇指指向轴的正方向，四指弯曲方向即为顺时针方向</div>
+      <div class="intro">Z轴</div>
+      <div class="basic intro-img"></div>
+      <div class="mt2">2. translate - 位移</div>
+      <div>Each 3D element with z>0 becomes larger; each 3D-element with z&lt;0 becomes smaller</div>
+      <div class="intro">近大远小</div>
+      <div class="basic">
+        <img class="ob-img" id='trans-img' data-src="../utils/view/view0.jpg" alt="">
+      </div>
+      <div>
+        <input id="ranger" class="ranger" type="range" min=-1000 max=1000 value="0">
+        <div>拖动滑块查看Z轴位移 transform: translateZ( <span id='trans-px'>0</span>px ) [-1000px, +1000px]</div>
+      </div>
+      <div class="mt2">3. rotate - 旋转</div>
+      <div class="intro">
+        <span>顺时针为正；逆时针为负</span>
+      </div>
+      <div class="basic">
+        <img class="ob-img" id='rot-img' data-src="../utils/view/view0.jpg" alt="">
+      </div>
+      <div>
+        <input id="rot" class="ranger" type="range" min=-90 max=90 value="0">
+        <div>. 拖动滑块查看Y轴旋转 transform: rotateY( <span id='trans-deg'>0</span>deg ) [-90deg, +90deg]</div>
+      </div>
+    </dd>
+    <dt><span class="warn">&lt;section2&gt;</span> 核心属性 Core Property</dt>
+    <dd>
+      <div>.transform 默认是2D变形；要呈现3D效果，必须设置透视/景深及指定为3D变形模式；具体步骤为：</div>
+      <div>1. 为祖先元素指定景深 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/perspective">perspective</a> (创建一个天空盒
+        sky box)，单位是px，通常取800px-1200px；景深和视口宽度相差不要太大 - start by configuring the 3D space by giving it a perspective
+      </div>
+      <pre>
+.super {
+    perspective: 1000px;
+}</pre>
+      <div>2. 为自己显式的设置3D变形 transform-style: preserve-3d( flat 表示2D) - then you have to configure how your 2D elements
+        will behave in that space</div>
+      <pre>
+.self {
+    transform-style: preserve-3d;
+}</pre>
+    </dd>
+    <dd class="tips">这两个属性会影响元素的固定定位</dd>
+    <dt><span class="warn">&lt;section3&gt;</span> 实操 Coding</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-card.html">卡片翻转 - Card</a>、<a
+        href="https://codepen.io/glpla/pen/gOqEPLG">Card flip -
+        CodePen</a>、<a href="https://mp.weixin.qq.com/s/DBAm16DaxSCcP02N5_sOZA">CSS3D图片翻转效果</a></dd>
+    <dd>
+      <div>.使用普通元素或者 ::before ::after 展示图片或文字</div>
+      <div>.通过定位使得它们重叠在一起</div>
+      <div>.其中一张翻转180deg</div>
+      <div>.使用 backface-visibility 隐藏背面</div>
+      <div>.移动鼠标到图像上(桌面端)或单击图像(移动端)查看效果</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-cube.html">魔方 - Cube</a>、<a
+        href="./demo/transform-lottery.html">乐透 - Lottery</a>、<a href="https://codepen.io/glpla/full/oNmVWXG">魔方 Cube
+        - CodePen</a>、<a href="https://codepen.io/glpla/full/gOqEWRq">魔方旋转
+        - CodePen</a></dd>
+    <dd>
+      <div>.移动鼠标到图像上(桌面端)或单击图像(移动端)查看效果</div>
+      <div>.相对定位 relative、绝对 absolute</div>
+      <div>.图片 &lt;img&gt;或背景图片 background-image</div>
+      <div>.帧动画 animation 或过渡动画 transition</div>
+      <div>.盒阴影 box-shadow</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-gallery-txt.html">3D画廊 -
+        文字版</a>、<a href="./demo/transform-gallery2.html">3D画廊 - 图片版</a>、<a href="./demo/transform-gallery.html">3D画廊</a>
+    </dd>
+    <dd>
+      <div>.使用文字时，注意显示的方向 - 在反转 180deg 的基础上，再旋转一定角度，最后反向位移，成圆分布</div>
+      <pre>transform: rotateY(calc(180deg + var(--rot) * 60deg)) translateZ(calc(-1*var(--z)));</pre>
+      <div>.位移的长度同景深，故一部分在用户视线前方，一部分在用户视线后方</div>
+      <div>.CSS变量的使用</div>
+      <div>.匹配移动端</div>
+      <pre>
+:root {
+  --z: 1000px;
+  --ar: 16/9;
+}
+@media screen and (max-width: 768px) {
+  :root {
+    --z: 400px;
+    --ar: 9/16;
+  }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/dna.html">DNA</a></dd>
+    <dd>
+      <div>.帧动画 animation</div>
+      <div>.伪元素 ::before 或 ::after</div>
+      <div>.内联变量 --var</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-page.html">翻书</a>、<a
+        href="./demo/resume0.html">简历</a></dd>
+    <dd>
+      <div>.利用内联变量方便设置元素倾斜角度</div>
+      <div>.3D空间的营造：book-wrap 指定景深；book 指定3D变换</div>
+      <div>.打开和闭合的延迟效果</div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-vanilla.html">视觉差</a> -
+      借助第三方库 <a
+        href="https://micku7zu.github.io/vanilla-tilt.js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library">vanilla-tilt</a>，单击
+      <a href="/utils/lib/vanilla-tilt.min.js" download title="点击下载">本地下载</a>
+    </dd>
+    <dd>
+      <pre>
+VanillaTilt.init(document.querySelector(".van-box"), {
+    max: 50,
+    speed: 400
+});</pre>
+    </dd>
+    <dt><span class="warn">&lt;section4&gt;</span> 注意事项 tips</dt>
+    <dd>
+      <div>.父元素不能指定 overflow:hidden；否则就还原为2D模式</div>
+      <div>.如果为更高级的父元素指定景深 perspective，则其下面子元素都应指定3D变换模式，即：这些元素可以共享一个景深/天空盒(sky box)</div>
+      <div>.backface-visibility可以隐藏元素背面，和3D并没有直接关系</div>
+      <div>.更多信息，请访问 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transforms/Using_CSS_transforms#3d_specific_css_properties">MDN
+          - 3D specific CSS properties</a>、<a href="./demo/deal.html" class="link">发牌</a>、<a
+          href="https://codepen.io/glpla/full/oNmOjzQ">科技环 -
+          CodePen</a>
+      </div>
+    </dd>
+    <dt><span class="warn">&lt;section5&gt;</span> 课后练习 Homework</dt>
+    <dd class="number">
+      <div>定制LOGO</div>
+      <div>卡片翻转</div>
+      <div>3D魔方</div>
+      <div>根据个人网站设计，进行扩充完善</div>
+      <div>拓展阅读：查阅CSS3有关 transform 的其他属性和应用</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/lazyload.js"></script>
+  <script>
+    let nav = document.querySelectorAll('.nav-item')
+    console.log(nav);
+    let navCont = document.querySelectorAll('.nav-cont')
+    nav.forEach((item, ind) => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault();
+        setTimeout(function () {
+          navCont[ind].scrollIntoView();
+          reset();
+          item.classList.toggle('active');
+        }, 100)
+      })
+    })
+    function reset() {
+      for (let i = 0; i < nav.length; i++) {
+        nav[i].classList.remove('active');
+      }
+    }
+
+    document.body.addEventListener('touchstart', function () { });
+
+    // translate
+    let transImg = document.querySelector('#trans-img')
+    let ranger = document.querySelector('#ranger')
+    let px = document.querySelector('#trans-px')
+    ranger.addEventListener('input', function () {
+      transImg.style.transform = `translateZ(${this.value}px)`
+      px.innerHTML = this.value
+    })
+
+    // rotate
+    let rotImg = document.querySelector('#rot-img')
+    let rot = document.querySelector('#rot')
+    let deg = document.querySelector('#trans-deg')
+    // console.log(transImg, ranger);
+    rot.addEventListener('input', function () {
+      console.log(this.value);
+      rotImg.style.transform = `rotateY(${this.value}deg)`
+      deg.innerHTML = this.value
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滤镜 Filter</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/filter.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Filter</h1>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">blur</a>
+      <a href="" style="--delay:1" class="nav-item">drop-shadow</a>
+      <a href="" style="--delay:2" class="nav-item">grayscale</a>
+      <a href="" style="--delay:3" class="nav-item">hue-rotate</a>
+      <a href="" style="--delay:4" class="nav-item">brightness</a>
+      <a href="" style="--delay:5" class="nav-item">contrast</a>
+      <a href="" style="--delay:6" class="nav-item">backdrop-filter</a>
+    </nav>
+  </header>
+  <dl>
+    <dd>.为元素添加滤镜效果</dd>
+    <dd>.多个滤镜，请用空格分隔</dd>
+    <dd>.多尝试，找到合适的效果</dd>
+    <dd>原图如下</dd>
+    <dd class="basic">
+      <img class="blur0" src="../utils/view/view0.jpg" alt="">
+    </dd>
+    <dt class="nav-cont">1. blur()</dt>
+    <dd>
+      <div>.模糊滤镜；模糊导致元素的发散会影响到周边其他元素；但是实际尺寸没有变化</div>
+      <pre>filter:blur(px)</pre>
+    </dd>
+    <dd>
+    </dd>
+    <dd class="basic">
+      <img class="blur" src="/utils/logo/ty.png" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 发光效果</dd>
+    <dd class="light-wrap">
+      <div style="--color:#48fc8b"></div>
+      <div style="--color:#DE2910"></div>
+      <div style="--color:#FFDE00"></div>
+    </dd>
+    <dt class="nav-cont">2. drop-shadow()</dt>
+    <dd>
+      <div>.投影滤镜：部分浏览器不支持第4个参数；如果添加，则不会呈现</div>
+      <div>.同box-shadow不同的是，drop-shadow只为内容设置阴影，padding会被过滤掉</div>
+      <div>.drop-shadow会破坏3D变换</div>
+      <pre>filter:drop-shadow(h-shadow v-shadow blur [spread] color)</pre>
+      <div>.多个投影使用空格分开；不是逗号,</div>
+      <pre> filter: drop-shadow() drop-shadow() drop-shadow();</pre>
+    </dd>
+    <dd class="basic">
+      <img class="shadow" src="../utils/view/view0.jpg" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 比较 box-shadow 和 drop-shadow</dd>
+    <dd>
+      <div class="basic bs">早安中国</div>
+      <pre>
+.bs {
+    box-shadow: 0 0 1px #000;
+}
+</pre>
+      <div class="basic ds">早安中国</div>
+      <pre>
+.ds {
+    filter: drop-shadow(0 0 1px #000);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 气泡对话框 - 伪元素叠拼</dd>
+    <dd class="bubble"></dd>
+    <dt class="nav-cont">3. grayscale()</dt>
+    <dd>.将图像转换为灰阶：0%为原图；100%为全灰</dd>
+    <dd>.特殊时期，各大门户网站使用灰度表达敬意</dd>
+    <dd>
+      <pre>filter:grayscale(%)</pre>
+    </dd>
+    <dd>
+    </dd>
+    <dd class="basic">
+      <img class="gray" src="../utils/view/view0.jpg" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 工作经历</dd>
+    <dd>
+      <div class="work">
+        <img src="/utils/logo/54414.png" alt="" loading="lazy">
+        <img src="/utils/logo/75660.png" alt="" loading="lazy">
+        <img src="/utils/logo/ty.png" alt="" loading="lazy">
+      </div>
+    </dd>
+    <dt class="nav-cont">4. hue-rotate()</dt>
+    <dd>.在图像上应用色相旋转。该值定义色环的度数deg，也可以使用turn。默认值为0deg，代表原始图像</dd>
+    <dd>
+      <pre>filter: hue-rotate(deg)</pre>
+    </dd>
+    <dd id="hue">[<span class="iconfont icon-keyboard"></span>] 霓虹灯</dd>
+    <dd>.多重文本阴影 text-shadow 叠加</dd>
+    <dd class="hue-wrap">
+      <div class="hue">早安中国</div>
+    </dd>
+    <dd>
+      <pre>
+.hue {
+  color: #fff;
+  font-size: 60px;
+  letter-spacing: 4px;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 10px #089,
+    0 0 20px #089,
+    0 0 40px #089,
+    0 0 80px #089,
+    0 0 160px #089;
+  animation: hue 2s linear alternate infinite;
+}
+
+@keyframes hue {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}        </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 类重用</dd>
+    <dd>.先定义好一个button，然后利用hue-rotate创造出其他同款的button</dd>
+    <dd class="hue-btn"><button class="primary">primary</button><button class="primary hue1">hue1</button><button
+        class="primary hue2">hue2</button><button class="primary hue3">hue3</button><button
+        class="primary hue4">hue4</button><button class="primary hue5">hue5</button></dd>
+    <dd>
+      <pre>
+.primary {
+    border: none;
+    outline: none;
+    width: 100px;
+    height: 40px;
+    color: #fff;
+    background-color: #f40;
+    border-radius: 10px;
+}
+
+.hue1 {
+    filter: hue-rotate(0.1turn);
+}
+
+.hue2 {
+    filter: hue-rotate(0.3turn);
+}
+
+.hue3 {
+    filter: hue-rotate(0.5turn);
+}
+
+.hue4 {
+    filter: hue-rotate(0.7turn);
+}
+
+.hue5 {
+    filter: hue-rotate(0.9turn);
+}</pre>
+    </dd>
+    <dt class="nav-cont">5. brightness(%)</dt>
+    <dd>.如果没有设定值，默认是1</dd>
+    <dd>.如果值是0%，图像会全黑</dd>
+    <dd>.值是100%，则图像无变化</dd>
+    <dd>.超过100%，图像会比原来更亮</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 模拟白天、黑夜</dd>
+    <dt class="nav-cont">6. contrast</dt>
+    <dd>对比度</dd>
+    <dd>调整图像的亮度；如果为0，则为灰度，rgb都是128</dd>
+    <dd class="basic">
+      <img class="contrast" src="../utils/view/view0.jpg" alt="">
+    </dd>
+  </dl>
+  <div class="chap">案例 Cases</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 查看原图-img</dd>
+    <dd>.利用img元素分别放置相同的图片；底层放灰图；上层放彩图</dd>
+    <dd>.使用定位使2层图片重叠</dd>
+    <dd>.通过input拖动使上层图片的裁剪变化，显示出下面的灰片，实现黑白到彩色的渐变</dd>
+    <dd class="basic slider">
+      <input id='slider' class="range" type="range">
+      <img class="slider-down" src="../utils/view/view0.jpg" alt="">
+      <img id="tar" class="slider-up" src="../utils/view/view0.jpg" style="--slider:50" alt="">
+    </dd>
+    <dd>
+      <div>[HTML]：使用了自定义属性--slider接受input的变化，来反映input的拖动</div>
+      <pre>
+&lt;div class="slider"&gt;
+    &lt;input id='slider' class="range" type="range"&gt;
+    &lt;img class="slider-down" src="../utils/view/view0.jpg" alt=""&gt;
+    &lt;img id="tar" class="slider-up" src="../utils/view/view0.jpg" style="--slider:50" alt=""&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.slider-down {
+    filter: grayscale(100%);
+}
+.slider-up {
+    clip-path: inset(0 0 0 calc(var(--slider)*1%));
+}</pre>
+      <pre>
+let slider = document.querySelector('#slider')
+let tar = document.querySelector('#tar')
+slider.addEventListener('input', function () {
+    tar.style.setProperty('--slider', this.value)
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 查看原图-伪元素</dd>
+    <dd>
+      <div>.利用伪元素实现</div>
+      <div>.hover触发</div>
+      <div class="basic slider-pre"></div>
+      <div>[HTML]：显然伪元素的结构更为精简</div>
+      <pre>&lt;div class="slider slider-pre"&gt;&lt;/div&gt;</pre>
+      <pre>
+.slider-pre {
+    position: relative;
+    width: 320px;
+    height: 180px;
+    margin: 2rem auto;
+}
+
+.slider-pre::before, .slider-pre::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../utils/view/view0.jpg);
+}
+
+.slider-pre::before {
+    filter: grayscale(100%);
+}
+
+.slider-pre::after {
+    clip-path: inset(0 100% 0 0);
+    transition: 5s;
+}
+
+.slider-pre:hover::after {
+    clip-path: inset(0 0 0 0);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 水滴筹 - 子元素使用模糊 blur() 外扩；父元素使用对比增强 contrast() 内收；使用 <a
+        href="./animation.html">帧动画 - animation</a> 辅助；其它工具 <a
+        href="https://9elements.github.io/fancy-border-radius/">fancy-border-radius</a></dd>
+    <dd>更多效果，请访问 <a href="./demo/drop.html">水滴 - drops</a></dd>
+    <dd class="water">
+      <div class="drop" style="--delay:0"></div>
+      <div class="drop" style="--delay:1"></div>
+      <div class="drop" style="--delay:2"></div>
+      <div class="drop" style="--delay:3"></div>
+      <div class="drop" style="--delay:4"></div>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">背景过滤 backdrop-filter</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>.为一个元素后面区域添加图形效果（如模糊或颜色偏移）</dd>
+    <dd>.适用于元素背后所有元素</dd>
+    <dd>.为了看到效果，前面元素应<span class="warn">无</span>背景或背景<span class="warn">透明</span>；如果是实心背景，就看不到下面背景的毛玻璃效果</dd>
+    <dd>.应用：苹果UI、广告等毛玻璃效果、登录表单背景</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 毛玻璃</dd>
+    <dd class="basic glass-box">
+      <div class="glass"></div>
+    </dd>
+    <dd>
+      <pre>
+.glass-box {
+    background-image: url(./imgs/1.png);
+    background-size: cover;
+}
+
+.glass {
+    width: 60%;
+    height: 100%;
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(1rem);
+}</pre>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script>
+    window.onload = function () {
+      let slider = document.querySelector('#slider')
+      let tar = document.querySelector('#tar')
+      slider.addEventListener('input', function () {
+        tar.style.setProperty('--slider', this.value)
+      })
+    }
+  </script>
+</body>
+
+</html>

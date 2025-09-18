@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单 Form</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <link rel="stylesheet" href="./css/form.css">
+  <base target="_blank">
+  <style>
+    table th:first-child {
+      width: 20%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>表单</h1>
+    <span>&lt;form&gt;</span>
+  </header>
+  <section>
+    <h3>概述 Overview</h3>
+    <ul>
+      <li>块元素 block</li>
+      <li>人机交互 - 通过种类多样的表单元素，以值对 name-value 的形式收集/采集数据，提交给后端服务器 backend server处理</li>
+      <li>表单本身并不可见，除了承载脚本外，更多是作为一个壳/ <span class="warn">容器</span></li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form">MDN - &lt;form&gt;</a>
+      </li>
+      <figure>
+        <img src="./imgs/xmind-form.png" alt="">
+        <figcaption>表单思维导图</figcaption>
+      </figure>
+    </ul>
+    <h3>表单属性 Attribute</h3>
+    <ul>
+      <pre>&lt;form action="" method="" target="" name=""&gt;&lt;/form&gt;</pre>
+      <li>常见的属性如下表</li>
+      <table>
+        <caption>表单属性</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>action</td>
+            <td>表单提交后端处理；通常由服务器端脚本负责处理，如 PHP 或 Node.js</td>
+          </tr>
+          <tr>
+            <td>method</td>
+            <td>表单提交的方式，常见有 GET | POST；默认 GET
+              <br>GET：获取数据，数据地址栏可见；数据少，不安全；便于分享[绩效]，通常使用各种 ID 来标记资源<br>POST：提交数据；数据不可见；数据多，安全；适合上传数据，如用户注册
+            </td>
+          </tr>
+          <tr>
+            <td>target</td>
+            <td>展示响应的位置；可以指定 &lt;iframe&gt; 为响应区域而不跳转</td>
+          </tr>
+          <tr>
+            <td>name</td>
+            <td>区分页面中不同的表单</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3>表单元素 Element</h3>
+    <ul>
+      <li>表单元素类型很多；常见的表单元素如下表</li>
+      <table>
+        <caption>常见表单元素</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="./input.html">&lt;input&gt;</a></td>
+            <td>供用户输入/选择，类型最为丰富，应用最多</td>
+          </tr>
+          <tr>
+            <td><a href="./select.html">&lt;select&gt;</a></td>
+            <td>下拉列表</td>
+          </tr>
+          <tr>
+            <td><a href="./textarea.html">&lt;textarea&gt;</a></td>
+            <td>多行输入</td>
+          </tr>
+          <tr>
+            <td><a href="./input_button.html">&lt;button&gt;</a></td>
+            <td>按钮；通过 type 可以指定为提交 submit 或清除 reset；默认是 submit
+              <br>也可以使用 &lt;input&gt; 指定其 type 为 button
+            </td>
+          </tr>
+          <tr>
+            <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset"> &lt;fieldset&gt;</a>
+            </td>
+            <td>分组表单元素</td>
+          </tr>
+          <tr>
+            <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/legend"> &lt;legend&gt;</a></td>
+            <td>分组的标题；分组的好处是操作整个分组，如使用 disabled 属性禁止整个分组</td>
+          </tr>
+          <tr>
+            <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist"> &lt;datalist&gt;</a>
+            </td>
+            <td>数据列表，为 &lt;input&gt; 等文本输入元素提供一个输入可选项
+              <br>permissible or recommended options available to choose
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <li>表单元素的公共属性下表</li>
+      <table>
+        <caption>常见表单元素</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td>用于提交数据；还用于单选和多选的分组</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>提交数据的值</td>
+          </tr>
+          <tr>
+            <td>id</td>
+            <td>可以用和 &lt;label&gt; 的 for 绑定，改善用户体验</td>
+          </tr>
+          <tr>
+            <td>hidden</td>
+            <td>隐藏；也可以使用CSS隐藏 display: none</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3>表单样式 Style</h3>
+    <ul>
+      <li>表单元素在不同浏览器上的默认样式不尽相同；为了统一，通常需要覆盖/初始化默认样式，再重新自定义新的样式</li>
+      <li>后续案例，如无特殊说明，均使用初始化设计</li>
+      <li>部分样式需要使用浏览器前缀；更多注意事项，请参考 <a href="https://caniuse.com/">Can I Use</a>，避免样式使用异常</li>
+      <li>初始化设置</li>
+      <li>各表单元素为 border-box</li>
+      <li>字体大小、类型、边框、背景、轮廓、默认的占位符样式和文本选择样式</li>
+      <li>不同类型的元素需要单独初始化，如 &lt;input&gt; 初始化：通常根据 type 修改特定的表单元素，参考后续内容</li>
+      <li>accent-color</li>
+      <li>利用 accent-color 简单粗暴的统一指定部分元素的 <span class="warn">强调色</span>，如 &lt;input&gt; 的 radio、checkbox、range 和
+        &lt;progress&gt;</li>
+      <li>appearance</li>
+      <li>外观；可以设置为 none，从头开始设计UI</li>
+    </ul>
+    <div class="tips">Unify it so that it looks the same everywhere.</div>
+    <h3>选择器 Selector</h3>
+    <ul>
+      <li><a href="./selector_arr.html">属性选择器</a></li>
+      <li>为属性为 radio 的 input 指定强调色</li>
+      <pre>
+input[type='radio'] {
+  accent-color: #f40;
+}</pre>
+      <li>为了保持一致，通常使用 <a href="./variable.html">CSS变量</a> 全局定义</li>
+      <pre>
+:root{
+  accent-color: #ff1493;
+}</pre>
+      <li><a href="./selector_class.html">伪类选择器</a></li>
+      <li>单行输入文本框获取焦点时指定边框</li>
+      <pre>
+input[type='text']:focus {
+  border: 1px solid #f40;
+}</pre>
+      <li><a href="./selector_ele.html">伪元素选择器</a></li>
+      <li>单行输入文本框的占位符样式</li>
+      <pre>
+input::placeholder {
+  color: #f40;
+}      </pre>
+      <li>可以不使用具体的元素而统一指定样式</li>
+      <pre>
+::placeholder {
+  color: #f40;
+}      </pre>
+      <li><a href="./selector_com.html">组合选择器</a></li>
+      <li>根据表单元素之间的关系确定更为丰富的效果</li>
+      <li>更多表单操作，请参考后续内容</li>
+    </ul>
+    <h3>表单事件 Event</h3>
+    <ol>
+      <p>. 支持2个事件，如下表</p>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tbody>
+          <tr>
+            <td>submit</td>
+            <td>提交数据</td>
+          </tr>
+          <tr>
+            <td>reset</td>
+            <td>清除数据</td>
+          </tr>
+        </tbody>
+      </table>
+      <li>提交 submit</li>
+      <p>. 表单的默认事件；单击按钮时触发</p>
+      <p>. 表单提交数据时，要求表单元素必须指定 name 属性，否则提交时无法获取数据</p>
+      <p>. 表单提交时，默认页面会跳转；有时需要阻止表单的默认提交事件；但是需要 JavaScript 参与才能提交数据</p>
+      <li>清除 reset</li>
+      <p>. 清除各表单元素数据，重新填写</p>
+      <p>. 更多信息，请访问 <a href="./js/event_form.html">表单事件 - JavaScript</a></p>
+      <li>提交后，默认会跳转</li>
+      <pre>
+&lt;form action="https://www.baidu.com" method="get" name="demo"&gt;
+  &lt;input type="text" name="uname" id=""&gt;
+  &lt;input type="password" name="upass" id=""&gt;
+  &lt;input type="submit" value="submit"&gt;
+  &lt;input type="reset" value="reset"&gt;
+&lt;/form&gt;</pre>
+      <p>. 取消默认提交 - 使用内联方式；页面不发生跳转，数据不会发送到服务器，不能成功提交</p>
+      <pre>
+&lt;form action="https://www.baidu.com" method="get" name="demo" onsubmit='return false'&gt;
+  &lt;input type="text" name="uname" id=""&gt;
+  &lt;input type="password" name="upass" id=""&gt;
+  &lt;input type="submit" value="submit"&gt;
+  &lt;input type="reset" value="reset"&gt;
+&lt;/form&gt;</pre>
+      <p>. 提交数据并取消默认跳转 - 使用 JavaScript</p>
+      <pre>
+&lt;form action="https://www.baidu.com" method="get" name="demo"&gt;
+  &lt;input type="text" name="uname" id=""&gt;
+  &lt;input type="password" name="upass" id=""&gt;
+  &lt;input type="submit" value="submit"&gt;
+  &lt;input type="reset" value="reset"&gt;
+&lt;/form&gt;</pre>
+      <pre>
+const form = document.querySelector('form')
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+  // ...
+  // 提交数据
+})</pre>
+    </ol>
+  </section>
+  <h2>Summary & Homework</h2>
+  <section>
+    <h3>Summary</h3>
+    <ul>
+      <li>&lt;form&gt; 的作用</li>
+      <li>常见表单元素</li>
+      <li>操作表单常用的选择器</li>
+      <li>表单事件的基本过程</li>
+    </ul>
+    <h3>Homework</h3>
+    <div>. 使用 &lt;form&gt; 和 其它表单元素设计个人网站的留言板</div>
+  </section>
+
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>

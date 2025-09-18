@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>定位 Position</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <link rel="stylesheet" href="./css/position.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>定位</h1>
+    <span>&commat;Position</span>
+  </header>
+  <dl>
+    <dd>
+      <p>把子元素定位在祖先元素盒子的任意位置，甚至盒子外面</p>
+      <p>最后定位在哪里，需要一个参考对象 - <span class="warn">父相子绝</span></p>
+      <p>更多信息，请查看 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position">MDN - position</a></p>
+      <pre>position: static | relative | absolute | fixed | sticky;</pre>
+    </dd>
+    <dt>相对定位 relative</dt>
+    <dd>
+      <p>不脱离文档流，仍然占据原来位置</p>
+      <p>层级提高，发生偏移时，如 top、left，可能会遮挡住后面标准流的元素</p>
+      <p>参考对象：自己[自恋型] - 灵魂出窍</p>
+      <p>相对定位很少单独使用，通常为子元素提供定位依据</p>
+    </dd>
+    <dt>绝对定位 absolute</dt>
+    <dd>
+      <p>脱离文档流 - 原地起飞</p>
+      <p>隐式的转换为块元素 block</p>
+      <p>参考对象：显式的设置了 <span class="warn">定位</span> 属性(相对或绝对都可以)的元素都可以作为参考对象，一般是父元素。如果父元素没有指定定位属性，则一级一级往上寻找，直至
+        &lt;body&gt;
+      </p>
+      <p>可以使用数值或关键字 top、right、bottom、left 或负边距设置定位元素的偏移；如果不显式的指定，则停留在原来的位置；实际开发中，有时候不用设置偏移也可以实现特定需求</p>
+      <p>可以使用 <span class="warn">inset</span> 指定定位元素相对于参考对象的收缩位置：top、right、bottom、left；0为全覆盖
+      </p>
+      <p>层级提高，会遮挡其他元素</p>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/inset">inset</a></dt>
+    <dd>
+      <p>为元素设置内嵌/偏移大小；可以是百分比或具体的数值</p>
+      <p>对定位元素有效 - positioned elements</p>
+      <p>一个值的情况：0 - 全覆盖；100% - 缩小为中心一个点</p>
+      <p>其它情况，同 padding、margin 和 border，按照上 → 右 → 下 → 左的顺序指定</p>
+    </dd>
+    <dt>堆叠上下文 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index/Stacking_context">MDN
+        - z-index</a></dt>
+    <dd>
+      <p>控制 Z轴 方向上盒子堆叠时的前后次序/渲染排序，通常也称层级</p>
+      <p>只有显式使用 <span class="warn">定位</span> 属性的元素才有 z-index，标准文档流没有；但是后面的元素默认比前面的元素具有更高的层级</p>
+      <p>如果没有显式指定 z-index，则为 auto，按照文档流中元素出现的顺序，后来居上</p>
+      <p>z-index 大的元素，位于上层/近；z-index 小的元素位于下层/远；上层的元素会遮盖下层的元素</p>
+      <p>z-index 为正的元素，出现在没有指定 z-index 的元素的上面</p>
+      <p>z-index 为负的元素，出现在没有指定 z-index 的元素的下面</p>
+      <p>导航等需要始终引导用户的元素一般采用较大的层级，保证始终位于页面顶部，如汉堡菜单、弹出对话框等</p>
+    </dd>
+  </dl>
+  <div class="chap">Cases</div>
+  <dl>
+    <dt>应用1：定位</dt>
+    <dd id="cart">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/btns.html">购物车</a>、<a
+        href="./demo/radio-checkbox.html">定制多选按钮</a>、<a href="./demo/login_deer.html">一路有你 - 登录表单</a></dd>
+    <dd>
+      <p>初始化：button 取消边框、轮廓、背景</p>
+      <p>数量定位在右上角</p>
+      <p>还可以使用、伪元素、负边距实现</p>
+    </dd>
+    <dt>应用2：居中</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/transform-translate.html">卡片</a></dd>
+    <dd>
+      <p>实现1：配合 margin 使元素的垂直水平居中</p>
+      <pre>
+.container{
+  position: relative;
+}
+
+.item {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}</pre>
+      <p>实现2：配合 <a href="./transform.html">变换 transform</a> 使元素的垂直水平居中</p>
+      <pre>
+.container{
+  position: relative;
+}
+
+.item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // translate: -50% -50%;
+}</pre>
+    </dd>
+    <dt>应用3：层级提升</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 打造3D环境：利用不同的 z-index 营造 3D 氛围，更多细节，请参看 顶部 banner、<a
+        href="./demo/parallax.html">视距差 - parallax</a></dd>
+    <dd class="environment">
+      <img class="ob-img tree0" data-src="./imgs/tree0.png" alt="">
+      <img class="ob-img tree2" data-src="./imgs/tree2.png" alt="">
+      <img class="ob-img tree1" data-src="./imgs/tree1.png" alt="">
+      <img class="ob-img tree5" data-src="./imgs/tree1.png" alt="">
+      <img class="ob-img girl" data-src="./imgs/girl.png" alt="">
+      <img class="ob-img tree3" data-src="./imgs/tree3.png" alt="">
+      <img class="ob-img tree4" data-src="./imgs/tree4.png" alt="">
+      <img class="ob-img boy" data-src="./imgs/boy.png" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/border-ring.html">环环相扣</a>、<a
+        href="./demo/olympic.html">奥运五环</a> - 对前后元素的影响</dd>
+    <dd>
+      <div class="el-undone" style="height: 50px;">层级未提升 - 默认情况下，后续元素的层级比前面的高</div>
+      <p style="background-color: #fff;">后续元素：设置了背景颜色[当前设置为白色]，会覆盖前面的阴影</p>
+      <pre>
+.el-undone {
+    height: 40px;
+    line-height: 40px;
+    background-color: #f40;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+}</pre>
+      <div class="el-done" style="height: 50px;">层级提升 - 通过指定目标元素为相对定位，并提升层级，使其位于后续元素的上层</div>
+      <p>当前元素：默认层级，不会覆盖</【>
+      <pre>
+.el-done {
+    // MUST
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    background-color: #f40;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+    // 不指定层级，默认在最上层
+    // z-index: 1;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用 inset 定位元素</dd>
+    <dd>
+      <p>. 使用 <a href="./selector_ele.html">伪元素</a> 实现</p>
+      <div class="inset"></div>
+      <pre>
+.inset {
+  position: relative;
+  width: 180px;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--txt-warn-color);
+  margin: 1rem auto;
+}
+
+.inset::before {
+  content: '';
+  position: absolute;
+  inset: 20px 0;
+  background-color: var(--txt-warn-color);
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/avatar.html">头像设计 - 渐变背景边框</a></dd>
+    <dd>
+      <p>定位 position</p>
+      <p>伪元素 ::before</p>
+      <p>背景图片 background-image</p>
+      <p>线路渐变 linear-gradient</p>
+      <p>圆角边框 border-radius</p>
+    </dd>
+    <dd id="mul-menu">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-sample.html">下拉菜单</a>、<a
+        href="./demo/dropdown.html">下拉菜单 - hover transition</a>、<a href="./demo/grid-nav.html">二级导航 - click
+        transition</a></dd>
+    <dd>
+      <p>开始隐藏2级菜单，:hover 时显示；后期使用 JavaScript 控制更灵活</p>
+      <p>适合桌面端；移动端通常使用汉堡菜单</p>
+      <p>注意：&lt;a&gt; 不能嵌套使用 &lt;a&gt;</p>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd>
+      <p>父相子绝</p>
+      <p>. 定位</p>
+      <p>. 居中</p>
+      <p>. 提升层级</p>
+    </dd>
+    <dt>Homework</dt>
+    <dd class="sn">
+      <div>定制个人LOGO</div>
+      <div>添加2级菜单导航</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/lazyload.js"></script>
+</body>
+
+</html>

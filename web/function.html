@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS函数 Function</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .fn-var-bg {
+      text-align: center;
+    }
+
+    .fn-var-bg div {
+      background-color: rgba(255, 44, 00, calc(var(--alpha)*0.1));
+    }
+
+    .fn-var-rot {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      margin: 2rem auto;
+    }
+
+    .fn-var-rot span {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 4px;
+      margin: auto;
+      background: #f40;
+      transform: translateY(-50%) rotate(calc(var(--rot)*120deg));
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>函数&commat;Function</h1>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">rgba()</a>
+      <a href="" style="--delay:1" class="nav-item">attr()</a>
+      <a href="" style="--delay:2" class="nav-item">var()</a>
+      <a href="" style="--delay:3" class="nav-item">calc()</a>
+      <a href="" style="--delay:4" class="nav-item">clamp()</a>
+      <a href="" style="--delay:5" class="nav-item">other</a>
+    </nav>
+  </header>
+  <div class="chap">颜色函数 rgb()</div>
+  <dl class="nav-cont">
+    <dt>Overview</dt>
+    <dd>
+      <div>. 使用红(R)、绿(G)、蓝(B)三个颜色的叠加来生成各式各样的颜色</div>
+      <div>. 红色(R)：0 到 255 间的整数，代表颜色中的红色成分</div>
+      <div>. 绿色(G)：0 到 255 间的整数，代表颜色中的绿色成分</div>
+      <div>. 蓝色(B)：0 到 255 间的整数，代表颜色中的蓝色成分</div>
+      <div>. 透明度(A)：取值 0~1 之间， 代表透明度</div>
+      <div>. 更多信息，请参考 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb">rgb()</a></div>
+      <div class="tips">rbga() 是 rgb() 的别名- an alias for rgb()；推荐使用 rgb() - recommended to use rgb()</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 定义透明色</dd>
+    <dd>
+      <pre>
+:root{
+  --base-color: 255, 68, 0;
+  --warn-color: rgb(var(--base-color), 1);
+  --warn-color-light: rgb(var(--base-color), 0.05);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">属性函数 attr()</div>
+  <dl class="nav-cont">
+    <dt>Overview</dt>
+    <dd>
+      <div>. 获取 <span class="warn">当前</span> 元素的属性值，在 CSS 样式中使用</div>
+      <div>. 也可以用在伪类元素里；在伪类元素里使用，它得到的是伪元素的原始元素的值</div>
+      <div>. attr() 函数通常和自定义属性 data- 配合使用</div>
+      <div>. attr() 函数可以和任何 CSS 属性一起使用；使用较多的是伪元素的 content 属性</div>
+      <div>. 还可以动态生成页面，实现部分 JavaScript 功能</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/attr">MDN - attr()</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] attr() 应用 - <a href="./opening.html">开课啦</a></dd>
+    <dd>
+      <pre>
+.title::after {
+    content: attr(data-tip);
+    //... ...
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./js/skin.html">换肤</a></dd>
+    <dd>
+      <div>. 获取元素</div>
+      <div>. 修改元素属性</div>
+      <div>[<span class="iconfont icon-bell"></span>]如何使用纯 CSS 实现?</div>
+      <pre>
+&lt;div&gt;
+  &lt;button data-src="./imgs/1.jpg"&gt;1&lt;/button&gt;
+  &lt;button data-src="./imgs/2.jpg"&gt;2&lt;/button&gt;
+  &lt;button data-src="./imgs/3.jpg"&gt;3&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="box"&gt;
+  &lt;img src="" alt=""&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.active {
+  background-color: #f40;
+}</pre>
+      <pre>
+let btns = document.querySelectorAll('button');
+let img = document.querySelector('img');
+btns.forEach(item =&gt; {
+  item.addEventListener('click', () =&gt; {
+    img.src = item.getAttribute('data-src');
+    btns.forEach(btn => {
+      btn.classList.remove('active');
+    })
+    item.classList.add('active');
+  })
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap">变量函数 var()</div>
+  <dl class="nav-cont">
+    <dt>Overview</dt>
+    <dd>
+      <div>. 使用全局变量或内联变量</div>
+      <div>. 变量以双 -- 号开始，如 --main-color</div>
+      <div>. 通常配合 calc() 函数一起运算</div>
+      <pre>var(custom-property-name[, value])</pre>
+      <div>. custom-property-name：必需。自定义属性的名称，必需以 -- 开头</div>
+      <div>. value：可选。备用值，在属性不存在的时候使用</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/var">MDN - var()</a></div>
+    </dd>
+    <dt>使用全局CSS变量</dt>
+    <dd>. 如果变量定义在根选择器 :root，则所有元素都可以使用-全局变量</dd>
+    <dd>. 如果变量定义在某个选择器，则只有该选择器选中的元素和它的所有后代元素使用-局部变量</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 定义并使用告警颜色</dd>
+    <dd>
+      <pre>
+:root {
+    --txt-wran-color: #c81623;
+}
+
+.wrap{
+    --el-color: #890;
+}
+
+.warn {
+    color: var(--txt-wran-color);
+}</pre>
+    </dd>
+    <dt>使用内联 CSS 变量</dt>
+    <dd>. 利用 style 在元素上定义，仅供当前元素使用</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 渐变背景</dd>
+    <dd>
+      <div class="fn-var-bg">
+        <div style="--alpha:0">0</div>
+        <div style="--alpha:1">1</div>
+        <div style="--alpha:2">2</div>
+        <div style="--alpha:3">3</div>
+        <div style="--alpha:4">4</div>
+        <div style="--alpha:5">5</div>
+        <div style="--alpha:6">6</div>
+        <div style="--alpha:7">7</div>
+        <div style="--alpha:8">8</div>
+        <div style="--alpha:9">9</div>
+      </div>
+      <pre>
+&lt;div class="fn-var"&gt;
+    &lt;div style="--alpha:0"&gt;0&lt;/div&gt;
+    &lt;div style="--alpha:1"&gt;1&lt;/div&gt;
+    //...
+    &lt;div style="--alpha:8"&gt;8&lt;/div&gt;
+    &lt;div style="--alpha:9"&gt;9&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.fn-var-bg div {
+    background-color: rgba(255, 44, 00, calc(var(--alpha)*0.1));
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]
+      自适应布局 - 没有 --left 就使用48px；当元素 left 处于 hover 状态时，定义 --left 变量为30%</dd>
+    <dd>
+      <pre>
+.grid {
+  display: grid;
+  transition: 300ms;
+  grid-template-columns: var(--left, 48px) auto;
+}
+
+.grid:has(.left:hover) {
+  --left: 30%;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 自定义图形</dd>
+    <dd>
+      <div>. 在 HTML 中利用 style 属性为元素指定不同的旋转角度，在 CSS 中使用</div>
+      <div>. 每个元素旋转120deg</div>
+      <div>. 可以制作加载，参考实例 <a href="./animation.html">animation</a></div>
+      <div class="fn-var-rot">
+        <span style="--rot:0"></span>
+        <span style="--rot:1"></span>
+        <span style="--rot:2"></span>
+      </div>
+      <pre>
+&lt;div class="fn-var"&gt;
+    &lt;span style="--rot:0"&gt;&lt;/span&gt;
+    &lt;span style="--rot:1"&gt;&lt;/span&gt;
+    &lt;span style="--rot:2"&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.fn-var-rot span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 4px;
+    margin: auto;
+    background: #f40;
+    transform: translateY(-50%) rotate(calc(var(--rot)*120deg));
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">计算函数 calc()</div>
+  <dl class="nav-cont">
+    <dt>Overview</dt>
+    <dd>
+      <div>. 利用 + - * / 四则运算的结果作为元素的 CSS 属性</div>
+      <div>. 可以<span class="warn">直接使用单位</span>运算：绝对单位/像素）与相对单位/百分比/视口单位</div>
+      <div>. 为了和负值区分开来，+ 和 - 这两个运算符两侧需要额外添加一个空格，否则会报错</div>
+      <div>. * 和 / 不需要空格，但考虑到统一性，推荐加上空格</div>
+      <div>. 计算函数，使得 CSS 更像一门编程语言</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/calc">MDN - calc()</a></div>
+      <pre>calc(100% - 20px);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 定义根字体大小</dd>
+    <dd>
+      <div>. 通常推荐一行最多容纳不超过30个字符，可以基于视口设置根元素的字体大小为视口宽度的一部分。</div>
+      <pre>
+html {
+    font-size: calc(100vw / 30);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 定义栅格</dd>
+    <dd>
+      <div>. 如12分栅格,定义更清晰</div>
+      <pre>
+.col {
+    width: calc(100% / 12);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">限制比较函数 clamp()</div>
+  <dl class="nav-cont">
+    <dt>Overview</dt>
+    <dd>
+      <div>. 对 CSS 属性执行 min-width、max-width 等等操作，即：把一个值限制在一个下限 min 和上限 max 之间</div>
+      <div>. 函数接收三个参数：最小值、首选值、最大值；用逗号分隔；可以是表达式</div>
+      <div>. 当首选值比最小值要小时，则使用最小值</div>
+      <div>. 当首选值介于最小值和最大值之间时，用首选值</div>
+      <div>. 当首选值比最大值要大时，则使用最大值</div>
+      <div>. 最大值和最小值一般都是固定值；而首选值是动态的</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">MDN - clamp()</a>、<a
+          href="./responsive.html">响应式开发</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>]字体跟着视口宽度变换，通过钳制避免字体过大</div>
+      <pre>
+html {
+    font-size: clamp(14px, 100vw/30, 24px);
+    width: clamp(1024px, 100%, 1200px);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">其它函数</div>
+  <dl class="nav-cont">
+    <dt>背景渐变函数</dt>
+    <dd>. 线性渐变 linear-gradient()</dd>
+    <dd>. 径向渐变 radial-gradient()</dd>
+    <dd>. 锥向渐变 Conic-gradient()</dd>
+    <dd>. 更多信息，请参考 <a href="./background3.html">渐变背景</a></dd>
+    <dt>最大最小函数</dt>
+    <dd>. 最小函数 min()</dd>
+    <dd>. 最小函数 minmax()</dd>
+    <dt>选择器函数</dt>
+    <dd>. :nth-child()</dd>
+    <dd>. :nth-of-type()</dd>
+    <dd>. :has()</dd>
+    <dd>. :is()</dd>
+    <dd>. :where()</dd>
+    <dd>. 更多信息，请参考 <a href="./selector.html">选择器 - selector</a></dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd>. 常见 CSS 函数的使用</dd>
+    <dt>Homework</dt>
+    <dd>. 使用函数优化个人网站，如定义颜色变量、使用颜色函数，添加并使用自定义属性</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

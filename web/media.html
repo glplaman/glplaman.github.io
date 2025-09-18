@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>媒体查询 Media</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>媒体查询</h1>
+    <span>&commat;Media</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">视口</a>
+      <a href="" style="--delay:1" class="nav-item">断点</a>
+      <a href="" style="--delay:2" class="nav-item">语法</a>
+      <a href="" style="--delay:3" class="nav-item">桌面优先</a>
+      <a href="" style="--delay:4" class="nav-item">移动优先</a>
+      <a href="" style="--delay:5" class="nav-item">实现</a>
+      <a href="" style="--delay:6" class="nav-item">案例</a>
+    </nav>
+  </header>
+  <dl>
+    <dl class="nav-cont">
+      <dt>视口 viewpoint</dt>
+      <dd>
+        <div>.约束&lt;html&gt;的大小</div>
+        <div>.显示内容，和浏览器窗口大小一致；不包括底部的状态栏和顶部的菜单栏和地址栏</div>
+        <div>.在&lt;head&gt;引入视口 viewport</div>
+        <div>.VS Code创建的html页面默认已提供；其它开发环境注意确认是否有</div>
+        <pre>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</pre>
+        <table>
+          <tr>
+            <th>类别</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>width</td>
+            <td>视口宽度</td>
+          </tr>
+          <tr>
+            <td>initial-scale</td>
+            <td>初始缩放比例，默认1</td>
+          </tr>
+          <tr>
+            <td>minmum-scale</td>
+            <td>最小缩放比例</td>
+          </tr>
+          <tr>
+            <td>maxmum-scale</td>
+            <td>最大缩放比例</td>
+          </tr>
+          <tr>
+            <td>user-scalable</td>
+            <td>是否缩放yes[默认]|no</td>
+          </tr>
+        </table>
+        <div>.是苹果公司为了解决移动端浏览器的页面渲染而提出的方案，后来被其它移动设备公司采用，即：<span class="warn">浏览器的宽度=设备屏幕的宽度</span></div>
+        <div>.通常只使用前面两个属性</div>
+        <div>.用户缩放行为：微信扫码响应，QQ浏览器不响应；无论是否允许缩放，都能缩放[流氓浏览器]</div>
+        <div>.width指浏览器的屏幕宽度；通常认为和设备宽度保持一致，不做区分，特别是移动端[你在移动端对浏览器进行过最大最小化操作吗？]</div>
+        <div>.device-width指设备屏幕的宽度，对于特定的设备，宽度是固定的</div>
+        <div>.如果修改视口大小为300，则真机调试的结果也为300，所以默认情况下，设置浏览器的宽度等于设备屏幕的宽度</div>
+        <pre>&lt;meta name="viewport" content="width=300, initial-scale=1.0"&gt;</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>]获取视口大小 - 缩放浏览器、最大化、最小化，结果相应变化</dd>
+      <dd>
+        <pre>
+let w = document.documentElement.clientWidth;
+let h = document.documentElement.clientHeight;
+console.log(w, h);</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>]真机调试-移动端视口</dd>
+      <dd>
+        <div>.开发环境中，切换为移动设备后，调试的视口大小和真机测试不一致</div>
+        <div>.使用上述代码，在华为某真机上，微信扫码显示为宽高为400*745；浏览器输入地址查看为360*597[真机调试需要手机和电脑处于同一个WIFI内]</div>
+        <div>
+          .查看屏幕大小：真机上，微信扫码为400*867[宽度一致，高度不一致，是因为视口高度+上方的标题栏+下方的状态栏=屏幕宽度]；浏览器输入地址查看360*780[原理相同]；之所以微信扫码结果比浏览器宽度大，是因为浏览器有40px的滚动条；所以移动端开发，通常会指定最小宽度为320px
+        </div>
+        <pre>
+let sw = window.screen.width;
+let sh = window.screen.height;</pre>
+        <div>移动端容器最小尺寸</div>
+        <pre>min-width: 320px;</pre>
+      </dd>
+    </dl>
+    <dl>
+      <dt class="nav-cont">断点 breakpoint</dt>
+      <dd>
+        <div>利用断点 breakpoint 划分尺寸</div>
+        <div>尺寸断点 breakpoint 应以实际内容为主，如根据导航条灵活指定</div>
+        <div>通常以Ipnone6（375*667）为标准进行设计图的设计</div>
+        <table>
+          <tr>
+            <th>类别</th>
+            <th>说明</th>
+            <th>备注</th>
+          </tr>
+          <tr>
+            <td>large</td>
+            <td>>1200</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>normal</td>
+            <td>&lt;1200</td>
+            <td>iPad横版 1024*768</td>
+          </tr>
+          <tr>
+            <td>medium</td>
+            <td>&lt;992</td>
+            <td>iPad竖版 768*1024</td>
+          </tr>
+          <tr>
+            <td>small</td>
+            <td>&lt;768</td>
+            <td>iPhone6/7/8 375*667 iPhoneX 375*812</td>
+          </tr>
+          <tr>
+            <td>tiny</td>
+            <td>&lt;576</td>
+            <td></td>
+          </tr>
+        </table>
+      </dd>
+      <dt>调试</dt>
+      <dd>
+        <div>使用开发者工具查看各断点预置</div>
+        <div>上部灰色区域是系统预置断点；下部蓝色区域是自定义断点</div>
+        <div>鼠标移入查看各断点</div>
+        <img src="./imgs/r0.png" alt="">
+        <div class="fig-sn">断点预置</div>
+        <img src="./imgs/r1.png" alt="">
+        <div class="fig-sn">超大屏</div>
+        <img src="./imgs/r2.png" alt="">
+        <div class="fig-sn">普通屏</div>
+        <img src="./imgs/r3.png" alt="">
+        <div class="fig-sn">平板</div>
+        <img src="./imgs/r4.png" alt="">
+        <div class="fig-sn">移动大屏</div>
+        <img src="./imgs/r5.png" alt="">
+        <div class="fig-sn">移动普通屏</div>
+        <img src="./imgs/r6.png" alt="">
+        <div class="fig-sn">移动迷你屏</div>
+      </dd>
+      <dt class="nav-cont">语法</dt>
+      <dd>
+        <div>需要指定媒体类型 mediaType 和媒体特性 mediaFeature</div>
+        <pre>
+@media screen and (max-width: 1200px) {
+  // CSS样式
+}      </pre>
+        <div>mediaType：all 所有设备、screen 屏幕、print 打印、speech 屏幕阅读器/发声设备等；默认是屏幕 screen</div>
+        <div>mediaFeature：适配当前媒体尺寸的样式；通常指定一个 <span class="warn">区间</span></div>
+        <div>.max-width：尺寸小于或等于 <span class="warn">&lt;=</span> 当前值时，样式生效</div>
+        <div>.min-width：尺寸大于或等于 <span class="warn">&gt;=</span> 当前值时，样式生效</div>
+        <div>.使用关键字确定区间：AND、NOT、ONLY等；关键字两端需要空格同其它分隔开来</div>
+        <div>.通常根据尺寸响应；还可以根据比例响应 aspect-ratio，不过使用较少</div>
+        <div>.使用关系运算符：&lt;=、&gt;=等等；可读性更好；请在Can I Use查看 media query 中范围 range 的支持情况</div>
+        <div>媒体查询通常写在原有样式|基础样式的最后面</div>
+        <div>媒体查询同样具有优先和重叠等特性，所以要特别注意顺序</div>
+        <pre>
+@media (width>=768px) {
+  a {
+    background-color: #f40;
+  }
+}        </pre>
+        <div>相当于</div>
+        <pre>
+@media (min-width: 768px) {
+  a {
+    background-color: #089;
+  }
+}        </pre>
+        <div>其它使用</div>
+        <pre>
+@media (768px <=width <=1024px) {
+  a {
+    background-color: #f40;
+    color: #fff;
+  }
+}</pre>
+      </dd>
+      <dt class="nav-cont">桌面优先 Desktop First</dt>
+      <dd>
+        <div>优先满足桌面端，然后逐步减小尺寸</div>
+        <div>使用max-width，从默认的大尺寸向小尺寸过渡</div>
+        <pre>
+//默认是大尺寸 large... ...
+
+//normal... ...
+@media screen and (max-width: 1200px) {
+}
+
+//medium... ...
+@media screen and (max-width: 992px) {
+}
+
+//small... ...
+@media screen and (max-width: 768px) {
+}</pre>
+      </dd>
+      <dt class="nav-cont">移动优先 Mobile First</dt>
+      <dd>
+        <div>优先满足移动端，逐步增加尺寸</div>
+        <div>使用min-width，从默认的小尺寸向大尺寸过渡</div>
+        <pre>
+//默认是小尺寸 small... ...
+
+//normal... ...
+@media screen and (min-width:768px) {
+}
+
+//medium... ...
+@media screen and (min-width:992px) {
+}
+
+//large... ...
+@media screen and (min-width:1200px) {
+}
+
+//2K - 2048x1152 2048x1536
+@media screen and (min-width:2048px) {
+}
+</pre>
+      </dd>
+      <dt>其他使用</dt>
+      <dd>
+        <pre>
+//使用关键字
+@media screen AND (min-width:768px) AND (max-width:992px) {
+
+}
+
+//使用关系运算符；省略screen
+@media (width&lt;=768px) {
+  body {
+    background-color: #f40;
+  }
+}
+
+//使用比例-较少使用
+@media (min-aspect-ratio:1/1) {
+  body {
+    background-color: #f40;
+  }
+}
+
+@media (min-aspect-ratio:16/9) {
+  body {
+    background-color: #890;
+  }
+}</pre>
+      </dd>
+      <dd class="tips">
+        <div>.xxx-device-width和xxx-width不一样；对桌面端而言[不开启toggl device选项]，设备宽度是固定的，并不会响应媒体查询</div>
+        <div>.开发者视图中，切换设备时，改变的就是对应设备的设备宽度；不切换设备，改变的是浏览器的宽度</div>
+      </dd>
+    </dl>
+    <div class="chap">实现 Implementation</div>
+    <dl class="nav-cont">
+      <dd>.媒体查询的不同运用</dd>
+      <dt>外部样式</dt>
+      <dd>
+        <div>.link - 在 HTML 中根据媒体尺寸动态引入 link 对应的外部CSS文件</div>
+        <pre>
+&lt;link rel="stylesheet" media="screen and (min-width:1201px)" href="./media_large.css"&gt;
+&lt;link rel="stylesheet" media="screen and (max-width:1200px)" href="./media_medium.css"&gt;
+&lt;link rel="stylesheet" media="screen and (max-width:992px)" href="./media_normal.css"&gt;
+&lt;link rel="stylesheet" media="screen and (max-width:768px)" href="./media_small.css"&gt;</pre>
+        <div>. @import - 在主样式文件 app.css 引入响应的CSS文件</div>
+        <pre>
+@import url(./css/media_large.css);
+@import url(./css/media_medium.css) only screen and (max-width:1200px);
+@import url(./css/media_normal.css) only screen and (max-width:992px);
+@import url(./css/media_small.css) only screen and (max-width:768px);</pre>
+      </dd>
+      <dt>内部样式</dt>
+      <dd>
+        <div>. <span class="warn">同一个 </span> &lt;style&gt; 直接编辑内部样式</div>
+        <pre>
+body {
+  background-color: #f2f3f4;
+}
+
+@media screen and (max-width: 1200px) {
+  body {
+    background-color: #908;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  body {
+    background-color: #890;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    background-color: #f40;
+  }
+}</pre>
+        <div>. <span class="warn">不同 </span> 的&lt;style&gt; 编辑内部样式</div>
+        <pre>
+&lt;style&gt;
+  body {
+    background-color: #f2f3f3;
+  }
+&lt;/style&gt;
+
+&lt;style media="(max-width:1200px)"&gt;
+  body {
+    background-color: #908;
+  }
+&lt;/style&gt;
+
+&lt;style media="(max-width:992px)"&gt;
+  body {
+    background-color: #890;
+  }
+&lt;/style&gt;
+
+&lt;style media="(max-width:768px)"&gt;
+  body {
+    background-color: #f40;
+  }
+&lt;/style&gt;</pre>
+      <dt>内联样式</dt>
+      <div>特定元素的媒体查询 - &lt;picture&gt;</div>
+      <pre>
+&lt;picture&gt;
+  &lt;source srcset="https://picsum.photos/400/300?random=0" media="(max-width:768px)"&gt;
+  &lt;img src="https://picsum.photos/800/600?random=0" alt=""&gt;
+&lt;/picture&gt;      </pre>
+      </dd>
+    </dl>
+    <div class="chap">案例 Cases</div>
+    <dl class="nav-cont">
+      <dd>[<span class="iconfont icon-keyboard"></span>] 画廊</dd>
+      <dd>
+        <div>.内部样式</div>
+        <div>.默认是大屏，>1200px，显式4列</div>
+        <div>.&le;1200px，显式3列</div>
+        <div>.&le;992px，显式2列</div>
+        <div>.&le;768px，显式1列</div>
+        <pre>
+&lt;div class="wrap"&gt;
+  &lt;img src="./imgs/1.jpg" alt=""&gt;
+  &lt;img src="./imgs/2.jpg" alt=""&gt;
+  &lt;img src="./imgs/3.jpg" alt=""&gt;
+  &lt;img src="./imgs/4.jpg" alt=""&gt;
+  &lt;img src="./imgs/5.jpg" alt=""&gt;
+  &lt;img src="./imgs/6.jpg" alt=""&gt;
+&lt;/div&gt;</pre>
+        <p>方案1：使用 grid 实现 - 桌面优先</p>
+        <pre>
+.wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .wrap {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .wrap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrap {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}</pre>
+        <p>方案 2：使用%实现 - 移动优先；采用了 float，记得清除浮动</p>
+        <pre>
+.wrap img {
+  float: left;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+@media (min-width:768px) {
+  .wrap img {
+    width: 50%;
+  }
+}
+
+@media (min-width:992px) {
+  .wrap img {
+    width: 33.3%;
+  }
+}
+
+@media (min-width:1200px) {
+  .wrap img {
+    width: 25%;
+  }
+}      </pre>
+        <div>其它方案：请参考grid万能的自适应布局<a href="./grid.html#grid"> gird布局</a></div>
+      </dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] 小尺寸时使用普通小图；大尺寸时，使用高清大图</dd>
+      <dd>体会 &lt;picture&gt;、&lt;img&gt; 和 background-image 的特点</dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/ham0.html">汉堡菜单1</a>、<a
+          href="./demo/ham1.html">汉堡菜单2</a>、<a href="./demo/ham2.html">汉堡菜单3</a></dd>
+      <dd> 主导航nav、logo、和 ham</dd>
+      <dd> 传统方式下：大尺寸下，只显示 nav 和 logo，隐藏 ham；小尺寸时，再显示 ham</dd>
+      <dd> 改进：大尺寸下，ham的h5指定结构但是内容为空，小尺寸下才设计ham的具体内容，这样就不需要先隐藏再显示。适合开始弹性布局的flex-start和结束flex-end</dd>
+      <dd> 如果使用space-between则0元素也会被分隔 [好大的坑！！！]</dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] 面向桌面端；移动端没有hover；且100vh默认是包含底部操作栏</dd>
+      <dd>
+        <pre>
+@media (hover: hover) {
+  body{
+    height: 100vh;
+  }
+  a {
+    color: #f40;
+  }
+}</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] 标签和媒体查询的使用</dd>
+      <dd class="sn">
+        <div><a href="./imgpicture.html">&lt;picture&gt;</a> - 组合标签；指定不同的备选图片以适应不同的设备；如果都不满足就使用 &lt;img&gt; 指定的内容</div>
+        <pre>
+&lt;picture&gt;
+  &lt;source srcset="https://picsum.photos/400/300?random=0" media="(max-width:768px)"&gt;
+  &lt;img src="https://picsum.photos/800/600?random=0" alt=""&gt;
+&lt;/picture&gt;      </pre>
+        <div><a href="">&lt;link&gt;</a> - 使用属性preload 实现<a href="./preload.html">预加载 - preload</a></div>
+        <pre>
+&lt;link
+  rel="preload"
+  href="bg-image-narrow.png"
+  as="image"
+  media="(max-width: 600px)" /&gt;
+&lt;link
+  rel="preload"
+  href="bg-image-wide.png"
+  as="image"
+  media="(min-width: 601px)" /&gt;
+
+&lt;link rel="stylesheet" href="main.css" /&gt;</pre>
+      </dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] 设备查询 - 打印时，隐藏不需要打印的元素或显示特定内容</dd>
+      <dd>
+        <div>隐藏汉堡菜单</div>
+        <pre>
+@media print {
+  .ham {
+    display: none;
+  }
+}        </pre>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+    <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基本选择器 Selector</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/selector.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>基本选择器</h1>
+    <span>&commat;Selector</span>
+  </header>
+  <dl>
+    <dd>
+      <div>. 选择某个或某些元素以应用其定义的样式|规则</div>
+      <div>. 大多数选择器是向下选择，如后代；还可以平行选择，如兄弟 + ~；甚至可以向上选择，如 :has</div>
+      <div>. 更多信息，请访问 <a
+          href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Type_Class_and_ID_Selectors">MDN
+          - selector</a></div>
+    </dd>
+    <dt>标签选择器 Type selectors</dt>
+    <dd>
+      <div>. 也称元素选择器、类型选择器</div>
+      <div>. 使用元素标签名，如使用 div 表示选择&lt;div&gt;</div>
+      <div>. 可以选择多个元素</div>
+      <div>. 通常用来 <span class="warn">初始化</span> 标签属性</div>
+    </dd>
+    <dt>类选择器 Class selectors</dt>
+    <dd>
+      <div>. HTML中，使用 <span class="warn">class</span> 为元素添加类属性</div>
+      <div>. CSS中，使用点 <span class="warn">.</span> 表示，如 .box</div>
+      <div>. 元素可以同时使用多个类/层叠，最后的样式由多个类共同作用</div>
+      <div>. 应用最为广泛</div>
+      <div>. 容器类通常命名为：container、wrap、wrapper、box、card等</div>
+      <pre>&lt;div class = "box"&gt;&lt;/div&gt;</pre>
+      <pre>.box{}</pre>
+    </dd>
+    <dt>ID选择器 ID selectors</dt>
+    <dd>
+      <div>. HTML中，使用 <span class="warn">id</span> 为元素添加 ID 属性</div>
+      <div>. CSS中，使用点 <span class="warn">#</span> 表示，如 #box</div>
+      <div>. ID属性用来唯一标识一个元素</div>
+      <div>. 一般供 JavaScript 操作元素使用</div>
+      <pre>&lt;div id = "box"&gt;&lt;/div&gt;</pre>
+      <pre>#box{}</pre>
+    </dd>
+    <dd class="tips">类 class 和 ID 请使用语义化的变量命名</dd>
+    <dt>*通配符选择器 Universal selectors</dt>
+    <dd>
+      <div>. 以 <span class="warn">*</span> 表示，代表所有元素</div>
+      <div>. 多用于样式初始化</div>
+      <div>. 渲染性能上略有不足；生产环境中不建议使用，尽量初始化具体的元素</div>
+      <div>. 优先级最低</div>
+      <pre>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}        </pre>
+    </dd>
+  </dl>
+  <div class="chap">优先级</div>
+  <dl>
+    <dd>
+      <div>. 不同的选择器，对应的优先级也不尽相同</div>
+      <div>. 选择器的优先级会决定样式是否应用到元素：优先级高，选中元素，将应用/覆盖元素样式；优先级低，选不中元素，样式不应用/不覆盖，保持原来样式</div>
+      <div>. 样式不生效，一定要检查选择器的优先级，特别是选择器组合使用的时候</div>
+      <div>. 单个选择器比较容易；组合选择器最终的优先级要综合计算不同选择器的权值对应的十进制</div>
+      <table>
+        <caption>权值分配</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>∞</td>
+          <td>重要选择器 !</td>
+        </tr>
+        <tr>
+          <td>1000</td>
+          <td>行内样式 style</td>
+        </tr>
+        <tr>
+          <td>0100</td>
+          <td>ID选择器 #</td>
+        </tr>
+        <tr>
+          <td>0010</td>
+          <td>类选择器 . | 伪类选择器 : | 属性选择器 []</td>
+        </tr>
+        <tr>
+          <td>0001</td>
+          <td>标签选择器 tag | 伪元素选择器 ::</td>
+        </tr>
+        <tr>
+          <td>0000</td>
+          <td>通配符选择器 *</td>
+        </tr>
+      </table>
+      <div>. 可以使用 !important 提升优先级为最高，谨慎使用；某些框架开发中，为了覆盖样式，会使用样式穿刺技术提示优先级</div>
+      <pre>
+div {
+    color: #f40 !important;
+}</pre>
+    </dd>
+    <dd class="tips">
+      <div>Tips</div>
+      <div>如非必要，尽量使用更加直观的方式应用类；避免炫技</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

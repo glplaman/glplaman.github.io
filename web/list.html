@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表 List</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/list.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>列表</h1>
+    <span>&commat;List</span>
+  </header>
+  <dl>
+    <dt>Xmind</dt>
+    <dd>
+      <figure><img src="./imgs/xmind-list.png" alt="">
+        <figcaption>列表思维导图</figcaption>
+      </figure>
+    </dd>
+  </dl>
+  <div class="chap">Ordered List</div>
+  <dl>
+    <dd>
+      <div>. 有序列表 Ordered List</div>
+      <div>. 元素按照一定规则排列，如：从小到大；类似办公文档的<span class="warn">编号 numbering</span></div>
+      <div>. 应用较少；更多通过定制编号实现，如使用 <a href="./selector_ele.html">伪元素 - ::before</a>、<a href="./counter.html">计数器</a>
+      </div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ol">&lt;ol&gt;</a>
+    </dt>
+    <dd>
+      <div>. 块盒 block</div>
+      <div>. 使用属性 type 指定排序方式；默认按照数字升序排序</div>
+      <div>. 可以嵌套使用</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/li">&lt;li&gt;</a></dt>
+    <dd>
+      <div>. 列表项 list item；块盒 block</div>
+      <div>. &lt;ol&gt; 的子元素只能是 &lt;li&gt;</div>
+      <pre>
+&lt;ol type="" start="" reversed&gt;
+    &lt;li&gt;&lt;/li&gt;
+    //... ...
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;</pre>
+      <table>
+        <caption>有序列表的属性</caption>
+        <thead>
+          <tr>
+            <th>类别</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>type</td>
+            <td>1：按数字；默认排序方式<br>
+              A：按大写字母、a：按小写字母<br>
+              I：按大写罗马字母、i：按小写罗马字母</td>
+          </tr>
+          <tr>
+            <td>start</td>
+            <td>起始值；只适用于数字排序</td>
+          </tr>
+          <tr>
+            <td>reversed</td>
+            <td>倒序；减到0会成为负数</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 常见有序列表</dd>
+    <dd class="sn">
+      <div>从4开始排序</div>
+      <pre>
+&lt;ol start=4&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+      <div>从3开始倒序排序</div>
+      <pre>
+&lt;ol start=3 reversed&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+      <div>按照小写罗马字母排序</div>
+      <pre>
+&lt;ol type="i"&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+      <div>按照大写字母降序排序</div>
+      <pre>
+&lt;ol type="A" reversed&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+      <!-- <div>使用计数器定制编号 - 这里使用伪元素::marker</div>
+      <pre>
+.coustom-ol {
+  counter-reset: sn;
+}
+
+.coustom-ol li {
+  counter-increment: sn;
+}
+
+.coustom-ol li::marker {
+  content: '0' counter(sn)' ';
+}      </pre> -->
+    </dd>
+  </dl>
+  <div class="chap">Unordered List</div>
+  <dl>
+    <dd>
+      <div>. 无序列表 Unordered List</div>
+      <div>. 元素彼此之间没有顺序；取而代之的是标记 marker；类似于办公文档的<span class="warn">项目符号 bullets</span></div>
+      <div>. 早期广泛用于<span class="warn">导航</span>结构：&lt;ul&gt; → &lt;li&gt; → &lt;a&gt;；结构清晰；避免被 SEO 降权</div>
+      <div>. 现在多使用 &lt;nav&gt; → &lt;a&gt; 实现；结构层级减少而又不失去 SEO 增强</div>
+      <div>[<span class="iconfont icon-bell"></span>] OA文档如何定制下划线颜色？</div>
+      <div>[<span class="iconfont icon-bell"></span>] OA文档如何定制项目符号？</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul">&lt;ul&gt;</a></dt>
+    <dd>
+      <div>. 块盒 block</div>
+      <div>. 可以嵌套使用</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/li">&lt;li&gt;</a></dt>
+    <dd>
+      <div>. 列表项 list item；块盒 block</div>
+      <div>. &lt;ul&gt; 的子元素只能是 &lt;li&gt;</div>
+      <pre>
+&lt;ul type=""&gt;
+    &lt;li&gt;&lt;/li&gt;
+    //... ...
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <table>
+        <caption>无序列表属性 type</caption>
+        <thead>
+          <tr>
+            <th>类别</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>disc</td>
+            <td>点；默认标记</td>
+          </tr>
+          <tr>
+            <td>square</td>
+            <td>方块</td>
+          </tr>
+          <tr>
+            <td>circle</td>
+            <td>圆圈</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::marker">::marker</a></dt>
+    <dd>
+      <div>. 除了使用 type 选择项目符号外，还可以使用列表的 <a href="./selector_ele.html">伪元素</a> ::marker 定制更为丰富的效果</div>
+      <div>. 列表默认的项目符号也是通过 ::marker 实现的</div>
+      <div>. 更多使用，请访问 <a
+          href="https://css-tricks.com/everything-you-need-to-know-about-the-gap-after-the-list-marker/">Everything You
+          Need to Know About the Gap After the List Marker</a>、<a href="./counter.html">计数器</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 常见无序列表</dd>
+    <dd class="sn">
+      <div>使用 type，指定为 square；适合单个列表</div>
+      <pre>
+&lt;ul type="square"&gt;
+    &lt;li&gt;&lt;/li&gt;
+    //... ...
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <div>使用 CSS 统一设置为方形 square、橙色；适合大量列表</div>
+      <pre>
+ul {
+  list-style: square;
+}
+
+li::marker {
+  color: #fa8231;
+}</pre>
+      <div>定制项目符号/标记；可以使用普通字符或使用 CSS 的实体 <a href="./entity.html">Entity</a> 对应的 Unicode 编码</div>
+      <p>. 普通字符 - 一个或多个</p>
+      <pre>
+li::marker {
+  content: '+';
+}</pre>
+      <p>. 直接拼接</p>
+      <pre>
+li::marker {
+  content: '+ ';
+}</pre>
+      <p>. 版权符号 &copy; 对应的 Unicode 编码：&amp;#x00A9;</p>
+      <pre>
+li::marker {
+  content: '\00A9';
+}</pre>
+      <p>. 额外拼接更多字符</p>
+      <pre>
+li::marker {
+  content: '\00A9''. ';
+}</pre>
+    </dd>
+    <dt>最佳体验</dt>
+    <dd>
+      <div>. 为了消除默认的项目符号对布局的影响，取消默认的项目符号，并使用 <a href="./selector_ele.html">伪元素 ::before</a> 定制</div>
+      <pre>
+ul {
+  list-style: none;
+}
+
+li::before {
+  content: "\2610";
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Definition List</div>
+  <dl>
+    <dd>
+      <div>. 描述列表/自定义列表 Description List / Definition list；用于对数据总结或分类</div>
+      <div>. 应用非常广泛：各大门户网站底部的信息和版权等</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl">&lt;dl&gt;</a></dt>
+    <dd>
+      <div>. 块盒 block</div>
+      <div>. 一个 &lt;dl&gt; 可以有多个 &lt;dt&gt;、多个 &lt;dd&gt;</div>
+      <div>. 也可以使用<span class="warn">多个</span> &lt;ul&gt; 代替</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dt">&lt;dt&gt;</a></dt>
+    <dd>
+      <div>. 块盒 block</div>
+      <div>. 定义列表项标题 Description Term / Definition Title - 数据项的汇总/分类标题</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dd">&lt;dd&gt;</a></dt>
+    <dd>
+      <div>. 块盒 block</div>
+      <div>. 定义列表项详情/描述 Description Details / Definition Description - 各个数据项</div>
+    </dd>
+  </dl>
+  <div class="chap">CSS Initialization</div>
+  <dl>
+    <dt>Why</dt>
+    <dd>
+      <div>. 列表默认有 margin 和 padding</div>
+      <div>. 项目符号或编号会破坏页面布局</div>
+      <div>. 保证样式在不同浏览器的一致性</div>
+    </dd>
+    <dt>How</dt>
+    <dd>
+      <div>. 使用通配符取消所有元素的 margin 和 padding；并修改盒模型计算方式</div>
+      <div>. &lt;ol&gt; 和 &lt;ul&gt;取消默认项目符号和编号；如需要，再根据设计重新指定</div>
+      <div>. &lt;dl&gt; 没有更多操作</div>
+    </dd>
+    <pre>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ol,
+ul {
+  list-style: none;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">Drill</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>]导航；<a href="./demo/companies.html#footer">关于</a>、<a
+        href="https://www.jd.com/">京东</a>、<a href="https://www.mi.com/about">小米</a></dd>
+    <dd>
+      <div>. 早期导航结构 - 层级深/复杂；需先初始化，去除列表的项目符号和其它默认样式再使用</div>
+      <pre>
+&lt;ul type=""&gt;
+    &lt;li&gt;
+      &lt;a href="" target="" title=""&gt; discernible text &lt;/a&gt;
+    &lt;/li&gt;
+    //... ...
+    &lt;li&gt;
+      &lt;a href="" target="" title=""&gt; discernible text &lt;/a&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <div>. 现在导航结构 - 层级浅/简单；直接使用</div>
+      <pre>
+&lt;nav&gt;
+  &lt;a href="" target="" title=""&gt; discernible text &lt;/a&gt;
+  //... ...
+  &lt;a href="" target="" title=""&gt; discernible text &lt;/a&gt;
+&lt;/nav&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>有序列表 &lt;ol&gt; 的使用</div>
+      <div>无序列表 &lt;ul&gt; 的使用</div>
+      <div>自定义列表 &lt;dl&gt; 的使用</div>
+      <div>列表的样式初始化</div>
+    </dd>
+    <dt>Homework</dt>
+    <dd>
+      <div>1. 结合实际情况，思考如何规范使用列表？</div>
+      <div>2. 筹备并完善自己的初始化样式表</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/list.html">列表设计</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 导航设计</div>
+      <div>
+        <div>. 完善个人网站导航：分别使用&lt;ul&gt; → &lt;li&gt; → &lt;a&gt; 和 &lt;nav&gt; → &lt;a&gt; 实现</div>
+        <div>. 鼠标 :hover 时，使用文字下划线提示，同时改变文字颜色</div>
+        <div>
+          <ul class="self-nav">
+            <li><a href="javascript:;">主页</a></li>
+            <li><a href="javascript:;">随笔</a></li>
+            <li><a href="javascript:;">作品</a></li>
+            <li><a href="javascript:;">美文</a></li>
+            <li><a href="javascript:;">推荐</a></li>
+          </ul>
+        </div>
+        <!-- <div class="sn">
+          <div>使用 &lt;ul&gt; → &lt;li&gt; → &lt;a&gt; 实现</div>
+          <div>初始化样式： ul a</div>
+          <div>修改li样式：inline-block；填充padding</div>
+          <div>其它样式设计 - 自由发挥</div>
+          <div>尝试使用 &lt;nav&gt; → &lt;a&gt; 实现导航</div>
+        </div> -->
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 底部信息区设计</div>
+      <div>
+        <div>. 分别使用 &lt;ul&gt; 和 &lt;dl&gt; 创建页面底部 &lt;footer&gt; 信息区；如下图；请加入自己的设计</div>
+        <img src="./imgs/list0.png" alt="">
+      </div>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

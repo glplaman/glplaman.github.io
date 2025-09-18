@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>伪元素选择器 Pseudo element</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/selector.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>伪元素选择器</h1>
+    <span>&commat;Pseudo element</span>
+  </header>
+  <dl>
+    <dd>
+      <div>. 并不是由传统的HTML标签创建出来，而是依附于已有的标签，所以叫伪元素</div>
+      <div>. 更多信息，请访问 <a
+          href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements">MDN
+          - Pseudo element</a></div>
+      <pre>
+selector::pseudo-element {
+    property: value;
+}</pre>
+    </dd>
+    <dt>::before ::after</dt>
+    <dd>
+      <div>. 创建一个 inline 元素作为第一个 first 子元素、最后一个 last 子元素</div>
+      <div>. 必须指定伪元素 content 属性，哪怕为空</div>
+      <div>. 可以使用普通字符、<a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">CSS实体</a>；也可利用 attr() 获取元素属性
+      </div>
+      <div>. content 拼接字符串不能使用+，直接在后面添加即可</div>
+      <div>. content 属性不支持变量使用 var()，可以通过<a href="./counter.html">计数器</a> 迂回实现</div>
+      <div>. 可按照普通元素对其进行定位、布局、旋转等等操作；注意：旋转会撑开/破坏布局，请为父元素设置 overflow 溢出隐藏；同样需要注意的是：他们的 box-sizing 也要初始化为 border-box</div>
+      <div>. 伪元素的样式受父级元素的影响；但是伪元素不是元素的直接孩子，无法使用直接后代选择器 > 选择</div>
+      <div>. 应用非常非常非常广泛。。。可以使用任何形式的内容</div>
+      <div class="tips">&lt;input&gt;、&lt;select&gt;等可替换元素 replaced element 不可以使用伪元素</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 样式初始化</div>
+      <pre>
+*, 
+*::before,
+*::after {
+    display: block;
+    box-sizing: border-box;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 定制列表标记</dd>
+    <dd class="sn">
+      <div>使用普通字符</div>
+      <pre>
+li::before {
+    content: '>';
+}</pre>
+      <div>使用 CSS 实体</div>
+      <pre>
+li::before {
+    content: '\21E8';
+}</pre>
+      <div>使用元素属性；可以是自定义属性 data-</div>
+      <pre>
+li::before {
+  content: attr(data-ind);
+}</pre>
+      <div>使用图片；大图片调整大小应转为行块盒并指定溢出隐藏</div>
+      <pre>
+li::before {
+  content: url(./imgs/avatar.jpg);
+  display: inline-block;/* MUST */
+  overflow: hidden;/* MUST */
+} </pre>
+      <div>留空：做其他装饰性设计；如使用背景图片，可以配合弹性盒子 flex 实现特定布局</div>
+      <pre>
+li::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url(../imgs/logo1.png);
+    background-size: cover;
+    border-radius: 50%;
+}</pre>
+      <div>使用 <a href="./framework/iconfont.html">阿里字体图标 - iconfont</a>；需要指定字体家族为 iconfont</div>
+      <pre>
+li {
+  list-style: none;
+}
+
+li::before {
+  content: '\e6e0';
+  font-family: 'iconfont';
+  color: #f40;
+}      </pre>
+      <div>使用计数器；可以拼接普通字符或 CSS 实体</div>
+      <pre>
+li::before {
+content: counter(sn) '\21e8 ';
+} </pre>
+      <div>使用内联变量；需要显示的指定为字符串，无法直接使用；同样适用变量形式的字体图标</div>
+      <pre>&lt;div class="bar" style="--per:85;--num:'85';--info:'\e881'"&gt;&lt;/div&gt;</pre>
+      <pre>
+.bar::before {
+  content: var(--info);
+  font-family: 'iconfont';
+}
+
+.bar::after {
+  content: var(--num)'%';
+}      </pre>
+    </dd>
+    <dt>::first-letter ::first-line</dt>
+    <dd>
+      <div>. 只能获取 <span class="warn">block块元素</span> 的首字母、首行</div>
+      <div>. 获取的元素是内联元素 inline，<span class="warn">无法</span> 转化为块元素 block！！！</div>
+      <div>. 设置的样式有限；常用样式有 padding、margin、color、background-color、line-height等</div>
+      <div>. ::first-letter 优先级高于 ::first-line</div>
+      <div>. 应用：首字下沉</div>
+    </dd>
+    <dt>::selection</dt>
+    <dd>. 元素被选择的部分</dd>
+    <dd>. 默认是蓝底白字</dd>
+    <dt>::placeholder</dt>
+    <dd>. 占位符样式；多用于表单元素 input</dd>
+    <dd>. 设置的样式有限</dd>
+    <dt>::marker</dt>
+    <dd>
+      <div>. 定义标记类型</div>
+      <div>. 适用于 display 为 list-item 的元素，如 &lt;li&gt;、&lt;summary&gt;</div>
+      <div>. 使用 content 属性指定内容</div>
+      <div>. 设置的样式有限</div>
+      <div>. 因为标记会破坏布局，基本很少使用</div>
+      <div>. 更多使用技巧，请访问<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::marker">MDN ::marker</a>、<a
+          href="https://css-tricks.com/everything-you-need-to-know-about-the-gap-after-the-list-marker/">list
+          marker</a></div>
+      <pre>
+li::marker {
+  content: '✝ ';
+  font-size: 1.2em;
+}</pre>
+    </dd>
+    <dt>案例 Cases</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/border-ring.html">环环相扣</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/btns.html">购物车</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/companies.html">分节标题设计</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./list.html">模拟列表</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./web.html#browser">浏览器市场占有率</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./opening.html#evaluation">教学评价</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/up2u.html#home">技能条</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/todo.html">代办事项</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../os/sql/quiz.html">定制答题模板</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/clock.html">时钟</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/paper.html">首字高亮</a></dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

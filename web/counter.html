@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器 Counter</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    tr th:first-child {
+      width: 25%;
+    }
+
+    @counter-style my-style {
+      system: cyclic;
+      symbols: '①' '②' '③' '④' '⑤' '⑥' '⑦' '⑧' '⑨' '⑩' '⑪' '⑫' '⑬' '⑭' '⑮' '⑯' '⑰' '⑱' '⑲' '⑳';
+      /* suffix: '、'; */
+      /* fallback: decimal; */
+      /* speak-as: numeric; */
+    }
+
+    .custom-ul {
+      margin-left: calc(4*var(--p-m-g));
+    }
+
+    .custom-ul>li {
+      list-style-type: my-style;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>计数器</h1>
+    <span>&commat;Counter</span>
+  </header>
+  <dl>
+    <dd>
+      <div>. 根据元素个数自动计数</div>
+      <div>. 可以嵌套使用实现多级列表</div>
+      <div>. 理工科最爱：为代码编号</div>
+      <div>. 计数标识符可以使用连字符-，不需要使用引号包裹</div>
+      <div>. 建议使用 &lt;ol&gt; 或 &lt;ul&gt; 或 &lt;dl&gt; 列表元素；也可以使用其它任意元素形式</div>
+      <table>
+        <caption>计算器属性</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>counter-reset</td>
+          <td>创建；默认从0开始；初始化计数器
+            <br>多个计数器使用空格分割
+            <br>可以使用变量
+          </td>
+        </tr>
+        <tr>
+          <td>counter-increment</td>
+          <td>计数</td>
+        </tr>
+        <tr>
+          <td>counter()</td>
+          <td>在伪元素的 content 属性中获取并显示
+            <br>设置计数器样式
+          </td>
+        </tr>
+      </table>
+      <table>
+        <caption>list-style-type常见类型</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>disc</td>
+          <td>默认实心圆</td>
+        </tr>
+        <tr>
+          <td>circle</td>
+          <td>标记是空心圆</td>
+        </tr>
+        <tr>
+          <td>square</td>
+          <td>标记是实心方块</td>
+        </tr>
+        <tr>
+          <td>decimal</td>
+          <td>普通数字</td>
+        </tr>
+        <tr>
+          <td>decimal-leading-zero</td>
+          <td>0开头的数字标记：01, 02, 03</td>
+        </tr>
+        <tr>
+          <td>lower-roman</td>
+          <td>小写罗马数字：i, ii, iii, iv, v</td>
+        </tr>
+        <tr>
+          <td>upper-roman</td>
+          <td>大写罗马数字：I, II, III, IV, V</td>
+        </tr>
+        <tr>
+          <td>lower-alpha</td>
+          <td>小写英文字母：a, b, c, d, e</td>
+        </tr>
+        <tr>
+          <td>upper-alpha</td>
+          <td>大写英文字母：A, B, C, D, E</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>步骤</dt>
+    <dd class="sn">
+      <div>为父元素创建/设置/初始化计数器</div>
+      <div>子元素计数并使用伪元素 content 显示</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 初始化</dd>
+    <dd>
+      <div>. 默认从0开始计数</div>
+      <pre>counter-reset: percent;</pre>
+      <div>. 从10开始计数</div>
+      <pre>counter-reset: percent 10;</pre>
+      <div>. 根据变量开始计数</div>
+      <pre>counter-reset: percent var(--per);</pre>
+      <div>. 使用连字符-定义复杂计数器</div>
+      <pre>counter-reset: chapter-sn;</pre>
+      <div>. 同时声明多个计数器</div>
+      <pre>counter-reset: tbl-sn img-sn exam-sn;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/tabcard-scrollIntoView.html">有序列表编号</a></dd>
+    <dd>
+      <div>.除了使用列表元素外，也可以使用任意元素</div>
+      <pre>
+ol {
+    counter-reset: li-sn;
+}
+
+ol li {
+    counter-increment: li-sn;
+}
+
+ol li::before {
+    content: counter(li-sn);
+    color: #fff;
+    margin-right: 1em;
+    padding: 0 4px;
+    background-color: var(--main-color);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./web.html">为代码添加行号</a></dd>
+    <dd>
+      <div>. 注意结构要符合要求</div>
+      <pre>
+&lt;pre&gt;
+  &lt;span&gt;hello, world.&lt;/span&gt;
+&lt;/pre&gt;</pre>
+      <pre>
+pre {
+  counter-reset: sn;
+}
+
+pre span {
+  counter-increment: sn;
+}
+
+pre span::before {
+  content: counter(sn, decimal-leading-zero)' ';
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/paper.html">文章排版 - paper</a></dd>
+    <dd>
+      <div>1. 为文章添加章节序号</div>
+      <pre>
+.article {
+  counter-reset: chap;
+}
+
+.article h2 {
+  counter-reset: sec;//每章的分节都重新编号
+  counter-increment: chap;
+}
+
+.article h2::before {
+  content: '第' counter(chap)'章 ';
+}
+
+.article h3 {
+  counter-increment: sec;
+}
+
+.article h3::before {
+  content: counter(chap)'.' counter(sec)'节 ';
+}</pre>
+      <div>2. 为表和图添加序号；统一编号；也可以按章节编号</div>
+      <pre>
+body {
+  counter-reset: tbl-sn img-sn;
+}
+
+/* table */
+table {
+  counter-increment: tbl-sn;
+}
+
+table caption::before {
+  content: '表' counter(tbl-sn)' ';
+}
+
+/* figure */
+figure {
+  counter-increment: img-sn;
+}
+
+figure figcaption::before {
+  content: '图' counter(img-sn)' ';
+}      </pre>
+
+    </dd>
+  </dl>
+  <div class="chap">@counter-style</div>
+  <dl>
+    <dd>. 自定义计数样式</dd>
+    <dd>
+      <pre>
+@counter-style counter-style-name {
+  system: 类型 decimal | alpha | symbols;
+  symbols: 符号序列;
+  suffix: 后缀；每个计数后面的字符串;
+  range: 有效范围;
+  fallback: 超出范围时使用的备用计数器，counter-style-name;
+  speak-as: 控制语音合成器如何读出计数 speaking-rule;
+}
+
+.custom-ul>li {
+  list-style-type: my-style;
+}</pre>
+    </dd>
+    <dd>
+      <ul class="custom-ul">
+        <li>Lorem ipsum dolor sit amet.</li>
+        <li>Consequuntur aliquam unde quam molestiae.</li>
+        <li>Harum, delectus rerum. Sapiente, eveniet?</li>
+        <li>Voluptatibus earum at saepe nisi!</li>
+        <li>Et atque sint quis reprehenderit.</li>
+        <li>Dicta earum unde sunt corporis.</li>
+        <li>Commodi, dolores minima! Quas, odio?</li>
+        <li>Ipsa unde dignissimos tenetur exercitationem.</li>
+        <li>Quisquam voluptatem enim dicta maiores.</li>
+        <li>Necessitatibus amet nostrum nesciunt quis.</li>
+      </ul>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

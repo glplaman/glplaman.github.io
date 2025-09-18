@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>固定定位 Fixed</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/fixed.css">
+</head>
+
+<body>
+  <header>
+    <h1>固定定位</h1>
+    <span>&commat;Fixed</span>
+  </header>
+  <dl id="home">
+    <dt>说明</dt>
+    <dd>
+      <div>.脱离文档流 - removed from the normal document flow</div>
+      <div>.以浏览器视口 viewport 为参考</div>
+      <div>.固定在浏览器可视区的某个位置，始终保持可视，不会随页面滚动而移动 - in the same position on every page</div>
+      <div>.层级提高，变为块元素 block</div>
+      <div>.默认会待在<span class="warn">原来的位置</span>；实际开发中，有时候不用设置偏移也可以实现特定需求</div>
+      <div>.通常设置较大的 z-index，确保位于其它定位元素上面</div>
+      <div>.定制导航，如顶部导航、侧边导航和底部导航等等；还有各种模态框...</div>
+      <div>.通常需要显式的设置宽度</div>
+      <div>.更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank">MDN -
+          position</a>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">案例 cases</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 返回顶部 -
+      将返回顶部按钮始终定位在页面右下角；本例采用阿里字体图标实现；锚点置空，默认返回本页面</dd>
+    <dd>
+      <pre>
+.back-fixed {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    cursor: pointer;
+}</pre>
+      <div>也可以先隐藏返回顶部，当页面滚动到一定位置时再出现，一般需要借助
+        JavaScript 实现；详情请访问 <a href="./demo/companies.html">网站 - 返回顶部</a></div>
+      <pre>
+const back = document.querySelector('.back')
+window.addEventListener('scroll', () => {
+    back.classList.toggle('fixed', window.scrollY > 500)
+})        </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 顶部固定 - 导航菜单、用户注册与登录、网站更新通知等等</dd>
+    <dd class="top-fixed">
+      <span>2023-11-17</span>
+      <span>Fixed Position</span>
+    </dd>
+    <dd>
+      <pre>
+.top-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 底部固定 - 导航菜单[移动端]、版权信息、重要提示等</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 贴近版心</dd>
+    <dd>
+      <div>.适用于桌面端</div>
+      <div>.贴近版心左侧：right 偏移浏览器/版心的一半（50%），再增加半个版心的 margin-right</div>
+      <div>.贴近版心右侧：同理</div>
+      <div>.如果使用负边距呢？</div>
+      <aside class="left-fixed">
+        <ul>
+          <li class="item">
+            <div>京东</div>
+            <div>秒杀</div>
+          </li>
+          <li class="spacer"></li>
+          <li class="item">
+            <div>特色</div>
+            <div>优选</div>
+          </li>
+          <li class="spacer"></li>
+          <li class="item">
+            <div>频道</div>
+            <div>广场</div>
+          </li>
+          <li class="spacer"></li>
+          <li class="item">
+            <div>为你</div>
+            <div>推荐</div>
+          </li>
+          <li class="spacer"></li>
+          <li class="item">
+            <div>客服</div>
+            <div>反馈</div>
+          </li>
+        </ul>
+      </aside>
+      <pre>
+.left-fixed {
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    margin-right: 500px;
+    transform: translateY(-50%);
+    background-color: #f40;
+    color: #fff;
+    padding: 10px;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>.常见固定导航</dd>
+    <dt>作业</dt>
+    <dd>.完善个人网站，如：</dd>
+    <dd class="sn">
+      <div>完成底部固定导航的设计</div>
+      <div>完成两个迷你菜单分别贴近版心左右的设计</div>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

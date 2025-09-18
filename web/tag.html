@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标签 Tag</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/web.css">
+  <base target="_blank">
+  <style>
+    .ring-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 2rem auto;
+    }
+
+    .ring-item {
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.6rem;
+    }
+
+    .item1 {
+      grid-column: span 2;
+      justify-self: center;
+    }
+
+    .item2 {
+      justify-self: right;
+    }
+
+    .item3 {
+      justify-self: left;
+    }
+
+    .ring {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+
+    .ring>div {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .one {
+      border-bottom: 4px solid #f40;
+      transform: rotateX(60deg) rotateY(160deg) rotateZ(0deg);
+      animation: oneRoll 1s linear infinite;
+    }
+
+    .two {
+      transform: rotateX(60deg) rotateY(30deg) rotateZ(0deg);
+      border-left: 4px solid #089;
+      animation: twoRoll 1s linear infinite;
+    }
+
+    .three {
+      border-right: 4px solid #890;
+      transform: rotatex(30deg) rotateY(60deg) rotateZ(0deg);
+      animation: threeRoll 1s linear infinite;
+    }
+
+    @keyframes oneRoll {
+      to {
+        transform: rotateX(60deg) rotateY(160deg) rotateZ(360deg);
+      }
+    }
+
+    @keyframes twoRoll {
+      to {
+        transform: rotateX(60deg) rotateY(30deg) rotateZ(360deg);
+      }
+    }
+
+    @keyframes threeRoll {
+      to {
+        transform: rotatex(30deg) rotateY(60deg) rotateZ(360deg);
+      }
+    }
+
+    .svg {
+      width: max-content;
+      margin: 2rem auto;
+    }
+
+    .svg svg {
+      background-color: #f2f3f4;
+    }
+
+    text {
+      font-size: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>标签</h1>
+    <span>&commat;Tag</span>
+  </header>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>. 标签是组成HTML页面的基本元素；一般情况下，标签和元素不做严格区分，二者可以互用</div>
+      <div>. 标签由 <span class="warn">&lt;&gt;</span> 包裹关键字组成，分：开始标签 <span class="warn">&lt;&gt;</span> 和结束标签 <span
+          class="warn">&lt;/&gt;</span>
+      </div>
+      <div>. 大部分标签有开始标签和结束标签；少量标签是单标签，如&lt;img&gt;、&lt;input&gt;</div>
+      <div>. 还有少量标签是复合标签，需要搭配其它标签一起使用，如&lt;figure&gt;和&lt;figcaption&gt;</div>
+      <div>. 不同的标签具有不同的 <span class="warn">语义</span>，不能随便使用，应按照实际用途和需求 <span class="warn">按需</span> 选择|添加使用</div>
+      <div>. 标签对大小写不敏感；万维网联盟W3C推荐使用小写</div>
+      <div class="tips">
+        <div>&lt;head&gt;中的标签多为单标签；&lt;body&gt;中的标签多为双标签</div>
+        <div>无需背记标签的形式，基本的开发环境都会自动检测并完成，除非你使用记事本</div>
+      </div>
+    </dd>
+    <dt>常见标签 Tags</dt>
+    <dd>
+      <figure class="svg">
+        <svg width="350" height="480">
+          <rect x="10" y="10" width="330" height='40' fill="#FFFDFA"></rect>
+          <text x="175" y="30" text-anchor="middle" dominant-baseline="central">&lt;head&gt;</text>
+          <rect x="10" y="60" width="330" height='430' fill="#FFFDFA"></rect>
+          <text x="175" y="80" text-anchor="middle" dominant-baseline="central">&lt;body&gt;</text>
+          <rect x="20" y="110" width="310" height='40' fill="#F0F8FF"></rect>
+          <text x="175" y="130" text-anchor="middle" dominant-baseline="central">&lt;nav&gt;</text>
+          <rect x="20" y="160" width="200" height='80' fill="#F0F8FF"></rect>
+          <text x="70" y="180" text-anchor="middle" dominant-baseline="central">&lt;article&gt;</text>
+          <rect x="230" y="160" width="100" height='260' fill="#F0F8FF"></rect>
+          <text x="280" y="180" text-anchor="middle" dominant-baseline="central">&lt;aside&gt;</text>
+          <rect x="20" y="250" width="200" height='80' fill="#F0F8FF"></rect>
+          <text x="70" y="270" text-anchor="middle" dominant-baseline="central">&lt;article&gt;</text>
+          <rect x="20" y="340" width="200" height='80' fill="#F0F8FF"></rect>
+          <text x="70" y="360" text-anchor="middle" dominant-baseline="central">&lt;article&gt;</text>
+          <rect x="20" y="430" width="310" height='40' fill="#F0F8FF"></rect>
+          <text x="175" y="450" text-anchor="middle" dominant-baseline="central">&lt;footer&gt;</text>
+        </svg>
+        <figcaption>html标签结构</figcaption>
+      </figure>
+    </dd>
+    <dd class="sn">
+      <div>页面标签</div>
+      <p>. 有了这些标签，文件才能称之为HTML页面</p>
+      <table>
+        <colgroup>
+          <col style="width: 30%;">
+        </colgroup>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>&lt;html&gt;</td>
+          <td>HTML页面根元素；定义了整个 HTML 文档</td>
+        </tr>
+        <tr>
+          <td>&lt;head&gt;</td>
+          <td>HTML页面头部元素</td>
+        </tr>
+        <tr>
+          <td>&lt;body&gt;</td>
+          <td>HTML页面主体元素；包括脚本标签&lt;script&gt;</td>
+        </tr>
+      </table>
+      <div>框架结构标签</div>
+      <p>. 对&lt;body&gt;区的划分 - <span class="warn">Layout 布局</span></p>
+      <p>. 划分页面各区域时对应的标签，构建页面框架，更好的体现对应的功能，方便搜索引擎使用</p>
+      <table>
+        <colgroup>
+          <col style="width: 30%;">
+        </colgroup>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>&lt;article&gt;</td>
+          <td>完整的文章结构；通常包括以下结构化标签</td>
+        </tr>
+        <tr>
+          <td>&lt;header&gt;</td>
+          <td>页眉/头部信息，通常用在&lt;body&gt;；&lt;article&gt;和&lt;section&gt;头部</td>
+        </tr>
+        <tr>
+          <td>&lt;nav&gt;</td>
+          <td>navigation；导航，使用&lt;ul&gt;实现；顶部、侧边、分页导航</td>
+        </tr>
+        <tr>
+          <td>&lt;aside&gt;</td>
+          <td>侧边栏</td>
+        </tr>
+        <tr>
+          <td>&lt;section&gt;</td>
+          <td>节元素，类似于&lt;div&gt;，但是HTML5建议应带上标题&lt;header&gt;；如果不需要标题，使用&lt;div&gt;即可</td>
+        </tr>
+        <tr>
+          <td>&lt;footer&gt;</td>
+          <td>页脚/底部信息，通常位于&lt;body&gt;、&lt;article&gt;底部，包括：版权声明、友情链接、备案信息等</td>
+        </tr>
+        <tr>
+          <td><span class="warn">&lt;div&gt;</span></td>
+          <td>division；块，用于分隔区域/布局；对搜索引擎来说，无语义，不利于网站的推广和使用</td>
+        </tr>
+        <tr>
+          <td><span class="warn">&lt;span&gt;</span></td>
+          <td>行内块；对搜索引擎来说，无语义</td>
+        </tr>
+        <tr>
+          <td>&lt;h1&gt; - &lt;h6&gt;</td>
+          <td>headline；标题，h1只能出现一次；便于搜索引擎为网页编制索引</td>
+        </tr>
+        <tr>
+          <td>&lt;p&gt;</td>
+          <td>paragraph；段落</td>
+        </tr>
+      </table>
+      <div>普通元素标签</div>
+      <p>. 页面的内容|细节呈现</p>
+      <table>
+        <colgroup>
+          <col style="width: 30%;">
+        </colgroup>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="./a.html">&lt;a&gt;</a></td>
+          <td>anchor；超链接/导航；单级导航可直接使用；多级导航应配合列表</td>
+        </tr>
+        <tr>
+          <td><a href="./img.html">&lt;img&gt;</a></td>
+          <td>image；图像；多使用&lt;figure&gt;或&lt;picture&gt;代替</td>
+        </tr>
+        <tr>
+          <td><a href="./imgfigure.html">&lt;figure&gt;</a></td>
+          <td>图形标签，配合&lt;figcaption&gt;一起使用，可以取代&lt;img&gt;</td>
+        </tr>
+        <tr>
+          <td><a href="./imgpicture.html">&lt;picture&gt;</a></td>
+          <td>图片标签，组合标签；配合&lt;source&gt;、&lt;img&gt;一起使用，可以实现响应式开发</td>
+        </tr>
+        <tr>
+          <td><a href="./list.html">&lt;ul&gt;&lt;ol&gt;&lt;li&gt;&lt;dl&gt;&lt;dt&gt;&lt;dd&gt;</a></td>
+          <td>&lt;ul&gt;；unordered list 有序列表；其子标签只能是列表项&lt;li&gt;
+            <br>&lt;ol&gt;；ordered list 无序列表；其子标签只能是列表项&lt;li&gt;
+            <br>&lt;dl&gt;；defined list 自定义列表；其子标签只能是：&lt;dt&gt;、t:title；&lt;dd&gt;、d:description
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./table.html">&lt;table&gt;</a></td>
+          <td>表格；由行列组成
+            <br>&lt;tr&gt;；行
+            <br>&lt;th&gt;；标题行单元格
+            <br>&lt;td&gt;；普通单元格
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./form.html">&lt;form&gt;</a></td>
+          <td>表单
+            <br>&lt;input&gt;；单行文本输入框、单选、多选
+            <br>&lt;textarea&gt;；多行文输入本框
+            <br>&lt;select&gt;；下拉列表
+            <br>&lt;button&gt;；按钮等
+          </td>
+        </tr>
+        <tr>
+          <td><a href="./iframe.html">&lt;iframe&gt;</a></td>
+          <td>inner-frame；内联框架；在当前页面嵌入/显示另外一个页面；早期使用较多</td>
+        </tr>
+        <tr>
+          <td><a href="./audio.html">&lt;audio&gt;</a></td>
+          <td>音频</td>
+        </tr>
+        <tr>
+          <td><a href="./video.html">&lt;video&gt;</a></td>
+          <td>视频</td>
+        </tr>
+      </table>
+      <div>其他标签</div>
+      <table>
+        <colgroup>
+          <col style="width: 30%;">
+        </colgroup>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>&lt;pre&gt;</td>
+          <td>定义预格式文本/按照原始代码的排列方式进行显示</td>
+        </tr>
+        <tr>
+          <td>&lt;code&gt;</td>
+          <td>定义计算机代码</td>
+        </tr>
+        <tr>
+          <td><a href="./details.html">&lt;details&gt;</a></td>
+          <td>细节|更多标签，用于区域的折叠和展开</td>
+        </tr>
+        <tr>
+          <td>&lt;summary&gt;</td>
+          <td>配合&lt;details&gt;使用，定义标题</td>
+        </tr>
+        <tr>
+          <td>&lt;sup&gt;</td>
+          <td>定义上标字</td>
+        </tr>
+        <tr>
+          <td>&lt;sub&gt;</td>
+          <td>定义下标字</td>
+        </tr>
+        <tr>
+          <td>&lt;small&gt;</td>
+          <td>小字体标签</td>
+        </tr>
+        <tr>
+          <td>&lt;progress&gt;</td>
+          <td>动态进度条标签</td>
+        </tr>
+        <tr>
+          <td>&lt;meter&gt;</td>
+          <td>静态进度条</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>标签属性 Attribute</dt>
+    <dd>
+      <div>. HTML 标签可以拥有属性。属性提供更多元素信息，如类、ID、名称、值、数据等等</div>
+      <div>. 不同的标签所拥有的属性不完全相同，如&lt;a&gt;有专有的href属性；&lt;img&gt;有专有的alt属性；两者都有通用的title属性</div>
+      <div>. 属性总是以<span class="warn">值对</span>的形式出现：名称name/值value；如：class="warn"，其中class是名称，warn是值</div>
+      <div>. 请始终为属性值添加引号：双引号或单引号，并保持引号类型一致，不能混用</div>
+      <div>. 属性总是在开始标签中指定</div>
+      <div>. 部分元素的属性可以省略属性值，多见于布尔类型，如disabled，有该属性，元素被禁止；没有则正常使用</div>
+      <div>. 部分元素建议必须使用某些属性，如&lt;img&gt;，请始终使用 alt 属性，当图像无法显示时给出提示</div>
+      <div class="tips">以上为HTML元素的<span class="warn">原生</span>属性；实际开发过程中，多使用框架，如Vue，这些框架具有自己特定的属性，如@click、:class等等
+      </div>
+      <table>
+        <colgroup>
+          <col style="width: 30%;">
+        </colgroup>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>id</td>
+          <td>ID属性，唯一标识元素</td>
+        </tr>
+        <tr>
+          <td>class</td>
+          <td>类样式属性；一个元素可以指定多个类，以空格分隔</td>
+        </tr>
+        <tr>
+          <td>style</td>
+          <td>内联样式属性</td>
+        </tr>
+        <tr>
+          <td>data-</td>
+          <td>数据属性[自定义属性]</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>额外提示信息</td>
+        </tr>
+        <tr>
+          <td>alt</td>
+          <td>替换属性</td>
+        </tr>
+        <tr>
+          <td>contenteditable</td>
+          <td>是否可编辑</td>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>资源路径属性</td>
+        </tr>
+        <tr>
+          <td>href</td>
+          <td>超链接地址属性</td>
+        </tr>
+        <tr>
+          <td>hidden</td>
+          <td>隐藏属性</td>
+        </tr>
+        <tr>
+          <td>checked</td>
+          <td>选中属性</td>
+        </tr>
+        <tr>
+          <td>selected</td>
+          <td>选中属性</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">标签分类 Classification</div>
+  <dl>
+    <dd>. 使用显示模式display区分标签种类</dd>
+    <dd>. 每个元素有自己默认的显示模式</dd>
+    <dd>. 根据设计需要，元素的显示模式可以<span class="warn">相互转换</span>；如通常将&lt;a&gt;转换为块元素更方便、安全</dd>
+    <dt>按占位/宽度</dt>
+    <dd class="sn">
+      <div>内联元素 <span class="warn">inline</span></div>
+      <pre>display: inline;</pre>
+      <p>. 也称行内元素，<span class="warn">行盒</span></p>
+      <p>. 根据本身宽度占有空间，在文档流中从左到右依次显示</p>
+      <p>. 不能设置宽度，不会独占一行</p>
+      <p>. 满行时候切换到下一行重新开始</p>
+      <p>. 内联元素和文字一样，并不是紧紧挨着，而是有一定的间隙</p>
+      <p>. 常见的有：&lt;a&gt; &lt;i&gt; &lt;span&gt; &lt;label&gt; &lt;small&gt; <span class="warn">&lt;img&gt;</span> <span
+          class="warn">&lt;audio&gt;</span> <span class="warn">&lt;video&gt;</span></p>
+      <div>行内块元素 <span class="warn">inline-block</span></div>
+      <pre>display: inline-block;</pre>
+      <p>. 可以设置宽度的内联元素</p>
+      <p>. 在文档流中的排列方式同inline</p>
+      <p>. 数量很少： &lt;input&gt; &lt;button&gt;</p>
+      <div>块级元素 <span class="warn">block</span></div>
+      <pre>display: block;</pre>
+      <p>. 也称<span class="warn">块盒</span></p>
+      <p>. 可以设置宽度</p>
+      <p>. 独占一行，在文档流中从上到下依次排列</p>
+      <p>. 大部分标签都是块级元素；很多结构化的标签，如&lt;header&gt;本质上都是块元素</p>
+      <div>布局类元素</div>
+      <p><a href="./flex.html">弹性盒子 - flex</a></p>
+      <pre>display: flex;</pre>
+      <p> <a href="./grid.html">网格 - grid</a></p>
+      <pre>display: grid;</pre>
+      <div>表格类元素</div>
+      <p>. 特指table系列的元素，特性类似inline-block；特意区分的目的之一是为了更高效的渲染页面</p>
+      <p>. 修改表格元素的模式，可以实现特定的应用；更多信息，请访问 <a href="./table.html">表格 - table</a></p>
+      <pre>
+// &lt;tabel&gt;
+display: table;
+
+// &lt;tr&gt;
+display: table-row;
+
+// &lt;td&gt; &lt;th&gt; 
+display: table-cell;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用浏览器的检查功能，查看常见元素的默认display</dd>
+    <dt>按语义</dt>
+    <dd>. 语义化 semantic 标签：清晰地定义其内容；大部分标签都是，如&lt;form&gt;、&lt;table&gt;</dd>
+    <dd>.
+      非语义化标签：无法提供关于其内容的信息，仅仅作为容器/载体使用，如&lt;div&gt;、&lt;span&gt;、&lt;i&gt;；多用于布局和功能型拓展，如大部分字体图标都是依托&lt;span&gt;、&lt;i&gt;实现，已经失去了其标签本意
+    </dd>
+    <dd class="tips">
+      <div>. 页面不单单是给人看的，更是给计算机看的；在给人看之前，首先要给计算机看</div>
+      <div>. 规范的Web页面，可以让计算机和人更加高效的理解和处理文档</div>
+      <div>. 在正确的地方使用正确的标签，创建有意义的Web页面</div>
+      <div>1. 结构化：见者知内容</div>
+      <div>2. 语义化：见者知用途</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

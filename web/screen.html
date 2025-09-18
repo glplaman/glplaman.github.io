@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>屏风图 Screen</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="./css/screen.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>屏风图</h1>
+    <span>&commat;Screen</span>
+    <div class="screen">
+      <div class="seg" style="--pos:0"></div>
+      <div class="seg" style="--pos:1"></div>
+      <div class="seg" style="--pos:2"></div>
+      <div class="seg" style="--pos:3"></div>
+      <div class="seg" style="--pos:4"></div>
+      <div class="seg" style="--pos:5"></div>
+    </div>
+  </header>
+  <dl>
+    <dd>. 将图片水平分隔为若干片，每个元素显示其中一片</dd>
+    <dd>. 每个元素显示的图片位置为：(当前片数-1) /(总片数-1)：从0到100%分成若干段；第一段从0开始；最后一段在100%结束</dd>
+    <dd>. 每片的背景图片大小background-size应为总片数*100%</dd>
+    <dd>. 为查看效果，以下各例采用hover触发特效，且采用公共类tile；任意调试尺寸均无异常</dd>
+    <dd>
+      <pre>
+.tile {
+    width: 320px;
+    height: 180px;
+    margin: 2rem auto;
+    display: flex;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 2片</dd>
+    <dd>.2个点平分100%</dd>
+    <dd>.第一片在开始0，第二片在结束100%；每片的位置：0、100%</dd>
+    <dd class="tile tile-2">
+      <div></div>
+      <div></div>
+    </dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-2"&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.tile-2>div {
+    flex: 1;//2等分
+    background-image: url(../imgs/bg.jpg);
+    background-size: 200%;//2倍大小
+    background-repeat: no-repeat;
+}
+
+.tile-2>div:nth-child(1) {
+    background-position: 0;
+}
+
+.tile-2>div:nth-child(2) {
+    background-position: 100%;
+}
+
+.tile-2>div:hover {
+    transform: translateY(1rem);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 3片</dd>
+    <dd>.3个点平分100%</dd>
+    <dd>.第一片在开始0，第三片在结束100%；第二片在中间50%；每片的位置：0、50%、100%</dd>
+    <dd class="tile tile-3">
+      <div></div>
+      <div></div>
+      <div></div>
+    </dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-3"&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.tile-3>div {
+    flex: 1;
+    background-image: url(../imgs/bg.jpg);
+    background-size: 300%;//3倍
+    background-repeat: no-repeat;
+}
+
+.tile-3>div:nth-child(1) {
+    background-position: 0;
+}
+
+.tile-3>div:nth-child(2) {
+    background-position: 50%;
+}
+
+.tile-3>div:nth-child(3) {
+    background-position: 100%;
+}
+
+.tile-3>div:hover {
+    transform: translateY(1rem);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 4片</dd>
+    <dd>.4个点平分100%</dd>
+    <dd>.第一片在开始0，第四片在结束100%；每片的位置：0、33.3%、66.7%、100%</dd>
+    <dd class="tile tile-4">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-4"&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.tile-4>div {
+    flex: 1;
+    background-image: url(../imgs/bg.jpg);
+    background-size: 400%;//4倍
+    background-repeat: no-repeat;
+}
+
+.tile-4>div:nth-child(1) {
+    background-position: 0;
+}
+
+.tile-4>div:nth-child(2) {
+    background-position: 33.3%;
+}
+
+.tile-4>div:nth-child(3) {
+    background-position: 66.7%;
+}
+
+.tile-4>div:nth-child(4) {
+    background-position: 100%;
+}
+
+.tile-4>div:hover {
+    transform: translateY(1rem);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 使用内联变量优化</dd>
+    <dd class="tile tile-4 adv">
+      <div style="--pos:0"></div>
+      <div style="--pos:1"></div>
+      <div style="--pos:2"></div>
+      <div style="--pos:3"></div>
+    </dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-4 adv"&gt;
+    &lt;div style='--pos:0'&gt;&lt;/div&gt;
+    &lt;div style='--pos:1'&gt;&lt;/div&gt;
+    &lt;div style='--pos:2'&gt;&lt;/div&gt;
+    &lt;div style='--pos:3'&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.tile-4.adv div {
+  background-position: calc(var(--pos)*100%/(4 - 1));
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

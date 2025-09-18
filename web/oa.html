@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大学计算机练习</title>
+  <link rel="stylesheet" href="../css/normalizeNew.css">
+  <link rel="stylesheet" href="../css/oa.css">
+  <link rel="stylesheet" href="../utils/lib/magnific-popup.min.css">
+  <script src="../utils/lib/vue.global.prod.min.js"></script>
+</head>
+
+<body>
+  <div class="w cont" id="app">
+    <header>
+      <h1>
+        <a class="logo" href="../oa.html" title="理工学院软件工程">理工学院软件工程</a>
+      </h1>
+      <span class="logo-txt">大学计算机练习</span>
+      <div class="tips-box">
+        <a href="#score-popup" id='score-link'>
+          <span class="iconfont icon-zhengquetishi tips-icon"></span>
+        </a>
+        <a href="#tips-popup" id='tips-link'>
+          <span class="iconfont icon-bangzhu tips-icon"></span>
+        </a>
+        <audio id='music' ref='bgm' src="../utils/music/Bandari-NewMorning.mp3" preload loop></audio>
+        <span id='bgm' @click='onBgm'>
+          <span v-if='bgmBool' class="iconfont icon-kaiqiyinle tips-icon ani-rotate"></span>
+          <span v-else class="iconfont icon-jingyin tips-icon"></span>
+        </span>
+      </div>
+      <div id="tips-popup" class="tips-popup mfp-hide">
+        <p class="tips-title">提示</p>
+        <div class="tips-cont">仅供测试练习</div>
+        <a href="javascript:;" id='tips-close-link'>关闭</a>
+      </div>
+      <div id="score-popup" class="tips-popup mfp-hide">
+        <p class="tips-title">历史成绩-仅保留上次成绩</p>
+        <div v-if='score.length>0'>
+          <div class="tips-cont">
+            <span>章节</span>
+            <span>总题数</span>
+            <span>正确数</span>
+            <span>正确率</span>
+          </div>
+          <div v-for='(item,ind) in score' :key='ind'>
+            <div class="tips-cont" v-if='item'>
+              <span>{{ind+1}}</span><span>{{item.len}}</span><span>{{item.ok}}</span><span>{{(item.ok*100/item.len).toFixed(0)}}%</span>
+            </div>
+          </div>
+        </div>
+        <div v-else class="tips-cont">记录为空</div>
+        <a href="javascript:;" id='score-close-link'>关闭</a>
+        <!-- <a href="javascript:;" id='score-clear-link' class="tips-clr" v-if='score.length>0'>清除记录</a> -->
+      </div>
+    </header>
+    <div class="grid grid4">
+      <button class="chap-box flex-v" v-for='(item,ind) in title' :key='item' @click='sel' :data-ind='ind'
+        :disabled='startBool' :class='chapInd==ind? "active":""'>
+        <p class="chap-tips">- 第{{ind+1}}章 -</p>
+        <p class="chap-tips">{{item}}</p>
+      </button>
+    </div>
+    <section class="timer">
+      <button class="btn" v-if='!startBool' @click='startBtn' :disabled='chapInd<0'>开始</button>
+      <button class="btn" v-else @click='submitBtn' :disabled="submitBool">
+        <span v-if='timeBool'>提交</span>
+        <span v-else>
+          <span ref='h0'>0</span><span ref='h1'>0</span>:<span ref='m0'>0</span><span ref='m1'>0</span>:<span
+            ref='s0'>0</span><span ref='s1'>0</span>
+        </span>
+      </button>
+    </section>
+    <form class="quiz" v-if='len'>
+      <div class="quiz-item" v-for='(item,ind) in quiz' :hidden='!startBool && !doneBool'>
+        <p class="desc">{{ind+1}}-{{quiz.length}}. {{item.desc}}</p>
+        <label v-for='(option,sn) in item.options' class="option">
+          <div class="sn">
+            <input type="radio" :name="'r'+ind" :value='option' :disabled='!startBool' :key="option"
+              @change='change(ind,$event)'>
+          </div>
+          <div :class='(doneBool && option==item.answer)?"flag":""'>{{label[sn]}}&nbsp;&nbsp;{{option}}</div>
+        </label>
+      </div>
+    </form>
+    <a class="back" @click.prevent='back' href="#app" :class='{"show":showBool}'>
+      <span class="iconfont icon-Arrowup"></span>
+    </a>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../utils/lib/jquery-3.6.0.min.js"></script>
+  <script src="../utils/lib/jquery.magnific-popup.min.js"></script>
+  <script type="module">
+    import oa from '../utils/data/data2021/oa.js'
+    const app = Vue.createApp({
+      data() {
+        return {
+          title: oa.title,
+          oa: oa.quiz,
+          chapInd: -1,
+          startBool: false,
+          bgmBool: false,
+          submitBool: true,
+          doneBool: false,
+          timeBool: false,
+          showBool: false,
+          quiz: [],
+          label: ['A', 'B', 'C', 'D'],
+          score: [],
+          curScore: []
+        }
+      },
+      methods: {
+        onBgm() {
+          if (this.bgmBool) {
+            this.bgmBool = false
+            this.$refs.bgm.pause()
+          } else {
+            this.bgmBool = true
+            this.$refs.bgm.play()
+          }
+        },
+        sel(e) {
+          let chapInd = Number(e.target.dataset.ind)
+          if (chapInd == this.chapInd) {
+            return
+          }
+          let keys = 'chap' + (chapInd + 1)
+          this.chapInd = chapInd
+          this.doneBool = false
+          // do not arr1=arr2;
+          let quizbak = [...this.oa[keys]]
+          let temp = [...this.rand(quizbak)]
+          for (let i = 0; i < temp.length; i++) {
+            temp[i].options = [...this.rand(temp[i].options)]
+            this.curScore.push(0)
+          }
+          this.quiz = [...temp]
+        },
+        change(ind, e) {
+          console.log(ind, e.target.value);
+          this.curScore[ind] = e.target.value
+        },
+        startBtn() {
+          this.startBool = true
+          this.submitBool = true
+          this.doneBool = false
+          this.timeBool = false
+          this.counting()
+        },
+        submitBtn() {
+          this.doneBool = true
+          this.startBool = false
+          // update curScore
+          let grade = 0
+          this.quiz.forEach((ele, ind) => {
+            if (ele.answer === this.curScore[ind]) {
+              grade++
+            }
+          });
+          // show the grade
+
+          // update localStorage score
+          let score = this.score
+          console.log('before', score);
+          let item = new Object()
+          console.log(item);
+          item.ok = grade
+          item.len = this.quiz.length
+          score[Number(this.chapInd)] = item
+          console.log('after', score);
+          this.score = score
+          window.localStorage.setItem('score', JSON.stringify(this.score))
+        },
+        rand(arr) {
+          let temp = []
+          while (arr.length > 0) {
+            let ind = Math.floor(Math.random() * arr.length)
+            temp.push(arr[ind])
+            arr.splice(ind, 1)
+          }
+          return temp
+        },
+        counting() {
+          let secs = 0.5 * 60
+          let inter = setInterval(() => {
+            secs--;
+            if (secs < 1) {
+              clearInterval(inter)
+              this.timeBool = true
+              this.submitBool = false
+              return
+            }
+            let hour = Math.floor(secs / 3600)
+            let min = Math.floor(secs % 3600 / 60)
+            let sec = secs % 60
+            this.$refs.h0.innerHTML = Math.floor(hour / 10)
+            this.$refs.h1.innerHTML = hour % 10
+
+            this.$refs.m0.innerHTML = Math.floor(min / 10)
+            this.$refs.m1.innerHTML = min % 10
+
+            this.$refs.s0.innerHTML = Math.floor(sec / 10)
+            this.$refs.s1.innerHTML = sec % 10
+          }, 1000)
+        },
+        back() {
+          setTimeout(function () {
+            document.querySelector('#app').scrollIntoView()
+          }, 100)
+        }
+      },
+      computed: {
+        res() {
+          return (options, option) => {
+            return this.label[options.indexOf(option)]
+          }
+        },
+        len() {
+          return this.quiz.length
+        }
+      },
+      watch: {
+        bool(oldval, newval) {
+          console.log(oldval, newval);
+        }
+      },
+      created() {
+        // window.localStorage.clear()
+        let score = window.localStorage.getItem('score')
+        this.score = JSON.parse(score) ? JSON.parse(score) : []
+        // popup
+        $(document).ready(function () {
+          let magnificPopup = $.magnificPopup.instance;
+          $('#tips-link').magnificPopup({
+            type: 'inline',
+            // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            midClick: true,
+            modal: true
+          });
+          $('#tips-close-link').click(function () {
+            magnificPopup.close();
+          })
+          $('#score-link').magnificPopup({
+            type: 'inline',
+            // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+            midClick: true,
+            modal: true
+          });
+          $('#score-close-link').click(function () {
+            magnificPopup.close();
+          })
+          $('#score-clear-link').click(function () {
+            window.localStorage.clear();
+            magnificPopup.close();
+          })
+        })
+        window.addEventListener('scroll', (e) => {
+          if (window.pageYOffset > window.innerHeight) {
+            this.showBool = true
+          } else {
+            this.showBool = false
+          }
+        })
+      }
+    })
+    const vm = app.mount('#app')
+  </script>
+</body>
+
+</html>

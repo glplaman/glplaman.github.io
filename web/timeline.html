@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间轴动画 Timeline</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>时间轴动画</h1>
+    <span>&commat;Timeline</span>
+  </header>
+  <section>
+    <h3>Introduction</h3>
+    <ul>
+      <li>元素的动画效果由容器的<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline/scroll">滚动
+          scroll()</a> 或<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline/view">视口
+          view()</a> 触发</li>
+      <pre>animation-timeline: none | auto | scroll() | view();</pre>
+      <li>animation-timeline 应在动画 animation 定义后面给出</li>
+      <li>不用指定动画时间 animation-duration</li>
+      <li>通常指定 animation-fill-mode 为 both</li>
+      <li>使用线性 linear、交互 alternate 和双向填充模式 both 能更好观察动画的变换过程</li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline">MDN -
+          animation-timeline</a> <span class="iconfont icon-lab"></span>、<a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/timeline-scope">timeline-scope</a> <span
+          class="iconfont icon-lab"></span>、<a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-timeline">scroll-timeline</a> <span
+          class="iconfont icon-lab"></span>
+        、<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/view-timeline">view-timeline</a> <span
+          class="iconfont icon-lab"></span></li>
+    </ul>
+    <table>
+      <caption>时间轴动画常用属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline">animation-timeline</a></td>
+          <td>none | auto | scroll() | view()</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-range">animation-range</a></td>
+          <td>复合属性；动画范围；默认 0 100%</td>
+        </tr>
+        <tr>
+          <td>animation-range-start</td>
+          <td>动画开始范围；默认 0</td>
+        </tr>
+        <tr>
+          <td>animation-range-end</td>
+          <td>动画结束范围；默认 100%</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <h2>view()</h2>
+  <section>
+    <ul>
+      <li>动画由原始视口或经过调整大小的视口 view 触发</li>
+      <li>元素在屏幕/视口可见时才触发
+        <p>animation happens only when the element is visible on the screen</p>
+      </li>
+      <li>元素进入视口，动画开始播放
+        <p>by default, the timeline is at 0% when the subject is first visible at one edge of the scroller</p>
+      </li>
+      <li>元素到达视口顶部，动画结束播放
+        <p>and 100% when it reaches the opposite edge.</p>
+      </li>
+    </ul>
+    <h3>Syntax</h3>
+    <ul>
+      <li>调整视口范围：使用 <span class="warn">正值内收</span> 视口范围或使用 <span class="warn">负值外扩</span> 视口范围</li>
+      <pre>animation-timeline: view(start end);</pre>
+      <li>start：Inward offset <span class="warn">from</span> beginning of the scrollport. default 0</li>
+      <li>end：Inward offset <span class="warn">from</span> end of the scrollport. default 0</li>
+      <li>内收的开始 start 和结束 end 顺序任意，系统会自动判定动画的时间轴区域
+        <p>The scroller and inset values can be specified in any order.</p>
+      </li>
+      <figure>
+        <img src="./imgs/timeline0.png" alt="">
+        <figcaption>定制动画视口大小</figcaption>
+      </figure>
+    </ul>
+    <h3>Cases</h3>
+    <ol>
+      <li>通常取值 view(50% 10%)<p>While scrolling down, start at 10% from the bottom and finish at 50% from the top</p>
+        <p>Conversely, scrolling up, the animation proceeds in the reverse direction, starting at 50% from the
+          top, moving backward through the animation, and ending at 10% from the bottom</p>
+      </li>
+      <figure>
+        <img src="./imgs/timeline1.png" alt="">
+        <figcaption>animation-timeline: view(50% 10%);</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/timeline2.png" alt="">
+        <figcaption>animation-timeline: view(10% 50%);</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/timeline3.png" alt="">
+        <figcaption>animation-timeline: view(40% 60%);</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/timeline4.png" alt="">
+        <figcaption>animation-timeline: view(40% 40%);</figcaption>
+      </figure>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animTimelineView.html">Animation Timeline view()
+        时间轴动画</a></div>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-timeline.html">时间轴联动导航</a></div>
+  </section>
+  <h2>scroll()</h2>
+  <section>
+    <ul>
+      <li>当前元素的动画效果由最近 nearest 的容器或根容器 root 的滚动触发</li>
+      <li>容器应该有滚动条</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animTimelineScroll.html">随页面滚动的风火轮</a></div>
+    <ul>
+      <li>使用的动画定义如下</li>
+      <pre>
+@keyframes --windmill {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}</pre>
+      <li>使用默认容器 nearest</li>
+      <pre>
+.windmill {
+  animation-name: --windmill;
+  animation-timing-function: linear;
+  animation-timeline: scroll();
+}</pre>
+      <li>使用根容器 root</li>
+      <pre>
+.windmill {
+  animation-name: --windmill;
+  animation-timing-function: linear;
+  animation-timeline: scroll(root);
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

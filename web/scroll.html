@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滚动 Scroll</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+  <style>
+    .slider {
+      display: flex;
+      gap: 10px;
+      width: 300px;
+      aspect-ratio: 9/16;
+      overflow-x: auto;
+      margin: 0 auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      scroll-snap-align: center;
+    }
+
+    .slider::-webkit-scrollbar {
+      width: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>滚动</h1>
+    <span>&commat;Scroll</span>
+  </header>
+  <dl>
+    <dd>
+      <div>.元素的内容超过元素的大小，且出现滚动条时，才会有相应的变化；不能溢出隐藏</div>
+      <div>.使用CSS定制页面的滚动行为；也可以使用 JavaScript 更加精细控制</div>
+      <div>.容器的概念</div>
+      <div>.父元素和子元素的区分</div>
+    </dd>
+  </dl>
+  <div class="chap">滚动属性</div>
+  <dl>
+    <dt>滚动行为 scroll-behavior</dt>
+    <dd>
+      <div>.容器/父元素行为</div>
+      <pre>scroll-behavior: auto | smooth | initial | inherit;</pre>
+      <div>.为 &lt;html&gt; 指定平滑滚动；其中，字体大小设置为62.5%，相当于是1rem = 10px，便于运算</div>
+      <pre>
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}</pre>
+    </dd>
+    <dt>滚动停止 scroll-padding-top</dt>
+    <dd>
+      <div>.容器/父元素行为</div>
+      <div>.在滚动到某个元素时，该元素顶部与视口顶部之间的最小距离，特别适合锚点跳转，可以避免内容区被顶部的导航区遮盖</div>
+      <pre>scroll-padding-top: length | percentage | auto;</pre>
+      <pre>
+html {
+  scroll-padding-top: 10vh;
+}</pre>
+    </dd>
+    <dt>滚动类型 scroll-snap-type</dt>
+    <dd>
+      <div>.容器/父元素行为</div>
+      <pre>scroll-snap-type: [ axis ] [ snapStrictness ];</pre>
+      <div>.通常为指定 html 为父元素</div>
+      <pre>
+  html {
+  scroll-snap-type: y mandatory;
+  }</pre>
+    </dd>
+    <dt>对齐方式 scroll-snap-align</dt>
+    <dd>
+      <div>.子元素行为</div>
+      <div>.配合 scroll-snap-type 一起使用</div>
+      <div>.用于指定滚动容器内的滚动快照类型和行为。这个属性允许你控制滚动时元素如何“捕捉”到特定的位置，从而创建出平滑和有节奏的滚动体验</div>
+      <div>.页面滚动时，子元素在容器中的对齐方式</div>
+      <div>.常见于无限滚动、轮播图、多页布局等设计中</div>
+      <pre>scroll-snap-align: none | start | end | center</pre>
+      <pre>
+.item {
+  scroll-snap-align: start;
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 开机动画|首页加载</dd>
+    <dd>
+      <div>.隐藏滚动条</div>
+      <div>.桌面端按住 Shift，使用中键滚动</div>
+      <div>.移动端左右滑动</div>
+      <div class="slider">
+        <img src="/utils/screen/screen0.jpg" alt="">
+        <img src="/utils/screen/screen1.jpg" alt="">
+        <img src="/utils/screen/screen2.jpg" alt="">
+        <img src="/utils/screen/screen3.jpg" alt="">
+        <img src="/utils/screen/screen4.jpg" alt="">
+        <img src="/utils/screen/screen5.jpg" alt="">
+        <img src="/utils/screen/screen6.jpg" alt="">
+        <img src="/utils/screen/screen7.jpg" alt="">
+        <img src="/utils/screen/screen8.jpg" alt="">
+        <img src="/utils/screen/screen9.jpg" alt="">
+      </div>
+    </dd>
+    <dt>定制滚动条 Custom Scrollbar</dt>
+    <dd>
+      <div>.通常指定特定元素，如 &lt;body&gt; 或某个容器元素；如果不指定，则所有元素共享一个样式</div>
+      <div>.可以使用：hover、box-shadow等属性</div>
+      <div>.更多信息，请查看 <a href="https://mp.weixin.qq.com/s/_iNAT-he6YJ8q8tDxYzmKg">学会使用 CSS 自定义滚动条，能让你做的产品更有用户体验！</a>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 垂直滚动条 - 设置宽度 width</div>
+      <pre>
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--blue-light-color);
+}</pre>
+    </dd>
+    <div>[<span class="iconfont icon-keyboard"></span>] 水平滚动条 - 设置高度 height；其它类似</div>
+    <pre>
+body::-webkit-scrollbar {
+  height: 4px;
+}    </pre>
+    <dt></dt>
+  </dl>
+  <div class="chap">滚动设计</div>
+  <dl>
+    <dd>
+      <div>.通常处理HTML页面的滚动，也可以处理某个特定元素的滚动</div>
+      <div>.通常处理垂直方向的应用</div>
+      <figure>
+        <img src="./imgs/dom.jpg" alt="">
+        <figcaption>滚动区域</figcaption>
+      </figure>
+      <div>.没有滚动时，scrollTop为0，滚动比例为0</div>
+      <div>.滚动到最下面时，scrollTop为最大，滚动比例为1</div>
+      <div>.利用这个比值，可以做一些特别设计</div>
+    </dd>
+    <dd class="sn">
+      <div>获取文档对象 - 返回文档document的根元素root element；对HTML文档来说，就是&lt;html&gt;</div>
+      <pre>let html = document.documentElement</pre>
+      <div>获取文档视口高度 - 和浏览器有关，如缩放，调试时选择不同的设备等都可以影响视口大小</div>
+      <pre>let clientHeight = html.clientHeight</pre>
+      <div>获取文档可滚动高度 - el.scrollHeight：可以滚动的高度；通常获取body的可滚动高度</div>
+      <pre>let scrollHeight = html.scrollHeight || document.body.scrollHeight</pre>
+      <div>4. 获取文档滚动高度 - el.scrollTop：元素垂直滚动的数值：the number of pixels that an element's content is scrolled vertically.
+      </div>
+      <pre>let scrollTop = html.scrollTop || document.body.scrollTop</pre>
+    </dd>
+    <dd class="tips">
+      <div>When scrollTop is used on the root element (the &lt;html&gt; element), the scrollY of the window is returned.
+        This is a special case of scrollTop</div>
+      <div>window.scrollY：是BOM中window对象的属性，滚动的距离；同scrollTop</div>
+      <div>可以根据这个动态设置元素样式，如视觉差、返回顶部；IE不支持</div>
+    </dd>
+    <!-- <dd>为了跨浏览器兼容性，请使用 window.pageYOffset 而不是 window.scrollY</dd> -->
+    <dt>过程 Procedure</dt>
+    <dd>
+      <div>方案1：利用DOM元素：滚动事件添加在元素上</div>
+      <pre>
+el.addEventListener('scroll', () => {
+let per = el.scrollTop / (el.scrollHeight - el.clientHeight);
+console.log(per);})</pre>
+      <div>方案2：利用BOM元素：滚动事件添加在window上</div>
+      <pre>
+window.addEventListener('scroll', fn);
+window.addEventListener('resize', fn);
+window.addEventListener('load', fn);
+function fn() {
+  let top = document.documentElement.scrollTop | document.body.scrollTop;
+  console.log(top);
+  console.log(window.scrollY);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/parallax.html">视觉差</a></dd>
+    <dd>
+      <div>.将滚动值转化为元素的定位属性</div>
+      <pre>
+window.addEventListener('scroll', () => {
+  let val = window.scrollY;
+  tree0.style.left = -val * 0.25 + 'px';
+  tree1.style.left = -val * 0.5 + 'px';
+  tree2.style.right = -val * 0.25 + 'px';
+  tree3.style.marginLeft = -val * 0.5 + 'px';
+  h1.style.marginTop = val + 'px';
+})      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/scroll.html">滚动显示</a></dd>
+    <dd>
+      <div>.将滚动值转化为元素的透明、缩放、位移等属性</div>
+      <pre>
+let lis = document.querySelectorAll('li');
+let html = document.documentElement;
+document.addEventListener('scroll', () => {
+  let per = html.scrollTop / (html.scrollHeight - html.clientHeight);
+
+  let total = 1 / lis.length;
+  for (let [index, li] of lis.entries()) {
+    let start = total * index;
+    let end = total * (index + 1);
+    let pro = (per - start) / (end - start);
+    if (pro >= 1) pro = 1;
+    if (pro &lt;= 0) pro = 0;
+    li.style.setProperty('--per', pro);
+  }
+})      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/notice.html">使用须知 notice</a>、<a
+        href="https://codepen.io/glpla/full/QWojbYE">使用须知 notice - CodePen</a></dd>
+    <dd>
+      <div>.阅读完才可以继续下一步</div>
+      <pre>
+let tips = document.querySelector('.tips');
+let btn = document.querySelector('.btn');
+tips.addEventListener('scroll', () => {
+  let per = tips.scrollTop / (tips.scrollHeight - tips.offsetHeight);
+  if (per >= 0.9) {
+    btn.removeAttribute('disabled');
+    btn.classList.add('active');
+  }
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/eYXpNqe">水平进度条 -
+        CodePen</a></dd>
+    <dd>.水平方向的应用</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 下拉刷新 - 当滚动到一定程度时，如70%，加载更多数据</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 联动导航</dd>
+    <dd>
+      <div>.页面滚动时，高亮当前导航项</div>
+      <div>.当前思路对结构有要求</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

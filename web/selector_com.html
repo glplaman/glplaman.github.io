@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组合选择器 Combinators</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/selector.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>组合选择器</h1>
+    <span>&commat;Combinators</span>
+  </header>
+  <dl>
+    <dd>. 使用多个选择器选择匹配的元素</dd>
+    <dd>. 更多信息，请访问 <a
+        href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Combinators">MDN -
+        combinators</a></dd>
+    <dt>后代选择器 Descendant combinator ( &nbsp; )</dt>
+    <dd>
+      <div>. 以 <span class="warn">空格</span> 分隔，从所有后代[子辈、孙辈、...]中选择符合条件的元素</div>
+      <div>. The descendant combinator — typically represented by <span class="warn">a single space (" ")</span>
+        character
+        —
+        combines two selectors such that elements matched by the second selector are selected if they have an ancestor
+        (parent, parent's parent, parent's parent's parent, etc.) element matching the first selector.</div>
+    </dd>
+    <dt>直接后代选择器 Child combinator ( &gt; )</dt>
+    <dd>
+      <div>. The child combinator (>) is placed between two CSS selectors. It matches only those elements matched by the
+        second selector that are <span class="warn">the direct children</span> of elements matched by the first.</div>
+      <div>. 以 <span class="warn">&gt;</span> 分隔，从儿子中选择符合条件的元素</div>
+      <div>. 元素的伪元素::before、::after不是其直接后代</div>
+    </dd>
+    <dt id="bro0">Subsequent-sibling combinator ( ~ )</dt>
+    <dd>
+      <div>. 也叫兄弟/弟弟选择器 General sibling combinator</div>
+      <div>. The general sibling combinator (~) separates two selectors and matches all iterations of the <span
+          class="warn">second</span>
+        element,
+        that are following the first element (though not necessarily immediately), and are children of the <span
+          class="warn">same parent</span>
+        element.</div>
+      <div>. 以 <span class="warn">~</span> 分隔，向后选择，从所有弟弟|little brothers中选择符合条件的元素</div>
+    </dd>
+    <dt id="bro1">Next-sibling combinator ( + )</dt>
+    <dd>
+      <div>. 也叫相邻兄弟/小弟选择器 Adjacent sibling combinator</div>
+      <div>. The adjacent sibling combinator (+) separates two selectors and matches the second element only if it
+        <span class="warn">immediately follows</span> the first element, and both are children of the same parent
+      </div>
+      <div>. 以 <span class="warn">+</span> 分隔，选择相邻immediately followed的弟弟|little brother；应用非常广泛</div>
+    </dd>
+    <dt>叠加选择器 ( . )</dt>
+    <dd>
+      <div>. 以 <span class="warn">点 . 连接</span> 不是分隔，表示在当前样式的基础上，再叠加一个新样式</div>
+      <div>. 通常用于公共样式、专有样式或动态样式，如使用JS控制切换状态</div>
+      <div>. CCS文件中，新样式必须出现在当前样式的<span class="warn">后面</span></div>
+      <div>. 叠加会增加优先级</div>
+      <pre>
+//HTML5
+&lt;div class="box active"&gt;&lt;/div&gt;
+//CSS3
+.box {
+    opacity: 0.5;
+}
+.box.active {
+    opacity: 1;
+}</pre>
+    </dd>
+    <dt>列表选择器 Selector list ( , )</dt>
+    <dd>
+      <div>. 以 <span class="warn">逗号,</span> 分隔，表示样式同时适用于这些元素</div>
+      <div>. 一旦列表包含有一个无效选择器，则整个声明都无效[ <span class="warn">经验证，限制已解除</span> ]</div>
+      <div>. Multiple selectors share the same declarations</div>
+      <div>. The CSS selector list (,) selects all the matching nodes. A selector list is a comma-separated list of
+        selectors</div>
+      <div>. Selector lists can also be passed as parameters to some functional CSS pseudo-classes</div>
+      <div>. Can improve consistency while reducing the size of style sheets</div>
+      <div>. When a selector list contains an invalid selector, the entire style block is ignored, except for the :is()
+        and :where()</div>
+      <pre>
+ul,ol {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}</pre>
+      <p>等价于</p>
+      <pre>
+:is(ul,ol) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}</pre>
+    </dd>
+    <dt>案例 Cases</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./tabcard.html">标签页 -
+        Tabcard</a>、<a href="https://codepen.io/glpla/pen/MWZBQev">标签页 -
+        CodePen</a>、<a href="https://codepen.io/glpla/full/ZEPbbQv">标签页 - CodePen - js</a>、 </dd>
+    <dd>
+      <div>. 默认显示第一个标签页内容；其它隐藏</div>
+      <div>. 单击标签，对于的标签页内容显示，其它隐藏</div>
+      <div>. 高亮标签、定制滚动条</div>
+      <div>. 使用单选按钮 radio，绑定 label，结合 <a href="./selector_class.html">选中选择器 :checked</a>、<a
+          href="./selector_com.html">兄弟选择器
+          ~</a>、<a href="./selector_com.html">相邻兄弟选择器 + </a>、<a href="./selector_arr.html">属性选择器</a> 综合实现
+      </div>
+      <div>. 注意选择器对结构的要求</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-message1.html">留言板 - Contact</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/detail.html">详情页 - Detail</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/swiper0.html">手动轮播 - Swiper</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/login_deer.html">一路有你 - Login&Register</a>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-sample.html">仿苹果停靠栏</a></dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>伪类选择器 Pseudo class</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/selector.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>伪类选择器</h1>
+    <span>&commat;Pseudo class</span>
+  </header>
+  <dl>
+    <dd>. 和普通类的可以应用在多个元素不同，伪类<span class="warn">仅仅限定当前元素使用</span>，所以叫伪类</dd>
+    <dd>. 伪元素会增加元素，伪类不增加元素</dd>
+    <dd>. 伪元素使用::，伪类使用:</dd>
+    <dd>. 更多信息，请访问 <a
+        href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements">MDN
+        - Pseudo class</a></dd>
+    <dt>超链接伪类</dt>
+    <dd>
+      <div>. 常见于超链接 &lt;a&gt; 桌面端应用</div>
+      <div>. &lt;a&gt; 使用时，需按下述顺序定义：a:link → a:visted → a:hover → a:active</div>
+      <div>. 除了超链接 &lt;a&gt;，部分伪类还可以作用于其它元素，如表单元素</div>
+      <!-- <div>. 无法直接高亮highlight当前元素；需要借助其它方法</div> -->
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>:link</td>
+          <td>&lt;a&gt; 初始状态/为访问过；静态样式</td>
+        </tr>
+        <tr>
+          <td>:visited</td>
+          <td>访问过/点击后状态；较少使用</td>
+        </tr>
+        <tr>
+          <td>:hover</td>
+          <td>鼠标置于元素上时；使用最广泛；移动端无效</td>
+        </tr>
+        <tr>
+          <td>:focus</td>
+          <td>获取焦点时[使用 tab 查看获取焦点效果]</td>
+        </tr>
+        <tr>
+          <td>:focus-within</td>
+          <td>如果有子元素获取焦点时，即：选择包含有获得焦点元素的祖先元素</td>
+        </tr>
+        <tr>
+          <td>:active</td>
+          <td>单击时的状态；多用于提示；较少使用</td>
+        </tr>
+        <tr>
+          <td>:target</td>
+          <td>当前锚点选中时；使用 ID 指定锚点</td>
+        </tr>
+      </table>
+      <pre>
+a {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  border-bottom: 1px solid #ccc;
+}
+
+
+a:hover,
+a:focus {
+  border-color: #f40;
+  color: #f40;
+}
+
+a:active {
+  background-color: #f40;
+  color: #fff;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] :hover 使用，请参考 <a href="./demo/acc_flex.html">抽屉相册</a>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] :target 使用，请参考 <a href="./demo/acc_target.html#item1">古诗鉴赏</a>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] :focus-within 使用，请参考 <a href="./demo/login_deer.html">一路有你</a>
+    </dd>
+    <dd>
+      <pre>
+.wrap:focus-within {
+  border-color: #ff0;
+}</pre>
+    </dd>
+    <dt id="checked">表单伪类</dt>
+    <dd>
+      <div>. 多用于表单元素</div>
+      <div>. 功能非常强大，很多纯CSS效果甚至可以媲美 JavaScript</div>
+      <div>. 凡是鼠标点击的联动响应，都可以使用 :checked，如标签页、轮播、导航；见后续案例</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus">:focus</a></td>
+          <td>获取焦点 - received focus</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:checked">:checked</a></td>
+          <td>元素选中 - checked or toggled to an on state
+            <br>radio (&lt;input type="radio"&gt;)
+            <br>checkbox (&lt;input type="checkbox"&gt;)
+            <br>option (&lt;option&gt; in a &lt;select&gt;)
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:valid">:valid</a></td>
+          <td>验证有效 - contents validate successfully</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:invalid">:invalid</a></td>
+          <td>验证无效 - contents fail to validate</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:in-range">:in-range</a></td>
+          <td>在指定范围 - current value is within the range limits</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:out-of-range">:out-of-range</a></td>
+          <td>超出指定范围 - current value is outside the range limits</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled">:disabled</a></td>
+          <td>元素功能被禁止生效时</td>
+        </tr>
+      </table>
+      <pre>
+input[type='text']:focus+label {
+  color: #f40;
+}
+
+input[type='radio']:checked+label {
+  color: #f40;
+}        </pre>
+      <pre>
+button {
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  font: inherit;
+  color: #f40;
+  cursor: pointer;
+}
+
+button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}</pre>
+    </dd>
+    <dt id="nth">结构伪类</dt>
+    <dd class="sn">
+      <div>根据序号选择元素</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child">:nth-child(n)</a></td>
+          <td>第几个孩子；孩子从1开始
+            <br>matches elements based on the indexes of the elements in the child list
+            <br>according to their position
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:first-child">:first-child</a></td>
+          <td>第一个孩子 - the first element </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:last-child">:last-child</a></td>
+          <td>最后一个孩子 - the last element</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:only-child">:only-child</a></td>
+          <td>唯一的子元素/孩子</td>
+        </tr>
+      </table>
+      <p>. 根据文档结构来选择，通常配合父级元素一起使用</p>
+      <p>. nth-child 可以使用关键字；odd 选中序号为奇数的孩子；even 选中序号为偶数的孩子</p>
+      <p>. nth-child 可以使用 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child#anb">表达式 An+B</a>；n
+        只能是非负数字，从0开始；n 必须是表达式的第一项 - n is all nonnegative integers, starting from 0</p>
+      <p>. 以上选择器不区分元素类型 - according to their position</p>
+      <pre>
+:nth-child(even)//选择序号为偶数的元素
+:nth-child(odd)//选择序号为奇数的元素
+</pre>
+      <pre>
+:nth-child(2n)//同even；选择序号为偶数的元素
+:nth-child(2n+1)//同odd：选择序号为奇数的元素
+</pre>
+      <pre>
+:nth-child(3n)//选择序号为3、6、9等元素
+:nth-child(3n+1)//选择序号为1、4、7、10等元素
+</pre>
+      <pre>
+:nth-child(-n+3)//前3 - 选择序号为3、2、1的元素；:nth-child(3-n)错误
+:nth-last-child(-n+3)//后3</pre>
+      <p>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table2.html"> 表格 - 斑马纹表格</a></p>
+      <pre>
+tr:nth-child(odd) {
+  background-color: #dcb0ff;
+}
+tr:nth-child(even) {
+  background-color: #faccff;
+}      </pre>
+      <div>根据<span class="warn">类型/标签</span>选择元素 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type">:nth-of-type()</a></div>
+      <p>. 指定类型的元素按照序号 position 选择</p>
+      <p>. 根据类型选择符合条件的元素；适合多种元素类型并存的情况</p>
+      <p>. 同样可以使用关键字或表达式</p>
+      <p>. 不可以依据类名或其它选择器类型</p>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>first-of-type()</td>
+          <td>选择指定类型第一个</td>
+        </tr>
+        <tr>
+          <td>last-of-type()</td>
+          <td>选择指定类型最后一个</td>
+        </tr>
+        <tr>
+          <td>nth-of-type()</td>
+          <td>选择指定类型第几个</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 应用示例</dd>
+    <dd class="sn">
+      <pre>
+.item:nth-of-type(n+2) {
+  color: #f40;
+}      </pre>
+      <div>同样的标签应用不同的类名 - 从第2个 &lt;div&gt; 开始选中</div>
+      <img src="./imgs/select3.png" alt="">
+      <p class="fig-sn">都是&lt;div&gt;</p>
+      <div>不同的标签应用不同的类名 - 从第2个 &lt;p&gt; 开始选中；推荐 <span class="iconfont icon-dianzan"></span></div>
+      <img src="./imgs/select4.png" alt="">
+      <p class="fig-sn">&lt;div&gt;和&lt;p&gt;</p>
+      <p>[<span class="iconfont icon-keyboard"></span>] 同样的类名不同的标签</p>
+      <p>. 选中元素范围：分别从&lt;div&gt;的第2个开始和&lt;p&gt;的第2个开始</p>
+      <img src="./imgs/select5.png" alt="">
+      <p class="fig-sn">&lt;div&gt;和&lt;p&gt;</p>
+    </dd>
+  </dl>
+  <div class="chap">其它伪类选择器</div>
+  <dl>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:root">:root</a></dt>
+    <dd>
+      <div>. 定义 <span class="warn">全局CSS变量</span>，供当前 CSS 文件所有元素使用</div>
+      <div>. 借助函数 var() 使用/获取定义的变量</div>
+      <div>. 方便统一调整</div>
+      <div>. 还可以在元素上使用style定义 <span class="warn">内联CSS变量</span>，供当前元素使用，详情请查看 <a href="./variable.html">CSS变量</a> 一节
+      </div>
+      <pre>
+//定义
+:root {
+  --title-h: 100px;
+  --main-color-white: #f3f3f3;
+  --main-color-red: #ff0f5b;
+  --main-color-purple: #be01fe;
+  --main-color-blue: #01b4ff;
+  --main-color-green: #2dfc52;
+  --main-color-orange: #ff7f50;
+  --main-color-gray: #333849;
+  accent-color: var(--main-color-red);
+}
+//使用
+.warn {
+  font-weight: 600;
+  color: var(--main-color-red);
+}</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:empty">:empty</a></dt>
+    <dd>
+      <div>元素为空的样式</div>
+      <div>列表渲染时，如果数据为空，则给出特定样式，如不显示</div>
+      <div>也可以通过 JavaScript 实现</div>
+      <pre>
+li {
+  //
+}
+
+li:empty {
+  display: none;
+}      </pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:not">:not()</a></dt>
+    <dd>. 选中不符合条件的元素</dd>
+    <dd class="tips">
+      <div>The :not() CSS pseudo-class represents elements that do not match a list of selectors. Since it prevents
+        specific items from being selected, it is known as the negation pseudo-class.</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 元素彼此之间等间隔排列 - 最后一个 &lt;li&gt; 不指定 margin-right</dd>
+    <dd>
+      <pre>
+//传统方案
+ul li:not(:last-child) {
+  margin-right: 10px;
+}
+
+//优化方案：使用相邻兄弟选择器实现
+ul li + li {
+  margin-left: 10px;
+}
+
+//优化方案：使用flex的gap实现
+ul {
+  display: flex;
+  gap: 10px;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 选中不属于 &lt;header&gt; 或 &lt;section&gt; 的 &lt;h2&gt;；范围中的 h2 不能省略
+    </dd>
+    <dd>
+      <pre>
+h2:not(header h2, section h2) {
+  color: #f40;
+}</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:is">:is()</a></dt>
+    <dd>. 为选择器列表中指定的元素分配样式；共享样式</dd>
+    <dd>. 后代选择器的高级用法；简化代码；而且可以容错；独立写法中，如果有一个语法错误，则所有样式都不生效；:is 则可以大胆使用</dd>
+    <dd class="tips">
+      <div>. The :is() CSS pseudo-class function takes a selector list as its argument, and selects any element that can
+        be
+        selected by one of the selectors in that list. This is useful for writing large selectors in a more compact
+        form.
+    </dd>
+    <dd>
+      <pre>
+.box h1,
+.box h2,
+.box h3 {
+  color: #f40;
+}
+
+.box :is(h1, h2, h3) {
+  color: #f40;
+}
+
+//或者当前元素是哪些状态，如表单的伪类选择器
+input:is(:hover, :focus) {
+  border: 1px solid #f40;
+  outline: none;
+}</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:has">:has()</a></dt>
+    <dd>
+      <div>. 选中具备某种关系的元素</div>
+      <div>. 如果某个选择器 <span class="warn">有</span> 哪些选择器，则选中当前选择器</div>
+      <div>. 可以根据子元素的状态设置父元素的样式，经常被认为是 <span class="warn">父级选择器</span> -referred to as the parent
+        selector；也有看作是家庭选择器，还可以匹配兄弟关系</div>
+      <div>. 本质上是一个函数，参数就是和当前元素存在父子关系或兄弟关系的选择器列表，以逗号分隔 - a comma-separated list</div>
+      <div>. 属于关系型伪类选择器的范畴-The Relational Pseudo-class</div>
+      <div class="tips">This pseudo-class presents a way of selecting a parent element or a previous sibling element
+        with respect to a reference element by taking a relative selector list as an argument.</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table2.html">斑马纹</a> - 有 &lt;th&gt; 的使用背景样式
+    </dd>
+    <dd>
+      <pre>
+tr:has(th) {
+  background-color: #fff;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/select-cart.html">商品筛选</a></dd>
+    <dd>
+      <pre>
+select:has(option[value="jd"]:checked)+.cont img.jd {
+    display: block;
+}
+
+select:has(option[value="jd"]:checked)+.cont img:not(.jd) {
+    display: none;
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../os/sql/quiz.html">试题分割</a> - 相邻的题目以实线分割</dd>
+    <dd>
+      <pre>
+//如果包含有一个图形img和一个紧跟着图形的段落p，则选中
+.card:has(img + p) {
+}
+   
+//匹配到包含有&lt;ol&gt;或&lt;ul&gt;的文章
+article:has(ol, ul) {
+}
+    
+//选中直接兄弟是dt的dt
+dt:has(+ dt){
+}
+   
+//选中&lt;h2&gt;，其相邻兄弟是：&lt;p&gt;或类为red的&lt;ul&gt;
+h2:has(+ p, + ul.red) {
+}
+
+//某个ID被选中时
+body:has(#p0:checked) {
+}
+
+//自适应布局-没有--left-width就使用48px；当元素left处于hover状态时，定义--left-width变量为30%
+.grid {
+  display: grid;
+  transition: 300ms;
+  grid-template-columns: var(--left-width, 48px) auto;
+}
+
+.grid:has(.left:hover) {
+  --left-width: 30%;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-sample.html">菜单停靠栏</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/not-has.html">树状手风琴</a></dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:where">:where()</a></dt>
+    <dd>. 使用选择器列表|集合作为参数；某个/些元素符合选择器条件时设置对应的样式</dd>
+    <dd>. 对于缩短一个较长的选择器列表非常有用</dd>
+    <dd>. 如果样式使用比较频繁，建议定义为公共类</dd>
+    <dd class="tips">
+      <div>. The :where() CSS pseudo-class function takes a selector list as its argument, and selects any element that
+        can
+        be selected by one of the selectors in that list.</div>
+    </dd>
+    <dd>
+      <pre>
+//为多个元素指定样式
+:where(.left, .center, .right):hover {
+  background: crimson;
+}
+
+//为&lt;body&gt;和&lt;main&gt;指定水平垂直居中
+:where(body, main) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//使用公共类更加直观
+.center-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}</pre>
+    </dd>
+    <dt>过滤器 - filter</dt>
+    <dd>
+      <div>使用 &lt;select&gt; 配合相应的选择器完成对商品的过滤/筛选</div>
+      <div>使用不同的类标识不同的商品</div>
+      <pre>
+select:has(option[value='blue']:checked)+.goods div:not(.blue) {
+  display: none;
+}
+
+select:has(option[value='red']:checked)+.goods div:not(.yellow) {
+  display: none;
+}
+
+select:has(option[value='yellow']:checked)+.goods div:not(.yellow) {
+  display: none;
+}</pre>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

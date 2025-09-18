@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>背景 Background</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/bg.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>背景</h1>
+    <span>&commat;Background</span>
+  </header>
+  <dl>
+    <dd>
+      <div>. 为元素指定背景颜色，可以同时指定背景图片、大小、位置、铺贴方式等</div>
+      <div>. 背景 background 样式包含多个属性</div>
+      <div>. 通常使用独立属性；也可以使用复合属性，但是可读性不好，不建议</div>
+      <pre>background:bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;</pre>
+      <figure>
+        <img src="./imgs/xmind-bg.png" alt="">
+        <figcaption>背景思维导图</figcaption>
+      </figure>
+    </dd>
+    <dt>背景色 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-color">Background-color</a></dt>
+    <dd>
+      <div>. 为元素设置背景 <a href="./css-color.html">颜色 - Color</a>；可以使用透明色 transparent</div>
+      <div>. 为了后向兼容/容错 fallback options，指定背景图片的同时，建议也指定颜色；俩者互不冲突；通常结合在一起使用</div>
+      <div>. 指定背景颜色还可以提升用户体验，避免大图片加载时的页面空白</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 背景颜色使用示例</div>
+      <pre>
+background-color: tomato;
+background-color: #ff6347;
+background-color: #f40;
+background-color: rgb(255, 99, 71);
+background-color: rgba(255, 99, 71, .6);
+background-color: hsl(9, 100%, 64%);
+background-color: hsla(9, 100%, 64%, .8);</pre>
+    </dd>
+    <dt>背景图片 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-image">Background-image</a></dt>
+    <dd>
+      <div>. 可以使用传统的图片作为背景，也可以使用 <a href="./background3.html">渐变背景 - 线性渐变、径向渐变、锥向渐变</a> 创建背景图片</div>
+      <div>. 可以使用多个背景图片，使用 <span class="warn">逗号;</span> 分隔；先指定的图片会在前面</div>
+      <div>. 应用非常广泛。如使用透明色渐变添加蒙版、百叶窗等</div>
+      <div>[<span class="iconfont icon-help"></span>] 有了 &lt;img&gt;，为什么还需要使用这个属性？</div>
+      <!-- <div>. 功能更强大、操作更丰富</div> -->
+      <div>. <span class="warn">装饰型元素</span> 多使用 Background-image</div>
+      <div>. <span class="warn">功能性元素</span> 多使用 &lt;img&gt;；或者说如果去掉图片仍能正常表达主题就使用 Background-image，否则应使用 &lt;img&gt;
+      </div>
+      <pre>
+background-img: url(./imgs/1.jpg);
+background-img: url(https://images.unsplash.com/...);
+background-img: linear-gradient();
+background-img: radial-gradient();
+background-img: conic-gradient();
+background-image: linear-gradient(transparent, #000), url(./imgs/2019middle.jpg);</pre>
+    </dd>
+    <dt>背景图片位置 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-position">Background-position</a>
+    </dt>
+    <dd>
+      <div>. 根据图片坐标/位置显示指定的内容；默认从左上角开始 - relative to the edges of an element's box</div>
+      <div>. 可以使用关键字，如 top、left、right、bottom</div>
+      <div>. 也可以使用具体数字 length 或百分比 percentage</div>
+      <div>. 还可以关键字和数字、百分比组合使用</div>
+      <div>. 如果只指定了一个方向，另外一个方向默认是 center 或 50%</div>
+    </dd>
+    <dt>背景图片大小 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-size">Background-size</a></dt>
+    <dd>
+      <div>. 背景图片的大小</div>
+      <pre>background-size: contain | cover | auto | length | percentage</pre>
+      <div>. contain：包含图片，即 <span class="warn">完全</span> 显示图片；元素背景易出现留白 - Scales the image as large as possible within
+        its container without cropping or stretching the image</div>
+      <div>. cover：<span class="warn">等比例最大化</span> 显示图片；元素背景被占满、图片可能被裁剪 - leaving no empty space</div>
+      <div>. percentage：参考元素大小设置背景图片大小；200%就是2倍的元素大小；50%就是元素的一半</div>
+      <div>. length：固定数值设置背景图片大小</div>
+      <div>. 默认情况下，背景图片按照图片原始大小显示；当元素尺寸和背景图片尺寸不一致时，就会出现背景图片重复铺贴或背景图片被裁剪的情况</div>
+      <div>. 元素尺寸 &gt; 背景图片的尺寸，则默认情况下，背景图片会在水平和垂直方向上重复贴铺</div>
+      <div>. 元素尺寸 &lt; 背景图片的尺寸，图片被裁剪/部分显示；实际上背景图片还是会在水平和垂直方向上重复铺贴，只不过受元素大小限制，没有呈现出来</div>
+      <!-- <div>. 终端尺寸变化时，易导致显示缺失；不能媒体自适应</div> -->
+      <!-- <div>. 使用复合属性时，应在background-position属性后面使用</div> -->
+      <div>. 可以指定2个参数：宽、高；通常只指定宽，高为auto，系统会按照图片比例，自动调整背景图片高度</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 背景图片大小 - 示例图片大小为640*427</dd>
+    <dd>
+      <div class="bgs-option">
+        .size {
+        <br> width: 320px;
+        <br> height: 180px;
+        <br> background-image: url(../imgs/bg.jpg);
+        <br>background-size:
+        <input type="radio" name="bgs" id="auto" checked>
+        <label for="auto">auto</label>
+        <input type="radio" name="bgs" id="contain">
+        <label for="contain">contain</label>
+        <input type="radio" name="bgs" id="cover">
+        <label for="cover">cover</label>
+        <input type="radio" name="bgs" id="px">
+        <label for="px">100px</label>
+        <input type="radio" name="bgs" id="per">
+        <label for="per">20%</label>;
+        <br> }
+      </div>
+      <div class="bgs"></div>
+      <div class="tips">使用 cover 时，配合位置 background-position，确保图片的重点内容/热区凸显</div>
+    </dd>
+    <dt>背景图片重复 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat">Background-repeat</a></dt>
+    <dd>
+      <div>. 背景图片重复铺贴</div>
+      <div>. 如果图片尺寸大于容器尺寸，看不出重复效果；实际上也是重复铺贴了的</div>
+      <pre>background-repeat: repeat | no-repeat | repeat-x | repeat-y;</pre>
+      <div>. repeat：默认情况下，图片会水平和垂直方向上铺满整个容器</div>
+      <div>. no-repeat：不重复；如果指定图片的位置，必须取消重复</div>
+      <div>. repeat-x：x轴重复</div>
+      <div>. repeat-y：y轴重复</div>
+    </dd>
+    <dt class="nav-cont">背景起点 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-origin">Background-origin</a></dt>
+    <dd>
+      <div>背景图片 background-image[<span class="warn">NOT</span>背景颜色 background-color]使用/渲染时的起点位置/原点位置</div>
+      <!-- <div>用来控制background-position位置的属性</div> -->
+      <pre>background-origin: padding-box | border-box | content-box;</pre>
+      <div>. padding-box：默认值；背景图片从 padding 区开始渲染，border 区不会出现；如果有背景色，则默认会在 border 区出现</div>
+      <div>. border-box：背景图片从 border 区开始渲染；可创建透明边框效果</div>
+      <div>. content-box：背景图片只会出现在内容区域，padding 和 border 都不会出现</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] background-origin 示例</dd>
+    <dd>
+      <div class="bgo-option">
+        .bg-origin {
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;width: 320px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;height: 180px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;border: 20px dashed rgba(255, 255, 255, 0.8);
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 20px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-image: linear-gradient(45deg, #ff0, #f00);
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-size: cover;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-origin:
+        <input type="radio" name="bgo" id="bgopadding" checked>
+        <label for="bgopadding">padding-box</label>
+        <input type="radio" name="bgo" id="bgoborder">
+        <label for="bgoborder">border-box</label>
+        <input type="radio" name="bgo" id="bgocontent">
+        <label for="bgocontent">content-box</label>;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;margin: 1rem auto;
+        <br> }
+      </div>
+      <div class="bg-origin"></div>
+    </dd>
+    <dt class="nav-cont">背景裁剪 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip">Background-clip</a></dt>
+    <dd>
+      <p>背景[背景颜色 <span class="warn">和</span> 背景图片]的延申什么位置 - extends underneath</p>
+      <pre>background-clip: border-box | padding-box | content-box | text;</pre>
+      <div>1. border-box</div>
+      <div>背景延伸至边框外沿（但是在边框下层）；默认属性</div>
+      <div>背景显示拓展到border区域下面；超出border区的背景将被裁剪掉</div>
+      <div>如果有border，则border会覆盖背景；换句话说，背景填充到border区，只不过被border覆盖住了</div>
+      <div>设置一个dashed的border就可看到背景是在border的下方</div>
+      <div>2. padding-box</div>
+      <div>背景延伸至内边距（padding）外沿。不会绘制到边框处</div>
+      <div>背景显示拓展到padding区域；超过padding区的背景将被裁剪掉</div>
+      <div>3. content-box</div>
+      <div>背景被裁剪至内容区（content box）外沿</div>
+      <div>背景显示在content区域下面；超过context区的背景将被裁剪掉</div>
+      <div>如果有padding，但是只指定了background-image而没有指定background-color，则padding区为默认的白色</div>
+      <div>所以保险起见，通常要设置一个背景色，避免background-image无效</div>
+      <div>4. text</div>
+      <div>背景被裁剪成文字的前景色</div>
+      <div>文字颜色设置为透明色，创建带背景的文字效果</div>
+      <div>尽量不要使用文字阴影 <a href="./text.html">text-shadow</a>，而应该使用滤镜 <a href="./filter.html">filter</a> 的 投影
+        drop-shadow() 添加层次效果</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] background-clip 示例</dd>
+    <dd>
+      <div class="bgc-option">
+        .bg-clip {
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;width: 320px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;height: 180px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;line-height: 100px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;font-size: 40px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;font-weight: 600;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;border: 20px dashed rgba(255, 255, 255, 0.8);
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;padding: 20px;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-color: #ff0;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-image: linear-gradient(45deg, #ff0, #f00);
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-size: cover;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;background-clip:
+        <input type="radio" name="bgc" id="bgcborder" checked>
+        <label for="bgcborder">border-box</label>
+        <input type="radio" name="bgc" id="bgcpadding">
+        <label for="bgcpadding">padding-box</label>
+        <input type="radio" name="bgc" id="bgccontent">
+        <label for="bgccontent">content-box</label>
+        <input type="radio" name="bgc" id="bgctext">
+        <label for="bgctext">text</label>;
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;margin: 1rem auto;
+        <br> }
+      </div>
+      <div class="bg-clip">hello, world.</div>
+    </dd>
+    <dt class="nav-cont">背景铺贴 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment">Background-attachment</a>
+    </dt>
+    <dd>
+      <div>. 背景图片是固定在视口viewpoint还是随窗口容器滚动；即背景图片和元素的附着方式</div>
+      <div>. 多用于营造视觉差效果</div>
+      <pre>background-attachment: scroll | fixed | local; </pre>
+      <div>. scroll：默认背景图片会随着窗口/页面滚动而滚动；背景图片和自己保持固定；自己滚动不影响，别人滚动会影响</div>
+      <div>. fixed：背景图片不会随着窗口/页面滚动而滚动背景，即：背景图片固定不动/相对于视口固定</div>
+      <div>. local：背景图片会随着元素内容的滚动而滚动</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 默认情况</dd>
+    <dd>. 背景图片不跟随内容滚动；但跟随窗口/视口滚动：整体滚动</dd>
+    <dd class="basic bg-attach-default">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis at nostrum fugiat ratione
+        reprehenderit eius officia, tempore voluptatum incidunt nihil, iusto laborum? Cupiditate autem ipsam
+        illum totam excepturi aliquam sit.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, doloribus libero at nihil temporibus ipsa
+        quisquam, nulla sapiente voluptates fuga, porro sequi unde labore explicabo. Unde dolore omnis
+        distinctio molestias?</p>
+    </dd>
+    <dd>
+      <pre>
+.bg-attach-default {
+    overflow-y: auto;
+    background-image: url(../imgs/bg.jpg);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 固定</dd>
+    <dd>. 背景图片不跟随内容滚动，但是相对窗口/视口固定</dd>
+    <dd>. 参考页面顶部</dd>
+    <dd class="basic bg-attach-fixed">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis at nostrum fugiat ratione
+        reprehenderit eius officia, tempore voluptatum incidunt nihil, iusto laborum? Cupiditate autem ipsam
+        illum totam excepturi aliquam sit.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, doloribus libero at nihil temporibus ipsa
+        quisquam, nulla sapiente voluptates fuga, porro sequi unde labore explicabo. Unde dolore omnis
+        distinctio molestias?</p>
+    </dd>
+    <dd>
+      <pre>
+.bg-attach-local {
+    overflow-y: auto;
+    background-image: url(../imgs/bg.jpg);
+    background-attachment: local;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 本地</dd>
+    <dd>. 背景图片跟随内容滚动；跟随窗口/视口滚动</dd>
+    <dd>. 背景图片通常需要重复</dd>
+    <dd class="basic bg-attach-local">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis at nostrum fugiat ratione
+        reprehenderit eius officia, tempore voluptatum incidunt nihil, iusto laborum? Cupiditate autem ipsam
+        illum totam excepturi aliquam sit.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, doloribus libero at nihil temporibus ipsa
+        quisquam, nulla sapiente voluptates fuga, porro sequi unde labore explicabo. Unde dolore omnis
+        distinctio molestias?</p>
+    </dd>
+    <dd>
+      <pre>
+.bg-attach-local {
+    overflow-y: auto;
+    background-image: url(../imgs/bg.jpg);
+    background-attachment: local;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">案例 Cases</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-login1.html">带背景的登录表单</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/paper.html">带背景的表格</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/avatar.html">头像</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./select.html">定制下拉菜单</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./sprite.html">精灵图 -
+        sprite</a> - 也叫雪碧图；一个图整合多个图形元素，用于减少图片的网络请求；利用位置显示指定的部分；早期应用较多。随着互联网的提速和字体图标的广泛应用，现在基本不用了</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./screen.html">屏风图 - screen</a> -
+      多个元素分别显示同一张图的不同部分，即利用位置显示不同的部分，最后拼接为完整的图片</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./index.html">模拟目录页</a> - 水平方向平铺；可以使用使用普通元素或 <a
+        href="./selector_ele.html">伪元素</a></dd>
+    <dd>
+      <pre>
+.item::before {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  background-repeat: repeat-x;
+  order: 1;
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 多背景 - 背景图片分别定位于左上角和右下角；更多案例，请访问 <a href="./index.html">Web首页</a>
+    </dd>
+    <dd>
+      <div class="multi-img"></div>
+      <div>1. 独立属性 - 图片属性要一一对应</div>
+      <pre>
+.multi-img {
+    height: 200px;
+    background-color: rgba(255, 68, 0, 0.4);
+    background-image: url(../imgs/lg.png), url(../imgs/glc.png);
+    background-position: right bottom, top left;
+    background-size: 50px;
+    background-repeat: no-repeat;//MUST
+}
+</pre>
+      <div>2. 复合属性 - background-color 放在后面；可读性差</div>
+      <pre>background: url(../imgs/logo0.png) right bottom/50px no-repeat, url(../imgs/logo1.png) top left/50px no-repeat;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 多背景 - 遮罩图；在一个背景上叠加一个透明的背景，可以使用渐变背景</dd>
+    <dd>
+      <pre>
+.img {
+  width: 800px;
+  height: 600px;
+  background-image: linear-gradient(transparent, #000), url(./imgs/2019middle.jpg);
+  background-size: cover;
+}        </pre>
+      <div class="size mask"></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 多背景 - 百叶窗；自动重复</dd>
+    <dd>
+      <div>[<span class="iconfont icon-help"></span>] 如果指定位置 position 和不重复 no-repeat 会怎么样？</div>
+      <pre>
+.img {
+  width: 800px;
+  height: 600px;
+  background-image: linear-gradient(transparent, #000), url(./imgs/2019middle.jpg);
+  background-size: 100% 6px, cover;
+}        </pre>
+      <div class="size blinds"></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="/index.html">Banner滑动</a>、<a
+        href="./demo/up2u.html">按钮背景变化</a></dd>
+    <dd>
+      <div>背景图片要大于元素尺寸</div>
+      <div>静态时，背景图片定位在left；hover时定在right；借助 <a href="./transition.html">过渡动画 - transition</a> 丝滑实现</div>
+      <pre>
+  header {
+   // ...
+    background-position: left center;
+    transition: 0.4s;
+  }
+  
+  header:hover {
+    background-position: right center;
+  }
+</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/acc_flex.html">抽屉相册</a></dd>
+    <dd>. 分别使用 &lt;img&gt; 和 background-img 并借助 :hover 和 <a href="./flex.html">弹性盒子 - flex</a> 实现</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 折角/狗耳朵[进阶]</dd>
+    <dd>
+      <figure style="text-align: center;">
+        <div class="basic dog"></div>
+        <figcaption>折角/狗耳朵</figcaption>
+      </figure>
+      <pre>
+.dog {
+    position: relative;
+    background-image: linear-gradient(210deg, transparent 3em, #ddd 0);
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+.dog::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(-120deg, #888 3em, transparent 0);
+    border-radius: 1em;
+    transform-origin: top right;
+    transform: rotate(150deg) translate(5em, -3em);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. 背景 background 的使用</dd>
+    <dt>作业</dt>
+    <dd>. 优化个人网站中的图片使用</dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

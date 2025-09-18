@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盒模型 Box Model</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>盒模型</h1>
+    <span>&commat;Box Model</span>
+  </header>
+  <dl class="nav-cont">
+    <dt>引言 Introduction</dt>
+    <dd class="sn">
+      <p>. Web页面中每个元素都可以看作是一个盒子，由：</p>
+      <div style="color: #8cb6c0;">内容 content/蓝色</div>
+      <div style="color: #c3d08b;">填充 padding/绿色</div>
+      <div style="color: #fddd9b;">边框 border/黄色</div>
+      <div style="color: #f9cc9d;">外边距 margin/橙色</div>
+      <figure class="basic">
+        <img src="./imgs/box.png" alt="">
+        <figcaption>元素的盒模型 Box Model</figcaption>
+      </figure>
+      <table>
+        <caption>元素的基本属性</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>width</td>
+          <td>元素内容区宽度</td>
+        </tr>
+        <tr>
+          <td>height</td>
+          <td>元素内容区高度</td>
+        </tr>
+        <tr>
+          <td>padding</td>
+          <td>元素填充，也称内边距、内填充
+            <br>可以单独设置元素4个方向的内边距：padding-top | padding-right | padding-bottom | padding-left
+          </td>
+        </tr>
+        <tr>
+          <td>border</td>
+          <td>元素边框
+            <br>可以单独设置元素4个方向的边框：border-top | border-right | border-bottom | border-left
+          </td>
+        </tr>
+        <tr>
+          <td>margin</td>
+          <td>元素到其它元素之间的距离，也称外边距、外填充、空白
+            <br>可以单独设置元素4个方向的外边距：margin-top | margin-right | margin-bottom | margin-left；
+            <br><span class="warn">负边距</span>也有很惊艳的表现
+          </td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 以鸡蛋为例，分别说明每一部分对应元素的哪个属性</dd>
+    <dd class="basic">
+      <img src="./imgs/egg.jpg" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-a-ziyuan4"></span>] 过渡包装</dd>
+    <dt>盒子尺寸计算模式 box-sizing</dt>
+    <dd>
+      <div>. 默认情况下，CSS指定/设置的宽度 width 和高度 height 是内容区的宽度和高度</div>
+      <div>. 实际尺寸应该是在宽度 width/高度 height 的基础上，再加上边框 border 和填充 padding</div>
+      <pre>
+元素的实际宽度 = width + padding-left + padding-right + border-left + border-right
+元素的实际高度 = height + padding-top + padding-bottom + border-top + border-bottom</pre>
+      <div>. 导致：元素的实际尺寸比设置的<span class="warn">更大</span></div>
+      <div>. 多数情况下，为了不破坏页面布局，希望设置的元素尺寸就是元素的实际尺寸；<a href="https://developer.mozilla.org/docs/Web/CSS/box-sizing">
+          box-sizing</a> 允许选择元素计算尺寸的模式</div>
+      <div>. content-box：默认模式，元素尺寸不包括 padding 和 border</div>
+      <div>. border-box：元素尺寸包括 padding 和 border；通常在初始化样式表中统一设置</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] content-box 和 border-box的元素大小</dd>
+    <dd>
+      <pre>
+.box {
+  width: 400px;
+  height: 300px;
+  padding: 10px;
+  border: 5px solid #ddd;
+  box-sizing: border-box;//content-box
+}      </pre>
+      <img src="./imgs/boxsizing.png" alt="">
+    </dd>
+    <dd class="tips">
+      <div>. padding、border、margin这三个属性有4个方向的体现，所以样式值的多少分别对应着不同的方向</div>
+      <div>1个值：4个方向都一样</div>
+      <div>2个值：上下对应第一个值；左右对应第二个值</div>
+      <div>3个值：上对应第一个值；左右对应第二个值；下对应第三个值</div>
+      <div>4个值：分别对应上、右、下、左四个方向/顺时针</div>
+      <div>对指定了大小的块元素而言，margin: xxx auto;可以使其在父元素盒子内水平居中</div>
+      <div>垂直方向居中需要结合实际情况综合考虑，见后续内容</div>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

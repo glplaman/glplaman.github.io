@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渐变背景 Gradient Background</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/bg3.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>渐变背景</h1>
+    <span>&commat;Gradient Background</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">Linear-gradient</a>
+      <a href="" style="--delay:1" class="nav-item">Radial-gradient</a>
+      <a href="" style="--delay:2" class="nav-item">Conic-gradient</a>
+      <a href="" style="--delay:3" class="nav-item">Other</a>
+    </nav>
+  </header>
+  <dl>
+    <dd>
+      <div>. 利用不同的颜色以图片的形式渲染背景</div>
+      <div>. 可以多次渲染；先出现的在上面，后出现的在后面</div>
+      <div>. 复合属性 - 可读性差</div>
+      <pre>background:
+  bg-color 
+  bg-image 
+  position/bg-size 
+  bg-repeat 
+  bg-origin 
+  bg-clip 
+  bg-attachment 
+  initial|inherit;</pre>
+      <div>. 独立属性 - 可读性好</div>
+    </dd>
+  </dl>
+  <div class="chap">线性渐变 Linear-gradient</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 线性渐变 Linear Gradients - 向下/向上/向左/向右/对角方向</div>
+      <div>. 创建一个线性渐变，至少定义两个色块</div>
+      <div>. 可以指定色块的大小/范围和方向；可以使用 deg 或关键字，如 left、right、top、bottom</div>
+      <div>. 方向：0deg是从下到上↑，顺时针方向增加；默认是180deg，从上到下↓</div>
+      <div>. 位置：不特别指明都是从0开始，到100%结束；这俩个位置的值 <span class="warn">可以省略</span></div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient">MDN -
+          linear-gradient</a></div>
+      <pre>background-image: 
+  linear-gradient(direction, color-stop1, color-stop2, ...);</pre>
+    </dd>
+    <dt>基本渐变</dt>
+    <dd class="grid">
+      <div class="basic default-bg"></div>
+      <pre>
+background-image: 
+  linear-gradient(#f40, #ff0);
+background-image: 
+  linear-gradient(to bottom, #f40, #ff0);</pre>
+      <div class="basic deg0-bg"></div>
+      <pre>
+background-image: 
+  linear-gradient(0deg, #f40, #ff0);
+background-image: 
+  linear-gradient(to top, #f40, #ff0);</pre>
+      <div class="basic deg45-bg"></div>
+      <pre>
+background-image: 
+  linear-gradient(45deg, #f40, #ff0);
+background-image: 
+  linear-gradient(to top right, #f40, #ff0);</pre>
+    </dd>
+    <dt>断点渐变</dt>
+    <dd>. 断点处使用相同的色块大小；使用0表示和前面色块的范围相同</dd>
+    <dd>. 利用角度实现切角的效果</dd>
+    <dd class="grid">
+      <div class="price-bg"></div>
+      <pre>
+// 切割色块 - 将其中一个色块设置为白色或透明
+background-image: 
+linear-gradient(90deg, #f40 50%, #fff 0);</pre>
+      <div class="price-bg-adv">
+        <span>&yen;99</span>
+        <del>&yen;199</del>
+      </div>
+      <pre>
+// 价格促销
+background-image: 
+linear-gradient(90deg, #f40 50%, #fff 0);</pre>
+      <div class="rt-bg"></div>
+      <pre>
+// 增加有色部分的占比
+background-image: 
+linear-gradient(45deg, #f40 95%, #fff 0);</pre>
+      <div class="zebra-bg"></div>
+      <pre>
+// 斑马渐变；也可以使用多个背景或重复线性渐变实现
+background-image: 
+  linear-gradient(90deg, 
+    #f40 20%, #fff 0, 
+    #fff 40%, #f40 0, 
+    #f40 60%, #fff 0, 
+    #fff 80%, #f40 0);</pre>
+      <div class="ltrt-bg"></div>
+      <pre>
+// 2个背景图片叠加而成；一左一右放置；不重复
+background-image: 
+  linear-gradient(45deg, #f40 95%, #fff 0), 
+  linear-gradient(135deg, #fff 5%, #f40 0);
+background-size: 50%;
+background-position: right, left;
+background-repeat: no-repeat;</pre>
+      <div class="basic all-bg"></div>
+      <pre>
+// 4个背景；宽高各为50%；分别放置4个角；不重复
+background-image:
+  linear-gradient(45deg, #f40 95%, #fff 0),
+  linear-gradient(135deg, #fff 5%, #f40 0),
+  linear-gradient(45deg, #fff 5%, #f40 0),
+  linear-gradient(135deg, #f40 95%, #fff 0);
+background-size: 50% 50%;
+background-position: 
+  right top, 
+  left top, 
+  left bottom, 
+  right bottom;
+background-repeat: no-repeat;</pre>
+      <div class="basic mask-bg"></div>
+      <pre>
+// 遮罩背景；利用透明的渐变背景和图片背景实现
+background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1)),
+    url(../imgs/cover.jpg);
+background-size: cover;</pre>
+    </dd>
+    <dd class="tips">
+      <div>. 如果使用多个渐变，请使用复合属性 background；可以单独指定不重复</div>
+      <div>. 实际运用时，先画个草图，大概确定下背景图片的组成、大小和位置，再使用样式实现</div>
+      <div>. 除此外，还有重复线性渐变：repeating-linear-gradient()</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/btns.html">按钮设计 Button</a></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table3.html">表格设计 Table</a></dd>
+  </dl>
+  <div class="chap">径向渐变 Radial-gradient</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 径向渐变 Radial Gradients - 由它们的中心和到容器边或角的大小决定</div>
+      <div>. 同线性渐变一样：创建一个径向渐变，至少定义两个色块；可以定义每个色块的渐变范围；可以指定大小；可以定义多重径向渐变等等</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient">MDN -
+          radial-gradient</a></div>
+      <pre>background-image: 
+  radial-gradient([shape] [size] at position, start-color, ..., last-color);</pre>
+    </dd>
+    <dt>参数说明：</dt>
+    <dd>
+      <div>. shape： 椭圆eclipse[默认]，圆circle</div>
+      <div>. size：到容器的边或角的距离；closest-side、farthest-side、closest-corner、farthest-corner[默认]</div>
+      <div>. position：为中心；可以使用关键字指定位置；可以使用数字；可以百分比</div>
+      <img class="tips-bg" src="./imgs/bg0.png" alt="">
+    </dd>
+    <dt>基本渐变</dt>
+    <dd class="grid">
+      <div class="basic default-radial"></div>
+      <pre>
+// 默认渐变：从中心向外
+background-image: 
+  radial-gradient(#f40, #ff0);</pre>
+      <div class="basic lt-radial"></div>
+      <pre>
+// 圆形从左上向外渐变
+background-image: 
+  radial-gradient(circle at left top, #f40, #ff0);</pre>
+      <div class="basic lt-clip-radial"></div>
+      <pre>
+// 圆形从左上向外断点渐变
+background-image: 
+  radial-gradient(circle at top left, #f40 50%, #ff0 0);</pre>
+      <div class="basic rt-clip-radial"></div>
+      <pre>
+// 放置于右上角的50px的圆形
+background-image: 
+  radial-gradient(circle at top left, #f40 50%, #ff0 0);</pre>
+      <div class="radial-basic single-radial"></div>
+      <pre>
+// 弧度 - 单重渐变
+background-image: 
+  radial-gradient(at 0% 0%, transparent 71%, #f40 0);</pre>
+      <div class="radial-basic ad-radial"></div>
+      <pre>
+// 弧度 - 多重渐变
+//可以使用background-image或background
+background: 
+    radial-gradient(circle at -10% 10%, transparent 70%, rgba(255, 68, 0, 0.3) 0), 
+    radial-gradient(circle at 5% 20%, transparent 70%, rgba(255, 68, 0, 0.6) 0), 
+    radial-gradient(circle at 10% 10%, transparent 75%, rgb(255, 68, 0) 0);</pre>
+      <div class="radial-basic size-bg"></div>
+      <pre>
+// 指定图形大小
+background: 
+    radial-gradient(30px circle at 0 0, transparent 50%, #f40 0),
+    radial-gradient(30px circle at 100% 0, transparent 50%, #f40 0) right top,
+    radial-gradient(30px circle at 100% 100%, transparent 50%, #f40 0) right bottom, 
+    radial-gradient(30px circle at 0% 100%, transparent 50%, #f40 0) left bottom;
+background-repeat: no-repeat;
+background-size: 50% 50%;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 利用断点渐变体会参数 size</dd>
+    <dd>调整背景的位置，再观察结果</dd>
+    <dd class="grid size">
+      <div></div>
+      <pre>
+// 观察到哪个边最近
+background-image: 
+  radial-gradient(circle closest-side, 
+  #f40 50%, #089 0);</pre>
+      <div></div>
+      <pre>
+// 观察到哪个边最远
+background-image: 
+  radial-gradient(circle farthest-side, 
+  #f40 50%, #089 0);</pre>
+      <div></div>
+      <pre>
+// 观察到哪个角最近
+background-image: 
+  radial-gradient(circle closest-corner, 
+  #f40 50%, #089 0);
+      </pre>
+      <div></div>
+      <pre>
+// 观察到哪个角最远
+background-image: 
+  radial-gradient(circle farthest-corner, 
+  #f40 50%, #089 0);
+      </pre>
+    </dd>
+    <dd class="tips">更多径向渐变背景，请访问重复径向渐变：repeating-radial-gradient()</dd>
+  </dl>
+  <div class="chap">锥向渐变 Conic-gradient</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 角度渐变</div>
+      <div>. 适合做圆锥图/饼状图</div>
+      <div>. 默认从0/12点方向开始；可以使用 from 指定起始位置</div>
+      <div>. 可以使用度 deg 或百分比 %</div>
+      <div>. 使用0表示从前面部分结束的位置开始</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient">MDN -
+          conic-gradient</a></div>
+      <pre>background-image:
+  conic-gradient([from angle] [at position,] color degree, color degree, ...);</pre>
+    </dd>
+    <dt>基本渐变</dt>
+    <dd class="grid">
+      <div class="basic pie0"></div>
+      <pre>
+background-image: 
+  conic-gradient(#f3f3f3, #078);</pre>
+      <div class="basic pie1"></div>
+      <pre>
+// 划分3个区域：0-40deg、40-120deg、120-360deg
+background-image: 
+  conic-gradient(
+    hsl(188, 100%, 40%) 0deg  40deg, 
+    hsl(188, 100%, 27%) 40deg 120deg, 
+    hsl(188, 100%, 20%) 120deg 360deg);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-ring.html">环图</a> - 多背景或多元素；覆盖一个白色背景；可以使用伪元素
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-adv.html">动态饼图</a></dd>
+  </dl>
+  <div class="chap" id="bgi">其它 Other</div>
+  <dl class="nav-cont">
+    <dt>background-blend-mode</dt>
+    <dd>
+      <div>. 指定上下层图像的混合模式</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>screen</td>
+          <td>滤色模式</td>
+        </tr>
+        <tr>
+          <td>overlay</td>
+          <td>叠加模式</td>
+        </tr>
+        <tr>
+          <td>darken</td>
+          <td>变暗模式</td>
+        </tr>
+        <tr>
+          <td>lighten</td>
+          <td>变亮模式</td>
+        </tr>
+        <tr>
+          <td>color-dodge</td>
+          <td>颜色减淡模式</td>
+        </tr>
+        <tr>
+          <td>saturation</td>
+          <td>饱和度模式</td>
+        </tr>
+        <tr>
+          <td>color</td>
+          <td>颜色模式</td>
+        </tr>
+        <tr>
+          <td>luminosity</td>
+          <td>亮度模式</td>
+        </tr>
+      </table>
+      <div>. 原始图片、遮罩图片和合成图片</div>
+      <div>. 遮罩图片请使用高对比度素材</div>
+      <div class="grid">
+        <img src="./imgs/bg.jpg" alt="">
+        <img src="./imgs/mask0.jpg" alt="">
+        <div class="blend-img"></div>
+        <pre>
+.blend-img {
+    width: 320px;
+    height: 180px;
+    background: 
+      url(../imgs/bg.jpg), 
+      url(../imgs/mask.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-blend-mode: screen;
+}</pre>
+      </div>
+    </dd>
+    <dt>mix-blend-mode</dt>
+    <dd>. 普通元素和背景图片的混合模式</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 文字背景</dd>
+    <dd class="grid">
+      <div class="mbm">
+        <div>mix-blend-mode</div>
+      </div>
+      <pre>
+.mbm {
+  background-image: url(../../imgs/lg.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.mbm>div {
+  text-align: center;
+  font-size: 60px;
+  background-color: #fff;
+  mix-blend-mode: screen;
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 移除图片背景 - 和容器背景融合</dd>
+    <dd>
+      <div>1. 初始情况，图片背景和容器背景</div>
+      <div class="img0">
+        <img src="../imgs/chrome.jpg" alt="">
+      </div>
+      <div>2. 混合背景 darken - 两两相比取深色</div>
+      <div class="img1">
+        <img src="../imgs/chrome.jpg" alt="">
+      </div>
+      <pre>
+.img1 img {
+  mix-blend-mode: darken;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结 Summary</dt>
+    <dd>. 渐变背景的使用</dd>
+    <dt>作业 Homework</dt>
+    <dd>1. 为图片或代码打上水印</dd>
+    <dd>2. 参照下图的设计，应用到个人网站，如信息介绍、导航背景等等</dd>
+    <dd class="grid">
+      <img src="./imgs/card0.png" alt="">
+      <img src="./imgs/card1.png" alt="">
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>

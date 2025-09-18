@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盒阴影 box-shadow</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/boxshadow.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>盒阴影</h1>
+    <span>&commat;box-shadow</span>
+  </header>
+  <dl>
+    <dd>
+      <div>. 为元素添加阴影 - adds shadow effects around an element's frame</div>
+      <div>. 多个阴影使用逗号,分隔 - separated by commas</div>
+      <div>. 阴影由 2-4 个长度值、可选的颜色值以及可选的 inset 关键词来规定。省略长度的值是 0</div>
+      <div>. 可以创建普通阴影、发光、分身、模拟边框都多种特效</div>
+      <div>. 更多阴影使用，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow">MDN - box-shadow</a>、<a
+          href="https://neumorphism.io">Neumorphism</a></div>
+      <div class="tips">可以把阴影当作一个元素本身的孵化器</div>
+      <pre>box-shadow: h-shadow v-shadow blur spread color inset;</pre>
+    </dd>
+    <dt>普通阴影</dt>
+    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./index.html">课程主页 3D图标</a></div>
+      <div>. 内阴影</div>
+      <div>. 外阴影</div>
+      <div>. 多重阴影</div>
+    </dd>
+    <dt>发光阴影</dt>
+    <dd>
+      <div>. 水平偏移和垂直偏移为0</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 按钮</div>
+      <div>. 静态时，使用1个发光阴影</div>
+      <div>. 鼠标 :hover 时，指定同色背景，并叠加多个同色阴影</div>
+      <div>. 过渡动画 transition</div>
+      <div class="glow-wrap">
+        <div class="glow" style="--color: #a00">hover</div>
+        <div class="glow" style="--color: #426cdb">hover</div>
+        <div class="glow" style="--color: #c232ce">hover</div>
+      </div>
+      <pre>
+.glow {
+  border-radius: 30px;
+  padding: 4px 30px;
+  border: 2px solid var(--color);
+  box-shadow: 0 0 10px var(--color);
+  color: var(--color);
+}</pre>
+      <pre>
+.glow:hover {
+  color: #fff;
+  background-color: var(--color);
+  box-shadow:
+    0 0 10px var(--color),
+    0 0 20px var(--color),
+    0 0 40px var(--color);
+}</pre>
+    </dd>
+    <dt>分身阴影</dt>
+    <dd>
+      <div>. 不指定模糊和扩展</div>
+      <div>. 使用一个或多个阴影模拟多个元素</div>
+      <div>. 可以配合伪元素使用</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/up2u.html">个人网站 - 标题条</a></div>
+      <div>. 伪元素和阴影配合使用</div>
+      <div>. 扩展分身 spread</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 汉堡菜单</div>
+      <div>. 分别向上、向下扩展/投射一个阴影；也可以使用伪元素实现，见后例</div>
+      <div class="glow-wrap">
+        <div class="ham-menu"></div>
+      </div>
+      <pre>
+.ham-menu {
+    width: 40px;
+    height: 4px;
+    background-color: #fff;
+    box-shadow: 0 -10px #fff, 0 10px #fff;
+}      </pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 分身</div>
+      <div>. 4个方向的阴影</div>
+      <div>. 过渡动画</div>
+      <div class="glow-wrap">
+        <div class="more"></div>
+      </div>
+      <pre>
+.more:hover {
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8),
+    30px 30px rgba(255, 0, 0, 0.8),
+    -30px -30px rgba(255, 0, 0, 0.8),
+    -30px 30px rgba(255, 0, 0, 0.8),
+    30px -30px rgba(255, 0, 0, 0.8);
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./index.html">光环符号 - 集成开发环境</a></div>
+      <div>. 伪元素和阴影配合使用</div>
+      <div>. 拓展 spread 一个同色透明的阴影实现|双边框</div>
+      <pre>
+.list-item:hover::before {
+  box-shadow: 0 0 0 4px rgba(75, 194, 206, 0.4);
+}</pre>
+    </dd>
+    <dt>模拟边框</dt>
+    <dd>
+      <div>. 在扩展的基础上，使用一个阴影</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 表单元素 - checkbox</div>
+      <div>. 边框 border</div>
+      <div>. 变形 transform</div>
+      <div>. 过渡动画 transition</div>
+      <div>. 相邻兄弟选择器+</div>
+      <div>. 其它设计方案见 <a href="./form.html">form</a> 样式一节</div>
+      <div>[<span class="iconfont icon-bell"></span>] 如果使用 &lt;label&gt; 包裹 &lt;input&gt;，请移除 for 属性</div>
+      <div>[<span class="iconfont icon-bell"></span>] 请使用 outline 相关属性实现</div>
+      <label class="cb">
+        <input type="checkbox" hidden>
+        <span></span>
+      </label>
+      <div>[<span class="iconfont icon-keyboard"></span>] 内阴影模拟边框</div>
+      <div>. 利用z-index叠放在下面；不能设置父级容器背景颜色</div>
+      <div class="img-box">
+        <img src="./imgs/bg.jpg" alt="">
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 透明边框特效</div>
+      <div>. 用白色遮盖</div>
+      <img class="img-bs" src="./imgs/bg.jpg" alt="">
+      <pre>
+.img-bs {
+  box-shadow:
+    0 0 0 10px #890,
+    0 0 0 35px #fff,
+    40px 40px #f40,
+    -40px -40px #f40;
+  margin: 6rem auto;
+}</pre>
+    </dd>
+    <dt>更多案例</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 社交分享按钮</dd>
+    <dd>
+      <div>. 使用伪元素、阴影和过渡动画综合实现</div>
+      <div>. 鼠标:hover查看效果</div>
+      <div class="glow-wrap share">
+        <span class="icon"><span class="iconfont icon-shouye_o"></span></span>
+        <span class="icon"><span class="iconfont icon-gerentouxiang_o"></span></span>
+        <span class="icon"><span class="iconfont icon-xiai_o"></span></span>
+        <span class="icon"><span class="iconfont icon-dianhua_o"></span></span>
+      </div>
+      <pre>
+.share .icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    transform: scale(0.8);
+    transition: .5s;
+}
+        
+.share .icon:hover::before {
+    box-shadow: 0 0 1rem 2px #e1251b;
+    transform: scale(1.2);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 汉堡菜单</dd>
+    <dd>
+      <div>. 本例采用利用伪元素和阴影实现</div>
+      <div>. 单击更换css类</div>
+      <div>其它方案</div>
+      <div>. 使用编码字符&#9776[去掉空格]来代替&#9776</div>
+      <div>. 使用字体图标实现</div>
+      <div>. 使用js</div>
+      <div class="glow-wrap">
+        <div id="ham"></div>
+      </div>
+      <pre>
+#ham {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background-color: #38a6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+}
+
+#ham::before {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 0 #fff;
+    transition: .2s;
+}
+
+#ham::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translateY(10px);
+    transition: .2s;
+}
+
+#ham.ham-active {
+    background-color: #e1251b;
+}
+
+#ham.ham-active::before {
+    box-shadow: unset;
+    transform: translateY(0px) rotateZ(45deg);
+}
+
+#ham.ham-active::after {
+    transform: translateY(0px) rotateZ(-45deg);
+}</pre>
+      <pre>
+let ham = document.querySelector('#ham')
+ham.addEventListener('click', () => {
+    ham.classList.toggle('ham-active')
+})</pre>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="../utils/custom/clipboard.js"></script>
+  <script>
+    window.onload = function () {
+      let ham = document.querySelector('#ham')
+      ham.addEventListener('click', () => {
+        ham.classList.toggle('ham-active')
+      })
+    }
+  </script>
+</body>
+
+</html>

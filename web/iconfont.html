@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iconfont</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <script src="//at.alicdn.com/t/c/font_3859342_gpyhrzeh5u.js"></script>
+  <base target="_blank">
+  <style>
+    .symbol {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 4rem;
+    }
+
+    .symbol .icon {
+      width: 40px;
+      height: 40px;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Iconfont</h1>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>. 以字体图标|文字的形式呈现图像，多用于图标，可以取代精灵图的部分应用</div>
+      <div>. 在线使用、本地使用</div>
+      <div>. 可以按照 Unicode、Class 和 Symbol 三种方式使用图标</div>
+      <div>. 可以使用 &lt;i&gt; 或者 &lt;span&gt; 作为字体容器；甚至可以使用 &lt;div&gt;</div>
+      <div>. 可以使用彩色图标</div>
+      <div>. 每次往项目中添加、删除字体图标时，都需要重新更新一下 CSS 资源</div>
+      <div>. 图标类名字区分大小写</div>
+      <div>. 更多使用细节，请参考<a href="https://www.iconfont.cn/">官方文档</a></div>
+      <div>. 其它字体库 <a href="https://boxicons.com/">boxicons</a>、<a href="./fontawesome.html">fontawesome</a>、<a
+          href="https://remixicon.com/">
+          remixicon</a>、<a href="https://www.iconfinder.com/"> iconfinder</a>、<a
+          href="https://yesicon.app/">yesicon</a>、<a href="https://icomoon.io/">icomoon</a>、<a
+          href="https://icon-sets.iconify.design/">iconify</a>
+      </div>
+    </dd>
+    <dt>准备字体图标文件</dt>
+    <dd class="sn">
+      <div>注册|登陆：打开阿里字体<a href="https://www.iconfont.cn/">
+          https://www.iconfont.cn</a>，创建账户</div>
+      <div>创建项目；也可以在收集完图标后再创建；</div>
+      <p>. 部分环境，如微信小程序需要 base64 的格式，请在项目设置中勾选</p>
+      <p>. 可以修改字体图标前缀和字体家族，默认是 icon- 和 iconfont</p>
+      <img src="./imgs/base64.png" alt="">
+      <div>查找图标：搜索并选择字体图标；添加到购物车[免费]；如果需要使用图片，可以直接下载为图片格式</div>
+      <div>将购物车中的字体图标添加到项目；或上传图标至项目：将自己设计的 svg 格式的图标引入；适合设计能力比较强的小伙伴；需要审核</div>
+      <div>更新并生成链接；可以下载到本地使用[推荐]；也可以在线使用</div>
+      <img src="./imgs/iconfont.png" alt="">
+    </dd>
+  </dl>
+  <div class="chap">Font Class</div>
+  <dl>
+    <dt>在线使用</dt>
+    <dd class="sn">
+      <div>复制项目下面生成的在线 fontclass 链接到 H5 项目的 &lt;link&gt;中；通常忽略网络协议 https 或 http，由系统决定</div>
+      <pre>&lt;link rel="stylesheet" href="//at.alicdn.com/t/c/font_3859342_55f4w9rdzau.css"&gt;</pre>
+      <div>在 &lt;i&gt; 使用基类 iconfont 和相应的字体图标类名</div>
+      <pre>
+&lt;i class="iconfont icon-xxx"&gt;&lt;/i&gt;</pre>
+    </dd>
+    <dt>本地使用</dt>
+    <dd class="sn">
+      <div>在阿里字体图标项目处，选择：下载至本地，建议创建单独的文件夹保存</div>
+      <div>在 H5 项目 &lt;link&gt; 中引入其中的 CSS 文件。注意文件路径</div>
+      <pre>./font_2357817_yw2cn9gbib/iconfont.css</pre>
+      <div>在&lt;i&gt;使用基类 iconfont 和相应的字体图标类名</div>
+      <pre>&lt;i class="iconfont icon12"&gt;&lt;/i&gt;</pre>
+    </dd>
+    <dd class="tips">类本质上也是使用了伪元素；请查看 字体文件或 F12 检查元素</dd>
+  </dl>
+  <div class="chap">Symbol</div>
+  <dl>
+    <dt>在线使用</dt>
+    <dd class="sn">
+      <div>支持多色图标</div>
+      <div>拷贝项目下面生成的 Symbol 代码链接到脚本 &lt;script&gt;</div>
+      <pre>&lt;script src="//at.alicdn.com/t/c/font_3859342_gpyhrzeh5u.js"&gt;&lt;/script&gt;</pre>
+      <div>加入通用 CSS 代码（引入一次就行），并根据需要调整大小；这里是图标的样式，也可以自己定制，非必须</div>
+      <pre>
+&lt;style type="text/css"&gt;
+  .icon {
+      width: 1em; height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+  }
+&lt;/style&gt;</pre>
+      <div>挑选相应图标并获取类名，应用于页面；保留 #</div>
+      <pre>
+&lt;svg class="icon" aria-hidden="true"&gt;
+    &lt;use xlink:href="#icon-xxx"&gt;&lt;/use&gt;
+&lt;/svg&gt;</pre>
+      <p class="symbol">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-bench"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-bed"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-home_bar"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-television_cabinet"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-writing_desk"></use>
+        </svg>
+      </p>
+    </dd>
+  </dl>
+  <div class="chap">Unicode</div>
+  <dl>
+    <dd>
+      <div>. 兼容性最好，支持 IE6+，及所有现代浏览器</div>
+      <div>. 支持按字体的方式去动态调整图标大小，颜色等等</div>
+      <div>. 可以在线使用或本地使用</div>
+    </dd>
+    <dt>在线使用</dt>
+    <dd class="sn">
+      <div>拷贝项目下面生成的 font-face 字体代码到 CSS 中</div>
+      <pre>
+@font-face {
+font-family: 'iconfont';  /* Project id 2357817 */
+src: url('//at.alicdn.com/t/font_2357817_dhel13phics.woff2?t=1632974998048') format('woff2'),
+        url('//at.alicdn.com/t/font_2357817_dhel13phics.woff?t=1632974998048') format('woff'),
+        url('//at.alicdn.com/t/font_2357817_dhel13phics.ttf?t=1632974998048') format('truetype');
+}</pre>
+      <div>定义使用 iconfont 的样式</div>
+      <pre>
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}</pre>
+      <div>挑选相应图标并获取字体编码，应用于页面</div>
+      <pre>
+&lt;i class="iconfont"&gt;&amp;#x33;&lt;/i&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 伪元素 - 定制列表标记</dd>
+    <dd>
+      <div>. 准备并引入 Unicode 格式的字体图标；如上</div>
+      <div>. 使用伪元素指定为 Unicode 编码</div>
+      <div>. 指定字体家族为 iconfont</div>
+      <pre>
+li {
+  list-style: none;
+}
+
+li::before {
+  content: '\e6e0';
+  font-family: 'iconfont';
+  color: #f40;
+}      </pre>
+    </dd>
+    <dd class="tips">如果已经引入了类的库文件，可以直接使用对应的 Unicode 编码</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 伪元素 & 自定义数据 - 定制列表标记</dd>
+    <dd>
+      <div>. 项目中引入字体的类文件</div>
+      <div>. 在结构中指定自定义数据 data-为 Unicode 中的编码；可以不带后面的分号;</div>
+      <pre>&lt;h4 data-icon="&amp;#xe60d;"&gt;Admin&lt;/h4&gt;</pre>
+      <div>. 在样式中使用</div>
+      <pre>
+h4::before {
+  content: attr(data-icon);
+  font-family: 'iconfont';
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap" id="vue">Vue</div>
+  <dl>
+    <dd>. 基本操作同前</dd>
+    <dt>在线使用</dt>
+    <dd>
+      <div>. 使用 url 地址请求</div>
+      <div>. 在任何位置导入，无论是否勾选 scoped 都是全局使用</div>
+      <pre>@import url(//at.alicdn.com/t/c/font_4235521_vw0a33le7e.css);</pre>
+    </dd>
+    <dt>本地使用</dt>
+    <dd>. 直接导入本地的 css 文件，需要完整的字体文件夹</dd>
+    <dd class="sn">
+      <div>在 assets 目录中导入 - base.css 或 main.css；全局使用</div>
+      <pre>@import './download/font_4235521_r6opgv9sz3/iconfont.css';</pre>
+      <div>在 app.vue 的样式中导入，不勾选 scoped，全局使用；勾选 scoped，仅当前组件使用，子组件也不能使用</div>
+      <pre>
+&lt;style&gt;
+@import './assets/download/font_4235521_r6opgv9sz3/iconfont.css';
+&lt;/style&gt;</pre>
+      <div>在某个组件的样式中导入，不勾选 scoped，全局使用；勾选 scoped，仅当前组件使用，子组件也不能使用</div>
+      <pre>
+&lt;style&gt;
+@import url(//at.alicdn.com/t/c/font_4235521_vw0a33le7e.css);
+&lt;/style&gt;</pre>
+    </dd>
+    <dt>使用 Symbol</dt>
+    <dd>
+      <div>. 在组件逻辑中导入并使用</div>
+      <pre>import '//at.alicdn.com/t/c/font_3859342_gpyhrzeh5u.js'</pre>
+    </dd>
+  </dl>
+  <div class="chap" id="mp">微信小程序</div>
+  <dl>
+    <dd>
+      <div>. 限字体类格式、本地使用，且必须使用 base64 格式</div>
+      <div>. 下载到本地 → 解压 → 复制 iconfont.css 到小程序项目某个目录 → 修改后缀名为小程序的样式类后缀名 .wxss</div>
+      <div>. 在 .wxss 中导入；如果全局使用，请在 app.wxss 中导入，并根据需要设置字体样式</div>
+      <pre>
+@import '../../utils/css/iconfont.wxss';
+.iconfont{
+  font-size: 32rpx;
+}</pre>
+      <div>. 在页面的 wxml 中使用</div>
+      <pre>&lt;text class="iconfont icon-home"&gt;&lt;/text&gt;</pre>
+    </dd>
+    <dd class="tips">建议直接复制在线链接的样式内容到样式文件 .wxss</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

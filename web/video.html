@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频 &lt;video&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+  <style>
+    video {
+      display: block;
+      max-width: 100%;
+      aspect-ratio: 16/9;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>视频</h1>
+    <span>&lt;video&gt;</span>
+  </header>
+  <section>
+    <h3>素材准备</h3>
+    <div><span class="iconfont icon-layer-group"></span> 点击下载素材 <a href="../utils/video/alizee.mp4" download>宽屏</a>、<a
+        href="../utils/video/v01.mp4">竖屏</a> 或自行准备 </div>
+    <div>视频素材推荐：<a href="https://shipin520.com/">潮点视频</a></div>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>行盒 inline；<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Replaced_element">可替换元素 - replaced
+          element</a>，同 &lt;img&gt;；可以设置大小</li>
+      <li>播放视频，常见格式有：mp4、avi 等</li>
+      <li>桌面端单击视频窗口可以触发播放或暂停；移动端不能，只能使用控制栏</li>
+      <li>默认情况下，没有播放控件，需要通过 JavaScript 控制</li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video">MDN -
+          &lt;video&gt;</a>、<a href="https://mp.weixin.qq.com/s/1mMEXKzXHTl2eHJEXi-8PA">HTML5 向网页嵌入视频和音频</a>
+      </li>
+      <pre>&lt;video src=""&gt;&lt;/video&gt;</pre>
+      <li>使用播放控件属性 controls 可视化控制</li>
+      <pre>&lt;video src="" controls&gt;&lt;/video&gt;</pre>
+    </ul>
+    <h3>标签属性 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attributes">video
+        attributes</a></h3>
+    <table>
+      <caption>标签属性 Attribute</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td>src</td>
+        <td>视频的URL，推荐使用 mp4 格式</td>
+      </tr>
+      <tr>
+        <td>autoplay</td>
+        <td>自动播放</td>
+      </tr>
+      <tr>
+        <td>controls</td>
+        <td>播放控制条</td>
+      </tr>
+      <tr>
+        <td>loop</td>
+        <td>重复播放</td>
+      </tr>
+      <tr>
+        <td>muted</td>
+        <td>静音播放</td>
+      </tr>
+      <tr>
+        <td>preload</td>
+        <td>预加载；如果使用 autoplay，则忽略该属性</td>
+      </tr>
+      <tr>
+        <td>poster</td>
+        <td>视频封面图像；可以使用 gif；大小应该和视频保持一致</td>
+      </tr>
+    </table>
+  </section>
+  <h2>CSS</h2>
+  <section>
+    <h3>初始化样式 Initialization</h3>
+    <ul>
+      <li>&lt;video&gt; 的 object-fit 默认是 contain，所以通常情况下 <span class="warn">无须特别设计</span>；如果需要铺满，则应该设置为 cover</li>
+      <li>默认情况下，视频采用 16*9 的比例，最小尺寸是 640*360；其容器应该满足视频宽高比；调整容器时，应保证比例不变</li>
+      <li>指定封面时，应保证封面 cover 覆盖</li>
+      <li>以下各例均采用初始化样式 - 使用 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio">MDN -
+          aspect-ratio</a>、<a href="https://blog.csdn.net/isKelel/article/details/116265354">aspect-ratio</a></li>
+      <pre>
+.container{
+  width: xxx;
+  aspect-ratio: 16/9;
+}
+
+video {
+    display: block;
+    width: 100%;
+    height: 100%;
+}</pre>
+      <li>早期容器样式 - 16:9 宽高比</li>
+      <pre>
+.container {
+  position: relative;
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: hidden;
+}     
+ 
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}</pre>
+    </ul>
+    <div class="tips">
+      <div>You can use the object-position property to adjust the positioning of the video within the
+        element's frame,
+        and the object-fit property to control how the video's size is adjusted to fit within the frame.</div>
+      <div>There are no special considerations for styling &lt;video&gt;; a common strategy is to give it a
+        display value of block to make it easier to position, size, etc., and then provide styling and layout
+        information as required.</div>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 视频的可视化使用</div>
+    <ul>
+      <li>添加 controls 属性方便可视化控制</li>
+      <li>添加 preload 属性可以预加载视频，避免卡顿</li>
+      <li>添加封面 poster 可以避免视频剪辑过程中头部的黑场/空白帧</li>
+      <video src="../utils/video/alizee.mp4" controls preload poster="./imgs/alizee.jpg">您的浏览器不支持video标签</video>
+      <pre>
+&lt;video src="../utils/video/alizee.mp4" controls preload poster="../imgs/alizee.jpg"&gt;您的浏览器不支持video标签&lt;/video&gt;</pre>
+    </ul>
+  </section>
+  <h2>JavaScript</h2>
+  <section>
+    <h3>媒体属性</h3>
+    <ul>
+      <li>用于 JavaScript 控制</li>
+      <li>大多和 HTML 标签属性一一对应</li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video#events">video
+          events</a></li>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>设置或返回是否在就绪（加载完成）后随即播放音频</td>
+        </tr>
+        <tr>
+          <td><span class="warn">currentTime</span></td>
+          <td>设置或返回音频中的当前播放位置；以秒计）</td>
+        </tr>
+        <tr>
+          <td>ended</td>
+          <td>返回音频的播放是否已结束</td>
+        </tr>
+        <tr>
+          <td>muted</td>
+          <td>设置或返回是否关闭声音</td>
+        </tr>
+        <tr>
+          <td>paused</td>
+          <td>设置或返回音频是否暂停</td>
+        </tr>
+        <tr>
+          <td>played</td>
+          <td>播放状态；返回表示音频已播放部分的 TimeRanges 对象</td>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>设置或返回音频的 src 属性的值</td>
+        </tr>
+        <tr>
+          <td>volume</td>
+          <td>设置或返回音频的音量： 0.0（静音）- 1.0（最大声）</td>
+        </tr>
+      </table>
+    </ul>
+    <h3>媒体事件</h3>
+    <ul>
+      <li>利用事件对视频流进行控制</li>
+      <pre>
+video.addEventListener('loadstart', () => {
+    console.log('1.loadstart');
+    console.log('duration', video.duration);
+})
+video.addEventListener('durationchange', () => {
+    console.log('2.durationchange');
+    console.log('duration', video.duration);
+})
+video.addEventListener('loadedmetadata', () => {
+    console.log('3.loadedmetadata');
+    console.log('duration', video.duration);
+})
+video.addEventListener('loadeddata', () => {
+    console.log('4.loadeddata');
+})
+video.addEventListener('progress', () => {
+    console.log('progress');
+})
+video.addEventListener('canplay', () => {
+    console.log('5.canplay');
+})
+video.addEventListener('play', () => {
+    console.log('play');
+})
+video.addEventListener('playing', () => {
+    console.log('playing');
+})
+video.addEventListener('pause', () => {
+    console.log('pause');
+})
+video.addEventListener('seeking', () => {
+    console.log('seeking');
+})
+video.addEventListener('seeked', () => {
+    console.log('seeked');
+})
+video.addEventListener('ended', () => {
+    console.log('ended');
+})
+video.addEventListener('error', () => {
+    console.log('error');
+})
+video.addEventListener('timeupdate', () => {
+    let current = video.currentTime;
+    console.log('timeupdate', current);
+})</pre>
+      <li>快进快退</li>
+      <pre>
+function adjustVideo(val) {
+  myVideo.currentTime += val
+}
+pre.addEventListener('click', () => {
+  adjustVideo(-5);
+})
+next.addEventListener('click', () => {
+  adjustVideo(5);
+})        </pre>
+      <li>音量增减 - 开始是0.5；如何越界检测</li>
+      <pre>
+function adjustVol(val) {
+  if(myVideo.volume &lt; 1){
+    myVideo.volume += val
+  }
+}
+va.addEventListener('click', () => {
+  if(myVideo.volume &lt; 1){
+    adjustVol(0.1);
+  }
+})
+vs.addEventListener('click', () => {
+  if(myVideo.volume &gt; 0){
+    adjustVol(-0.1);
+  }
+})</pre>
+    </ul>
+  </section>
+  <h2>案例 Cases</h2>
+  <section>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="../index_cover.html">首页全屏背景视频</a></div>
+    <ul>
+      <li>视频全覆盖 cover</li>
+      <li>其它元素通过定位 position，显示在视频上方</li>
+      <pre>
+video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/autoplay_dy.html">视频播放</a></div>
+    <div>方案1：引导用户互动打开播放</div>
+    <div>方案2：先静音播放，再根据播放状态，如是否能自动播放，取消静音</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/hotline.html">微课</a></div>
+    <ul>
+      <li>使用 &lt;figure&gt; 实现</li>
+      <li>可以定制更多信息</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 视频预览和播放</div>
+    <ul>
+      <li>鼠标移入 mouseover 循环播放视频，同时显示播放控件，方便用户进一步操作</li>
+      <li>鼠标移出 mouseout 暂停播放，取消播放控件</li>
+      <video src="../utils/video/alizee.mp4" id="pre" preload poster="./imgs/alizee.jpg"></video>
+      <pre>
+let pre = document.querySelector("#pre");
+pre.loop = true;
+pre.addEventListener('mouseover', () => {
+    pre.controls = true;
+    pre.play();
+})
+pre.addEventListener('mouseout', () => {
+    pre.controls = false;
+    pre.pause();
+})</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 使用字幕</div>
+    <ol>
+      <li>准备视频</li>
+      <pre>
+&lt;video src="/utils/video/flag.mp4" controls muted autoplay loop&gt;
+&lt;/video&gt;</pre>
+      <li>准备字幕 - 手动或下载
+        <ul>
+          <li>后缀名是.vtt，如 demo.vtt</li>
+          <li>必须以 WEBVTT 开始；建议全部大写</li>
+          <li>可以使用定位指令指定字幕出现的位置 line 和对齐 align；默认是底部、居中对齐</li>
+        </ul>
+        <pre>
+WEBVTT
+
+00:00:01.000 --&gt; 00:00:04.000
+这是第一段字幕
+
+00:00:05.000 --&gt; 00:00:08.000 line:100%
+这是第二段字幕
+
+00:00:09.000 --&gt; 00:00:12.000 line:90% align:left
+这是第三段字幕</pre>
+      </li>
+      <li>引入字幕 - 使用 <a target="_blank" class="link"
+          href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/track">&lt;track&gt;</a>，指定 src
+        等属性；default 默认开启字幕</li>
+      <pre>
+&lt;video src="/utils/video/flag.mp4" controls muted autoplay loop&gt;
+  &lt;track kind="captions" src="./demo.vtt" default /&gt;
+&lt;/video&gt;</pre>
+      <li>设置字幕样式 - 使用伪元素 <a target="_blank" class="link"
+          href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/::cue">::cue</a>；默认是白底黑字</li>
+      <pre>
+::cue {
+  background-color: transparent;
+  font-size: 20px;
+  color: #fff;
+}</pre>
+      <li>优化字幕 - 提高多语言支持；需要多个语言字幕</li>
+      <pre>
+&lt;video src="/utils/video/flag.mp4" controls muted autoplay loop&gt;
+  &lt;track kind="subtitles" src="./demo_en.vtt" default label="English" srclang="en" /&gt;
+  &lt;track kind="subtitles" src="./demo_zh.vtt" default label="Chinese" srclang="zh" /&gt;
+&lt;/video&gt;</pre>
+    </ol>
+  </section>
+  <h2>总结与作业 Summary & Homework</h2>
+  <section>
+    <h3>总结 Summary</h3>
+    <div>. 视频 &lt;video&gt;的使用</div>
+    <div class="tips">
+      <div>为了首页加载速度，通常不直接在主页放置视频；而是通过链接的方式转到单独的页面播放</div>
+      <div>如果坚持在首页展示，一般设置 mute和 preload，同时禁止 autoplay</div>
+      <div>JavaScript 控制时，不允许未经任何交互直接播放：play() failed because the user didn't interact with the document first.</div>
+    </div>
+    <h3>作业 Homework</h3>
+    <ol>
+      <li>制作网站开场视频秀</li>
+      <li>制作个人视频素材库，扩充并完善到个人网站</li>
+      <li>如何使用字幕？</li>
+    </ol>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    let pre = document.querySelector("#pre");
+    pre.loop = true;
+    pre.addEventListener('mouseover', () => {
+      pre.controls = true;
+      pre.play();
+    })
+    pre.addEventListener('mouseout', () => {
+      pre.controls = false;
+      pre.pause();
+    })
+  </script>
+</body>
+
+</html>

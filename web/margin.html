@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>外边距 Margin</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>外边距</h1>
+    <span>&commat;Margin</span>
+  </header>
+  <dl>
+    <dt>概述</dt>
+    <dd>
+      <div>.外边距；元素和元素之间的空白</div>
+      <div>.通常用来分隔元素；也可以使用负边距拉近/重叠元素</div>
+    </dd>
+    <dt>基本使用</dt>
+    <dd>
+      <div>.支持1个值、2个值、3个值和4个值的语法；类似的属性还有 padding、border、outline等</div>
+      <div>1个值：上下左右</div>
+      <pre>margin: 10px;</pre>
+      <div>2个值：上下、左右</div>
+      <pre>margin: 10px 20px;</pre>
+      <div>3个值：上、左右、下</div>
+      <pre>margin: 10px 20px 10px;</pre>
+      <div>4个值：上、右、下、左</div>
+      <pre>margin: 10px 20px 10px 20px;</pre>
+      <div>也可以分别设置某个方向的外边距</div>
+      <pre>margin-bottom: 10px;</pre>
+      <div>还可以在水平方向指定属性，简化代码；注意浏览器支持</div>
+      <pre>
+margin-inline: 10px;
+/* 等价于 */      
+margin-left: 10px;
+margin-right: 10px;</pre>
+    </dd>
+  </dl>
+  <div class="chap">应用</div>
+  <dl>
+    <dt>居中</dt>
+    <dd>
+      <div>.块元素 block 水平</div>
+      <pre>margin: 0 auto;</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 定制版心</div>
+      <div>1. 版心大小固定；大小不超过1120</div>
+      <pre>
+.container{
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}      </pre>
+      <div>2. 左右边距固定；大小随屏幕/自适应，但距离左右保持固定距离</div>
+      <pre>
+.container{
+  margin: 0 1rem;
+}      </pre>
+      <div>或</div>
+      <pre>
+.container{
+  margin-inline: 1rem;
+}      </pre>
+    </dd>
+    <dt>负边距</dt>
+    <dd>
+      <div>.利用负边距拉近/堆叠元素</div>
+      <div>.也可以使用定位实现，不过比较麻烦</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/olympic.html">奥运五环</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/margin-flex.html">相册</a></div>
+    </dd>
+  </dl>
+  <div class="chap">特性 Feature</div>
+  <dl>
+    <dt>Margin 合并</dt>
+    <dd>
+      <div>.相邻元素同时存在某个方向上的 margin 时，会触发 margin 合并</div>
+      <div>.如一个元素设置了margin-bottom，一个设置了margin-top；合并结果取两者之中的<span class="warn">大者</span></div>
+      <div>.实际体现：文章中，上下相邻段落的段间距是一样的</div>
+      <div>.只有标准流存在；浮动/固定/绝对定位的元素不存在塌陷</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 兄弟关系</dd>
+    <dd>.兄元素margin-bottom</dd>
+    <dd>.弟元素margin-top</dd>
+    <dt>Margin 塌陷</dt>
+    <dd>.相邻元素同时存在某个方向上的margin时，会触发margin塌陷，如父子元素都设置margin-top；塌陷结果取两者之中的
+      <span class="warn">大者</span>
+    </dd>
+    <dd>.只有标准流存在；浮动/固定/绝对定位的元素不存在塌陷</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 父子塌陷</dd>
+    <dd>.父元素margin-top</dd>
+    <dd>.子元素margin-top</dd>
+    <dd>解决方案</dd>
+    <dd>
+      <div>.破除相邻的关系即可</div>
+      <div>.创建BFC - Block Formatting Context - 独立渲染的一块区域</div>
+      <div>.不同的BFC互不干扰：即里面的元素不会影响外面的元素</div>
+      <div>.创建BFC可以解决高度坍塌和清除浮动</div>
+    </dd>
+    <dd>具体措施</dd>
+    <dd>.为父元素增加：border-top/padding-top/overfollow：hidden</dd>
+    <dd>.为子元素添加：浮动、定位</dd>
+    <!-- <dd>[<span class="iconfont icon-keyboard"></span>] 塌陷</dd>
+    <dd>
+      <div>.使用Snipaste测量：父级顶部实际 margin 不是10px，而是20px，同时子级 margin 塌陷为0</div>
+      <div>.点击不同选项，查看塌陷解决方案</div>
+      <input type="radio" name="margin" id="none" checked>
+      <label for="none">none</label>
+      <input type="radio" name="margin" id="border">
+      <label for="border">border-top</label>
+      <input type="radio" name="margin" id="padding">
+      <label for="padding">padding-top</label>
+      <input type="radio" name="margin" id="overflow">
+      <label for="overflow">overflow: hidden;</label>
+      <input type="radio" name="margin" id="float">
+      <label for="float">float: left;</label>
+      <input type="radio" name="margin" id="pos">
+      <label for="pos">position: absolute;</label>
+      <input type="radio" name="margin" id="dis">
+      <label for="dis">display: flow-root;</label>
+      <div class="ref"></div>
+      <div class="basic father" id="fa">
+        <div class="son" id="son"></div>
+      </div>
+      <div>尺寸、背景颜色略</div>
+      <pre>
+.fa {
+    margin-top: 10px;
+}
+
+.son {
+    margin-top: 20px;
+}</pre>
+    </dd> -->
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>过渡动画 Transition</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <link rel="stylesheet" href="./css/transition.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>过渡动画</h1>
+    <span>&commat;Transition</span>
+  </header>
+  <section>
+    <h3>Introduction</h3>
+    <ul>
+      <li>元素从一个状态过渡到另外一个状态 - define the transition between two states of an element，包括过渡的2个状态、过渡的时间、过渡的方式、是否延迟等属性</li>
+      <li>状态过渡需要一个触发条件，通常是鼠标悬停 hover；也可以通过添加/移除类的方式实现</li>
+      <li>只能定义2个状态：开始状态、结束状态；如果需要多个状态呈现变化过程，请使用 <a href="./animation.html">帧动画</a></li>
+      <li>只适用于 <span class="warn">数值</span> 属性状态的变换；如 display:none; 和 display:block; 之间无法实现过渡</li>
+      <li>只能作用于当前元素的状态变换；如果多个元素使用，请使用帧动画</li>
+      <li>可以是一个属性的状态变换，也可以是多个属性的状态变换，如宽度和颜色都变换；多个属性使用 <span class="warn">逗号,</span> 分隔 - separated by commas</li>
+      <li>桌面端使用较多；移动端使用少</li>
+      <li>更多细节，请参考 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">MDN - transition</a>、<a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transitions/Using_CSS_transitions">Using_CSS_transitions</a>
+      </li>
+    </ul>
+    <h3>Syntax</h3>
+    <ul>
+      <li>复合属性 shorthand</li>
+      <pre>transition: property duration timing-function delay;</pre>
+      <li>单独属性 longhand</li>
+      <pre>
+transition-property:
+transition-duration:
+transition-timing-function:
+transition-delay:</pre>
+      <li>常用动画属性如下</li>
+      <table>
+        <caption>过渡属性</caption>
+        <thead>
+          <tr>
+            <th style="width: 30%;">item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>property</td>
+            <td>元素参与过渡的属性，必须是 <span class="warn">数值型</span> 的属性
+              <br>通常指定为 all；<span class="warn">建议</span> 指定为特定属性
+            </td>
+          </tr>
+          <tr>
+            <td>duration</td>
+            <td>过渡持续时间，单位秒 s 或毫秒 ms，必选参数，且必须是第一个时间参数；第二个时间参数是延迟时间
+              <br>UI界面的过渡通常不超过 0.4s
+            </td>
+          </tr>
+          <tr>
+            <td>timing-function</td>
+            <td>时间函数，过渡的效果/方式
+              <br>默认是 ease
+            </td>
+          </tr>
+          <tr>
+            <td>delay</td>
+            <td>过渡延迟时间，必须是第二个时间参数；第一个时间参数是过渡时间</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>时间函数 timing-function</caption>
+        <thead>
+          <tr>
+            <th style="width: 30%;">item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>linear</td>
+            <td>以相同速度开始到结束（ cubic-bezier(0, 0, 1, 1) ）</td>
+          </tr>
+          <tr>
+            <td class="warn">ease</td>
+            <td>默认；开始慢，然后快，慢下来，结束时非常慢（ cubic-bezier(0.25, 0.1, 0.25, 1)）</td>
+          </tr>
+          <tr>
+            <td>ease-in</td>
+            <td>开始慢，结束快（ cubic-bezier(0.42,0,1,1)</td>
+          </tr>
+          <tr>
+            <td>ease-out</td>
+            <td>开始快，结束慢（ cubic-bezier(0,0,0.58,1)</td>
+          </tr>
+          <tr>
+            <td>ease-in-out</td>
+            <td>中间快，两边慢（ cubic-bezier(0.42,0,0.58,1)</td>
+          </tr>
+          <tr>
+            <td>cubic-bezier(n,n,n,n)</td>
+            <td>在 cubic-bezier 函数中定义自己的值；更多使用，请访问 <a href="https://easingwizard.com/">Easing Wizard</a></td>
+          </tr>
+          <tr>
+            <td>steps()</td>
+            <td>步进方式变换，见后续内容</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3>Usage</h3>
+    <ul>
+      <li>以 :hover 触发动画为例</li>
+      <li>默认所有属性过渡</li>
+      <pre>
+.demo {
+  background-color: #ccc;
+  transition: 1s;
+}
+
+.demo:hover {
+  background-color: #f40;
+}</pre>
+      <li>指定属性过渡 - 部分属性需要指定才可以；强烈建议</li>
+      <pre>
+.demo {
+  background-color: #ccc;
+  transition: background-color 1s;
+}
+
+.demo:hover {
+  background-color: #f40;
+}</pre>
+      <li>分别指定不同阶段过渡</li>
+      <li>过渡大多数情况下写在开始状态，也可以写在结束状态，还可以在两个状态中分别指定过渡：配合不同的时间，实现特定的效果，如快进慢退</li>
+      <li>过渡自动双向执行：只要状态翻转，过渡就会执行；为了避免这种情况，在结束态指定过渡</li>
+      <li>多级元素使用过渡时，可能导致页面渲染延迟，调整过渡到结束状态即可</li>
+      <pre>
+.demo {
+  background-color: #ccc;
+  transition: background-color 1s;
+}
+
+.demo:hover {
+  background-color: #f40;
+  transition: background-color 3s;
+}</pre>
+      <li>多个属性分别过渡；使用单独属性语法可以指定多个过渡属性，必须是一一对应</li>
+      <pre>
+.demo {
+  background-color: #ccc;
+  font-size: 16px;
+  transition: 
+    background-color 1s, 
+    font-size 1s;
+}
+
+.demo:hover {
+  background-color: #f40;
+  font-size: 20px;
+  transition: 
+    background-color 1s, 
+    font-size 1s;
+}</pre>
+      <li>多个属性带延迟分别过渡</li>
+      <pre>
+.demo {
+  background-color: #ccc;
+  font-size: 16px;
+  transition: 
+    background-color 1s, 
+    font-size 1s;
+}
+
+.demo:hover {
+  background-color: #f40;
+  font-size: 20px;
+  transition: 
+    background-color 1s, 
+    font-size 1s 1s;
+}</pre>
+    </ul>
+  </section>
+  <h2>案例 Cases</h2>
+  <section>
+    <div>[<span class="iconfont icon-keyboard"></span>] 鼠标悬停类 :hover - 改变背景颜色、背景图片、背景大小等等</div>
+    <ul>
+      <li><a href="./demo/table2.html">动态斑马纹表格</a></li>
+      <li><a href="./demo/btns.html">按钮设计</a>、<a href="./demo/car.html">靓车荟 Cars - 汉堡菜单</a></li>
+      <li><a href="./demo/nav-sample.html">菜单/导航设计</a> - 下划线动画、水平滑动菜单、垂直滑动菜单、仿苹果停靠栏</li>
+      <li><a href="../index.html">网站 banner</a></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 聚焦类 :focus - 多见于表单；获取焦点时，通过定位 position 或变换 transform
+      移动元素</div>
+    <ul>
+      <li><a href="./demo/inputs.html">单行输入</a></li>
+      <li><a href="./demo/login_deer.html">一路有你</a></li>
+      <li><a href="./demo/form-site0.html">注册和登录</a></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 选中类 :checked - 多见于表单的单选按钮或多选按钮的设计</div>
+    <ul>
+      <li><a href="./demo/radio-checkbox.html">定制 radio</a></li>
+      <li><a href="./demo/radio-checkbox.html">定制 checkbox</a></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 事件类 - 单击时，为元素添加动态类，进而改变样式</div>
+    <ul>
+      <li><a href="./demo/animSide.html">侧边滑动菜单</a></li>
+      <li><a href="./tabcard.html">标签页/手风琴</a></li>
+      <li><a href="./demo/grid-nav.html">多级菜单</a></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 个人信息卡 - 慢进1s快退0.5s</div>
+    <div class="basic info-card">
+      <img src="./imgs/bg.jpg" alt="">
+      <div class="icons">
+        <span class="iconfont icon-shouye_o"></span>
+        <span class="iconfont icon-gerentouxiang_o"></span>
+        <span class="iconfont icon-youjian_o"></span>
+        <span class="iconfont icon-fenxiang_o"></span>
+      </div>
+    </div>
+    <pre>
+.info-card img {
+  position: relative;
+  z-index: 1;
+  transform-origin: left top;
+  transition: .5s;
+}
+
+.info-card:hover img {
+  transform: scale(0.8);
+  transition: 1s;
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 图片大小变化</div>
+    <div>. 标题位置变化：开始定位在元素外部，hover时定位在元素底部</div>
+    <div class="basic mars">
+      <img class="img" src="./imgs/Mars.jfif" alt="">
+      <div class="info">祝融号火星车</div>
+    </div>
+    <pre>
+.mars .img {
+    transform-origin: top;
+    transition: .4s;
+}
+
+.mars:hover .img {
+    transform: scale(.5);
+}
+
+.mars .info {
+    position: absolute;
+    left: 0px;
+    bottom: -60px;
+    //......
+    transition: .4s;
+}
+
+.mars:hover .info {
+    bottom: 0px;
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 旋转过渡：把元素的旋转点调整到左上角</div>
+    <div class="basic rot">hover查看
+      <div></div>
+    </div>
+    <pre>
+.rot div {
+    position: absolute;
+    left: -230px;
+    top: -230px;
+    width: 80%;
+    height: 80%;
+    border: 10px solid #b22222;
+    transform-origin: left top;
+    transition: 1s;
+}
+
+.rot:hover div {
+    left: 10%;
+    top: 10%;
+    transform: rotate(360deg);
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 伪元素旋转位移</div>
+    <div class="basic tran">
+      <div>hover查看</div>
+    </div>
+    <pre>
+.tran div::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -180px;
+    width: 320px;
+    height: 180px;
+    background-color: #fff;
+    transform-origin: left top;
+    transition: 1s;
+}
+
+.tran div:hover::after {
+    transform: rotate(-20deg);
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 伪元素缩放</div>
+    <dd class="basic border">hover查看</dd>
+    <ul>
+      <li>伪元素分别设置上下边框</li>
+      <li>需要显式的设置初始状态为0</li>
+      <pre>
+.border::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    height: 50%;
+    border: solid #b22222;
+    border-width: 4px 0;
+    transform: translate(-50%, -50%) scaleX(0);
+    transition: .4s;
+}
+
+.border::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    height: 60%;
+    border: solid #b22222;
+    border-width: 0px 4px;
+    transform: translate(-50%, -50%) scaleY(0);
+    transition: .4s;
+}
+
+.border:hover::before {
+    transform: translate(-50%, -50%) scaleX(1);
+}
+
+.border:hover::after {
+    transform: translate(-50%, -50%) scaleY(1);
+}</pre>
+    </ul>
+  </section>
+  <h2>步进 Steps</h2>
+  <section>
+    <h3>说明</h3>
+    <ul>
+      <li>由时间函数 steps() 指定的一种特殊的分段过渡效果</li>
+      <pre>steps(number_of_steps，direction)</pre>
+      <li>number_of_steps：数字，过渡分几个阶段完成</li>
+      <li>direction：start 和 end，默认是 <span class="warn">end</span>，指每个阶段过渡结束后才渲染；start 则是过渡开始前就渲染</li>
+      <li>矩形的宽度从0px，经过5个阶段，过渡到200px：0-40、40-80、80-120、120-160、160-200</li>
+    </ul>
+    <div class="flex-box">
+      <div class="step-title">steps(5,end)</div>
+      <div class="step-demo-end"></div>
+    </div>
+    <div class="flex-box">
+      <div class="step-title">steps(5,start)</div>
+      <div class="step-demo-start"></div>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/border-skill.html">技能条/进度条</a> - 从0到100%</div>
+    <ul>
+      <li>这里使用 :hover 模拟加载情况</li>
+      <li>先加载再更新，所以应使用默认的 end 方向</li>
+      <li>静态和动态分别使用不同的过渡效果</li>
+      <pre>
+.loading {
+    display: flex;
+    width: 300px;
+    height: 40px;
+    border: 1px solid #f40;
+    padding: 4px;
+    margin: 100px auto;
+}
+
+.loading::before {
+    content: '';
+    width: 0%;
+    height: 100%;
+    background-color: #f40;
+    transition: width 1s linear;
+}
+
+.loading:hover::before {
+    transition: width 5s steps(5);
+    width: 100%;
+}</pre>
+    </ul>
+  </section>
+  <h2>事件 Events</h2>
+  <section>
+    <div>. 侦听过渡动画的执行过程</div>
+    <table>
+      <caption>事件 Events</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>transitionstart</td>
+          <td>动画开始</td>
+        </tr>
+        <tr>
+          <td>transitionrun</td>
+          <td>动画运行</td>
+        </tr>
+        <tr>
+          <td>transitionend</td>
+          <td>动画结束</td>
+        </tr>
+        <tr>
+          <td>transitioncancel</td>
+          <td>动画取消</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre>el.addEventListener("transitionstart", (event) => {});</pre>
+    <pre>el.addEventListener("transitionrun", (event) => {});</pre>
+    <pre>el.addEventListener("transitionend", (event) => {});</pre>
+    <pre>el.addEventListener("transitioncancel", (event) => {});</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 动画结束后，切换页面；更多案例，请访问 <a href="./demo/form-transition.html">表单</a>
+    </div>
+    <div class="demo-wrap">
+      <span class="iconfont icon-home btn">返回主页</span>
+    </div>
+    <pre>
+const wrap = document.querySelector('.demo-wrap');
+const btn = document.querySelector('.btn');
+btn.addEventListener('click', () => {
+  wrap.classList.toggle('active');
+})
+wrap.addEventListener('transitionend', () => {
+  if (wrap.classList.contains('active')) {
+  }
+  window.location.href = './index.html';
+})</pre>
+  </section>
+  <h2>总结和作业 Summary & Homework</h2>
+  <section>
+    <h3>Summary</h3>
+    <div>. 过渡动画的基本使用</div>
+    <h3>Homework</h3>
+    <ul>
+      <li>独立完成上述案例</li>
+      <li>利用过渡动画，完善个人网站，如导航过渡效果；个人信息过渡效果等等</li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    const wrap = document.querySelector('.demo-wrap');
+    const btn = document.querySelector('.btn');
+    btn.addEventListener('click', () => {
+      wrap.classList.toggle('active');
+    })
+    wrap.addEventListener('transitionend', () => {
+      if (wrap.classList.contains('active')) {
+      }
+      window.location.href = './index.html';
+    })
+  </script>
+</body>
+
+</html>

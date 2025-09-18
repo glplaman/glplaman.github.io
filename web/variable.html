@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS变量 Variable</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <base target="_blank">
+  <style>
+    :root {
+      --main-color: #01b4ff;
+      --main-layout: repeat(3, 1fr);
+    }
+
+    :root[data-theme="blue"] {
+      --main-color: #01b4ff;
+    }
+
+    :root[data-theme="purple"] {
+      --main-color: #be01fe;
+    }
+
+    :root[data-theme="red"] {
+      --main-color: #ff0f5b;
+    }
+
+    header {
+      background-image: linear-gradient(315deg, var(--main-color) 25%, #647eff);
+    }
+
+    .mixer span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: var(--main-layout);
+    }
+
+    dt {
+      position: relative;
+      color: var(--main-color);
+      display: flex;
+      align-items: center;
+    }
+
+    dt::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--main-color);
+    }
+
+    @media screen and (max-width:768px) {
+      :root {
+        --main-layout: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>变量</h1>
+    <span>&commat;Variable</span>
+    <div class="mixer">
+      <span data-color="#ff0f5b" style="background-color: #ff0f5b;"></span>
+      <span data-color="#be01fe" style="background-color: #be01fe;"></span>
+      <span data-color="#01b4ff" style="background-color: #01b4ff;"></span>
+    </div>
+  </header>
+  <dl>
+    <dt>说明</dt>
+    <dd>
+      <div>. 也称自定义属性</div>
+      <div>. 声明：使用 <span class="warn">两个短划线 -- </span> 开始的变量名表示</div>
+      <div>. 使用：在 CSS 中使用 var() 引用变量；建议同时指定 <span style="color: var(--warn-color);">备用值</span></div>
+      <div>. 一次定义、多次使用；适合一个属性值在多处被使用；相当于定义了一个当前CSS文件内的全局变量</div>
+      <div>. 优势：方便运维，特别适合全站换肤</div>
+      <div>. 变量的使用经常配合计算函数 calc() 使用</div>
+      <div>. 更多信息，请访问 <a href="https://mp.weixin.qq.com/s/YN4oKtrE6lsLyiPmjEzeGg">玩转 CSS 变量</a></div>
+    </dd>
+    <dt>全局变量</dt>
+    <dd>
+      <div>. 在CSS中，使用根选择器 :root 声明，页面内所有元素都可使用；:root 是 &lt;html&gt; 的一个属性</div>
+      <pre>
+:root {
+  --base-layout: repeat(3, 1fr);
+  --base-color: 255, 68, 0;
+  --warn-color: rgba(var(--base-color), 1);
+  --warn-color-light: rgba(var(--base-color), 0.05);
+}
+
+.wrap {
+  display: grid;
+  grid-template-columns: var(--base-layout);
+  color: var(--base-color, #fff);
+}
+
+@media screen and (max-width:768px) {
+  :root {
+    --base-layout: 1fr;
+  }
+}</pre>
+      <div>. 也可以在元素的内联样式中使用</div>
+      <pre>&lt;span style="color: var(--base-color);"&gt;Lorem.&lt;/span&gt;</div></pre>
+    </dd>
+    <dt>局部变量</dt>
+    <dd>
+      <div>. 在 CSS 中，如果变量定义在某个选择器，则只有该选择器选中的元素和它的所有后代元素使用</div>
+      <pre>
+.wrap{
+  --el-color: #890;
+}</pre>
+    </dd>
+    <dt>内联变量</dt>
+    <dd>
+      <div>. 在 HTML 元素中，使用内联样式 style 定义的变量，供当前元素在 CSS 使用</div>
+      <pre>&lt;div style="--alpha:0"&gt;0&lt;/div&gt;</pre>
+      <pre>
+el{
+  opacity: var(--alpha, 0.4);
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./opening.html#evaluation">教学评价</a>、<a
+        href="./demo/border-skill.html">技能条</a></dd>
+    <dd>
+      <div>. 每个评价条目仅仅是百分比和提示信息不同</div>
+      <div>. 使用伪元素分别显示百分比和提示信息</div>
+      <pre>
+&lt;div class="grid">
+  &lt;div class="per" style="--per:10%;" data-cont="考勤10%"&gt; &lt;/div&gt;
+  &lt;div class="per" style="--per:30%;" data-cont="作业30%"&gt; &lt;/div&gt;
+  &lt;div class="per" style="--per:60%;" data-cont="考试60%"&gt; &lt;/div&gt;
+&lt;/div&gt;
+      </pre>
+      <pre>
+.per::before {
+  content: '';
+  width: var(--per, 100%);
+  height: 100%;
+  border-radius: 2rem;
+  background-color: #f40;
+  transform-origin: left center;
+}
+
+.per::after {
+  content: attr(data-cont);
+  color: #f40;
+  margin-right: 1rem;
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用 JavaScript 与 :root 交互</dd>
+    <dd>
+      <div>获取 :root - 相当于整个 &lt;html&gt;</div>
+      <pre>let root = document.documentElement;</pre>
+      <div>或直接获取 :root 节点</div>
+      <pre>let root = document.querySelector(':root');</pre>
+      <div>. 获取元素节点，使用其特定属性，如颜色去修改变量的值，达到换肤的效果</div>
+      <div>. 也可以使用自定义属性绑定颜色值</div>
+      <pre>
+let mixer = document.querySelectorAll('.mixer span');
+mixer.forEach(item => {
+    item.addEventListener('click', (e) => {
+        console.log(e.target.style.backgroundColor);
+        root.style.setProperty('--main-color', e.target.style.backgroundColor)
+    })
+})</pre>
+    </dd>
+    <dd class="tips">
+      <div>修改变量可以快速实现批量调整</div>
+      <div>为变量指定特定的值可以使用条件渲染，如1或0</div>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    let mixer = document.querySelectorAll('.mixer span');
+    // let root = document.querySelector(':root');
+    let root = document.documentElement;
+    console.log(root);
+    mixer.forEach(item => {
+      item.addEventListener('click', (e) => {
+        // console.log(e.target.style.backgroundColor);
+        console.log(e.target);
+        console.log(e.target.getAttribute('data-color'));
+        root.style.setProperty('--main-color', e.target.style.backgroundColor)
+      })
+    })
+  </script>
+</body>
+
+</html>

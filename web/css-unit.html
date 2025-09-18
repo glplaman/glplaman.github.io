@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单位 Unit</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>单位</h1>
+    <span>&commat;Unit</span>
+  </header>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://mp.weixin.qq.com/s/oY6qGyNek7dKCw1EuFNG-Q">一文读懂 CSS 单位</a></dd>
+    <dt>绝对单位</dt>
+    <dd class="sn">
+      <div>px</div>
+      <p>像素[点]</p>
+      <p>绝对单位</p>
+      <p>使用最频繁</p>
+      <div>ch</div>
+      <p>字符</p>
+      <p>绝对单位</p>
+      <p>可以用来实现打字效果</p>
+    </dd>
+    <dt>相对单位</dt>
+    <dd class="sn">
+      <div>%</div>
+      <p>百分比</p>
+      <p>宽度 width、填充 padding、空白 margin 使用百分比时，相对于<span class="warn">父级</span>的宽度</p>
+      <p>用于自适应布局</p>
+      <p>用于设置根字体</p>
+      <pre>
+html {
+    font-size: 62.5%;
+}</pre>
+      <div>em</div>
+      <p>相对于上一级/父级元素字体大小</p>
+      <p>如果父级没有显示的设置 font-size，则继续往上查找，直到根元素 HTML</p>
+      <p>参考过于凌乱，不建议使用。主要应用场合是设置段落的2个字符<span class="warn">首行缩进</span>和<span class="warn">段落间距</span></p>
+      <pre>
+p {
+  text-indent: 2em;
+  margin-bottom: 1em;
+}</pre>
+      <div>rem</div>
+      <p>相对于根元素 html 字体大小</p>
+      <p>参考唯一，比较容易调整</p>
+      <p>采用 rem 单位时，为了换算方便，通常设置 HTML 的 font-size: 62.5%，即16*62.5%=10; 16px = 1.6rem;1rem = 10px;</p>
+      <p>用于设置根字体</p>
+      <div>vw：视口 viewport 宽度</div>
+      <div>vh：视口 viewport 高度</div>
+      <p>每个视口 viewport 水平垂直各分为100份</p>
+      <div>fr</div>
+      <p>fraction | 份数；子项相对于容器的份数；多用于网格布局 <a href="./grid.html">grid</a></p>
+      <div>flex</div>
+      <p>子项在容器中的比例；多用于弹性盒子布局 <a href="./flex.html">flex</a></p>
+      <p>前端UI框架中多采用12份、24份进行布局，如 <a href="https://github.com/twbs/bootstrap">Bootstrap</a>、<a
+          href="https://element.eleme.cn/#/en-US">element UI</a>；更多信息，请访问 <a
+          href="https://css-tricks.com/the-lengths-of-css/">the lengths of css</a>、<a
+          href="https://www.sitepoint.com/power-em-units-css/">The Power of em Units in CSS</a></p>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] em 父级参考</dd>
+    <dd>
+      <pre>
+&lt;div&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;
+&lt;/div&gt;</pre>
+      <pre>
+p {
+    font-size: 2em;
+}</pre>
+      <p>[解读]只设置&lt;p&gt;元素字体大小，因为父级&lt;div&gt;没有设置，最终参考的是&lt;html&gt;的大小16px。所以最后&lt;p&gt;元素字体大小为 2*16px = 32px
+      </p>
+      <p>[解读]如果&lt;div&gt;显式的设置了字体大小为20px，则&lt;p&gt;字体大小为2*20px = 40px</p>
+      <pre>
+div {
+    font-size: 20px;
+}
+
+p {
+    font-size: 2em;
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

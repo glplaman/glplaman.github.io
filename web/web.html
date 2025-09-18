@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>万维网 Web</title>
+  <link rel="stylesheet" href="../css/common.css">
+
+  <link rel="stylesheet" href="./css/web.css">
+  <base target="_blank">
+  <style>
+    .ring-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 2rem auto;
+    }
+
+    .ring-item {
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.6rem;
+    }
+
+    .item1 {
+      grid-column: span 2;
+      justify-self: center;
+    }
+
+    .item2 {
+      justify-self: right;
+    }
+
+    .item3 {
+      justify-self: left;
+    }
+
+    .ring {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+
+    .ring>div {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .one {
+      border-bottom: 4px solid #f40;
+      transform: rotateX(60deg) rotateY(160deg) rotateZ(0deg);
+      animation: oneRoll 1s linear infinite;
+    }
+
+    .two {
+      transform: rotateX(60deg) rotateY(30deg) rotateZ(0deg);
+      border-left: 4px solid #089;
+      animation: twoRoll 1s linear infinite;
+    }
+
+    .three {
+      border-right: 4px solid #890;
+      transform: rotatex(30deg) rotateY(60deg) rotateZ(0deg);
+      animation: threeRoll 1s linear infinite;
+    }
+
+    @keyframes oneRoll {
+      to {
+        transform: rotateX(60deg) rotateY(160deg) rotateZ(360deg);
+      }
+    }
+
+    @keyframes twoRoll {
+      to {
+        transform: rotateX(60deg) rotateY(30deg) rotateZ(360deg);
+      }
+    }
+
+    @keyframes threeRoll {
+      to {
+        transform: rotatex(30deg) rotateY(60deg) rotateZ(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>万维网</h1>
+    <span>&commat;Web</span>
+  </header>
+  <dl>
+    <dt>前端是什么？</dt>
+    <dd><a href="https://mp.weixin.qq.com/s/0EEIfuOzEKzczu27_6sQYg">前端 101：给不了解前端的同学讲前端</a></dd>
+    <dt>案例欣赏 Cases</dt>
+    <dd class="grid3 center">
+      <a class="grid-a jd" href="https://www.jd.com/">jd</a>
+      <a class="grid-a tb" href="https://www.taobao.com/">tb</a>
+      <a class="grid-a mi" href="https://www.mi.com/">mi</a>
+    </dd>
+    <dt>万维网 WWW</dt>
+    <dd>
+      <div><span class="warn">World Wide Web</span>，由多个网站组成，也称为Web或WEB</div>
+      <div>网站 <span class="warn">Site</span>：以文档的形式存储；每个网站由多个文档组成</div>
+      <div>网页 <span class="warn">Page</span>：每个文档称为 Web页，也叫网页 Page；网页文件的后缀名是
+        .html；早期多使用.htm；除了网页外，还有很多与之关联的资源文件，如图像、多媒体、数据库以及脚本，这些共同组成网站 Site
+      </div>
+      <div>主页 <span class="warn">Index</span>：引导浏览者访问网站的网页文件，是一个网站的门户 Portal；默认文件名是index.html；使用默认文件名可以带来很多便利</div>
+      <div>网址 <span class="warn">URL</span>：Uniform Resource Locator，统一资源定位；通过不同的网络协议来标识网络资源类型和地址</div>
+      <pre>how://who/where/what</pre>
+      <pre>https://glpla.github.io/web/index.html</pre>
+      <table>
+        <caption>常见协议类型</caption>
+        <tr>
+          <th>类型</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>http</td>
+          <td>Hypertext Transfer Protocol<br>超文本传输协议<br>早期应用</td>
+        </tr>
+        <tr>
+          <td>https</td>
+          <td>Hypertext Transfer Protocol Secure<br>具有安全通道的超文本传输协议<br>主流应用</td>
+        </tr>
+        <tr>
+          <td>ftp</td>
+          <td>File Transfer Protocol<br>文件传输协议<br>现在多以云盘的形式存在</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>网络服务模式</dt>
+    <dd class="sn">
+      <div>Browser/Server( B/S)</div>
+      <p>浏览器端/服务器端</p>
+      <p>用户使用浏览器或少量的辅助插件|软件 - 廋客户机</p>
+      <div>Client/Server(C/S)</div>
+      <p>客户端/服务器端</p>
+      <p>用户需要下载并定期更新客户端 - 胖客户机</p>
+      <p class="tips">B端、C端、S端</p>
+    </dd>
+    <dt>工作过程</dt>
+    <dd class="sn">
+      <div>用户在浏览器地址栏输入URL地址，发起一个请求</div>
+      <div>DNS服务器解析域名，根据对应的IP地址，找到网站的服务器地址</div>
+      <div>服务器处理收到的请求</div>
+      <div>如果是请求网页，则把对应的htm或html发送给浏览器</div>
+      <div>浏览器解析网页并渲染</div>
+      <p>解析HTML文档：构建DOM树</p>
+      <p>构建CSSOM（CSS对象模型）：解析页面中的CSS样式表或内联样式</p>
+      <p>计算样式：包括继承、层叠和优先级计算</p>
+      <p>布局（Layout）</p>
+      <p>绘制（Painting）</p>
+      <p>重排与重绘</p>
+      <div>用户看到最终生成的网页</div>
+    </dd>
+    <dd class="tips">
+      <div>CSR - Client Side Rendering</div>
+      <div>SSR - Server Side Rendering</div>
+    </dd>
+    <dt id="browser">浏览器 Browser</dt>
+    <dd>
+      <div>浏览网页的工具</div>
+      <div>渲染和呈现Web页面的平台</div>
+      <div>无论是桌面端还是移动端，谷歌浏览器Chrome都遥遥领先</div>
+      <div>至于<span class="iconfont icon-internet-explorer"></span> IE|Trident，<a href="./imgs/IE.jpg">已停服</a></div>
+      <div class="item-head txt-center">
+        <span>浏览器</span>
+        <span>市场占有率</span>
+        <span>内核</span>
+      </div>
+      <div class="item-per" style="--per:65.44%;--color:#f40;" title="65.44%">
+        <div class="item-title">
+          <span>Chrome</span>
+          <span class="iconfont icon-chrome item-icon"></span>
+        </div>
+        <div class="item-bar"></div>
+        <span>Blink</span>
+      </div>
+      <div class="item-per" style="--per:11.18%;--color:#e67e22;" title="11.18%">
+        <div class="item-title">
+          <span>Safari</span>
+          <span class="iconfont icon-safari item-icon"></span>
+        </div>
+        <div class="item-bar"></div>
+        <span>Webkit</span>
+      </div>
+      <div class="item-per" style="--per:10.88%;--color:#908;" title="10.88%">
+        <div class="item-title">
+          <span>Edge</span>
+          <span class="iconfont icon-edge item-icon"></span>
+        </div>
+        <div class="item-bar"></div>
+        <span>Chromium</span>
+      </div>
+      <div class="item-per" style="--per:6.39%;--color:#089;" title="6.39%">
+        <div class="item-title">
+          <span>Firefox</span>
+          <span class="iconfont icon-firefox item-icon"></span>
+        </div>
+        <div class="item-bar"></div>
+        <span>Gecko</span>
+      </div>
+      <div class="item-per" style="--per:3.58%;--color:#2ecc71;" title="3.58%">
+        <div class="item-title">
+          <span>Opera</span>
+          <span class="iconfont icon-opera item-icon"></span>
+        </div>
+        <div class="item-bar"></div>
+        <span>Presto</span>
+      </div>
+    </dd>
+    <dd class="tips">
+      <div>浏览器内核 Rendering Engine</div>
+      <div>地址栏 vs 搜索栏</div>
+    </dd>
+  </dl>
+  <div class="chap">Architect</div>
+  <dl>
+    <dd>Web页面由文档类型声明 DOCTYPE 和 &lt;html&gt; 标签组成</dd>
+    <dt>&lt;html&gt;</dt>
+    <dd>
+      <div>HTML - HyperText Mark Language； 超文本标记语言；标记就是标签 Tag</div>
+      <div>Web页面的根</div>
+      <div>组成：由各种各样的标签 Tag 组成</div>
+      <div>作用：说明使用语言类型 lang：方便搜索引擎查找翻译；默认是en；如果不想触发浏览器的自动翻译提醒，可以不设置该属性</div>
+      <div>查看：右键单击选择"检查"或按 <span class="warn">F12</span> 打开浏览器的开发者视图便于调试；再次按 F12，关闭</div>
+    </dd>
+    <dt>&lt;head&gt;</dt>
+    <dd class="sn">
+      <p>文档信息区 - <a href="https://www.jianshu.com/p/25cd39709e49">设置关键字和页面描述</a></p>
+      <div>&lt;title&gt;：网站名</div>
+      <div>&lt;meta&gt;：负责网站的 <span class="warn">信息</span> 描述，多以name、content的形式给出，提供给搜索引擎优化 <span
+          class="warn">SEO</span>
+        - Search Engine
+        Optimization使用；内容通常由SEO专业人员撰写，前端人员只需要把标签准备好即可</div>
+      <p>. 字符编码 charset：默认使用万国码 UTF-8</p>
+      <p>. 网站说明 name 为 description；content：基本描述</p>
+      <p>. 关键字 name 为 keywords，content：体现网站特色的若干关键字</p>
+      <div>&lt;link&gt;：引入资源</div>
+      <p>. 网站图标 <a href="./favicon.html">favicon.ico</a>：网站标识；除了传统的 .ico 格式，HTML5 还支持多种图标格式；现在多使用 svg</p>
+      <p>. CSS样式表文件</p>
+      <div>&lt;script&gt;：引入JavaScript脚本资源</div>
+      <p>[<span class="iconfont icon-bell"></span>] OA文档的信息区在哪里？</p>
+    </dd>
+    <dt>&lt;body&gt;</dt>
+    <dd>
+      <div>文档内容区</div>
+      <p>展示给用户的内容，由各种标签 Tag 组成，负责Web的 <span class="warn">结构</span> 描述</p>
+      <p>部分JavaScript代码也放在此处；为了解析正确，通常位于该区域的底部</p>
+      <p>[<span class="iconfont icon-bell"></span>] Web页面的内容需要一个字符一个字符完成编辑吗？</p>
+      <pre>
+<span>&lt;!DOCTYPE html&gt;</span>
+<span>&lt;html lang="en"&gt;</span>
+<span></span>
+<span>&lt;head&gt;</span>
+<span>    &lt;meta charset="UTF-8"&gt;</span>
+<span>    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</span>
+<span>    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+<span>    &lt;title&gt;Demo&lt;/title&gt;</span>
+<span>    &lt;script src=''&gt;&lt;/script&gt;</span>
+<span>&lt;/head&gt;</span>
+<span></span>
+<span>&lt;body&gt;</span>
+<span>    &lt;div&gt;hello, world.&lt;/div&gt;</span>
+<span>    // ... ...</span>
+<span>    &lt;script src=''&gt;&lt;/script&gt;</span>
+<span>    &lt;script&gt;</span>
+<span>      // ... ...</span>
+<span>    &lt;/script&gt;</span>
+<span>&lt;/body&gt;</span>
+<span></span>
+<span>&lt;/html&gt;</span></pre>
+    </dd>
+    <dt>Rules</dt>
+    <dd>
+      <div>专业的事交给专业的人去做</div>
+      <div>结构 HTML5|H5、样式 CSS3|C3和逻辑 JavaScript|JS 三分离</div>
+      <div><span class="warn">结构</span>部分：各种标签组成，负责盖房子</div>
+      <div><span class="warn">样式</span>部分：使用选择器选择某个或某些标签/元素进行修饰，负责装修房子</div>
+      <div><span class="warn">逻辑</span>部分：使用逻辑分配业务功能，和用户动态交互，负责让房子动起来</div>
+    </dd>
+    <dd class="ring-wrap">
+      <div class="ring-item item1 ring">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div>H5</div>
+      </div>
+      <div class="ring-item item2 ring">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div>C3</div>
+      </div>
+      <div class="ring-item item3 ring">
+        <div class="one"></div>
+        <div class="two"></div>
+        <div class="three"></div>
+        <div>JS</div>
+      </div>
+    </dd>
+    <dt>Summary</dt>
+    <dd>把服务器的资源拉过来，经浏览器渲染后展示给用户</dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

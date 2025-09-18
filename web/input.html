@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>输入 input</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <link rel="stylesheet" href="./css/form.css">
+  <base target="_blank">
+  <style>
+    table th:first-child {
+      width: 30%;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>输入</h1>
+    <span>&lt;input&gt;</span>
+  </header>
+  <section>
+    <h3>Introduction</h3>
+    <ul>
+      <li>应用最广泛的表单元素 - the most powerful and complex</li>
+      <li>种类 type 很多，默认是 text，单行文本输入</li>
+      <li>更多 &lt;input&gt; 类型和使用，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">MDN -
+          &lt;input&gt;</a>、<a href="./input_other.html">更多 &lt;input&gt;</a>
+      </li>
+      <pre>&lt;input type = "text" name = "" id = ""&gt;</pre>
+      <table>
+        <caption>常用属性</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>type</td>
+            <td>input 类型，如：单选 radio、多选 checkbox 等</td>
+          </tr>
+          <tr>
+            <td>name</td>
+            <td>提交时，由后端区别不同类型元素的值；还可以对元素分类，如一组单选按钮</td>
+          </tr>
+          <tr>
+            <td>value</td>
+            <td>值</td>
+          </tr>
+          <tr>
+            <td>id</td>
+            <td>多用于 JavaScript 控制；或配合 &lt;label&gt; 使用，增强用户体验</td>
+          </tr>
+          <tr>
+            <td>maxlength</td>
+            <td>最大字符数</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>内容占位符，显示提示信息</td>
+          </tr>
+          <tr>
+            <td>checked</td>
+            <td>是否选中；selected 表示 select 的默认选中</td>
+          </tr>
+          <tr>
+            <td>required</td>
+            <td>必填字段；否则会把空的当成有效字符</td>
+          </tr>
+          <tr>
+            <td>hidden</td>
+            <td>隐藏</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>是否可用；普通元素不具备该特性</td>
+          </tr>
+          <tr>
+            <td>autocomplete</td>
+            <td>提示历史输入，方便自动完成，一般配合 datalist</td>
+          </tr>
+          <tr>
+            <td>autofocus</td>
+            <td>自动获取焦点</td>
+          </tr>
+          <tr>
+            <td>pattern</td>
+            <td>利用正则表达式提供验证功能，如："\d{6}"；请参考 <a href="./js/regExp.html">正则表达式</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>常用类型 - 普通类</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>text</td>
+            <td>单行文本输入；默认类型</td>
+          </tr>
+          <tr>
+            <td>password</td>
+            <td>密码输入</td>
+          </tr>
+          <tr>
+            <td>radio</td>
+            <td>单选按钮；多个选一个；使用 name 属性分组；应显式指定 value</td>
+          </tr>
+          <tr>
+            <td>checkbox</td>
+            <td>多选按钮；使用 name 属性分组；应显式指定 value</td>
+          </tr>
+          <tr>
+            <td>submit</td>
+            <td>数据提交按钮；建议使用专门的按钮标签 &lt;button&gt;</td>
+          </tr>
+          <tr>
+            <td>reset</td>
+            <td>数据复位按钮；建议使用专门的按钮标签 &lt;button&gt;</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">radio本意是只无线电，为什么用做单选？</div>
+      <!-- <div>收听广播时，一次只能选择一个频道</div> -->
+      <table>
+        <caption>常用类型 - 应用类</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>file</td>
+            <td>文件选择按钮，请参考 <a href="./input_file.html">file</a></td>
+          </tr>
+          <tr>
+            <td>image</td>
+            <td>图片</td>
+          </tr>
+          <tr>
+            <td>number</td>
+            <td>数值，如身高、体重；min max step</td>
+          </tr>
+          <tr>
+            <td>search</td>
+            <td>搜索框；语义化</td>
+          </tr>
+          <tr>
+            <td>range</td>
+            <td>指定数值范围选择，如音量选择</td>
+          </tr>
+          <tr>
+            <td>color</td>
+            <td>颜色选择</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>常用类型 - 验证类</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>email</td>
+            <td>电子邮件</td>
+          </tr>
+          <tr>
+            <td>url</td>
+            <td>网址</td>
+          </tr>
+          <tr>
+            <td>tel</td>
+            <td>电话；适用于移动端</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>常用类型 - 日期类</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>date</td>
+            <td>日期</td>
+          </tr>
+          <tr>
+            <td>month</td>
+            <td>年月</td>
+          </tr>
+          <tr>
+            <td>time</td>
+            <td>时分秒</td>
+          </tr>
+          <tr>
+            <td>week</td>
+            <td>星期</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+  </section>
+  <section>
+    <h3>Initialization</h3>
+    <ul>
+      <li>通常使用 <a href="./selector_arr.html">属性选择器</a> 根据不同的 type 修改特定的表单元素</li>
+      <li>若无特别说明，后续均做初始化处理</li>
+      <li>类型 text 和 password 的初始化</li>
+      <pre>
+input[type=text],
+input[type=password] {
+  width: 100%;
+  border: none;
+  outline: none;
+  font: inherit;
+  color: inherit;
+  box-sizing: border-box;
+  background-color: transparent;
+}</pre>
+      <li>其它属性的初始化</li>
+      <pre>
+:root{
+  accent-color: #ff1493;
+}
+
+::placeholder {
+  color: #089;
+} 
+
+::selection {
+  color: #fff;
+  background-color: #ff1493;
+}
+</pre>
+    </ul>
+  </section>
+  <h2>Usage</h2>
+  <section>
+    <h3>单行文本 text</h3>
+    <ul>
+      <li><a href="./demo/inputs.html">定制 text</a></li>
+      <li>选择器：:focus、::selection、::placeholder</li>
+      <img src="./imgs/input0.png" alt="" loading="lazy">
+      <img src="./imgs/input1.png" alt="" loading="lazy">
+    </ul>
+    <h3>单选 radio</h3>
+    <ul>
+      <li>利用 accent-color，简单粗暴 </li>
+      <img src="./imgs/input2.png" alt="" loading="lazy">
+      <li><a href="./demo/radio-checkbox.html">定制 radio</a> - 利用 <a href="./selector_class.html">选中伪类选择器 :checked</a>、<a
+          href="./selector_com.html">相邻兄弟选择器 +</a> ，必要时隐藏
+        &lt;input&gt;，配合 <a href="./label.html">&lt;label&gt;</a> 和 <a href="./position.html">定位
+          position</a>，借助文字、图片、字体图标等设计元素实现</li>
+    </ul>
+    <h3>多选 checkbox</h3>
+    <ul>
+      <li>利用 accent-color，简单粗暴</li>
+      <img src="./imgs/input3.png" alt="" loading="lazy">
+      <li><a href="./demo/radio-checkbox.html">定制 checkbox</a> - 思路同 radio</li>
+    </ul>
+    <div class="tips">
+      <div>是一个替换元素（replaced element），其内部结构是由浏览器控制的，不允许通过这些伪元素进行自定义</div>
+      <div>部分系统要求表单元素不能单独使用，必须用在&lt;form&gt;中；还有某些元素如密码，必须指定 autocomplete属性，请注意查看控制台提示信息，如：</div>
+      <p>xxx field is not contained in a form</p>
+      <p>Input elements should have autocomplete attributes</p>
+    </div>
+  </section>
+  <h2>Summary & Homework</h2>
+  <section>
+    <h3>Summary</h3>
+    <ul>
+      <li>&lt;input&gt; 的常见分类和基本使用</li>
+      <li>&lt;input&gt; 样式的设计</li>
+      <li>初步使用伪类选择器、伪元素选择器和组合选择器</li>
+      <li>初步使用 CSS 函数和 CSS 变量</li>
+    </ul>
+    <h3>Homework</h3>
+    <div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-login.html">表单登录</a>、<a
+          href="./demo/form-login1.html">表单登录</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-register.html">表单注册</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-message.html">留言板</a>、<a
+          href="./demo/form-message1.html">留言板</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/login_deer.html">一"鹿"有你</a>、<a
+          href="./demo/form-site0.html">一"鹿"有你</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/form-transition.html">表单登录和注册</a>、<a
+          href="./demo/form-transition.html">表单登录和注册-简化版</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/login_taobao.html">Taobao</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/login_xiaomi.html">Xiaomi</a></div>
+    </div>
+    <!-- <dd>
+      <div>方案1</div>
+      <div>. 隐藏外观 appearance，利用accent-color，配合 <a href="./clip-path.html">路径裁剪</a> 调整为圆形</div>
+      <div>. 同样适用于单选按钮的设计：调整圆形为矩形</div>
+      <div>方案2</div>
+      <div>. 使用 <a href="./framework/iconfont.html">字体图标</a> 和 <a href="./selector_ele.html">伪元素</a> 重新定义</div>
+      <pre>
+.cb-custom {
+  display: inline-block;
+  accent-color: var(--main-color);
+  appearance: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  background-color: #fff;
+  border: 1px solid var(--dark-bg-color);
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.cb-custom:checked {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.cb-custom:checked::before {
+  content: '\eb78';
+  font-family: 'iconfont';
+}</pre>
+    </dd> -->
+  </section>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

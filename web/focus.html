@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>开发热点 Focus</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/focus.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>聚焦</h1>
+    <span>&commat;Focus</span>
+  </header>
+  <dl>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@property">@property</a></dt>
+    <dd>
+      <div>.定义属性，拓宽应用</div>
+    </dd>
+    <dt>&amp;nbsp vs space</dt>
+    <dd>
+      <div>.&amp;nbsp：non-breaking space，不换行的空格，多用于组织英文的关键字，避免被换行打散</div>
+      <div>.&amp;copy; - &copy;</div>
+      <div>.&amp;commat; - &commat;</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/user-select">user-select</a></dt>
+    <dd>
+      <pre>user-select:none;</pre>
+      <div>.禁止用户选择</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events">pointer-events</a></dt>
+    <dd>
+      <pre>pointer-events: none;</pre>
+      <div>.简化事件处理：如只让父元素响应，所有子元素或其它元素如设计的遮罩层等禁止响应事件</div>
+      <div>.节流功能：禁止频繁触发</div>
+    </dd>
+    <dt>溢出隐藏 Overflow：hidden;</dt>
+    <dd>
+      <div>.消除塌陷</div>
+      <div>.清除浮动</div>
+      <div>.消除 grid 布局时为 grid-item 指定 padding 时引起的尺寸扩展</div>
+      <div>.消除 flex 布局时，子项分配的空间被实际内容撑开，如&lt;img&gt;，详情见 <a href="./demo/text-oath.html">Text-入党誓词</a>一节</div>
+      <div>.消除溢出打点异常</div>
+    </dd>
+    <dt>继承 inherit</dt>
+    <dd>
+      <div>.继承父级属性，避免重复定义样式</div>
+      <div>.适用：input、select、button、a</div>
+      <pre>
+a, input {
+    font: inherit;
+    color: inherit;
+}</pre>
+    </dd>
+    <dt>自定义鼠标 cursor</dt>
+    <dd>
+      <div>.支持静态图片</div>
+      <div>.图片大小不能太大，一般是32*32</div>
+      <div>.使用的容器如 &lt;body&gt; 要有高度，否则显示不出来</div>
+      <pre>
+body {
+  cursor: url(./favicon.ico), auto;
+  min-height: 100vh;
+}</pre>
+    </dd>
+    <dt>移动端热区响应背景</dt>
+    <dd>
+      <div>更多细节，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-tap-highlight-color">CAN I USE</a>
+      </div>
+      <pre>-webkit-tap-highlight-color: transparent;</pre>
+    </dd>
+    <dt>取消/禁止页面翻译 lang</dt>
+    <dd>.移除 &lt;html lang="en"&gt;的lang属性</dd>
+    <dt>垂直方向对齐 vertical-align</dt>
+    <dd>
+      <div>.适用于 inline 元素和 inline-block 元素</div>
+      <div>.对于文本，基线 baseline 是字母的底部；对于图像，基线通常是图像的底部</div>
+      <div>.一个容器中，有多个子元素要分别设置，如统一垂直居中 middle</div>
+      <div>.对中文影响不大</div>
+      <div>.相邻行文字的基线与基线之间的距离就是行高 line-height</div>
+      <div>.行间距 = 行高 - 字体大小</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>baseline</td>
+          <td>默认。元素放置在父元素的基线上</td>
+        </tr>
+        <tr>
+          <td>top</td>
+          <td>把元素的顶端与行中最高元素的顶端对齐</td>
+        </tr>
+        <tr>
+          <td>text-top</td>
+          <td>把元素的顶端与父元素字体的顶端对齐</td>
+        </tr>
+        <tr>
+          <td>middle</td>
+          <td>把此元素放置在父元素的中部</td>
+        </tr>
+        <tr>
+          <td>text-bottom</td>
+          <td>把元素的底端与父元素字体的底端对齐</td>
+        </tr>
+        <tr>
+          <td>bottom</td>
+          <td>把元素的顶端与行中最低的元素的顶端对齐</td>
+        </tr>
+      </table>
+      <div>Iconfont的垂直对齐 - 为了避免图标大小和正文大小的不匹配导致行内错位，应指定图标样式垂直居中；图片有时也需要这样处理</div>
+      <pre>
+img,
+.iconfont {
+  vertical-align: middle;
+}      </pre>
+      <div class="dd-img-box"><img src="./imgs/vl.gif" alt=""></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 对齐</div>
+      <div class="ref-box">
+        line-height: 64px;
+        <span style="vertical-align: top">top</span>
+        <span style="vertical-align: text-top">text-top</span>
+        <span style="vertical-align: middle">middle</span>
+        <span style="vertical-align: baseline">baseline</span>
+        <span style="vertical-align: text-bottom">text-bottom</span>
+        <span style="vertical-align: bottom">bottom</span>
+      </div>
+      <pre>
+&lt;div class="ref-box"&gt;
+    line-height: 64px;
+    &lt;span style="vertical-align: top"&gt;top&lt;/span&gt;
+    &lt;span style="vertical-align: text-top"&gt;text-top&lt;/span&gt;
+    &lt;span style="vertical-align: middle"&gt;middle&lt;/span&gt;
+    &lt;span style="vertical-align: baseline"&gt;baseline&lt;/span&gt;
+    &lt;span style="vertical-align: text-bottom"&gt;text-bottom&lt;/span&gt;
+    &lt;span style="vertical-align: bottom"&gt;bottom&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.ref-box {
+    font-size: 32px;
+    line-height: 64px;
+    height: 100px;
+    background: #000;
+    color: #fff;
+}
+
+.ref-box span {
+    display: inline-block;
+    border: 1px solid #fff;
+    font-size: 16px;
+    line-height: 16px;
+    height: 20px;
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

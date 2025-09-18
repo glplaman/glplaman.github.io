@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浏览器 Chrome</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    :root {
+      --main-color: #4bc2ce;
+      --warn-color: #1b9fab;
+      --tbl-color-light: #edf9fa;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>浏览器</h1>
+    <span>&commat;Chrome</span>
+  </header>
+  <dl>
+    <dt>Download</dt>
+    <dd>. 官网 <a href="https://www.google.cn/intl/zh-cn/chrome/" title="单击下载">www.google.cn</a></dd>
+    <dt>Install</dt>
+    <dd>. 略</dd>
+    <dt>Setting</dt>
+    <dd class="sn">
+      <div>默认浏览器：default browser</div>
+      <div>百度/必应搜索引擎：baidu/biying search engine</div>
+    </dd>
+    <dt>Shortcut</dt>
+    <dd>
+      <div>. 缩放窗口：CTRL + /-</div>
+      <div>. 还原窗口：CTRL + 0</div>
+    </dd>
+  </dl>
+  <div class="chap">Inspect</div>
+  <dl>
+    <dd>
+      <div>. 要学会 <span class="warn">偷</span></div>
+      <div>. 在浏览器中，按 <span class="warn">F12</span> 打开浏览器的开发者工具视图|检查功能页，或鼠标右键单击 → 检查</div>
+      <div>. 默认是上下布局：上面是元素结构和页面功能，下面是元素样式；也可以调整为左右布局</div>
+      <figure>
+        <img src="./imgs/F12.png" alt="">
+        <figcaption>开发者工具视图</figcaption>
+      </figure>
+    </dd>
+    <dt>Selector - 1</dt>
+    <dd>
+      <div>. 拾取某个元素，在底部的 <span class="warn">样式 style</span> 选项卡中查看元素的样式信息，包括继承的样式、被覆盖的样式</div>
+      <div>. 特别适合调试样式效果</div>
+      <div>. 页面元素较多的情况下，还需要在 <span class="warn">元素 Element</span> 中，慢慢的一层一层选择，直至定位到目标元素</div>
+    </dd>
+    <dt>Toggle Device -2</dt>
+    <dd>
+      <div>. 切换设备，查看不同设备下的页面效果</div>
+      <div>. 可以添加或定制设备</div>
+      <div>. 在移动端和桌面端切换，特别是响应式开发要切换到移动端</div>
+    </dd>
+    <dt>Element - 3</dt>
+    <dd>
+      <div>. 检查/修改文档/元素结构</div>
+      <div>. 偷图片、偷视频、偷...</div>
+      <div>. 捕获节点屏幕截图 Capture node screenshot；特别适合超大截图，不需要滚屏哦</div>
+    </dd>
+    <dt>Console - 4</dt>
+    <dd>
+      <div>. 查看控制台输出</div>
+      <div>. 开发过程中，逻辑相关的部分，请多使用 console.log() 调试</div>
+      <div>. 右键记录，选择复制 console，即可复制，便于分享，无须拖拽复制</div>
+      <div>. 无须拼接</div>
+      <pre>
+console.log('a', a, 'b', b, 'c', c );
+console.log({ a, b, c });</pre>
+      <div>. 测试代码运行时间</div>
+      <pre>
+console.time('timer')
+for (let i = 0; i &lt; 1000; i++) {
+  //不要嵌套使用console，会导致计时增加
+}
+console.timeEnd('timer')</pre>
+      <div>. 清屏</div>
+      <pre>console.clear()</pre>
+    </dd>
+    <dt>Network - 5</dt>
+    <dd>
+      <div>. 网络情况，各种资源图片、样式文件等加载情况</div>
+      <div>. stop recording：停止网络追踪</div>
+      <div>. clear network log：清空记录</div>
+      <div>. preserve log：保留记录，适合页面跳转时查看</div>
+      <div>. no Throttling：不限流；可以调整网络带宽以便查看数据加载情况，如 fast 3G、slow 3G、offline</div>
+      <!-- <div>5. more：更多网络设置，如切换不同的浏览器以便查看UI效果</div> -->
+    </dd>
+    <dt>Application -6</dt>
+    <dd>
+      <div>. Local Storage</div>
+      <div>. Session</div>
+      <div>. Cookie</div>
+    </dd>
+    <dt>Style -7</dt>
+    <dd class="sn">
+      <p>. 从上到下，越靠上，样式的优先级越高</p>
+      <div>内联样式 -1： 写在元素标签上的样式，优先级最高</div>
+      <div>叠加样式 -2-3：如果有重复的样式，上面的会覆盖下面的；如果没有，则层层叠加 - 层叠样式表</div>
+      <div>浏览器代理样式 -4：不同的浏览器的渲染引擎有差异，建议使用现代主流浏览器开发</div>
+      <div>盒模型 -5：选择元素的盒模型</div>
+      <div>特定样式的编辑器 -9-10：专有样式检查工具，所见即所得：阴影 Box-shadow、弹性盒子 Flexbox、网格 Grid ...</div>
+    </dd>
+    <dt>Computed - 8</dt>
+    <dd>
+      <div>. 元素计算|渲染出来的最终样式信息</div>
+    </dd>
+    <dt>Other</dt>
+    <dd class="sn">
+      <div>Source：增加断点 breakpoint、记录点 logpoint</div>
+      <div>Coverage：参考使用录优化页面</div>
+      <div>CSS Overview：统计样式信息</div>
+    </dd>
+  </dl>
+  <div class="chap">Simulation</div>
+  <dl>
+    <dt>真机调试</dt>
+    <dd>
+      <div>. 开发应严格遵循设计稿；更多细节，请访问 <a
+          href="https://www.bilibili.com/video/BV1we411f7Ds/?spm_id_from=333.999.0.0&vd_source=fe13480e1099e18e9d5f4e25467df4df"
+          target="_blank">
+          UI 设计稿验收</a></div>
+      <div>. 本着移动优先的原则，通常要查看项目在真机上的效果，所以真机调试的步骤必不可少[除非明确项目的定位就是桌面端]</div>
+      <div>1. 环境需求</div>
+      <div>. 插件需求：Live Server</div>
+      <div>. 网络需求：开发电脑和手机链接同一个 WiFi | 同一个域</div>
+      <div>2. 环境配置</div>
+      <div>2.1. 查看本机 IP 地址；按 Win + R，打开命令运行窗口，输入 CMD，打开控制台/小黑屋，输入 ipconfig，查看本机 IPv4 地址；或者按 Win+I，打开系统设置，在网络的本地连接中查看网络信息
+      </div>
+      <pre>
+C:\Users\cnplaman>ipconfig
+
+Windows IP 配置
+
+以太网适配器 VMware Network Adapter VMnet1:
+
+   //VMware
+
+以太网适配器 VMware Network Adapter VMnet8:
+
+   //VMware
+
+无线局域网适配器 WLAN:
+
+   连接特定的 DNS 后缀 . . . . . . . :
+   IPv6 地址 . . . . . . . . . . . . : 2408:8220:3434:3330::2
+   IPv6 地址 . . . . . . . . . . . . : 2408:8220:3434:3330:f2c:629f:80e4:3bee
+   临时 IPv6 地址. . . . . . . . . . : 2408:8220:3434:3330:dc54:f31f:ae4f:643e
+   本地链接 IPv6 地址. . . . . . . . : fe80::62d7:b476:7de2:1bef%8
+   IPv4 地址 . . . . . . . . . . . . : 192.168.1.3
+   子网掩码  . . . . . . . . . . . . : 255.255.255.0//here
+   默认网关. . . . . . . . . . . . . : fe80::1%8
+                                       192.168.1.1
+
+以太网适配器 蓝牙网络连接:
+
+   //Bluetooth
+
+C:\Users\cnplaman></pre>
+      <div>2.2. 打开 Vs code，点击右下角管理按钮 <span class="iconfont icon-sun"></span>，选择设置 setting，或者直接按 CTRL + ,</div>
+      <div>2.3. 选择扩展 Extension 里的 Live Server Config，修改主机 host 为查询到的 IPv4 地址</div>
+      <div><img src="./imgs/host.png" alt=""></div>
+      <div>2.4. 重新启动 Vs code</div>
+      <div>3. 真机调试</div>
+      <div>. 使用 Open With Live Server 打开浏览器</div>
+      <div>. 在浏览器的页面中，右键单击 → 为此页面创建 QR 代码，打开一个二维码，使用手机扫码，即可在手机端预览页面效果</div>
+    </dd>
+    <dd class="tips">
+      <div>真机查看效果时，不需要每次扫码，手机端页面不要关闭即可保持实时更新</div>
+      <div>按 Win + I 打开系统设置，在网络属性中查看 IPv4 地址</div>
+    </dd>
+    <dt>Lighthouse</dt>
+    <dd>
+      <div>. Lighthouse 是一个开源的自动化工具，用于改进网络应用的质量</div>
+      <div>. 是 Chrome 扩展程序： 检查 → Lighthouse</div>
+      <div>. 对 HTML 页面运行一连串的测试，生成一个有关页面性能的报告</div>
+      <div>. 参考失败的测试，采取措施改进应用</div>
+      <figure>
+        <img src="./imgs/lighthouse.png" alt="">
+        <figcaption>Lighthouse 性能检测</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 结合浏览器的调试功能，指出下列代码片段的问题</div>
+      <pre>
+&lt;nav id="main" id='nav'&gt;
+    &lt;ul class="nav-wrap'&gt;
+        &lt;li class="logo main"&gt;
+            &lt;img src="./imgs/1.jpg"&gt;
+        &lt;/li&gt;
+        &lt;li style="color:#f40"&gt;item1&lt;/li&gt;
+        &lt;li&gt;item2&lt;/li&gt;
+        &lt;li&gt;item3&lt;/li&gt;
+        &lt;li&gt;item4&lt;/li&gt;
+        &lt;li&gt;item5&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

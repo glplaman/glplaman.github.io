@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本域 &lt;textarea&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+  <style>
+    textarea {
+      display: block;
+      width: 100%;
+      resize: none;
+      border: none;
+      outline: none;
+      padding: 10px;
+      background-color: transparent;
+      font: inherit;
+      color: inherit;
+      box-sizing: border-box;
+    }
+
+    textarea::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+      background-color: var(--main-color);
+    }
+
+    .ta {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .ta:focus {
+      border-color: var(--main-color);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>文本域</h1>
+    <span>&lt;textarea&gt;</span>
+  </header>
+  <section>
+    <h3>Introduction</h3>
+    <ul>
+      <li>文本域；多行文本输入</li>
+      <li>行内盒 inline-block</li>
+      <li>默认结构；建议使用 CSS 设置宽高来代替 cols、rows</li>
+      <li>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">MDN -
+          &lt;textarea&gt;</a></li>
+      <pre>&lt;textarea name="" id="" cols="30" rows="10"&gt;&lt;/textarea&gt;</pre>
+    </ul>
+    <table>
+      <caption>文本域属性</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>名称，用以提交数据</td>
+      </tr>
+      <tr>
+        <td>placeholder</td>
+        <td>提示信息/占位符</td>
+      </tr>
+      <tr>
+        <td>maxlength</td>
+        <td>最大字符数</td>
+      </tr>
+      <tr>
+        <td>wrap</td>
+        <td>是否换行；默认 on | 换行。off | 不换行。谁会不换行呢</td>
+      </tr>
+      <tr>
+        <td>cols</td>
+        <td>列数；建议使用 CSS 宽高指定</td>
+      </tr>
+      <tr>
+        <td>rows</td>
+        <td>行数；建议使用 CSS 宽高指定</td>
+      </tr>
+    </table>
+    <pre>&lt;textarea name="msg" id="msg" placeholder="your message" maxlength="60"&gt;&lt;/textarea&gt;</pre>
+  </section>
+  <h2>CSS</h2>
+  <section>
+    <h3>Initialization</h3>
+    <ul>
+      <li>先初始化样式再定制样式</li>
+      <li>默认情况下，可以自由缩放，会影响布局；应指定不缩放</li>
+      <li>属性：字体、边框、轮廓和缩放等</li>
+      <li>选择器：伪类选择器 :focus</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 初始化样式</div>
+    <pre>
+textarea {
+  display: block;
+  width: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: transparent;
+  font: inherit;
+  color: inherit;
+  box-sizing: border-box;
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 内容较多时，还应该考虑 <a href="./scroll.html">滚动条</a> 的设计</div>
+    <pre>
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: #f40;
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 获取焦点时，改变边框颜色</div>
+    <pre>
+.msg {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.msg:focus {
+  border-color: #f40;
+}</pre>
+  </section>
+  <h2 id="js">JavaScript</h2>
+  <section>
+    <ol>
+      <li>获取元素</li>
+      <li>响应事件</li>
+    </ol>
+    <table>
+      <caption>文本域事件</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td>change</td>
+        <td>选择改变时</td>
+      </tr>
+      <tr>
+        <td>focus</td>
+        <td>获取焦点时</td>
+      </tr>
+      <tr>
+        <td>blur</td>
+        <td>失去焦点时</td>
+      </tr>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] 动态改变背景</div>
+    <pre>
+const msg = document.getElementById('msg');
+function setBg(color) {
+  msg.style.background = color;
+}
+msg.addEventListener('change', (e) => {
+  console.log(msg.value)
+});
+msg.addEventListener('focus', (e) => {
+  setBg('#f3f4f5')
+});
+msg.addEventListener('blur', (e) => {
+  setBg('#fff')
+});</pre>
+  </section>
+  <h2>Summary & Homework</h2>
+  <section>
+    <h3>Summary</h3>
+    <ul>
+      <li>&lt;textarea&gt; 的使用</li>
+      <li>&lt;textarea&gt; 样式的设计</li>
+      <li>&lt;textarea&gt; 事件运用</li>
+    </ul>
+    <h3>Homework</h3>
+    <ul>
+      <li><a href="./demo/form-message.html">留言板1</a></li>
+      <li><a href="./demo/form-message1.html">留言板2</a></li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    window.onload = function () {
+      let ta = document.querySelector('#ta-bg');
+      // ta.style.backgroundColor = '#f40';
+      function setBg(color) {
+        ta.style.background = color;
+      }
+      ta.addEventListener('focus', (e) => {
+        setBg('#f3f4f5')
+      });
+      ta.addEventListener('blur', (e) => {
+        setBg('#fff')
+      });
+      // ta.addEventListener('focus', function () {
+      //   setBg('#f40')
+      // });
+      // ta.addEventListener('blur', function () {
+      //   setBg('#ccc')
+      // });
+
+    }
+  </script>
+</body>
+
+</html>

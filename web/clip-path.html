@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路径裁剪 Clip-path</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/effect.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>路径裁剪</h1>
+    <span>&commat;Clip-path</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">inset</a>
+      <a href="" style="--delay:1" class="nav-item">circle</a>
+      <a href="" style="--delay:2" class="nav-item">eclipse</a>
+      <a href="" style="--delay:3" class="nav-item">polygon</a>
+      <a href="" style="--delay:4" class="nav-item">path</a>
+      <a href="" style="--delay:5" class="nav-item">cases</a>
+    </nav>
+  </header>
+  <dl>
+    <dt>Introduction</dt>
+    <dd>
+      <div>. 按照指定的形状/路径裁剪背景色/背景图像，如扫光、暗夜模式切换</div>
+      <div>. 会导致内容、阴影、边框等显示缺失/被切掉</div>
+      <div>. 不会影响伪元素的内容</div>
+      <div>. 裁剪方式：圆 circle、椭圆 eclipse、多边形 polygon 等等</div>
+      <div>. 最佳体验：对伪元素背景裁剪</div>
+      <div>. 不要直接用到 &lt;html&gt; 或 &lt;body&gt;</div>
+      <div>. 更多裁剪方式，请访问 <a href="https://tools.jb51.net/code/css3path"> clip-path maker</a></div>
+    </dd>
+    <!-- <dt>Attribute</dt>
+    <dd>
+      <div>. clip-source = url</div>
+      <div>. basic-shape = inset | circle | ellipse | polygon</div>
+      <div>. geometry-box = shape-box | fill-box | stroke-box | view-box</div>
+    </dd> -->
+    <dt class="nav-cont">inset()</dt>
+    <dd>
+      <div>. 使用内嵌矩形裁剪</div>
+      <div>. 距离/大小/百分比和可选的圆角；参数个数遵循上右下左的原则</div>
+      <div>. 更多案例，请访问 <a href="./demo/f_inset.html">inset()</a></div>
+      <pre>clip-path: inset(length/percentage [ round border-radius ])</pre>
+      <figure class="basic"><img class="cp-img0" src="../utils/view/view0.jpg" alt="">
+        <figcaption>clip-path: inset(20px round 10px);</figcaption>
+      </figure>
+    </dd>
+    <dt class="nav-cont">circle()</dt>
+    <dd>
+      <div>. 使用圆裁剪</div>
+      <div>. 1个半径 radius；1个位置 position；默认是图像中心</div>
+      <div>. 更多案例，请访问 <a href="./demo/f_circle.html">circle()</a></div>
+      <pre>clip-path: circle(radius [ at x y ])</pre>
+      <figure class="basic">
+        <img class="cp-img10" src="../utils/view/view0.jpg" alt="">
+        <figcaption>clip-path: circle(50%);</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 定制单选/多选按钮</div>
+      <div class="cb-box">
+        <input class="cb" type="checkbox" id="code" name="cb" title="cb"><label for="code">code</label>
+        <input class="cb" type="checkbox" id="read" name="cb" title="cb"><label for="read">read</label>
+        <input class="cb" type="checkbox" id="sing" name="cb" title="cb"><label for="sing">sing</label>
+      </div>
+      <pre>
+.cb[type='checkbox'] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #f1f1f1;
+  clip-path: circle(50%);
+  accent-color: var(--main-color);
+}
+
+.cb[type='checkbox']:checked {
+  appearance: auto;
+}</pre>
+      <div>或者选中时，使用伪元素模拟符号；这里使用 <a href="./framework/iconfont.html">阿里字体图标</a></div>
+      <pre>
+.cb[type=checkbox]:checked::before {
+  content: '\e6aa';
+  font-family: 'iconfont';
+  color: #f40;
+  font-size: 18px;
+}</pre>
+    </dd>
+    <dt class="nav-cont">eclipse()</dt>
+    <dd>
+      <div>. 使用椭圆裁剪</div>
+      <div>. 2个半径 radius；1个位置 position；默认是图形中心</div>
+      <pre>clip-path: eclipse(rx ry [ at x y ])</pre>
+      <figure class="basic">
+        <img class="cp-img20" src="../utils/view/view0.jpg" alt="">
+        <figcaption>clip-path: ellipse(50% 50%);</figcaption>
+      </figure>
+      <figure class="basic">
+        <img class="cp-img21" src="../utils/view/view0.jpg" alt="">
+        <figcaption>clip-path: ellipse(50% 50% at 0 50%);</figcaption>
+      </figure>
+    </dd>
+    <dt class="nav-cont">polygon</dt>
+    <dd>
+      <div>. 裁剪的顶点顺序不做要求，按照一定的方向即可</div>
+      <div>1. 菱形</div>
+      <figure class="basic"><img class="cp-img3" src="../utils/view/view0.jpg" alt="">
+        <figcaption>clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);</figcaption>
+        </div>
+      </figure>
+      <div>2. 三角形</div>
+      <div>. 还可以使用0大小粗边框元素创建三角形，见 <a href="./border.html"> 边框</a>一节</div>
+      <figure class="basic">
+        <img class="cp-img4" src="../utils/view/view0.jpg" alt="">
+        <figcaption>clip-path: polygon(50% 0, 0 100%, 100% 100%);</figcaption>
+      </figure>
+      <div>或</div>
+      <pre>
+.cp-img4 {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}</pre>
+      <div>或</div>
+      <pre>
+.cp-img4 {
+    clip-path: polygon(0 100%, 50% 0%, 100% 100%);
+}</pre>
+    </dd>
+    <dt class="nav-cont">path()</dt>
+    <dd>
+      <div>. 自定义路径裁剪；功能最强大</div>
+      <div>. M：移动</div>
+      <div>. L：画线</div>
+      <div>. A：画弧；rx ry x-axis-rotation large-arc-flag sweep-flag x y</div>
+      <div>. 更多案例，请访问 <a href="./demo/f_path_a.html">Path A</a></div>
+      <table>
+        <caption>A 参数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>rx</td>
+            <td>椭圆的长半轴；x方向半径</td>
+          </tr>
+          <tr>
+            <td>ry</td>
+            <td>椭圆的短半轴；y方向半径</td>
+          </tr>
+          <tr>
+            <td>x-axis-rotation</td>
+            <td>椭圆相对于当前坐标系旋转的角度；单位是度数</td>
+          </tr>
+          <tr>
+            <td>large-arc-flag</td>
+            <td>弧度选择；0：小弧；1：大弧</td>
+          </tr>
+          <tr>
+            <td>sweep-flag</td>
+            <td>弧线绘制方向；0：逆时针；1：顺时针</td>
+          </tr>
+          <tr>
+            <td>x y</td>
+            <td>圆弧终点坐标</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">案例 Cases</div>
+  <dl class="nav-cont">
+    <dd>[<span class="iconfont icon-keyboard"></span>] 图文混排</dd>
+    <dd>
+      <div>. float</div>
+      <div>. shape-outside</div>
+      <img class="cp-img5" src="../utils/view/view0.jpg" alt="">
+      <img class="cp-img6" src="../utils/view/view0.jpg" alt="">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi unde laudantium dicta ullam ab minus
+        numquam qui totam deleniti eligendi a molestiae, voluptas aliquid exercitationem necessitatibus
+        consectetur omnis natus debitis maiores dignissimos velit quibusdam! Velit labore eligendi error et
+        eaque dolorem illum doloremque similique sequi est, voluptatum nemo officiis, sit atque quisquam itaque.
+        Odit magnam nesciunt nostrum error perspiciatis. Atque harum earum velit tenetur ut ipsa repudiandae
+        neque cupiditate reprehenderit magnam, aliquam eius ea dolor aliquid necessitatibus cum aperiam odit
+        unde esse ex illo? Eveniet.</p>
+      <pre>
+.cp-img5 {
+    float: left;
+    width: 30%;
+    width: 48%;
+    clip-path: polygon(0 0, 50% 50%, 0 100%);
+    shape-outside: polygon(0 0, 50% 50%, 0 100%);
+}
+
+.cp-img6 {
+    float: right;
+    width: 30%;
+    width: 48%;
+    clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+    shape-outside: polygon(100% 0, 100% 100%, 50% 50%);
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 聚光灯</dd>
+    <dd>
+      <div>. 裁剪圆或椭圆剪切，并改变剪切位置</div>
+      <div>. 文字叠加</div>
+      <div>. 分布体会上下文字使用路径剪切的效果</div>
+      <div>. 尝试增加模糊滤镜</div>
+      <div class="spot-light">
+        <h2>you are the world.</h2>
+      </div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 扫光按钮</dd>
+    <dd>
+      <div>1. 静态效果</div>
+      <div>. 伪元素：分别切俩个对角出来</div>
+      <div class="cp-btn">Hover Me</div>
+      <pre>
+.cp-btn::before {
+    clip-path: inset(0 98px 10px 0);
+}
+
+.cp-btn::after {
+    clip-path: inset(10px 0 0 98px);
+}</pre>
+      <div>2. 动态效果</div>
+      <div>. 伪元素：分别切4个边出来；box-sizing</div>
+      <div>. 增加帧动画</div>
+      <div class="cp-btn-adv">Hover Me</div>
+      <pre>
+@keyframes cp {
+
+    /* top */
+    0%, 100% {
+        clip-path: inset(0 0 34px 0);
+    }
+
+    /* right */
+    25% {
+        clip-path: inset(0 126px 0 0);
+    }
+
+    /* bottom */
+    50% {
+        clip-path: inset(34px 0 0 0);
+    }
+
+    /* left */
+    75% {
+        clip-path: inset(0 0 0 126px);
+    }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 扫光按钮</dd>
+    <dd>
+      <div>.适合正方形</div>
+      <div>.检查元素，取消溢出隐藏，体会其原理</div>
+      <div class="border">
+        <div style="--deg:0"></div>
+        <div style="--deg:1"></div>
+        <div style="--deg:2"></div>
+        <div style="--deg:3"></div>
+      </div>
+      <pre>
+&lt;div class="border"&gt;
+  &lt;div style="--deg:0"&gt;&lt;/div&gt;
+  &lt;div style="--deg:1"&gt;&lt;/div&gt;
+  &lt;div style="--deg:2"&gt;&lt;/div&gt;
+  &lt;div style="--deg:3"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.border {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 100px auto;
+}
+
+.border::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #890;
+  box-shadow: 0 0 0 8px #8903, 0 0 0 16px #8901;
+  border-radius: 50%;
+  animation: move 4s linear infinite;
+}
+
+@keyframes move {
+  25% {
+    transform: translate(174px, -2px);
+  }
+
+  50% {
+    transform: translate(174px, 174px);
+  }
+
+  75% {
+    transform: translate(-2px, 174px);
+  }
+
+  0%,
+  100% {
+    transform: translate(-2px, -2px);
+  }
+}
+
+.border div {
+  position: absolute;
+  inset: 0px;
+  background-color: rgba(0, 0, 0, 0.01);
+  transform: rotate(calc(90deg*var(--deg)));
+  overflow: hidden;
+}
+
+.border div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #890;
+  transform: translateX(-100%);
+  animation: slide 4s linear infinite;
+  animation-delay: calc(var(--deg)*1s);
+  z-index: 1;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50%,
+  100% {
+    transform: translateX(100%);
+  }
+}</pre>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>

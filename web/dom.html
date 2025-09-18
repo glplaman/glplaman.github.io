@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文档对象模型 DOM</title>
+  <link rel="stylesheet" href="../css/timeline.css">
+  <style>
+    table th:first-child {
+      width: 30%;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header">
+    <div class="title">
+      <h1>文档对象模型</h1>
+      <span>DOM</span>
+    </div>
+    <span class="iconfont icon-Sun theme" id="theme"></span>
+    <!-- <span class="iconfont icon-Moon-Star"></span> -->
+    <span class="iconfont icon-menu ham" id="ham"></span>
+    <div class="nav-wrap" id="nav-wrap">
+      <div class="logo"></div>
+      <nav class="nav">
+        <a class="nav-item" style="--s:--n0" href="#objective"><span class="iconfont icon-gpsfixed"></span>
+          Objective</a>
+        <a class="nav-item" style="--s:--n1" href="#content"><span class="iconfont icon-assignment"></span> Content</a>
+        <a class="nav-item" style="--s:--n2" href="#review"><span class="iconfont icon-magicwand"></span> Review</a>
+        <a class="nav-item" style="--s:--n3" href="#introduction"><span class="iconfont icon-arrowforward"></span>
+          Introduction</a>
+        <a class="nav-item" style="--s:--n4" href="#node"><span class="iconfont icon-nowwallpaper"></span>
+          Node</a>
+        <a class="nav-item" style="--s:--n5" href="#document"><span class="iconfont icon-collections"></span>
+          Document</a>
+        <a class="nav-item" style="--s:--n6" href="#element"><span class="iconfont icon-palette"></span> Element</a>
+        <a class="nav-item" style="--s:--n8" href="#array"><span class="iconfont icon-aspectratio"></span> Array</a>
+        <a class="nav-item" style="--s:--n9" href="#function"><span class="iconfont icon-aspectratio"></span>
+          Function</a>
+        <a class="nav-item" style="--s:--n10" href="#class"><span class="iconfont icon-aspectratio"></span> Class</a>
+        <a class="nav-item" style="--s:--n11" href="#init"><span class="iconfont icon-menu"></span> Initialization</a>
+        <a class="nav-item" style="--s:--n12" href="#drill"><span class="iconfont icon-mouse"></span> Drill</a>
+        <a class="nav-item" style="--s:--n13" href="#summary"><span class="iconfont icon-hangzhengguanli"></span>
+          Summary</a>
+        <a class="nav-item" style="--s:--n14" href="#homework"><span class="iconfont icon-pen"></span> Homework</a>
+        <a class="nav-item" style="--s:--n15" href="#reference"><span class="iconfont icon-clip"></span> Reference</a>
+      </nav>
+    </div>
+  </header>
+  <!-- <div class="banner"></div> -->
+  <section class="section" style="--s:--n0" id="objective">
+    <h2>目标 Objective</h2>
+    <ul class="objective">
+      <li>Lorem ipsum dolor sit amet.</li>
+      <li>Perspiciatis, dolores numquam. Voluptas, earum.</li>
+      <li>Repellendus quae quasi obcaecati blanditiis!</li>
+      <li>Atque iste amet voluptatibus numquam!</li>
+      <li>Laborum sed tempore voluptatum adipisci!</li>
+    </ul>
+  </section>
+  <section class="section" style="--s:--n1" id="content">
+    <h2>内容 Content</h2>
+    <ol>
+      <li>Lorem ipsum dolor sit.</li>
+      <li>Aperiam beatae odit consectetur?</li>
+      <li>Consectetur amet repellat error?</li>
+      <li>Cum, delectus deserunt? Magni.</li>
+      <li>Atque illum reiciendis ut.</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n2" id="review">
+    <h2>回顾 Review</h2>
+    <ul class="review">
+      <li>Lorem ipsum dolor sit amet.</li>
+      <li>Quibusdam veritatis repellat magni possimus.</li>
+      <li>Consectetur non impedit eos rerum.</li>
+      <li>Ratione ea nihil blanditiis vitae?</li>
+      <li>Quibusdam, dolorum aliquam. Facere, sequi.</li>
+    </ul>
+  </section>
+  <section class="section" style="--s:--n3" id="introduction">
+    <h2>引言 Introduction</h2>
+    <figure>
+      <img src="" alt="">
+      <figcaption>思维导图</figcaption>
+    </figure>
+    <ul>
+      <li>文档对象模型 <a target="_blank" class="link"
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">DOM</a> -
+        Document Object Model</li>
+      <li>专注于文档内容的操作</li>
+      <li>DOM：操作HTML / document</li>
+      <li>BOM：操作浏览器 / window</li>
+    </ul>
+    <div class="tips">
+      <p>1. 学习 JavaScript，更多关注的是 API 的掌握程度</p>
+      <p>2. 注意区分：属性或事件是 DOM 范畴还是 BOM 范畴</p>
+      <p>3. 每个 API 都包括3个方面</p>
+      <p>. 属性 Properties</p>
+      <p>. 方法 Methods</p>
+      <p>. 事件 Events</p>
+    </div>
+  </section>
+  <section class="section" style="--s:--n4" id="node ">
+    <h2>节点 Node </h2>
+    <ul>
+      <li>是一个抽象类 - abstract base</li>
+      <li>是其它DOM类的基类 - many other DOM API objects are based upon，即：各种类型的 DOM API 对象会从这个接口继承，如 Document 和 Element</li>
+    </ul>
+    <h3>实例属性 Properties</h3>
+    <ul>
+      <li>Node.nodeType: 节点类型；以数字区分；标签之间由于格式化自动产生的的回车，空白和空格都是文本节点</li>
+      <table>
+        <caption>节点类型 nodeType</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ELEMENT_NODE</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>ATTRIBUTE_NODE</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>TEXT_NODE</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>COMMENT_NODE</td>
+            <td>8</td>
+          </tr>
+        </tbody>
+      </table>
+      <li>Node.nodeName: 节点名称；只读属性</li>
+      <li>Node.nodeValue: 节点值</li>
+      <li>Node.childNodes： 动态更新的子节点；Returns a <span class="warn">live / automatically updated</span> NodeList,
+        including elements, text and comments</li>
+      <li>Node.firstChild： 第一个节点；the first <span class="warn">direct</span> child node</li>
+      <li>Node.lastChild： 第一个节点；the last <span class="warn">direct</span> child node</li>
+      <li>Node.nextSibling： 下一个兄弟节点；the next node in the DOM tree</li>
+      <li>Node.previousSibling： 上一个兄弟节点；the previous node in the DOM tree</li>
+      <li>Node.parentNode： 父节点；无则返回null；只能有一个亲爸爸；the parent of this node</li>
+      <li>Node.offsetParent： 参考的定位的父节点；如果没有就一直往上找，直到BODY</li>
+      <li>Node.textContent： 文本内容，包括其所有的后代节点；无论是否渲染；the textual content of an element and all its descendants</li>
+    </ul>
+    <h3>实例方法 Methods</h3>
+    <p>. 操作节点的方法，如增加、删除、复制</p>
+    <table>
+      <caption>节点方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild">appendChild(node)</a> </td>
+          <td>尾插节点；如果该节点已经存在DOM树中，则是移动位置</td>
+        </tr>
+        <tr>
+          <td>prepend()</td>
+          <td>头插节点</td>
+        </tr>
+        <tr>
+          <td>insertBefore(node, node)</td>
+          <td>在某个节点前插入节点</td>
+        </tr>
+        <tr>
+          <td>removeChild(node)</td>
+          <td>删除节点</td>
+        </tr>
+        <tr>
+          <td>cloneNode(node,bool)</td>
+          <td>克隆节点</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>实例事件 Methods</h3>
+    <p>. 略</p>
+  </section>
+  <section class="section" style="--s:--n5" id="document">
+    <h2>文档 Document</h2>
+    <h3>实例属性 Properties</h3>
+    <ul>
+      <li>Document.documentElement</li>
+      <li>Document.body</li>
+      <li>Document.title</li>
+    </ul>
+    <h3>实例方法 Instance methods</h3>
+    <ol>
+      <li>创建
+        <ul>
+          <li>Document.createElement()</li>
+        </ul>
+      </li>
+      <li>插入
+        <ul>
+          <li>Document.append()</li>
+          <li>Document.prepend()</li>
+        </ul>
+      </li>
+      <li>获取
+        <ul>
+          <li>Document.getElementsByTagName()</li>
+          <li>Document.getElementById()</li>
+          <li>Document.getElementsByClassName()</li>
+          <li>Document.querySelector()</li>
+          <li>Document.querySelectorAll()</li>
+        </ul>
+      </li>
+    </ol>
+    <h3>事件 Events</h3>
+    <ol>
+      <li>DOMContentLoaded</li>
+      <li>scroll</li>
+      <li>scrollend</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n6" id="element">
+    <h2>元素 Element</h2>
+    <ol>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n8" id="array">
+    <h2>数组 Array</h2>
+    <h3>实例属性 Instance properties</h3>
+    <table>
+      <caption>实例属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>length</td>
+          <td>数组长度</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>实例方法 Instance methods</h3>
+    <table>
+      <caption>一般方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>push()</td>
+          <td>添加元素到数组末尾</td>
+        </tr>
+        <tr>
+          <td>unshift()</td>
+          <td>添加元素到数组头部</td>
+        </tr>
+        <tr>
+          <td>pop()</td>
+          <td>移除数组末尾元素并返回</td>
+        </tr>
+        <tr>
+          <td>shift()</td>
+          <td>移除数组头部元素并返回</td>
+        </tr>
+        <tr>
+          <td>concat()</td>
+          <td>数组连接 - 返回一个新数组；不会修改原数组；不会去重</td>
+        </tr>
+        <tr>
+          <td>join()</td>
+          <td>数组元素按照指定的分隔符连接为字符串</td>
+        </tr>
+        <tr>
+          <td>slice()</td>
+          <td>提取调用数组的一部分并返回一个新数组</td>
+        </tr>
+        <tr>
+          <td>splice()</td>
+          <td>从数组中添加和/或删除元素</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>迭代方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>forEach()</td>
+          <td>对调用数组中的每个元素调用给定的函数</td>
+        </tr>
+        <tr>
+          <td>map()</td>
+          <td>返回一个新数组，其中包含对调用数组中的每个元素调用函数的结果</td>
+        </tr>
+        <tr>
+          <td>every()</td>
+          <td>对数组中的每一项执行给定函数；如果该函数对每一项都返回 true，则返回 true；不会修改数组</td>
+        </tr>
+        <tr>
+          <td>some()</td>
+          <td>对数组中的每一项执行给定函数；如果该函数有一项返回 true，则返回 true；不会修改数组</td>
+        </tr>
+        <tr>
+          <td>filter()</td>
+          <td>返回一个新数组，其中包含调用所提供的筛选函数返回为 true 的所有数组元素</td>
+        </tr>
+        <tr>
+          <td>find()</td>
+          <td>返回数组中满足提供的测试函数的第一个元素的值，如果没有找到合适的元素，则返回 undefined</td>
+        </tr>
+        <tr>
+          <td>findIndex()</td>
+          <td>返回数组中满足提供的测试函数的第一个元素的索引，如果没有找到合适的元素，则返回 -1</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>归并方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>reduce()</td>
+          <td>对数组的每个元素（从左到右）执行用户提供的“reducer”回调函数，将其简化为单个值/统计/归并</td>
+        </tr>
+        <tr>
+          <td>reduceRight()</td>
+          <td>对数组的每个元素（从右到左）执行用户提供的“reducer”回调函数，将其简化为单个值</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>排序方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>sort()</td>
+          <td>不指定比较函数排序；默认根据数据项 UTF-16 编码升序比较</td>
+        </tr>
+        <tr>
+          <td>sort(compareFn)</td>
+          <td>根据比较函数排序排序</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>数值数组排序</li>
+      <li>字符数组排序 - localeCompare()</li>
+    </ul>
+  </section>
+  <section class="section" style="--s:--n9" id="function">
+    <h2>函数 Function</h2>
+    <ul>
+      <li>一等公民 - first-class objects</li>
+    </ul>
+    <h3>函数定义 Defining functions</h3>
+    <ol>
+      <li>函数声明 Function declarations</li>
+      <p>. 存在函数提升 Function hoisting：JavaScript 解释器会将整个函数声明提升到当前作用域的顶部，允许先调用再声明</p>
+      <pre>
+function 函数名 (形参列表) { 
+  //函数逻辑实现
+  return 返回值; 
+}</pre>
+      <li>函数表达式 Function expressions</li>
+      <p>. 必须先声明再调用</p>
+      <pre>
+const sum = function (形参列表) { 
+  //函数逻辑实现
+  return 返回值; 
+};</pre>
+    </ol>
+    <h3>函数调用 Calling functions</h3>
+    <h3>箭头函数 Arrow function expressions</h3>
+  </section>
+  <section class="section" style="--s:--n10" id="class">
+    <h2>类 Class</h2>
+  </section>
+  <section class="section" style="--s:--n11" id="init">
+    <h2>初始化 Initialization</h2>
+  </section>
+  <section class="section" style="--s:--n12" id="drill">
+    <h2>练习 Drill</h2>
+    <div>[ <span class="iconfont icon-keyboard"></span> ] 购物车</div>
+    <ol>
+      <li>价格统计 reduce()</li>
+      <li>数量统计 reduce()</li>
+      <li>添加商品 find()</li>
+      <li>删除商品 filter()</li>
+    </ol>
+    <div>[ <span class="iconfont icon-keyboard"></span> ] <a target="_blank" class="link"
+        href="./demo/table.html">表格排序</a></div>
+    <ol>
+      <li>数值排序 - 价格</li>
+      <li>字符串排序 - 名称</li>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n13" id="summary">
+    <h2>小结 Summary</h2>
+    <ol>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n14" id="homework">
+    <h2>作业 Homework</h2>
+    <ol>
+    </ol>
+  </section>
+  <section class="section" style="--s:--n15" id="reference">
+    <h2>参考 Reference</h2>
+    <ol class="reference">
+      <li><a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model">Document
+          Object Model</a>
+      </li>
+      <li><a target="_blank" href="./js/node.html">节点 Dode</a></li>
+      <li><a target="_blank" href="./js/document.html">文档 Document</a></li>
+      <li><a target="_blank" href="./js/element.html">元素 Element</a></li>
+      <li><a target="_blank" href="./js/htmlElement.html">HTML元素 htmlElement</a></li>
+    </ol>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/timeline.js"></script>
+  <!-- <script>
+    let header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.style.backgroundColor = `rgba(0,0,0,${window.scrollY * 0.01})`
+    })
+  </script> -->
+</body>
+
+</html>

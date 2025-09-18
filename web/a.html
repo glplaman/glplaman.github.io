@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>超链接 &lt;a&gt;</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/a.css">
+  <link rel="stylesheet" href="./css/sidebar.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <nav>
+    <div class="iconfont icon-anchor title">&lt;A&gt;</div>
+    <div class="iconfont icon-menu ham"></div>
+    <div class="nav-wrap">
+      <a class='nav-btn' style="--deg:0">简介</a>
+      <a class='nav-btn' style="--deg:1">锚点跳转</a>
+      <a class='nav-btn' style="--deg:2">页面跳转</a>
+      <a class='nav-btn' style="--deg:3">改善</a>
+      <a class='nav-btn' style="--deg:4">其它应用</a>
+      <a class='nav-btn' style="--deg:5">总结</a>
+      <a class='nav-btn' style="--deg:6">作业</a>
+    </div>
+  </nav>
+  <div class="cont">
+    <div class="chap">简介</div>
+    <dl class="item">
+      <dt>说明</dt>
+      <dd>
+        <div>. 锚点 anchor，用来记录位置；后来发展为超链接内容导航</div>
+        <div>. 行盒 inline</div>
+        <div>. 可以包含其它标签，但不可以嵌套 &lt;a&gt;</div>
+        <div>. 必须有可识别的文字或其它内容，如图片，不能是空标签</div>
+        <div>. 更多信息，请参考 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">MDN - &lt;a&gt;</a></div>
+        <figure class="img-sn">
+          <img src="./imgs/anchor.png" alt="">
+          <figcaption>超链接示意图</figcaption>
+        </figure>
+        <pre>&lt;a href="" target=""&gt; discernible text &lt;/a&gt;</pre>
+        <div>1. href：链接的目标URL</div>
+        <table class="tbl-sn">
+          <tr>
+            <th style="width: 30%;">类别</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>内部页面</td>
+            <td>about.html
+              <br>./about.html
+              <br>./team/about.html
+              <br>../team/about.html
+            </td>
+          </tr>
+          <tr>
+            <td>外部页面</td>
+            <td>https://www.baidu.com </td>
+          </tr>
+          <tr>
+            <td>内部页面锚点</td>
+            <td>about.html#id
+            </td>
+          </tr>
+          <tr>
+            <td>外部页面锚点</td>
+            <td>https://www.baidu.com#about</td>
+          </tr>
+          <tr>
+            <td>普通文件</td>
+            <td>/utils/file/附件9-关于印发《广州新华学院本科教学运行管理规定》的通知.pdf</td>
+          </tr>
+          <tr>
+            <td>图片</td>
+            <td>.jpg
+              <br>./imgs/81.jpeg
+            </td>
+          </tr>
+          <tr>
+            <td>音频</td>
+            <td>./utils/music/AvaMax-OMGWhat'sHappening.ogg</td>
+          </tr>
+          <tr>
+            <td>视频</td>
+            <td>./utils/video/alizee.mp4</td>
+          </tr>
+        </table>
+        <div>2. target：打开目标URL的位置</div>
+        <table class="tbl-sn">
+          <tr>
+            <th style="width: 30%;">类别</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>_self</td>
+            <td>当前页面加载；默认</td>
+          </tr>
+          <tr>
+            <td>_blank</td>
+            <td>新窗口打开；使用较多</td>
+          </tr>
+          <tr>
+            <td>_parent</td>
+            <td>加载到当前框架的父框架；如果没有，同_self</td>
+          </tr>
+          <tr>
+            <td>_top</td>
+            <td>加载进入当前框架顶层/祖先；如果没有，同_self</td>
+          </tr>
+        </table>
+        <div>2. aria-label</div>
+        <div>特殊群体阅读使用</div>
+        <div class="tips">
+          <div>注意相对路径和绝对路径的使用</div>
+          <div>还可以指定打开位置为<a href="./iframe.html">&lt;iframe&gt;</a></div>
+        </div>
+      </dd>
+    </dl>
+    <div class="chap">锚点跳转</div>
+    <dl class="item">
+      <dt>说明</dt>
+      <dd>
+        <div>. 在页面某个位置标记一个锚点，单击超链接时，跳转到该位置</div>
+        <div>. 页面返回时不能直接退出当前页面，需要逐级返回；后期多使用 js 实现跳转</div>
+        <p>[<span class="iconfont icon-bangzhu2"></span>] 办公文档的锚点在哪里？</p>
+      </dd>
+      <dt>基本过程</dt>
+      <dd>
+        <div>1. 定义锚点：使用 <span class="warn">id</span> 属性为目标元素定义一个锚点；W3C规范仅仅允许使用 id 标记锚点，不能使用类</div>
+        <pre>&lt;div id='cont'&gt; 我是目标元素 &lt;/div&gt;</pre>
+        <div>2. 在 &lt;a&gt; 的 href 属性中，使用 <span class="warn">#</span> 识别锚点</div>
+        <pre>&lt;a href="#cont"&gt; 跳转到目标元素 &lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 个人网站 - 请使用但不局限于这些标签：&lt;div&gt; &lt;html&gt;
+        &lt;a&gt; &lt;nav&gt; &lt;p&gt; &lt;h1&gt;</dd>
+      <dd class="number">
+        <div>创建文件夹 Demo 为H5项目，使用 Vs Code打开</div>
+        <div>创建主页文件 index.html，按!快速生成 H5 架构</div>
+        <div>在主页&lt;body&gt;区，使用普通方法或快速编辑 <span class="warn">a[href=#nav$]{item$}*5</span> 创建5个超链接</div>
+        <div>在超链接下面使用快速编辑 (p[id=nav$]>lorem100)*5 创建5个段落作为锚点|目标资源；注意 id 和 href 要保持对应</div>
+        <div>使用 live server 查看锚点跳转效果</div>
+        <p>[<span class="iconfont icon-bangzhu2"></span>] 如何实现返回顶部？</p>
+        <p>[<span class="iconfont icon-bangzhu2"></span>] 如何高亮提示当前锚点？</p>
+        <p>[<span class="iconfont icon-bangzhu2"></span>] 如何不遮盖导航区？</p>
+        <p>[<span class="iconfont icon-bangzhu2"></span>] 如何丝滑跳转？</p>
+      </dd>
+    </dl>
+    <div class="chap">页面跳转</div>
+    <dl class="item">
+      <dt>说明</dt>
+      <dd>. 页面之间的跳转</dd>
+      <dd>. 根据页面是否属于同一个网站，又可以分：站内跳转和站外跳转</dd>
+      <dt>站内跳转</dt>
+      <dd>
+        <div>同一个网站内部页面之间的跳转，多使用<span class="warn">相对路径</span></div>
+        <pre>&lt;a href="./greeting.html"&gt; 目标页面 &lt;/a&gt;</pre>
+        <div>也可以转跳转到站内其它页面的某个锚点</div>
+        <pre>&lt;a href="./blog.html#cont"&gt; 目标页面某个元素 &lt;/a&gt;</pre>
+      </dd>
+      <dt>站外跳转</dt>
+      <dd>
+        <div>跳转到其它网站页面或页面内某个锚点，建议使用完整网络协议</div>
+        <pre>
+&lt;a href="https://www.baidu.com"&gt; 百度 &lt;/a&gt;
+&lt;a href="https://www.baidu.com#bike"&gt; 百度百科 &lt;/a&gt;</pre>
+        <div>也可以不指定网络协议，由系统自行判断；不建议，部分测试平台会告警</div>
+        <pre>&lt;a href="//www.baidu.com"&gt; www.baidu.com &lt;/a&gt;</pre>
+        <table class="tbl-sn">
+          <caption>几个特殊页面</caption>
+          <tr>
+            <th>类别</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>/</td>
+            <td>当前页面所在网站根页面</td>
+          </tr>
+          <tr>
+            <td>.</td>
+            <td>当前页面所在目录根页面</td>
+          </tr>
+          <tr>
+            <td>#</td>
+            <td>当前页面；不重新加载</td>
+          </tr>
+          <tr>
+            <td>空</td>
+            <td>当前页面；会重新加载</td>
+          </tr>
+          <tr>
+            <td>javascript:;</td>
+            <td>不跳转</td>
+          </tr>
+        </table>
+      </dd>
+    </dl>
+    <div class="chap">改善</div>
+    <dl>
+      <dt>样式初始化</dt>
+      <dd>
+        <div>. 为保证风格统一，通常覆盖 &lt;a&gt; 的默认样式，重新设计；请参考 <a
+            href="http://necolas.github.io/normalize.css/">normalize.css</a>、<a
+            href="https://meyerweb.com/eric/tools/css/reset/">reset.css</a> 两个专业网站</div>
+        <div>. 系统提供了4个默认的样式伪类，必须按照一定的顺序定义和使用；详细信息，请参考 <a href="./selector_class.html">伪类</a></div>
+        <div>1. 全局初始化 - 简单粗暴型、偷懒性</div>
+        <pre>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }</pre>
+        <div>2. 特定元素初始化 - 专一性</div>
+        <pre>
+a {
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+}</pre>
+      </dd>
+      <dt>改善用户体验</dt>
+      <dd>
+        <div>1. 提示用户：添加 title 属性，鼠标移入后，给出提示，完善用户体验</div>
+        <pre>&lt;a href="" target="" title="点击查看更多推荐"&gt;更多 &lt;/a&gt;</pre>
+        <div>2. 高亮目标：使用 CSS 目标选择器 :target 高亮当前跳转到的锚点|目标</div>
+        <pre>
+el:target {
+  color: #f40;
+}</pre>
+        <div>3. 丝滑滚动：为 &lt;html&gt; [CSS为元素的滚动容器]指定 <a href="./scroll.html">滚动行为 - scroll behavior</a>
+          为丝滑滚动 smooth，控制整个页面的滚动行为</div>
+        <p>[<span class="iconfont icon-bangzhu2"></span>] 为什么不是给 &lt;body&gt; 指定行为？</p>
+        <!-- <p>body作为可视区的容器，性质比较特殊；</p> -->
+        <pre>
+html {
+  scroll-behavior: smooth;
+}</pre>
+        <div>4. 保留导航：使用 CSS 为元素的滚动容器指定滚动填充 scroll-padding-top 为导航区的高度；并借助定位 position 使得导航留在屏幕上</div>
+        <pre>
+html {
+  scroll-padding-top: 100px;
+}</pre>
+        <div>5. 默认打开位置：在 &lt;head&gt;区加上 &lt;base target=""&gt; 指定默认打开方式，适合大量 &lt;a&gt; 的情况</div>
+        <pre>&lt;base target="_blank"&gt;</pre>
+      </dd>
+      <dd class="tips">也借助 JavaScript 实现更多改善</dd>
+    </dl>
+    <div class="chap">其它应用</div>
+    <dl class="item">
+      <dt>内容预览</dt>
+      <dd>
+        <div>. 查看/预览资源|文件的内容；可以是普通文档txt、OA文档、多媒体资源，如图片、音频、视频</div>
+        <div>. 需要使用CSS特别处理&lt;a&gt;，如：修改display，隐藏文字、设置大小、添加背景</div>
+        <div> <a class="pre-img" href="./imgs/alizee.jpg" title="点击查看大图" target="_blank">图片预览</a> </div>
+        <div>1. 图片</div>
+        <pre>
+&lt;a href="./alizee.jpg" title="点击查看大图" target="_blank"&gt;图片预览&lt;/a&gt;</pre>
+        <div><a class="pre-img" href="/utils/music/Alizee-LaIslaBonita.mp3" title="点击播放音乐" target="_blank">音乐预览</a>
+        </div>
+        <div>2. 音乐</div>
+        <pre>&lt;a href="./Alizee-La Isla Bonita.mp3" title="点击播放音乐" target="_blank"&gt;音乐预览&lt;/a&gt;</pre>
+        <div><a class="pre-img" href="/utils/video/alizee.mp4" title="点击播放视频" target="_blank">视频预览</a> </div>
+        <div>3. 视频</div>
+        <pre>&lt;a href="../video/alizee.mp4" title="点击播放视频" target="_blank"&gt;视频预览&lt;/a&gt;</pre>
+        <div>4. 文件 </div>
+        <div><a href="/utils/file/广州新华学院进度表-2023-数字媒体-Web前端开发-张树彬.pdf" target="_blank">新华学院进度表-2023-数字媒体-Web前端开发</a>
+        </div>
+        <pre>&lt;a href="./进度表.pdf"&gt;进度表.pdf&lt;/a&gt;</pre>
+        <div><a href="/utils/data/data2022/course.json" target="_blank">广工商课程表.json</a></div>
+        <pre>&lt;a href="./course.json"&gt;课程表.json&lt;/a&gt;</pre>
+        <div><a href="../css/base.css" target="_blank">base.css</a></div>
+        <pre>&lt;a href="./dom.css"&gt;base.css&lt;/a&gt;</pre>
+      </dd>
+      <dt>下载文件</dt>
+      <dd>
+        <div>. 指定download属性</div>
+        <div>. 如果系统识别不了href提供的资源，就会触发下载</div>
+        <div>. 默认情况下，浏览器以预览的方式打开链接；如果仅仅提供下载链接，应显式的指定download属性</div>
+        <div>1. 截图工具Snipaste<a href='/utils/lib/Snipaste-1.16.2-x64.rar' download title="单击下载"> 本地下载</a>、<a
+            href="https://zh.snipaste.com/">在线下载</a>
+        </div>
+        <pre>&lt;a href='./Snipaste-1.16.2-x64.rar' title="单击下载" download&gt; 截图工具Snipaste &lt;/a&gt;</pre>
+      </dd>
+      <dt>拨打电话</dt>
+      <dd>
+        <div>. 移动端使用比较方便</div>
+        <div>. 桌面端需要系统支持的设备；通过扫码或PIN完成配对后才可以使用</div>
+        <div><a href='tel:13707735481'>Make a call</a></div>
+        <pre>&lt;a href='tel:13707735481'&gt; Make a call &lt;/a&gt;</pre>
+      </dd>
+      <dt>发送邮件</dt>
+      <dd>
+        <div>. 需要特定环境的支持，如需要安装outlook等邮件系统</div>
+        <div>. 多用于企业级</div>
+        <div><a href='mailTo:1942194789@qq.com'> Sending a mail </a></div>
+        <pre>&lt;a href='mailTo:1942194789@qq.com'&gt; Sending a mail &lt;/a&gt;</pre>
+      </dd>
+    </dl>
+    <div class="chap">总结</div>
+    <dl class="item">
+      <dt>作用</dt>
+      <dd class="number">
+        <div>页面跳转、锚点跳转</div>
+        <div>内容预览、下载</div>
+      </dd>
+
+      <dt>应用</dt>
+      <dd class="number">
+        <div>返回顶部</div>
+        <div>单击页面LOGO打开主页</div>
+        <div>打开百度首页</div>
+        <div>预览图片、音频、视频</div>
+        <div>预览文件，如word、css、js、pdf等等</div>
+        <div>下载资源</div>
+      </dd>
+      <dt>初识CSS</dt>
+      <dd class="number">
+        <div>CSS文件的创建、引入/使用</div>
+        <div>初始化CSS</div>
+        <div>选择器：通配符选择器 *；标签选择器 p、a；目标选择器 :target；鼠标悬停选择器 :hover</div>
+        <div>样式： 字体 font；文本装饰 text-decoration；颜色 color；行高 line-height；滚动行为 scroll-behavior</div>
+      </dd>
+      <dd class="quote number">
+        <div>指定滚动模式 scroll-behavior</div>
+        <div>使用选择器 :hover 高亮超链接</div>
+        <div>使用选择器 :target 设置锚点</div>
+        <div>指定滚动填充 scroll-padding-top</div>
+      </dd>
+    </dl>
+    <div class="chap">作业</div>
+    <dl class="item">
+      <dt>内容</dt>
+      <dd class="number">
+        <div>总结所用到的标签、样式</div>
+        <div>个人网站框架构造</div>
+        <div>思考：如何设计图片导航？</div>
+        <!-- <div>嵌套一个图像</div> -->
+      </dd>
+      <dt>要求</dt>
+      <dd class="number">
+        <div>应体现&lt;a&gt;的不同用法</div>
+        <div>规范开发；独立完成；突出个人设计特点和风格</div>
+        <div>实验报告：采用学院统一下发的 <a href="../utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx">实验模板</a>
+          文件，以文字说明，配以必要的效果图片或核心代码，展示并说明数据来源、实施过程、各部分功能、具体内容和实现细节；最后导出为PDF，按照要求命名，提交个人学习通作业
+        </div>
+        <div>未按要求在规定时间内提交视为无效，不得分</div>
+        <div>格式规范，请参考 <a href="../course/paper.html">论文规范要点</a></div>
+      </dd>
+    </dl>
+  </div>
+  <script>
+    let btns = document.querySelectorAll('.nav-btn')
+    let tars = document.querySelectorAll('.chap')
+    let body = document.querySelector('body')
+    let ham = document.querySelector('.ham')
+    let navWrap = document.querySelector('.nav-wrap')
+
+    btns.forEach((item, index) => {
+      item.addEventListener('click', function (e) {
+        // e.preventDefault();
+        setTimeout(function () {
+          tars[index].scrollIntoView()
+          navWrap.classList.toggle('active')
+          body.classList.toggle('active')
+        }, 100)
+        let info = item.getBoundingClientRect()
+        let x = e.clientX - info.left;
+        let y = e.clientY - info.top;
+        let ripple = document.createElement('span');
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        item.appendChild(ripple);
+        setTimeout(() => {
+          item.removeChild(ripple)
+        }, 500)
+      })
+    })
+
+
+    ham.addEventListener('click', function () {
+      navWrap.classList.toggle('active')
+      body.classList.toggle('active')
+    })
+  </script>
+</body>
+
+</html>

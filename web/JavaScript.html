@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>脚本 JavaScript</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>脚本</h1>
+    <span>&commat;JavaScript</span>
+  </header>
+  <section>
+    <div class="tips">
+      <div>任何能够使用 JavaScript 实现的应用系统，最终都必将用 JavaScript 实现</div>
+      <div>-Jeff Atwood 定律</div>
+    </div>
+    <h3>简洁 Introduction</h3>
+    <ul>
+      <li>布兰登艾奇 Brandon Eich 于1995年5月，利用10天开发出 JavaScript 语言</li>
+      <li>单线程、客户端脚本、解释性语言，由浏览器解释执行；浏览器本身不会执行 JavaScript，而是通过内置的JS引擎/解释器逐行解释并执行 JavaScript</li>
+      <li>区分大小写 - Case Sensitivity</li>
+      <li>每条语句以 <span>分号;</span> 结束[非强制性，但是建议]</li>
+      <li>三大部分：<span class="warn">ECMAScript</span> 规范 、<span class="warn">DOM</span> - 文档对象模型 Document
+        Object
+        Model 和 <span class="warn">BOM</span>-浏览器对象模型 Browser Object Model</li>
+      <li style="text-align: center;margin: 2rem auto;font-size: 20px;">
+        JavaScript = ECMAScript + DOM + BOM
+      </li>
+      <li>ECMA Script，简称ES；现在已发展到ES14</li>
+      <li>快速上手，请访问 <a href="https://www.fadocodecamp.com/posts/javascript-basics-tutorial">fadocodecamp -
+          javascript</a></li>
+    </ul>
+    <h3>脚本的作用</h3>
+    <ul>
+      <li>操作对象使其具有某种行为，实现人机交互</li>
+      <li>对象可以是 DOM、也可以是 BOM，还可以是 JavaScript 本身</li>
+      <li>行为，大多以 <a href="./js/event.html">事件 - Event</a> 的形式体现出来</li>
+    </ul>
+    <h3>应用 Application</h3>
+    <ul>
+      <li>表单校验</li>
+      <li>网页特效</li>
+      <li>服务端开发 <a href="https://nodejs.org/en">Node.js</a></li>
+      <li>桌面程序/Apps <a href="https://www.electronjs.org/">Electron</a></li>
+      <li>物流网 <a href="http://ruff.io/">Ruff</a></li>
+      <li>游戏开发 <a href="https://www.cocos.com/">Cocos</a></li>
+    </ul>
+  </section>
+  <h2>使用 Usage</h2>
+  <section>
+    <h3>行内 JavaScript</h3>
+    <ul>
+      <li>写在元素上，仅适用 <span class="warn">当前元素</span>；通常只用于简单的逻辑</li>
+      <li>不符合结构 - 样式 - 行为三分离的原则，原生开发很少使用</li>
+      <li>框架中应用较多，如 React.js</li>
+      <pre>
+&lt;div onclick="alert('hi')"&gt;click me&lt;/div&gt;</pre>
+    </ul>
+    <h3>内部 JavaScript</h3>
+    <ul>
+      <li>写在页面的 &lt;script&gt; 内</li>
+      <li>仅适用 <span class="warn">当前页面</span>，不便于逻辑共享</li>
+      <pre>
+&lt;div onclick="fn()"&gt;click me&lt;/div&gt;</pre>
+      <pre>
+&lt;script&gt;
+  function fn() {
+    alert('hi');
+  }
+&lt;/script&gt;</pre>
+      <li>如果 JavaScript 需要操作元素，为保证元素已就绪，通常将 &lt;script&gt; 放在 &lt;body&gt; 的最后面</li>
+      <pre>
+&lt;body&gt;
+  // ...
+  &lt;script&gt;
+    // ...
+  &lt;/script&gt;
+&lt;/body&gt;</pre>
+      <li>也可以写在 onload 函数中，此时脚本可以放在页面任何地方</li>
+      <pre>
+&lt;script&gt;
+  window.onload=function(){
+    // ...
+  }
+&lt;/script&gt;</pre>
+    </ul>
+    <h3>外部 JavaScript</h3>
+    <ul>
+      <li>将业务逻辑放在单独的 JavaScript 文件中，后缀名是 .js；使用 &lt;script&gt; 的 src 属性引入[<span class="warn">推荐</span>]</li>
+      <li>便于共享逻辑</li>
+      <li>库文件都是以外部 JavaScript 的形式引入，可以服务于多个项目|页面|模块</li>
+      <li>大部分都放在 &lt;body&gt; 最后面；有些 &lt;script&gt; 引入需要放在头部&lt;head&gt;，如设置字体</li>
+      <pre>
+&lt;body&gt;
+  // ...
+  &lt;script src="./tmp.js"&gt;&lt;/script&gt;
+&lt;/body&gt;      </pre>
+    </ul>
+    <h3>代码组织</h3>
+    <ol>
+      <li>引入</li>
+      <li>变量声明</li>
+      <li>函数或方法声明</li>
+      <li>初始化</li>
+      <li>事件处理</li>
+      <pre>
+let form=document.querySelector('form');
+
+function submit(){
+  //your code
+}
+
+form.addEventListener('submit', submit);</pre>
+    </ol>
+  </section>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

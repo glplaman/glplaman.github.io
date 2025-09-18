@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>边框 Border</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/border.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>边框</h1>
+    <span>&commat;Border</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href='' class="nav-item">border</a>
+      <a href='' class="nav-item">border-radius</a>
+      <a href='' class="nav-item">border-image</a>
+      <a href='' class="nav-item">border-block</a>
+    </nav>
+  </header>
+  <dl>
+    <dt class="nav-cont">边框 border</dt>
+    <dd>
+      <div>. 为元素添加指定宽度、样式和颜色的边框</div>
+      <div>. 元素有4个边，默认是同时设置4个边：top、right、bottom、left - 上右下左</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/border">MDN - border</a></div>
+      <pre>border: border-width border-style border-color</pre>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>border-width</td>
+          <td>线条宽度：以像素 px 为单位</td>
+        </tr>
+        <tr>
+          <td>border-style</td>
+          <td>线条样式：实线 solid|默认、点线 dotted、短划 dashed、双线 double</td>
+        </tr>
+        <tr>
+          <td>border-color</td>
+          <td>线条颜色：默认和元素的文字颜色保持一致</td>
+        </tr>
+      </table>
+      <div>. 可以单独设置每个边的宽度、样式和颜色</div>
+      <pre>border-top: border-width border-style border-color</pre>
+      <div>. 还可以使用独立属性单独设置</div>
+      <pre>
+border-top-color: #f40;
+border-top-width: 1px;
+border-top-style: solid;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 基本使用</dd>
+    <dd class="grid">
+      <div class="basic basic0"></div>
+      <pre>
+// 同时设置4个边
+border: 1px #f40 solid;</pre>
+      <div class="basic basic1"></div>
+      <pre>
+// 单独设置某个边
+border-top: 4px dotted #f08;
+border-right: 4px dashed #089;
+border-bottom: 4px solid #f40;
+border-left: 4px double #890;</pre>
+      <div class="zero0"></div>
+      <pre>
+// 0元素边框 - 0尺寸大边框
+width: 0;
+height: 0;
+border: 20px solid  #f08;
+border-right-color: #089;
+border-bottom-color: #f40;
+border-left-color: #890;</pre>
+      <div class="zero1"></div>
+      <pre>
+// 将其中一个或几个边框颜色隐去transparent
+width: 0;
+height: 0;
+border: 20px solid transparent;
+border-bottom-color: #f40;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/site0.html">页面设计</a> - 增加边框大小</dd>
+    <dd class="tips">
+      <div>WEB早期发展限制，多使用这种 hack 手段进行设计</div>
+      <div>随着字体图标和其它方式的流行，这种设计手法渐渐淡出视野</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 透明边框</dd>
+    <dd class="grid">
+      <div class="basic basic2"></div>
+      <pre>
+// 指定边框透明色
+border: 20px dashed rgba(255, 255, 255, 0.2);
+background-color: #f40;</pre>
+      <div class="basic basic3"></div>
+      <pre>
+// 有背景图片的情况下，不能直接指定透明边框颜色
+// 必须指定背景图片起点为border区
+padding: 1rem;
+border: 20px dashed rgba(255, 255, 255, 0.4);
+background-color: #f40;//容错
+background-image: url(../imgs/bg.jpg);
+background-size: cover;
+background-origin: border-box;//MUST</pre>
+    </dd>
+  </dl>
+  <div class="chap">边框圆角 border-radius</div>
+  <dl class="nav-cont">
+    <dd>. 边框的圆角半径</dd>
+    <dd>. 更多应用，请点击 <a href="https://9elements.github.io/fancy-border-radius/">fancy-border-radius</a>
+    </dd>
+    <dd class="txt-center"><img src="./imgs/border-radius.png" alt=""></dd>
+    <dt>语法1</dt>
+    <dd>
+      <pre>border-radius: length|%;</pre>
+      <div>. 1个值：四个角</div>
+      <div>. 2个值：[左上、右下]、[右上、左下]</div>
+      <div>. 3个值：[左上]、[右上、左下]、[右下]</div>
+      <div>. 4个值：[左上角]、[右上角]、[右下角]、[左下角]</div>
+      <div>. 可单独设置每个角的变化</div>
+    </dd>
+    <dt>语法2</dt>
+    <dd>
+      <pre>border-radius:x x x x/y y y y</pre>
+      <div>. 单独设置x轴、y轴的圆角半径；/前面是4个角水平方向的半径；/后面是4个角垂直方向的半径</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 示例</dd>
+    <dd class="grid">
+      <div class="basic radiu0"></div>
+      <pre>
+//正圆 - 四个角
+//圆角边框；50%为正圆
+border-radius: 50%;
+//简写形式
+border-radius: 50% / 50%;</pre>
+      <div class="basic radiu1"></div>
+      <pre>
+//扇形 - 一个角
+border-top-left-radius: 100%;
+//简写形式
+border-radius: 100% 0 0 0/100% 0 0 0;</pre>
+      <div class="basic radiu4"></div>
+      <pre>
+//扇形 - 二个角
+background-color: var(--main-color);
+border-radius: 0 100% 100% 0/50%;</pre>
+      <div class="basic radiu2"></div>
+      <pre>
+//扇形 - 二个角
+border-top-right-radius: 50%;
+border-bottom-left-radius: 50%;
+//简写形式
+border-radius: 0 50% /0 50%;</pre>
+      <div class="basic radiu3"></div>
+      <pre>
+//扇形 - 三个角
+border-top-right-radius: 50%;
+border-bottom-right-radius: 50%;
+border-bottom-left-radius: 50%;
+//简写形式
+border-radius: 0 50% 50%/0 50% 50%;</pre>
+      <div class="egg"></div>
+      <pre>border-radius: 
+        50% 50% 50% 50% / 60% 60% 40% 40%;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/companies.html#service">公告信息栏</a>、<a
+        href="https://codepen.io/glpla/full/oNmOjzQ">科技环 - codepen</a></dd>
+    <dd>
+      <div>. 仅指定一个方向的边框，然后圆角化</div>
+      <div>. 左边框 border-left</div>
+      <div>. 圆角 border-radius</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/border-skill.html">技能条</a></dd>
+    <dd>
+      <div>. 用 padding 将子元素隔开</div>
+      <div>. 可以使用 <span class="warn">伪元素</span> 实现</div>
+      <div>. 可以使用CSS变量、CSS函数 var()，简化CSS代码、便于修改</div>
+      <div>. 可以使用自定义属性 data- 展示更多信息</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/site.html">头像定制</a></dd>
+    <dd>
+      <div>. border：上下或左右边框设置为透明色</div>
+      <div>. 圆角 border-radius</div>
+      <div>. 定位 position</div>
+      <div>. 过渡动画 transition</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/border-ring.html">环环相扣</a>、<a
+        href="https://codepen.io/glpla/full/RwvOPvE">环环相扣 - Codepen</a></dd>
+    <dd>
+      <div>. 使用负边距重叠，配合 <a href="./position.html">定位</a> 和 <a href="./selector_ele.html">伪元素</a> 实现</div>
+      <div>. 左环使用伪元素创建同样大小的圆环；注意盒模型的尺寸计算</div>
+      <div>. 设置伪元素上边框 border-top 颜色为相同的颜色；其他三个方向的边框颜色透明</div>
+      <div>. 旋转伪元素 transform，使其覆盖在右侧环上方</div>
+    </dd>
+    <dd id="border-radius">[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-radius.html">圆角导航</a></dd>
+    <dd>
+      <div>. 使用子元素撑开容器；否则要仔细计算元素尺寸</div>
+      <div>. 后期使用弹性盒子实现更加简洁</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./index.html">章节标题</a> - 第三方库 fancy-border-radius 实现
+    </dd>
+    <dd>
+      <div>. 盒阴影 box-shadow</div>
+      <div>. 过渡动画 transition</div>
+      <div>. 鼠标悬停 :hover</div>
+      <pre>
+.water {
+  width: 180px;
+  height: 180px;
+  margin: 2rem auto;
+  box-shadow:
+    inset 20px 20px 20px rgba(0, 0, 0, 0.05),
+    20px 20px 20px rgba(0, 0, 0, 0.05),
+    inset -20px -20px 20px rgba(255, 255, 255, 0.05);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  transition: 1s;
+  cursor: pointer;
+}
+
+.water:hover {
+  border-radius: 50%;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">边框图像 border-image</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>. 使用图片代替元素的边框 - draws an image around a given element, replaces the element's regular border.</div>
+      <div>. 可以使用url()引入普通背景图片，也可以使用渐变背景</div>
+      <div>. 通过切割背景图片，将切割的9份分别应用到元素的相应位置</div>
+      <div>. 应该指定边框宽度 border-width 和样式 border-style</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image">MDN - border-image</a>
+      </div>
+      <img src="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-slice/border-image-slice.png" alt=""
+        loading="lazy">
+    </dd>
+    <dt>复合属性</dt>
+    <dd>. border-image</dd>
+    <dt>独立属性</dt>
+    <dd>
+      <div>may be specified with anywhere from one to five of the values listed below</div>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-source">border-image-source</a>
+      </div>
+      <div>. 背景图片</div>
+      <div>. 对切片大小和最后的效果有很大的关系</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-slice">border-image-slice</a></div>
+      <div>. 将边框图像裁剪成9份 region - four <span class="warn">corners</span>, four <span class="warn">edges</span>, and a
+        <span class="warn">middle</span> region.
+      </div>
+      <div>. 各份会被拉伸或平铺以适应实际的边框宽度：四个角部区域会被直接放置在边框的四个角；四条边的中间部分会被拉伸或平铺以适应边框的宽度</div>
+      <div>. 如果切片大小正好匹配边框宽度，不会发生拉伸或平铺</div>
+      <div>. 同margin、padding一样，可以使用1-4个值指定方向的切割</div>
+      <div>. 可以是 数值 或 %，表示 <span class="warn">从图像边缘开始向内切割的大小</span>；如果为0，则只有中间部分</div>
+      <div>. 数字：默认单位像素px；不能为负值</div>
+      <div>. %：默认100%；如果为50%，因为左右俩端已经各占了50%，中间区域没有内容；当&lt;50%时，中间端才会有内容</div>
+      <div>. fill：填充中间部分；默认不填充 - discarded by default</div>
+      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-width">border-image-width</a></div>
+      <div>. 边框图像的宽度；可以使用数值或百分比</div>
+      <div>. 如果比边框宽度 border-width大，则占用填充 padding</div>
+      <div>. 如果没有指定 auto，则使用边框宽度 border-width</div>
+      <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-repeat">border-image-repeat</a>
+      </div>
+      <div>. 指定边 edges 和中心 middle 的重复方式：stretch、repeat、round、space</div>
+      <div>. 可以使用1个值或2个值表示；不支持3个和4个值</div>
+      <div>. 1个值：4个方向</div>
+      <div>. 2个值：第1个值表示 top、center和bottom；第2个值表示 left、right</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>stretch</td>
+          <td>拉伸；默认</td>
+        </tr>
+        <tr>
+          <td>repeat</td>
+          <td>重复平铺；可能出现不完整的部分/被裁剪</td>
+        </tr>
+        <tr>
+          <td>round</td>
+          <td>通过拉伸重复平铺；比repeat衔接更顺滑；不会裁剪</td>
+        </tr>
+        <tr>
+          <td>space</td>
+          <td>重复平铺，使用空格填充多余的空间；不会拉伸；不会裁剪</td>
+        </tr>
+      </table>
+      <div>5. border-image-outset</div>
+      <div>. 图像向外扩展的区域；默认0；不可以是负数</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 相框类设计；示例中，原图大小为 81x81</dd>
+    <dd><img class="b-img" src="./imgs/border-img.png" alt="" title="原图"></dd>
+    <dd>
+      <div>1. 边框背景</div>
+      <p class="basic-img b-img0">Lorem ipsum dolor sit amet.</p>
+      <pre>
+border: 27px solid #f40;
+border-image: url(../imgs/border-img.png);
+//等同于
+border-image-source: url(../imgs/border-img.png);</pre>
+      <div>2. 裁剪大小为27并round铺满；2、4、6、8默认被拉伸</div>
+      <p class="basic-img b-img1">Lorem ipsum dolor sit amet.</p>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: 27;
+border-image-repeat: round;</pre>
+      <div>3. 裁剪大小为50%，只有4个角，没有中间部分，是否拉伸不起作用</div>
+      <p>. 当&lt;50%时，中间区域才会有内容</p>
+      <p class="basic-img b-img2">Lorem ipsum dolor sit amet.</p>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: 50%;
+border-image-repeat: round;</pre>
+      <div>4. 裁剪大小1/3；边框宽度为1/2，所以容器被4个边角覆盖，中间没有预留空间；是否拉伸不起作用</div>
+      <div>.注意：如果不指定图像边框宽度，则和第2种情况相同</div>
+      <p class="basic-img b-img4">Lorem ipsum dolor sit amet.</p>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: calc(100%/3);
+border-image-repeat: round;
+border-image-width: 50%;</pre>
+      </p>
+      <div>5. 裁剪大小为1/6</div>
+      <p class="basic-img b-img3">Lorem ipsum dolor sit amet.</p>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: calc(100%/6);
+border-image-repeat: round;</pre>
+
+      <div>6. 1/6裁剪；宽度为1/20</div>
+      <p class="basic-img b-img5">Lorem ipsum dolor sit amet.</p>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: calc(100%/6);
+border-image-width: 5%;
+border-image-repeat: round;</pre>
+      </p>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 渐变边框 - 如非必要，尽量使用渐变背景美化边框；更多实现，请访问 <a href="./position.html">定位 -
+        渐变背景</a>、<a href="./demo/table3.html">渐变边框表格</a></dd>
+    <dd>
+      <div class="basic-img linear-border"></div>
+      <pre>
+border-width: 10px;
+border-style: solid;
+border-image-source: linear-gradient(#f40, #800);
+border-image-slice: 10;</pre>
+      <div class="basic-img linear-border-part"></div>
+      <pre>
+border-width: 10px 0;
+border-style: solid;
+border-image-source: linear-gradient(#f40, #800);
+border-image-slice: 10;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 叠加渐变蒙层 - 利用0裁剪；更多案例实现，请访问 <a href="./position.html">渐变背景</a>
+    </dd>
+    <dd>
+      <div class="basic-img border-img"></div>
+      <pre>
+border-image-source: linear-gradient(#0003, #000);
+border-image-slice: 0 fill;</pre>
+      <div>或</div>
+      <pre>border-image: linear-gradient(#0003, #000) 0 fill;</pre>
+    </dd>
+  </dl>
+  <div class="chap">边框块 border-block</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>
+      <div>. 指定边框块的起始/顶部start和结束/底部end样式</div>
+      <div>. 浏览器支持不是很好，建议使用SVG实现</div>
+      <figure class="code">
+        <pre>
+border-block-start
+border-block-end</pre>
+      </figure>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] loading</dd>
+    <dd class="grid">
+      <div>
+        <div>. 起始透明</div>
+        <div>. 结束加粗</div>
+        <div>. :hover旋转1周</div>
+      </div>
+      <div class="border-blk"></div>
+    </dd>
+    <dd>
+      <pre>
+.border-blk {
+    width: 60px;
+    height: 60px;
+    margin: 2rem auto;
+    border-radius: 50%;
+    border: 1px solid #f40;
+    border-block-start-color: transparent;
+    border-block-end: 4px dashed #089;
+    transition: 1s;
+}
+
+.border-blk:hover {
+    transform: rotate(360deg);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. 边框 border 的使用和样式</dd>
+    <dt>作业</dt>
+    <dd class="sn">
+      <div>绘制透明椭圆头像框</div>
+      <div>优化个人网站，如导航按钮、信息介绍</div>
+      <div>如何利用边框图像实现单独某个边的渐变背景？</div>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="../utils/custom/ham2024.js"></script>
+</body>
+
+</html>

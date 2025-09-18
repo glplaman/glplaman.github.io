@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式表 CSS</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .svg {
+      width: max-content;
+      margin: 2rem auto;
+    }
+
+    /* 内部样式 */
+    .svg svg {
+      background-color: #f2f3f4;
+    }
+
+    rect {
+      height: 40px;
+    }
+
+    text {
+      font-size: 15px;
+      fill: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>样式表</h1>
+    <span>&commat;CSS</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:1" class="nav-item active">概述 Overview</a>
+      <a href="" style="--delay:2" class="nav-item">使用 Usage</a>
+      <a href="" style="--delay:3" class="nav-item">特性 Features</a>
+      <a href="" style="--delay:5" class="nav-item">选择器 Selector</a>
+      <a href="" style="--delay:4" class="nav-item">属性 Properties</a>
+    </nav>
+  </header>
+  <dl class="nav-cont">
+    <dt>简介 Overview</dt>
+    <dd>
+      <div>. CSS - Cascading Style Sheets，层叠样式表</div>
+      <div>. 美化页面：如何在屏幕、纸张或其他媒体上显示 HTML 元素</div>
+      <div>. 可以同时控制多个网页的显示</div>
+      <div>. 更多信息，请查看 <a href="https://mp.weixin.qq.com/s/r-S8iu8zRd8ari7d5spLgg">CSS 开发快速提升技巧</a>、<a
+          href="https://mp.weixin.qq.com/s/VxS8AdYEWvqOMHJFaDlNyQ">20个编写现代 CSS 代码的建议</a></div>
+      <div>. CSS 由选择器 <a href="./selector.html">选择器 - selector</a> 和声明块 Declaration 组成</div>
+      <div>. 选择器：选择一个或多个元素，以便应用样式；选择器可以是标签、类、id等单一选择器或其它复合选择器</div>
+      <div>. 声明块：用 <span class="warn">花括号{}</span> 括起来，由一条或多条规则rule构成，为选出来的元素指定样式；多条规则使用 <span class="warn">分号;</span>
+        分隔</div>
+      <div>. 规则：每个规则都包含一个 CSS 属性名name和一个值value，以 <span class="warn">冒号:</span> 分隔</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 类名为 warn 的 CSS 样式，包含2条规则，指定了被选中的元素/应用该类样式的元素的颜色和字体重量/加粗
+    </dd>
+    <dd>
+      <pre>
+.warn {
+    color: #eb2f06;
+    font-weight: 600;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">使用 Usage</div>
+  <dl class="nav-cont">
+    <dt>行内样式/内联样式</dt>
+    <dd>
+      <div>. 使用 style 属性为元素定义样式</div>
+      <div>. 定义的样式仅适合于当前元素</div>
+      <div>. 行内样式具有最高优先级，并且将覆盖外部和内部样式以及浏览器默认样式</div>
+      <div>. style 还可以指定 <a href="./variable.html">内联变量</a> 供当前元素的样式使用；内联样式和内联变量互不影响</div>
+      <div>. 通常配合 JavaScript 来动态改变</div>
+      <div>. 不符合结构-样式-逻辑分离的开发原则</div>
+    </dd>
+    <dt>内部样式</dt>
+    <dd>
+      <div>. 在 HTML 页面 &lt;head&gt; 区使用 &lt;style&gt; 定义样式</div>
+      <div>. 适用当前 HTML 页面多个元素</div>
+      <div>. 不可跨页面使用</div>
+      <div>. 不符合结构 → 样式 → 逻辑分离的开发原则</div>
+    </dd>
+    <dt>外部样式</dt>
+    <dd>
+      <div>. 样式在外部文件中定义；后缀 <span class="warn">.css</span>；可以使用任何文本编辑器编写</div>
+      <div>. 在 HTML 页面 &lt;head&gt; 中使用 &lt;link&gt; 引入样式文件</div>
+      <div>. 可以在样式文件中使用 @import 导入其它样式文件；应在样式文件 <span class="warn">首行</span> 引入</div>
+      <div>. 样式文件不能包含任何 HTML 标签</div>
+      <div>. 适合多个 HTML 页面、多个元素</div>
+      <div>. 可以缓存到本地，加快页面访问速度</div>
+      <div>. 符合结构 → 样式 → 逻辑分离的开发原则</div>
+      <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;CSS introduction&lt;/title&gt;
+
+    /* 外部样式 - link */
+    &lt;link rel="stylesheet" href="./css/style.css"&gt;
+
+    /* 内部样式 - style */
+    &lt;style&gt;
+      /* 引入其它样式文件 */
+      @import url(https://at.alicdn.com/t/c/font_3859342_yxk1peemmtq.css);
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .p-txt {
+            /* 全局变量 */
+            color: var(--txt-wran-color);
+            /* 局部变量 */
+            opacity: var(--sn);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;!-- 内联样式 --&gt;
+  &lt;h1 style="color: #F40;"&gt;hello, world&lt;/h1&gt;
+  &lt;!-- 内联变量 --&gt;
+  &lt;p class=“p-txt” style="--sn: 0.1;"&gt;第1段&lt;/p&gt;
+  &lt;p class=“p-txt” style="--sn: 0.3;"&gt;第2段&lt;/p&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</pre>
+      <pre>
+@charset "utf-8";
+@import "./style.css";
+
+:root {
+    --txt-wran-color: #c81623;
+    --nav-bg-color: #9f103a;
+    --w-width: 1000px;
+}</pre>
+    </dd>
+    <dd class="tips">
+      <div>1. 几种形式的使用可以并存；最后哪个样式生效，由其代表的优先级决定，请参考后续内容和 <a href="./selector.html">选择器 - selector</a></div>
+      <div>2. 编码：可以指定 CSS 文件的编码，特别是有中文存在时，必须指定；通常不需要指定，因为不推荐使用中文；指定编码必须在 CSS 文件第一行</div>
+      <div>3. 变量：可以声明 CSS 全局变量，便于修改和调整：一处修改，多处更新；还可以在元素上以 style 的形式声明内联变量；更多变量内容，请参考 <a href="./variable.html">CSS -
+          variable</a>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">特性 Features</div>
+  <dl class="nav-cont">
+    <dt>继承性</dt>
+    <dd>
+      <div>. 子元素会继承父元素的某些样式</div>
+      <div>. 不是所有的样式都可以被继承，特别是表单类元素和超链接 &lt;a&gt;，很多样式不会继承父元素</div>
+    </dd>
+    <dt>叠加性</dt>
+    <dd>
+      <div>. CSS 文件是按照从上到下的顺序执行；因此，同一个元素的样式，后面的样式会覆盖前面的样式</div>
+      <div>. 特别要注意：样式的叠加和元素上样式类的书写顺序无关，和 CSS 文件中的顺序有关</div>
+      <div>. 有利于实现类的复用</div>
+      <div>. 同类型多个功能按钮往往需要先指定公共样式，包括静态样式、动态样式，再根据功能指定专有样式</div>
+      <div class="svg">
+        <svg width="350" height="160">
+          <rect x="10" y="10" width="330" fill="#090"></rect>
+          <text x="175" y="30" text-anchor="middle" dominant-baseline="central">初始化样式</text>
+          <rect x="60" y="60" width="280" fill="#095"></rect>
+          <text x="200" y="80" text-anchor="middle" dominant-baseline="central">公共样式</text>
+          <rect x="110" y="110" width="230" fill="#098"></rect>
+          <text x="225" y="130" text-anchor="middle" dominant-baseline="central">专有样式</text>
+        </svg>
+      </div>
+    </dd>
+    <dt>优先级</dt>
+    <dd>
+      <div>. 一般来说，多个样式同时作用于一个元素时，由优先级决定</div>
+      <div>. 优先级高的样式会覆盖优先级低的；同时还要结合不同 <a href="./selector0.html">选择器 -
+          selector</a> 共同决定</div>
+      <div>. 样式异常或无效，请使用浏览器的开发者工具视图检查：按 <span class="warn">F12</span> 打开并检查</div>
+      <div class="svg">
+        <svg width="350" height="210">
+          <rect x="10" y="10" width="330" fill="#090"></rect>
+          <text x="175" y="30" text-anchor="middle" dominant-baseline="central">浏览器默认样式</text>
+          <rect x="60" y="60" width="280" fill="#095"></rect>
+          <text x="200" y="80" text-anchor="middle" dominant-baseline="central">外部样式</text>
+          <rect x="110" y="110" width="230" fill="#098"></rect>
+          <text x="225" y="130" text-anchor="middle" dominant-baseline="central">内部样式</text>
+          <rect x="160" y="160" width="180" fill="#09a"></rect>
+          <text x="250" y="180" text-anchor="middle" dominant-baseline="central">行内样式</text>
+        </svg>
+      </div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 样式顺序和书写顺序对结果的影响</dd>
+    <dd>
+      <pre>
+.active-color {
+    color: #f40;
+}
+
+.color {
+    color: #000;
+}
+    
+//颜色为黑色
+&lt;div class="active-color color"&gt;CSS的样式顺序&lt;/div&gt;
+
+//颜色为黑色
+&lt;div class="color active-color"&gt;CSS的样式顺序&lt;/div&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 复用类</dd>
+    <dd>
+      <div>grid：布局</div>
+      <div>container：大小</div>
+      <div>service-container：细节</div>
+      <pre>&lt;div class="service-container container grid"&gt;&lt;/div&gt;</pre>
+      <pre>
+.grid {
+  display: grid;
+}
+
+.container {
+  max-width: 1000px;
+  margin-inline: 3rem;
+}
+
+.service-container {
+  row-gap: 1rem;
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 复用类 - 第三方库</dd>
+    <dd>
+      <div>多个轮播图的使用</div>
+      <div>保证库约定类的基础上，叠加不同的类实现不同的内容轮播</div>
+      <div>更多信息，请访问 <a href="./framework/swiper.html">轮播图 - Swiper</a></div>
+    </dd>
+  </dl>
+  <div class="chap">选择器 Selector</div>
+  <dl class="nav-cont">
+    <dd>选择HTML元素，以便指定/应用样式</dd>
+    <dd>可以选择一个元素；也可以选择多个元素</dd>
+    <dt>基本选择器</dt>
+    <dd>
+      <div>. 类型选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors">Type
+          selectors</a>：也叫标签选择器，如 div
+        span
+        h1 header table footer ...；多用于样式初始化</div>
+      <div>. 类选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors">Class selectors</a>：以点 .
+        开始，如
+        .wrap</div>
+      <div>. ID选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors">ID selectors</a>： 以井号 # 开始，如
+        #user
+      </div>
+      <div>. 通配符选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors">Universal
+          selectors</a>：以星号 * 表示，代表所有元素 </div>
+      <div>嵌套选择器 <a href="">& nesting selector</a>：以缩进的形式书写样式；新规范；注意浏览器的支持</div>
+    <dt>属性选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors">Attribute selectors</a>
+    </dt>
+    </dd>
+    <dt>伪元素 Pseudo-elements</dt>
+    <dd>
+      <div>::before</div>
+      <div>::after</div>
+      <div>::first-letter</div>
+      <div>::first-line</div>
+      <div>::marker</div>
+      <div>::selection</div>
+      <div>::placeholder</div>
+    </dd>
+    <dt>伪类 Pseudo-classes</dt>
+    <dd>
+      <div>:hover</div>
+      <div>:target</div>
+      <div>:first-child</div>
+      <div>:last-child</div>
+      <div>:nth-child(n)</div>
+      <div>:has()</div>
+      <div>:not()</div>
+      <div>:root</div>
+      <div>:checked</div>
+      <div>:selected</div>
+      <div>:valid | :invalid</div>
+      <div>:focus | :focus-within</div>
+    </dd>
+    <dt>组合选择器 Combinators</dt>
+    <dd>
+      <div>. 列表选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Selector_list">Selector
+          list</a>：也叫并列选择器，适合多个元素应用同样的样式</div>
+      <div>. 后代选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Descendant_combinator">Descendant
+          combinator</a>：所有后代元素
+      </div>
+      <div>. 直接后代选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Child_combinator">Child
+          combinator</a>：子元素
+      </div>
+      <div>. 兄弟选择器 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/Subsequent-sibling_combinator">Subsequent-sibling
+          combinator</a>：以波浪线 ~ 表示，所有弟弟</div>
+      <div>. 相邻兄弟选择器 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Next-sibling_combinator">Next-sibling
+          combinator</a>：以加号 + 表示，相邻的弟弟</div>
+      <div>. 叠加选择器：为一个类再叠加一个样式，如.btn.goods、.wrap.active；多用于类的共享和动态类</div>
+    </dd>
+  </dl>
+  <div class="chap">属性 Properties</div>
+  <dl class="nav-cont">
+    <dd>设置元素的 CSS 样式属性</dd>
+    <dd>更多信息，请查看 <a href="https://mp.weixin.qq.com/s/nPLFpYPt0zaupmH5idGr6A">一些不好记却很好用的 CSS 属性</a>、<a
+        href="https://mp.weixin.qq.com/s/C4kFVleGdOTq7b2Zpf5YpQ">14 个非常实用的 CSS 属性技巧</a></dd>
+    <dt>自身属性</dt>
+    <dd>
+      <div>元素类型：display: inline | inline-block | block | flex | grid</div>
+      <div>元素尺寸计算模式：box-sizing: content-box | border-box</div>
+      <div>宽度/高度：width max-width height max-height</div>
+      <div>填充：padding (top | right | bottom | left)</div>
+      <div>边距：<a href="./margin.html">margin</a> (top | right | bottom | left)</div>
+      <div>边框：<a href="./border.html">border</a> (top | right | bottom | left)</div>
+      <div>背景：<a href="./background.html">background</a></div>
+      <div>阴影：box-shadow</div>
+    </dd>
+    <dt>定位属性</dt>
+    <dd>
+      <div>相对定位：<a href="./position.html">relative</a></div>
+      <div>绝对定位：<a href="./position.html">absolute</a></div>
+      <div>固定定位：<a href="./fixed.html">fixed</a></div>
+      <div>粘性定位：<a href="./sticky.html">sticky</a></div>
+    </dd>
+    <dt>布局属性</dt>
+    <dd>
+      <div>浮动 <a href="./float.html">float</a></div>
+      <div>弹性盒子 <a href="./flex.html">flex</a></div>
+      <div>网格 <a href="./grid.html">grid</a></div>
+    </dd>
+    <dt>字体属性</dt>
+    <dd>
+      <div>字体：@font-face font font-size font-family font-weight</div>
+      <div>颜色：color</div>
+      <div>格式：text-align text-indent text-shadow text-decoration letter-spacing word-spacing</div>
+      <div>其它：vertical-align line-height white-space break-word writing-mode</div>
+    </dd>
+    <dt>特效类</dt>
+    <dd>
+      <div>盒阴影：<a href="./boxshadow.html">box-shadow</a></div>
+      <div>文字阴影：<a href="./text.html">text-shadow</a></div>
+      <div>过渡动画：<a href="./transition.html">transition</a></div>
+      <div>帧动画：<a href="./animation.html">animation @keyframes</a></div>
+      <div>变换：<a href="./transform.html">transform</a></div>
+      <div>滤镜：<a href="./filter.html">filter</a></div>
+    </dd>
+    <dt>函数</dt>
+    <dd>
+      <div>rgb()、rgba()、hsl()</div>
+      <div>url()</div>
+      <div>attr()</div>
+      <div>var()</div>
+      <div>calc()</div>
+      <div>linear-gradient()、radial-gradient()、Conic-gradient()</div>
+      <div>clamp()</div>
+      <div>min()</div>
+      <div>max()</div>
+      <div>minmax()</div>
+      <div>repeat()</div>
+    </dd>
+    <dt>浏览器厂商前缀</dt>
+    <dd>
+      <div>代码健壮性</div>
+      <div>更多信息，请查看 <a href="https://caniuse.com/">Can I Use</a></div>
+      <div>--webkit：谷歌 Chrome、欧鹏 Opera、苹果 Safari</div>
+      <div>--moz：火狐 Firefox</div>
+      <div>--ms：微软 Edge</div>
+    </dd>
+    <dd class="tips">CSS顺序：布局定位属性 → 自身属性 → 文本属性 → 其它属性</dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+</body>
+
+</html>
