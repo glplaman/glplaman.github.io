@@ -8,7 +8,9 @@
   --main-blue: #7a0714;
   --main-light-blue: #f40;
   --main-red: #f40;
-  --nav-h: 100px;
+  --w: 1024px;
+  --p-m-g: 10px;
+  --nav-h: 140px;
   --header-h: 300px;
   --top: calc(-1*var(--header-h)/2);
 }
@@ -20,9 +22,15 @@
   font-family: Arial, 'Poppins', Helvetica, "Microsoft YaHei", '微软雅黑', sans-serif;
 }
 
+.w {
+  position: relative;
+  width: var(--w);
+  margin: 0 auto;
+}
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h)/2);
+  scroll-padding-top: var(--nav-h);
   font-size: 62.5%;
 }
 
@@ -37,7 +45,7 @@ body.lock {
 }
 
 body::-webkit-scrollbar {
-  width: 8px;
+  width: var(--p-m-g);
 }
 
 body::-webkit-scrollbar-thumb {
@@ -137,7 +145,6 @@ th {
 
 pre {
   padding: 1rem;
-  font-family: 'Popins', Helvetica, sans-serif;
   overflow-y: auto;
   overflow-x: auto;
   counter-reset: sn;
@@ -195,6 +202,14 @@ pre {
   margin-top: 2rem;
 }
 
+.mt4 {
+  margin-top: 4rem;
+}
+
+.mt8 {
+  margin-top: 8rem;
+}
+
 .space {
   position: relative;
   height: 60vh;
@@ -218,10 +233,7 @@ pre {
 }
 
 header {
-  position: sticky;
-  top: calc(var(--top));
   width: var(--w);
-  margin: 0 auto;
   height: var(--header-h);
   background-color: var(--main-blue);
   background-size: cover;
@@ -230,15 +242,14 @@ header {
 }
 
 .nav {
-  position: absolute;
-  width: 100%;
-  height: 120px;
-  left: 0;
-  bottom: 0;
+  position: sticky;
+  top: 0;
+  height: var(--nav-h);
   display: flex;
   align-items: center;
-  padding: 0 2rem;
+  padding: 2rem;
   background-color: #fff;
+  z-index: 1;
 }
 
 .logo {
