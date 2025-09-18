@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播图 &lt;swiper&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>轮播图</h1>
+    <span>&lt;swiper&gt;</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>应用轮播图效果；非常方便</li>
+      <li>swiper：轮播容器</li>
+      <li>swiper-item ：仅可放置在 swiper 组件中，宽高自动设置为100%</li>
+      <li>Skyline模式 可以设置更多指示器 indicator 样式</li>
+      <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/component/swiper.html">&lt;swiper&gt;</a>
+      </li>
+    </ul>
+    <table>
+      <caption>通用属性 - swiper</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>indicator-dots</td>
+          <td>指示器</td>
+        </tr>
+        <tr>
+          <td>indicator-color</td>
+          <td>指示器颜色</td>
+        </tr>
+        <tr>
+          <td>indicator-active-color</td>
+          <td>当前指示器颜色</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>自动播放；false</td>
+        </tr>
+        <tr>
+          <td>current</td>
+          <td>当前项目索引；0</td>
+        </tr>
+        <tr>
+          <td>interval</td>
+          <td>自动切换时间间隔；5000</td>
+        </tr>
+        <tr>
+          <td>duration</td>
+          <td>滑动动画时长；500</td>
+        </tr>
+        <tr>
+          <td>circular</td>
+          <td>是否采用衔接滑动；false</td>
+        </tr>
+        <tr>
+          <td>vertical</td>
+          <td>纵向；false</td>
+        </tr>
+        <tr>
+          <td>bindchange</td>
+          <td>current 改变时会触发；可以获取当前项：e.detail.current</td>
+        </tr>
+        <tr>
+          <td>bindtransition</td>
+          <td>swiper-item 的位置发生改变时会触发</td>
+        </tr>
+        <tr>
+          <td>bindanimationfinish</td>
+          <td>动画结束时会触发</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] 自动、循环轮播图</div>
+    <ul>
+      <li>在页面的 onLoad() 中从 <a href="/utils/index.html">大树小站</a> 请求图片，或自行准备；imgs 是 data 中的定义的数据</li>
+      <pre>
+wx.request({
+    url: 'https://glpla.github.io/utils/data/swiper.json',
+    success: res => {
+        console.log('res', res);
+        this.setData({
+            imgs: res.data.cont
+        })
+    }
+})</pre>
+      <li>使用列表渲染结构；指定循环、自动播放以及指示器的样式</li>
+      <pre>
+&lt;swiper class="swiper" indicator-dots indicator-color="#fff" indicator-active-color="#f40" autoplay circular&gt;
+    &lt;swiper-item class="swiper-item" wx:for="{{imgs}}" wx:key="id"&gt;
+        &lt;image class="img" src="{{item.url}}" mode="aspectFill" /&gt;
+    &lt;/swiper-item&gt;
+&lt;/swiper&gt;</pre>
+      <li>指定样式</li>
+      <pre>
+.swiper{
+    height: 30vh;
+}
+.img{
+    width: 100%;
+}</pre>
+      <img src="./imgs/swiper0.png" alt="">
+      <img src="./imgs/swiper1.png" alt="">
+      <img src="./imgs/swiper2.png" alt="">
+      <img src="./imgs/swiper3.png" alt="">
+      <img src="./imgs/swiper4.png" alt="">
+      <img src="./imgs/swiper5.png" alt="">
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./component3.html">封装为组件</a> 使用</div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

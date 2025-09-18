@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件插槽 Slot</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>组件插槽</h1>
+    <span>&commat;Slot</span>
+  </header>
+  <section>
+    <ul>
+      <li>在组件的 wxml 中以 slot 节点开启一个占位符，用于承载组件使用者提供的 wxml 结构</li>
+      <li>默认情况下，一个组件的 wxml 中只能有一个 slot 。需要使用多 slot 时，可以在组件 js 的选项 options 中声明启用</li>
+      <li>多个 slot 必须使用不同的 name 加以区分</li>
+      <pre>
+Component({
+    properties: {},
+    data: {},
+    methods: {},
+    options: {
+        multipleSlots: true
+    }
+})</pre>
+    </ul>
+    <h3>单插槽应用</h3>
+    <div>[<span class="iconfont icon-keyboard"></span>] 改进版权信息组件 copyright，增加一个 slot 接收使用者提供的 wxml，如使用图像组件</div>
+    <ol>
+      <li>在组件中预留/创建插槽，调整结构如下</li>
+      <pre>
+&lt;view class="copy"&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+    &lt;text&gt;copyright 2023-2024&lt;/text&gt;
+&lt;/view&gt;</pre>
+      <li>调整样式为弹性盒子垂直居中对齐；因为不确定使用者传递的是什么结构，所以不能指定插槽的样式</li>
+      <pre>
+.copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}</pre>
+      <li>使用组件时，引入并使用组件，传递图像内容</li>
+      <pre>
+&lt;view class="copy"&gt;
+    &lt;copy&gt;
+        &lt;image class="img" src="../../utils/marker.png" mode="aspectFill" /&gt;
+    &lt;/copy&gt;
+&lt;/view&gt;</pre>
+      <li>使用者指定图像样式</li>
+      <pre>
+.img {
+    width: 50px;
+    height: 50px;
+}</pre>
+    </ol>
+    <h3>多插槽应用</h3>
+    <div>[<span class="iconfont icon-keyboard"></span>] 改进版权信息组件copyright，再增加一个 slot 接收使用者的学号</div>
+    <ol>
+      <li>在组件 js 选项中，启用多插槽 - 不是在 .json</li>
+      <pre>
+Component({
+    properties: {},
+    data: {},
+    methods: {},
+    options: {
+        multipleSlots: true
+    }
+})</pre>
+      <li>在组件中预留/创建插槽，分配名字，调整结构如下</li>
+      <pre>
+&lt;view class="copy"&gt;
+    &lt;slot name="img"&gt;&lt;/slot&gt;
+    &lt;text&gt;copyright 2023-2024&lt;/text&gt;
+    &lt;slot name="sn"&gt;&lt;/slot&gt;
+&lt;/view&gt;</pre>
+      <li>目标组件引入，使用 slot 指定插槽名称，并传递相应的内容</li>
+      <pre>
+&lt;view class="copy"&gt;
+    &lt;copy&gt;
+        &lt;image slot='img' class="img" src="../../utils/marker.png" mode="aspectFill" /&gt;
+        &lt;text slot='sn'&gt;20221081&lt;/text&gt;
+    &lt;/copy&gt;
+&lt;/view&gt;</pre>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 商品组件 product</div>
+    <ul>
+      <li>插槽组件：使用2个插槽</li>
+      <pre>
+        <view class="product">
+&lt;view class="img"&gt;
+    &lt;image src="https://glpla.github.io/utils{{product.image}}" mode="aspectFill" /&gt;
+  &lt;/view&gt;
+  &lt;view class="info"&gt;
+    &lt;view class="title"&gt;{{product.title}}&lt;/view&gt;
+    &lt;view class="price"&gt;
+      &lt;text&gt;¥&lt;text class="txt-bold"&gt;{{product.price}}&lt;/text&gt;&lt;/text&gt;
+      &lt;slot name="extra"&gt;&lt;/slot&gt;
+    &lt;/view&gt;
+  &lt;/view&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/view&gt;</pre>
+      <figure>
+        <img src="./imgs/slot0.png" alt="">
+        <figcaption>商品列表</figcaption>
+      </figure>
+      <li>商品列表：使用默认插槽：添加到购物车</li>
+      <pre>
+&lt;product product="{{item}}"&gt;
+    &lt;view class="btn-oper add" catch:tap="addToCart" data-id="{{item.id}}" data-item='{{item}}'&gt;+&lt;/view&gt;
+&lt;/product&gt;
+      </pre>
+      <figure>
+        <img src="./imgs/slot1.png" alt="">
+        <figcaption>购物车弹出菜单</figcaption>
+      </figure>
+      <li>商品列表：使用默认插槽：商品数量增加和减少</li>
+      <figure>
+        <img src="./imgs/slot2.png" alt="">
+        <figcaption>购物车弹出菜单</figcaption>
+      </figure>
+      <li>购物车：使用具名插槽：库存；右上角的关闭，是父组件的元素</li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

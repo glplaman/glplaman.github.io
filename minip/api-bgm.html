@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>背景音频管理 BackgroundAudioManager</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>背景音频管理</h1>
+    <span>BackgroundAudioManagerudio</span>
+  </header>
+  <section>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/audio.html">&lt;audio&gt;</a></h3>
+    <ul>
+      <li>展示音频的容器</li>
+      <li>从基础库 1.6.0 开始，&lt;audio&gt;接口 <span class="warn">停止维护</span>，请使用 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/media/audio/wx.createInnerAudioContext.html">wx.createInnerAudioContext(Object
+          object)</a>
+      </li>
+      <li>请使用在线资源或自建服务器资源；不要使用本地资源</li>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/audio/wx.createInnerAudioContext.html">wx.createInnerAudioContext(Object
+        object)</a></h3>
+    <ul>
+      <li>创建内部 audio 上下文 InnerAudioContext 对象</li>
+      <li>InnerAudioContext 音频资源不会自动释放</li>
+      <li>如果不需要使用音频，请调用 InnerAudioContext.destroy() 释放资源，避免内存泄漏</li>
+      <li>音频播放过程中，可能被系统中断</li>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/background-audio/wx.getBackgroundAudioManager.html">wx.getBackgroundAudioManager()</a>
+    </h3>
+    <ul>
+      <li>获取全局唯一的背景音频管理器；创建背景音乐管理器</li>
+      <li>若需要在小程序切后台后继续播放音频，需要在 app.json 中配置 requiredBackgroundModes 属性；正式版还需通过审核</li>
+      <pre>"requiredBackgroundModes": ["audio"]</pre>
+      <li>设置后，即使用户离开小程序或锁屏，背景音乐也能继续播放</li>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/background-audio/BackgroundAudioManager.html">wx.BackgroundAudioManager()</a>
+    </h3>
+    <ul>
+      <li>BackgroundAudioManager 实例</li>
+      <li>通过 wx.getBackgroundAudioManager() 获取</li>
+    </ul>
+    <table>
+      <caption>一般属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>src</td>
+          <td>音频资源的地址；设置了新的 src 时，会自动开始播放</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td class="warn">音频标题，用于原生音频播放器音频标题；必填；分享出去的卡片标题将使用该值</td>
+        </tr>
+        <tr>
+          <td>startTime</td>
+          <td>开始播放的位置；单位 s</td>
+        </tr>
+        <tr>
+          <td>playbackRate</td>
+          <td>播放速度 0.5-2.0；默认 1；经测试，不支持</td>
+        </tr>
+        <tr>
+          <td>duration</td>
+          <td>当前音频的长度；只读</td>
+        </tr>
+        <tr>
+          <td>currentTime</td>
+          <td>当前音频的播放位置;单位 s；改变 currentTime 值等同于调用 seek；只读</td>
+        </tr>
+        <tr>
+          <td>paused</td>
+          <td>当前是是否暂停或停止状态；只读</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>一般方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>play()</td>
+          <td>播放</td>
+        </tr>
+        <tr>
+          <td>pause()</td>
+          <td>暂停。暂停后的音频再播放会从暂停处开始播放</td>
+        </tr>
+        <tr>
+          <td>seek()</td>
+          <td>跳转到指定位置</td>
+        </tr>
+        <tr>
+          <td>stop()</td>
+          <td>停止。停止后的音频再播放会从头开始播放</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>侦听方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>onCanplay(function listener)</td>
+          <td>监听音频进入可以播放状态的事件。但不保证后面可以流畅播放；可以获取 duration</td>
+        </tr>
+        <tr>
+          <td>onPlay(function listener)</td>
+          <td>监听音频播放事件；建议在此获取 duration</td>
+        </tr>
+        <tr>
+          <td>onPause(function listener)</td>
+          <td>监听音频暂停事件</td>
+        </tr>
+        <tr>
+          <td>onSeeked(function listener)</td>
+          <td>监听音频完成跳转事件</td>
+        </tr>
+        <tr>
+          <td>onStop(function listener)</td>
+          <td>监听音频停止事件</td>
+        </tr>
+        <tr>
+          <td>onEnded(function listener)</td>
+          <td>监听音频自然播放至结束的事件；资源会被释放</td>
+        </tr>
+        <tr>
+          <td>onTimeUpdate(function listener)</td>
+          <td>监听音频播放进度更新事件</td>
+        </tr>
+        <tr>
+          <td>onError(function listener)</td>
+          <td>监听音频播放错误事件；如果错误，给出相应的错误代码</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tips">建议每次更新 src 时，都重新添加侦听事件，即侦听事件放在更新 src 后面</div>
+    <details>
+      <summary>其它属性</summary>
+      <div>epname：专辑名；分享出去的卡片简介将使用该值</div>
+      <div>singer：歌手名；分享出去的卡片简介将使用该值</div>
+      <div>coverImgUrl：封面图 URL，用于做原生音频播放器背景图；分享出去的卡片配图及背景将使用该图</div>
+      <div>webUrl：页面链接；分享出去的卡片简介将使用该值</div>
+    </details>
+    <div>[<span class="iconfont icon-keyboard"></span>] 极简版音乐播放器</div>
+    <pre>
+Page({
+    onLoad() {
+        const bgm = wx.getBackgroundAudioManager()
+        bgm.title = 'wang fei'
+        bgm.src = 'https://glpla.github.io/utils/music/wang.mp3'
+    }
+})</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./case6.html">音乐播放器 - player</a></div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

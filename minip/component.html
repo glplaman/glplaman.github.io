@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义组件 Components</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>自定义组件</h1>
+    <span>&commat;Components</span>
+  </header>
+  <section>
+    <ul>
+      <li>有助于团队开发、提高开发效率、避免重复造轮子</li>
+      <li>组件的使用分为：全局使用和页面使用</li>
+      <li>组件也有对应的4个文件：wxml、wxss、js、json</li>
+      <li>每个组件js都可以有自己的：</li>
+      <li>单独创建一个目录存放组件，如components；不同作用的组件再存放到单独的文件夹中</li>
+      <li>更多信息，请参考 <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/">官方文档 -
+          自定义组件</a></li>
+    </ul>
+    <h3>常见选项</h3>
+    <ul>
+      <li> properties：接收参数，实现组件传参</li>
+      <li> data：数据</li>
+      <li> methods：方法</li>
+      <li> options：选项；默认没有，需要手动添加</li>
+      <pre>
+Component({
+    properties: {},
+    data: {},
+    methods: {}
+})</pre>
+    </ul>
+    <dt>基本步骤</dt>
+    <ol>
+      <li>创建</li>
+      <li>设计</li>
+      <li>引入</li>
+      <li>使用</li>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 以封装版权信息组件 copyright 为例</div>
+    <ol>
+      <li>创建组件总目录</li>
+      <p>在小程序根目录创建一个文件夹作为组件根目录，如 components</p>
+      <li>创建组件</li>
+      <p>.右键单击组件根目录 components → 新建目录 copyright 作为要创建的组件的目录</p>
+      <p>.再右键组件目录 copyright，新建 Component 为 copyright；组件名和组件目录通常保持一致，系统会自动创建组件的4个文件</p>
+      <figure class="img-sn">
+        <img src="./imgs/pro7.png" alt="">
+        <figcaption>创建组件</figcaption>
+      </figure>
+      <li>设计组件</li>
+      <p>.仅仅展示信息，不需要参数传递，所以只编辑 .wxml 即可</p>
+      <pre>&lt;text&gt;copyright 2023-2024&lt;/text&gt;</pre>
+      <p>.wxss 样式略</p>
+      <p>.js 无需编辑</p>
+      <p>.json 无需编辑</p>
+      <li>引入组件</li>
+      <p>.在使用组件的页面 .json 中配置：指定使用的组件路径和使用时的组件名</p>
+      <p>.可以 <span class="warn">修改</span> 使用时的名字，如 my-copyright。这里和组件名保持一致</p>
+      <pre>
+{
+    "usingComponents": {
+        "copyright":"../../components/copyright/copyright"
+    }
+}</pre>
+      <li>使用组件 </li>
+      <p>.在使用组件的页面 .wxml 中使用</p>
+      <pre>&lt;copyright&gt;&lt;/copyright&gt;</pre>
+      <p>从布局角度出发，建议使用容器包裹，并指定同名类</p>
+      <pre>
+&lt;view class="copyright"&gt;
+    &lt;copyright&gt;&lt;/copyright&gt;
+&lt;/view&gt;</pre>
+    </ol>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html">组件模板和样式</a>
+    </h3>
+    <ul>
+      <li>请尽量使用类选择器，不要使用标签选择器、id选择器、属性选择器</li>
+      <li>组件根容器的样式类名同组件名保持一致，如版权组件 copyright 的根容器类名为 copyright</li>
+      <li>app.wxss 的全局样式会影响到组件样式，如类选择器、标签选择器；id选择器、属性选择器请确认再使用</li>
+      <li>默认情况下，组件的样式仅仅作用于当前组件 - 样式隔离；不建议修改，避免后期样式冲突</li>
+      <figure class="img-sn">
+        <img src="./imgs/pro9.png" alt="">
+        <figcaption>组件样式配置</figcaption>
+      </figure>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装空购物车组件</div>
+    <ul>
+      <li>结构</li>
+      <pre>
+&lt;view class="empty-cart"&gt;
+  &lt;text class="iconfont icon-cart-empty txt-xxxl"&gt;&lt;/text&gt;
+  &lt;text&gt;购物车空空的，去逛逛吧&lt;/text&gt;
+&lt;/view&gt;</pre>
+      <li>样式：iconfont 样式文件已经在 app.wxss 中引入；为了在组件内部使用 iconfont，需要显式的引入样式文件</li>
+      <pre>
+@import '../../app.wxss';
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生命周期函数 Lifetime</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>生命周期函数</h1>
+    <span>&commat;Lifetime</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>也叫 life circle</li>
+      <li>指的是一个对象从创建 → 运行 → 销毁的整个过程</li>
+      <li>每个过程对应一个阶段；每个阶段都可以使用特定的函数来处理 - 生命周期函数</li>
+      <li>小程序、页面和组件都有自己的生命周期函数
+        <p>小程序 app 的启动 → 运行 → 关闭</p>
+        <p>页面 page 的加载 → 渲染 → 卸载</p>
+        <p>组件 component 的加载 → 渲染 → 卸载</p>
+      </li>
+      <li>小程序提供的生命周期函数按次序自动执行</li>
+    </ul>
+    <h3>小程序生命周期函数 <a href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/App.html">App</a></h3>
+    <ul>
+      <li>注册小程序。接受一个 Object 参数，其指定小程序的生命周期回调等</li>
+      <li>App() 必须在 app.js 中调用，必须调用且只能调用一次。不然会出现无法预期的后果</li>
+      <li>在 app.js 中，包括：
+        <p>onLaunch()</p>
+        <p>onShow()</p>
+        <p>onHide()</p>
+        <p>onError()</p>
+      </li>
+      <pre>
+App({
+  globalData: {
+    // 全局数据
+    // 其他页面使用 const app = getApp()可以获取app所有的数据
+  },
+  onLaunch(){
+    // 启动；只触发1次
+    // 本地数据获取和更新
+  },
+  onShow(option){
+    // 显示、恢复；可以多次触发
+    // 进入前台运行
+  },
+  onHide(){
+    // 隐藏、最小化；可以多次触发
+    // 进入后台运行
+  },
+  onError(msg) {
+    console.error(msg)
+  }
+})</pre>
+    </ul>
+    <h3>页面生命周期函数 <a href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html">Page</a></h3>
+    <ul>
+      <li>在各页面的逻辑文件中，除了初始数据、事件处理函数，还包括如下生命周期函数：<p>onLoad()</p>
+        <p>onShow()</p>
+        <p>onReady()</p>
+        <p>onHide()</p>
+        <p>onUnload()</p>
+      </li>
+      <pre>
+Page({
+  data:{},
+  onLoad(option) {
+    // 1
+    // 页面加载时触发
+    // 初始化页面数据
+    // 获取页面传参
+    // 1个页面只调用1次
+    // 如果页面有数据更新，请使用 onShow
+  },
+  onShow() {
+    // 2
+    // 可以多次触发
+    // 场景：返回时，需要更新的页面，如修改昵称后返回
+  },
+  onReady() {
+    // 3
+    // 页面初次渲染完毕后触发
+    // 可以与视图层交互，如修改导航栏标题
+  },
+  onHide() {
+    // 可以多次触发
+  },
+  onUnload() {
+    // 触发1次
+  }
+})</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 数据加载</div>
+    <ul>
+      <li>页面在 data 中定义数据 products，初始值为空 []</li>
+      <li>页面首次加载时，如果全局数据有数据，就直接使用；如果没有，就从数据库中加载；无论如何，必须要给 products 赋值</li>
+      <li>返回页面时，继续使用之前的 products，无需再次赋值或重新加载数据</li>
+      <pre>
+        data:{
+          products: []
+        }
+      </pre>
+      <li>data 中的数据 products 无法直接访问 app 中的全局数据 globalData</li>
+      <pre>
+data:{
+  products: app.globalData.products // 错误
+}</pre>
+      <li>方案1：使用立即函数</li>
+      <pre>
+data: {
+  products: (function () {
+    return app.globalData.products
+  })()
+}</pre>
+      <li>方案2：在页面的 onLoad() 或 onShow() 中获取并赋值；推荐</li>
+      <pre>
+onLoad(options) {
+  if (app.globalData.products && app.globalData.products.length > 0) {
+    this.setData({
+      products: app.globalData.products
+    })
+  } else {
+    this.loadData()
+  }
+}</pre>
+    </ul>
+    <h3>组件生命周期函数</h3>
+    <ul>
+      <li>组件自身的一些函数：在特殊的时间点或遇到一些特殊的框架事件时被自动触发</li>
+      <li>在组件的逻辑文件中，主要包括</li>
+      <li>created()：组件实例刚刚被创建好时</li>
+      <li>attached()：在组件完全初始化完毕、进入页面节点树</li>
+      <li>detached()：在组件离开页面节点树后</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html">组件生命周期</a>
+      </li>
+      <pre>
+Component({
+  lifetimes: {
+    created: function () {},
+    attached: function () {},
+    detached: function() {}
+  }
+})</pre>
+    </ul>
+    <div class="tips">老版本的微信开发工具中的工具栏有个"切后台"，用于调试前台和后台业务逻辑</div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

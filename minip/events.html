@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件 Evetns</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>事件</h1>
+    <span>&commat;Evetns</span>
+  </header>
+  <section>
+    <h3>事件 Events</h3>
+    <ul>
+      <li>事件是视图层 | wxml 到逻辑层 | js 的通讯方式：将用户的行为反馈到逻辑层进行处理</li>
+      <li>事件绑定在组件上；当达到触发事件，就会执行逻辑层中对应的事件处理函数</li>
+      <li>默认情况下，事件是冒泡机制</li>
+      <li>绑定事件使用 bind: 语法</li>
+      <li>使用 catch: 语法可以阻止事件冒泡</li>
+      <li>更多信息，请访问 <a href="../vue/events.html">Vue-events</a>、<a href="../web/js/event.html">html-event</a></li>
+    </ul>
+    <h3>事件处理函数 EventHandle</h3>
+    <ul>
+      <li>在结构中为节点元素绑定事件并指定事件处理函数</li>
+      <pre>&lt;view class="title" bind:tap="test"&gt;best wishes&lt;/view&gt;</pre>
+      <li>在页面逻辑顶层 | data 同级，声明事件处理函数；e 是事件对象</li>
+      <pre>
+test: function(e){
+  console.log(e);
+}</pre>
+      <li>可以不使用关键字 function</li>
+      <pre>
+test(e){
+  console.log(e);
+}</pre>
+      <li>使用更为简洁的箭头函数；HTML中，this 指向 window；小程序宿主环境是微信，不是浏览器，所以 this 为 undefined</li>
+      <pre>
+test: (e)=>{
+  console.log(e);
+}</pre>
+    </ul>
+    <div class="tips">统一风格即可；建议和小程序示例代码保持一致</div>
+    <h3>事件类型 Type</h3>
+    <ul>
+      <li>常见事件有：单击事件 tap 和触摸事件 touch</li>
+      <li>此外，每个组件还有自己的独有的事件，如表单的提交事件 submit 和重置事件 reset、滑动组件的 scroll 等等，详情请查阅官方文档</li>
+    </ul>
+    <table>
+      <caption>常用事件</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>bindtap</td>
+          <td>单击屏幕时触发；类似 HTML 的 click</td>
+        </tr>
+        <tr>
+          <td>touchstart</td>
+          <td>触摸屏幕开始</td>
+        </tr>
+        <tr>
+          <td>touchmove</td>
+          <td>触摸屏幕移动</td>
+        </tr>
+        <tr>
+          <td>touchend</td>
+          <td>触摸屏幕结束</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>事件对象 Event</h3>
+    <ul>
+      <li>事件发生时，会触发一个事件对象 event；通常简写为 e</li>
+      <li>包含事件发生时的很多额外信息，常见的有：</li>
+      <li>type：事件类型</li>
+      <li>dataset：自定义数据</li>
+      <li>detail：具体信息，如表单元素的值</li>
+      <li>target：事件对象目标；<span class="warn">绑定</span>事件的组件</li>
+      <li>currentTarget：事件流当前阶段的目标，<span class="warn">响应</span>事件的元素</li>
+      <li>touches：一个数组，每个元素为一个 Touch 对象，表示当前停留在屏幕上的触摸点</li>
+      </li>
+    </ul>
+    <div class="tips">
+      <div>使用console.log(e) 查看完整的事件对象</div>
+      <div>当节点元素触发一个事件后，该事件会逐步冒泡至它的父级及父级的父级直至顶级；所以一个事件可以由不同的节点元素响应</div>
+      <div>触发事件的是 target；响应事件的是 currentTarget</div>
+      <div>无法像 Html 那样通过判断 targe 或 currentTarget 来确定单击对象；见后续模态框的设计</div>
+    </div>
+    <h3>事件传参 Parameter</h3>
+    <ul>
+      <li>无法像其它环境中直接传递参数，如 eventHandle(parameter)</li>
+      <li>通过 <span class="warn">自定义数据 data- </span> 的方式携带参数，保存在事件对象目标 target/currentTarget 的 dataset 属性中</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 利用自定义数据传参，查看事件对象目标</div>
+    <ul>
+      <li>结构 - 一个大矩形包含一个小矩形；分别绑定事件、指定事件处理函数并自定义数据；样式略</li>
+      <li>单击大矩形时，target 和 currentTarget 都是自己：自己绑定事件，自己响应事件</li>
+      <li>单击小矩形时，由于冒泡的原因，先是小矩形响应事件，然后冒泡到大矩形再响应事件 </li>
+      <li>对小矩形而言，target 和 currentTarget 都是自己：自己绑定事件，自己响应事件</li>
+      <li>对大矩形而言，它响应的是小矩形绑定的事件，所以 target 是小矩形，而 currentTarget 是大矩形</li>
+      <pre>
+&lt;view class="outer" bind:tap="outerTap" data-ind="outer"&gt;
+  &lt;view class="inner" bind:tap="innerTap" data-ind="inner"&gt;&lt;/view&gt;
+&lt;/view&gt;</pre>
+      <li>逻辑 - 分别显示事件对象目标和当前事件对象目标</li>
+      <pre>
+outerTap(e) {
+  console.log('outer');
+  console.log('target', e.target.dataset);
+  console.log('currentTarget', e.currentTarget.dataset);
+},
+
+innerTap(e) {
+  console.log('inner');
+  console.log('target', e.target.dataset);
+  console.log('currentTarget', e.currentTarget.dataset);
+}</pre>
+    </ul>
+    <figure>
+      <img src="./imgs/event0.png" alt="">
+      <figcaption>target 和 currentTarget</figcaption>
+    </figure>
+    <div class="tips">
+      <div>bind:tap和bindtap写法都可以</div>
+      <div>单个事件时，target 和 currentTarget一样</div>
+      <div>父子组件多个事件并存时，注意区分 target 和 currentTarget</div>
+      <div>大多数情况下，父元素由子元素撑开；事件绑定在父元素，点击的实际上是子元素，最后冒泡才由父元素响应，所以使用 currentTarget 最多</div>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 自定义数据 data- 的特点</div>
+    <ul>
+      <li>根据自定义数据，决定业务方向</li>
+      <li>结构</li>
+      <pre>
+&lt;button bind:tap="confirmProduct" data-flag="0"&gt;加入购物车&lt;/button&gt;
+&lt;button bind:tap="confirmProduct" data-flag="1"&gt;立即购买&lt;/button&gt;</pre>
+      <li>逻辑</li>
+      <pre>
+confirmProduct(e) {
+    if (e.currentTarget.dataset.flag) {
+      // to order
+      console.log('order');
+    } else {
+      // add to cart
+      console.log('cart');     
+    }
+  }</pre>
+      <li>请分析代码执行情况</li>
+      <!-- <li>自定义的数据是字符串，无论获取是 '0' 还是 '1'，结果都是真</li> -->
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 点击随机更改背景颜色</div>
+    <ul>
+      <div>思路：使用内联样式绑定数据 color；获取3个随机数并使用模板语法更新颜色</div>
+      <pre>&lt;view style="background-color: {{color}};" bind:tap="randColor"&gt;random color&lt;/view&gt;</pre>
+      <pre>
+data: {
+  color: '#f40'
+},
+randColor(){
+  let rand0=parseInt(Math.random()*255)
+  let rand1=parseInt(Math.random()*255)
+  let rand2=parseInt(Math.random()*255)
+  this.setData({
+    color:`rgb(${rand0},${rand1},${rand2})`
+  })
+}</pre>
+    </ul>
+    <div class="tips">
+      <div>拓展：如何获取随机透明色的颜色</div>
+      <div>方案：额外增加一个0-1的随机数表示透明度</div>
+    </div>
+  </section>
+  <h2>Homework</h2>
+  <section>
+    <div>[<span class="iconfont icon-keyboard"></span>] 购物车商品数量调整</div>
+    <ul>
+      <li>商品数据 goods：数组，远程读取</li>
+      <pre>
+data: {
+  goods: [],
+}</pre>
+      <li>每个商品是一个对象，包括如下基本信息</li>
+      <pre>
+id: 1,
+name: '商品名称',
+desc: '商品描述',
+price: 10,
+quantity: 1,
+img: 'https://img.alicdn.com/tfs/TB1.XZ.XZJ1B2RjSZFXXX_o8VXa-200-200.png',</pre>
+      <li>在页面 onload 中列表渲染 wx:for，并为增加减少绑定事件，同时使用数据 index 作为自定义数据，便于修改其数量</li>
+      <pre>
+&lt;view wx:for="{{goods}}" wx:key="item"&gt;
+  &lt;view&gt;{{item.name}}&lt;/view&gt;
+  &lt;view&gt;{{item.desc}}&lt;/view&gt;
+  &lt;view&gt;{{item.price}}&lt;/view&gt;
+  &lt;view&gt;
+     &lt;button bind:tap="dec" data-ind="{{index}}"&gt;-&lt;/button&gt;
+     &lt;view&gt;{{item.quantity}}&lt;/view&gt;
+     &lt;button bind:tap="inc" data-ind="{{index}}"&gt;+&lt;/button&gt;
+  &lt;/view&gt; 
+&lt;/view&gt;</pre>
+      <li>数量增加/减少业务逻辑：分别获取所有商品数据和当前商品数据的 index；在边界条件的限制下，增加或减少当前商品数据的数量；最后更新数据</li>
+      <pre>
+dec(e) {
+  const ind = e.currentTarget.dataset.ind
+  const carts = this.data.carts
+  const item = carts[ind]
+  if (item.quantity > 1) {
+    item.quantity--
+  }
+  this.setData({
+    carts
+  })
+},
+
+inc(e) {
+  const ind = e.currentTarget.dataset.ind
+  const carts = this.data.carts
+  const item = carts[ind]
+  if (item.quantity &le; 9) {
+    item.quantity++
+  }
+  this.setData({
+    carts
+  })
+}</pre>
+    </ul>
+    <div class="tips">数据的处理：获取 → 处理 → 更新（回填）</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 模态框设计</div>
+    <ul>
+      <li>结构：三级，包括：modal → cont → close</li>
+      <li>需求：单击 modal 或者 单击 cont 中的 close，都可以关闭模态框；单击 cont 不应关闭；通常说，单击关闭或其它地方来关闭模态框</li>
+      <li>为了避免冒泡事件重复执行，为 close 采用阻止事件冒泡的绑定 catch:</li>
+      <li>
+        <pre>
+&lt;view class="modal" id="modal" bind:tap="closeModal"&gt;
+  &lt;view close="“cont"&gt;
+    &lt;view class="close" id="close" catch:tap="closeModal"&gt;x&lt;/view&gt;
+  &lt;/view&gt;
+&lt;/view&gt;</pre>
+      </li>
+      <li>借助 id 来判断，如果触发事件和响应事件相同，则关闭</li>
+      <pre>
+closeModal(e) {
+  if (e.target.id == e.currentTarget.id) {
+    this.setData({
+      isShowCart: false
+    })
+  }
+}</pre>
+      <li>优化：为了避免单击 cont 时，modal 响应，为 cont 绑定空事件并阻止冒泡</li>
+      <pre>
+&lt;view close="“cont" catch:tap="preventModalClose"&gt;
+  // ...
+&lt;/view&gt;</pre>
+      <pre>preventModalClose(e) {}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

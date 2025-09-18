@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频 &lt;video&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+  <style>
+    video {
+      display: block;
+      width: 300px;
+      height: 225px;
+      background-color: #000;
+      margin: 0 auto;
+    }
+
+    .contain {
+      object-fit: contain;
+    }
+
+    .cover {
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>视频</h1>
+    <span>&lt;video&gt;</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>展示视频的容器组件；行内块元素 inline-block，可以设置宽度、高度</li>
+      <li>默认宽度 300px、高度 225px</li>
+      <li>支持的格式：mp4、mov、m4v、avi、webm等</li>
+      <li>除了常规属性外，还可以指定画中画、广告等特有属性</li>
+      <li>请使用在线资源或自建服务器资源；不要使用本地资源</li>
+      <li>视频现在多是16/9的比例；可惜小程序不支持 aspect-ratio 属性；不过可以根据宽度推算高度</li>
+      <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/component/video.html">&lt;video&gt;</a>
+      </li>
+    </ul>
+    <table>
+      <caption>常见分辨率比例</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>16/9</td>
+          <td>1280*720 <br>1920*1080</td>
+        </tr>
+        <tr>
+          <td>4/3</td>
+          <td>1280*960 <br>960*720 <br>300*225</td>
+        </tr>
+        <tr>
+          <td>9/16</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3/4</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>一般属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>src</td>
+          <td>资源url</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>自动播放</td>
+        </tr>
+        <tr>
+          <td>controls</td>
+          <td>播放控件</td>
+        </tr>
+        <tr>
+          <td>loop</td>
+          <td>循环播放</td>
+        </tr>
+        <tr>
+          <td>mute</td>
+          <td>静音播放</td>
+        </tr>
+        <tr>
+          <td>object-fit</td>
+          <td>当视频大小与 video 容器大小不一致时，视频的表现形式
+            <br>contain：容器完全包含视频；视频按照比例缩放；默认；容器有留白
+            <br>fill：填充；视频拉伸至填满容器
+            <br>cover：覆盖；视频按比例裁剪至填满容器
+          </td>
+        </tr>
+        <tr>
+          <td>poster</td>
+          <td>视频封面</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] 视频大小1280*720；默认视频标签大小300*225，即4/3的比例；因此：</div>
+    <ul>
+      <li>高度匹配：可以显示960*720的视频，但是视频容器宽度不够，原视频宽度1280；完整显示视频的高度，但是容器宽度不够</li>
+      <li>宽度匹配：可以显示1280*960的视频，但是源视频高度不够，原视频高度为720；完整显示视频的宽度，但是容器高度剩余</li>
+      <pre>
+video {
+    width: 300px;
+    height: 225px;
+    background-color: #000;
+}</pre>
+      <figure>
+        <video class="contain" src="//video.shipin520.com/videos/40/94/96/b_UYkhsNEPI9Bv1584409496.mp4" autoplay loop
+          muted></video>
+        <figcaption>&lt;video src="" object-fit="contain"/&gt;</figcaption>
+      </figure>
+      <figure>
+        <video class="cover" src="//video.shipin520.com/videos/40/94/96/b_UYkhsNEPI9Bv1584409496.mp4" autoplay loop
+          muted></video>
+        <figcaption>&lt;video src="" object-fit="cover"/&gt;</figcaption>
+      </figure>
+    </ul>
+    <div class="tips">
+      <div>素材经过处理一定是标准比例；很少直接使用原图</div>
+      <div>一般都是默认使用即可，无须特别处理：看到的视频都是包含 contain 模式，存在黑边</div>
+      <div>建议指定宽高，并应用 cover 模式；去除黑边 - 自带高级感</div>
+    </div>
+    <h3>焦点</h3>
+    <ul>
+      <li>自动播放 autoplay</li>
+      <li>HTML中，大多数浏览器，特别是谷歌浏览器，不允许没有用户任何行为的情况下自动播放视频：必须是用户显式的操作视频进行播放</li>
+      <li>为了解决这个冲突，满足用户需求，可以：</li>
+      <li class="warn">将声音禁掉，设为静音muted，采用自动播放autoplay</li>
+      <li>但是在小程序中，如果不设置为自动播放就会告警。当然这个告警并不影响执行</li>
+      <li>视微信小程序版本而定</li>
+      <pre>[渲染层网络层错误] Failed to load media &lt;URL&gt;</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 在线视频的使用</div>
+    <div>
+      <div>. 受小程序大小2M的限制，大多数多媒体资源，如图片、视频、音频等不能本地使用，只能在线获取</div>
+    </div>
+    <div>方案1：自建资源服务器，将本地视频放在指定目录，开启服务；详情请参考 <a href="../node/static.html">静态资源服务器</a></div>
+    <pre>&lt;video src="http://1237.0.0.1:3000/video/sea.mp4" muted autoplay/&gt;</pre>
+    <div>方案2：外网在线资源；容易死链；如：<a href="https://shipin520.com/">潮点视频</a></div>
+    <ul>
+      <li>点击上方链接打开网站，或使用谷歌浏览器，在上方地址栏输入地址 https://shipin520.com，打开网站</li>
+      <li>在视频库中预览喜欢的视频</li>
+      <li>按F12打开开发者工具，拾取元素拾取工具单击视频</li>
+      <li>在结构面板中，看到视频对应的各种信息</li>
+      <li>找到 src 属性，双击并复制视频路径到小程序中，记得加上网络协议 https</li>
+      <pre>&lt;video src="https://video.shipin520.com/videos/77/08/15/a_6PPqEeFnxHvK1586770815.mp4" muted autoplay/&gt;</pre>
+    </ul>
+    <div>方案3：利用 - <a href="../utils/index.html">大树小站</a> - 提供的在线视频；更多视频持续更新中。。。</div>
+    <pre>&lt;video src="https://glpla.github.io/utils/video/sea.mp4" muted autoplay/&gt;</pre>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

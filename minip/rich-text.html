@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>富文本 &lt;rich-text&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>富文本</h1>
+    <span>&lt;rich-text&gt;</span>
+  </header>
+  <section>
+    <ul>
+      <li>原生标签仅支持少量HTML5属性</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/component/rich-text.html">&lt;rich-text&gt;</a></li>
+      <li>更多支持，请使用第三方插件WxParse；基本使用请参照 <a href="https://juejin.cn/post/6844903913431253005">微信小程序之富文本解析</a></li>
+    </ul>
+    <h3>基本步骤</h3>
+    <ul>
+      <li>下载 <a href="https://gitcode.com/icindy/wxparse/overview">WxParse</a></li>
+      <li>拷贝 WxParse 文件夹至小程序项目中并引入；为了减少提交，可以删除其中的 emojis 表情文件夹</li>
+      <pre>
+&lt;import src="../../utils/wxParse/wxParse.wxml"/&gt;
+&lt;template is="wxParse" data="{{wxParseData:article.nodes}}"/&gt;</pre>
+      <pre>@import "../../utils/wxParse/wxParse.wxss";</pre>
+    </ul>
+    <div>
+      <div>语法1 - 局部使用</div>
+      <pre>
+onLoad(option) {
+    let WxParse = require('../../utils/wxParse/wxParse.js')
+    let article = '&lt;div&gt;我是HTML代码&lt;/div&gt;'
+    let that = this;
+    WxParse.wxParse('article', 'html', article, that, 5);
+}</pre>
+      <div>语法2 - 全局使用</div>
+      <pre>
+WxParse : require('../../utils/wxParse/wxParse.js'),
+article : '&lt;div&gt;我是HTML代码&lt;/div&gt;',
+onLoad(option) {
+    let that = this;
+    this.WxParse.wxParse('article', 'html', this.article, that, 5);
+}</pre>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

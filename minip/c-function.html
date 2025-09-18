@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云函数 Cloud function</title>
+  <link rel="stylesheet" href="/css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>云函数</h1>
+    <span>&commat;Cloud Function</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>部署在微信云端的函数服务</li>
+      <li>提供后端服务能力，如：数据库操作、文件存储、HTTP请求</li>
+      <li>需要 Node.js 环境</li>
+      <li>每个云函数都是一个 .js 文件</li>
+      <li>云函数文件名即为云函数名称</li>
+      <li>支持 async/await</li>
+      <li>可以引入和使用 NPM 包</li>
+      <li>数据库直连，只能操作自己的数据；使用云函数，操作的权限得到提升</li>
+      <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/guide/">开发者指引 →
+          基础能力 → 云函数或开发者资源 → SDK → 云函数</a></li>
+    </ul>
+    <h3>特点 Feature</h3>
+    <ul>
+      <li>无需管理服务器：开发者只需关注业务逻辑代码，无需运维服务器</li>
+      <li>弹性伸缩：根据请求量自动扩缩容</li>
+      <li>按需付费：只在函数执行时计费</li>
+      <li>高可用性：由云服务商保证服务的稳定性和可靠性</li>
+    </ul>
+    <h3>场景 Application</h3>
+    <ul>
+      <li>业务逻辑处理：处理复杂的业务逻辑</li>
+      <li>数据库操作：访问云数据库进行增删改查</li>
+      <li>文件处理：操作云存储中的文件</li>
+      <li>第三方服务调用：调用外部API或服务</li>
+      <li>定时任务：执行定时或计划任务</li>
+    </ul>
+    <h3>部署流程 Procedure</h3>
+    <ul>
+      <li>创建云函数 - 右键 cloudfunctions，新建 Node.js 云函数；以文件夹的形式创建，包括：
+        <p>config.json</p>
+        <p>index.js - 业务逻辑</p>
+        <p>package.json</p>
+        <p>node_modules - 安装依赖时才有</p>
+      </li>
+      <li>函数模板默认内容如下：
+        <p>event: 包含调用时传入的参数</p>
+        <p>context: 包含调用上下文信息，如 openid 和 appid，用于获取用户信息</p>
+      </li>
+      <pre>
+// 1. 引入云开发SDK
+const cloud = require('wx-server-sdk')
+
+// 2. 初始化云环境
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
+
+// 3. 导出 main 函数（云函数入口）
+exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
+
+  // 函数逻辑
+  return {
+    event,
+    openid: wxContext.OPENID,
+    appid: wxContext.APPID,
+    unionid: wxContext.UNIONID,
+  }
+}</pre>
+      <li>编写云函数代码</li>
+      <li>右键云函数目录选择"上传并部署"；注意观察右下角指示器；如果还是圆圈，则表示还在进行中。完毕后，圆圈消失。如有依赖，通常选择忽略；但是使用时，如果换了环境，需要先安装依赖</li>
+      <li>在客户端调用已部署的云函数；使用 data 传递参数；可以是 callback 或 promise 方式</li>
+      <pre>
+// 调用云函数
+wx.cloud.callFunction({
+  name: '函数名',
+  data: {
+    // 传递的参数
+    a: 1,
+    b: 2
+  },
+  success: res => {
+    console.log('调用成功', res)
+  },
+  fail: err => {
+    console.error('调用失败', err)
+  },
+  complete: () => {
+    console.log('调用结束')
+  }
+})</pre>
+      <pre>
+wx.cloud.callFunction({
+  name: '函数名',
+  data: {}
+})
+  .then(res => {})
+  .catch(err => {})
+  .finally(() => {})</pre>
+      <li>云函数的执行是在云端，相关 log 调试需要开启本地调试</li>
+      <li>其它：访问云数据库</li>
+      <pre>
+const cloud = require('wx-server-sdk')
+cloud.init()
+
+// NOT
+// const db = cloud.database()
+
+exports.main = async (event, context) => {
+  // 这里不需要使用 wx.cloud
+  // 不建议放在外面
+  const db = cloud.database()
+  
+  try {
+    // 查询数据
+    const result = await db.collection('users').get()
+    return result
+  } catch (error) {
+    return { error }
+  }
+}</pre>
+      <li>其它：云函数间调用</li>
+      <pre>
+const cloud = require('wx-server-sdk')
+cloud.init()
+
+exports.main = async (event, context) => {
+  // 调用其他云函数
+  const result = await cloud.callFunction({
+    name: 'otherFunction',
+    data: { param: 'value' }
+  })
+  
+  return result
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 加载数据</div>
+    <ul>
+      <li>可以加载商品 products 集合的数据；也可以加载订单 orders 集合的数据</li>
+      <li>使用参数 collection 传递集合名</li>
+      <li>创建云函数 loadData</li>
+      <pre>
+const cloud = require('wx-server-sdk')
+
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
+
+exports.main = async (event, context) => {
+  const db = cloud.database()
+  const res = await db.collection(event.collection).get()
+  return {
+    data: res.data,
+  }
+}</pre>
+      <li>调用云函数 - 传递参数，加载商品集合 products 的数据</li>
+      <pre>
+wx.cloud.callFunction({
+  name: 'loadData',
+  data: {
+    database: 'products'
+  },
+  success: res => {
+    console.log('load products', res.result);
+  },
+  fail: err => {
+    console.log(err);
+  }
+})</pre>
+    </ul>
+    <div class="tips">使用云函数加载数据，最多可以获取100条</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 加法计算器</div>
+    <ul>
+      <pre>
+const cloud = require('wx-server-sdk')
+cloud.init()
+
+exports.main = async (event, context) => {
+  const { a, b } = event
+  const sum = a + b
+  
+  return {
+    sum
+  }
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 获取用户手机号</div>
+    <ul>
+      <li>小程序主体不能是个人</li>
+      <li>需要在云函数目录中 config.json 中配置接口使用权限</li>
+      <pre>
+{
+  "permissions": {
+    "openapi": [
+      "phonenumber.getPhoneNumber"
+    ]
+  }
+}</pre>
+      <li>结构 - 指定 open-type 并绑定专用事件 bindgetphonenumber</li>
+      <pre>
+&lt;button open-type="getPhoneNumber" bindgetphonenumber="getCell"&gt;
+  &lt;text&gt;单击获取手机号{{phoneNumber}}&lt;/text&gt;
+&lt;/button&gt;</pre>
+      <li>逻辑 - 利用 code 换取用户手机号</li>
+      <pre>
+getCell(e) {
+  const code = e.detail.code
+  wx.cloud.callFunction({
+    name: 'getCell',
+    data: {
+      code
+    }
+  }).then(res => {
+    this.setData({
+      'phoneNumber': res.result.phoneInfo.phoneNumber
+    })
+  }).catch(err => {
+    console.log(err);
+  })
+}</pre>
+      <li>云函数 - 核心代码</li>
+      <pre>
+try {
+  const res = await cloud.openapi.phonenumber.getPhoneNumber({
+    code: event.code
+  })
+  return res
+} catch (err) {
+  return err
+}</pre>
+    </ul>
+    <h3>异常处理 try-catch</h3>
+    <ul>
+      <li>云函数默认情况下，没有提供错误处理</li>
+      <li>增加错误处理可以
+        <p>防止未捕获异常导致云函数崩溃</p>
+        <p>提供结构化的返回数据</p>
+        <p>记录服务器端错误日志</p>
+        <p>避免暴露敏感的系统错误信息</p>
+      </li>
+      <li>同时增加客户端处理，作为补充作用</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 加载数据 - 最佳体验</div>
+    <ul>
+      <li>错误控制</li>
+      <li>格式化输出</li>
+      <li>核心代码完善如下</li>
+      <pre>
+try {
+  const res = await db.collection(event.collection).get()
+  return {
+    errCode: 200,
+    errMsg: "get ok",
+    data: res.data,
+  }
+} catch (error) {
+  console.log('error', error);
+  return {
+    errorCode: error.errCode || 'UNKNOWN_ERROR',
+    errMsg: error.message || '服务异常'
+  }
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

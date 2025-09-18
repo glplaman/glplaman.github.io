@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>逻辑 JS</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>逻辑</h1>
+    <span>&commat;JS</span>
+  </header>
+  <section>
+    <ul>
+      <li>微信小程序逻辑文件的后缀名是 <span class="warn">.js</span></li>
+      <li>包含：数据、<a href="./events.html">事件处理函数</a> 、<a href="./lifetime.html">生命周期函数</a>
+        和其他函数，如<a href="./page_event.html">页面特定事件</a></li>
+    </ul>
+    <h3>数据 data</h3>
+    <ul>
+      <li>数据类型同 JavaScript 数据类型：Number、String，Array，Object等等</li>
+      <li>按照用途分为：响应式数据和静态数据；如无特别说明，都是指响应式数据</li>
+      <li>按照来源分为：全局数据和页面数据</li>
+      <li>按照声明分为：外部数据和内部数据；外面数据使用 require 导入</li>
+    </ul>
+    <h3>全局数据 globalData</h3>
+    <ul>
+      <li>在 app.js 中声明并使用</li>
+      <li>作为全局数据使用；也称作状态</li>
+      <li>其他页面使用 const app = getApp()可以获取 app 所有的数据</li>
+      <li>小程序每次重新启动，数据都丢失；可以考虑使用 <a href="./api-storage.html">本地数据缓存 storage</a> 持久化保存</li>
+      <li>敏感数据请不要本地缓存；如商品数据应从后端获取；订单数据需要保存在后端；而购物车、收藏夹可以缓存在本地</li>
+      <pre>
+App({
+  globalData: {
+    // 全局数据
+    products: wx.getStorageSync('products') || []
+  }
+})</pre>
+      <li>app.globalData 的数据可以在 cconsole 标签页输入并查看</li>
+      <pre>&gt; getApp().globalData</pre>
+    </ul>
+    <h3>页面数据 data</h3>
+    <ul>
+      <li>某个页面导入或声明的数据，当前页面内有效</li>
+      <li>响应式数据用于渲染页面，在属性数据 data 中定义</li>
+      <li>静态数据在 page 顶级说明，和 data 同级，且不需要指定数据类型</li>
+      <li>除了使用本页面定义的数据外，还可以使用其它页面的数据，如从 app.js 中获取数据/全局状态、从服务器拉取数据</li>
+      <pre>
+// 页面外部数据
+const app = getApp()
+Page({
+  // 页面静态数据
+  uploadFileUrl: null
+  data: {
+    // 页面响应式数据
+    age: 18,
+    msg: 'hi,there',
+    url: 'glpla.github.io',
+    tempFilePath: null,
+    userInfo:{
+      uage: 18,
+      ugender: '男',
+      uname: 'glpla',
+      usn:20221001
+    },
+    goods: []
+  },
+  // 自定义函数
+  getInfo(){
+    //...
+  }
+  // 生命周期函数
+  onLoad(options) {
+    // ...
+  },
+})        
+</pre>
+      <li>页面的数据可以在调试器的 AppData 中查看</li>
+    </ul>
+    <h3>使用数据 this.data</h3>
+    <ul>
+      <li>在逻辑 .js </li>
+      <pre>this.data.varible_name</pre>
+      <li>结构 .wxml</li>
+      <pre>&lt;view&gt;{{varible_name}}&lt;/view&gt;</pre>
+    </ul>
+    <h3>更新数据 setData()</h3>
+    <ul>
+      <li>逻辑中的数据变化会影响视图 / <a href="./wxml.html">结构 wxml</a> 中绑定数据部分的更新</li>
+      <li>接受两个参数：要更新的数据对象和可选的回调函数（在数据更新完成并且页面渲染结束后执行）</li>
+      <li>如果回调函数中，需要渲染页面/更新，则应考虑 <span class="warn">数据合并后一次更新</span></li>
+      <li>修改简单数据</li>
+      <pre>
+this.setData({
+  msg: 'welcome back'
+})
+</pre>
+      <li>修改复杂数据；增加或修改属性；通过扩展运算符，使用了回调函数 cb</li>
+      <pre>
+this.setData({
+  userInfo": {...userInfo, uage:24}
+}, cb)</pre>
+      <li>修改复杂数据；增加或修改属性；路径写法，更简洁 <span class="iconfont icon-dianzan"></span></li>
+      <pre>
+this.setData({
+  "userInfo.uage": 24
+})</pre>
+      <li>如果直接操作 this.data.userInfo 是不是就不用 this.setData()<span class="iconfont icon-wenhao"></span></li>
+      <pre>this.data.userInfo.uage = 18</pre>
+    </ul>
+    <!-- <ul>
+      <li>数据确实会变化；需要切换调试器的标签页查看数据的变化；但是无法更新页面</li>
+      <li>必须使用 setData() 才可以触发页面渲染更新</li>
+      <li>所以要尽量合并数据更新</li>
+      <li>更多信息，请访问 <a href="./events.html">事件 Events</a></li>
+    </ul> -->
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

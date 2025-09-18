@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单使用 Form</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>注册/留言/问卷</h1>
+    <h4>&commat;Form</h4>
+    <dl class="number-mul-sn">
+      <dt>目的</dt>
+      <dd>
+        <div>掌握数据绑定的使用</div>
+        <div>熟悉常见表单元素的事件</div>
+        <div>了解表单提交和网络请求的基本过程</div>
+      </dd>
+      <dt>内容</dt>
+      <dd>
+        <div>数据绑定</div>
+        <div>表单事件</div>
+        <div><a href="../node/jsonserver.html" class="link">Json-Server</a>数据服务器搭建</div>
+        <div>网络请求</div>
+      </dd>
+      <dt>使用组件</dt>
+      <dd>
+        <div>input - text/nickname</div>
+        <div>slider</div>
+        <div>picker</div>
+        <div>radio radio-group</div>
+        <div>checkbox checkbox-group</div>
+        <div>textarea</div>
+        <div>buttton - submit</div>
+      </dd>
+      <dt>要求</dt>
+      <dd>
+        <div>自行设计场景，完成留言、用户注册或问卷调查，并应用到小程序项目中</div>
+        <div>三个应用案例完成一个即可，建议全部完成</div>
+        <div>实验报告：采用学院统一下发的 <a href="../utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx">实验模板</a>
+          文件，以文字说明，配以必要的效果图片或核心代码，展示并说明数据来源、实施过程、各部分功能、具体内容和实现细节；最后导出为PDF，按照要求命名，提交个人学习通作业
+        </div>
+        <div>未按要求在规定时间内提交视为无效，不得分</div>
+        <div>相关格式规范，请参考 <a href="../course/paper.html">论文格式规范 Paper Prettier</a></div>
+      </dd>
+      <dt>特别提示</dt>
+      <dd>实验报告除了各要素齐全外，特别要体现</dd>
+      <dd>
+        <div>完成的案例</div>
+        <div>接口文档和字段说明；其中信息字段info要体现个人信息或小组信息</div>
+        <div>结构WXML - 代码</div>
+        <div>逻辑js -代码</div>
+        <div>效果- 截图，统一宽度，高度随内容、有编号、有说明标题，如：图1 页面布局</div>
+      </dd>
+      <dt>接口设置</dt>
+      <dd>
+        <div>服务器支持 json-server</div>
+        <div>数据文件 form.json - info开发者信息；msg用户留言数据，user用户注册数据、survey用户问卷数据</div>
+        <pre>
+{
+    "info": {},
+    "msg": [],
+    "user": [],
+    "survey": []
+}</pre>
+      </dd>
+      <dt>留言模块</dt>
+      <dd>.婚礼邀请函案例</dd>
+      <dd>
+        <div>表单各字段名字name：用户姓名uname、用户性别ugender、用户电话ucell、用户邮箱umail、用户留言umsg</div>
+        <div>效果图</div>
+        <img src="./imgs/wedding3.png" alt="">
+      </dd>
+      <dt>用户注册模块</dt>
+
+      <div>用户节点信息参考字段，可根据实际需求定制</div>
+      <pre>
+user:{
+    id:20221001
+    ubirth:'2020-08-01',
+    udesc:'hi,there.',
+    ulike:[],
+    uage:18,
+    ugender:'女',
+    uname:'glpla',
+}</pre>
+      <div>提交代码 - 默认提交json，所以不需要额外指定header</div>
+      <pre>
+submit(e){
+    wx.request({
+        url: 'http://127.0.0.1:3000/user',
+        method:'POST',
+        data:this.data.user,
+        success:(res)=>{
+            console.log(res);
+        },
+        fail:err=>{
+            console.log(err);
+        }
+    })
+}</pre>
+      <div>效果图</div>
+      <img src="./imgs/setup0.png" alt="">
+      </dd>
+      <dt>问卷调查模块</dt>
+      <dd>
+        <div>问卷内容以小组为单位自定</div>
+        <div>表单各字段名字name：用户姓名uname、用户邮箱umail、用户选择urx（x:1-n）、用户留言umsg</div>
+        <div>表单提交事件处理函数 - 具体服务器地址视当时开发环境</div>
+        <pre>
+submitSurvey(e) {
+    wx.request({
+        url: 'http://127.0.0.1:3000/survey',
+        method:'POST',
+        data: e.detail.value,
+        success:res=>{
+        console.log(res);
+        },
+        fail:err=>{
+        console.log(err);
+        },
+        complete:()=>{
+        console.log('log done');
+        }
+    })
+}                </pre>
+        <div>效果图</div>
+        <img src="./imgs/survey0.png" alt="">
+        <img src="./imgs/survey1.png" alt="">
+      </dd>
+      <dt>扩展</dt>
+      <dd>
+        <div>使用node.js服务器，提交数据单独保存为一个文件</div>
+        <pre>
+const express = require('express')
+const fs = require('fs');
+
+// 创建Web服务器
+const app = express();
+const port = 3000;
+
+// 静态资源；系统中间件-靠前引用；路由中间件
+app
+  .use(express.static('./public'))
+  .use(express.json())
+
+app.post('/userInfo', (req, res) => {
+    console.log(req.body);
+    fs.writeFile('./public/data/userInfo.json', JSON.stringify(req.body), (error) => {
+        if (error) {
+            console.log('保存文件失败了')
+        }
+    });
+    res.json(req.body)
+})
+
+app.listen(port, () => {
+  console.log('server is on at: http://127.0.0.1:3000');
+});</pre>
+        <div>如何改善用户体验？如加入各种提示信息</div>
+        <p>. wx.showLoading()</p>
+        <p>. wx.hideLoading()</p>
+        <p>. wx.showToast()</p>
+      </dd>
+    </dl>
+  </div>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

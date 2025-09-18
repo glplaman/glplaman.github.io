@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网络请求 Request</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>网络请求</h1>
+    <span>&commat;Request</span>
+  </header>
+  <section>
+    <h3>开发要求</h3>
+    <ul>
+      <li>- 仅支持 https 请求</li>
+      <li>- 必须将接口域名（不是IP地址）添加到信任列表|白名单</li>
+      <li>- 如果提示：对应的服务器证书无效。。。需要服务器重新下载并配置SSL证书；生产环境，必须要配置新的SSL证书</li>
+      <li>- 临时调试，可以选择取消校验</li>
+    </ul>
+    <figure>
+      <img src="./imgs/pro6.png" alt="">
+      <figcaption>取消校验域名合法性</figcaption>
+    </figure>
+    <h3>接口配置</h3>
+    <ul>
+      <li>- 微信开发平台 → 开发</li>
+      <li>- 开发时可以在微信开发工具 → 详情 → 项目配置中查看</li>
+    </ul>
+    <figure>
+      <img src="./imgs/pro5.png" alt="">
+      <figcaption>配置合法域名</figcaption>
+    </figure>
+    <figure>
+      <img src="./imgs/pro4.png" alt="">
+      <figcaption>查看合法域名</figcaption>
+    </figure>
+  </section>
+  <h2>Request</h2>
+  <section>
+    <ul>
+      <li>受小程序体量限制，数据需要搭建本地静态资源服务器保存或使用云存储</li>
+      <li>微信小程序使用 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/network/request/wx.request.html">wx.request()</a>
+        发起网络请求；还可以使用 <a href="https://www.axios-http.cn/docs/intro">Axios</a>
+      </li>
+      <li>请求方式很多，默认是 GET；使用较多的还有 POST</li>
+      <li>微信小程序支持 回调函数 callback 和 <a
+          href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>
+        两种方式</li>
+      <li>本地静态资源服务器使用，请访问 <a href="../node/static.html">静态资源服务器</a>、<a href="../node/dynamic.html">动态资源服务器</a></li>
+    </ul>
+    <table>
+      <caption>常见配置项</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>url</td>
+          <td>请求接口地址或数据</td>
+        </tr>
+        <tr>
+          <td>data</td>
+          <td>请求的参数<br> 多用于 POST，指的是提交数据<br>也可以是 GET，用到 query 参数；也可以直接使用 ? 拼接在 url 后面</td>
+        </tr>
+        <tr>
+          <td>header</td>
+          <td>请求头；默认 content-type 为 application/json</td>
+        </tr>
+        <tr>
+          <td>method</td>
+          <td>请求方式：默认是 GET；还有 POST、DELETE、PUT、PATCH等</td>
+        </tr>
+        <tr>
+          <td>success</td>
+          <td>请求成功；通常还要根据结果进一步确认</td>
+        </tr>
+        <tr>
+          <td>fail</td>
+          <td>请求失败</td>
+        </tr>
+        <tr>
+          <td>complete</td>
+          <td>请求完成；无论成功失败都会执行<br>通常用于日志</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>GET</h3>
+    <ol>
+      <li>获取 <a href="https://glpla.github.io">大树小站</a> 积分榜数据</li>
+      <pre>
+wx.request({
+    url: 'https://glpla.github.io/utils/data/data2024/rank202402.json',
+    success: res => console.log(res),
+    fail: err => console.log(err),
+    complete: () => console.log('log done')
+})</pre>
+      <li>获取 <a href="https://glpla.github.io">大树小站</a> 美食列表数据</li>
+      <pre>
+wx.request({
+    url: 'https://glpla.github.io/utils/data/goods.json',
+    success: res => console.log(res),
+    fail: err => console.log(err),
+    complete: () => console.log('log done')
+})</pre>
+      <li>分页获取数据，数据来自 node.js 服务器或 JSON-Server 服务器</li>
+      <p>. 使用 ? 和 & 直接拼接分页参数；注意不要拼错</p>
+      <pre>
+wx.request({
+    url: this.data.baseUrl + '/goods/page?page=' + this.page + '&pageSize=' + this.pageSize,
+    success: res => console.log(res),
+    fail: err => console.log(err),
+    complete: () => console.log('log done')
+})</pre>
+      <p>. 使用 data 配置项指定分页参数；可读性好，更直接</p>
+      <pre>
+wx.request({
+    url: this.data.baseUrl + '/goods/page',
+    data: {
+        page: this.page,
+        pageSize: this.pageSize
+    },
+    success: res => console.log(res),
+    fail: err => console.log(err),
+    complete: () => console.log('log done')
+})</pre>
+      <li>使用猫眼API获取信息并渲染到页面</li>
+      <pre>
+wx.request({
+    url:'https://m.maoyan.com/ajax/movieOnInfoList',
+    success:(res:any)=>{
+        console.log(res.data);
+        this.setData({
+            list:res.data.movieList
+        })
+    }
+})</pre>
+    </ol>
+    <h3>POST</h3>
+    <ul>
+      <li>数据提交到服务器；应显式的指定方式 method 和数据 data</li>
+      <li>案例：留言、问卷、注册</li>
+      <pre>
+wx.request({
+    url: 'http://127.0.0.1:3000/users',
+    method:'POST',
+    data:this.data.user,
+    success: res => console.log(res),
+    fail: err => console.log(err),
+    complete: () => console.log('log done')
+})</pre>
+    </ul>
+    <div class="tips">
+      <div>如果不确定数据的结构，可以在调试器控制台使用 log 输出 res，一层一层剥离数据，直到拿到需要的数据</div>
+      <div>请随时关注并确认网络 API 接口的变化</div>
+      <div>跨域问题只存在于使用浏览器的 WEB 开发中。小程序的宿主环境是微信客户端，不是浏览器，不存在跨域的问题</div>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 自建 <a href="../node/dynamic.html">动态资源服务器</a> 的使用</div>
+    <ol>
+      <p>注意比较几种数据请求的特点</p>
+      <p>这里使用 https；开发阶段，小程序会警告，无需理会</p>
+      <li>获取所有数据</li>
+      <pre>
+wx.request({
+  url: 'http://127.0.0.1:3000/coffee',
+  success: res => {
+    console.log(res);
+  },
+  fail: err => console.log(err),
+  complete: () => console.log('done')
+})</pre>
+      <li>根据 id 获取数据</li>
+      <pre>
+wx.request({
+  url: 'http://127.0.0.1:3000/coffee?id=9',
+  success: res => {
+    console.log(res);
+  },
+  fail: err => console.log(err),
+  complete: () => console.log('done')
+})</pre>
+      <li>分页获取 - 指定页数和大小；页数从1开始</li>
+      <pre>
+wx.request({
+  url: 'http://127.0.0.1:3000/coffee/page?page=2&pageSize=2',
+  success: res => {
+    console.log(res);
+  },
+  fail: err => console.log(err),
+  complete: () => console.log('done')
+})</pre>
+      <li>服务器 API 接口实现 - 根据是否携带查询参数 Query Parameter 判断如何返回数据</li>
+      <pre>
+router.get("/", (req, res) => {
+  const id = req.query.id;
+  if (id) {
+    console.log("get by id");
+    res.json({
+      err: 0,
+      data: coffee.find((item) => item.id == id),
+    });
+  } else {
+    console.log("get all");
+    res.json({
+      err: 0,
+      data: coffee,
+    });
+  }
+});
+
+router.get("/page", (req, res) => {
+  let arr = [...coffee];
+  let start = (req.query.page - 1) * req.query.pageSize;
+  let result = arr.splice(start, req.query.pageSize);
+  res.setHeader("X-Total-Count", coffee.length);
+  res.json({
+    errno: 0,
+    msg: "get goods by page ok",
+    data: result,
+  });
+});</pre>
+    </ol>
+    <div class="tips">
+      <div>如果指定 page=0，则范围会出现负值[-2,2]，从数据最后面开始截取2条数据</div>
+    </div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

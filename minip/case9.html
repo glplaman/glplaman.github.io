@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美食地图 Food</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>美食地图</h1>
+    <h4>Food</h4>
+    <dl class="number-mul-sn">
+      <dt>目的</dt>
+      <dd>
+        <div>掌握地图组件 &lt;map&gt; 和常见 API的使用</div>
+        <div>掌握页面滚动 pageScrollTo 的使用</div>
+        <div>掌握腾讯地图 微信小程序 JavaScript SDK 的使用</div>
+        <div>进一步熟悉网络请求 wx.request() 的基本过程</div>
+      </dd>
+      <dt>内容</dt>
+      <dd>
+        <div>素材准备</div>
+        <div>项目创建</div>
+        <div>腾讯 LBS 账号申请及微信小程序 SDK 下载</div>
+        <div>综合运用</div>
+      </dd>
+      <dt>步骤</dt>
+      <dd class="sn">
+        <div>准备</div>
+        <p>素材 Iconfont字体图标、标记图片等</p>
+        <p>账号申请 - 略</p>
+        <p>SDK下载并引入 - 略</p>
+        <p>打开项目美食列表项目或新建一个项目 - 略</p>
+        <div>调整商品渲染列表结构 - 增加锚点属性 id，供页面滚动使用</div>
+        <pre>
+&lt;navigator class="item" url="../detail/detail?id={{index}}" wx:for="{{lists}}" wx:key="index" id="nav{{index}}"&gt;
+    //
+&lt;/navigator&gt;</pre>
+        <div>导航栏</div>
+        <figure class="img-sn">
+          <img src="./imgs/text1.png" alt="">
+          <figcaption>返回顶部和跳转到地图页</figcaption>
+        </figure>
+        <figure class="img-sn">
+          <img src="./imgs/text5.png" alt="">
+          <figcaption>侧边导航栏</figcaption>
+        </figure>
+        <p><span class="warn">增加</span> 侧边导航栏 - 单击时，跳转到指定的商品分类；商品列表渲染时，可以使用 id 指定目标锚点</p>
+        <p>导航栏结构 - 采用列表渲染；列表提供 导航项的图标、标签；可以增加页面 LOGO</p>
+        <pre>
+&lt;view class="menu"&gt;
+    &lt;view class="menu-header"&gt;
+        &lt;image class="menu-img" src="https://glpla.github.io/utils/coffee/coffee0.jpg" mode="aspectFill" /&gt;
+    &lt;/view&gt;
+    &lt;view class="menu-item {{index==ind?'active':''}}" wx:for="{{navs}}" wx:key="item" data-ind="{{index}}" bind:tap="getInd"&gt;
+        &lt;text class="iconfont {{item.icon}}"&gt;&lt;/text&gt;
+        &lt;text&gt;{{item.tag}}&lt;/text&gt;
+    &lt;/view&gt;
+&lt;/view&gt;</pre>
+        <p>导航栏数据 - ind 表示当前导航项，navs是导航项内容数组，根据需要增加</p>
+        <pre>
+ind: 0,
+navs: [{
+    tag: '面包',
+    icon: 'icon-bread'
+}]</pre>
+        <p>侧边导航栏样式 - 固定定位在页面左侧，宽度为页面宽度的25%；之前的要靠右，可以使用 margin-left 或 padding-left 增加相应的大小</p>
+        <pre>
+.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 25%;
+    height: 100vh;
+}                </pre>
+        <p>导航栏绑定的跳转事件 getInd() - 获取当前项，改变样式，同时跳转到指定位置</p>
+        <pre>
+getInd(e) {
+    let ind = e.currentTarget.dataset.ind
+    this.setData({
+        ind: ind
+    })
+    wx.pageScrollTo({
+        selector: '#nav' + ind*6
+    })
+}</pre>
+        <div>返回顶部</div>
+        <p><span class="warn">增加</span> 一个返回顶部按钮，绑定事件toTop，点击后，返回到美食列表页</p>
+        <pre>
+toTop() {
+    wx.pageScrollTo({
+        scrollTop: 0,
+        duration: 300,
+        success: res => console.log(res),
+        fail: err => console.log(err),
+        complete: () => console.log('scroll done')
+    })
+}</pre>
+        <div>优惠券</div>
+        <p><span class="warn">增加</span> 优惠券结构；可以使用图片代替；绑定事件，单击跳转到优惠券详情页面</p>
+        <p><span class="warn">增加</span> 优惠券页面 promotion；包括新到、快过期、满折券、满减券、立减券等；略</p>
+        <div>地图</div>
+        <p><span class="warn">增加</span> 一个跳转地图按钮，绑定事件toMap，点击后，跳转到美食地图页面</p>
+        <pre>
+toMap() {
+    wx.navigateTo({
+        url: '../map/map',
+    })
+}</pre>
+        <div>地图详情</div>
+        <p><span class="warn">增加</span> 一个地图页面 map</p>
+        <p>打开<span class="warn">地图</span>页面，创建 wxml 结构如下：使用罗盘、标尺、显示当前位置等属性，并绑定地图移动事件和标记单击事件</p>
+        <pre>
+&lt;map 
+    longitude="{{longitude}}" 
+    latitude="{{latitude}}" 
+    markers="{{markers}}" 
+    show-location 
+    show-scale 
+    show-compass 
+    bindregionchange="changeRegion" 
+    bindmarkertap="doMarker"/&gt;</pre>
+        <p>地面页面逻辑 - 页面加载时，获取位置并调用自定义函数 getHotel搜索餐厅，并以标记的形式展示搜索结果；标记样式的设计，通常采用默认样式。一般只需指定上方气泡 callout 和下方标签
+          label。这里采用红色，序号在下方，分类在上方</p>
+        <pre>
+onLoad(options) {
+    wx.getLocation({
+        type: 'gcj02',
+        success: res => {
+            console.log(res);
+            this.setData({
+                latitude: res.latitude,
+                longitude: res.longitude
+            })
+            this.getHotel(res.longitude, res.latitude)
+        },
+        fail: err => console.log('err', err),
+        complete: () => console.log('get food done')
+    })
+}</pre>
+        <p>使用经纬度封装搜索函数 getHotel(long, lati)；默认情况下会根据自身定位搜索，建议显示的指定位置</p>
+        <pre>
+getHotel(long, lati) {
+    qqmapsdk.search({
+        keyword: '餐厅',
+        location: {
+            longitude: long,
+            latitude: lati
+        },
+        success: res => {
+            console.log(res);
+            let markers = []
+            res.data.forEach((marker, ind) => {
+                markers.push({
+                    id: ind,
+                    longitude: marker.location.lng,
+                    latitude: marker.location.lat,
+                    iconPath: '/utils/marker.png',
+                    callout: {
+                        content: marker.category,
+                        display: 'ALWAYS',
+                        color:'#f40'
+                    },
+                    label: {
+                        content: ind,
+                        color:'#f40'
+                    },
+                    width: 32,
+                    height: 32
+                })
+            })
+            //当前中心点坐标；可以不使用
+            markers.push({
+                id: res.data.length,
+                longitude: long,
+                latitude: lati,
+                iconPath: '/utils/marker.png',
+                callout: {
+                    content: 'bubble',
+                    display: 'ALWAYS'
+                },
+                label: {
+                    content: 'label',
+                },
+                width: 32,
+                height: 32
+            })
+            this.setData({
+                markers
+            })
+        }
+    })
+}</pre>
+        <p>移动地图时，数借助系统函数区域改变 changeRegion() 获取的结束点end位置来更新当前区域的餐厅信息 - 略</p>
+        <pre>
+changeRegion(e) {
+    if (e.type == 'end') {
+        this.getHotel(e.detail.centerLocation.longitude, e.detail.centerLocation.latitude)
+    }
+}</pre>
+        <p>通过标记id获取标记点信息 - 略</p>
+        <pre>
+doMarker(e){
+    console.log(e);
+}</pre>
+        <div>预览或在真机中查看效果</div>
+        <figure class="img-sn">
+          <img src="./imgs/text2.png" alt="">
+          <img src="./imgs/text3.png" alt="">
+          <img src="./imgs/text4.png" alt="">
+          <figcaption>美食地图</figcaption>
+        </figure>
+      </dd>
+      <dt>要求</dt>
+      <dd>
+        <div>按照以上步骤分别完成设计与开发</div>
+        <div>规范开发；独立完成；突出个人设计特点和风格</div>
+        <div>实验报告：采用学院统一下发的 <a href="../utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx">实验模板</a>
+          文件，以文字说明，配以必要的效果图片或核心代码，展示并说明数据来源、实施过程、各部分功能、具体内容和实现细节；最后导出为PDF，按照要求命名，提交个人学习通作业
+        </div>
+        <div>未按要求在规定时间内提交视为无效，不得分</div>
+        <div>相关格式规范，请参考 <a href="../course/paper.html">论文格式规范 Paper Prettier</a></div>
+      </dd>
+      <dt>拓展</dt>
+      <dd>
+        <div>修改搜索函数为 getHotel(long, lati, keyword)，根据参数 keyword 实现指定内容的搜索</div>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+    <script src="../utils/custom/clipboard.js"></script>
+  </div>
+</body>
+
+</html>

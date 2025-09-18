@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本 &lt;text&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>文本</h1>
+    <span>&lt;text&gt;</span>
+  </header>
+  <section>
+    <ul>
+      <li>展示文字的组件；行内元素 inline，不可以设置宽度高度等；相当于HTML5的 &lt;span&gt;</li>
+      <li>其子元素只能是自己</li>
+      <li>支持文本缩进 text-indent</li>
+      <li>white-space: pre-line; 可以识别数据中的换行符 \n</li>
+      <li>支持的实体受限，如不支持版权符号 ©；可以利用输入法或从其它地方直接复制过来</li>
+      <li>小程序支持的14种 <a href="https://blog.csdn.net/include_IT_dog/article/details/98382276">字体</a></li>
+      <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/component/text.html">&lt;text&gt;</a>
+      </li>
+    </ul>
+    <table>
+      <caption>通用属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>user-select</td>
+          <td>布尔；默认false；文本是否可选；<br>长按复制；仅限文本组件</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>WebView 特有属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>space</td>
+          <td>空格；根据字体设置的空格大小</td>
+        </tr>
+        <tr>
+          <td>decode</td>
+          <td>实体符号解码；非常鸡肋<br>数量非常有限；&amp;nbsp; &amp;lt; &amp;gt; &amp;amp; &amp;apos; &amp;ensp;
+            &amp;emsp;<br>Skyline模式支持更多实体</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>Skyline 特有属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>overflow</td>
+          <td>溢出特性；常用打点 ellipsis</td>
+        </tr>
+        <tr>
+          <td>max-lines</td>
+          <td>数字；限制文本最大行数</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] 单行文字打点</div>
+    <ul>
+      <li>传统的三件套</li>
+      <li>直接块元素或者通过布局可以隐式的转换为块元素</li>
+      <li>部分场景下，需要 <span class="warn">父容器</span> 也要设置溢出隐藏</li>
+      <pre>
+.wrap{
+    overflow: hidden;
+}
+.txt{
+    // 1
+    overflow: hidden;
+    // 2
+    text-overflow: ellipsis;
+    // 3
+    white-space: nowrap;
+}</pre>
+      <figure>
+        <img src="./imgs/text0.png" alt="">
+        <figcaption>单行文字打点</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/text5.png" alt="">
+        <figcaption>单行文字打点</figcaption>
+      </figure>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 多行文字打点 - Skyline模式</div>
+    <ul>
+      <pre>&lt;text overflow='ellipsis' max-lines='5'&gt;lorem100...&lt;/text&gt;</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

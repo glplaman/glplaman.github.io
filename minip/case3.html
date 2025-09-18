@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>美食荟 Foods</title>
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="./css/case3.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <img src="./imgs/food0.png" alt="">
+      <img src="./imgs/food1.png" alt="">
+      <img src="./imgs/food2.png" alt="">
+      <img src="./imgs/food3.png" alt="">
+      <img src="./imgs/food4.png" alt="">
+      <h1>Foods, Only Foods</h1>
+    </header>
+    <dl>
+      <dt><span>General</span> 概要</dt>
+      <dd class="number">
+        <div>内容</div>
+        <p>.事件</p>
+        <p>.导航</p>
+        <p>.声明周期函数</p>
+        <div>目的</div>
+        <p>.进一步熟悉资源服务器的搭建和网络请求的过程</p>
+        <p>.掌握事件的基本使用以及</p>
+        <p>.掌握导航的基本使用</p>
+        <p>.掌握页面的生命周期函数的使用</p>
+        <div>原理</div>
+        <p>.从资源服务器读取数据并渲染</p>
+        <div>要求</div>
+        <p>.按照以下步骤完成美食列表的设计和开发</p>
+        <p>.本案例可拓展至列表形式的其它内容，如新闻、购物车、订单、留言、代办事项等；不局限于美食。如果使用其它题材，请自行准备素材或服务器</p>
+        <p>.独立完成</p>
+        <p>.有自己的设计和拓展</p>
+        <p>.实验报告：采用学院统一下发的 <a href="../utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx">实验模板</a>
+          文件，以文字说明，配以必要的效果图片或核心代码，展示并说明数据来源、实施过程、各部分功能、具体内容和实现细节；最后导出为PDF，按照要求命名，提交个人学习通作业
+        </p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Project</span> 项目介绍</dt>
+      <dd class="number">
+        <div>首次加载并渲染10条数据</div>
+        <div>拖动到底部后，触发加载更多数据</div>
+        <div>顶部下拉时，触发数据刷新</div>
+        <div>当所有数据加载完毕后，提示"所有数据加载完毕"</div>
+        <div>单击某个美食，进入到详情页</div>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Keypoints</span> 知识点</dt>
+      <dd class="number">
+        <div>搭建服务器 Node.js</div>
+        <div>列表渲染 wx:for</div>
+        <div>生命周期函数 lifetime</div>
+        <div>网络请求 wx.request</div>
+        <div>下拉刷新 pulldownRefresh</div>
+        <div>触底加载 reachBottom</div>
+        <div>导航及传参 navigator</div>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Footage</span> 素材准备</dt>
+      <dd class="number">
+        <div>数据文件 JSON</div>
+        <p>数据节点信息要素；准备若干条</p>
+        <p>为调试方便，没有给出完整的图片路径，仅给出图片部分路径，后期再<span class="warn">拼接</span>上资源服务器的地址</p>
+        <pre>
+{
+    "id": 1,
+    "image": "/img/2846ed948e95eef4c4d50edaf52a483432023.jpg",
+    "name": "宫廷月亮虾饼",
+    "phone": "15530710686",
+    "address": "任丘市裕华中路与会战道交叉口东南角蕾莎汇生活4层",
+    "businessHours": "周一至周日10:00-21:00"
+}</pre>
+        <div>产品图片 images</div>
+        <div>阿里字体图标 iconfont</div>
+        <p>店铺、地址、联系电话、营业时间</p>
+        <div>资源服务器</div>
+        <p>node.js、express</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Pages</span> 项目页面</dt>
+      <dd class="number">
+        <div>列表页 index</div>
+        <div>详情页 detail - 自行完成</div>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Step 1</span>: 项目创建</dt>
+      <dd class="number">
+        <div>创建空白文件夹 foods</div>
+        <div>打开微信开发者工具</div>
+        <div>新建项目；项目名称为 foods，项目目录为刚才创建的空白文件夹 foods</div>
+        <div>其他根据实际情况填写</div>
+        <div>最后确定，完成项目的创建</div>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Step 2</span>: app.json项目设置</dt>
+      <p>颜色、标题可以自定</p>
+      <dd class="number">
+        <div>标题栏设置</div>
+        <pre class="code">
+"window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "foods",
+    "navigationBarBackgroundColor": "#f39c12"
+}</pre>
+        <div>页面配置：index、detail</div>
+        <pre class="code">
+"pages": [
+    "pages/index/index",
+    "pages/index/detail/detail"
+]</pre>
+      </dd>
+      <dt><span>Step 3</span>: app.wxss</dt>
+      <dd class="number">
+        <div>初始化样式</div>
+        <p>盒模型</p>
+        <div>公共样式设置</div>
+        <p>字体</p>
+        <p>图片</p>
+        <p>布局</p>
+        <div>第三方样式</div>
+        <p>导入@import</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Step 4</span>: index 页面</dt>
+      <dd class="number">
+        <div>index.json - 导航栏标题</div>
+        <p>使用下拉刷新</p>
+        <pre class="code">
+"navigationBarTitleText": "Foods",
+"navigationBarBackgroundColor": "#ffa502",
+"enablePullDownRefresh": true</pre>
+        <div>index.wxml</div>
+        <p>列表渲染</p>
+        <figure>
+          <img src="./imgs/food5.png" alt="">
+        </figure>
+        <div>index.js</div>
+        <p>网络请求 - 使用一个flag区分下拉刷新和触底加载；page、pageSize、isLoading使用静态数据；baseUrl使用动态数据，因为结构中需要使用</p>
+        <figure class="code">
+          <figcaption>封装网络请求函数</figcaption>
+          <pre>
+loadLists(flag) {
+    this.isLoading = true
+    wx.request({
+        //url: this.data.baseUrl + '/good/page?page=' + this.page + '&pageSize=' + this.pageSize,
+        url: this.data.baseUrl + '/good/page',
+        //默认是GET；可以不写
+        method: 'GET',
+        //也可以不使用data配置项，直接拼接请求参数
+        data: {
+            page: this.page,
+            pageSize: this.pageSize
+        },
+        success: (res) => {
+            //拉取成功后，新数据叠加到旧数据上
+            this.setData({
+                lists: [...this.data.lists, ...res.data],
+                total: res.header['X-Total-Count']
+            })
+        },
+        fail:err=>{
+            console.log(err);
+        },
+        complete: () => {
+            this.isLoading = false
+            if (flag) {
+                wx.stopPullDownRefresh()
+            }
+        }
+    })
+}</pre>
+        </figure>
+        <p>每个数据项绑定事件，单击后跳转到详情页；<span class="warn">思考：为什么使用currentTarget？</span></p>
+        <pre class="code">
+toDetail(e) {
+    wx.navigateTo({
+        url: './detail/detail?id=' + e.currentTarget.dataset.id,
+    })
+}</pre>
+        <p>下拉刷新 - 页数初始化；初始化完成后，停止刷新动画；true表示要执行停止刷新行为</p>
+        <pre class="code">
+onPullDownRefresh() {
+    this.page = 1,
+    this.setData({
+        lists: []
+    })
+    this.loadLists(true)
+}</pre>
+        <p>触底加载 - 页数和页大小达到总数时，停止加载；数据加载中停止再次触发加载</p>
+        <pre class="code">
+onReachBottom() {
+    //也可以直接判断当前列表的长度和总长度是否相等
+    if (this.page * this.pageSize >= this.data.total) {
+        return;
+    }
+    //这两个条件可以合并判断
+    if (this.isLoading) {
+        return;
+    }
+    this.page ++
+    this.loadLists(false)
+}                </pre>
+        <div>index.wxss</div>
+        <p>数据项渲染 - flex布局；溢出打点；注意直接父级也要溢出隐藏</p>
+        <img src="./imgs/text0.png" alt="">
+      </dd>
+    </dl>
+    <dl>
+      <dt><span>Step 5</span>: detail 页面</dt>
+      <dd>根据导航参数显示指定美食的详情</dd>
+      <dd>请自行设计开发</dd>
+      <dd>详情页在onLoad中获取id并渲染对应的商品</dd>
+      <dd class="code">
+        <pre>
+onLoad(options) {
+    this.setData({
+        id: options.id
+    })
+    //自行完成
+}</pre>
+      </dd>
+    </dl>
+    <dl>
+      <dt>拓展</dt>
+      <dd>给出已加载数据和总数据展示 - 固定定位在页面右下角</dd>
+      <dd>使用界面API给出相应的提示，如数据加载中、加载完毕等</dd>
+    </dl>
+    <dl>
+      <dt>资源服务器参考代码</dt>
+      <dd>完整流程请参考 <a href="../node/dynamic.html" class="link">动态资源服务器</a></dd>
+      <dd>读取json数据 → 解析 → 根据参数截取 → 返回结果</dd>
+      <dd>all：全部返回</dd>
+      <dd>page：截取返回</dd>
+      <dd class="code">
+        <pre>
+let fs = require('fs');
+let express = require('express')
+let port = 3000
+
+// 创建Web服务器对象
+let app = express();
+
+// 静态资源处理
+app.use(express.static('./public'));
+
+// 读取JSON数据
+const jsonStr = fs.readFileSync('./public/data/good.json', {
+    encoding: 'utf8'
+});
+
+const food = JSON.parse(jsonStr);
+
+//全部拉取
+app.get('good/all', (req, res) => {
+    res.send(food.cont)
+})
+
+//分页拉取 - 请求格式 ?page=1&pageSize=10
+app.get('good/page', (req, res) => {
+    let arr = [...food.cont]
+    let start = (req.query.page - 1) * req.query.pageSize;
+    let result = arr.splice(start, req.query.pageSize)
+    res.setHeader('X-Total-Count', food.cont.length);
+    res.send(result);
+});
+
+app.listen(port, () => {
+    console.log('服务器启动成功，地址为：http://127.0.0.1:3000');
+});</pre>
+      </dd>
+    </dl>
+    <footer class="txt-center">
+      <img src="../imgs/avatar.jpg" alt="">
+      <span>Best Wishes &copy; glpla 2024</span>
+    </footer>
+  </div>
+</body>
+
+</html>

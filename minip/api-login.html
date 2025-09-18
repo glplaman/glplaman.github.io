@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 Login</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>登录</h1>
+    <span>&commat;Login</span>
+  </header>
+  <section>
+    <h3>Overview</h3>
+    <ul>
+      <li>借助小程序的宿主环境，通过小程序的授权实现登录</li>
+      <li>必须要用户主动授权才可以实现；基于用户对产品充分了解并预知可能的风险</li>
+      <li>可以自定义登录，如：使用用户名、密码或邮箱、验证码登录</li>
+      <li>多使用表单实现</li>
+    </ul>
+    <h3>API</h3>
+    <ul>
+      <li>以下接口均被官方回收或调整，建议使用 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/userProfile.html">头像昵称填写</a>
+        完善用户信息，即新项目示例代码所示
+      </li>
+    </ul>
+    <ol>
+      <li><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserProfile.html">wx.getUserProfile</a>
+      </li>
+      <li><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserInfo.html">wx.getUserInfo</a>
+      </li>
+      <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/UserInfo.html">UserInfo</a>
+      </li>
+      <li><a href="https://developers.weixin.qq.com/miniprogram/dev/component/button.html">&lt;button&gt;</a> 的
+        open-type
+      </li>
+      <li><a href="https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html">&lt;open-data&gt;</a>
+      </li>
+    </ol>
+    <h3>wx.login()</h3>
+    <ul>
+      <li>调用 wx.login() 获取 code</li>
+      <li>使用 code、appid 和 appserv 向微信请求用户的 openod 和 session</li>
+      <li>保存并自定义用户状态</li>
+      <li>启动时检查：在 onLaunch 中自动检查登录状态</li>
+      <li>状态标记：使用 globalData.isLogin 标记登录状态</li>
+      <li>多层验证：
+        <p>检查本地是否有 token</p>
+        <p>验证 token 是否过期</p>
+        <p>检查微信 session 是否有效</p>
+      </li>
+      <li>数据持久化：使用 wx.setStorageSync 保存登录信息</li>
+      <li>页面使用：在页面中通过 getApp().globalData.isLogin 获取登录状态</li>
+      <li>登录/登出：提供完整的登录和登出功能</li>
+      <li>前端 - 演示获取 openid 和 session 的过程</li>
+      <pre>
+onLaunch: function () {
+  this.login()
+},
+
+login() {
+  wx.login({
+    success(res) {
+      if (res.code) {
+        wx.request({
+          url: 'http://127.0.0.1:3000/login',
+          // req.body
+          // 如果没有指定为 post，则在 req.query
+          method: 'POST',
+          data: {
+            code: res.code
+          },
+          success: res => {
+            console.log(res);
+            wx.setStorageSync('openis', res.data.openid)
+            wx.setStorageSync('session_key', res.data.session_key)
+          }
+        })
+      } else {
+        console.log('登录失败！' + res.errMsg)
+      }
+    }
+  })
+}</pre>
+      <li>后端 - 使用 <a href="../node/index.html">Node.js</a> 搭建本地服务器</li>
+      <pre>
+const wx = {
+  appid: 'wxf878bb2864a8f765',
+  assServ: 'f084f92acca09b2b19081c2e2758b082'
+}
+
+app.post('/login', (req, res) => {
+fetch(`https://api.weixin.qq.com/sns/jscode2session?appid=${wx.appid}&secret=${wx.assServ}&js_code=${req.body.code}&grant_type=authorization_code`)
+  .then(res => res.json())
+  .then(result => {
+    res.json({
+      errno: 0,
+      session_key: result.session_key,
+      openid: result.openid
+    })
+  })
+})</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 设置用户头像和昵称</div>
+    <ul>
+      <li>可以使用微信头像或者从相册中选择、或者拍照</li>
+      <li>可以使用微信昵称或者输入</li>
+      <li>头像或昵称变化后，及时更新数据；头像还可以 <a href="./api-file.html">上传</a> 到服务器</li>
+      <pre>
+&lt;button open-type="chooseAvatar" bind:chooseavatar="chooseAvatar"&gt;
+  &lt;image src="{{userInfo.avatar}}" mode="aspectFill" /&gt;
+&lt;/button&gt;
+&lt;input type="nickname" bindinput="iptName" value="{{userInfo.nickName}}"/&gt;</pre>
+      <pre>
+const defaultAvatarUrl = 'https://glpla.github.io/imgs/qrcode_glpla.github.io.png'
+
+Page({
+  data: {
+    userInfo:{
+      avatar: defaultAvatarUrl,
+      nickName:''
+    }
+  },
+
+  chooseAvatar(e) {
+    this.setData({
+        'userInfo.avatar': e.detail.avatarUrl
+    })
+    wx.setStorageSync('userInfo', this.data.userInfo);
+    app.globalData.userInfo = this.data.userInfo
+  },
+
+  iptName(e){
+    this.setData({
+      'userInfo.nickName': e.detail.value
+    })
+    wx.setStorageSync('userInfo', this.data.userInfo);
+    app.globalData.userInfo = this.data.userInfo
+  }
+})</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

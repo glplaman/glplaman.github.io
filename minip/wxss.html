@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式 WXSS</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>样式</h1>
+    <span>&commat;WXSS</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>微信小程序样式文件的后缀名是 <span class="warn">.wxss</span></li>
+      <li>区分全局样式和局部|页面样式</li>
+      <li>app.wxss定义的样式是全局样式，作用于所有页面</li>
+      <li>每个页面的.wxss定义的样式是局部|页面样式，只作用于当前页面</li>
+      <li>微信小程序默认使用弹性盒子 <a href="../web/flex.html">Flex</a> 布局，也可以使用网格 <a href="../web/grid.html">Grid</a> 布局</li>
+    </ul>
+    <h3>特点 Feature</h3>
+    <ul>
+      <div>支持：</div>
+      <li>- 支持内联样式 style</li>
+      <li>- 支持外部样式导入 @import</li>
+      <li>- 支持计算函数 calc()</li>
+      <li>- 支持变量使用 var()</li>
+      <li>- 支持!important</li>
+      <div>不支持：</div>
+      <li>- 不支持全局定义 :root；只能在顶级标签元素内部定义，如在页面 page 中定义</li>
+      <li>- 不支持通配符选择器 * ；只能罗列所有用到的元素</li>
+      <li>- 不支持类背景图片；只能通过内联样式定位曲线救国</li>
+      <li>- 组件库部分样式优先级高于类样式；只能使用内联样式</li>
+    </ul>
+    <h3>选择器 Selector</h3>
+    <ul>
+      <li>小程序中的 <a href="../web/selectors.html">选择器 selector</a> 没有传统CSS那样丰富，特别是在组件样式中，很多不能使用，如标签选择器、ID选择器和属性选择器 - Some
+        selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute
+        selectors. <span class="warn">WHY???</span></li>
+      <li>尽量使用常规选择器；不要炫技</li>
+      <li>优先使用类选择器</li>
+      <li>小程序提供了很多UI的样式，背离了结构 - 样式 - 逻辑分离的原则，不建议使用，主要是巨丑。。。</li>
+      <li>学会使用调试器检查元素样式</li>
+      <table>
+        <caption>建议使用的选择器</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>类选择器 逗号.</td>
+            <td>.wrap{}</td>
+          </tr>
+          <tr>
+            <td>标签选择器 - 组件标签名</td>
+            <td>view{} text{}</td>
+          </tr>
+          <tr>
+            <td>并列选择器 ,</td>
+            <td>.wrap, .box{}</td>
+          </tr>
+          <tr>
+            <td>后代选择器 - 空格分隔</td>
+            <td>.wrap item{}</td>
+          </tr>
+          <tr>
+            <td>伪元素选择器</td>
+            <td>::before ::after ::first-letter ::first-line</td>
+          </tr>
+          <tr>
+            <td>结构伪类选择器</td>
+            <td>:nth-child() :first-child :last-child</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3>样式表导入 @import</h3>
+    <ul>
+      <li>便于样式复用；如初始化样式库、模块样式库等等</li>
+      <li>支持相对路径和绝对路径；以 <span class="warn">分号 ;</span> 结束</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 导入初始化样式表</div>
+    <ol>
+      <li>在样式目录下新建一个样式文件，命名为reset.wxss</li>
+      <li>初始化常用元素，如边框、轮廓、颜色、字体大小等；可以通过变量定制主题色--themeColor；使用主题颜色：var(--themeColor)</li>
+      <li>在app.wxss中引入，全局使用</li>
+      <pre>
+@import './utils/css/reset.wxss';</pre>
+      </figure>
+    </ol>
+    <div class="tips">有些元素的初始化样式仍然会被用户代理覆盖，请使用类的方式初始化，甚至使用!important提权</div>
+    <pre>
+//页面所有共享
+page{
+  --themeColor:#eb4450;
+  --main-color: #f40;
+  --border-color: var(--main-color);
+  --padding: 10px;
+  --margin: 10px;
+  --gap: 10px;
+  min-height: 100vh;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+button{
+  width: 100%!important;
+  padding: 0;
+  margin: 0;
+  font-weight: normal;
+  border-radius: 0;
+}
+
+//元素及其子元素共享
+.wrap {
+    --main-color: #a4552e;
+    padding: 0;
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 使用 <a href="../web/framework/iconfont.html">阿里字体图标 iconfont</a>
+    </div>
+    <ul>
+      <li>可以根据需要修改iconfont.wxss的样式，如字体大小、单位、颜色等等</li>
+      <li>为避免频繁使用基类iconfont，可封装为全局组件；详情请参考 <a href="./component3.html">自定义组件</a></li>
+    </ul>
+    <h3>单位</h3>
+    <ul>
+      <li>不推荐使用绝对单位 px；推荐使用以下相对单位</li>
+      <li>更多信息，请访问 <a href="../web/css-unit.html">CSS unit</a></li>
+      <div>1. rpx</div>
+      <li>物理像素 - 实际的像素点</li>
+      <li>逻辑像素 - CSS的像素单位</li>
+      <li>DPR - Device Pixel Ratio, 设备像素比：设备的物理像素与逻辑像素之比</li>
+      <li>iPhone6：375*667 dpr=2；逻辑像素是 375px*667px，dpr 为2，所以物理像素是 750px*1334px，1个逻辑像素需要2个物理像素来显示</li>
+      <li>通常采用 iPhone6（375*667 dpr=2） 作为设计稿的标准，量取尺寸，使用 rpx 作为单位即可</li>
+      <li>responsive px - 响应式像素；小程序<span class="warn">专有</span>单位，用来解决屏幕适配；小程序规定任何手机屏幕的宽度都是750份，即750rpx -
+        逻辑像素；在不同设备上运行时，小程序会自动把 rpx 换算成对应的物理像素，实现适配</li>
+      <li class="txt-center">750rpx = 375px = 750物理像素</li>
+      <li class="txt-center">1rpx = 0.5px = 1物理像素</li>
+      <div>2. vw vh</div>
+      <li>将屏幕宽高分为100份</li>
+      <div>3. %</div>
+      <li>百分比</li>
+    </ul>
+    <h3>颜色</h3>
+    <ul>
+      <li>使用16进制颜色，如 #ff4400；支持简写，如 #f40；支持透明色，如 #f406</li>
+      <li>建议使用rgb()</li>
+      <li>更多信息，请访问 <a href="../web/css-color.html">CSS color</a></li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渲染引擎 Render</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>渲染引擎</h1>
+    <span>&commat;Render</span>
+  </header>
+  <dl>
+    <dt>WebView</dt>
+    <dd>传统模式</dd>
+    <dt>Skyline</dt>
+    <dd>以性能为首要目标：渲染流程上较 WebView 更为精简</dd>
+    <dd>只保留 <span>更现代</span> 的 CSS 集合 - 并不能像CSS3的规范那样任意发挥。。。WebView中也存在类似的情况</dd>
+    <dd>对组件和样式的支持得到提升</dd>
+    <dd>只能用自定义导航</dd>
+    <dd>更贴近原生开发</dd>
+    <dd>老版本的开发者工具不支持</dd>
+    <dd>更多信息，请访问<a
+        href="https://developers.weixin.qq.com/miniprogram/dev/framework/runtime/skyline/introduction.html">官方文档</a>
+    </dd>
+    <dd class="example-sn">从WebView迁移到Skyline</dd>
+    <dd>1. json设置</dd>
+    <dd>
+      <p>app.json增加配置项</p>
+      <pre>
+"renderer": "skyline",
+"rendererOptions": {
+    "skyline": {
+        "defaultDisplayBlock": false
+    }
+}</pre>
+      <p>页面.json增加配置项 - 不需设置导航标题，也无法设置</p>
+      <pre>
+"navigationStyle": "custom",
+"disableScroll": true</pre>
+    </dd>
+    <dd>2. 项目设置</dd>
+    <dd>勾选"详情" → "本地设置" → "启用Skyline渲染调试"</dd>
+    <dd>3. 设置完毕后，模拟器顶部出现"当前渲染模式 Skyline"，表示迁移成功</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

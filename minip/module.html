@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模块化 Module</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>模块化</h1>
+    <span>&commat;Module</span>
+  </header>
+  <section>
+    <ul>
+      <li>模块化更有助于代码复用</li>
+      <li>每个模块都是一个 .js 文件</li>
+      <li>需要导出 exports 才能被使用</li>
+      <li>需要引入 require 采能使用</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 时间格式化 formatTime.js</div>
+    <ul>
+      <li>创建模块文件 .js</li>
+      <li>业务逻辑</li>
+      <li>导出模块</li>
+      <pre>
+const formatTime = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
+}
+
+const formatNumber = n => {
+  n = n.toString()
+  return n[1] ? n : `0${n}`
+}
+
+module.exports = {
+  formatTime
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装购物车数据统计 calcCarts.js</div>
+    <ul>
+      <li>统计数量</li>
+      <li>统计总价</li>
+      <li>统计优惠</li>
+      <li>其它数据</li>
+      <li>创建模块文件 calcCarts.js</li>
+      <pre>
+const calcCarts = (carts) => {
+  return carts.reduce((acc, item) => {
+    if (item.selected) {
+      const itemTotal = item.quantity * item.price;
+      const itemDiscounted = itemTotal * (1 - (item.discount || 0));
+      acc.original += itemTotal;
+      acc.discounted += itemDiscounted;
+      acc.total += item.quantity;
+    }
+    return acc;
+  }, {
+    original: 0.00,
+    discounted: 0.00,
+    total: 0
+  })
+}
+
+// 导出
+module.exports = {
+  calcCarts
+}</pre>
+      <li>引入模块；注意路径</li>
+      <pre>
+const {
+  calcCarts
+} = require('../../utils/calcCart')
+</pre>
+      <li>使用解构出来的方法</li>
+      <pre>
+onLoad(){
+  this.setData({
+    carts: calcCarts(this.data.carts)
+  })
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 公共库 common.js - 手动封装随机 id</div>
+    <ul>
+      <li>根据需要添加其它业务</li>
+      <li>nanoid X</li>
+      <li>uuid X</li>
+      <li>生成 0-1 之间的随机小数 0.729483294823</li>
+      <li>转换为36进制字符串 0.q8x7n2k4m9</li>
+      <li>去掉了 0. 结果 q8x7n2k4m9</li>
+      <pre>
+const generateID = () => {
+  return new Date().getTime().toString(36) + Math.random().toString(36).substr(2)
+}
+
+module.exports = {
+  generateID
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

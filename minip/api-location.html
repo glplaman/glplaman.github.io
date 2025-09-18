@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>位置 Location</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>位置</h1>
+    <span>&commat;Location</span>
+  </header>
+  <section>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/map.html">&lt;map&gt;</a>
+    </h3>
+    <ul>
+      <li>渲染地图</li>
+      <li>以属性的形式设置各种地图插件</li>
+      <li>默认大小 300*150</li>
+    </ul>
+    <pre>&lt;map id="myMap" show-location /&gt;</pre>
+    <table>
+      <caption>常用属性</caption>
+      <tr>
+        <th>属性</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td>longitude</td>
+        <td>经度；<span class="warn">必填</span></td>
+      </tr>
+      <tr>
+        <td>latitude</td>
+        <td>纬度；<span class="warn">必填</span></td>
+      </tr>
+      <tr>
+        <td>show-location</td>
+        <td>显示带有方向的当前定位点</td>
+      </tr>
+      <tr>
+        <td>show-scale</td>
+        <td>显示缩放标尺</td>
+      </tr>
+      <tr>
+        <td>show-compass</td>
+        <td>显示罗盘</td>
+      </tr>
+      <tr>
+        <td>markers</td>
+        <td>
+          <div>在地图上显示标记的位置；结合地图服务API - 地点搜索实现</div>
+          <div>latitude：标记经度； <span class="warn">必填</span></div>
+          <div>longitude：标记维度； <span class="warn">必填</span></div>
+          <div>iconPath：标记图片路径； <span class="warn">必填</span></div>
+          <div>id：标记id；number；注意是数字类型；每个标记的id应该不同； <span class="warn">必填</span></div>
+          <div>width：标记宽度；实际开发 <span class="warn">必填</span></div>
+          <div>height：标记高度；实际开发 <span class="warn">必填</span></div>
+          <div>label：标签；在标记下方显示信息；对象类型</div>
+          <div>callout：单击标记，在上方显示content信息，单击地图其它地方，信息消失；对象类型</div>
+        </td>
+      </tr>
+      <tr>
+        <td>bindtap</td>
+        <td>单击地图，获取单击点经纬度信息</td>
+      </tr>
+      <tr>
+        <td>bindmarkertap</td>
+        <td>单击地图标记，获取标记点id</td>
+      </tr>
+      <tr>
+        <td>bindcallouttap</td>
+        <td>单击标记的气泡触发</td>
+      </tr>
+      <tr>
+        <td>bindlabeltap</td>
+        <td>单击标记的标签触发</td>
+      </tr>
+    </table>
+    <div class="tips">
+      <div>调试的时候，应结合预览和真机调试共同使用</div>
+      <div>[渲染层错误] [Component] &lt;map&gt;:width and heigth of marker id 1 are required</div>
+    </div>
+    <table>
+      <caption>气泡 callout vs 标签 label</caption>
+      <tr>
+        <th>属性</th>
+        <th>callout</th>
+        <th>label</th>
+      </tr>
+      <tr>
+        <td>display</td>
+        <td>√：BYCLICK、ALWAYS、NEVER</td>
+        <td>×</td>
+      </tr>
+      <tr>
+        <td>content</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>color</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>fontSize</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>anchorX</td>
+        <td>√：marker 对应的经纬度</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>anchorY</td>
+        <td>√：marker 对应的经纬度</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>borderWidth</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>borderColor</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>borderRadius</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>bgColor</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>padding</td>
+        <td>√</td>
+        <td>√</td>
+      </tr>
+      <tr>
+        <td>textAlign</td>
+        <td>√：left, right, center</td>
+        <td>√</td>
+      </tr>
+    </table>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/map/wx.createMapContext.html">wx.createMapContext(string
+        mapId, Object this)</a></h3>
+    <ul>
+      <li>深入控制地图：根据地图组件 map 的 mapId 创建其上下文 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/media/map/MapContext.html">MapContext</a> 对象，与地图交互
+      </li>
+      <li>不需要显示的使用 #</li>
+    </ul>
+    <pre>
+Page({
+  onReady: function (e) {
+    // 使用 wx.createMapContext 获取 map 上下文
+    this.mapCtx = wx.createMapContext('myMap')
+  }
+})</pre>
+    <table>
+      <caption>MapContext 常用方法</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>getCenterLocation(Object object)</td>
+          <td>获取当前地图中心的经纬度；返回 gcj02 坐标系，可以用于 wx.openLocation()</td>
+        </tr>
+        <tr>
+          <td>moveToLocation(Object object)</td>
+          <td>将地图中心移置当前定位点；地图组件 <span class="warn">需</span> 设置 show-location 为 true；经纬度非必须</td>
+        </tr>
+        <tr>
+          <td>addMarkers(Object object)</td>
+          <td>在地图上添加标记 marker</td>
+        </tr>
+        <tr>
+          <td>removeMarkers(Object object)</td>
+          <td>移除地图上标记 marker</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.getLocation.html">wx.getLocation(Object
+        object)</a></h3>
+    <ul>
+      <li>分类：位置接口</li>
+      <li>只针对部分限定类目的小程序开放</li>
+      <li>获取当前的地理位置、速度</li>
+      <li>需要在 app.json 中声明使用到的 API；详情请查看 <a
+          href="https://developers.weixin.qq.com/community/develop/doc/000a02f2c5026891650e7f40351c01">具体规则公告</a></li>
+      <pre>
+"requiredPrivateInfos": [
+    "getLocation"
+]</pre>
+      <li>默认 type 是 GPS，推荐使用 gcj02</li>
+      <pre>"getLocation:fail the api need to be declared in the requiredPrivateInfos field in app.json/ext.json"</pre>
+      <li>需要开通权限：[开发] → [开发管理] → [接口设置]中自助开通</li>
+      <li>提示：增加调用频率限制</li>
+      <pre>
+wx.getLocation({
+    type: 'gcj02',
+    success: res => console.log('getLocation ok', res),
+    fail: err => console.log('getLocation fail', err)
+})</pre>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.openLocation.html">wx.openLocation(Object
+        object)</a></h3>
+    <ul>
+      <li>分类：位置接口</li>
+      <li>使用微信<span class="warn">内置地图</span>查看位置，并将指定的地点居中显示；通常用于在用户需要查看某个特定位置的详细地图和周边情况</li>
+      <li>如果不提供 latitude 和 longitude，地图将以用户当前位置为中心</li>
+      <li>wx.openLocation() 通常与 wx.getLocation() 或 wx.chooseLocation() 结合使用，先获取位置信息，然后使用这些信息打开地图</li>
+      <li>会提供返回中心点、导航、打车、收藏等信息</li>
+      <li>需要在 app.json 中配置权限</li>
+      <pre>
+"permission": {
+  "scope.userLocation": {
+    "desc": "你的位置信息将用于小程序位置接口的效果展示"
+  }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 打开桂林市体育中心；坐标可以事先查阅好</div>
+      <pre>
+wx.openLocation({
+    latitude: 25.26,
+    longitude: 110.32,
+    name: '桂林市体育中心',
+    address: '七星区穿山东路12号'
+})</pre>
+      <figure>
+        <img src="./imgs/openLocation.jpg" alt="">
+        <figcaption>打开位置</figcaption>
+      </figure>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.chooseLocation.html">wx.chooseLocation(Object
+        object)</a></h3>
+    <ul>
+      <li>分类：位置接口</li>
+      <li>打开地图选择位置</li>
+      <pre>
+chooseLoc() {
+    wx.chooseLocation({
+        success: res => console.log('chooseLocation ok', res),
+        fail: err => console.log('chooseLocation fail', err)
+    })
+}</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.choosePoi.html">wx.choosePoi(Object
+        object)</a></h3>
+    <ul>
+      <li>分类：位置接口</li>
+      <li>打开 POI 列表选择位置</li>
+      <pre>
+choosePoi() {
+    wx.choosePoi({
+        success: res => console.log('choose poi ok', res),
+        fail: err => console.log('choose poi fail', err)
+    })
+}</pre>
+    </ul>
+    <div class="tips">choosePoi:fail 开发者工具暂时不支持此 API 调试，请使用真机进行开发</div>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/address/wx.chooseAddress.html">wx.chooseAddress(Object
+        object)</a></h3>
+    <ul>
+      <li>分类：开放接口</li>
+      <li>获取用户收货地址。调起用户编辑收货地址原生界面，并在编辑完成后返回用户选择的地址</li>
+      <pre>
+chooseAddr() {
+    wx.chooseAddress({
+        success: res => console.log('chooseAddress ok', res),
+        fail: err => console.log('chooseAddress fail', err)
+    })
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] map 基本使用</div>
+    <ul>
+      <li>配置 app.json - 只需配置一次，全局生效</li>
+      <li>根据需要的具体业务指定</li>
+      <pre>
+"requiredPrivateInfos":[
+    "getLocation",
+    "chooseLocation",
+    "choosePoi",
+    "chooseAddress"
+]</pre>
+      <li>非必须 - 具体视版本而定；系统通过弹窗提示是否授权</li>
+      <pre>
+"permission": {
+    "scope.userLocation": {
+        "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+}</pre>
+      <li>页面 .wxml - 使用位置信息渲染地图组件&lt;map&gt;；使用固定定位的图片元素返回地图中心</li>
+      <pre>
+&lt;map
+    class="map" 
+    id="map"
+    longitude="{{longitude}}" 
+    latitude="{{latitude}}" 
+    markers="{{markers}}
+    show-location 
+    show-scale 
+    show-compass 
+    bindtap='getMapInfo' 
+    bindmarkertap="getMarker" 
+    bindlabeltap="getLabel" 
+    bindcallouttap="getCallout"
+    bindregionchange="changeRegion"/&gt;
+&lt;image 
+    class="img"
+    src="../../utils/center.png" 
+    mode="aspectFill" 
+    bind:tap="moveToLocation" /&gt;</pre>
+      <li>页面 .wxss - 设置样式宽高同屏幕</li>
+      <pre>
+map{
+    width: 100vw;
+    height: 100vh;
+}
+
+.img {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+}</pre>
+      <li>在 Page 外部声明全局地图上下文变量 mapCtx，在页面 onLoad 中初始化，可以避免使用 this</li>
+      <li>在 data 中声明经纬度变量、标记点；标记用来显示地图中心</li>
+      <li>在 onLoad 中同时获取位置信息</li>
+      <pre>
+let mapCtx;
+
+Page({
+  data: {
+    longitude: "",
+    latitude: ""
+    markers: []
+  },
+
+  onLoad(options) {
+    mapCtx = wx.createMapContext('myMap')
+    wx.getLocation({
+      type: 'gcj02',
+      success: res => {
+        this.setData({
+          longitude: res.longitude,
+          latitude: res.latitude
+        })
+      },
+      fail: err => console.log('getLocation fail', err)
+    })
+  }
+})</pre>
+      <li>添加标记点函数，使用经纬度作为形参</li>
+      <pre>
+addCenterMarkers(lati, long) {
+    let markers = this.data.markers
+    let ind = markers.length
+    let marker = {
+        id: ind,
+        latitude: lati,
+        longitude: long,
+        iconPath: '../../utils/marker.png',
+        width: 32,
+        height: 32,
+        callout: {
+            content: 'top',
+            color: '#ff4400',
+            textAlign: 'center',
+            display: 'BYCLICK'
+        },
+        label: {
+            content: 'center',
+            color: '#ff4400',
+            textAlign: 'cneter'
+        }
+    }
+    markers.push(marker)
+    this.setData({
+        markers
+    })
+}</pre>
+      <li>单击返回中心，使地图回到中心点</li>
+      <pre>
+moveToLocation() {
+    mapCtx.moveToLocation({
+        longitude: this.data.longitude,
+        latitude: this.data.latitude
+    })
+}</pre>
+      <li>移动地图 - 略</li>
+      <pre>
+changeRegion(e) {
+  console.log('moving', e);
+}</pre>
+      <li>其它事件 - 借助UI API；略</li>
+      <pre>
+getMapInfo(e) {
+    console.log(e);
+    wx.showToast({
+        title: 'map tapped',
+    })
+    // 每次单击地图时，增加一个 markers
+    this.addCenterMarkers(e.detail.latitude, e.detail.longitude)
+},
+
+getMarker(e) {
+    console.log('marker tap', e);
+    wx.showToast({
+        title: 'marker tapped',
+    })
+},
+
+getLabel(e) {
+    console.log('label tap', e);
+    wx.showToast({
+        title: 'label tapped',
+    })
+},
+
+getCallout(e) {
+    console.log('callout tap', e);
+    wx.showToast({
+        title: 'callout tapped',
+    })
+}</pre>
+      <figure>
+        <img src="./imgs/map0.png" alt="">
+        <figcaption>地图及中心点</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/map1.png" alt="">
+        <figcaption>添加 marker</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/map2.png" alt="">
+        <figcaption>单击 label</figcaption>
+      </figure>
+    </ul>
+    <div class="tips">开发工具的模拟器和预览、真机调试有差别</div>
+    <h3>第三方平台</h3>
+    <ul>
+      <li><a href="https://lbs.qq.com/">腾讯位置服务 LBS</a></li>
+      <li><a href="https://api.map.baidu.com/mapCard/">百度地图开放平台</a></li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>声明式导导航 &lt;navigator&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>声明式导导航</h1>
+    <span>&lt;navigator&gt;</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>页面之间的导航/链接，类似HTML的 &lt;a&gt;</li>
+      <li>使用 &lt;navigator&gt; 实现的导航，称为声明式导航</li>
+      <li>跳转到普通页面</li>
+      <li>跳转到标签页</li>
+      <li>跳转到外部小程序</li>
+      <li>还可以指定返回的层级</li>
+      <li>可以使用文字；也可以使用图片等其他元素</li>
+      <li>除了声明式导航，还可以利用导航组件对应的 API，实现 <a href="./api-navigator.html">编程式导航</a></li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/component/navigator.html">&lt;navigator&gt;</a></li>
+    </ul>
+    <table>
+      <caption>导航组件属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>target</td>
+        <td>打开位置 <br> self：当前小程序；默认 <br>miniProgram：外部小程序</td>
+      </tr>
+      <tr>
+        <td>url</td>
+        <td>跳转链接|地址；相对地址或绝对地址</td>
+      </tr>
+      <tr>
+        <td>open-type</td>
+        <td>跳转类型 <br> navigate：默认，也可以是外部小程序 <br>switchTab：到标签页</td>
+      </tr>
+      <tr>
+        <td>delta</td>
+        <td>数字，后退的层级；默认是1，可以省略</td>
+      </tr>
+      <tr>
+        <td>app-id</td>
+        <td>外部小程序的 AppID；在"更多"或"设置"或公众号关联的小程序中获取</td>
+      </tr>
+      <tr>
+        <td>path</td>
+        <td>外部小程序的页面；默认是主页</td>
+      </tr>
+      <tr>
+        <td>extra-data</td>
+        <td>传递给外部小程序的数据</td>
+      </tr>
+      <tr>
+        <td>hover-class</td>
+        <td>指定点击时的样式类；none 时，没有点击态效果；或修改默认的导航类样式 navigator-hover</td>
+      </tr>
+    </table>
+    <h3>无参导航</h3>
+    <ul>
+      <li>跳转到小程序内部普通页面 - 仅指定 url</li>
+      <pre>&lt;navigator url="../test/test"&gt;To Page Test&lt;/navigator&gt;</pre>
+      <li>页面层级比较深，可以使用根路径，从 pages 开始</li>
+      <pre>&lt;navigator url="/pages/test/test"&gt;To Page Test&lt;/navigator&gt;</pre>
+      <li>跳转到外部小程序 - 指定 app-id 和 target</li>
+      <pre>&lt;navigator app-id="wx91d27dbf599dff74" target="miniProgram"&gt;To JD&lt;/navigator&gt;</pre>
+      <li>跳转到标签页 - 指定 open-type</li>
+      <pre>&lt;navigator url="../photo/photo" open-type="switchTab"&gt;To Tab Photo &lt;/navigator&gt;</pre>
+      <li>后退1页 - 省略 delta</li>
+      <pre>&lt;navigator open-type="navigate"&gt;Back&lt;/navigator&gt;</pre>
+    </ul>
+    <h3>带参导航</h3>
+    <ol>
+      <li>拼接参数 - 在路径 url 后面以值对 key-value 的形式拼接参数</li>
+      <p>参数和 url 之间使用 ? 连接</p>
+      <p>多个参数以 & 分隔</p>
+      <p>静态数据 - url?name=value&...</p>
+      <pre>
+&lt;navigator url="../test/test?name=gl"&gt;To Page Test&lt;/navigator&gt;</pre>
+      <p>动态数据 - 使用数据绑定</p>
+      <pre>
+&lt;navigator url="../test/test?name={{uname}}"&gt;To Page Test&lt;/navigator&gt;</pre>
+      <li>目标页获取参数 - 传递的参数在目标页的生命周期函数 onLoad 中通过形参 options 获取</li>
+      <pre>
+onLoad(options) {
+    console.log(options);
+}</pre>
+    </ol>
+    <div class="tips">
+      <div>请尽量使用调试器的"预览"体验完整功能</div>
+      <div>模拟器底部状态栏，默认显示"页面路径"，也可以切换到"页面参数"观察页面之间的参数传递情况</div>
+    </div>
+  </section>
+  <section>
+    <div>[<span class="iconfont icon-keyboard"></span>] 使用声明式导航，完成个人小程序各页面之间的导航</div>
+    <ul>
+      <li>使用 &lt;navigator&gt;，修改个人中心静态页面，采用列表渲染定制导航；根据不同的导航项，动态设置目标页的导航标题 </li>
+      <li>该案例也适合客户、产品详情页，如：使用一个页面展示不同的商品内容</li>
+      <li>个人中心页 wxml - 某个导航节点示例，其它略</li>
+      <pre>
+&lt;navigator url="../team/team" class="item"&gt;
+    &lt;text class="iconfont icon-like icon"&gt;&lt;/text&gt;
+    &lt;text&gt;团队&lt;/text&gt;
+&lt;/navigator&gt;</pre>
+      <li>移除点击状态：为 &lt;navigator&gt; 指定 hover-class 为 none，无效，修改 <span class="warn">默认的导航类</span></li>
+      <li>默认样式：带背景色，降低透明度</li>
+      <pre>
+.navigator-hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  opacity: 0.7;
+}</pre>
+      <li>修改为：移除背景色；不改变透明度</li>
+      <pre>
+.navigator-hover {
+  background-color: rgba(0, 0, 0, 0.0);
+  opacity: 1;
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

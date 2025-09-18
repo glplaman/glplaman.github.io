@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>头像上传下载 upload/download</title>
+  <link rel="stylesheet" href="../css/sn.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <link rel="stylesheet" href="./css/case1.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>Upload VS Download</h1>
+    <dl>
+      <dt>实验题目</dt>
+      <dd>头像定制</dd>
+      <dt>实验内容</dt>
+      <dd>文件上传和下载</dd>
+      <dt>实验目的</dt>
+      <dd>进一步熟悉资源服务器的搭建</dd>
+      <dd>进一步熟悉网络请求的基本过程</dd>
+      <dd>掌握利用中间件实现文件的上传和下载</dd>
+      <dt>实验过程</dt>
+      <dd>在<a href="./case1.html">个人中心</a>页面的基础上，为头像增加导航，点击后跳转到设置页面setup继续开发</dd>
+      <dd>从资源服务器拉取用户信息，如果为空，则头像显示默认图片；如果不为空，则显示用户头像</dd>
+      <dd>单击修改头像可以重新选择头像，并同步更新到资源服务器</dd>
+      <dd>长按头像图片预览并下载</dd>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/file0.png" alt="">
+          <figcaption>用户默认头像</figcaption>
+        </figure>
+      </dd>
+      <dt>知识点</dt>
+      <dd>wxml：&lt;view&gt;、&lt;image&gt;、&lt;form&gt;、&lt;radio-group&gt;、&lt;radio&gt;、&lt;picker&gt;、&lt;button&gt;
+      <dd>js：bindblur、bindchange、bindsubmit、bindchooseavatar、wx.request</dd>
+      <dd>wxss：flex、border-radius、border、fixed、absolute</dd>
+      <dt>API</dt>
+      <dd><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/media/video/wx.chooseMedia.html">wx.chooseMedia(Object
+          object)</a></dd>
+      <dd><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/network/upload/wx.uploadFile.html">wx.uploadFile(Object
+          object)</a>
+      </dd>
+      <dd><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/network/download/wx.downloadFile.html">wx.downloadFile(Object
+          object)</a></dd>
+      <dd><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/media/image/wx.previewImage.html">wx.previewImage(Object
+          object)</a></dd>
+      <dt>中间件</dt>
+      <dd><a href="https://www.npmjs.com/package/multer#readme">multer</a></dd>
+      <dd><a href="https://www.npmjs.com/package/formidable#readme">formidable*</a></dd>
+      <dt>API接口</dt>
+      <dd>/upload:头像上传</dd>
+      <dd>avatar:头像name</dd>
+      <dt>效果图</dt>
+      <dd>
+        <figure class="img-sn">
+          <img src="./imgs/file1.png" alt="">
+        </figure>
+      </dd>
+      <dt>实验过程</dt>
+      <dd class="number">
+        <div>创建上传服务器并启动；也可以集成在资源服务器中；详细操作和完整代码，请参考 <a href="../node/multer.html">上传 - multer</a></div>
+        <div>wxml - 先选择图片预览再上传；长按图片预览并下载</div>
+        <pre class="code">
+&lt;view class="wrap"&gt;
+    &lt;view class="img-box"&gt;
+        &lt;image class="img" src="{{imgUrl}}" mode="aspectFill"  bind:longpress="downloadImg"/&gt;
+        &lt;button class="btn" bind:tap="chooseAndUpload"&gt;更新头像&lt;/button&gt;
+    &lt;/view&gt;
+&lt;/view&gt;</pre>
+        <div>wxss - 定位，略</div>
+        <div>js -
+          准备渲染数据data和临时数据uploadFileUrl；其中，imgUrl是默认头像，tempFilePath是选择图片后返回的临时路径，用以渲染头像和上传头像；uploadFileUrl保存上传成功后头像在服务器的路径，便于下载使用
+        </div>
+        <pre class="code">
+data: {
+    imgUrl: 'https://cdn.pixabay.com/photo/2015/03/03/20/42/man-657869_640.jpg',
+    tempFilePath: null
+},
+uploadFileUrl: null</pre>
+        <div>js - 选择头像</div>
+        <p>数量count指定1张；默认是9张</p>
+        <p>mediaType：类型指定是图片image</p>
+        <p>sourceType：指定从相册活照相机拍摄</p>
+        <pre class="code">
+changeImg: function () {
+    wx.chooseMedia({
+        count: 1,
+        mediaType: ['image'],
+        sourceType: ['album', 'camera'],
+        success: res => {
+            var tempFilePath = res.tempFiles[0].tempFilePath
+            this.setData({
+                tempFilePath: tempFilePath,
+                imgUrl: tempFilePath
+            })
+        }
+    })
+}            </pre>
+        <div>js - 上传头像</div>
+        <p>指定上传文件路径filePath：使用图像选择的临时路径</p>
+        <p>指定name为avatar，便于服务器分辨</p>
+        <p>指定服务器路由url</p>
+        <pre class="code">
+upload: function () {
+    // 如果没有更改照片则提示更改后再上传
+    if (!this.data.tempFilePath) {
+        wx.showToast({
+            title: '请您更改头像之后再进行上传操作',
+            icon: 'none',
+            duration: 2000
+        })
+        return
+    }
+    // 确认更改头像之后再上传
+    wx.uploadFile({
+        filePath: this.data.tempFilePath,
+        name: 'avatar',
+        // 实际地址视机房服务器环境配置
+        url: 'http://10.10.151.178:3000/upload',
+        header:{
+            'content-type':'multipart/form-data'
+        },
+        success: res => {
+            this.uploadFileUrl = JSON.parse(res.data).url        
+            console.log('上传成功')
+            wx.showToast({
+                title: '上传成功',
+            })
+        }
+    })
+}</pre>
+        <div>js - 下载头像文件</div>
+        <p>上传成功后，返回的头像图片路径保存在了数据中；利用它下载图片到本地</p>
+        <pre class="code">
+download: function () {
+    if (!this.uploadFileUrl) {
+        wx.showToast({
+            title: '请您上传头像之后再进行下载操作',
+            icon: 'none',
+            duration: 2000
+        })
+        return
+    }
+    wx.showLoading({
+        title: '图片下载中，请稍后……',
+    })
+    wx.downloadFile({
+        url: this.uploadFileUrl,
+        success: res => {
+            wx.hideLoading()
+            console.log('下载完成')
+            wx.previewImage({
+                urls: [res.tempFilePath]
+            })
+        }
+    })
+}            </pre>
+        <div>运行小程序，选择图片并上传；在服务器目录下看到使用了时间戳的完整文件名字</div>
+        <pre class="code">
+{
+  fieldname: 'image',
+  originalname: 'bYmNOVO35pLd787bce43d31211e2a9fb482c28888418.png',
+  encoding: '7bit',
+  mimetype: 'image/png',
+  destination: 'E:\\nodeServer/upload',
+  filename: 'image1706875478704.png',
+  path: 'E:\\nodeServer\\upload\\image1706875478704.png',
+  size: 91117
+}</pre>
+      </dd>
+      <dt>实验要求</dt>
+      <dd class="number">
+        <div>按照以上步骤分别完成头像文件的上传和下载</div>
+        <div>规范开发；独立完成；突出个人设计特点和风格</div>
+        <div>实验报告：采用学院统一下发的 <a href="../utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx">实验模板</a>
+          文件，以文字说明，配以必要的效果图片或核心代码，展示并说明数据来源、实施过程、各部分功能、具体内容和实现细节；最后导出为PDF，按照要求命名，提交个人学习通作业
+        </div>
+        <div>未按要求在规定时间内提交视为无效，不得分</div>
+        <div>相关格式规范，请参考 <a href="../course/paper.html">论文格式规范 Paper Prettier</a></div>
+      </dd>
+    </dl>
+  </div>
+</body>
+
+</html>

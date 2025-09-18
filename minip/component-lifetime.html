@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件生命周期函数 Lifetime</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>组件生命周期函数</h1>
+    <span>&commat;Lifetime</span>
+  </header>
+  <section>
+    <ul>
+      <li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html">生命周期</a>
+        是组件自身的一些函数：在特殊的时间点或遇到一些特殊的框架事件时被自动触发
+      </li>
+      <li>最重要的生命周期是 created、attached、detached ，包含一个组件实例生命流程的最主要的时间节点</li>
+      <li>created：组件实例刚刚被创建好时</li>
+      <li>attached：在组件完全初始化完毕、进入页面节点树</li>
+      <li>detached：在组件离开页面节点树后</li>
+      <pre>
+lifetimes: {
+    created: function () {},
+    attached: function () {},
+    detached: function() {}
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装地图组件 map</div>
+    <ol>
+      <li>创建组件 - 目录、文件</li>
+      <li>地图组件结构 - 指定id和经纬度、中心点；绑定事件；其它略</li>
+      <pre>
+&lt;view class="map-wrap"&gt;
+    &lt;map class="map" id="my-map" longitude="{{longitude}}" latitude="{{latitude}}" show-location /&gt;
+    &lt;image class="center-img" src="/utils/center.png" mode="aspectFill" bind:tap="moveToLocation" /&gt;
+&lt;/view&gt;</pre>
+      <li>地图组件逻辑 - 创建地图组件上下文变量，这里声明为页面全局变量，避免使用 this 引用</li>
+      <pre>
+let mapCtx;
+Component({})</pre>
+      <li>地图组件逻辑的生命周期函数</li>
+      <pre>
+lifetimes: {
+    attached: function () {
+        // 实例化地图组件上下文
+        mapCtx = wx.createMapContext('my-map', this)
+        // 获取当前位置
+        wx.getLocation({
+        type: 'gcj02',
+        success: res => {
+            this.setData({
+                longitude: res.longitude,
+                latitude: res.latitude
+            })
+        }
+        })
+    }
+}</pre>
+      <li>地图组件逻辑的数据 - 经纬度</li>
+      <pre>
+longitude: '"",
+latitude: ""</pre>
+      <li>地图组件逻辑的方法 - 返回中心点方法</li>
+      <pre>
+moveToLocation() {
+    mapCtx.moveToLocation({})
+}</pre>
+      <li>样式 - 略</li>
+    </ol>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

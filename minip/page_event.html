@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面事件 PageEvent</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>页面事件</h1>
+    <span>&commat;PageEvent</span>
+  </header>
+  <section>
+    <h3>下拉刷新 <a href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onPullDownRefresh">
+        onPullDownRefresh</a></h3>
+    <ul>
+      <li>在Page顶级 top-level 中使用</li>
+      <li>页面重新初始化或部分逻辑初始化</li>
+      <li>真机下不能自动返回，需要显式的调用对应的API接口：<a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/pull-down-refresh/wx.stopPullDownRefresh.html">wx.stopPullDownRefresh(Object
+          object)</a></li>
+      <li>需要在配置文件中开启</li>
+      <pre>"enablePullDownRefresh": true</pre>
+      <pre>
+onPullDownRefresh() {
+    //
+}</pre>
+    </ul>
+    <h3>触底加载 <a
+        href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onReachBottom">onReachBottom</a>
+    </h3>
+    <ul>
+      <li>在Page顶级top-level中使用</li>
+      <li>加载更多数据，如拉取下一分页数据</li>
+      <li>每次触底都会触发 - 节流、懒加载</li>
+      <li>每次拉取的新数据，都叠加到之前的数据上</li>
+      <li>拉取完毕后，应停止</li>
+      <li>更多信息，请访问 <a href="../web/js/lazyLoad.html">lazyLoad</a>、<a href="../web/js/scroll.html">scroll滚动加载</a>
+      </li>
+      <pre>
+onReachBottom() {
+    //
+}</pre>
+    </ul>
+    <h3>分享|转发 <a
+        href="https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html#onShareAppMessage-Object-object">onShareAppMessage</a>
+    </h3>
+    <ul>
+      <li>在Page顶级top-level中使用</li>
+      <pre>
+onShareAppMessage() {
+    //
+}</pre>
+    </ul>
+  </section>
+  <h2>节流</h2>
+  <section>
+    <h3>焦点1 Focus</h3>
+    <div>. 触底加载和下拉刷新都涉及到数据拉取；但是：下拉刷新需要手动停止刷新，而触底加载不需要</div>
+    <h3>方案1 Solution</h3>
+    <ul>
+      <li>使用标记 flag：true 为下拉刷新；false 为触底加载</li>
+      <li>在下拉刷新中，传入 true；在触底加载中，传入 false；如果是下拉刷新，就执行停止下拉刷新效果</li>
+      <pre>
+_load(flag) {
+    wx.request({
+        url: this.data.baseUrl + '/good/page?page=' + this.page + '&pageSize=' + this.pageSize,
+        success: res => {
+            console.log(res);
+            this.setData({
+                goods: [...this.data.goods, ...res.data],
+                total: res.header['X-Total-Count']
+            })
+            //下拉刷新才执行
+            if(flag){
+                wx.stopPullDownRefresh()
+            }
+        },
+        fail: err => {
+            console.log(err);
+        },
+        complete: () => {
+            console.log('log done');
+        }
+    })
+}</pre>
+    </ul>
+    <h3>方案2 Solution</h3>
+    <ul>
+      <li>使用函数作为参数决定是否要显式停止刷新；传入函数，则执行；否则不执行</li>
+      <li>本质上，和方案1并没有区别</li>
+      <p>函数声明 - 根据cb的有无决定是否执行特定操作</p>
+      <pre>
+_load(cb) {
+    //其他逻辑
+    cb&cb()
+}</pre>
+      <p>函数执行 - 无形参 cb，正常执行</p>
+      <pre>this._load()</pre>
+      <p>函数执行 - 有形参 cb，执行特定操作</p>
+      <pre>
+this._load(()=>{
+    wx.stopPullDownRefresh()  
+})</pre>
+    </ul>
+    <h3>焦点2 Focus</h3>
+    <ul>
+      <li>不管是下拉刷新还是触底加载，在当前加载没有完成之前，不应该再次触发</li>
+      <li>节流阀初始为false</li>
+      <li>加载时设置节流阀为true</li>
+      <li>加载完毕时设置节流阀为false</li>
+      <li>每次加载时，先判断节流阀是否为false；为false则加载；否则返回</li>
+      <li>修改加载函数 - 增加静态数据isLoading；在下拉刷新和触底加载中，判断是否为真；为真返回；为假才加载</li>
+      <pre>
+_load(flag) {
+    //开始加载时，为真
+    this.isLoading = true
+    wx.request({
+        url: this.data.baseUrl + '/good/page?page=' + this.page + '&pageSize=' + this.pageSize,
+        success: res => {
+            console.log(res);
+            this.setData({
+                goods: [...this.data.goods, ...res.data],
+                total: res.header['X-Total-Count']
+            })
+            //下拉刷新才执行
+            if(flag){
+                wx.stopPullDownRefresh()
+            }
+        },
+        fail: err => {
+            console.log(err);
+        },
+        complete: () => {
+            console.log('log done');
+            //加载完毕为假
+            this.isLoading = false
+        }
+    })
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

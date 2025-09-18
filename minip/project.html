@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目 Project</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>项目</h1>
+    <span>&commat;Project</span>
+  </header>
+  <dl>
+    <dt>项目创建</dt>
+    <dd>双击启动微信开发者工具 → 扫码登录 → 单击加号 + 创建项目 → 设置以下各项并确定</dd>
+    <dd>.项目名称</dd>
+    <dd>.目录 - 指定位置并创建一个同名空文件夹作为项目目录；直接修改目录名会同步修改项目名并创建项目目录</dd>
+    <dd data-app-id="wxf878bb2864a8f765">.AppID</dd>
+    <dd>.开发模式：小程序</dd>
+    <dd>.后端服务：不使用云服务</dd>
+    <dd>.模板选择：js - 基础模板</dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/pro0.png" alt="">
+        <figcaption>项目创建</figcaption>
+      </figure>
+      <figure class="img-sn">
+        <img src="./imgs/pro10.png" alt="">
+        <figcaption>js - 基础模板</figcaption>
+      </figure>
+    </dd>
+    <dt>项目打开</dt>
+    <dd>以导入的方式打开项目或在历史项目列表中选择项目</dd>
+    <dt>界面介绍</dt>
+    <dd>1.菜单栏</dd>
+    <dd>2.工具栏</dd>
+    <dd>.模拟器 - 小程序效果预览；高版本可以分离出去，通过置顶，改善开发体验</dd>
+    <dd>.编辑器 - 开发区域</dd>
+    <dd>.调试器 - Wxml、Console、Network、AppData、Storage；调试项目的利器，多多利用</dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/pro2.png" alt="">
+        <figcaption>调试器标签页</figcaption>
+      </figure>
+    </dd>
+    <dd>.云开发 - 新用户有一个月的免费使用；建议等熟悉了基本概念和操作后再开启</dd>
+    <dd>.编译模式 - 首页预览或定制页面预览或者在app.json中指定入口页面entryPagePath</dd>
+    <dd>.预览 - 一定要预览！一定要预览！！一定要预览！！！</dd>
+    <dd>.真机调试 - 预览的同时，调试项目；同WiFi环境下，真机扫码预览，同时会打开调试窗口</dd>
+    <dd>.清缓存 - 操作卡顿、反映迟缓、数据异常时，清除缓存可以改善开发体验、提高开发效率</dd>
+    <dd>.上传 - 版本发布到微信公众平台供审核并等待发布</dd>
+    <dd>.版本管理 - Git/GitHub</dd>
+    <dd>.详情 - 小程序的各种信息；操作比较多的是：选择 → 不校验服务器</dd>
+    <dd class="tips">使用 CTRL + -/+ 可以快速缩放环境，调整大小</dd>
+    <dt>项目结构</dt>
+    <dd>主要包括：项目级别app和页面级别pages的应用</dd>
+    <dd>
+      <figure class="img-sn">
+        <img src="./imgs/pro1.png" alt="">
+        <figcaption>项目结构</figcaption>
+      </figure>
+    </dd>
+    <dd>
+      <details class="outer" open>
+        <summary>project</summary>
+        <details class="inner">
+          <summary>pages - 小程序的页面，包括逻辑 js、结构 wxml、样式 wxss和配置 json</summary>
+          <div>● js - 当前页面的逻辑</div>
+          <div>. 包含：数据、事件处理函数、生命周期函数和其他函数</div>
+          <div>● wxml - 当前页面的结构</div>
+          <div>. 由各种组件构成：系统组件和自定义组件</div>
+          <div>. 避免使用HTML标签</div>
+          <div>. 更多组件，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/component/">component</a>
+          </div>
+          <div>● json - 当前页面的配置</div>
+          <div>. 很多配置项同app.json；应严格按照JSON语法使用双引号"，不能使用单引号'</div>
+          <div>. 导航标题、背景；多页面时通常设置为不同的样式；如果未设置，则和全局设置的保持一致</div>
+          <div>. 是否使用组件</div>
+          <div>. 也可以使用API，根据传递的参数完成导航标题设置</div>
+          <pre>
+onLoad(option: any) {
+    wx.setNavigationBarTitle({
+        title:option.name
+    })
+}</pre>
+          <div>● wxss - 当前页面的样式</div>
+          <div>. 同CSS样式使用基本相同，但是功能没有CSS那么丰富；...强烈吐槽</div>
+        </details>
+        <details class="inner">
+          <summary>utils - 资源类</summary>
+          <div>也可以在根目录下创建不同的文件夹存放，如imgs</div>
+        </details>
+        <details class="inner">
+          <summary>app.js - 全局逻辑；全局数据；本地存储</summary>
+          <dl>
+            <dd>
+              <pre>
+App({
+    onLaunch() {
+        // 展示本地存储能力
+        const logs = wx.getStorageSync('logs') || []
+        logs.unshift(Date.now())
+        wx.setStorageSync('logs', logs)
+    
+        // 登录
+        wx.login({
+            success: res => {
+                // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            }
+        })
+    },
+    globalData: {
+        userInfo: null
+    }
+})</pre>
+            </dd>
+            <dd>页面使用时，通过getApp()实现</dd>
+            <dd>
+              <pre> const app = getApp()</pre>
+            </dd>
+          </dl>
+        </details>
+        <details class="inner">
+          <summary>app.json - 小程序的全局配置文件</summary>
+          <dl>
+            <dd>常用配置如下；完整配置项目，请查看 <a
+                href="https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html">官方文档</a>
+            </dd>
+            <dt>entryPagePath</dt>
+            <dd>小程序的默认启动路径（首页）- 页面太多时，想专注某个页面的开发</dd>
+            <dd>不支持|不能携带页面路径参数</dd>
+            <dd>如果不指定，将默认为 pages 列表的第一项</dd>
+            <dd>
+              <pre>"entryPagePath": "pages/test/test"</pre>
+            </dd>
+            <dt>pages</dt>
+            <dd>以数组的形式提供小程序用到的各个页面</dd>
+            <dd>默认第一项是小程序起始页面</dd>
+            <pre>
+"pages": [
+    "pages/index/index",
+    "pages/photo/photo",
+    "pages/video/video",
+    "pages/guest/guest"
+]</pre>
+            <dt>window</dt>
+            <dd>窗口的各项配置</dd>
+            <dd>导航栏标题文字、颜色：文字颜色仅支持黑色black和白色white；默认黑色black</dd>
+            <dd>导航栏背景颜色：仅支持16进制颜色；默认白色#ffffff</dd>
+            <dd>小程序窗口背景颜色：相当于HTML中&lt;body&gt;的背景颜色；默认是白色#ffffff；下拉刷新时可以看到</dd>
+            <dd>小程序窗口文字颜色：仅仅支持白色light和黑色dark；默认黑色dark</dd>
+            <dd>开启下拉刷新 enablePullDownRefresh：默认关闭false；开启：设置为true；但是真机预览无法还原；通常在 <span class="warn">特定页面</span> 中配置该项
+            </dd>
+            <dd>触底加载距离 onReachBottomDistance：默认是50；单位是px；通常在 <span class="warn">特定页面</span> 中配置该项</dd>
+            <dd>自定义导航标题栏 navigationStyle：通常在 <span class="warn">特定页面</span> 中配置该项</dd>
+            <dd>
+              <pre>
+"window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Our Wedding",
+    "navigationBarBackgroundColor": "#ff5d73",
+    "backgroundColor": "#fed",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 50,
+    "navigationStyle": "custom"
+}</pre>
+            </dd>
+            <dt>tabBar</dt>
+            <dd>标签栏配置；用于快速切换页面；建议标签页对应的页面放在pages数组的前面</dd>
+            <dd>color、selectedColor：颜色和选中时的颜色</dd>
+            <dd>borderStyle：标签页和正文内容使用线条分隔</dd>
+            <dd>list：标签页数组；最少2个标签页；最多5个标签页</dd>
+            <dd>position：可放在底部（默认）或顶部 top</dd>
+            <dd>底部支持文字和图标；顶部仅支持文字</dd>
+            <dd>使用对象数组list定义标签页的属性</dd>
+            <dd>- pagePath：页面路径；必须</dd>
+            <dd>- text：标签文本；必须</dd>
+            <dd>- iconPath：未选中时的图标</dd>
+            <dd>- selectedIconPath：选中时的图标</dd>
+            <dd>也可以自定义tabBar组件，具体操作请访问 <a
+                href="https://developers.weixin.qq.com/miniprogram/dev/framework/ability/custom-tabbar.html">官方文档</a>
+            </dd>
+            <pre>
+"tabBar": {
+    "color": "#000000", //未选中颜色
+    "selectedColor": "#ff5d73", //选中颜色
+    "borderStyle": "white", //默认黑色dark
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "love", 
+        "iconPath": "imgs/wedding0.png",
+        "selectedIconPath": "imgs/wedding1.png"
+    },{
+        "pagePath": "pages/photo/photo",
+        "text": "photo",
+        "iconPath": "imgs/photo0.png",
+        "selectedIconPath": "imgs/photo1.png"
+    },{
+        "pagePath": "pages/video/video",
+        "text": "video",
+        "iconPath": "imgs/video0.png",
+        "selectedIconPath": "imgs/video1.png"
+    },{
+        "pagePath": "pages/guest/guest",
+        "text": "guest",
+        "iconPath": "imgs/guest0.png",
+        "selectedIconPath": "imgs/guest1.png"
+    }]
+}</pre>
+            <dt>style</dt>
+            <dd>组件样式；目前是第2版样式</dd>
+            <pre>"style": "v2"</pre>
+            <dt>networkTimeout</dt>
+            <dd>各类网络请求的超时时间，单位均为毫秒</dd>
+            <dt>subpackages</dt>
+            <dd>分包；加快加载；减少耦合；更多细节，请访问 <a
+                href="https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages/independent.html">subpackages</a>
+            </dd>
+            <dt>lazyCodeLoading</dt>
+            <dd>懒加载模块</dd>
+            <dd>
+              <pre>"lazyCodeLoading": "requiredComponents"</pre>
+            </dd>
+            <dt>render</dt>
+            <dd>渲染引擎。更多信息，请访问 <a href="./render.html">渲染引擎 Render</a></dd>
+          </dl>
+        </details>
+        <details class="inner">
+          <summary>app.wxss - 初始化样式；全局样式</summary>
+          <pre>
+@import '/utils/css/reset.wxss';
+@import '../../utils/transfonter.org-20240229-142749/stylesheet.wxss';
+
+page{
+    --themeColor:#eb4450;
+    --tips-color:rgb(13, 206, 7);
+    font-size: 28rpx;
+}
+
+input {
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background-color: transparent;
+    height: 60rpx;
+}
+
+button {
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 60rpx;
+}                    </pre>
+        </details>
+      </details>
+    </dd>
+    <dt>项目提交</dt>
+    <dd class="sn">
+      <div>上传</div>
+      <div>审核：比较烦。比较烦。。比较烦。。。</div>
+      <div>发布</div>
+    </dd>
+    <dt>项目版本</dt>
+    <dd class="sn">
+      <div>开发版本</div>
+      <div>审核版本</div>
+      <div>发布版本</div>
+    </dd>
+    <dt>项目推广</dt>
+    <dd>设置 → 基本设置 → 基本信息 → 下载小程序码 → 各种场合、各种人员的推广</dd>
+    <dt>项目运维</dt>
+    <dd>统计小程序的使用情况</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/star.js"></script>
+</body>
+
+</html>

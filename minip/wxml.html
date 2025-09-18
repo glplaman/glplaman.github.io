@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>结构 WXML</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>结构</h1>
+    <span>&commat;WXML</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>小程序的页面 page 由各种 <a href="https://developers.weixin.qq.com/miniprogram/dev/component/">组件 -
+          component</a>构成</li>
+      <li>区分：系统组件和自定义组件</li>
+      <li>每个组件包括：结构文件 .wxml、逻辑文件 .js、样式文件 .wxss和配置文件 .json</li>
+      <li>结构文件中由标签组成；不支持 HTML 标签</li>
+      <li>由于小程序大小的限制，多媒体资源如图像、视频、音频等等，应通过在线方式获取；需搭建本地资源服务器或者花钱使用云开发</li>
+    </ul>
+    <table>
+      <caption>常用组件</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td>&lt;view&gt;</td>
+        <td>视图；块标签；类似 &lt;div&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;text&gt;</td>
+        <td>文本；行标签；只能嵌套文本标签；类似 &lt;span&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;navigator&gt;</td>
+        <td>导航；类似 &lt;a&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;image&gt;</td>
+        <td>图像；默认300px*240px；类似 &lt;img&gt;</td>
+      </tr>
+      <tr>
+        <td>&lt;video&gt;</td>
+        <td>视频；默认300px*225px</td>
+      </tr>
+      <tr>
+        <td>&lt;audio&gt;</td>
+        <td>音频；系统不建议使用</td>
+      </tr>
+    </table>
+  </section>
+  <h2>数据绑定 Data binding</h2>
+  <section>
+    <ul>
+      <li>可以绑定 <span class="warn">内容</span>，也可以绑定 <span class="warn">属性</span></li>
+      <li>在 .wxml 中使用插值表达式 {{}} 和 .js 中的数据绑定起来；测试数据如下</li>
+      <li>简单粗暴 - 想绑哪个值就绑哪个值</li>
+      <li>WXML 中的动态数据均来自对应页面 Page 的数据 data</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A">数据绑定</a>
+      </li>
+    </ul>
+    <h3>绑定内容</h3>
+    <ul>
+      <pre>&lt;view&gt; {{msg}} &lt;/view&gt;</pre>
+      <li>可以进行简单的逻辑运算，如三元表达式、算术运算</li>
+      <pre>
+&lt;view&gt; {{age + 2}} &lt;/view&gt;
+&lt;view&gt; {{age&gt;=18 ? 'Welcome' : 'Bye'}} &lt;/view&gt;</pre>
+    </ul>
+    <h3>绑定属性</h3>
+    <ul>
+      <li>src</li>
+      <pre>&lt;image src="{{src}}" mode=""/&gt;</pre>
+      <li>样式 <a href="./wxss.html"> wxss</a></li>
+      <pre>&lt;view class="{{isActive?'bold':''}}"&gt;动态类的三元表达式&lt;/view&gt;</pre>
+      <pre>&lt;view class="title {{isActive?'bold':'normal'}}"&gt;静态类和动态类的组合形式&lt;/view&gt;</pre>
+      <pre>&lt;text style="color: {{color}};"&gt;内联样式&lt;/text&gt;</pre>
+      <pre>&lt;view class="box" style="background-image: url({{src}});"&gt;类和内联样式可以共同使用&lt;/view&gt;</pre>
+      <li>编译后，使用调试器的拾取工具，单击模拟器中的元素，可以查看结构对应的样式</li>
+      <figure>
+        <img src="./imgs/wxss0.png" alt="">
+        <figcaption>编译后查看结构</figcaption>
+      </figure>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 错误语法示例</div>
+    <ul>
+      <pre>&lt;view class="{{'bold':isActive}}"&gt;错误！简洁起见，小程序不支持对象形式&lt;/view&gt;</pre>
+      <pre>&lt;text style="backgroundColor: {{color}};"&gt;居然不支持驼峰语法&lt;/text&gt;</pre>
+    </ul>
+  </section>
+  <h2>条件渲染</h2>
+  <section>
+    <ul>
+      <li>以绑定属性的方式使用 wx:if 判断条件是否成立，成立则渲染，否则不渲染或不处理</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/#%E6%9D%A1%E4%BB%B6%E6%B8%B2%E6%9F%93">
+          条件渲染 wx:if</a></li>
+      <li>测试数据如下：</li>
+      <pre>
+data: {
+  age: 18,
+  isShow: true
+}</pre>
+    </ul>
+    <h3>单分支判断</h3>
+    <ul>
+      <li>仅使用 wx:if</li>
+      <pre>&lt;view wx:if = '{{ age >= 18 }}'&gt; Welcome &lt;/view&gt;</pre>
+      <li>单分支判断还可以使用 hidden 属性实现条件渲染；为 true 时，隐藏；为 false 时，显示</li>
+      <pre>
+&lt;view hidden="{{age >= 18}}"&gt;88&lt;/view&gt;
+&lt;view hidden="{{isShow}}"&gt;88&lt;/view&gt;</pre>
+    </ul>
+    <h3>双分支判断</h3>
+    <ul>
+      <li>配合 wx:else 使用</li>
+      <pre>
+&lt;view wx:if = '{{ age >= 18 }}'&gt; Welcome &lt;/view&gt;
+&lt;view wx:else&gt; Bye &lt;/view&gt;
+</pre>
+    </ul>
+    <h3>多分支判断</h3>
+    <ul>
+      <li>wx:if wx:elif wx:else</li>
+      <li>可读性不好，不建议使用</li>
+    </ul>
+    <div class="tips">
+      <div>凡是用到布尔变量的地方，都可以使用比较表达式</div>
+      <div>wx:if 是通过加载或移除组件的方式实现条件渲染；真，加载组件；假，移除组件；有没有的问题</div>
+      <div>hidden 是通过 display 是否为 none 实现条件渲染；组件始终加载；显示不显示的问题</div>
+      <div>复杂的逻辑切换，使用 wx:if；频繁切换状态，使用 hidden</div>
+      <div>使用调试器的 appData 面板实时调试</div>
+      <div>有时候使用 wx:show 并不能真正控制，请检查样式是否有冲突或者直接使用 wx:if - 购物车 footer</div>
+    </div>
+  </section>
+  <h2>列表渲染</h2>
+  <section>
+    <ul>
+      <li>以绑定属性的方式使用 wx:for 循环数组或对象</li>
+      <li>默认情况下，使用 <span class="warn">item</span> 表示迭代的当前数据项，使用 <span class="warn">index</span> 表示当前数据项的索引</li>
+      <li>多重循环下，系统可以自动识别 index 和 item 的作用域；也可以使用 wx:for-index 和 wx:for-item 指定索引和当前项，但是不建议</li>
+      <li>为保证渲染效率和数据的唯一性，应总是使用 wx:key</li>
+      <li>key 不支持插值表达式，即不需要使用 {{}}
+        <p>使用数据项的 id - 每个数据项需要携带 id 字段属性；推荐</p>
+        <p>使用数据项的序号 index</p>
+        <p>使用数据项 item</p>
+        <p>为数据创建时间戳 - now()</p>
+      </li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/#%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93">列表渲染
+          wx:for</a>
+    </ul>
+    <h3>数组列表渲染</h3>
+    <ul>
+      <li>测试数据</li>
+      <pre>
+obj:[
+  {id:0, name:'gl', year:1995},
+  {id:1, name:'sh', year:2005},
+  {id:2, name:'nj', year:2008}
+],
+arr: [1, 2, 3, 4, 5]</pre>
+      <li>数字 - 循环9次，多用于测试；使用 index 作为 key</li>
+      <pre>&lt;view wx:for="{{9}}" wx:key="index"&gt; {{item}} &lt;/view&gt;</pre>
+      <li>简单数组 - 循环5次；使用 item 作为 key</li>
+      <pre>&lt;view wx:for="{{obj}}" wx:key="item"&gt; {{item.name}}- {{item.year}} &lt;/view&gt;</pre>
+      <li>对象数组 - 循环3次</li>
+      <pre>&lt;view wx:for="{{arr}}" wx:key="id"&gt; {{item}} &lt;/view&gt;</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 多重循环 - 9*9乘法表</div>
+    <ul>
+      <li>样式自定</li>
+      <li>为了更加直观的观察效果，配置页面 pageOrientation 为横板 landscape</li>
+      <pre>
+&lt;view  class="item" wx:for="{{arr}}" wx:key="index" wx:for-item='i'&gt;
+  &lt;text wx:for="{{i+1}}" wx:key="index" wx:for-item='j'&gt;
+    &lt;text class="item" wx:if="{{j&gt;0}}"&gt;{{j}} * {{i}} = {{i*j}} &lt;/text&gt;
+  &lt;/text&gt;
+&lt;/view&gt;</pre>
+      <figure>
+        <img src="./imgs/99.png" alt="">
+        <figcaption>9*9 乘法表</figcaption>
+      </figure>
+    </ul>
+    <h3>对象列表渲染</h3>
+    <ul>
+      <li>index 相当于 key；item 相当于 value - 也可以自定义为 key-value 形式</li>
+      <pre>obj:{id:100,name:'glpla',gender:'male'}</pre>
+      <pre>
+&lt;block wx:for="{{obj}}" wx:key="index"&gt;
+  &lt;view&gt;{{index}}&lt;/view&gt;
+  &lt;view&gt;{{item}}&lt;/view&gt;
+&lt;/block&gt;</pre>
+    </ul>
+    <div class="tips">可以使用无语义化的模板标签 &lt;block&gt;作为容器，用来分隔多层逻辑或控制一组组件的渲染</div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滚动视图 &lt;scroll-view&gt;</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>滚动视图</h1>
+    <span>&lt;scroll-view&gt;</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>容器组件</li>
+      <li>子项尺寸超过容器后，可以上下或左右滚动</li>
+      <li>未显示的子项被隐藏</li>
+      <li>不支持嵌套 textarea、map、canvas、video 组件</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/component/scroll-view.html">&lt;scroll-view&gt;</a>
+      </li>
+    </ul>
+    <table>
+      <caption>通用属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>scroll-x</td>
+          <td>允许横向滚动；最好也显式指定宽度；谨慎使用 % 宽度</td>
+        </tr>
+        <tr>
+          <td>scroll-y</td>
+          <td>允许纵向滚动；应显式指定高度</td>
+        </tr>
+        <tr>
+          <td>scroll-into-view</td>
+          <td>滚动到值为 id 的某子元素；id 不能以数字开头</td>
+        </tr>
+        <tr>
+          <td>scroll-with-animation</td>
+          <td>使用动画过渡</td>
+        </tr>
+        <tr>
+          <td>scroll-top</td>
+          <td>设置竖向滚动条位置</td>
+        </tr>
+        <tr>
+          <td>bindscroll</td>
+          <td>滚动时触发</td>
+        </tr>
+      </tbody>
+    </table>
+    <table>
+      <caption>WebView 特有属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>enable-flex</td>
+          <td>布尔；默认false
+            <br>水平方向启用 flexbox 布局，使之成为 flex 容器！！！
+          </td>
+        </tr>
+        <tr>
+          <td>using-sticky</td>
+          <td>布尔；默认false
+            <br>启用 position: sticky 特性
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tips">
+      <div>这个属性好像不指定也可以！！！</div>
+      <div>enable-flex 为了兼容早期的布局方式，使用需要注意的事项很多，建议直接使用 flex，见后续案例</div>
+    </div>
+    <table>
+      <caption>Skyline 特有属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>type</td>
+          <td>
+            <div>渲染模式</div>
+            <div>list：列表模式；默认</div>
+            <div>custom：自定义模式； 子组件是sticky-section、list-view或grid-view </div>
+            <div>nested：嵌套模式</div>
+          </td>
+        </tr>
+        <tr>
+          <td>using-sticky</td>
+          <td>布尔；默认false；启用 position: sticky 特性</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] 水平滚动 - 导航/推荐/活动</div>
+    <div>1. 推荐方案</div>
+    <ul>
+      <li>在容器和子项之间增加一个 view 作为间接容器，view 使用弹性盒子 flex</li>
+      <li>默认情况下，flex 会压缩子项；为了撑开，子项设置不缩放：flex-shrink: 0;</li>
+      <pre>
+&lt;scroll-view scroll-x class="wrap"&gt;
+    &lt;view class="inner-wrap"&gt;
+        &lt;view class="item"&gt;item1&lt;/view&gt;
+        ...
+        &lt;view class="item"&gt;item10&lt;/view&gt;
+    &lt;/view&gt;
+&lt;/scroll-view&gt;</pre>
+      <pre>
+.inner-wrap{
+    display: flex;
+    gap: 40rpx;
+}</pre>
+      <pre>
+.item{
+    width: 100rpx;
+    height: 100rpx;
+    flex-shrink: 0;
+}</pre>
+      <li>其它样式</li>
+    </ul>
+    <div>2. 小程序方案</div>
+    <ul>
+      <li>启用 enable-flex 属性，设置不换行</li>
+      <pre>
+&lt;scroll-view scroll-x  enable-flex class="wrap"&gt;
+    &lt;view class="item"&gt;item1&lt;/view&gt;
+    ...
+    &lt;view class="item"&gt;item10&lt;/view&gt;
+&lt;/scroll-view&gt;</pre>
+      <pre>
+.wrap{
+  white-space: nowrap;
+}</pre>
+      <li>各子项设置行内块</li>
+      <pre>
+.item{
+  display: inline-block;
+}</pre>
+      <li>其它设置：容器高度或子项高度；子项间隔；有时候还需要处理第一个和最后一个子项的间隔</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 垂直滚动 - 查看城市信息/商品列表</div>
+    <div>
+      <div>必须显式的指定高度 - px、rpx、%</div>
+      <div>页面结构</div>
+      <div>- 滑动视图：内部是若干标题城市首字母和城市图像或名称列表</div>
+      <div>- 版权信息</div>
+      <pre>&lt;scroll-view scroll-y using-sticky class="sc"&gt;&lt;/scroll-view&gt;</pre>
+    </div>
+    <h3>样式 Style</h3>
+    <div>- 版权信息高度100rpx</div>
+    <div>- 滑动视图高度由 calc 计算得出；且标题粘性定位在滑动视图顶端</div>
+    <div class="tips">如果不限高，不使用 scroll-view 也可以</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 联动导航 -水平</div>
+    <ul>
+      <li>滚动视图 scroll-view 和轮播 swiper 配合使用</li>
+      <li>单击滚动导航项，轮播跳转到指定项</li>
+      <li>拖动改变轮播时，滚动导航项也相应改变；且当前导航项样式高亮</li>
+      <li>滚动导航项使用自定义属性 data- 获取各项的索引</li>
+      <li>轮播使用改变时间获取当前 current</li>
+      <li>navs 和 swipers 数据</li>
+      <pre>
+&lt;scroll-view scroll-x scroll-with-animation scroll-into-view="nav{{curIndex}}"&gt;
+    &lt;view class="nav flex"&gt;
+        &lt;view class="item {{index==curIndex?'active':''}}" 
+          wx:for="{{navs}}" wx:key="index" 
+          data-ind="{{index}}" 
+          id="nav{{index}}" 
+          bind:tap="selectItem"&gt;
+          {{item.title}}
+        &lt;/view&gt;
+    &lt;/view&gt;
+&lt;/scroll-view&gt;
+&lt;swiper current="{{curIndex}}" bindchange="changeItem" circular&gt;
+    &lt;swiper-item class="swiper-item" wx:for="{{swipers}}" wx:key="index"&gt;
+      {{item}}
+    &lt;/swiper-item&gt;
+&lt;/swiper&gt;</pre>
+      <pre>
+selectItem(e:any) {
+    this.setData({
+        curIndex: e.target.dataset.ind
+    })
+},
+changeItem(e:any){
+    this.setData({
+        curIndex: e.detail.current
+    })
+}</pre>
+      <li>改进方案：使用双向绑定实现 - 简直不要太爽，详情请参考 <a href="./model.html">双向绑定</a></li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

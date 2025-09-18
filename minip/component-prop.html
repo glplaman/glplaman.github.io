@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件传参 Parameter</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>组件传参</h1>
+    <span>&commat;Parameter</span>
+  </header>
+  <section>
+    <h3>父组件 → 子组件</h3>
+    <ul>
+      <li>采用属性绑定的方式</li>
+      <li>只能传递普通参数</li>
+      <li>子组件使用属性 <span class="warn">properties</span> 定义参数接口</li>
+      <li>- 完整声明 - 类型type和值value</li>
+      <pre>
+properties: {
+    icon:{
+        type:String,
+        value:''
+    }
+}</pre>
+    </ul>
+    <div>- 简化声明 - 类型 type；不需要默认值</div>
+    <ul>
+      <pre>
+properties: {
+    icon:String
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装空组件 emptyCom</div>
+    <ul>
+      <li>应用：购物车或收藏等为空时，利用条件渲染展示空组件</li>
+      <li>属性：图标和标题；图标使用 <a href="../web/framework/iconfont.html">阿里字体图标 Iconfont</a></li>
+      <li>逻辑 - 仅定义图标和标题属性；默认是购物车</li>
+      <pre>
+properties: {
+    icon: {
+      type: String,
+      value: 'icon-cart-empty'
+    },
+    title: {
+      type: String,
+      value: '购物车'
+    }
+  }</pre>
+      <li>结构</li>
+      <pre>
+&lt;view class="empty-com"&gt;
+  &lt;text class="iconfont {{icon}}"&gt;&lt;/text&gt;
+  &lt;text&gt;{{title}}空空的，去逛逛吧&lt;/text&gt;
+&lt;/view&gt;</pre>
+      <li>样式略</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装图片轮播组件 my-swiper</div>
+    <div>. 不同的轮播组件在不同的页面显示的图片列表和高度不一样；通过传递图片列表参数 imgs 和高度参数h，采用内联样式设置轮播组件高度</div>
+    <ol>
+      <li>创建组件 my-swiper</li>
+      <li>组件逻辑js - 声明2个参数，高度默认20，图片列表为空</li>
+      <pre>
+Component({
+    properties: {
+        h:{
+            type:Number,
+            value: 20
+        },
+        imgs: {
+            type: Array,
+            value: []
+        }
+    }
+})</pre>
+      <li>组件结构 wxml - 内联样式 style 不需要使用{}</li>
+      <pre>
+&lt;swiper class="swiper" style="height: {{h}}vh;"  indicator-dots indicator-color="#fff" indicator-active-color="#f40" autoplay circular&gt;
+    &lt;swiper-item wx:for='{{imgs}}' wx:key='id'&gt;
+        &lt;image class="img" src="{{item.url}}" mode="aspectFill"&gt;&lt;/image&gt;
+    &lt;/swiper-item&gt;
+&lt;/swiper&gt;</pre>
+      <li>组件样式 wxss - 轮播图高度由内联样式 style 指定；这里仅需指定图片大小</li>
+      <pre>
+.img{
+    width: 100%;
+}</pre>
+      <li>父组件配置 json - 引入</li>
+      <pre>
+{
+    "usingComponents": {
+        "my-swiper": "../../components/my-swiper/my-swiper"
+    }
+}</pre>
+      <li>父组件结构 wxml - 使用；传递高度h；绑定图片列表 imgs</li>
+      <pre>&lt;my-swiper h='{{25}}' imgs='{{imgs}}'&gt;&lt;/m-swiper&gt;</pre>
+      <li>父组件逻辑 js - 在页面的 onLoad() 中从 <a href="/utils/index.html">大树小站</a> 请求图片，或自行准备；imgs 是 data 中的定义的数据</li>
+      <pre>
+wx.request({
+    url: 'https://glpla.github.io/utils/data/swiper.json',
+    success: res => {
+        console.log('res', res);
+        this.setData({
+            imgs: res.data.cont
+        })
+    }
+})</pre>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装阿里字体图标组件 my-iconfont</div>
+    <div>. 父组件仅仅传递图标类，控制组件显示相应的字体图标</div>
+    <ol>
+      <li>创建子组件</li>
+      <p>右键单击组件根目录 components → 新建组件目录 my-iconfont</p>
+      <p>再右键组件目录，新建 Component 为 my-iconfont；组件名和组件目录通常保持一致</p>
+      <li>设计子组件</li>
+      <p>wxml：基类 iconfont 保留，不同的图标类 icon 通过父组件传递获取</p>
+      <pre>&lt;text class="iconfont {{icon}}"&gt;&lt;/text&gt;</pre>
+      <p>js：在属性 properties 中设置将图标类 icon 的类型和默认值；并允许添加全局类</p>
+      <pre>
+Component({
+    options: {
+        addGlobalClass: true,
+    },
+    properties: {
+        icon:{
+            type:String
+        }
+        //简化形式icon:String
+    }
+})</pre>
+      <li>父组件 - 引入组件</li>
+      <p>在使用组件的页面 .json 中配置</p>
+      <pre>
+{
+    "usingComponents": {
+        "my-iconfont":"../../components/my-iconfont/my-iconfont"
+    }
+}</pre>
+      <p>父组件 - 使用组件</p>
+      <p>在使用组件的 .wxml 中，将图标类作为属性指定给参数接口即可</p>
+      <pre>&lt;my-iconfont icon='icon-home'&gt;&lt;/my-iconfont&gt;</pre>
+    </ol>
+  </section>
+  <h2>子组件 → 父组件</h2>
+  <section>
+    <h3>采用事件绑定</h3>
+    <ol>
+      <li>子组件绑定传统事件并在事件处理函数中 <span class="warn">触发|发送|triggerEvent</span> 自定义事件给父组件，可以指定传递的参数</li>
+      <li>父组件绑定自定义事件并声明事件处理函数</li>
+    </ol>
+    <ul>
+      <p>子组件wxml - 声明普通事件tap并指定事件处理函数toCalendar</p>
+      <pre>&lt;view class='nav-item' bindtap="toCalendar"&gt;navigation&lt;/view&gt;</pre>
+      <p>子组件js - 在事件处理函数 toCalendar 中触发自定义事件 toCal</p>
+      <pre>
+toCalendar() {
+    this.triggerEvent('toCal');
+}</pre>
+      <p>父组件 - 使用组件 xml - 绑定子组件发送的事件toCal并指定事件处理函数 dealCal</p>
+      <pre>&lt;nav bindtoCal="dealCal"&gt;&lt;/nav&gt;</pre>
+      <p>父组件 - 使用组件js - 实现事件处理函数dealCal</p>
+      <pre>
+dealCal() {
+    wx.navigateTo({
+        url: '../calendar/calendar',
+    })
+}</pre>
+    </ul>
+  </section>
+  <!-- <div class="chap">组件行为*</div>
+    <dl>
+        <dt>behavior</dt>
+        <dd>组件之间共享代码</dd>
+        <dd class="exanple-sn">自定义tabBar - <a
+                href="https://developers.weixin.qq.com/miniprogram/dev/framework/ability/custom-tabbar.html">官方文档 -
+                自定义 tabBar</a>
+        </dd>
+    </dl> -->
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

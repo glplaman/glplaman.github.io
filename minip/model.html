@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>双向绑定 model</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>双向绑定</h1>
+    <span>&commat;model</span>
+  </header>
+  <section>
+    <ul>
+      <li>Two-way binding</li>
+      <li>视图层可以影响到逻辑层</li>
+      <li>逻辑层也可以影响到视图层</li>
+      <li class="txt-center">视图层 <i class="iconfont icon-moduanzuoyouzhankai_o"></i> 逻辑层</li>
+      <li>多用于表单元素</li>
+      <li>为 <span class="warn">value</span> 添加 model 修饰符即可实现双向数据绑定</li>
+      <li>可以绑定的熟悉有：value、checked、selected 等</li>
+      <li>省略了触发事件，如 bindchange 或 bindinput</li>
+      <li>目前只支持绑定 <span class="warn">简单数据类型</span> （如字符串、数字、布尔值），不支持对象（Object）或数组（Array）等复杂数据结构</li>
+      <li>借助调试器的 AppData 查看绑定情况</li>
+      <li>推荐这些元素使用：input 的 value 是字符串 string；checkbox 的 checked 是布尔值 boolean；slider 的 value 是数字 number</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 数据提交 - 使用双向数据绑定和自定义事件实现；提交了绑定的数据，相当于提交了表单数据</div>
+    <ul>
+      <li>准备数据：通常以对象的形式出现，便于提交</li>
+      <pre>
+data: {
+    uname:''
+}</pre>
+      <li>调整结构：抛弃传统的表单结构，使用普通结构，按钮也不需要指定表单类型</li>
+      <pre>
+&lt;view class="form"&gt;
+    &lt;input type="text" model:value="{{uname}}" /&gt;
+    &lt;button bind:tap="submitModel"&gt;submit&lt;/button&gt;
+&lt;/view&gt;</pre>
+      <li>自定义事件：提交时，将 data 中 uname 提交给服务器端</li>
+      <pre>
+submitModel() {
+    console.log(this.data.uname);
+}</pre>
+    </ul>
+  </section>
+  <h2>值绑定</h2>
+  <section>
+    <div>. 绑定的是元素的值 value</div>
+    <h3>&lt;input&gt;</h3>
+    <ul>
+      <pre>
+data: {
+    msg: 'hi',
+    obj:{
+        id: '20201001'
+        name:'hi,there.'
+    }
+}</pre>
+      <li>普通方式实现双向绑定单一属性 msg - 利用事件bindinput修改数据</li>
+      <pre>
+&lt;view>{{msg}}&lt;/view&gt;
+&lt;input type="text" value='{{msg}}' bindinput="ipt"/&gt;</pre>
+      <pre>
+ipt(e) {
+    console.log(e.detail.value);
+    this.setData({
+        msg:e.detail.value
+    })
+}</pre>
+      <li>model方式实现双向绑定 - 简单粗暴；省略了bindinput事件</li>
+      <pre>&lt;input type="text" model:value='{{msg}}' /&gt;</pre>
+      <li>双向绑定复合数据 obj.name</li>
+      <pre>&lt;input type="text" model:value='{{obj.name}}' /&gt;</pre>
+      <li>失败：仅实现逻辑层到视图层的绑定；Two-way binding does not support complex data paths currently. This two-way binding is
+        ignored.</li>
+      <li>调整：还原为普通事件流 bindchange</li>
+      <pre>&lt;input type="text" value='{{obj.name}}' bindinput="getName"/&gt;</pre>
+      <pre>
+getName(e) {
+    this.setData({
+        'obj.name':e.detail.value
+    })
+}</pre>
+    </ul>
+    <h3>&lt;textarea&gt;</h3>
+    <h3>&lt;picker&gt;</h3>
+    <h3>&lt;slider&gt;</h3>
+    <h3>&lt;swiper&gt;</h3>
+    <ul>
+      <li>绑定的是当前swiper-item - current</li>
+      <li>拖动或设置为自动播放，查看绑定情况</li>
+      <pre>cur:1</pre>
+      <pre>
+&lt;view>{{cur}}&lt;/view&gt;
+&lt;swiper model:current="{{cur}}"&gt;
+  &lt;swiper-item&gt; 11 &lt;/swiper-item&gt;
+  &lt;swiper-item&gt; 22 &lt;/swiper-item&gt;
+  &lt;swiper-item&gt; 33 &lt;/swiper-item&gt;
+  &lt;swiper-item&gt; 44 &lt;/swiper-item&gt;
+&lt;/swiper&gt;</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 联动导航 - 改进方案</div>
+    <ul>
+      <li>滚动视图 scroll-view 和轮播 swiper 配合使用</li>
+      <pre>cur: 1</pre>
+      <pre>
+&lt;scroll-view class="wrap" scroll-x scroll-with-animation model:scroll-into-view="id{{cur}}"&gt;
+    &lt;view class="item" wx:for="{{10}}" wx:key="index" id="id{{index}}"&gt;{{item}}&lt;/view&gt;
+&lt;/scroll-view&gt;
+
+&lt;swiper class="swiper-wrap" model:current="{{cur}}"&gt;
+    &lt;swiper-item  class="swiper-item" wx:for="{{10}}" wx:key="index"&gt;
+        {{item}}
+    &lt;/swiper-item&gt;
+&lt;/swiper&gt;</pre>
+    </ul>
+  </section>
+  <h2>选择绑定</h2>
+  <section>
+    <div>. 绑定的是选中状态 checked</div>
+    <h3>&lt;radio&gt;</h3>
+    <ul>
+      <pre>
+&lt;radio-group name="ugender"&gt;
+    &lt;radio value="male" color="#ff4400" model:checked="{{user.ugender=='male'}}" /&gt;male
+    &lt;radio value="female" color="#ff4400" model:checked="{{user.ugender=='female'}}"/&gt;female
+&lt;/radio-group&gt;</pre>
+    </ul>
+    <h3>&lt;checkbox&gt;</h3>
+    <h3>&lt;switch&gt;</h3>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

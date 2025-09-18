@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本地存储 Storage</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>本地存储</h1>
+    <span>&commat;Storage</span>
+  </header>
+  <section>
+    <h3>案例分析</h3>
+    <ol>
+      <li>app.js
+        <p>启动时 onLaunch 拉取本地缓存的日志记录</p>
+        <p>获取本地存储；如果不存在或为空则为空数组</p>
+        <p>在头部追加一条记录，以当前时间作为数据 - 时间戳</p>
+        <p>更新/设置本地存储</p>
+      </li>
+      <pre>
+const logs = wx.getStorageSync('logs') || []
+logs.unshift(Date.now())
+wx.setStorageSync('logs', logs)</pre>
+      <li>log.js - 拉取并处理|格式化日志</li>
+      <pre>
+this.setData({
+    logs: (wx.getStorageSync('logs') || []).map(log => {
+        return {
+            date: util.formatTime(new Date(log)),
+            timeStamp: log
+        }
+    })
+})</pre>
+    </ol>
+    <div class="tips">早期版本的API，复合数据的保存和存储需要经过序列化 JSON.stringify 和解析 JSON.parse；现在可以直接使用</div>
+    <h3>简介</h3>
+    <ul>
+      <li>以值对 key-value 的形式在客户端<span class="warn">永久</span>保存数据</li>
+      <li>单个 key 允许存储的最大数据长度为 1MB，所有数据存储上限为 10MB</li>
+      <li>保存的数据 data|value：只支持原生类型、Date、及能够通过 JSON.stringify 序列化的对象</li>
+      <li>应：只进行数据的持久化存储，不应：用于运行时的数据传递或全局状态管理。启动过程中过多的同步读写存储，会显著影响启动</li>
+      <li>更多本地缓存，可以访问 <a href="../web/js/localStorage.html">HTML localStorage</a></li>
+    </ul>
+    <h3>查看</h3>
+    <div>. 调试器 → Storage</div>
+  </section>
+  <h2>API</h2>
+  <section>
+    <ul>
+      <li>所有的 API 都支持同步调用或异步调用</li>
+      <li>异步调用的 API 以 Sync 结束</li>
+      <table>
+        <caption>本地存储 API</caption>
+        <thead>
+          <tr>
+            <th>同步</th>
+            <th>异步</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>wx.setStorage</td>
+            <td>wx.setStorageSync</td>
+          </tr>
+          <tr>
+            <td>wx.getStorage</td>
+            <td>wx.getStorageSync</td>
+          </tr>
+          <tr>
+            <td>wx.removeStorage</td>
+            <td>wx.removeStorageSync</td>
+          </tr>
+          <tr>
+            <td>wx.clearStorage</td>
+            <td>wx.clearStorageSync</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3>保存数据 set</h3>
+    <ol>
+      <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/storage/wx.setStorage.html">wx.setStorage(Object
+          object)</a></li>
+      <li>wx.setStorageSync(string key, any data)</li>
+      <p>. 保存的时候，必须指定 key 和 data</p>
+      <p>. 保存成功，返回 errMsg: "setStorage:ok"</p>
+      <pre>
+wx.setStorage({
+    key:'msg',
+    data:'hi, there.',
+    success:res=>console.log(res),
+    fail:err=>console.log(err),
+    complete:()=>console.log('set done log')
+})</pre>
+    </ol>
+    <h3>获取数据 get</h3>
+    <ol>
+      <li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/storage/wx.getStorage.html">wx.getStorage(Object
+          object)</a></li>
+      <li>wx.getStorageSync(string key)</li>
+      <p>获取的时候，必须指定 key</p>
+      <p>如果成功，在返回结果的 data 中解析数据</p>
+      <p>如果数据不存在，返回 errMsg: "getStorage:fail data not found"</p>
+      <pre>
+wx.getStorage({
+    key:'msg',
+    success:res=>console.log(res),
+    fail:err=>console.log(err),
+    complete:()=>console.log('get done log')
+})</pre>
+      <p class="tips">建议获取数据 get，使用同步调用，减少异步操作带来的性能损耗</p>
+      <p>.如果数据不存在，返回字符串 hi</p>
+      <pre>
+getMsgSync() {
+    let msg = wx.getStorageSync('msg') || 'hi'
+    this.setData({
+        msg: msg
+    })
+}</pre>
+      <p>.如果数据不存在，返回对象 {id:100,name:'glpla'}</p>
+      <pre>
+getMsgSync() {
+    let msg = wx.getStorageSync('msg') || {id:100,name:'glpla'}
+    this.setData({
+        msg: msg
+    })
+}</pre>
+      <p>.如果数据不存在，返回数组 [0, 1, 2, 3, 4]</p>
+      <pre>
+getMsgSync() {
+    let msg = wx.getStorageSync('msg') || [0, 1, 2, 3, 4]
+    this.setData({
+        msg: msg
+    })
+}</pre>
+    </ol>
+    <h3>删除指定数据 remove</h3>
+    <ol>
+      <li><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/storage/wx.removeStorage.html">wx.removeStorage(Object
+          object)</a></li>
+      <li>wx.removeStorageSync(string key)</li>
+      <p>删除的时候，必须指定 key</p>
+      <p>删除成功，返回 errMsg: "removeStorage:ok"</p>
+      <pre>
+wx.removeStorage({
+    key: 'msg',
+    success:res=>console.log(res),
+    fail:err=>console.log(err),
+    complete:()=>console.log('remove done log')
+})</pre>
+    </ol>
+    <h3>清除所有数据 clear</h3>
+    <ol>
+      <li><a
+          href="https://developers.weixin.qq.com/miniprogram/dev/api/storage/wx.clearStorage.html">wx.clearStorage(Object
+          object)</a></li>
+      <li>wx.clearStorageSync()</li>
+      <p>清除成功，返回 errMsg: "clearStorage:ok"</p>
+      <pre>
+wx.clearStorage({
+    success:res=>console.log(res),
+    fail:err=>console.log(err),
+    complete:()=>console.log('clear done log')
+})</pre>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] JSON 数据的使用 - 直接存储和获取，无需序列化和解析</div>
+    <pre>
+wx.setStorage({
+    key: 'obj',
+    data: {id:100,name:'glpla'},
+    success: res => console.log('set',res),
+    fail: err => console.log('set',err),
+    complete: () => console.log('set done')
+})</pre>
+    <pre>let obj = wx.getStorageSync('obj') || {id:100,name:'glpla'}</pre>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

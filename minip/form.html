@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单 Form</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>表单</h1>
+    <span>&commat;Form</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>&lt;form&gt;和其中的大多数表单元素，基本同HTML5保持一致；具体效果视真机系统而定</li>
+      <li>表单数据提交时，请确保每个表单元素都指定属性 name；value可以由事件获取</li>
+      <li>请为每个表单元素都指定样式类 class</li>
+      <li>应初始化表单元素样式，如主题颜色和其它属性；部分需要配合类共同设置</li>
+      <li>组件还有一个共同属性：disabled</li>
+      <pre>
+radio,
+checkbox{
+    zoom:0.8;
+}</pre>
+    </ul>
+    <div class="tips">
+      <div>一定要预览。。。一定要预览。。。一定要预览。。。</div>
+    </div>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/form.html">&lt;form&gt;</a></h3>
+    <ul>
+      <li>表单容器；行内元素 inline</li>
+      <li>默认情况下，表单大小为0，即使添加了表单元素</li>
+      <li>生产环境下，通常是 <span class="warn">垂直方向</span> 分布各表单元素</li>
+      <li>布局上，为了 <span class="warn">优雅分隔</span> 各表单元素，通常增加一个内层元素 &lt;view&gt;，由它布局，而仅仅将 &lt;form&gt; 当作一个 <span
+          class="warn">功能元素</span></li>
+      <pre>
+&lt;form bindsubmit="submit"&gt;
+    &lt;view class="form-cont"&gt;
+        // 其它表单元素
+        //按钮指定表单类型，可以触发表单的默认提交行为
+        &lt;button form-type="submit"&gt;submit&lt;/button&gt;
+    &lt;/view&gt;
+&lt;/form&gt;</pre>
+      <li>提交时，可以在事件对象 e.detail 中获取表格各元素的值；需要配合指定了 form-type 为 submit 属性的按钮 &lt;button&gt; 一起使用</li>
+      <li>多数情况下，抛弃表单元素 &lt;form&gt;，使用普通结构，通过 <a href="./model.html">数据双向绑定</a> 和自定义事件提交数据</li>
+      <pre>
+submit(e) {
+    console.log(e.detail);
+}</pre>
+      <table>
+        <caption>表单事件</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bindsubmit</td>
+            <td>数据提交；默认</td>
+          </tr>
+          <tr>
+            <td>bindreset</td>
+            <td>表单重置时会触发 reset 事件</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/button.html">&lt;button&gt;</a></h3>
+    <ul>
+      <li>功能强大的按钮；有特定的类型属性和事件属性；块元素 block</li>
+      <li>如果设置了高度后，记得设置同样大小的行高，以确保文字垂直方向居中</li>
+      <li>除了默认的 tap 事件外，按钮其它事件大多和相应的开发能力关联</li>
+      <table>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>loading</td>
+            <td>是否带 loading 图标；然并卵</td>
+          </tr>
+          <tr>
+            <td>form-type</td>
+            <td>按钮类型；点击触发 form 的submit/reset 事件
+              <br>submit：单击后，默认行为是提交表单
+              <br>reset：单击后，默认行为是重置表单
+            </td>
+          </tr>
+          <tr>
+            <td>open-type</td>
+            <td>微信开放能力
+              <br>chooseAvatar：获取用户头像
+              <br>contact：客服
+              <br>getPhoneNumber：获取用户手机(企业号)
+              <br>getUserInfo：获取用户信息(接口被收回)
+            </td>
+          </tr>
+          <tr>
+            <td>bindchooseavatar</td>
+            <td>获取用户头像回调，返回头像临时地址；配合 open-type 使用</td>
+          </tr>
+          <tr>
+            <td>bindcontact</td>
+            <td>客服消息回调；配合 open-type 使用</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <div class="tips">开发能力 open-type 的使用，要随时关注官方接口的更新变化</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 样式</div>
+    <ul>
+      <li>&lt;button&gt; 组件的默认样式确实具有较高的优先级，会覆盖自定义样式</li>
+      <li>可以通过提权或设计 &lt;view&gt;来模拟</li>
+      <li>在调试器中，查看按钮的代理样式，体会样式初始化的重要性</li>
+      <pre>
+// 方案1：使用 important 提权
+button{
+    width: 100%!important;
+    background-color: var(--themeColor);
+    color: #fff;    
+}</pre>
+      <pre>
+// 方案2：使用选择器提权 - 叠加一个选择器作为所有按钮的基类
+button.btn{
+    width: 100%;
+    background-color: var(--themeColor);
+    color: #fff;    
+}</pre>
+      <li>部分样式需要在特定页面的类中设置</li>
+      <pre>
+.btn{
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    border-radius: 0;
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 业务</div>
+    <ul>
+      <li>打开客服对话框 - 用户点击后，打开客服对话框</li>
+      <pre>&lt;button open-type="contact" bindcontact='getContact'&gt;getContact&lt;/button&gt;</pre>
+      <pre>
+getContact(e){
+    console.log(e);
+}</pre>
+      <li>选择用户头像 - 用户点击后，打开头像选择对话框</li>
+      <pre>&lt;button open-type="chooseAvatar" bindchooseavatar='getAvatar'&gt;getAvatar&lt;/button&gt;</pre>
+      <pre>
+getAvatar(e){
+    console.log(e.detail);//http://tmp/bi86Wd1sI41s8ea8eb984c16d03bff787972d38e3ce6.jpg
+}</pre>
+      <li>使用<a href="./c-function.html">云函数</a>获取用户手机号</li>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/label.html">&lt;label&gt;</a></h3>
+    <ul>
+      <li>行内元素 inline，用以扩展用户点击、改善用户体验</li>
+      <li>使用属性 for，配合指定了 id 的表单元素，如 &lt;input&gt;、&lt;radio&gt;、&lt;checkbox&gt;，可以改进表单组件的可用性</li>
+      <pre>&lt;checkbox value="撸码" id="code" /&gt;&lt;label for="code"&gt;撸码&lt;/label&gt;</pre>
+      <li>或：使用 &lt;label&gt; 包裹表单元素，此时应略去 for 属性</li>
+      <pre>
+&lt;label&gt;
+    &lt;checkbox color="#3498db" value="撸码" /&gt;撸码
+&lt;/label&gt;</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/input.html">&lt;input&gt;</a></h3>
+    <ul>
+      <li>单行文本输入框；块元素 block</li>
+      <li>原生组件，字体是系统字体，<span class="warn">无法设置</span> font-family</li>
+      <table>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>输入框初始内容；字符串；必填</td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>输入框类型
+              <br>text：文本键盘；默认
+              <br>number：数字键盘
+              <br>digit：带小数点的数字键盘
+              <br>idcard：身份证键盘
+              <br>nickname：昵称键盘
+              <br>safe-password：密码
+            </td>
+          </tr>
+          <tr>
+            <td>password</td>
+            <td>是否是密码类型；布尔；默认假</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>输入框为空时占位符；字符串</td>
+          </tr>
+          <tr>
+            <td>placeholder-style</td>
+            <td>指定样式；仅支持设置颜色、大小和字重；需预览查看效果</td>
+          </tr>
+          <tr>
+            <td>placeholder-class</td>
+            <td>指定样式类；仅支持设置颜色、大小和字重；推荐</td>
+          </tr>
+          <tr>
+            <td>maxlength</td>
+            <td>最大输入长度；数字</td>
+          </tr>
+          <tr>
+            <td>focus</td>
+            <td>获取焦点；直接拉起键盘便于输入；但是用户欣赏不到你的设计</td>
+          </tr>
+          <tr>
+            <td>confirm-type</td>
+            <td>设置键盘右下角按钮的文字，仅适用text类型
+              <br>send：发送
+              <br>search：搜索
+              <br>next：下一个
+              <br>go：前往
+              <br>done：完成；默认
+            </td>
+          </tr>
+          <tr>
+            <td>bindinput</td>
+            <td>键盘输入时触发</td>
+          </tr>
+          <tr>
+            <td>bindfocus</td>
+            <td>输入框聚焦时触发</td>
+          </tr>
+          <tr>
+            <td>bindblur</td>
+            <td>输入框失去焦点时触发</td>
+          </tr>
+          <tr>
+            <td>bindconfirm</td>
+            <td>点击完成按钮时触发；不必非要使用普通事件</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 业务</div>
+    <ul>
+      <li>普通文本输入 - text</li>
+      <pre>
+&lt;view class="item"&gt;
+    &lt;text&gt;昵称&lt;/text&gt;
+    &lt;input type="text" 
+      placeholder="您的昵称" 
+      maxlength="8" 
+      value="{{user.uname}}" /&gt;
+&lt;/view&gt;</pre>
+      <li>昵称输入 - nickname；会自动拉取你的微信昵称</li>
+      <pre>
+&lt;view class="item"&gt;
+    &lt;text&gt;昵称&lt;/text&gt;
+    &lt;input type="nickname" 
+      placeholder="您的昵称" 
+      maxlength="8" 
+      value="{{user.uname}}" /&gt;
+&lt;/view&gt;</pre>
+      <li>密码输入 - safe-password；隐藏真实信息</li>
+      <pre>
+&lt;view class="item border-btm"&gt;
+    &lt;text&gt;密码&lt;/text&gt;
+    &lt;input type="safe-password" 
+      placeholder="您的密码" 
+      maxlength="8" 
+      value="{{user.upass}}" /&gt;
+&lt;/view&gt;
+</pre>
+      <li>数值型输入 - digit；打开数字键盘，需要在手机端查看效果</li>
+      <pre>
+&lt;view class="item border-btm"&gt;
+    &lt;text&gt;学号&lt;/text&gt;
+    &lt;input type="digit" 
+      placeholder="您的学号" 
+      maxlength="8" 
+      value="{{user.usn}}" /&gt;
+&lt;/view&gt;
+</pre>
+      <li>输入完毕后，按回车键或真机环境中，按键盘右下角的输入/确认即可触发后续逻辑；需要绑定 bindconfirm 事件并指定类型</li>
+      <pre>
+&lt;input type="text" 
+  placeholder="请输入您要搜索的商品名称" 
+  model:value='{{keyword}}' 
+  bindconfirm="queryProducts" 
+  confirm-type="search" /&gt;</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/radio.html">&lt;radio&gt;
+        &lt;radio-group&gt;</a></h3>
+    <ul>
+      <li>多选一组件：单选按钮和单选按钮组</li>
+      <li>行内块元素 inline-block</li>
+      <li>HTML中，需要给每个 &lt;radio&gt; 指定 name 以确保是一组；微信小程序中，使用 &lt;radio-group&gt; 分组，且指定 name</li>
+      <table>
+        <caption> &lt;radio-group&gt;</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bindchange</td>
+            <td>选中项发生改变时触发；从事件对象 e.detail 获取当前选中的值（ <span class="warn">数组</span> ）</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>&lt;radio&gt;</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>单选按钮的值</td>
+          </tr>
+          <tr>
+            <td>checked</td>
+            <td>当前是否选中</td>
+          </tr>
+          <tr>
+            <td>color</td>
+            <td>单选按钮选中时的颜色</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>是否禁用</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 业务</div>
+    <ul>
+      <li>性别选择</li>
+      <pre>
+&lt;radio-group bindchange="getGender" name="ugender"&gt;
+    &lt;radio color="#3498db" value="男" checked /&gt;男
+    &lt;radio color="#3498db" value="女" /&gt;女
+&lt;/radio-group&gt;</pre>
+      <li>获取结果</li>
+      <pre>
+getGender(e){
+    console.log(e.detail.value);
+}</pre>
+      <li>利用给定的数据和当前值是否相等来决定哪个是选中状态</li>
+      <pre>
+&lt;radio-group bindchange="getGender" name="ugender"&gt;
+    &lt;radio color="#3498db" value="男" checked="{{user.ugender=='男'}}" /&gt;男
+    &lt;radio color="#3498db" value="女" checked="{{user.ugender=='女'}}" /&gt;女
+&lt;/radio-group&gt;</pre>
+      <li>使用 &lt;label&gt; 改写上例，提升用户体验</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 样式</div>
+    <ul>
+      <li>隐藏 &lt;radio&gt;，重新设计</li>
+      <li>更多信息，请访问 <a href="../web/input.html">Html - &lt;input&gt;</a></li>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/checkbox.html">&lt;checkbox&gt;
+        &lt;checkbox-group&gt;</a></h3>
+    <ul>
+      <li>行内块元素 inline-block</li>
+      <li>多选按钮；多选按钮组</li>
+      <table>
+        <caption> &lt;checkbox-group&gt;</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bindchange</td>
+            <td>选中项发生改变时触发；从事件对象 e.detail 获取当前选中的值（ <span class="warn">数组</span> ）</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>&lt;checkbox&gt;</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>多选按钮的值；数组</td>
+          </tr>
+          <tr>
+            <td>checked</td>
+            <td>当前是否选中</td>
+          </tr>
+          <tr>
+            <td>color</td>
+            <td>多选按钮选中时的颜色</td>
+          </tr>
+          <tr>
+            <td>disabled</td>
+            <td>是否禁用</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 业务</div>
+    <ul>
+      <li>兴趣选择</li>
+      <pre>
+&lt;checkbox-group bindchange="getLike" name='ulike'&gt;
+    &lt;checkbox color="#3498db" value="撸码" /&gt;撸码
+    &lt;checkbox color="#3498db" value="睡觉" checked/&gt;睡觉
+    &lt;checkbox color="#3498db" value="电玩" /&gt;电玩
+    &lt;checkbox color="#3498db" value="唱歌" checked/&gt;唱歌
+    &lt;checkbox color="#3498db" value="跳舞" /&gt;跳舞
+    &lt;checkbox color="#3498db" value="美食" checked/&gt;美食
+&lt;/checkbox-group&gt;</pre>
+      <li>获取选择结果</li>
+      <pre>
+getLike(e){
+    console.log(e.detail.value);
+}</pre>
+      <li>使用 &lt;label&gt; 改写上例，提升用户体验</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 样式</div>
+    <ul>
+      <li>多选按钮默认是方块</li>
+      <li>自定义方法同 &lt;radio&gt;</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 全选/全不选</div>
+    <ul>
+      <li>购物车中商品的操作</li>
+      <li>如果全选为真，则所有商品为选中状态</li>
+      <li>如果全选为假，则所有商品为取消状态</li>
+      <li>只有所有商品都是选中状态，全选才为真</li>
+      <li>只要有一个商品是取消状态，则全选为假</li>
+      <li>数据：每个商品数据有有一个字段 selected 用来标记是否为选中状态</li>
+      <pre>
+data:{
+  carts:[],
+  isAll: false
+}</pre>
+      <li>商品列表渲染：每个商品项和一个 &lt;checkbox&gt; 关联并绑定 tap 事件 toggleItemSelection；使用自定义数据携带 id，便于修改其选择状态；其它内容略</li>
+      <pre>
+&lt;view wx:for="{{carts}}" wx:key="item"&gt;
+  &lt;checkbox checked="{{item.selected}}" bind:tap="toggleItemSelection" data-id='{{item.id}}' /&gt;
+  // ...
+&lt;/view&gt;</pre>
+      <li>全选 &lt;checkbox&gt; 并绑定 tap 事件 toggleSelectAll</li>
+      <pre>
+&lt;label&gt;
+  &lt;checkbox checked="{{isAll}}" bind:tap="toggleSelectAll" /&gt;全选
+&lt;/label&gt;</pre>
+      <li>全选逻辑：获取商品数据 carts 和全选标记 isAll；如果 isAll 之前是假，单击后，将变为真；所以将 isAll 取反后给每一个商品更新状态；最后更新数据</li>
+      <pre>
+toggleSelectAll() {
+  const {
+    carts,
+    isAll
+  } = this.data
+  carts.map(cart => cart.selected = !isAll)
+  this.setData({
+    carts,
+    isAll: !isAll
+  })
+}</pre>
+      <li>单个商品的选择状态逻辑：获取所有商品数据及当前商品数据 id；取反当前商品数据的状态状态；然后根据当前所有商品数据的选择状态，决定 isAll 的真假；使用数组方法 every 实现 - 只要每一个商品数据都是选中状态，
+        isAll 才是真；否则为假；最后更新数据</li>
+      <pre>
+toggleItemSelection(e) {
+  console.log(e.currentTarget);
+  const {
+    carts
+  } = this.data
+  const id = e.currentTarget.dataset.id
+  const updatedCarts = carts.map(cart => {
+    if (cart.id == id) {
+      cart.selected = !cart.selected
+    }
+    return cart
+  })
+  const isAll = updatedCarts.every(cart => cart.selected)
+  this.setData({
+    carts: updatedCarts,
+    isAll
+  })
+}</pre>
+    </ul>
+    <div class="tips">
+      <div>数组函数的使用 map()、every()...</div>
+    </div>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/textarea.html">&lt;textarea&gt;</a></h3>
+    <ul>
+      <li>多行输入；默认大小300*150；块元素 block</li>
+      <li>最大长度140个字符</li>
+      <table>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>value</td>
+            <td>输入框初始内容；字符串；必填</td>
+          </tr>
+          <tr>
+            <td>placeholder</td>
+            <td>输入框为空时占位符；字符串</td>
+          </tr>
+          <tr>
+            <td>maxlength</td>
+            <td>最大输入长度；数字</td>
+          </tr>
+          <tr>
+            <td>focus</td>
+            <td>获取焦点</td>
+          </tr>
+          <tr>
+            <td>confirm-type</td>
+            <td>设置键盘右下角按钮的文字，仅适用text类型
+              <br>send：发送
+              <br>search：搜索
+              <br>next：下一个
+              <br>go：前往
+              <br>done：完成；默认
+            </td>
+          </tr>
+          <tr>
+            <td>bindfocus</td>
+            <td>输入框聚焦时触发</td>
+          </tr>
+          <tr>
+            <td>bindinput</td>
+            <td>键盘输入时触发；组合使用</td>
+          </tr>
+          <tr>
+            <td>bindblur</td>
+            <td>输入框失去焦点时触发；组合使用</td>
+          </tr>
+          <tr>
+            <td>bindconfirm</td>
+            <td>点击完成按钮时触发；组合使用</td>
+          </tr>
+          <tr>
+            <td>bindlinechange</td>
+            <td>输入框行数变化时调用</td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>
+&lt;view&gt;
+    &lt;text&gt;简介&lt;/text&gt;
+    &lt;textarea name="udesc" value="{{user.udesc}}" maxlength="30" placeholder="your message"/&gt;
+&lt;/view&gt;</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 样式</div>
+    <ul>
+      <li><span class="warn">显式</span>的设置宽度和容器保持一样大小；同时设置内边距 padding 以使得文字内收一定距离</li>
+      <pre>
+textarea{
+    width: 100%;
+    padding: 20rpx;
+}</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/picker.html">&lt;picker&gt;</a></h3>
+    <ul>
+      <li>块元素 block</li>
+      <li>从底部弹起的滚动选择器，如：时间选择器、日期选择器、地区选择器</li>
+      <li>除了下述通用的属性外，不同的 mode，picker 拥有不同的属性；如时间类的都有开始 start、结束 end 等</li>
+      <li>内部结构和样式受到一定限制，不能像普通 view 组件那样直接使用弹性盒子 Flexbox来控制其内部元素的排列</li>
+      <li>在内部增加一个子容器，对该容器使用 Flex，见后续案例</li>
+      <table>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>mode</td>
+            <td>模式
+              <br>selector：普通选择器
+              <br>multiSelector：多列选择器
+              <br>time：时间选择器；hh:mm
+              <br>date：日期选择器；YYYY-MM-DD
+              <br>region：省市区选择器
+            </td>
+          </tr>
+          <tr>
+            <td>range</td>
+            <td>数据列表|范围</td>
+          </tr>
+          <tr>
+            <td>bindcancel</td>
+            <td>取消选择时触发</td>
+          </tr>
+          <tr>
+            <td>bindchange</td>
+            <td>选择时触发</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 业务</div>
+    <ul>
+      <li>弹出菜单 - ind和list是data中的数据</li>
+      <pre>
+&lt;picker 
+    mode="selector" 
+    value="{{ind}}" 
+    range="{{list}}" 
+    bindchange="pick"
+&gt;
+    {{list[ind]}}
+&lt;/picker&gt;</pre>
+      <pre>
+pick(e){
+    console.log(e.detail.value)
+}</pre>
+      <li>时间选择 - time；可以指定起始 start 和结束 end</li>
+      <pre>
+&lt;picker 
+    mode="time" 
+    value="{{time}}" 
+    bindchange="selTime"
+&gt;
+    {{time]}}
+&lt;/picker&gt;</pre>
+      <pre>
+selTime(e){
+    this.setData({
+        time: e.detail.value
+    })
+}</pre>
+      <li>日期选择 - date；通常应指定起始 start 和结束 end</li>
+      <pre>
+&lt;picker 
+    mode="date" 
+    value="{{user.ubirth}}" 
+    start="2000-07-01"
+    end="2026-12-31"
+    bindchange="selDate"
+&gt;
+    {{user.ubirth}}
+&lt;/picker&gt;</pre>
+      <pre>
+selDate(e){
+    this.setData({
+        date: e.detail.value
+    })
+}</pre>
+      <li>地区选择 - region；e.detail.value 返回一个数组：省、市、区；可以不使用地图实现选择</li>
+      <pre>
+&lt;picker 
+    mode="region" 
+    value="{{region}}" 
+    bindchange="selRegion"
+&gt;
+    {{region}}
+&lt;/picker&gt;</pre>
+      <pre>
+selRegion(e){
+    this.setData({
+        region: e.detail.value
+    })
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 样式</div>
+    <ul>
+      <li>无效</li>
+      <pre>
+&lt;picker class='flex'&gt;
+    &lt;text&gt;cont&lt;/text&gt;
+    &lt;text&gt;cont&lt;/text&gt;
+    &lt;text&gt;cont&lt;/text&gt;
+&lt;/picker&gt;</pre>
+      <li>有效 - 增加容器元素；思路同 <a href="./scrollview.html">&lt;scroll-view&gt;</a></li>
+      <pre>
+&lt;picker &gt;
+  &lt;view class='flex'&gt;
+    &lt;text&gt;cont&lt;/text&gt;
+    &lt;text&gt;cont&lt;/text&gt;
+    &lt;text&gt;cont&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/picker&gt;</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/slider.html">&lt;slider&gt;</a></h3>
+    <ul>
+      <li>块元素 block</li>
+      <li>滑动选择器</li>
+      <table>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>min</td>
+            <td>最小值</td>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>最大值</td>
+          </tr>
+          <tr>
+            <td>step</td>
+            <td>步长</td>
+          </tr>
+          <tr>
+            <td>show-value</td>
+            <td>是否显示值；默认不显示</td>
+          </tr>
+          <tr>
+            <td>backgroundColor</td>
+            <td>背景条的颜色</td>
+          </tr>
+          <tr>
+            <td>activeColor</td>
+            <td>已选择的颜色</td>
+          </tr>
+          <tr>
+            <td>block-size</td>
+            <td>滑块的大小，取值范围为 12 - 28</td>
+          </tr>
+          <tr>
+            <td>block-color</td>
+            <td>滑块颜色</td>
+          </tr>
+          <tr>
+            <td>bindchange</td>
+            <td>拖动后触发</td>
+          </tr>
+          <tr>
+            <td>bindchanging</td>
+            <td>拖动过程中触发</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 业务</div>
+    <ul>
+      <li>年龄选择</li>
+      <pre>
+&lt;slider 
+    activeColor="#3498db" 
+    backgroundColor="#ccc" 
+    block-size="24" 
+    block-color="#3498db" 
+    bindchange="selAge" 
+    min="18" 
+    max="24" 
+    name="uage" 
+    value="{{user.uage}}" 
+    show-value 
+/&gt;</pre>
+      <pre>
+selAge(e){
+    console.log(e.detail.value)
+}</pre>
+      <li>播放进度调节</li>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/switch.html">&lt;switch&gt;</a></h3>
+    <ul>
+      <li>行内块元素 inline-block</li>
+      <li>开关选择器</li>
+      <li>也可以使用 checkbox 实现功能</li>
+      <table>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>checked</td>
+            <td>是否选中</td>
+          </tr>
+          <tr>
+            <td>color</td>
+            <td>已选择的颜色</td>
+          </tr>
+          <tr>
+            <td>type</td>
+            <td>switch, checkbox；默认是switch</td>
+          </tr>
+          <tr>
+            <td>bindchange</td>
+            <td>选择后触发</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+  </section>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

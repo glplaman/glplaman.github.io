@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件上传和下载 Upload & Download</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>文件上传和下载</h1>
+    <span>Upload & Download</span>
+  </header>
+  <section>
+    <ul>
+      <li>文件的上传和下载需要网络的支持，所以对应的API归类在网络</li>
+      <li>通常借助中间件|第三方，如 <a href="../node/multer.html">multer</a>、<a href="../node/formdata.html">formidable</a>，配合API实现
+      </li>
+      <li>通常先选择再上传</li>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/video/wx.chooseMedia.html">wx.chooseMedia(Object
+        object)</a></h3>
+    <ul>
+      <li>拍摄或从手机相册中选择图片或视频</li>
+      <li>可以指定图片的个数 count、类型 mediaType、来源 sourceType、压缩 sizeType等；一般保持默认即可</li>
+      <li>[<span class="iconfont icon-keyboard"></span>] 定制头像</li>
+      <li>点击选择头像并渲染 - img 是数据，和视图中的 &lt;image&gt; 绑定；在绑定事件中选择并解析出图片临时地址</li>
+      <li>这个临时地址就是上传的依据</li>
+      <pre>
+wx.chooseMedia({
+    count: 1,
+    success: res => {
+        this.setData({
+            img:res.tempFiles[0].tempFilePath
+        })
+    },
+    fail: err => console.log(err),
+    complete: () => console.log('choose media done')
+})</pre>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/network/upload/wx.uploadFile.html">wx.uploadFile(Object
+        object)</a></h3>
+    <ul>
+      <li>文件上传</li>
+      <li>发起一个 POST 请求，将本地资源上传到服务器</li>
+      <li>请求头 header：指定 content-type 为 multipart/form-data</li>
+      <li>名字 name：为 avatar，供 multer 识别路由</li>
+      <li>文件路径 filePath：要上传的图片路径，可以从 wx.chooseMedia() 中获取</li>
+    </ul>
+    <dov class="tips">
+      <div>wx.uploadFile 返回的 res.data 始终是字符串类型；即使服务器返回的是 JSON 格式，也需要手动解析</div>
+    </dov>
+    <div>[<span class="iconfont icon-keyboard"></span>] 定制头像 - 文件上传</div>
+    <ul>
+      <pre>
+wx.uploadFile({
+    filePath: 'img path',
+    name: 'avatar',
+    url: 'http://127.0.0.1:3000/avatar',
+    header: {
+        'content-type': 'multipart/form-data'
+    },
+    success: res => console.log(res),
+    fail: err => console.log(err),
+    complete: () => console.log('upload done logging')
+})</pre>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/network/download/wx.downloadFile.html">wx.downloadFile(Object
+        object)</a></h3>
+    <ul>
+      <li>文件下载 - 下载文件资源到本地</li>
+      <li>返回一个临时地址，并<span class="warn">不是</span>直接下载到本地，而是由用户通过预览的方式，确认进一步操作</li>
+      <li>客户端直接发起一个 HTTPS GET 请求，返回文件的本地临时路径 (本地路径)，单次下载允许的最大文件为 200MB</li>
+      <li>更多信息，请访问 </li>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/image/wx.previewImage.html">wx.previewImage(Object
+        object)</a></h3>
+    <ul>
+      <li>在新页面中全屏预览图片</li>
+      <li>预览的过程中用户可以进行保存图片、发送给朋友等操作</li>
+      <li>以数组的形式，给出需要预览图片的地址列表</li>
+      <pre>
+wx.previewImage({
+    urls: []
+})</pre>
+    </ul>
+    <h3><a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/media/image/wx.previewMedia.html">wx.previewMedia(Object
+        object)
+      </a></h3>
+    <ul>
+      <li>预览图片或视频</li>
+      <li>默认是图片</li>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编程式导航 navigator</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>编程式导航</h1>
+    <span>&commat;navigator</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>除了声明式导航，还可以利用导航组件对应的 API，实现编程式导航</li>
+      <li>采用自定义事件实现</li>
+      <li>需指定url属性</li>
+      <li>不需要指定后缀名</li>
+      <li>同声明式导航一样，在url后面拼接参数传递，并在目标页的onLoad中获取</li>
+      <li>还可以指定跳转结果的回调函数</li>
+      <li>- 成功 success</li>
+      <li>- 失败 fail</li>
+      <li>- 完成 complete：无论是成功还是失败都会执行这个回调函数</li>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.switchTab.html">wx.switchTab(Object
+        object)</a></h3>
+    <ul>
+      <li>跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面</li>
+      <pre>
+gotoCart(){
+    wx.switchTab({
+        url:'/pages/photo/photo'
+        //url:'../photo/photo'
+    })
+}</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.navigateTo.html">wx.navigateTo(Object
+        object)</a></h3>
+    <ul>
+      <li>保留当前页面，跳转到应用内的某个普通页面；<span class="warn">不能</span>跳到 tabbar 页面</li>
+      <pre>
+gotoTest(){
+    wx.navigateTo({
+        url:'../test/test',
+        success:()=>{
+            console.log('success');
+        },
+        fail:()=>{
+            console.log('fail');
+        },
+        complete:()=>{
+            console.log('complete');
+        }
+    })
+}</pre>
+      <li>携带参数</li>
+      <pre>
+gotoTest(){
+    wx.navigateTo({
+        url:'../test/test?name=gl&age=18'
+    })
+}</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.navigateBack.html">wx.navigateBack(Object
+        object)</a>
+    </h3>
+    <ul>
+      <li>关闭当前页面，返回上一页面或多级页面。可通过 getCurrentPages 获取当前的页面栈，决定需要返回几层</li>
+      <li>需要指定返回的页面数delta；如果 delta 大于现有页面数，则返回到首页</li>
+      <pre>
+backToHome(){
+    wx.navigateBack({
+        delta:1
+    })
+}</pre>
+    </ul>
+    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.redirectTo.html">wx.redirectTo(Object
+        object)</a></h3>
+    <ul>
+      <li>关闭当前页面，跳转到应用内的某个页面</li>
+      <li>但是不允许跳转到 tabbar 页面</li>
+      <li>无法返回</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 使用编程式导航，完成个人小程序各页面之间的导航，并设置标题和背景色；更多信息，请访问 <a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/navigation-bar/wx.setNavigationBarTitle.html">setNavigationBarTitle()</a>、<a
+        href="https://developers.weixin.qq.com/miniprogram/dev/api/ui/navigation-bar/wx.setNavigationBarColor.html">wx.setNavigationBarColor()</a>
+    </div>
+    <ul>
+      <li>使用普通组件，绑定单击事件，在事件处理函数中使用API</li>
+      <li>使用自定义数据指定参数</li>
+      <li>个人中心页 wxml - 绑定事件</li>
+      <pre>
+&lt;view bind:tap="toTeam" data-bgc="#908" data-title="message" class="item"&gt;
+    &lt;text class="iconfont icon-clipboard icon"&gt;&lt;/text&gt;
+&lt;/view&gt;</pre>
+      <li>个人中心页 js- 事件处理函数，获取自定义数据并导航</li>
+      <pre>
+toTeam(e){
+    let para=e.currentTarget.dataset
+    wx.navigateTo({
+        url: '../target/target?title='+para.title+'&bgc='+para.bgc,
+    })
+}</pre>
+      <li>目标页 js - 获取参数，设置标题和背景颜色</li>
+      <pre>
+onLoad(options){
+    wx.setNavigationBarTitle({
+        title:options.title
+    })
+    wx.setNavigationBarColor({            
+        frontColor: '#ffffff',//MUST
+        backgroundColor:options.bgc
+    })
+}</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

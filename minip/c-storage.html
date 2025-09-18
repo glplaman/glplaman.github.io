@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云存储 Storage</title>
+  <link rel="stylesheet" href="/css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>云存储</h1>
+    <span>&commat;Storage</span>
+  </header>
+  <section>
+    <h3>简介 Introduction</h3>
+    <ul>
+      <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/guide/">开发者指引 →
+          基础能力 → 存储或开发者资源 → SDK → 存储</a></li>
+    </ul>
+    <h3>Image</h3>
+    <ul>
+      <li>按照一定规则命名，可以从0开始，如 0.png</li>
+      <li>为了改善用户体验，应该准备不同尺寸的图；通常需要准备2种尺寸：缩略图和普通大图</li>
+      <li>创建单独的文件夹保存图像文件，如 peike</li>
+      <li>每个文件夹有自己的云路径</li>
+      <li>数据库中图像文件对应的地址字段可以是部分路径，如 /peike/0.png，最后通过拼接文件夹的云路径，成为图像文件完整的云ID</li>
+      <li>不建议直接拼接</li>
+      <pre>&lt;image src="cloud://cloud1-9gfr2z2oaabfeb0f.636c-cloud1-9gfr2z2oaabfeb0f-1259726622{{product.imageThumbnail}}" mode="aspectFill"/&gt;</pre>
+      <li>拿到数据并处理，完成拼接</li>
+      <pre>
+products.map(item => {
+  item.image = 'cloud://cloud1-9gfr2z2oaabfeb0f.636c-cloud1-9gfr2z2oaabfeb0f-1259726622' + item.image
+  item.imageThumbnail = 'cloud://cloud1-9gfr2z2oaabfeb0f.636c-cloud1-9gfr2z2oaabfeb0f-1259726622' + item.imageThumbnail
+})</pre>
+      <pre>&lt;image src="{{product.imageThumbnail}}" mode="aspectFill"/&gt;</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

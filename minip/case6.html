@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音乐播放器 Player</title>
+  <link rel="stylesheet" href="../css/exp.css">
+  <link rel="stylesheet" href="../css/code.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>音乐播放器</h1>
+    <h4>Player</h4>
+    <dl class="number-mul-sn">
+      <dt>实验目的</dt>
+      <dd>
+        <div>掌握背景音频API的使用和注意事项</div>
+        <div>进一步熟悉网络请求的基本过程</div>
+        <div>了解异步函数执行的过程</div>
+      </dd>
+      <dt>实验内容</dt>
+      <dd>
+        <div>素材准备</div>
+        <div>服务器准备；如无可以使用在线素材，如 <a href="../index.html">大树小站</a> 在线资源</div>
+        <div>音频API使用</div>
+        <div>滑块组件 slider</div>
+        <div>主要数据</div>
+        <table class="tbl-sn">
+          <caption>数据支持</caption>
+          <tr>
+            <th>变量</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>baseUrl</td>
+            <td>服务器地址，便于切换数据源</td>
+          </tr>
+          <tr>
+            <td>lists</td>
+            <td>播放列表；节点信息参考如下述代码</td>
+          </tr>
+          <tr>
+            <td>ind</td>
+            <td>播放列表索引 </td>
+          </tr>
+          <tr>
+            <td>isPause</td>
+            <td>播放标记；播放状态</td>
+          </tr>
+          <tr>
+            <td>per</td>
+            <td>进度条；百分比</td>
+          </tr>
+          <tr>
+            <td>cur</td>
+            <td>当前时间；00:00</td>
+          </tr>
+          <tr>
+            <td>dur</td>
+            <td>播放时长；00:00</td>
+          </tr>
+        </table>
+        <div>音频节点信息</div>
+        <pre>
+{
+    "id": 5,
+    "title": "微风细雨",
+    "singer": "wang",
+    "src": "/music/wang.mp3",
+    "coverImgUrl": "/music/wangfei.png"
+}</pre>
+      </dd>
+      <dt>实验步骤</dt>
+      <dd>
+        <div>创建项目或页面，修改基本配置信息</div>
+        <div>页面结构设计 - 参考效果图，这里略</div>
+        <div>定义页面全局变量和参考函数，包括：音乐播放器 BGM、时间处理函数 timeFormat 和格式化函数 to2Digit；可以在Page外面声明；也可以在Page内部声明
+        </div>
+        <pre>
+const BGM = wx.getBackgroundAudioManager();
+
+const timeFormat = (num) => {
+  let min = parseInt(num / 60);
+  let sec = parseInt(num) % 60
+  return `${to2Digit(min)}:${to2Digit(sec)}`
+};
+
+const to2Digit = (num) => {
+  return num > 9 ? num : '0' + num;
+};</pre>
+        <div>页面响应式数据定义</div>
+        <pre>
+data: {
+    lists: [],
+    ind: 0,
+    cur: 0,
+    dur: 0,
+    per: 0,
+    isPause: true.
+    baseUrl: 'https://glpla.github.io/utils'
+}</pre>
+        <div>加载页面时，导入音频素材列表并初始化播放器；使用弹窗UI给出提示</div>
+        <pre>
+onLoad() {
+    wx.showLoading({
+        title: 'loading',
+    })
+    wx.request({
+        url: this.data.baseUrl + '/data/song_list.json',
+        success: res => {
+            this.setData({
+                lists: res.data.cont
+            })
+            this.init(this.data.ind)
+        }
+    })
+}</pre>
+        <div>为按钮绑定播放事件、暂停事件：通过背景音频API实现</div>
+        <pre>
+playBgm() {
+    BGM.play()
+},
+pauseBgm() {
+    BGM.pause()
+}</pre>
+        <div>初始化播放器函数：为音频实例BGM指定title、src、singer等基本参数；并添加侦听函数；注意 <span class="warn">拼接地址！！！</span></div>
+        <pre>
+init(ind) {
+    BGM.title = this.data.lists[ind].title
+    BGM.singer = this.data.lists[ind].singer
+    BGM.src = this.data.baseUrl + this.data.lists[ind].src
+
+    BGM.onCanplay(() => {
+        console.log('music is ready')
+        wx.hideLoading()
+    })
+    
+    BGM.onPlay(() => {
+        console.log('play', BGM.duration);
+        this.setData({
+            isPause: false
+        })
+    })
+    
+    BGM.onPause(() => {
+        console.log('pause');
+        this.setData({
+            isPause: true
+        })
+    })
+    
+    BGM.onEnded(() => {
+        console.log('ended');
+        this.setData({
+            isPause: true,
+            cur:'00:00',
+            dur:'00:00'
+        })
+    })
+    
+    BGM.onError(() => {
+        console.log('error');
+    })
+    
+    BGM.onTimeUpdate(() => {
+        console.log('time updating');
+        this.setData({
+            cur: BGM.currentTime
+            per: parseInt(BGM.currentTime / BGM.duration * 100)
+        })
+    })
+}</pre>
+        <div>上一首、下一首：通过播放列表索引 ind 增加或减少实现；每次更新，自动播放init()</div>
+        <pre>
+prevSong() {
+    let ind = this.data.ind
+    if (ind > 0) {
+        ind--
+    }
+    this.setData({
+        ind
+    })
+    this.init(ind)
+},
+nextSong() {
+    let ind = this.data.ind
+    if (ind &lt; this.data.lists.length - 1) {
+        ind++
+    }
+    this.setData({
+        ind
+    })
+    this.init(ind)
+}</pre>
+        <div>进度调节：利用滑块组件 slider 实现；拖动后，相应的调整BGM的播放进度；将百分比转换为对应的秒数</div>
+        <pre>
+sliderChange(e) {
+    let per = parseInt(e.detail.value * BGM.duration / 100)
+    BGM.seek(per)
+}</pre>
+        <div>封面图片特效：略</div>
+        <div>其它设计：略</div>
+      </dd>
+      <dt>注意事项</dt>
+      <dd>
+        <div>数据列表获取前的页面渲染异常处理，如可以使用界面API给出提示，使用条件渲染。。。</div>
+        <div>音频数据的初始化，如时长和当前值的格式 00:00:00</div>
+        <div>播放完毕后数据的初始化，如暂停标记、时长和当前值</div>
+      </dd>
+      <dt>参考效果</dt>
+      <dd>
+        <div>请参考其它同类作品，充分发挥自由的设计创造</div>
+        <p class="grid">
+          <img src="../minip/imgs/p5.png" alt="">
+          <img src="../minip/imgs/p6.png" alt="">
+          <img src="../minip/imgs/p7.png" alt="">
+          <img src="../minip/imgs/p8.png" alt="">
+          <img src="../minip/imgs/p9.png" alt="">
+          <img src="../minip/imgs/p3.png" alt="">
+          <img src="../minip/imgs/p4.png" alt="">
+          <img src="../minip/imgs/p10.png" alt="">
+          <img src="../minip/imgs/p11.png" alt="">
+        </p>
+        <div>添加了指示条、收藏、循环和歌单效果</div>
+        <p class="grid">
+          <img src="../minip/imgs/p12.png" alt="">
+          <img src="../minip/imgs/p13.png" alt="">
+          <img src="../minip/imgs/p14.png" alt="">
+        </p>
+        <div>更多效果</div>
+        <p class="grid">
+          <img src="../minip/imgs/p0.png" alt="">
+          <img src="../minip/imgs/p1.png" alt="">
+          <img src="../minip/imgs/p2.png" alt="">
+        </p>
+      </dd>
+      <dt>实验要求</dt>
+      <dd>
+        <div>按照以上步骤分别完成设计与开发</div>
+        <div>规范开发；独立完成；突出个人设计特点和风格</div>
+        <div class="warn">使用UI给出提示并处理异常，完善用户体验</div>
+        <div>实验报告：采用学院统一下发的 <a href="../utils/file/软件相关实验报告模版（2023版）提交时需另存为PDF文件并重命名20231022.docx">实验模板</a>
+          文件，以文字说明，配以必要的效果图片或核心代码，展示并说明数据来源、实施过程、各部分功能、具体内容和实现细节；最后导出为PDF，按照要求命名，提交个人学习通作业
+        </div>
+        <div>未按要求在规定时间内提交视为无效，不得分</div>
+        <div>相关格式规范，请参考 <a href="../course/paper.html">论文格式规范 - Paper Prettier</a></div>
+      </dd>
+      <dt>拓展</dt>
+      <dd>
+        <div>自动播放：数据加载完毕后自动播放</div>
+        <div>列表循环：当前播放结束后，自动播放下一首；如果已经在最后一首，则播放第一首</div>
+        <div>播放列表展示</div>
+        <div>分享</div>
+        <div>UI优化</div>
+      </dd>
+      <dt>参考代码</dt>
+      <dd>改进版</dd>
+      <dd>
+        <pre>
+const util = require('../../utils/minsec.js')
+const BGM = getApp().globalData.BGM
+Page({
+  data: {
+    lists: [],
+    ind: 0,
+    cur: '00:00',
+    dur: '00:00',
+    per: 0,
+    isPause: true,
+    isLike: false,
+    isLoop: false,
+    isList: false,
+    baseUrl: 'https://glpla.github.io/utils'
+  },
+
+  onLoad(optons) {
+    console.log(BGM);
+    wx.showLoading({
+      title: 'Loading',
+      mask: true
+    })
+    wx.request({
+      url: this.data.baseUrl + '/data/song_list.json',
+      success: res => {
+        this.setData({
+          lists: res.data.cont
+        })
+        this.init(this.data.ind)
+      }
+    })
+  },
+
+  playBGM() {
+    BGM.play()
+  },
+
+  pauseBGM() {
+    BGM.pause()
+  },
+
+  sliderChange(e) {
+    let per = parseInt(e.detail.value * BGM.duration / 100)
+    console.log(e.detail.value, per);
+    BGM.seek(per)
+  },
+
+  prevSong() {
+    let ind = this.data.ind
+    if (ind > 0) {
+      ind--
+    } else {
+      if (this.data.isLoop) {
+        ind = this.data.lists.length - 1
+      } else {
+        return;
+      }
+    }
+    this.setData({
+      ind: ind
+    })
+    this.init(ind)
+  },
+
+  nextSong() {
+    let ind = this.data.ind
+    if (ind &lt; this.data.lists.length - 1) {
+      ind++
+    } else {
+      if (this.data.isLoop) {
+        ind = 0
+      } else {
+        return
+      }
+    }
+    console.log('ind', ind);
+    this.setData({
+      ind: ind
+    })
+    this.init(ind)
+  },
+
+  init(ind) {
+    this.setData({
+      isPause: true
+    })
+    wx.showLoading({
+      title: 'Buffering',
+    })
+
+    BGM.src = this.data.baseUrl + this.data.lists[ind].src;
+    BGM.title = this.data.lists[ind].title;
+    BGM.singer = this.data.lists[ind].singer;
+
+    BGM.onCanplay(() => {
+      console.log('music is ready')
+      wx.hideLoading()
+    })
+
+    BGM.onPlay(() => {
+      console.log('bgm play', BGM.duration)
+      this.setData({
+        dur: util.minsec(BGM.duration),
+        isPause: false
+      })
+      wx.hideToast()
+    })
+
+    BGM.onPause(() => {
+      console.log('bgm pause')
+      this.setData({
+        isPause: true
+      })
+    })
+
+    BGM.onWaiting(() => {
+      console.log('waiting');
+      wx.showToast({
+        title: 'Buffering',
+      })
+    })
+
+    BGM.onError(() => {
+      console.log('bgm error')
+      wx.hideLoading()
+      wx.showToast({
+        title: 'Try later',
+      })
+    })
+
+    BGM.onEnded(() => {
+      console.log('bgm ended');
+      if (this.data.isLoop) {
+        this.nextSong()
+      } else {
+        this.init(this.data.ind)
+      }
+    })
+
+    BGM.onTimeUpdate(() => {
+      this.setData({
+        cur: util.minsec(BGM.currentTime),
+        per: parseInt(BGM.currentTime / BGM.duration * 100)
+      })
+    })
+  },
+
+  setSong(e) {
+    let ind = e.currentTarget.dataset.ind
+    console.log(ind);
+    this.setData({
+      ind
+    })
+    this.init(ind)
+  },
+
+  setLike() {
+    let isLike = !this.data.isLike
+    this.setData({
+      isLike
+    })
+  },
+
+  setLoop() {
+    let isLoop = !this.data.isLoop
+    this.setData({
+      isLoop
+    })
+  },
+
+  showList() {
+    let isList = !this.data.isList
+    this.setData({
+      isList
+    })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: 'Music from glpla',
+      path: '/page/music/music'
+    }
+  }
+})</pre>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+    <script>
+      let num = 3800
+      let h = parseInt(num / 60 / 60)
+      // 模掉够小时的秒数
+      let min = parseInt(num % 3600 / 60)
+      // 模掉够分钟的秒数
+      let sec = parseInt(num % 60)
+      console.log(h, min, sec);
+    </script>
+  </div>
+</body>
+
+</html>
