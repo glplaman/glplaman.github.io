@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实训 迷你银行</title>
+  <link rel="stylesheet" href="../../css/exp.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="container">
+    <h1>迷你银行</h1>
+    <h4>Bank</h4>
+    <dl class="number-mul-sn">
+      <dt>实验题目</dt>
+      <dd>迷你银行</dd>
+      <dt>实验目的</dt>
+      <dd>
+        <div>搭建开发环境</div>
+        <div>掌握基本开发流程</div>
+        <div>掌握基本调试方法</div>
+      </dd>
+      <dt>实验内容</dt>
+      <dd>
+        <div>查询余额</div>
+        <div>存钱</div>
+        <div>取钱</div>
+        <div>退出</div>
+      </dd>
+      <dt>知识点</dt>
+      <dd>
+        <div>IO</div>
+        <div>f-string</div>
+        <div>while</div>
+        <div>if-else</div>
+        <div>function</div>
+      </dd>
+      <dt>开发环境</dt>
+      <dd>
+        <div>操作系统 Window 10+</div>
+        <div>文本编辑器 Vs Code</div>
+        <div>谷歌浏览器 Chrome</div>
+      </dd>
+      <dt>实验要求</dt>
+      <dd>
+        <iframe src="../common/drill.html" frameborder="0" scrolling="no" title="footer" id="drill"
+          onload="this.height=this.contentWindow.document.documentElement.scrollHeight;"></iframe>
+      </dd>
+      <dt>实验过程</dt>
+      <dd>略</dd>
+      <dt>实验总结</dt>
+      <dd>
+        <div>掌握的知识点、开发技能</div>
+        <div>碰到的问题、解决的思路和方法以及未解决的问题</div>
+        <div>其它思考</div>
+      </dd>
+      <dt>参考效果和参考代码</dt>
+      <dd>
+        <pre>
+user = None
+money = 10000
+user = input('please input your name->')
+
+def queryMoney(flag=False):
+  if flag:
+    print(f'Query Money')
+  print(f'{user}\'s money is ￥{money:,}')
+
+def saveMoney(mon):
+  print(f'Save Money')
+  global money
+  money += mon
+  print(f'{user} save money ￥{mon}')
+  queryMoney()
+
+def getMoney(mon):
+  print(f'Get Money')
+  global money
+  money -=mon
+  print(f'{user} get money ￥{mon}')
+  queryMoney()
+
+def main():
+  tips = 'main menu'
+  print(f'{tips:*^60}')
+  tips = f'welcome {user} to Python, please choose'
+  print(f'{tips:^60}')
+  print('*'*60)  
+  print(f'query\t[1]')
+  print(f'save\t[2]')
+  print(f'get\t[3]')
+  print(f'exit\t[4]')
+  return input('your choice->')
+      
+
+while True:
+  key = main()
+  if key == '1':
+    queryMoney(True)
+    continue
+  elif key == '2':
+    mon = input('money you want to save ->￥')
+    saveMoney(int(mon))
+    continue
+  elif key == '3':
+    mon = input('money you want to get ->￥')
+    getMoney(int(mon))
+    continue
+  else:
+    print(f'88, {user}')
+    break        </pre>
+      </dd>
+      <dt>拓展与思考</dt>
+      <dd>
+        <div>如何复用结构和样式?</div>
+        <div>使用其它浏览器查看项目效果</div>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>集合 Set</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>集合</h1>
+    <span>Set</span>
+  </header>
+  <dl>
+    <dd>
+      <div>集合的元素必须：无序 unordered、可哈希的/唯一 <a href="https://docs.python.org/3/glossary.html#term-hashable">hashable</a>
+      </div>
+      <div>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#set">Python - set</a></div>
+    </dd>
+    <dt>应用 Application</dt>
+    <dd class="sn">
+      <div>数据去重</div>
+      <div>集合运算：并、交、差</div>
+    </dd>
+    <dt>创建 Creation</dt>
+    <dd class="sn">
+      <div>花括号 {} 括起来的，以逗号分隔的列表 - comma-separated list of elements within braces</div>
+      <pre>s = {0, 2, 4}</pre>
+      <div>集合推导式 - set comprehension；同列表 list</div>
+      <p>数据位序唯一</p>
+      <pre>
+# {0, 2, 4, 6, 8, 10, 12, 14, 16, 18}
+s = {2 * c for c in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]}</pre>
+      <pre>
+# {8, 9, 6, 7}
+s = {c for c in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] if c > 5}
+      </pre>
+      <div>类型构造器 - type constructor: set()</div>
+      <p>数据位序不尽相同</p>
+      <pre>
+# {'1', '5', '0', '6', '9', '8', '3', '7', '2', '4'}
+# {'6', '8', '4', '9', '5', '2', '3', '1', '7', '0'}
+# {'6', '0', '1', '5', '4', '2', '9', '7', '8', '3'}
+s = set("0123456789")      </pre>
+      <table>
+        <colgroup>
+          <col style="width: 50%;">
+        </colgroup>
+        <caption>list vs set</caption>
+        <tr>
+          <th>list</th>
+          <th>set</th>
+        </tr>
+        <tr>
+          <td>l = []</td>
+          <td>s = {}</td>
+        </tr>
+        <tr>
+          <td>l = [1, 2, 3]</td>
+          <td>s = {1, 2, 3}</td>
+        </tr>
+        <tr>
+          <td>l = [[1, 2, 3], [4, 5, 6]]</td>
+          <td>s = {(1, 2, 3), (4, 5, 6)}</td>
+        </tr>
+        <tr>
+          <td>l = list(range(10))</td>
+          <td>s = set(range(10))</td>
+        </tr>
+        <tr>
+          <td>l = list('hi, there.')</td>
+          <td>s = set('hi, there.')</td>
+        </tr>
+      </table>
+      <pre>
+# 唯一；不重复
+# {'e', 'r', ',', 'i', 'h', 't', '.', ' '}
+s = set("hi, there.")      </pre>
+    </dd>
+  </dl>
+  <div class="chap">操作 Operation</div>
+  <dl>
+    <dt class="warn">注意</dt>
+    <dd>
+      <div>不支持索引/下标访问；不支持切片 slice</div>
+      <pre>
+s[0]
+s[0:2]
+# TypeError: 'set' object is not subscriptable      </pre>
+    </dd>
+    <dt>遍历 for</dt>
+    <dt>并集 union(s) |</dt>
+    <dd>
+      <div>不支持 +</div>
+      <pre>
+s = {0, 1, 2, 3, 4, 5, 6}
+t = {5, 6, 7, 8, 9}
+n = s.union(t)
+# {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}</pre>
+    </dd>
+    <dt>交集 intersection &</dt>
+    <dd>
+      <pre>
+s = {0, 1, 2, 3, 4, 5, 6}
+t = {5, 6, 7, 8, 9}
+n = s.intersection(t)
+# {5, 6}      </pre>
+    </dd>
+    <dt>差集 difference() -</dt>
+    <dd>
+      <pre>
+s = {0, 1, 2, 3, 4, 5, 6}
+t = {5, 6, 7, 8, 9}
+n = s.difference(t)
+# {0, 1, 2, 3, 4}
+      </pre>
+    </dd>
+    <dt>增加 add(ele)</dt>
+    <dd>
+      <pre>
+s = {0, 1, 2, 3, 4}
+s.add(5)</pre>
+    </dd>
+    <dt>删除 remove(ele)</dt>
+    <dd>
+      <div>删除指定元素；如果元素不存在，会告警</div>
+    </dd>
+    <dt>丢弃 discard(ele)</dt>
+    <dd>
+      <div>丢弃指定元素；如果元素不存在，也不会告警</div>
+    </dd>
+    <dt>lens(s)</dt>
+    <dt>x in s</dt>
+    <dt>x not in s</dt>
+    <dt>pop()</dt>
+    <dd>
+      <div>删除并返回一个元素；该元素是随机的，不确定是哪个</div>
+      <p>如果集合为空，则告警</p>
+      <pre>KeyError: 'pop from an empty set'</pre>
+    </dd>
+    <dt>clear()</dt>
+    <dd>
+      <div>清空集合</div>
+    </dd>
+    <div class="q">
+      <div>
+        <div>hashable</div>
+        <div>subscriptable vs superscriptable</div>
+      </div>
+    </div>
+    <!-- <div>在 Python 中，“可哈希的”（hashable）是指一个对象具有以下特点：
+      哈希值不变：一个可哈希的对象在其生命周期中有一个固定的哈希值，这个值不会随着对象状态的变化而变化。
+      不可变性：可哈希的对象通常是不可变的，这意味着一旦创建后就不能改变其内容。
+      支持哈希方法：可哈希的对象必须定义了 __hash__() 方法，该方法返回对象的哈希值。
+      一致性：对于相同的对象，每次调用 __hash__() 方法都应该返回相同的哈希值。
+      可哈希的对象可以作为字典的键或集合的元素。这是因为字典和集合等数据结构内部依赖于哈希表来高效地查找和管理元素。如果对象是可哈希的，那么这些数据结构就能有效地工作。
+    </div> -->
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

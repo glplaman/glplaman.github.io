@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字典 Dict</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>字典</h1>
+    <span>Dict</span>
+  </header>
+  <dl>
+    <dd>
+      <div>键值对 key: value pairs</div>
+      <div>字典一旦创建，其key就确定下来，无法更改</div>
+      <div>键 key：唯一、不能重复</div>
+      <div>键 key：不可更改；任何不可变的、固定的都可以作为key，如元组；但是list不可以作为key；通常使用字符串作为key</div>
+      <div>值：任意</div>
+      <div>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#dict">Python - dict</a></div>
+    </dd>
+    <dt>创建 Creation</dt>
+    <dd class="sn">
+      <div>花括号 {} 括起来的，以逗号分隔的 <span class="warn">值对</span> 形式的列表 - comma-separated list of key: value pairs within
+        braces</div>
+      <pre>
+# 空字典
+d = {}</pre>
+      <pre>
+# 三个元素的字典
+d = {'name': 'glpla', 'age': 18, 'gender': true}</pre>
+      <div>字典推导式 - dict comprehension；同列表 list、set，除了值 value 外，还要生成键 key</div>
+      <pre>
+# {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 7, 8: 8, 9: 9}
+d = {x: x for x in range(10)} </pre>
+      <div>类型构造器 - type constructor: dict()</div>
+      <pre>d = dict([("name", "glpla"), ("age", 18), ("gender", True)])</pre>
+      <pre>d = dict(name="glpla", age=18, gender=True)</pre>
+      <pre>d = dict(zip(["name", "age", "gender"], ["glpla", 18, True]))</pre>
+    </dd>
+    <dt>键 key</dt>
+    <dd class="sn">
+      <div>字符串</div>
+      <pre>d = {'name': 'glpla', 'age': 18, 'gender': true}</pre>
+      <div>tuple为key</div>
+      <pre>d = {('name','age'):'123'}</pre>
+      <div>list为key，报错：TypeError: unhashable type: 'list'</div>
+      <pre>d = {['name','age']:'123'}</pre>
+      <div>使用变量：a=12</div>
+      <pre>d = {('name','age'):'123',a:20}</pre>
+    </dd>
+  </dl>
+  <div class="chap">操作 Operation</div>
+  <dl>
+    <dt>遍历 for</dt>
+    <dd>
+      <pre>
+for key, value in d.items():
+  print(key, ":", value)      </pre>
+    </dd>
+    <dt>查 d[key]</dt>
+    <dd>
+      <div>基于key访问；不是基于索引</div>
+      <pre>x = d["age"]</pre>
+    </dd>
+    <dt>改 d[key] = value</dt>
+    <dd>
+      <div>基于key修改；如果key存在，则修改；如果不存在，就添加一个key-value值对</div>
+      <pre>d["age"] = 24</pre>
+    </dd>
+    <dt>删 del d[key]</dt>
+    <dd>
+      <div>删除key对应的值对；如果不存在则告警</div>
+    </dd>
+    <dt>list(d)</dt>
+    <dd>返回字典中所有key组成的列表</dd>
+    <dt>len(d)</dt>
+    <dd>字典的长度</dd>
+    <dt>key in d</dt>
+    <dd>字典中是否存在key</dd>
+    <dt>key not in d</dt>
+    <dd>
+      <div>字典中是否不存在key</div>
+      <div>等同于 not key in d</div>
+    </dd>
+    <dt>items(d)</dt>
+    <dd>
+      <div>返回字典所有值对的视图；动态</div>
+      <pre>dict_items([('name', 'glpla'), ('age', 18), ('gender', True)])</pre>
+    </dd>
+    <dt>keys()</dt>
+    <dd>
+      <div>返回字典所有键的视图</div>
+      <pre>dict_keys(['name', 'age', 'gender'])</pre>
+      <pre>
+for key in d.keys():
+  print(d[key])</pre>
+    </dd>
+    <dt>values()</dt>
+    <dd>
+      <div>返回字典所有值的视图</div>
+      <pre>dict_values(['glpla', 18, True])</pre>
+    </dd>
+    <dd class="tips">使用list()可将视图转换为列表</dd>
+    <dt>get(key, default=None)</dt>
+    <dd>
+      <div>获取key对应的值；如果不存在，则返回None</div>
+      <div>x = d.get("na123me", "glpla")</div>
+    </dd>
+    <dt>pop(key, default=None)</dt>
+    <dd>
+      <div>删除key对应的值对并返回</div>
+      <pre>x = d.pop("na123me", "glpla")</pre>
+    </dd>
+    <dt>popitem()</dt>
+    <dd>
+      <div>按照后进先出LIFO的顺序删除并返回值对</div>
+      <pre>{'name': 'glpla', 'age': 18}</pre>
+    </dd>
+    <dt>clear()</dt>
+    <dd>删除所有值对</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>序列类型 Sequence Types</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/tbl-python.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>序列类型</h1>
+    <span>Sequence Types</span>
+  </header>
+  <dl>
+    <dt>关键字 Keywords</dt>
+    <dd>
+      <div>Mutable vs Immutable</div>
+      <div>shallow copy vs deep copy</div>
+      <div>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range">Sequence
+          Types</a></div>
+    </dd>
+    <dt>类型 Sequence Types</dt>
+    <dd class="sn">
+      <div><a href="./list.html">列表 list</a> - 可变序列 mutable sequences</div>
+      <div><a href="./tuple.html">元组 tuple</a> - 不可变序列 immutable sequences</div>
+      <div><a href="./range.html">范围 range</a> - 不可变序列 immutable sequence；数值型 numbers</div>
+    </dd>
+    <dt>通用操作 Common Sequence Operations</dt>
+    <dd>
+      <table class="python">
+        <tr>
+          <th>operation</th>
+          <th>result</th>
+        </tr>
+        <tr>
+          <td>x in s</td>
+          <td>True if an item of s is equal to x, else False</td>
+        </tr>
+        <tr>
+          <td>x not in s</td>
+          <td>False if an item of s is equal to x, else True</td>
+        </tr>
+        <tr>
+          <td>s + t</td>
+          <td>the concatenation of s and t</td>
+        </tr>
+        <tr>
+          <td>s * n or n * s</td>
+          <td>equivalent to adding s to itself n times</td>
+        </tr>
+        <tr>
+          <td>s[i]</td>
+          <td>ith item of s, origin 0</td>
+        </tr>
+        <tr>
+          <td>s[i: j]</td>
+          <td>slice of s from i to j</td>
+        </tr>
+        <tr>
+          <td>s[i: j: k]</td>
+          <td>slice of s from i to j with step k</td>
+        </tr>
+        <tr>
+          <td>len(s)</td>
+          <td>length of s</td>
+        </tr>
+        <tr>
+          <td>min(s)</td>
+          <td>smallest item of s</td>
+        </tr>
+        <tr>
+          <td>max(s)</td>
+          <td>largest item of s</td>
+        </tr>
+        <tr>
+          <td>s.index(x[, i[, j]])</td>
+          <td>index of the first occurrence of x in s (at or after index i and before index j)</td>
+        </tr>
+        <tr>
+          <td>s.count(x)</td>
+          <td>total number of occurrences of x in s</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>可变序列操作 Mutable Sequence operations</dt>
+    <dd>
+      <div>常见操作如下表</div>
+      <table class="python">
+        <tr>
+          <th>operation</th>
+          <th>result</th>
+        </tr>
+        <tr>
+          <td>s[i] = x</td>
+          <td>item i of s is replaced by x</td>
+        </tr>
+        <tr>
+          <td>s[i: j] = t</td>
+          <td>slice of s from i to j is replaced by the contents of the iterable t</td>
+        </tr>
+        <tr>
+          <td>s[i: j: k] = t</td>
+          <td>the elements of s[i:j:k] are replaced by those of t</td>
+        </tr>
+        <tr>
+          <td>del s[i:j]</td>
+          <td>same as s[i:j] = []</td>
+        </tr>
+        <tr>
+          <td>del s[i:j:k]</td>
+          <td>removes the elements of s[i:j:k] from the list</td>
+        </tr>
+        <tr>
+          <td>s.append(x)</td>
+          <td>appends x to the end of the sequence (same as s[len(s):len(s)] = [x])</td>
+        </tr>
+        <tr>
+          <td>s.clear()</td>
+          <td>removes all items from s (same as del s[:])</td>
+        </tr>
+        <tr>
+          <td>s.copy()</td>
+          <td>creates a <span class="warn">shallow copy</span> of s (same as s[:])</td>
+        </tr>
+        <tr>
+          <td>s.extend(t) or s += t</td>
+          <td>extends s with the contents of t (for the most part the same as s[len(s):len(s)] = t)</td>
+        </tr>
+        <tr>
+          <td>s *= n</td>
+          <td>updates s with its contents repeated n times</td>
+        </tr>
+        <tr>
+          <td>s.insert(i, x)</td>
+          <td>inserts x into s at the index given by i (same as s[i:i] = [x])</td>
+        </tr>
+        <tr>
+          <td>s.pop() or s.pop(i)</td>
+          <td>retrieves the item at i and also removes it from s
+            <br>The optional argument i defaults to -1, so that by default the last item is removed and returned.
+          </td>
+        </tr>
+        <tr>
+          <td>s.remove(x)</td>
+          <td>remove the first item from s where s[i] is equal to x</td>
+        </tr>
+        <tr>
+          <td>s.reverse()</td>
+          <td>reverses the items of s in place</td>
+        </tr>
+      </table>
+      <pre>nums = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</pre>
+      <pre>nums = [0] * 10</pre>
+    </dd>
+    <dt>解构</dt>
+    <dd class="sn">
+      <div>完全解构 - 数量保持相同</div>
+      <pre>
+letters = ["a", "b", "c", "d", "e", "f"]
+
+# a b c
+f, s, t = letters</pre>
+      <div>部分解构 - 使用中间变量带 * 略去部分数据</div>
+      <pre>
+# a b
+f, s, *other = letters
+
+# a f
+f, *other, s = letters</pre>
+    </dd>
+    <dt>遍历</dt>
+    <dd class="sn">
+      <div><a href="https://docs.python.org/3/reference/compound_stmts.html#the-for-statement">for-in</a></div>
+      <p>获取数据；但是无法直接获取数据对应的索引</p>
+      <pre>
+for letter in letters:
+  print(letter, end=" ")</pre>
+      <div><a href="https://docs.python.org/3/library/functions.html#enumerate">enumerate</a></div>
+      <p>内置函数</p>
+      <p>将一个序列转换枚举对象；该对象每次迭代时，返回一个包含索引和数据的元组 tuple</p>
+      <p>转换时，可以指定索引起始值</p>
+      <pre>enumerate(sequence, start)</pre>
+      <pre>
+# [(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e'), (5, 'f')]
+list(enumerate(letters))
+
+# [(2, 'a'), (3, 'b'), (4, 'c'), (5, 'd'), (6, 'e'), (7, 'f')]
+list(enumerate(letters, start=2))</pre>
+      <p>普通遍历使用</p>
+      <pre>
+for index, letter in enumerate(letters, start=2):
+  print(index, letter)      </pre>
+      <div><a href="https://docs.python.org/3/library/functions.html#zip">zip</a></div>
+      <p>内置函数</p>
+      <p>像拉链 zip一样，将2个或多个序列糅合|关联到一起</p>
+      <p>多个序列迭代时候，分别获取对应位置的数据组成一个元组 tuple</p>
+      <p>序列的长度尽量相同/匹配，否则需要遵循一定的原则处理</p>
+      <p>如果有个数值序列，相当于指定了数据的索引</p>
+      <pre>
+nums = [0, 1, 2, 3, 4, 5]
+letters = ["a", "b", "c", "d", "e", "f"]</pre>
+      <p>得到元组 (0, 'a') (1, 'b') (2, 'c') (3, 'd') (4, 'e') (5, 'f')</p>
+      <pre>
+for letter in zip(nums, letters):
+    print(letter)  </pre>
+      <p>得到具体的索引和数据</p>
+      <pre>
+for num, letter in zip(nums, letters):
+    print(num, letter)</pre>
+    </dd>
+    <dd class="q">
+      <div>del和pop的区别</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

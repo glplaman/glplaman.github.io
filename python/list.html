@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>列表 List</title>
+      <link rel="stylesheet" href="../css/common.css">
+      <base target="_blank">
+</head>
+
+<body>
+      <header>
+            <h1>列表</h1>
+            <span>List</span>
+      </header>
+      <dl>
+            <dd>
+                  <div>可变序列 mutable sequences</div>
+                  <div>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#lists">Python - list</a></div>
+            </dd>
+      </dl>
+      <div class="chap">创建 Creation</div>
+      <dl>
+            <dd>列表名使用单词的复数形式，如 filenames；迭代的时候，使用单数形式，如 filename</dd>
+            <dd class="sn">
+                  <div>一个 square brackets []</div>
+                  <pre>chars = ["a", "b", "c", "d", "e", "f", "g"]</pre>
+                  <pre>nums = [0, 1, 2, 3, 4, 5, 6]</pre>
+                  <div>多个 []：以逗号分隔</div>
+                  <pre>
+# ([0, 1, 2, 3, 4, 5], ['a', 'b', 'c', 'd', 'e', 'f'])
+temp = chars, nums</pre>
+                  <pre>
+# ([1, 2, 3, 4], [5, 6, 7, 8])
+temp = [1, 2, 3, 4], [5, 6, 7, 8]</pre>
+                  <div>构造函数 type constructor list()</div>
+                  <pre>
+# []
+chars = list()</pre>
+                  <pre>
+# ['a', 'b', 'c']
+letters = list("abc")      </pre>
+                  <pre>
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+nums = list( range(10) )</pre>
+                  <div>推导式 list comprehension：由一个数据获取新的数据</div>
+                  <p> [x for x in iterable condition]：借助for循环遍历可迭代数据</p>
+                  <p>第一个x可以是表达式，对处理每一个迭代数据</p>
+                  <p>可以先筛选数据再生成新数据</p>
+                  <pre>
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+nums = [x for x in range(10)]</pre>
+                  <pre>
+# [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+nums = [2 * x for x in range(10)]
+</pre>
+                  <pre>
+# [False, False, False, False, False, False, True, True, True, True]
+nums = [x > 5 for x in range(10)]</pre>
+            </dd>
+            <pre>
+# [6, 7, 8, 9]
+nums = [x for x in range(10) if x > 5]    </pre>
+      </dl>
+      <div class="chap">操作 Operation</div>
+      <dl>
+            <dd>
+                  <div>适用通用序列操作和可变序列操作 - Lists implement all of the <a href="./sequence.html">common and mutable
+                              sequence
+                              operations</a>.
+                  </div>
+            </dd>
+            <dt>增加 Added</dt>
+            <dd class="sn">
+                  <div>append</div>
+                  <div>insert</div>
+                  <div>extend</div>
+                  <div>+</div>
+                  <pre>nums + chars</pre>
+            </dd>
+            <dt>删除 Delete</dt>
+            <dd class="sn">
+                  <div>remove</div>
+                  <div>pop</div>
+                  <div>del</div>
+                  <div>clear</div>
+            </dd>
+            <dt>修改 Modified</dt>
+            <dd class="sn"></dd>
+            <dt>查找 Access</dt>
+            <dd>
+                  <div>索引：从0开始，溢出时，会告警 - IndexError: list index out of range</div>
+                  <pre>
+# 0
+nums[0]
+# i
+chars[1]      </pre>
+                  <div>可以是负数，-1表示尾部</div>
+                  <div>不管索引是正还是负，始终是递增的</div>
+                  <pre>
+# 9
+nums[-1]
+# e
+chars[-2]</pre>
+            </dd>
+      </dl>
+      <div class="chap">排序 Sort</div>
+      <dl>
+            <dd class="q">stable vs unstable </dd>
+            <dt>sort(*, key = None, reverse = False) 方法</dt>
+            <dd class="sn">
+                  <p>会改变元素位置</p>
+                  <p>稳定排序 stable</p>
+                  <p>key：一个函数，用于指定排序的关键字。默认为 None，表示直接比较元素本身，适用简单数据；复合数据通常需要指定key；可以是系统函数，也可以是自定义函数</p>
+                  <p>reverse：倒叙排序；默认为假 false</p>
+                  <p>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#list.sort">Python - sort</a></p>
+                  <div>数值按照大小排序</div>
+                  <pre>
+# [1, 2, 3, 7, 7, 9, 12, 32, 76]
+nums = [1, 3, 7, 2, 9, 7, 12, 76, 32]
+nums.sort()
+</pre>
+                  <div>字母按照字母表顺序排序</div>
+                  <pre>
+# ['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p']
+letters = list("cnplaman")
+letters.sort()</pre>
+                  <div>汉字按照utf-8编码排序</div>
+                  <p>汉字通常编码为3-4个字节；3 字节模板：1110xxxx 10xxxxxx 10xxxxxx</p>
+                  <p>"陆".encode("utf-8") 编码为3个字节：b'\xe9\x99\x86'</p>
+                  <pre>
+# ['作', '军', '学', '战', '特', '种', '陆', '院']
+letters = list("陆军特种作战学院")
+letters.sort()</pre>
+                  <div>倒序排序</div>
+                  <pre>
+# [76, 32, 12, 9, 7, 7, 3, 2, 1]
+nums.sort(reverse=True)</pre>
+                  <div>自定义排序 - 按长度排序；系统函数len</div>
+                  <pre>
+# ['张三', '王五', '李明四']
+stus = ["张三", "李明四", "王五"]
+stus.sort(key=len)</pre>
+                  <div>复合数据排序</div>
+                  <pre>
+stus = [
+    {"name": "张三", "age": 20},
+    {"name": "李明四", "age": 19},
+    {"name": "王五", "age": 22},
+]
+
+# 根据年龄排序；自定义函数
+# [{'name': '李明四', 'age': 19}, {'name': '张三', 'age': 20}, {'name': '王五', 'age': 22}]
+stus.sort(key=lambda x: x["age"])
+
+# 按照名字长度排序；自定义函数
+# [{'name': '张三', 'age': 20}, {'name': '王五', 'age': 22}, {'name': '李明四', 'age': 19}]
+stus.sort(key=lambda x: len(x["name"]))</pre>
+                  <p>将排序后的结果作为新的列表返回，不会改变原来列表元素位置</p>
+            </dd>
+            <dt>sorted() 函数</dt>
+      </dl>
+      <div class="chap">多维列表</div>
+      <dl></dl>
+      <div id="footer"></div>
+      <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
