@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简单播放器 Player</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .custom-audio {
+      --per: 0%;
+      width: 94%;
+      max-width: 1024px;
+      height: 40px;
+      position: relative;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 10px;
+      margin: auto;
+    }
+
+    .custom-audio::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0px;
+      width: var(--per);
+      height: 4px;
+      background-color: #2ecc71;
+    }
+
+    #ctrl {
+      width: 20px;
+      height: 20px;
+      background-size: cover;
+      cursor: pointer;
+    }
+
+    .play {
+      background-image: url(../imgs/Play.png);
+    }
+
+    .pause {
+      background-image: url(../imgs/Pause.png);
+    }
+
+    .cur {
+      margin-left: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="custom-audio">
+    <audio id='audio'>您的浏览器不支持 audio 标签</audio>
+    <span>Alizee-La Isla Bonita</span>
+    <div id="cur" class="cur">00:00</div>
+    <div id="ctrl" class="play"></div>
+    <div id="dur" class="dur">00:00</div>
+  </div>
+  <script>
+    // const audio = new Audio();
+    const tag = document.querySelector('.custom-audio');
+    const audio = document.getElementById('audio');
+    const cur = document.getElementById('cur');
+    const ctrl = document.getElementById('ctrl');
+    const dur = document.getElementById('dur');
+    audio.src = '/utils/music/Alizee-LaIslaBonita.mp3';
+    audio.addEventListener('durationchange', () => {
+      dur.innerHTML = time(audio.duration);
+    })
+
+    audio.addEventListener('timeupdate', () => {
+      let secs = audio.currentTime;
+      cur.innerHTML = time(audio.currentTime);
+      let per = (audio.currentTime / audio.duration) * 100 + '%';
+      tag.style.setProperty('--per', per);
+    })
+
+    ctrl.addEventListener('click', function () {
+      if (ctrl.className == 'play') {
+        audio.play()
+        ctrl.className = 'pause'
+      } else {
+        audio.pause()
+        ctrl.className = 'play'
+      }
+    })
+
+    function time(secs) {
+      let min = Math.floor(secs / 60);
+      let sec = Math.floor(secs % 60);
+      let secRes = sec > 9 ? `${sec}` : `0${sec}`;
+      let minRes = min > 9 ? `${min}` : `0${min}`;
+      return `${minRes}:${secRes}`;
+    }
+  </script>
+</body>
+
+</html>

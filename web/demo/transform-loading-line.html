@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform Loading Linear</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .loading>div {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #f40;
+      animation: scale 1s ease-in-out infinite backwards;
+      animation-delay: calc(var(--del) * 0.1s);
+    }
+
+    @keyframes scale {
+
+      0%,
+      100% {
+        transform: scale(0);
+        filter: hue-rotate(0deg);
+      }
+
+      50% {
+        transform: scale(3);
+        filter: hue-rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <dd class="loading">
+    <div style='--del:0'></div>
+    <div style='--del:1'></div>
+    <div style='--del:2'></div>
+    <div style='--del:3'></div>
+    <div style='--del:4'></div>
+    <div style='--del:5'></div>
+    <div style='--del:6'></div>
+    <div style='--del:7'></div>
+    <div style='--del:8'></div>
+    <div style='--del:9'></div>
+  </dd>
+</body>
+
+</html>

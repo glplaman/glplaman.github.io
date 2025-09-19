@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FontAwesome</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../css/fontawesome-free-6.4.0-web/css/fontawesome.css" />
+  <link rel="stylesheet" href="../css/fontawesome-free-6.4.0-web/css/solid.min.css" />
+  <link rel="stylesheet" href="../css/fontawesome-free-6.4.0-web/css/brands.min.css" />
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;FontAwesome</h1>
+  </header>
+  <dl>
+    <dt>概述</dt>
+    <dd>
+      <div>.相比阿里字体图标 Iconfont，FontAwesome 功能更强大；但是字体图标的管理不如 Iconfont</div>
+      <div>.可以指定动画、旋转、颜色和尺寸，还可以下载为 SVG 格式使用，相当给力</div>
+      <div>.Fontawesome 最新版本是6。早期的4使用比较广泛</div>
+      <div> .Fontawesome 共有三个系列：Classic、Sharp 和 Brands；相应的，普通用户可以使用的只有 Classic 系列的 fa-solid 样式和 Brands 系列的fa-brands
+        样式；查找图标时，选择 free 即可 </div>
+      <div>.使用 &lt;i&gt; 作为字体容器，分别指定以 fa- 开头的样式类 style class和图标名类 icon name class</div>
+      <div>.更多使用细节，请访问 <a href="https://fontawesome.com/">Fontawesome</a>、<a
+          href="https://docs.fontawesome.com/web/style/styling">Styling with Font Awesome</a>、<a
+          href="https://fontawesome.dashgame.com/">Fontawesome4.7</a></div>
+    </dd>
+    <dt>本地使用</dt>
+    <dd>
+      <div>1.下载最新版的字体文件并解压</div>
+      <div>2.拷贝/webfonts 和 /css 文件夹到项目中</div>
+      <div>./webfonts：字体图标依赖</div>
+      <div>./css：免费版除了必要的核心样式文件 fontawesome.css 外，只能使用 brands 样式和 solid 样式，对应的样式文件为 brands.css 和 solid.css，其它样式文件都可以删除
+      </div>
+      <pre>
+&lt;link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet"&gt;
+&lt;link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet"&gt;
+&lt;link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet"&gt;</pre>
+      <div>3.1基本使用：<i class="fa-brands fa-servicestack"></i></div>
+      <pre>&lt;i class="fa-brands fa-servicestack"&gt;&lt;/i&gt;</pre>
+      <div>3.2动画：<i class="fa-brands fa-servicestack fa-beat"></i></div>
+      <pre>&lt;i class="fa-brands fa-servicestack fa-beat"&gt;&lt;/i&gt;</pre>
+      <div>3.3颜色：<i class="fa-brands fa-servicestack" style="color: #e71352;"></i></div>
+      <pre>&lt;i class="fa-brands fa-servicestack" style="color: #e71352;"&gt;&lt;/i&gt;</pre>
+      <div>3.4旋转：<i class="fa-brands fa-servicestack fa-flip-horizontal"></i></div>
+      <pre>&lt;i class="fa-brands fa-servicestack fa-flip-horizontal"&gt;&lt;/i&gt;</pre>
+      <div>3.5大小：<i class="fa-brands fa-servicestack fa-xl"></i></div>
+      <pre>&lt;i class="fa-brands fa-servicestack fa-xl"&gt;&lt;/i&gt;</pre>
+    </dd>
+    <dt>在线使用 - 字体</dt>
+    <dd>
+      <div>1.打开 <a href="https://cdnjs.com/">CDN.js</a>；也可以去 Fontawesome 官网注册账号下载工具包 kit</div>
+      <div>2.搜索 Fontawesome，分别选择核心文件和对应的版本，最新为6.40，复制 link 标签，粘贴到项目的 &lt;head&gt;；integrity 是完整性检查，可以删除。下例使用 solid 系列
+      </div>
+      <pre>
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" /&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" /&gt;</pre>
+      <div>或者直接使用全图标版本 - all.min.css</div>
+      <pre>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/></pre>
+      <div>3.在 Fontawesom 官网搜索图标需要的 icon；搜索结果见下图</div>
+      <div>4.单击并复制，在项目中使用 - <i class="fa-solid fa-star"></i></div>
+      <pre>&lt;i class="fa-solid fa-star"&gt;&lt;/i&gt;</pre>
+      <div>5.添加动画 - <i class="fa-solid fa-star fa-beat"></i></div>
+      <pre>&lt;i class="fa-solid fa-star fa-beat"&gt;&lt;/i&gt;</pre>
+      <div>6.其它样式使用</div>
+      <img src="../imgs/fontawesome.png" alt="">
+    </dd>
+    <dt>在线使用 - Unicode</dt>
+    <dd>
+      <div>用在伪元素中</div>
+      <div>需指定字体家族为 fontawesome；同 <a href="./iconfont.html">Iconfont</a></div>
+      <div>字体编码在字体面板的右上角，见上图</div>
+      <pre>
+.tmp::before {
+  content: '\f005';
+  font-family: fontawesome;
+  color: #de5096;
+}      </pre>
+    </dd>
+  </dl>
+  <div class="chap">Vue3</div>
+  <dl>
+    <dt>安装</dt>
+    <dd>
+      <pre>npm install font-awesome --save</pre>
+    </dd>
+    <dt>引入</dt>
+    <dd>
+      <div>在逻辑中引入 - 通常在 main.js 中引入；注意不是在样式中引入</div>
+      <pre>import 'font-awesome/css/font-awesome.min.css'</pre>
+    </dd>
+    <dt>使用</dt>
+    <dd>
+      <div>在结构中使用</div>
+      <pre>&lt;i class="fa fa-paper-plane"&gt;&lt;/i&gt;</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

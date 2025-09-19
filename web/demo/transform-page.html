@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform Page Turning Over</title>
+  <style>
+    :root {
+      --z: 1000px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      perspective: var(--z);
+      overflow: hidden;
+    }
+
+    .book-wrap {
+      width: 180px;
+      height: 320px;
+      margin: auto;
+      /* perspective: 1000px; */
+      transform-style: preserve-3d;
+    }
+
+    .book {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: 1s;
+      cursor: pointer;
+    }
+
+    .book>div {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transform-origin: left;
+      transform: rotateY(calc(var(--deg)*1deg - 30deg));
+      transition: 2s;
+      transition-delay: calc(1s - var(--deg)*0.1s);
+      overflow: hidden;
+    }
+
+    .book-wrap:hover .book {
+      transform: translateX(30px);
+    }
+
+    .book-wrap:hover .book>div {
+      transform: rotateY(-180deg);
+      transition-delay: calc(var(--deg)*0.1s);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="book-wrap">
+    <div class="book">
+      <div style="--deg:0"><img class="ob-img" src="/utils/view/view0.jpg" alt=""></div>
+      <div style="--deg:1"><img class="ob-img" src="/utils/view/view1.jpg" alt=""></div>
+      <div style="--deg:2"><img class="ob-img" src="/utils/view/view2.jpg" alt=""></div>
+      <div style="--deg:3"><img class="ob-img" src="/utils/view/view3.jpg" alt=""></div>
+      <div style="--deg:4"><img class="ob-img" src="/utils/view/view4.jpg" alt=""></div>
+      <div style="--deg:5"><img class="ob-img" src="/utils/view/view5.jpg" alt=""></div>
+      <div style="--deg:6"><img class="ob-img" src="/utils/view/view6.jpg" alt=""></div>
+      <div style="--deg:7"><img class="ob-img" src="/utils/view/view7.jpg" alt=""></div>
+      <div style="--deg:8"><img class="ob-img" src="/utils/view/view8.jpg" alt=""></div>
+      <div style="--deg:9"><img class="ob-img" src="/utils/view/view9.jpg" alt=""></div>
+    </div>
+  </div>
+</body>
+
+</html>

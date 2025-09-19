@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Json-server</title>
+  <link rel="stylesheet" href="../../css/reset2024.css">
+  <link rel="stylesheet" href="../../css/common2024.css">
+  <link rel="stylesheet" href="../../css/code.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Json-server</h1>
+  </header>
+  <dl>
+    <dd>需要node.js环境支持</dd>
+    <dd>为应用提供JSON数据服务 - 仅仅是针对json文件的解析和应用</dd>
+    <dd>更多信息，请访问 <a href="https://www.npmjs.com/package/json-server" class="link">NPM - json-server</a></dd>
+    <dt>服务器创建基本步骤</dt>
+    <dd class="number">
+      <div>创建空白项目文件夹作为服务器，如server</div>
+      <div>项目初始化 - 完成后创建package.json包管理配置文件；参数-y表述默认创建</div>
+      <pre class="code">npm init -y</pre>
+      <div>安装json-server依赖 - 通常独立全局-g安装，可以监听对于任何位置的json数据的请求 - <span class="warn">指哪打哪</span></div>
+      <pre class="code">npm install json-server -g</pre>
+      <div>准备数据文件 form.json - 根据项目需求设计接口。这里设计3个接口，数据源信息、问卷内容、提交用户</div>
+      <pre class="code">
+{
+  "info": {},
+  "cont": {
+    "id": 1,
+    "title": "quiz",
+    "__webviewId__": 9,
+    "name": "李四",
+    "opinion": "微信小程序",
+    "gender": [
+      {
+        "name": "男",
+        "value": "0",
+        "checked": false
+      },
+      {
+        "name": "女",
+        "value": "1",
+        "checked": true
+      }
+    ],
+    "skills": [
+      {
+        "name": "HTML",
+        "value": "html",
+        "checked": true
+      },
+      {
+        "name": "CSS",
+        "value": "css",
+        "checked": false
+      },
+      {
+        "name": "JavaScript",
+        "value": "js",
+        "checked": true
+      },
+      {
+        "name": "Photoshop",
+        "value": "ps",
+        "checked": false
+      }
+    ]
+  },
+  "user": [
+    {
+      "id": "d641",
+      "uid": 1,
+      "uname": "nj"
+    }
+  ]
+}</pre>
+      <div>启动服务 - 在CMD控制台执行，系统自动检测并给出接口的地址：/info、/cont、/user；注意当前打开的CMD位置和监听数据文件的路径关系</div>
+      <pre class="code">json-server ./lib/server/form.json</pre>
+    </dd>
+    <dt>使用数据</dt>
+    <dd>以下数据操作面向微信小程序原生网络请求</dd>
+    <dd>
+      <div>GET - 获取数据</div>
+      <pre class="code">
+wx.request({
+  url: 'http://127.0.0.1:3000/cont',
+  success:res=>{
+    console.log(res);
+  }
+})</pre>
+      <p>根据用户id获取 - 用户提交前可以根据结果决定是不是已经提交；如果查询结果不为0，则已经提交，不允许再次提交</p>
+      <pre class="code">url: 'http://127.0.0.1:3000/user?id='+this.data.id</pre>
+      <div>POST - 提交数据；json-server会自动增加id，类型字符串</div>
+      <pre class="code">
+wx.request({
+  url: 'http://127.0.0.1:3000/user',
+  method:'POST',
+  data:{
+    id:2,
+    uname:'nj'
+  },
+  success:res=>{
+    console.log(res);
+  }
+})</pre>
+      <div>DELETE - 删除数据</div>
+      <div>PATCH - 修改部分数据</div>
+      <div>PUT - 覆盖数据</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>Mini Shop</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"> -->
+  <link href="//at.alicdn.com/t/c/font_3859342_aqd0ylc925p.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/minishop.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <aside></aside>
+    <ul class="goodsList"></ul>
+  </div>
+  <footer>
+    <!-- cart使用缩放animation效果更丰富 -->
+    <i class="iconfont icon-gouwuche_o cart"></i>
+    <div>
+      <div class="cart-price">&yen; <span>88</span></div>
+      <div class="cart-fee">配送费&yen;<span></span>元</div>
+    </div>
+    <div class="cart-pay">
+      <a href="">结算</a>
+      <span class="cart-diff">还差&yen;<span>0</span>元起送</span>
+    </div>
+  </footer>
+  <script src="/utils/data/data2023/goods.js"></script>
+  <script>
+    // 商品数据类 Good
+    class Good {
+      constructor(good) {
+        this.good = good;
+        this.choose = 0;
+      }
+      getTotalPrice() {
+        return this.good.price * this.choose;
+      }
+      inc() {
+        this.choose++;
+      }
+      dec() {
+        if (this.choose > 0) {
+          this.choose--;
+        }
+      }
+      isChoose() {
+        return this.choose > 0;
+      }
+    }
+
+    // 界面数据类 UIData
+    class UIData {
+      constructor() {
+        let uiGoods = []
+        goods.forEach(item => {
+          uiGoods.push(new Good(item));
+        });
+        this.UIGoods = uiGoods;
+        this.deliveryThreshold = 30;
+        this.deliveryFee = 5;
+      }
+
+      getTotalPrice() {
+        // let sum = this.UIGoods.reduce((acc, cur) => {
+        //   return acc + cur.getTotalPrice;
+        // }, 0)
+        let sum = 0;
+        for (let i = 0; i < this.UIGoods.length; i++) {
+          sum += this.UIGoods[i].getTotalPrice();
+        }
+        return sum;
+      }
+
+      getTotalNumber() {
+        // let sum = this.UIGoods.reduce((acc, cur) => {
+        //   return acc + cur.choose;
+        // }, 0)
+        let sum = 0;
+        for (let i = 0; i < this.UIGoods.length; i++) {
+          sum += this.UIGoods[i].choose;
+        }
+        return sum;
+      }
+
+      hasGoodsInCart() {
+        return this.getTotalNumber() > 0;
+      }
+
+      isCrossThreshold() {
+        return this.getTotalPrice() >= this.deliveryThreshold;
+      }
+
+      // 封装；避免直接使用子对象的方法
+      isChoose(ind) {
+        return this.UIGoods[ind].isChoose();
+      }
+
+      increase(ind) {
+        this.UIGoods[ind].inc();
+      }
+
+      decrease(ind) {
+        this.UIGoods[ind].dec();
+      }
+    }
+    // 界面类UI
+    class UI {
+      constructor() {
+        this.uiDate = new UIData();
+        // 集中管理所有的DOM节点
+        let footer = document.querySelector('footer');
+        this.doms = {
+          goodsList: document.querySelector('.goodsList'),
+          cart: footer.querySelector('.cart'),
+          pay: footer.querySelector('.cart-pay'),
+          fee: footer.querySelector('.cart-fee span'),
+          diff: footer.querySelector('.cart-diff span'),
+          total: footer.querySelector('.cart-price span')
+        }
+        this.createListDOM();
+
+        this.updateFooter();
+
+        this.listener();
+
+        let target = this.doms.cart.getBoundingClientRect()
+        this.jumpTar = {
+          x: target.left + target.width / 2,
+          y: target.top + target.height / 2
+        }
+      }
+
+      // 各种监听器
+      listener() {
+        this.doms.cart.addEventListener('animationend', function () {
+          // 注意this
+          console.log(this);
+          this.doms.cart.classList.remove('cart-active')
+        })
+      }
+
+      createListDOM() {
+        this.doms.goodsList.innerHTML = this.uiDate.UIGoods.map((item, ind) => {
+          // 输出不能回车
+          // src根据引入文件确定路径
+          // 使用HTML字符串比较创建单个DOM元素：可读性好、开发效率高，但执行效率低
+          return `<li class='good-item' id=${item.good.id}>
+            <img class='img' src="${item.good.picUrl}" alt="good pic">
+            <div class='info'>
+              <div class='title'>${item.good.title}</div>
+              <div class='desc'>${item.good.desc}</div>
+              <div class='rate-sold'>
+                <div class='rate'><i class="ri-star-s-fill"></i> ${item.good.rate}</div>
+                <div class='sold'><i class="ri-coin-fill"></i> ${item.good.sold}</div>
+              </div>
+              <div class='price-btn'>
+                <div class='price'><i class="ri-money-cny-circle-line"></i> ${item.good.price}</div>
+                <div class='btn'>                  
+                  <i class="iconfont icon-jianhao btn-dec" ind=${ind}></i>
+                  <span>${item.choose}</span>
+                  <i class="iconfont icon-jiahao btn-inc" ind=${ind}></i>
+                </div>
+              </div>
+            </div>
+          </li>
+          `
+        }).join('')
+      }
+
+      increaseUI(ind) {
+        this.uiDate.increase(ind);
+        this.updateUI(ind);
+        this.updateFooter();
+
+        this.jump(ind);
+      }
+      decreaseUI(ind) {
+        this.uiDate.decrease(ind);
+        this.updateUI(ind);
+        this.updateFooter();
+      }
+
+      updateUI(ind) {
+        let item = this.doms.goodsList.children[ind];
+        if (this.uiDate.isChoose(ind)) {
+          item.classList.add('good-active');
+        } else {
+          item.classList.remove('good-active');
+        }
+        let itemNum = item.querySelector('span');
+        itemNum.textContent = this.uiDate.UIGoods[ind].choose;
+      }
+
+      updateFooter() {
+        let total = this.uiDate.getTotalPrice();
+        this.doms.total.textContent = total;
+        this.doms.fee.textContent = this.uiDate.deliveryFee;
+        if (this.uiDate.isCrossThreshold()) {
+          this.doms.pay.classList.add('pay-active');
+        } else {
+          this.doms.pay.classList.remove('pay-active');
+          let diff = this.uiDate.deliveryThreshold - total;
+          console.log(total);
+          this.doms.diff.textContent = diff;
+        }
+      }
+
+      animateCart() {
+        this.doms.cart.classList.add('cart-active')
+      }
+
+      // 购物车特效
+      jump(ind) {
+        let target = this.doms.goodsList.children[ind].querySelector('.btn-inc').getBoundingClientRect()
+        let startPos = {
+          x: target.left,
+          y: target.top
+        }
+      }
+    }
+
+    let ui = new UI();
+
+    ui.doms.goodsList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-inc')) {
+        ui.increaseUI(e.target.getAttribute('ind'));
+      } else if (e.target.classList.contains('btn-dec')) {
+        ui.decreaseUI(e.target.getAttribute('ind'))
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Ring Animation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .loading-ring {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .item {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      transform: rotatez(calc(var(--ind) * 18deg));
+    }
+
+    .item::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff0;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #f40;
+      animation: flash 2s ease-in-out infinite;
+      animation-delay: calc(0.1s * var(--ind));
+    }
+
+    @keyframes flash {
+
+      100% {
+        filter: hue-rotate(360deg);
+        transform: scale(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading-ring">
+    <div class="item" style="--ind:0"></div>
+    <div class="item" style="--ind:1"></div>
+    <div class="item" style="--ind:2"></div>
+    <div class="item" style="--ind:3"></div>
+    <div class="item" style="--ind:4"></div>
+    <div class="item" style="--ind:5"></div>
+    <div class="item" style="--ind:6"></div>
+    <div class="item" style="--ind:7"></div>
+    <div class="item" style="--ind:8"></div>
+    <div class="item" style="--ind:9"></div>
+    <div class="item" style="--ind:10"></div>
+    <div class="item" style="--ind:11"></div>
+    <div class="item" style="--ind:12"></div>
+    <div class="item" style="--ind:13"></div>
+    <div class="item" style="--ind:14"></div>
+    <div class="item" style="--ind:15"></div>
+    <div class="item" style="--ind:16"></div>
+    <div class="item" style="--ind:17"></div>
+    <div class="item" style="--ind:18"></div>
+    <div class="item" style="--ind:19"></div>
+  </div>
+</body>
+
+</html>

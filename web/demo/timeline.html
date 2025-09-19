@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间轴 Flex Timeline</title>
+  <style>
+    :root {
+      --main-color: #f46;
+      --dot-w: 8px;
+      --border-w: 2px;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .clear::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    .warn {
+      color: var(--main-color);
+      font-weight: 600;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      min-height: 100vh;
+      padding-top: 10vh;
+      padding-bottom: 10vh;
+      font-size: 14px;
+    }
+
+    /* float */
+    .float-wrap .float {
+      position: relative;
+      width: calc(50% + var(--border-w));
+    }
+
+    .float-wrap .float:nth-child(odd) {
+      float: left;
+      border-right: calc(2*var(--border-w)) solid var(--main-color);
+    }
+
+    .float-wrap .float:nth-child(even) {
+      float: right;
+      border-left: calc(2*var(--border-w)) solid var(--main-color);
+    }
+
+    .float-wrap .float::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--dot-w);
+      height: var(--dot-w);
+      border-radius: 50%;
+      background-color: #fff;
+      border: 1px solid var(--main-color);
+    }
+
+    .float-wrap .float:nth-child(odd)::before {
+      right: -7px;
+    }
+
+    .float-wrap .float:nth-child(even)::before {
+      left: -7px;
+    }
+
+    .float .float-cont {
+      border-radius: 4px;
+      padding: 4px 10px;
+      background-color: #f1f2f3;
+      margin: 0 var(--p-m-g);
+    }
+
+    .float-wrap .float:nth-child(odd) .float-cont {
+      float: right;
+    }
+
+    .float-wrap .float:nth-child(even) .float-cont {
+      float: left;
+    }
+
+    /* flex */
+    .flex {
+      /* Better */
+      width: 300px;
+    }
+
+    .item {
+      display: flex;
+    }
+
+    .flex .item:nth-child(odd) {
+      flex-direction: row;
+    }
+
+    .flex .item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .cont {
+      position: relative;
+      width: calc(50% + var(--border-w));
+      display: flex;
+      align-items: center;
+    }
+
+    .flex .item:nth-child(odd) .cont {
+      justify-content: flex-end;
+      border-right: calc(2*var(--border-w)) solid var(--main-color);
+    }
+
+    .flex .item:nth-child(even) .cont {
+      justify-content: flex-start;
+      border-left: calc(2*var(--border-w)) solid var(--main-color);
+    }
+
+    .cont::after {
+      content: '';
+      position: absolute;
+      width: var(--dot-w);
+      height: var(--dot-w);
+      border-radius: 50%;
+      background-color: #fff;
+      border: 1px solid var(--main-color);
+    }
+
+    .flex .item:nth-child(odd) .cont::after {
+      right: -7px;
+    }
+
+    .flex .item:nth-child(even) .cont::after {
+      left: -7px;
+    }
+
+    .cont p {
+      position: relative;
+      border-radius: 4px;
+      padding: 4px 10px;
+      background-color: #f1f2f3;
+      margin: 0 var(--p-m-g);
+    }
+
+    /* flex-order */
+    .flex-order {
+      width: 300px;
+    }
+
+    .order-item {
+      display: flex;
+    }
+
+    .order-item .order-cont {
+      width: calc(50% - 2px);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .flex-order .order-item:nth-child(even) .order-cont {
+      order: 1;
+      justify-content: flex-start;
+    }
+
+    .order-item p {
+      border-radius: 4px;
+      padding: 4px 10px;
+      background-color: #f1f2f3;
+      margin: 0 var(--p-m-g);
+    }
+
+    .order-item .bar {
+      position: relative;
+      width: calc(50% + 2px);
+    }
+
+    .flex-order .order-item:nth-child(odd) .bar {
+      border-left: calc(2*var(--border-w)) solid var(--main-color);
+    }
+
+    .flex-order .order-item:nth-child(even) .bar {
+      border-right: calc(2*var(--border-w)) solid var(--main-color);
+    }
+
+    .order-item .bar::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--dot-w);
+      height: var(--dot-w);
+      border-radius: 50%;
+      border: 1px solid var(--main-color);
+      background-color: #fff;
+    }
+
+    .flex-order .order-item:nth-child(odd) .bar::before {
+      left: -7px;
+    }
+
+    .flex-order .order-item:nth-child(even) .bar::before {
+      right: -7px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="float-wrap clear">
+    <div class="float clear">
+      <div class="float-cont warn">FLOAT</div>
+    </div>
+    <div class="float clear">
+      <div class="float-cont">Tag</div>
+    </div>
+    <div class="float clear">
+      <div class="float-cont">CSS3</div>
+    </div>
+    <div class="float clear">
+      <div class="float-cont">JavaScript</div>
+    </div>
+  </div>
+  <div class="flex">
+    <div class="item">
+      <div class="cont warn">
+        <p>FLEX-direction</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="cont">
+        <p>Lorem</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="cont">
+        <p>Saepe</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="cont">
+        <p>Ipsam</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="cont">
+        <p>Maiores</p>
+      </div>
+    </div>
+    <div class="item">
+      <div class="cont">
+        <p>Quod</p>
+      </div>
+    </div>
+  </div>
+  <div class="flex-order">
+    <div class="order-item">
+      <div class="order-cont">
+        <p class="warn">FLEX-order</p>
+      </div>
+      <div class="bar "> </div>
+    </div>
+    <div class="order-item">
+      <div class="order-cont">
+        <p>Lorem</p>
+      </div>
+      <div class="bar"> </div>
+    </div>
+    <div class="order-item">
+      <div class="order-cont">
+        <p>Saepe</p>
+      </div>
+      <div class="bar"> </div>
+    </div>
+    <div class="order-item">
+      <div class="order-cont">
+        <p>Ipsam</p>
+      </div>
+      <div class="bar"> </div>
+    </div>
+  </div>
+</body>
+
+</html>

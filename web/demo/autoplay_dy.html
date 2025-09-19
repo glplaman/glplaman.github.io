@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autoplay douyin mode</title>
+  <link rel="stylesheet" href="./css/autoplay.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <video src="/utils/video/sea.mp4" autoplay muted loop></video>
+    <div class="mask">
+      <button type="button" class="iconfont icon-volumeoff">
+    </div>
+    </button>
+  </div>
+  <script>
+    const wrap = document.querySelector('.wrap')
+    const video = document.querySelector('video')
+    const mask = document.querySelector('.mask')
+    const btn = document.querySelector('button')
+    setTimeout(() => {
+      mask.style.display = 'none'
+    }, 3000)
+
+    const play = () => {
+      if (video.muted) {
+        video.muted = false
+        btn.className = 'iconfont icon-pause'
+      } else if (video.paused) {
+        video.play()
+        btn.className = 'iconfont icon-pause'
+      } else {
+        video.pause()
+        btn.className = 'iconfont icon-play'
+      }
+      mask.style.display = 'none'
+    }
+
+    btn.addEventListener('click', play)
+
+    video.onended = () => {
+      mask.style.display = 'flex'
+      btn.className = 'iconfont icon-replay'
+    }
+
+    wrap.addEventListener('mouseenter', () => {
+      mask.style.display = 'flex'
+    })
+
+    // wrap.addEventListener('mousemove', () => {
+    //   mask.style.display = 'flex'
+    // })
+
+    wrap.addEventListener('mouseleave', () => {
+      mask.style.display = 'none'
+    })
+  </script>
+</body>
+
+</html>

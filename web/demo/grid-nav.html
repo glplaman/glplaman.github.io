@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网格多级导航 Grid Nav</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4690841_08vyhb7495oi.css);
+
+    :root {
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Helvetica, sans-serif;
+      list-style: none;
+      line-height: 1.5rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    li a {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0.85rem;
+      border-radius: 0.6rem;
+    }
+
+    .drop-down {
+      display: flex;
+      align-items: center;
+      gap: var(--p-m-g);
+      padding: 0.85rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+    }
+
+    .drop-down .arrow {
+      margin-left: auto;
+      transition: 0.5s;
+    }
+
+    li a:hover,
+    .drop-down:hover {
+      background-color: #212530;
+    }
+
+    .drop-down.active .arrow {
+      transform: rotate(90deg);
+    }
+
+    .drop-down.active+.sub-nav {
+      grid-template-rows: 1fr;
+    }
+
+    .nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100vh;
+      padding: 1rem;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .sub-nav {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: 0.5s;
+    }
+
+    .sub-nav>div {
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="nav">
+    <li>
+      <div class="drop-down">
+        <span class="iconfont icon-home-fill"></span>
+        <span>Lorem.</span>
+        <span class="iconfont icon-right arrow"></span>
+      </div>
+      <nav class="sub-nav">
+        <div>
+          <a href="">Lorem.</a>
+          <a href="">Repellat?</a>
+          <a href="">Ut?</a>
+        </div>
+      </nav>
+    </li>
+    <li>
+      <div class="drop-down">
+        <span class="iconfont icon-calendar-fill"></span>
+        <span>Tenetur.</span>
+        <span class="iconfont icon-right arrow"></span>
+      </div>
+      <nav class="sub-nav">
+        <div>
+          <a href="">Lorem.</a>
+          <a href="">Dolor?</a>
+          <a href="">Explicabo.</a>
+        </div>
+      </nav>
+    </li>
+    <li>
+      <div class="drop-down">
+        <span class="iconfont icon-location-fill"></span>
+        <span>Maiores!</span>
+        <span class="iconfont icon-right arrow"></span>
+      </div>
+      <nav class="sub-nav">
+        <div>
+          <a href="">Lorem.</a>
+          <a href="">Pariatur.</a>
+          <a href="">Repellendus.</a>
+        </div>
+      </nav>
+    </li>
+    <li>
+      <div class="drop-down">
+        <span class="iconfont icon-setting-fill"></span>
+        <span>Maiores!</span>
+        <span class="iconfont icon-right arrow"></span>
+      </div>
+      <nav class="sub-nav">
+        <div>
+          <a href="">Lorem.</a>
+          <a href="">Pariatur.</a>
+          <a href="">Repellendus.</a>
+        </div>
+      </nav>
+    </li>
+  </ul>
+  <script>
+    const navItems = document.querySelectorAll('.drop-down')
+    navItems.forEach(navItem => {
+      // const subNav = navItem.querySelector('.sub-nav')
+      navItem.addEventListener('click', () => {
+        navItems.forEach(item => item.classList.remove('active'))
+        navItem.classList.toggle('active')
+      })
+    })
+  </script>
+</body>
+
+</html>

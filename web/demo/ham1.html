@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ham Media</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4078036_62ehidgkie7.css">
+  <style>
+    :root {
+      --main-color: #ffa040;
+      --p-m-g: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a {
+      font: inherit;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #eee;
+    }
+
+    nav {
+      position: sticky;
+      left: 0;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--main-color);
+      color: #fff;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .ham {
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--p-m-g);
+    }
+
+    section {
+      min-height: 100vh;
+    }
+
+    @media screen and (max-width: 768px) {
+      body.active {
+        overflow: hidden;
+      }
+
+      .nav-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 1rem;
+      }
+
+      .ham {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--main-color);
+        padding: 3rem 0rem;
+        transition: 0.5s;
+        z-index: -1;
+      }
+
+      body.active .nav-links {
+        transform: translateY(100%);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav id="nav" class="nav">
+    <div class="nav-header">
+      <a href="" class="logo">logo</a>
+      <span class="iconfont icon-menu ham" id="ham"></span>
+    </div>
+    <div class="nav-links">
+      <a href="#home">Lorem.</a>
+      <a href="#info">Itaque.</a>
+      <a href="#work">Modi.</a>
+      <a href="#team">In?</a>
+      <a href="#about">Eum.</a>
+    </div>
+  </nav>
+  <section id="home">home</section>
+  <section id="info">info</section>
+  <section id="work">work</section>
+  <section id="team">team</section>
+  <section id="about">about</section>
+  <script>
+    const body = document.querySelector('body')
+    const nav = document.querySelector('#nav')
+    const ham = document.querySelector('#ham')
+    const links = document.querySelector('.nav-links')
+    const items = document.querySelectorAll('.nav-links a')
+    ham.addEventListener('click', () => {
+      body.classList.toggle('active')
+
+      let flag = ham.classList.contains('icon-menu')
+
+      if (flag) {
+        ham.classList.remove('icon-menu')
+        ham.classList.add('icon-cross')
+      } else {
+        ham.classList.remove('icon-cross')
+        ham.classList.add('icon-menu')
+      }
+    })
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        body.classList.remove('active')
+        ham.classList.remove('icon-cross')
+        ham.classList.add('icon-menu')
+      })
+    })
+    // window.addEventListener('scroll', () => {
+    //   nav.classList.remove('active')
+    // })
+  </script>
+</body>
+
+</html>

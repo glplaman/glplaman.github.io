@@ -1,0 +1,200 @@
+    body,
+    div,
+    p {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .wrap {
+      min-height: 100vh;
+      background-color: #ffb8b8;
+      transition: 0.4s linear;
+      padding: 10px 0;
+    }
+
+    .pic {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      background-image: url(/utils/shoe/s_rose.jpg);
+      background-size: cover;
+      background-position: center;
+      border-radius: 1rem;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4/3;
+      position: absolute;
+    }
+
+    .info {
+      width: 100%;
+      margin: 1rem 0 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgb(112, 162, 255);
+    }
+
+    .price {
+      font-size: 1.4rem;
+    }
+
+    .btn {
+      color: inherit;
+      text-transform: uppercase;
+      padding: .4rem 2rem;
+      border-radius: 2rem;
+      border: 2px solid;
+      transition: .4s;
+    }
+
+    .btn:hover {
+      transform: scale(1.04);
+    }
+
+    .products-lbl {
+      display: flex;
+      margin: 2rem auto;
+      gap: 1rem;
+    }
+
+    .products-lbl label {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      background-color: var(--color);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    #p0:checked~.products img:nth-child(1) {
+      z-index: 1;
+    }
+
+    #p1:checked~.products img:nth-child(2) {
+      z-index: 1;
+    }
+
+    #p2:checked~.products img:nth-child(3) {
+      z-index: 1;
+    }
+
+    #p3:checked~.products img:nth-child(4) {
+      z-index: 1;
+    }
+
+    .product-box:has(#p0:checked) {
+      background-color: #ffb8b8;
+    }
+
+    .product-box:has(#p1:checked) {
+      background-color: #f1c40f;
+    }
+
+    .product-box:has(#p2:checked) {
+      background-color: #70a1ff;
+    }
+
+    .product-box:has(#p3:checked) {
+      background-color: #C4E538;
+    }
+
+    #p0:checked~.products-lbl label:nth-child(1)::after,
+    #p1:checked~.products-lbl label:nth-child(2)::after,
+    #p2:checked~.products-lbl label:nth-child(3)::after,
+    #p3:checked~.products-lbl label:nth-child(4)::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+    }
+
+    #p0:checked~.info {
+      color: #ffb8b8;
+    }
+
+    #p1:checked~.info {
+      color: #f1c40f;
+    }
+
+    #p2:checked~.info {
+      color: #70a1ff;
+    }
+
+    #p3:checked~.info {
+      color: #C4E538;
+    }
+
+    /* jquery */
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 600px;
+      width: 90%;
+      background-color: rgb(255, 255, 255);
+      box-shadow: 1px 1px 6px 6px rgba(136, 136, 136, 0.533);
+      padding: 1rem;
+      margin: 20px auto;
+    }
+
+    .sub-title {
+      color: rgb(153, 153, 153);
+    }
+
+    .colors {
+      display: flex;
+      justify-content: center;
+    }
+
+    .colors span {
+      position: relative;
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin: .4rem .5rem;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .colors span:nth-child(1) {
+      background-color: rgb(255, 184, 184);
+    }
+
+    .colors span:nth-child(2) {
+      background-color: rgb(241, 196, 15);
+    }
+
+    .colors span:nth-child(3) {
+      background-color: rgb(112, 161, 255);
+    }
+
+    .colors span:nth-child(4) {
+      background-color: rgb(196, 229, 56);
+    }
+
+    span.active::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      border: 1px solid rgb(102, 102, 102);
+    }

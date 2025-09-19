@@ -1,0 +1,215 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+  /* 选择器 selector*/
+  html {
+    /* 规则：值对 name-value pairs */
+    font-size: 62.5%;
+  }
+
+    header {
+      height: 25vh;
+      background-color: #ff7b00;
+    }
+
+    body {
+      font-size: 1.6rem;
+      width: 100%;
+      max-width: 1190px;
+      margin: 0 auto;
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+    }
+
+    header {
+      position: relative;
+      top: 0;
+    }
+
+    .article {
+      --line-h: 30px;
+      --main-color: #f40;
+      columns: 3 350px;
+      padding: 10px;
+      counter-reset: chap;
+      line-height: var(--line-h);
+      background-color: #f7f7f7;
+    }
+
+    .article .header {
+      column-span: all;
+      text-align: center;
+      margin-top: var(--line-h);
+      margin-bottom: var(--line-h);
+    }
+
+    .article h1 {
+      font-size: 2rem;
+    }
+
+    .article h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      counter-reset: sec;
+      counter-increment: chap;
+    }
+
+    .article h2::before {
+      content: '第' counter(chap)'章 ';
+    }
+
+    .article h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+
+      counter-reset: img;
+      counter-reset: tbl;
+      counter-increment: sec;
+    }
+
+    .article h3::before {
+      content: counter(chap)'.' counter(sec)'  ';
+    }
+
+    .article h3~figure figcaption {
+      counter-increment: img;
+    }
+
+    .article h3~figure figcaption::before {
+      content: '图' counter(chap)'-' counter(sec)'-' counter(img)' ';
+    }
+
+    .article h3~table caption {
+      counter-increment: tbl;
+    }
+
+    .article h3~table caption::before {
+      content: '表' counter(chap)'-' counter(sec)'-' counter(tbl)' ';
+    }
+
+    .article p {
+      text-indent: 2em;
+      text-align: justify;
+      margin-bottom: var(--line-h);
+    }
+
+    .article h3+p {
+      text-indent: 0;
+    }
+
+    .article h3+p::first-letter {
+      float: left;
+      font-size: 3.2rem;
+      font-weight: 600;
+      margin-right: var(--line-h);
+      line-height: calc(2*var(--line-h));
+      color: var(--main-color);
+    }
+
+    .abstract {
+      column-span: all;
+      text-align: justify;
+      margin-bottom: var(--line-h);
+    }
+
+    .abstract span {
+      font-weight: 600;
+      margin-right: 1em;
+      text-transform: capitalize;
+    }
+
+    .abstract span::before {
+      content: '[';
+    }
+
+    .abstract span::after {
+      content: ']';
+    }
+
+    figure {
+      margin-bottom: var(--line-h);
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: calc(8*var(--line-h));
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    figure figcaption {
+      margin: 0;
+      text-align: center;
+      line-height: var(--line-h);
+      color: #666;
+      font-size: 1.4rem;
+    }
+
+    table {
+      margin: 0 0 calc(2*var(--line-h)) 0;
+      background-image: url(../../imgs/logo1.png);
+      background-size: 50px;
+      background-repeat: no-repeat;
+      background-position: right 20px bottom 20px;
+    }
+
+    table caption {
+      font-size: 1.4rem;
+    }
+
+    thead th {
+      background-color: #fff;
+      color: #054b31;
+      text-transform: capitalize;
+      font-weight: 600;
+      background-color: rgba(0, 89, 52, 0.2);
+      text-align: left;
+    }
+
+
+    tbody tr:nth-child(odd) td {
+      background-color: rgba(0, 0, 0, 0.1);
+      color: #054b31;
+    }
+
+    tbody tr:hover td {
+      background-color: rgba(0, 89, 52, 0.1);
+    }
+
+    tfoot td {
+      text-align: center;
+      font-size: 1.4rem;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    footer {
+      text-align: right;
+      font-size: 1.4rem;
+    }

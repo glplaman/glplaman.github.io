@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Text Hopping</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+      color: #e67e22;
+      font-size: 40px;
+    }
+
+    .hop {
+      display: flex;
+      gap: 10px;
+    }
+
+    span {
+      cursor: pointer;
+    }
+
+    span.active {
+      animation: hopping 1s ease-in-out 2 alternate;
+    }
+
+    @keyframes hopping {
+      50% {
+        transform: scale(2);
+        color: #f1c40f;
+      }
+
+      100% {
+        transform: scale(0.5);
+        color: #f40;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hop">
+    <span>g</span>
+    <span>l</span>
+    <span>p</span>
+    <span>l</span>
+    <span>a</span>
+    <span>.</span>
+    <span>g</span>
+    <span>i</span>
+    <span>t</span>
+    <span>h</span>
+    <span>u</span>
+    <span>b</span>
+    <span>.</span>
+    <span>i</span>
+    <span>o</span>
+  </div>
+  <script>
+    let spans = document.querySelectorAll("span");
+    spans.forEach((span) => {
+      span.addEventListener("mouseover", () => {
+        span.classList.add("active");
+      });
+      span.addEventListener("animationend", () => {
+        span.classList.remove("active");
+      });
+    });
+
+  </script>
+</body>
+
+</html>

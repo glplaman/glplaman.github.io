@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>泛型 Generic</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <link rel="stylesheet" href="../../css/ts.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>泛型</h1>
+    <span>&commat;Generic</span>
+  </header>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://www.tslang.cn/index.html">TypeScript</a></dd>
+    <dt>Overview</dt>
+    <dd>
+      <div>定义函数、接口或类时使用 <span class="warn">类型参数 T</span> ，这些类型参数在使用时会被具体的类型替换 - 更灵活且类型安全的代码</div>
+      <div>用于创建可重用的组件和函数，同时保持类型安全</div>
+    </dd>
+    <dt>泛型函数</dt>
+    <dd>
+      <div>处理多种类型的函数，而不需要为每种类型编写单独的实现</div>
+      <div>一个函数可以定义多个泛型函数</div>
+      <pre>
+//定义
+function identity&lt;T&gt;(arg: T): T {
+  return arg;
+}
+
+// 使用     
+let output1 = identity<string>("myString");
+let output2 = identity<number>(100);</pre>
+    </dd>
+    <dt>泛型类</dt>
+    <dd>
+      <div>定义具有泛型类型的类</div>
+      <pre>
+class GenericNumber&lt;T&gt; {
+  zeroValue: T;
+  add: (x: T, y: T) => T;
+
+  constructor(zeroValue: T, add: (x: T, y: T) => T) {
+    this.zeroValue = zeroValue;
+    this.add = add;
+  }
+}
+
+let myGenericNumber = new GenericNumber&lt;number&gt;(0, (x, y) => x + y);
+
+console.log(myGenericNumber.add(5, 10)); // 输出: 15      </pre>
+    </dd>
+    <dt>泛型接口</dt>
+    <dd>
+      <div>定义具有泛型类型的接口</div>
+      <pre>
+interface GenericIdentityFn&lt;T&gt; {
+  (arg: T): T;
+}
+
+function identity&lt;T&gt;(arg: T): T {
+  return arg;
+}
+
+let myIdentity: GenericIdentityFn&lt;number&gt; = identity;
+
+console.log(myIdentity(42)); // 输出: 42</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

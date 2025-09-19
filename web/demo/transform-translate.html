@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>居中 - 单个子元素居中</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4061940_rc6rvlz53d.css);
+
+    :root {
+      --bg-color: #2c3e50;
+      --txt-color: #c8bc9d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      height: 100vh;
+      background-color: #000;
+      color: var(--txt-color);
+      cursor: pointer;
+    }
+
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 300px;
+      aspect-ratio: 16/9;
+      background-color: var(--bg-color);
+      overflow: hidden;
+    }
+
+    .iconfont {
+      font-size: 2rem;
+      padding: 10px;
+      border: 1px solid var(--txt-color);
+      border-radius: 50%;
+    }
+
+    .translate {
+      position: relative;
+      width: 300px;
+      aspect-ratio: 16/9;
+      background-color: var(--bg-color);
+      overflow: hidden;
+    }
+
+    .label::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 150px;
+      height: 30px;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 30px;
+      background-color: var(--txt-color);
+      color: #000;
+      transform: rotate(-45deg) translate(-45px, -20px);
+    }
+
+    .translate .iconfont {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* sync */
+
+    .sync span {
+      position: absolute;
+      transition: 0.5s;
+    }
+
+    .sync .txt {
+      transform: scale(0);
+    }
+
+    .sync:hover .icon {
+      transform: scale(0);
+    }
+
+    .sync:hover .txt {
+      transform: scale(1);
+    }
+
+    /* delay */
+
+    .delay span {
+      position: absolute;
+    }
+
+    .delay .icon {
+      transition: 0.5s 0.2s;
+    }
+
+    .delay .txt {
+      transform: scale(0);
+      transition: 0.5s;
+    }
+
+    .delay:hover .icon {
+      transform: scale(0);
+      transition: 0.5s;
+    }
+
+    .delay:hover .txt {
+      transform: scale(1);
+      transition: 0.5s 0.2s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="translate label" data-label="static">
+    <span class="iconfont icon-home icon"></span>
+  </div>
+  <div class="box sync label" data-label="sync">
+    <span class="iconfont icon-home icon"></span>
+    <span class="txt">glpla.github.io</span>
+  </div>
+  <div class="box delay label" data-label="delay">
+    <span class="iconfont icon-home icon"></span>
+    <span class="txt">glpla.github.io</span>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vant</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+  <style>
+    :root {
+      --main-color: #4bc2ce;
+      --warn-color: #1b9fab;
+      --tbl-color-light: #edf9fa;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Vant</h1>
+  </header>
+  <dl>
+    <dt>1. 安装</dt>
+    <dd>更多 Vant 安装方式，请参考 <a href="https://vant-ui.github.io/vant/#/zh-CN">Vant 官网</a></dd>
+    <dd>
+      <pre>npm i vant</pre>
+    </dd>
+    <dd>在项目的配置文 package.json 件中可以看到依赖</dd>
+    <dd>
+      <pre>
+"dependencies": {
+    "vant": "^4.0.8",
+    "vue": "^3.2.45"
+}</pre>
+    </dd>
+    <dt>2. 引入 - 全局注册；更多注册方法，请访问 <a href="https://vant-ui.github.io/vant/#/zh-CN/advanced-usage#zu-jian-zhu-ce">组件注册</a>
+    </dt>
+    <dd>
+      <div>使用某给组件</div>
+      <pre>
+// 1. Import the components you need
+import { Button } from 'vant';
+
+// 2. Import the components style
+import 'vant/lib/index.css';
+
+// 3. Use the components
+createApp(App).use(Button).mount('#app')</pre>
+    </dd>
+    <div>使用所有组件 - 不要忘记引入样式（系统文档说的比较糙）</div>
+    <pre>
+import Vant from 'vant';
+import 'vant/lib/index.css';
+app.use(Vant);</pre>
+    <dt>3. 使用</dt>
+    <dd>
+      <pre>&lt;van-button type="primary"&gt;Primary&lt;/van-button&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">适配</div>
+  <dl>
+    <dt>amfe-flexible</dt>
+    <dd>
+      <div>自动设置 Rem 基准值 - HTML 的 font-size 字体大小</div>
+      <div>install</div>
+      <pre>npm i amfe-flexible</pre>
+      <div>import - main.js</div>
+      <pre>import "amfe-flexible";</pre>
+    </dd>
+    <dt>postcss-pxtorem</dt>
+    <dd>
+      <div>将单位 px 转化为 rem - 行内样式单位无效</div>
+      <div>install</div>
+      <pre>npm install postcss postcss-pxtorem --save-dev</pre>
+      <div>根目录创建文件 postcss.config.js</div>
+      <pre>
+// postcss.config.js
+export default {
+  plugins: {
+    "postcss-pxtorem": {
+      // 设计稿宽度；默认是350px
+      rootValue: 37.5,
+      // 需要转化的 CSS 属性
+      propList: ["*"],
+    },
+  },
+};</pre>
+      <div>重新启动项目</div>
+    </dd>
+  </dl>
+  <div class="chap">tabbar</div>
+  <dl>
+    <dd>如何定制图标</dd>
+    <dt>使用vant内置图标</dt>
+    <dd>更改图标的名字即可</dd>
+    <dt>使用iconfont字体图标</dt>
+    <dt>使用本地图片</dt>
+    <dd>1.在项目assets中准备图片</dd>
+    <dd>2.在main.js中引入并使用tabbar</dd>
+    <dd>
+      <pre>
+// 1. Import the components you need
+import { Tabbar, TabbarItem } from 'vant';
+// 2. Import the components style
+import 'vant/lib/index.css';
+createApp(App).use(Tabbar).use(TabbarItem).mount('#app')</pre>
+    </dd>
+    <dd>3.script：引入图片资源，并定义slot属性icon的图片资源</dd>
+    <dd>
+      <pre>
+import h5 from "../assets/html-5.png"
+import unity from "../assets/unity.png"
+
+const active = ref(0);
+const icon = {
+    active: h5,
+    inactive: unity,
+};</pre>
+    </dd>
+    <dd>4.template</dd>
+    <dd>
+      <pre>
+&lt;van-tabbar v-model="active" active-color="#f46"&gt;
+    &lt;van-tabbar-item&gt;
+        &lt;span&gt;Menu&lt;/span&gt;
+        &lt;template #icon="props"&gt;
+            &lt;img :src="props.active ? icon.active : icon.inactive" /&gt;
+        &lt;/template&gt;
+    &lt;/van-tabbar-item&gt;
+    &lt;van-tabbar-item icon="fire" dot&gt;Search&lt;/van-tabbar-item&gt;
+    &lt;van-tabbar-item icon="setting-o" badge="5"&gt;Setting&lt;/van-tabbar-item&gt;
+&lt;/van-tabbar&gt;</pre>
+    </dd>
+    <dt>使用在线图片资源</dt>
+    <dd>使用对应的url即可</dd>
+    <dd>
+      <pre>
+const icon = {
+    active: url,
+    inactive: url,
+};</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

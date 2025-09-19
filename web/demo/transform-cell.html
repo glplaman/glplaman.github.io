@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>蜂窝加载</title>
+  <style>
+    :root {
+      --w: 30px;
+      --h: 17px;
+      --p-m-g: 5px;
+      --bg: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #000;
+    }
+
+    .wrap {
+      display: flex;
+      gap: 2px;
+      margin: var(--p-m-g) 0;
+    }
+
+    .cell {
+      position: relative;
+      width: var(--w);
+      height: var(--h);
+      background-color: var(--bg);
+      animation: cell-scale 2s infinite;
+    }
+
+    .cell::before,
+    .cell::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: inherit;
+    }
+
+    .cell::before {
+      transform: rotateZ(120deg);
+    }
+
+    .cell::after {
+      transform: rotateZ(-120deg);
+    }
+
+    .cell.r1,
+    .cell.r1::before,
+    .cell.r1::after {
+      background-color: #f40;
+    }
+
+    .cell.r2,
+    .cell.r2::before,
+    .cell.r2::after {
+      background-color: #0aa;
+    }
+
+    .cell.r3,
+    .cell.r3::before,
+    .cell.r3::after {
+      background-color: #0a0;
+    }
+
+    .cell.r0 {
+      animation-delay: 0s;
+    }
+
+    .cell.r1 {
+      animation-delay: 0.2s;
+    }
+
+    .cell.r2 {
+      animation-delay: 0.4s;
+    }
+
+    .cell.r3 {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes cell-scale {
+
+      50% {
+        transform: scale(0.01);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r3"></div>
+    <div class="cell r3"></div>
+    <div class="cell r3"></div>
+  </div>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r2"></div>
+    <div class="cell r2"></div>
+    <div class="cell r2"></div>
+    <div class="cell r3"></div>
+  </div>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r2"></div>
+    <div class="cell r1"></div>
+    <div class="cell r1"></div>
+    <div class="cell r2"></div>
+    <div class="cell r3"></div>
+  </div>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r2"></div>
+    <div class="cell r1"></div>
+    <div class="cell r0"></div>
+    <div class="cell r1"></div>
+    <div class="cell r2"></div>
+    <div class="cell r3"></div>
+  </div>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r2"></div>
+    <div class="cell r1"></div>
+    <div class="cell r1"></div>
+    <div class="cell r2"></div>
+    <div class="cell r3"></div>
+  </div>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r2"></div>
+    <div class="cell r2"></div>
+    <div class="cell r2"></div>
+    <div class="cell r3"></div>
+  </div>
+  <div class="wrap">
+    <div class="cell r3"></div>
+    <div class="cell r3"></div>
+    <div class="cell r3"></div>
+    <div class="cell r3"></div>
+  </div>
+</body>
+
+</html>

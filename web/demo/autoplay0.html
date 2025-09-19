@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autoplay</title>
+  <link rel="stylesheet" href="./css/autoplay.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <video src="/utils/video/sea.mp4"></video>
+    <div class="mask"><button class="iconfont icon-play"></button></div>
+  </div>
+  <script>
+    const video = document.querySelector('video')
+    const mask = document.querySelector('.mask')
+    const btn = document.querySelector('button')
+    async function play() {
+      try {
+        await video.play()
+        mask.style.display = 'none'
+        btn.removeEventListener('click', play)
+        /* wrap.removeChild(wrap.querySelector('.mask')) */
+      } catch (e) {
+        mask.style.display = 'flex'
+        btn.addEventListener('click', play)
+      }
+    }
+    video.onended = () => {
+      mask.style.display = 'flex'
+      btn.addEventListener('click', play)
+      btn.className = 'iconfont icon-replay'
+    }
+    play()
+  </script>
+</body>
+
+</html>

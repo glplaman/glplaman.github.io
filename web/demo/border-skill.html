@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技能条 Border</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_3834292_zxqb2r9tra.css);
+
+    :root {
+      --h: 30px;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+      height: 100vh;
+    }
+
+    .w {
+      width: 96%;
+      max-width: 600px;
+    }
+
+    .simple {
+      text-align-last: justify;
+    }
+
+    .simple .simple-bar {
+      height: var(--h);
+      padding: 2px;
+      border: 2px solid #089;
+    }
+
+    .simple .simple-bar .simple-per {
+      width: 86%;
+      height: 100%;
+      background-color: #089;
+    }
+
+    /* skill */
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: var(--p-m-g);
+      margin-bottom: var(--p-m-g);
+    }
+
+    .bar::before {
+      content: var(--info);
+      font-family: 'iconfont';
+      color: var(--color);
+      font-size: 24px;
+      vertical-align: middle;
+    }
+
+    .bar::after {
+      content: var(--num)'%';
+      vertical-align: middle;
+    }
+
+    .per {
+      flex: 1;
+      height: var(--h);
+      border-radius: 15px;
+      border: 2px solid var(--color);
+      padding: 2px;
+    }
+
+    .per::before {
+      content: '';
+      display: inline-block;
+      width: calc(var(--per)*1%);
+      height: 100%;
+      background-image: linear-gradient(to right, var(--color), var(--color2));
+      border-radius: 15px;
+    }
+
+
+
+    /* loading */
+    .loading {
+      display: flex;
+      height: var(--h);
+      border: 1px solid #f40;
+      padding: 4px;
+      cursor: pointer;
+    }
+
+    .loading::before {
+      content: '';
+      width: 0%;
+      height: 100%;
+      background-color: #f40;
+      transition: width 1s linear;
+    }
+
+    .loading:hover::before {
+      transition: width 5s steps(5);
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w simple">
+    <span>Html</span>
+    <span>86%</span>
+    <div class="simple-bar">
+      <div class="simple-per"></div>
+    </div>
+  </div>
+  <div class="w skill">
+    <div class="bar" style="--num:'85';--color:#089;--color2:#0896;--info:'\e881';--per:85">
+      <div class="per"></div>
+    </div>
+    <div class="bar" style="--num:'90';--color:#890;--color2:#8906;--info:'\e69a';--per:90">
+      <div class="per"></div>
+    </div>
+    <div class="bar" style="--num:'70';--color:#f40;--color2:#f406;--info:'\e72e';--per:70">
+      <div class="per"></div>
+    </div>
+    <div class="bar" style="--num:'80';--color:#908;--color2:#9086;--info:'\ec34';--per:80">
+      <div class="per"></div>
+    </div>
+  </div>
+  <div class="w loading"></div>
+</body>
+
+</html>

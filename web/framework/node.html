@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node.js</title>
+  <link rel="stylesheet" href="../../css/reset2024.css">
+  <link rel="stylesheet" href="../../css/common2024.css">
+  <link rel="stylesheet" href="../../css/code.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>Node服务器</h1>
+    <span>&commat;Node.js</span>
+  </header>
+  <dl>
+    <dd>基于JavaScript的开源、跨平台开发环境</dd>
+    <dt>下载 Download</dt>
+    <dd>. 点击<a href="https://nodejs.org/en/" class="link">Node.js</a>下载</dd>
+    <dt>安装 Installation</dt>
+    <dd>安装的同时，会安装包管理工具NPM - Node Package Management</dd>
+    <dd>也可以在NPM下安装 <a href="https://yarn.bootcss.com/" class="link">中文yarn</a> 或 <a href="https://yarnpkg.com/"
+        class="link">英文yarn</a>
+      作为包管理工具</dd>
+    <dt>查看版本 Version</dt>
+    <dd>.Win + R，输入CMD，打开控制台查看 - 小黑屋</dd>
+    <dd class="code">
+      <pre>
+C:\Users\cnplaman>node -v
+v18.13.0
+
+C:\Users\cnplaman>npm -v
+8.15.1</pre>
+    </dd>
+    <dt>切换镜像源 Registry</dt>
+    <dd>为了改善使用体验，为了加快包的下载和使用，通常需要切换镜像源</dd>
+    <dd>1. 查看 get 安装镜像源，默认是</dd>
+    <dd class="code">
+      <pre>
+>npm config get registry
+https://registry.npmjs.org</pre>
+    </dd>
+    <dd>2. 设置 set 为淘宝镜像源</dd>
+    <dd class="code">
+      <pre>
+>npm config set registry https://registry.npmmirror.com</pre>
+    </dd>
+    <dd>3. 再次查看安装镜像源</dd>
+    <dd class="code">
+      <pre>
+>npm config get registry
+https://registry.npmmirror.com</pre>
+    </dd>
+    <dt>安装依赖 Install</dt>
+    <dd>install可以简写为i</dd>
+    <dd>默认是生产环境</dd>
+    <p>生产环境依赖 dependencies：项目上线后，所必须的依赖，如网络请求axios；使用--S/--save命令行参数</p>
+    <pre class="code">npm install package_name --save</pre>
+    <pre class="code">npm install package_name --S</pre>
+    <p>开发环境依赖 devDependencies：开发过程中需要的依赖，发布上线后，不再需要，如CSS预处理；使用--D/--save-dev命令行参数</p>
+    <pre class="code">npm install package_name --save-dev</pre>
+    <pre class="code">npm install package_name --D</pre>
+    <dt>移除依赖</dt>
+    <dd class="code">
+      <pre>npm uninstall package_name</pre>
+    </dd>
+    <dt>查看本地全局依赖</dt>
+    <dd>.我的电脑 → c → 用户user → 当前用户 → 应用数据appdata → roaming → npm</dd>
+    <dd class="code">
+      <pre>C:\Users\cnplaman\AppData\Roaming\npm\node_modules</pre>
+    </dd>
+    <dd>
+      <img src="../../vue/imgs/server1.png" alt="">
+    </dd>
+  </dl>
+  <div class="chap">创建服务器</div>
+  <dl>
+    <dd>依托express框架创建；更多信息，请访问 <a href="https://www.expressjs.com.cn/" class="link">Express.js</a></dd>
+    <dt>基本过程</dt>
+    <dd class="number">
+      <div>准备数据</div>
+      <div>创建服务</div>
+      <div>处理请求</div>
+      <div>开启服务 - 监听</div>
+    </dd>
+    <dt>静态资源服务器</dt>
+    <dd class="number">
+      <div>创建一个空白文件夹作为服务器目录，如server</div>
+      <div>创建资源文件夹，如www，存放数据data、图片imgs、视频video等资源；建议不同类型的资源存放在不同的子目录</div>
+      <div>在服务器目录打开CMD，初始化，用来创建package.json文件；也可以使用-y命令行参数，将按照默认配置创建，如入口文件默认是index.js</div>
+      <p>定制创建</p>
+      <pre class="code">npm init</pre>
+      <p>默认配置创建 - 推荐</p>
+      <pre class="code">npm init -y</pre>
+      <div>安装express框架</div>
+      <pre class="code">npm i express --save</pre>
+      <div>在服务器目录创建服务器脚本index.js</div>
+      <pre class="code">
+//引入express
+const express = require('express');
+//创建服务器实例
+const app = express();
+//指定服务器端口
+const port = 3000
+//指定静态文件位置
+app.use(express.static('./www'));
+//监听
+app.listen(port, res => {
+  console.log('服务器启动成功，访问地址：http://127.0.0.1:3000/资源名');
+});  </pre>
+      <div>在CMD开启服务</div>
+      <p>默认命令</p>
+      <pre class="code">node index.js</pre>
+      <p>自定义命令启动服务 - 修改package.json里script</p>
+      <pre>
+"scripts": {
+  "start":"node index.js"
+}</pre>
+      <pre class="code">node start</pre>
+      <div>用户使用浏览器访问http://127.0.0.1:3000/资源名获取资源</div>
+    </dd>
+    <dd class="tips">日常开发使用Vs Code完成</dd>
+    <dd>监听对JSON数据的GET请求</dd>
+    <dd>创建过程，同上</dd>
+    <dd>
+      <figure class="code">
+        <figcaption>参考代码</figcaption>
+        <pre>
+let fs = require('fs');
+let express = require('express')
+
+// 读取JSON数据
+let jsonStr = fs.readFileSync('./data.json', {
+  encoding: 'utf8'
+});
+
+let data = JSON.parse(jsonStr);
+
+// 创建Web服务器对象
+let app = express();
+
+// 静态资源处理
+app.use(express.static('public'));
+
+//请求格式 url/data?page=1&pageSize=10
+app.get('/data', (req, res) => {
+  let [ ...arr ] = data
+  let start = (req.query.page - 1) * req.query.pageSize;
+  res.setHeader('X-Total-Count', data.length);
+  res.send(arr.splice(start, req.query.pageSize));
+});
+
+app.listen(3000, () => {
+  console.log('服务器启动成功，地址为：http://127.0.0.1:3000');
+});</pre>
+      </figure>
+    </dd>
+  </dl>
+  </dl>
+  <div class="chap">常见依赖</div>
+  <dl>
+    <dt>nodemon</dt>
+    <dd>自动检测js文件变化，适合开发时使用</dd>
+    <dd class="code">
+      <pre>cnpm i nodemon -g</pre>
+    </dd>
+    <dd class="code">
+      <pre>nodemon xx.js</pre>
+    </dd>
+    <dt>multer <a href="https://www.npmjs.com/package/multer#readme" class="link">NPM - multer</a></dt>
+    <dd>Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+    </dd>
+    <dd>Multer is a node.js middleware for handling <span class="warn">multipart/form-data</span>, which is
+      primarily used for uploading files. It is written on top of busboy for maximum efficiency.</dd>
+    <dd>Multer adds a body object and a file or files object to the request object:</dd>
+    <dd>The <span class="warn">body</span> object contains the values of the <span class="warn">text</span> fields
+      of the form.</dd>
+    <dd>the <span class="warn">file</span> or files object contains the <span class="warn">files</span> uploaded via
+      the form.</dd>
+    <dd>. upload.none()：only text field</dd>
+    <dd>. upload.single(file)：single file</dd>
+    <dd>. upload.array()：multiple files</dd>
+    <dd>安装依赖 - 推荐使用cnpm</dd>
+    <pre class="code">npm install multer --save</pre>
+    <dt>Formidable <a href="https://www.npmjs.com/package/formidable#readme" class="link">NPM - formidable</a></dt>
+    <dd>A Node.js module for parsing form data, especially <span class="warn">file uploads</span>.</dd>
+    <dd>Formidable是一个Node.js模块，用于解析表单数据，特别是文件上传</dd>
+    <dd class="code">
+      <pre>cnpm i formidable --save</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

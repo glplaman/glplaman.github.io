@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播 Swiper</title>
+  <style>
+    :root {
+      --main-w: 640px;
+      --main-h: 360px;
+      --seg-w: calc(var(--main-h)/2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    body {
+      background-color: #c0392b;
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      perspective: 1000px;
+      padding: 2rem 0;
+    }
+
+    .title {
+      text-align: center;
+      line-height: 2;
+      color: #fff;
+    }
+
+    .sliders {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      transform-style: preserve-3d;
+      width: var(--main-w);
+      aspect-ratio: 16/9;
+      cursor: pointer;
+      margin: auto;
+    }
+
+    .sliders li {
+      position: relative;
+      width: 25%;
+      height: 100%;
+      transition: all calc(1s*var(--delay)) ease-in-out;
+      transform-style: preserve-3d;
+    }
+
+
+    .sliders li div {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      background-size: cover;
+      background-position: var(--pos) center;
+    }
+
+    .sliders li div:nth-child(1) {
+      background-image: url(/utils/military/military1.jpg);
+      transform: rotateX(0deg) translateZ(var(--seg-w));
+    }
+
+    .sliders li div:nth-child(2) {
+      background-image: url(/utils/military/military2.jpg);
+      transform: rotateX(90deg) translateZ(var(--seg-w));
+    }
+
+    .sliders li div:nth-child(3) {
+      background-image: url(/utils/military/military3.jpg);
+      transform: rotateX(180deg) translateZ(var(--seg-w));
+    }
+
+    .sliders li div:nth-child(4) {
+      background-image: url(/utils/military/military4.jpg);
+      transform: rotateX(270deg) translateZ(var(--seg-w));
+    }
+
+    .dot {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot li {
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      color: #fff;
+      background-color: #333;
+      text-align: center;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: .5s;
+    }
+
+    .dot li:hover {
+      box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #fff;
+    }
+
+    .dot li.active {
+      background-color: #ddd;
+      color: #333;
+    }
+
+    @media (max-width:768px) {
+      :root {
+        --main-w: 320px;
+        --main-h: 180px;
+      }
+
+      section {
+        padding: 6rem 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="wrap">
+    <h2 class="title">3D轮播</h2>
+    <ul class="sliders">
+      <li style="--pos:0%;--delay:1">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </li>
+      <li style="--pos:33.3%;--delay:1.3">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </li>
+      <li style="--pos:66.7%;--delay:1.6">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </li>
+      <li style="--pos:100%;--delay:2.2">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </li>
+    </ul>
+    <ul class='dot'>
+      <li class='active'>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+  </section>
+  <script>
+    let
+      oSide = document.querySelectorAll('.sliders li'),
+      oDot = document.querySelector('.dot'),
+      oList = oDot.getElementsByTagName('li');
+
+    for (let i = 0; i < oList.length; i++) {
+      oList[i].onclick = function () {
+        for (let j = 0; j < oSide.length; j++) {
+          oSide[j].style.transform = 'rotateX(' + (i * 90) + 'deg)';
+        }
+        for (let j = 0; j < oList.length; j++) {
+          oList[j].className = '';
+        }
+        this.className = 'active';
+      }
+    }
+  </script>
+</body>
+
+</html>

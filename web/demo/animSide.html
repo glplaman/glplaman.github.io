@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>侧边滑动菜单 Transition</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4061940_6dyoea80rpg.css);
+
+    :root {
+      --main-color: #f40;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    a {
+      color: inherit;
+      font: inherit;
+      text-decoration: none;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .iconfont {
+      font-size: 20px;
+    }
+
+    .header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 800px;
+      height: 40px;
+      padding: 0 var(--p-m-g);
+      margin: 0 auto;
+      border-bottom: 2px solid var(--main-color);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .ham {
+      display: none;
+      color: var(--main-color);
+    }
+
+    .nav {
+      display: flex;
+      gap: var(--p-m-g);
+    }
+
+    .nav-item {
+      display: flex;
+      gap: var(--p-m-g);
+      text-transform: capitalize;
+      font-size: 20px;
+      transition: all 0.5s;
+    }
+
+    .nav-item:hover {
+      color: var(--main-color);
+      transition: color 0.5s 0s;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav {
+        position: fixed;
+        top: 40px;
+        right: -100px;
+        flex-direction: column;
+        color: #000;
+        padding-right: var(--p-m-g);
+        transition: 0.5s;
+      }
+
+      .nav-item {
+        flex-direction: row-reverse;
+        transform: translateX(100px);
+        transition: 0.5s calc(var(--del)*0.1s);
+      }
+
+      .ham {
+        display: block;
+      }
+
+      #ham:checked~.nav {
+        right: 0;
+      }
+
+      #ham:checked~.nav .nav-item {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="#" class="logo">logo</a>
+    <input type="checkbox" id="ham" hidden>
+    <label class="ham" for="ham">
+      <span class="iconfont icon-view-list-button"></span>
+    </label>
+    <nav class="nav">
+      <a class="nav-item" href="#" style="--del:0">
+        <span class="iconfont icon-home"></span>
+        <span class="txt">home</span>
+      </a>
+      <a class="nav-item" href="#" style="--del:1">
+        <span class="iconfont icon-book"></span>
+        <span class="txt">work</span>
+      </a>
+      <a class="nav-item" href="#" style="--del:2">
+        <span class="iconfont icon-tubiaozhizuomoban-32"></span>
+        <span class="txt">team</span>
+      </a>
+      <a class="nav-item" href="#" style="--del:3">
+        <span class="iconfont icon-boshimao"></span>
+        <span class="txt">about</span>
+      </a>
+    </nav>
+  </header>
+</body>
+
+</html>

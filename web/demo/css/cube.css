@@ -1,0 +1,121 @@
+:root {
+  --main-w: 200px;
+  --inner-w: calc(var(--main-w) / 4);
+  --offset: calc(var(--main-w) / 2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+  perspective: 1000px;
+}
+
+.wrap {
+  position: relative;
+  width: var(--main-w);
+  height: var(--main-w);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: cube-roll 20s linear infinite alternate;
+  transform-style: preserve-3d;
+  transform: rotatex(-30deg) rotatey(20deg);
+  cursor: pointer;
+}
+
+.wrap div {
+  position: absolute;
+}
+
+.item {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.6;
+  box-shadow: 0 0 40px 20px rgba(255, 255, 255, 0.2);
+  background-image: var(--bg-img);
+  transition: 0.5s;
+}
+
+.front {
+  transform: translatez(var(--offset));
+}
+
+.back {
+  transform: rotatey(180deg) translatez(var(--offset));
+}
+
+.left {
+  transform: rotatey(90deg) translatez(var(--offset));
+}
+
+.right {
+  transform: rotatey(-90deg) translatez(var(--offset));
+}
+
+.top {
+  transform: rotatex(90deg) translatez(var(--offset));
+}
+
+.btm {
+  transform: rotatex(-90deg) translatez(var(--offset));
+}
+
+.inner {
+  width: 50%;
+  height: 50%;
+  background-image: url(/utils/wallpaper/green.jpg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.inner-front {
+  transform: translatez(var(--inner-w));
+}
+
+.inner-back {
+  transform: rotatex(180deg) translatez(var(--inner-w));
+}
+
+.inner-left {
+  transform: rotatey(90deg) translatez(var(--inner-w));
+}
+
+.inner-right {
+  transform: rotatey(-90deg) translatez(var(--inner-w));
+}
+
+.inner-top {
+  transform: rotatex(90deg) translatez(var(--inner-w));
+}
+
+.inner-btm {
+  transform: rotatex(-90deg) translatez(var(--inner-w));
+}
+
+.wrap:hover {
+  --offset: var(--main-w);
+}
+
+.wrap:hover .item {
+  opacity: 1;
+}
+
+@keyframes cube-roll {
+  to {
+    transform: rotatex(180deg) rotatey(260deg) rotatez(240deg);
+  }
+}

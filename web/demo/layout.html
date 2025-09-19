@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page</title>
+  <style>
+    :root {
+      --top-h: 60px;
+      --left-w: 100px;
+      --line-h: 40px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    h1,
+    h2 {
+      font-weight: normal;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    header {
+      text-align: center;
+      background-color: #089;
+      color: #fff;
+      line-height: var(--top-h);
+    }
+
+    h2 {
+      line-height: var(--line-h);
+      border-bottom: 1px solid #ccc;
+      text-transform: capitalize;
+    }
+
+    h2[id]:target::first-letter {
+      background-color: #089;
+      color: #fff;
+      padding: 0 1rem;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 40px;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    body {
+      display: grid;
+      grid-template-rows: var(--top-h) auto;
+      font-size: 1.6rem;
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: var(--left-w) auto;
+      overflow-y: auto;
+    }
+
+    .right {
+      padding: 0 1rem;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    pre {
+      padding: 1rem;
+      margin: 1rem 0;
+      background-color: #f2f3f4;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>移动端布局</h1>
+  </header>
+  <div class="wrap">
+    <aside class="left">
+      <nav>
+        <a href="#normal">float</a>
+        <a href="#pos">position</a>
+        <a href="#flex">flex</a>
+        <a href="#grid">grid</a>
+      </nav>
+    </aside>
+    <div class="right">
+      <h2>common</h2>
+      <pre>
+  :root {
+    --top-h: 50px;
+    --left-w: 100px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }</pre>
+      <h2 id="normal">float</h2>
+      <pre>
+  header {
+    position: absolute;
+    width: 100%;
+    height: var(--top-h);
+    background-color: #f40;
+  }
+
+  .wrap {
+    width: 100%;
+    height: 100%;
+    padding-top: var(--top-h);
+    background-color: #089;
+  }
+
+  .left {
+    width: var(--left-w);
+    height: 100%;
+    background-color: #fff;
+    float: left;
+  }
+
+  .right {
+    margin-left: var(--left-w);
+    height: 100%;
+    background-color: #ff0;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+  }</pre>
+      <h2 id="pos">position</h2>
+      <dd>
+        <pre>
+aside {
+  position: fixed;
+  width: 200px;
+}
+
+main {
+  margin-left: 200px;
+}</pre>
+      </dd>
+      <h2 id="flex">flex</h2>
+      <pre>
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    height: var(--top-h);
+    background-color: #f40;
+  }
+
+  .wrap {
+    flex: 1;
+    display: flex;
+    overflow-y: auto;
+  }
+
+  .left {
+    width: var(--left-w);
+    background-color: #f2f3f4;
+  }
+
+  .right {
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+  }</pre>
+      <h2 id="grid">grid</h2>
+      <pre>
+  body {
+    display: grid;
+    grid-template-rows: var(--top-h) auto;
+  }
+
+  .wrap {
+    display: grid;
+    grid-template-columns: var(--left-w) auto;
+    overflow-y: auto;
+  }
+
+  .right {
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }</pre>
+    </div>
+  </div>
+</body>
+
+</html>

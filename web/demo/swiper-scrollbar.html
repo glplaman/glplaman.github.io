@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Columns</title>
+  <style>
+    :root {
+      --p-m-g: 10px;
+      --main-bg: #f1f2f3;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+    }
+
+    .carousel-wrap {
+      margin: auto;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      gap: 10px;
+      scroll-behavior: smooth;
+      anchor-name: --col2;
+      margin: 1rem auto;
+      font-size: 14px;
+      scroll-snap-type: x mandatory;
+      scroll-marker-group: after;
+    }
+
+    .carousel::scroll-marker-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+
+    .carousel::scroll-button(right),
+    .carousel::scroll-button(left) {
+      content: '→';
+      display: block;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #f40;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      position: fixed;
+      position-anchor: --col2;
+      position-area: right center;
+      translate: -50%;
+    }
+
+    .carousel::scroll-button(left) {
+      content: '←';
+      position-area: left center;
+      translate: 50%;
+    }
+
+    .carousel::scroll-button(right):disabled,
+    .carousel::scroll-button(left):disabled {
+      opacity: 0.5;
+      cursor: auto;
+    }
+
+    .item {
+      flex: 0 0 30%;
+      aspect-ratio: 16/9;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #ddd;
+      text-align: center;
+      align-content: center;
+      scroll-snap-align: center;
+    }
+
+    .item::scroll-marker {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #333;
+    }
+
+    .item::scroll-marker:target-current {
+      background-color: #f40;
+    }
+
+    @media screen and (max-width:768px) {
+      .item {
+        flex: 0 0 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="carousel-wrap">
+    <div class="carousel">
+      <div class="item">flex</div>
+      <div class="item">scroll-behavior</div>
+      <div class="item">scroll-snap-type</div>
+      <div class="item">scroll-marker-group</div>
+      <div class="item">::scroll-marker-group</div>
+      <div class="item">::-webkit-scrollbar</div>
+      <div class="item">anchor-name</div>
+      <div class="item">::scroll-button(right)</div>
+      <div class="item">position</div>
+      <div class="item">position-anchor</div>
+      <div class="item">position-area</div>
+      <div class="item">::scroll-button(left):disabled</div>
+      <div class="item">flex-shrink</div>
+      <div class="item">scroll-snap-align</div>
+      <div class="item">::scroll-marker</div>
+      <div class="item">::scroll-marker:target-current</div>
+    </div>
+  </div>
+
+</body>
+
+</html>

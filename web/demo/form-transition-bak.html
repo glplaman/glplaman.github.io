@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面动画-简化版</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4375346_fgaaclszyu.css);
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    input {
+      outline: none;
+      width: 100%;
+      height: 40px;
+      color: #333;
+      font: inherit;
+      border: 1px solid #eee;
+      padding: 0 10px;
+      background-color: #eee;
+    }
+
+    input::placeholder {
+      text-transform: capitalize;
+    }
+
+    button {
+      border: none;
+      outline: none;
+      color: #fff;
+      font: inherit;
+      padding: 10px 30px;
+      background-color: #0aa;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: #0aa;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .iconfont {
+      font-size: 20px;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: radial-gradient(#00abf0, #000);
+    }
+
+    .container {
+      position: relative;
+      width: 94%;
+      max-width: 800px;
+      height: 400px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    .form-box {
+      position: absolute;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      z-index: 1;
+      transition: 0.5s 1.2s, visibility 0s 1s;
+    }
+
+    .container.active .form-box {
+      right: 50%;
+    }
+
+    .form-box.register {
+      visibility: hidden;
+    }
+
+    .container.active .form-box.register {
+      visibility: visible;
+    }
+
+    /* toggle */
+    .toggle-box {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .toggle-box::before {
+      content: '';
+      position: absolute;
+      left: -250%;
+      width: 300%;
+      height: 100%;
+      background-color: #0aa;
+      border-radius: 200px;
+      transition: 1.8s;
+      z-index: 2;
+    }
+
+    .container.active .toggle-box::before {
+      left: 50%;
+    }
+
+    .toggle-panel {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.6s;
+      color: #fff;
+      z-index: 2;
+    }
+
+    /* left */
+    .toggle-panel.toggle-left {
+      left: 0;
+      transition-delay: 1.2s;
+    }
+
+    .container.active .toggle-panel.toggle-left {
+      left: -50%;
+      transition-delay: 0.6s;
+    }
+
+    /* right */
+    .toggle-panel.toggle-right {
+      right: -50%;
+      transition-delay: 0.6s;
+    }
+
+    .container.active .toggle-panel.toggle-right {
+      right: 0;
+      transition-delay: 1.2s;
+    }
+
+    .toggle-box button {
+      border: 1px solid #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-box login">login</div>
+    <div class="form-box register">rigister</div>
+    <div class="toggle-box">
+      <div class="toggle-panel toggle-left">
+        <button class="btn-register"><span class="iconfont icon-arrow-right"></span>register</button>
+      </div>
+      <div class="toggle-panel toggle-right">
+        <button class="btn-login">login<span class="iconfont icon-arrow-left"></span></button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const container = document.querySelector('.container')
+    const btnLogin = document.querySelector('.btn-login')
+    const btnRegister = document.querySelector('.btn-register')
+    btnRegister.onclick = function () {
+      container.classList.add('active')
+    }
+    btnLogin.onclick = function () {
+      container.classList.remove('active')
+    }
+  </script>
+</body>
+
+</html>

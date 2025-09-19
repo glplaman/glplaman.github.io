@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion - grid</title>
+  <style>
+    :root {
+      --main-color: #a8e073;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: normal;
+    }
+
+    p {
+      line-height: 2;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .accordion .box {
+      max-width: 640px;
+      width: 100%;
+      border-radius: 6px;
+      padding: 0.4rem 1rem;
+      background-color: var(--main-color);
+    }
+
+    .accordion h3 {
+      color: #fff;
+      border-bottom: 1px solid #fff;
+      cursor: pointer;
+      text-transform: capitalize;
+    }
+
+    .accordion .wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: .5s;
+      text-indent: 2em;
+      text-align: justify;
+    }
+
+    .accordion .wrap.is-open {
+      grid-template-rows: 1fr;
+    }
+
+    .accordion .wrap>div {
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="accordion">
+    <div class="box">
+      <h3>title one</h3>
+      <div class="wrap">
+        <div>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae porro aliquam tenetur quis dolores
+            suscipit
+            fugiat ab commodi, veritatis doloremque?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero sint maiores deserunt molestias obcaecati
+            magni dolorem nostrum maxime explicabo quasi.</p>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>title two</h3>
+      <div class="wrap">
+        <div>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus laborum sequi dicta vero atque,
+            consequatur at laudantium omnis, optio reprehenderit dolore, pariatur quo odit rerum commodi facere! Nulla
+            veniam suscipit, corporis in rem eaque iure, eum quia eius autem id.</p>
+          <p>Fugiat expedita a, nam saepe tenetur ipsum consequuntur suscipit autem similique cum harum, natus
+            sapiente
+            odio rem amet. Esse maxime eos voluptatem sapiente eligendi eaque modi sit minus quas possimus vero
+            laudantium
+            culpa rem porro provident, eveniet dicta cupiditate explicabo?</p>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>title three</h3>
+      <div class="wrap">
+        <div>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia, debitis rerum ea deserunt perferendis,
+            maxime
+            dolor perspiciatis eveniet sit, officiis voluptatibus similique error sapiente exercitationem facere unde
+            a
+            illum? Dignissimos.</p>
+          <p>Porro ab magni beatae labore praesentium nulla repellendus consequatur earum delectus, quasi eveniet
+            necessitatibus eum illo incidunt! Eum assumenda ea sequi, veritatis blanditiis natus pariatur laboriosam
+            odit
+            est repellat ab.</p>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>title four</h3>
+      <div class="wrap">
+        <div>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia deserunt ex reiciendis beatae. Dolores
+            consequuntur voluptate quo, impedit corporis voluptatem blanditiis, a, soluta nulla amet totam aliquam.
+            Illo,
+            suscipit accusantium?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis ea aliquid iste qui quisquam ullam
+            sequi et nobis voluptas, dolor earum vel? Eligendi, voluptatibus incidunt? Delectus sapiente voluptas eos
+            nam!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // case accordion
+    let accs = document.querySelectorAll('.accordion h3');
+    let items = document.querySelectorAll('.accordion .wrap');
+    accs.forEach((acc, ind) => {
+      acc.addEventListener('click', () => {
+        items.forEach(item => {
+          item.classList.remove('is-open');
+        })
+        items[ind].classList.add('is-open');
+      })
+    })
+  </script>
+</body>
+
+</html>

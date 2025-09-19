@@ -1,0 +1,81 @@
+body,
+div,
+h2 {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #000;
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.wrap div {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-image: linear-gradient(to left, var(--color) 50%, #ccc 0);
+  color: #fff;
+  box-shadow:
+    0 0 10px 4px rgba(255, 255, 0, 0.2),
+    0 0 20px 6px rgba(255, 255, 0, 0.2),
+    0 0 40px 10px rgba(255, 255, 0, 0.2);
+}
+
+.wrap div span {
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.wrap div h2 {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.wrap div h2 i {
+  font-size: 1rem;
+}
+
+.wrap div::before {
+  content: '';
+  display: block;
+  height: 100%;
+  margin-left: 50%;
+  background-color: var(--color);
+  border-radius: 0 100% 100% 0/50%;
+  transform-origin: left;
+  transform: rotateZ(calc((var(--num) - 50)*00.01turn));
+}
+
+.wrap div::after {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+@media (max-width:768px) {
+  .wrap {
+    flex-wrap: wrap;
+  }
+}

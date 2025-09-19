@@ -1,0 +1,140 @@
+:root {
+  --main-color: #ff7b00;
+  --bar-color: #4bc2ce;
+  --p-m-g: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+pre {
+  color: #dcdcaa;
+  padding: var(--p-m-g);
+  background-color: #000;
+  overflow: auto;
+  margin: var(--p-m-g) auto;
+  line-height: 2;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  background-color: var(--main-color);
+  color: #fff;
+  text-transform: capitalize;
+}
+
+/* bro */
+.bro {
+  max-width: 640px;
+  width: 100%;
+}
+
+.bro label {
+  display: block;
+  line-height: 40px;
+  border-bottom: 1px solid var(--main-color);
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.bro .cont {
+  max-height: 0;
+  overflow: hidden;
+  transition: .5s;
+  line-height: 2;
+  text-align: justify;
+}
+
+.bro input:checked+.cont {
+  max-height: 100px;
+}
+
+.wrap-target {
+  max-width: 640px;
+  width: 100%;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wrap-target input[type='radio'] {
+  display: none;
+}
+
+.wrap-target label {
+  position: relative;
+  display: block;
+  line-height: 50px;
+  padding: 0 1rem;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+  background-color: var(--bar-color);
+  color: #fff;
+}
+
+.wrap-target label::after {
+  content: '\003E';
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  line-height: 50px;
+  transition: .5s;
+}
+
+.wrap-target label::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  bottom: -4px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background-color: var(--bar-color);
+}
+
+.wrap-target section {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: justify;
+  transition: 0.2s;
+}
+
+.wrap-target input[id='rb0']:checked~.cont0,
+.wrap-target input[id='rb1']:checked~.cont1,
+.wrap-target input[id='rb2']:checked~.cont2,
+.wrap-target input[id='rb3']:checked~.cont3,
+.wrap-target input[id='rb4']:checked~.cont4 {
+  max-height: 360px;
+}
+
+.wrap-target input:checked+label::after {
+  transform: rotateZ(90deg);
+}
+
+.wrap-target footer {
+  position: relative;
+  background-color: var(--main-color);
+  color: #fff;
+  line-height: 50px;
+  font-size: 14px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}

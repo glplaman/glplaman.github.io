@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网站设计</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3859342_3uwkhw73sh3.css">
+  <style>
+    :root {
+      --main-color: #207f4c;
+      --primary-color: #eef2f7;
+      --second-color: #333;
+      --p-m-g: 10px;
+      --border-w: 100vh;
+      --header-h: 100px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+      text-decoration: none;
+      list-style: none;
+      border: none;
+      outline: none;
+      accent-color: var(--main-color);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      font: inherit;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--primary-color);
+      color: var(--second-color);
+      overflow-x: hidden;
+    }
+
+    body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: var(--main-color);
+    }
+
+    body.mode {
+      background-color: var(--second-color);
+      color: var(--primary-color);
+    }
+
+    .header {
+      position: fixed;
+      width: 100%;
+      height: var(--header-h);
+      padding: 0 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--p-m-g);
+      color: var(--primary-color);
+      background-color: transparent;
+      z-index: 99;
+      transition: 0.5s;
+    }
+
+    .header.active {
+      background-color: var(--main-color);
+    }
+
+    .logo {
+      margin-right: auto;
+      animation: --mov-left 1s ease-in-out;
+    }
+
+    .logo a {
+      color: var(--main-color);
+      text-transform: capitalize;
+    }
+
+    .header.active .logo a {
+      color: #fff;
+    }
+
+    @keyframes --mov-left {
+      from {
+        opacity: 0;
+        transform: translateX(-200px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .nav {
+      display: flex;
+    }
+
+    .nav a {
+      position: relative;
+      padding: 0 var(--p-m-g);
+      font-size: 18px;
+      opacity: 0;
+      animation: --mov-right 1s ease-in-out forwards;
+      animation-delay: calc(var(--delay)*0.05s);
+    }
+
+    .nav .close {
+      display: none;
+    }
+
+    .nav a:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    .header i {
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0 var(--p-m-g);
+      opacity: 0;
+      animation: --mov-right 1s 0.5s ease-in-out forwards;
+      animation-delay: calc(var(--delay)*0.05s);
+    }
+
+    .ham {
+      display: none;
+    }
+
+    @keyframes --mov-right {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .section {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--p-m-g);
+      justify-content: center;
+      height: 100vh;
+      width: 100%;
+      padding: 0 5%;
+      z-index: 2;
+      line-height: 1.5;
+    }
+
+    .section .cont {
+      max-width: 600px;
+    }
+
+    .home .sub-title,
+    .home .btn,
+    .home .desc {
+      opacity: 0;
+      animation: --mov-left 1s 0.5s ease-in-out forwards;
+      animation-delay: calc(var(--delay)*0.05s);
+    }
+
+    .home .title {
+      text-transform: capitalize;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .home .btn {
+      padding: 8px 40px;
+      width: max-content;
+      background-color: var(--main-color);
+      color: var(--primary-color);
+      border-radius: var(--p-m-g);
+      text-transform: capitalize;
+      font-size: 18px;
+      cursor: pointer;
+      border: 1px solid var(--main-color);
+    }
+
+    .home .btn:hover {
+      background-color: transparent;
+      color: var(--main-color);
+    }
+
+    .link {
+      display: flex;
+      gap: var(--p-m-g);
+      margin: var(--p-m-g) 0;
+    }
+
+    .link .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--main-color);
+      color: var(--main-color);
+      border-radius: 50%;
+      font-size: 18px;
+      opacity: 0;
+      animation: --mov-right 1s 0.5s ease-in-out forwards;
+      animation-delay: calc(var(--delay)*0.05s);
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    .link .icon:hover {
+      transform: scale(2);
+      background-color: var(--main-color);
+      color: var(--primary-color);
+    }
+
+    .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--border-w);
+      opacity: 0;
+      animation: --mov-right 1s 0.5s ease-in-out forwards;
+      animation-delay: calc(var(--delay)*0.05s);
+      pointer-events: none;
+    }
+
+    .overlay {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      border: calc(var(--border-w)/2) solid var(--main-color);
+      border-left-color: transparent;
+    }
+
+    #work,
+    #team,
+    #about,
+    #contact {
+      height: 100vh;
+    }
+
+    @media screen and (max-width: 768px) {
+      .header {
+        color: #000;
+      }
+
+      .header.active {
+        color: #fff;
+      }
+
+      .logo a {
+        color: #000;
+      }
+
+      .ham {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        width: 35vw;
+        height: 100vh;
+        gap: var(--p-m-g);
+        padding: var(--header-h) var(--p-m-g);
+        font-size: 15px;
+        background-color: var(--second-color);
+        transition: 0.5s;
+        z-index: 1;
+      }
+
+      .nav .close {
+        display: block;
+        position: absolute;
+        top: var(--p-m-g);
+        right: var(--p-m-g);
+      }
+
+      .nav.active {
+        right: 0;
+      }
+
+      .bg {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <a href="#">
+        <h1>glpla</h1>
+      </a>
+    </div>
+    <nav class="nav">
+      <a href="#home" style="--delay:1">首页</a>
+      <a href="#work" style="--delay:2">作品</a>
+      <a href="#team" style="--delay:3">团队</a>
+      <a href="#about" style="--delay:4">关于</a>
+      <a href="#contact" style="--delay:5">联系</a>
+      <i class='iconfont icon-close close'></i>
+    </nav>
+    <i class='iconfont icon-daytime-mode-fill theme' style="--delay:6"></i>
+    <i class='iconfont icon-menu ham' style="--delay:7"></i>
+  </header>
+  <section class="section home" id="home">
+    <div class="bg" style="--delay:0">
+      <div class="overlay"></div>
+    </div>
+    <div class="cont">
+      <div class="sub-title">hi,there. I'm <span class="title" style="--delay:7">glpla </span>
+      </div>
+      <p class="sub-title" style="--delay:8">from Guilin, Guangxi, born in AnYang, HeNan. China</p>
+      <p class="desc" style="--delay:9">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque aperiam,
+        ducimus dolores
+        dicta magnam
+        laboriosam expedita sed quibusdam optio dolor nesciunt debitis ad consequuntur nostrum vero doloribus,
+        unde
+        praesentium nobis?</p>
+      <div class="link">
+        <div class="icon" style="--delay:10"><i class='iconfont icon-twitter'></i></div>
+        <div class="icon" style="--delay:11"> <i class='iconfont icon-weixin0'></i></div>
+        <div class="icon" style="--delay:12"> <i class='iconfont icon-qq0'></i></div>
+        <div class="icon" style="--delay:13"><i class='iconfont icon-mail'></i></div>
+      </div>
+      <button class="btn" style="--delay:14">more</button>
+    </div>
+  </section>
+  <section class="section work" id="work">work</section>
+  <section class="section team" id="team">team</section>
+  <section class="section about" id="about">about</section>
+  <section class="section contact" id="contact">contact</section>
+  <script>
+    const header = document.querySelector('.header');
+    const theme = document.querySelector('.theme');
+    const nav = document.querySelector('.nav');
+    const ham = document.querySelector('.ham');
+    const close = document.querySelector('.close');
+    theme.addEventListener('click', function () {
+      document.body.classList.toggle('mode');
+      theme.classList.toggle('icon-night-mode-fill');
+    })
+    ham.addEventListener('click', function () {
+      // ham.classList.toggle('bx-x');
+      nav.classList.toggle('active');
+    })
+    close.addEventListener('click', function () {
+      ham.classList.toggle('icon-close');
+      nav.classList.toggle('active');
+    })
+    document.addEventListener('scroll', function () {
+      console.log('scroll');
+      header.classList.toggle('active', window.scrollY > 300);
+    })
+    window.addEventListener('scrollend', function () {
+      console.log('end');
+      nav.classList.remove('active');
+    })
+  </script>
+</body>
+
+</html>

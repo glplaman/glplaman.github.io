@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Details</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    :root {
+      --bg-color: #171f2b;
+      --second-bg-color: #1f2733;
+      --nav-bg-color: rgba(255, 255, 255, .);
+      --main-color: #5988b0;
+      --second-color: #de5096;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      list-style: none;
+      border: none;
+      outline: none;
+      color: inherit;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      font-size: 1.6rem;
+      height: 100vh;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg {
+      transition: .05s;
+    }
+
+    .info-box {
+      position: absolute;
+      left: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 400px;
+      height: 300px;
+    }
+
+    .info-cont {
+      height: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform: translateY(calc(100%*var(--rad)));
+    }
+
+    .img-box {
+      position: absolute;
+      right: 4%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 400px;
+      height: 300px;
+    }
+
+    .img-cont {
+      height: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(calc(100%*var(--rad)));
+    }
+
+    img {
+      display: block;
+      width: 200px;
+    }
+
+    .btns {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 4rem;
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 3rem;
+      background-color: var(--second-color);
+      border-radius: 3rem;
+      color: #fff;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #fff;
+      color: var(--second-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="bg"></div>
+    <div class="item">
+      <div class="info-box">
+        <div class="info-cont" style="--rad: 0">
+          <div class="info-item">Lorem ipsum dolor sit amet.</div>
+        </div>
+      </div>
+      <div class="img-box">
+        <div class="img-cont" style="--rad: 0">
+          <img src="../imgs/s_green.jpg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="info-box">
+        <div class="info-cont" style="--rad: 1">
+          <div class="info-item">Lorem ipsum dolor sit amet.</div>
+        </div>
+      </div>
+      <div class="img-box">
+        <div class="img-cont" style="--rad: 1">
+          <img src="../imgs/s_blue.jpg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="info-box">
+        <div class="info-cont" style="--rad: 2">
+          <div class="info-item">Lorem ipsum dolor sit amet.</div>
+        </div>
+      </div>
+      <div class="img-box">
+        <div class="img-cont" style="--rad: 2">
+          <img src="../imgs/s_rose.jpg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="info-box">
+        <div class="info-cont" style="--rad: 3">
+          <div class="info-item">Lorem ipsum dolor sit amet.</div>
+        </div>
+      </div>
+      <div class="img-box">
+        <div class="img-cont" style="--rad: 3">
+          <img src="../imgs/s_yellow.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btns">
+    <div class="btn">1</div>
+    <div class="btn">2</div>
+    <div class="btn">3</div>
+    <div class="btn">4</div>
+  </div>
+  <script>
+    const btns = document.querySelectorAll('.btn')
+    const conts = document.querySelectorAll('.info-cont')
+    const imgs = document.querySelectorAll('.img-cont')
+    btns.forEach((btn, ind) => {
+      btn.addEventListener('click', () => {
+        conts.forEach(cont => {
+          cont.style.transform = `translateY(calc(-400px*${ind}))`
+        })
+        imgs.forEach(img => {
+          img.style.transform = `translateY(calc(-400px*${ind}))`
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>

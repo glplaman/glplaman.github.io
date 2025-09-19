@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>对齐 Align</title>
+  <link rel="stylesheet" href="../css/styleNew.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>Align</h1>
+  </header>
+  <dl>
+    <dt>水平居中</dt>
+    <dd>.文字/inline/inline-block</dd>
+    <dd>
+      <pre>text-align: center;</pre>
+    </dd>
+    <dt>单行文本-水平垂直居中</dt>
+    <dd>.行高和高度保持一致；如果用到背景变化，在高度比较大的情况下，推荐使用flex</dd>
+    <dd>.行高可以被继承，所以要小心使用</dd>
+    <dd>
+      <pre>
+heigh: 60px;
+line-height: 60px;
+text-align: center;</pre>
+    </dd>
+    <dt>单个元素-水平垂直居中</dt>
+    <dd>.容器如果有宽度和高度，效果更直观</dd>
+    <dd>1.弹性盒子-只操作容器</dd>
+    <dd>
+      <pre>
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</pre>
+    </dd>
+    <dd>2.弹性盒子-同时操作容器和子元素</dd>
+    <dd>
+      <pre>
+        .wrap {
+          display: flex;//core
+          width: 300px;
+          height: 400px;
+        }
+    
+        .wrap div {
+          margin: auto;//core
+          width: 80px;
+          height: 60px;
+        }
+      </pre>
+    </dd>
+    <dd>3.定位</dd>
+    <dd>.父相子绝</dd>
+    <dd>.变形transform</dd>
+    <dd>.子元素甚至可以大过容器尺寸</dd>
+    <dd>
+      <pre>
+        .wrap {
+          position: relative;
+          width: 300px;
+          height: 400px;
+          background-color: #f40;
+        }
+    
+        .wrap div {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 80px;
+          height: 60px;
+        }
+      </pre>
+    </dd>
+    <dd>4.网格布局</dd>
+    <dd>.请参考<a href="../grid.html">网格布局Grid</a></dd>
+    <dt>多个元素-水平垂直居中</dt>
+    <dd>.定位实现：父相子绝、变形transform</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

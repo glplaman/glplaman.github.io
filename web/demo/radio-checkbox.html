@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单选 多选 Radio & Checkbox</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4235521_lhkl4vzbxy.css);
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+      height: 100vh;
+    }
+
+    .iconfont {
+      font-size: 24px;
+      color: #999;
+    }
+
+    /* case 1 */
+
+    .cb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cb span {
+      text-transform: uppercase;
+    }
+
+    .cb label {
+      position: relative;
+      width: 50px;
+      height: 30px;
+      border-radius: 30px;
+      border: 2px solid #ccc;
+      transition: 0.5s;
+      cursor: pointer;
+    }
+
+    .cb label::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      background-color: #ccc;
+      transition: 0.5s;
+    }
+
+    .cb input:checked~label::before {
+      background-color: #f40;
+      /* left: 22px; */
+      left: calc((100% - 2px - 2px) - 22px + 2px);
+    }
+
+    .cb input:checked~span {
+      color: #f40;
+    }
+
+    /* case 2 */
+    .cb-bg {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .cb-bg .iconfont {
+      color: #999;
+    }
+
+    .cb-bg .icon-male {
+      color: #1abc9c;
+    }
+
+    .cb-bg label {
+      display: block;
+      position: relative;
+      width: 50px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: #eee;
+      cursor: pointer;
+    }
+
+    .cb-bg label::before {
+      content: '';
+      font-size: 12px;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 24px;
+      height: 24px;
+      background-color: #1abc9c;
+      border-radius: 50%;
+      transition: left 0.5s, background-color 0.5s;
+    }
+
+    .cb-bg input:checked+label::before {
+      left: calc(50px - 24px - 4px);
+      background-color: #f39c12;
+    }
+
+    .cb-bg input:checked~.icon-female {
+      color: #f39c12;
+    }
+
+    .cb-bg:has(input:checked) .icon-male {
+      color: #999;
+    }
+
+    /* case 3 */
+    .rb label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .rb label::before {
+      content: '123';
+      left: -16px;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      line-height: 16px;
+      border: 1px solid #ccc;
+      vertical-align: middle;
+      color: transparent;
+    }
+
+
+    .rb input:checked+label {
+      color: #0a0;
+    }
+
+    .rb input:checked+label::before {
+      content: '\2713';
+      color: #0a0;
+    }
+
+    /* case 4 */
+    .rb-icon label {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .rb-icon label::before {
+      content: '\e728';
+      font-family: 'iconfont';
+      font-size: 24px;
+    }
+
+    .rb-icon input:checked+label::before {
+      content: '\e6ed';
+    }
+  </style>
+</head>
+
+<body>
+  <div class="rb">
+    <input type="radio" name="gender" id="male" hidden checked>
+    <label for="male">Male</label>
+    <input type="radio" name="gender" id="female" hidden>
+    <label for="female">Female</label>
+  </div>
+  <div class="rb-icon">
+    <input type="radio" name="gender-icon" id="male-icon" hidden>
+    <label for="male-icon">Male</label>
+    <input type="radio" name="gender-icon" id="female-icon" hidden checked>
+    <label for="female-icon">Female</label>
+  </div>
+  <div class="cb">
+    <span>off</span>
+    <input type="checkbox" id="cb" hidden>
+    <label for="cb"></label>
+    <span>on</span>
+  </div>
+  <div class="cb-bg">
+    <span class="iconfont icon-male"></span>
+    <input type="checkbox" id="cb-bg" hidden>
+    <label for="cb-bg"></label>
+    <span class="iconfont icon-female"></span>
+  </div>
+</body>
+
+</html>

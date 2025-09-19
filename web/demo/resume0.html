@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简历 Resume</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="./css/resume.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="cover cover-left"></div>
+    <div class="cover cover-right turn"></div>
+    <div class="book">
+      <!-- cover inside -->
+      <div class="book-page page-left">cover start</div>
+
+      <!-- p12 -->
+      <div class="book-page page-right " id="p12" style="--zindex:0">
+        <div class="page-front">
+          <h1 class="title">p1</h1>
+          <span class="number-page">1</span>
+          <span class="number-btn" data-id="p12">&gt;</span>
+        </div>
+        <div class="page-back">
+          <h1 class="title">p2</h1>
+          <span class="number-page">2</span>
+          <span class="number-btn" data-id="p12">&lt;</span>
+        </div>
+      </div>
+
+      <!-- p34 -->
+      <div class="book-page page-right " id="p34" style="--zindex:1">
+        <div class="page-front">
+          <h1 class="title">p3</h1>
+          <span class="number-page">3</span>
+          <span class="number-btn" data-id="p34">&gt;</span>
+        </div>
+        <div class="page-back">
+          <h1 class="title">p4</h1>
+          <span class="number-page">4</span>
+          <span class="number-btn" data-id="p34">&lt;</span>
+        </div>
+      </div>
+
+      <!-- p56 -->
+      <div class="book-page page-right " id="p56" style="--zindex:2">
+        <div class="page-front">
+          <h1 class="title">p5</h1>
+          <span class="number-page">5</span>
+          <span class="number-btn" data-id="p56">&gt;</span>
+        </div>
+        <div class="page-back">
+          <h1 class="title">p6</h1>
+          <span class="number-page">6</span>
+          <span class="number-btn" data-id="p56">&lt;</span>
+        </div>
+      </div>
+
+      <!-- p78 -->
+      <div class="book-page page-right " id="p78" style="--zindex:3">
+        <div class="page-front">
+          <h1 class="title">p7</h1>
+          <span class="number-page">7</span>
+          <span class="number-btn" data-id="p78">&gt;</span>
+        </div>
+        <div class="page-back">
+          <h1 class="title">p8</h1>
+          <span class="number-page">8</span>
+          <span class="number-btn" data-id="p78">&lt;</span>
+        </div>
+      </div>
+
+      <div class="book-page page-left end" style="--zindex:3">
+        <div class="logo-img"> <img src="/imgs/sf.jpg" alt=""></div>
+        <a href="#"><span class="bx bxs-home bx-lg bx-tada-hover"></span></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    const btns = document.querySelectorAll('.number-btn')
+    btns.forEach((btn, ind) => {
+      btn.addEventListener('click', e => {
+        const id = e.target.dataset.id
+        const page = document.getElementById(id)
+        if (page.classList.contains('turn')) {
+          page.classList.remove('turn')
+          setTimeout(() => {
+            page.style.zIndex = 20 - ind
+          }, 500)
+        } else {
+          page.classList.add('turn')
+          setTimeout(() => {
+            page.style.zIndex = 20 + ind
+          }, 500)
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>

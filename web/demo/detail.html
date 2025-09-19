@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品详情页 Detail</title>
+  <link rel="stylesheet" href="./css/detail.css">
+</head>
+
+<body>
+  <div class="wrap product-box">
+    <div class="card ">
+      <h2>Native</h2>
+      <input type="radio" name="pro" id="p0" hidden checked>
+      <input type="radio" name="pro" id="p1" hidden>
+      <input type="radio" name="pro" id="p2" hidden>
+      <input type="radio" name="pro" id="p3" hidden>
+      <div class="pic products">
+        <img src="/utils/shoe/s_rose.jpg" alt="">
+        <img src="/utils/shoe/s_yellow.jpg" alt="">
+        <img src="/utils/shoe/s_blue.jpg" alt="">
+        <img src="/utils/shoe/s_green.jpg" alt="">
+      </div>
+      <div class="products-lbl">
+        <label for="p0" style="--color:#ffb8b8"></label>
+        <label for="p1" style="--color:#f1c40f"></label>
+        <label for="p2" style="--color:#70a1ff"></label>
+        <label for="p3" style="--color:#C4E538"></label>
+      </div>
+      <div class="info">
+        <div class="price">￥90</div>
+        <a href="javascript:;" class="btn">add to cart</a>
+      </div>
+    </div>
+  </div>
+  <div class=" wrap card-box">
+    <div class="card">
+      <h2>jQuery</h2>
+      <div class="pic"></div>
+      <div class="colors">
+        <span class="rose active" data-color="#ffb8b8" data-pic="url(/utils/shoe/s_rose.jpg)"></span>
+        <span class="yellow" data-color="#f1c40f" data-pic="url(/utils/shoe/s_yellow.jpg)"></span>
+        <span class="blue " data-color="#70a1ff" data-pic="url(/utils/shoe/s_blue.jpg)"></span>
+        <span class="green" data-color="#C4E538" data-pic="url(/utils/shoe/s_green.jpg)"></span>
+      </div>
+      <div class="info">
+        <div class="price">￥90</div>
+        <a href="javascript:;" class="btn">add to cart</a>
+      </div>
+    </div>
+  </div>
+  <script src="/utils/lib/jquery-3.6.0.min.js"></script>
+  <script>
+    $('.pic').css('background-image', 'url(/utils/shoe/s_rose.jpg)');
+
+    $('.colors span').click(function () {
+      $('.colors span').removeClass('active');
+      $(this).addClass('active');
+      $('.card-box').css('background', $(this).attr('data-color'));
+      $('.pic').css('background-image', $(this).attr('data-pic'));
+      $('.price').css('color', $(this).attr('data-color'));
+      $('.btn').css('color', $(this).attr('data-color'));
+    })
+  </script>
+</body>
+
+</html>

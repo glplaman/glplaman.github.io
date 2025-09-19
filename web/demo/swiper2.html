@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播 Swiper</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #ecedef;
+    }
+
+    .carousel {
+      padding: 0 5vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .info-box {
+      position: absolute;
+      top: 50%;
+      max-width: 300px;
+      height: 300px;
+      transform: translateY(-50%);
+      overflow: hidden;
+    }
+
+    .info-wrap {
+      height: 100%;
+      transition: 0.5s cubic-bezier(0.25, -0.55, 0.25, 1.55);
+    }
+
+    .info-item {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .img-box {
+      height: 100%;
+      transition: 0.5s cubic-bezier(0.25, -0.55, 0.25, 1.55);
+    }
+
+    .img-item {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .img-item img {
+      position: absolute;
+      right: 0;
+      max-width: 100%;
+    }
+
+    /* btns */
+    .btns {
+      position: fixed;
+      bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    .btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+    }
+
+    .bg-box .bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg-box .bg:nth-child(1) {
+      background-image: linear-gradient(360deg, #1b73bb, #a5c2dd);
+    }
+
+    .bg-box .bg:nth-child(2) {
+      background-image: linear-gradient(360deg, #14651c, #afcfb4);
+    }
+
+    .bg-box .bg:nth-child(3) {
+      background-image: linear-gradient(360deg, #8f0231, #dda0b6);
+    }
+
+    .bg-box .bg:nth-child(4) {
+      background-image: linear-gradient(360deg, #ccae14, #e3d064);
+    }
+
+    .bg-box .bg:nth-child(1),
+    .bg-box .bg:nth-child(2),
+    .bg-box .bg:nth-child(3),
+    .bg-box .bg:nth-child(4) {
+      clip-path: circle(0% at 50% 50%);
+      transition: clip-path 0.5s cubic-bezier(0.25, -0.55, 0.25, 1.55);
+    }
+
+    .bg-box .bg:nth-child(1).active,
+    .bg-box .bg:nth-child(2).active,
+    .bg-box .bg:nth-child(3).active,
+    .bg-box .bg:nth-child(4).active {
+      clip-path: circle(70% at 50% 50%);
+    }
+
+    @media (max-width: 768px) {
+      .info-box {
+        transform: unset;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-box">
+    <div class="bg active"></div>
+    <div class="bg"></div>
+    <div class="bg"></div>
+    <div class="bg"></div>
+  </div>
+  <div class="carousel">
+    <div class="img-box">
+      <div class="img-item">
+        <img src="/utils/shoe/s_blue.png" alt="">
+      </div>
+      <div class="img-item">
+        <img src="/utils/shoe/s_green.png" alt="">
+      </div>
+      <div class="img-item">
+        <img src="/utils/shoe/s_rose.png" alt="">
+      </div>
+      <div class="img-item">
+        <img src="/utils/shoe/s_yellow.png" alt="">
+      </div>
+    </div>
+    <div class="info-box">
+      <div class="info-wrap">
+        <div class="info-item">
+          <h2>blue</h2>
+          <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi, eligendi?</div>
+        </div>
+        <div class="info-item">
+          <h2>green</h2>
+          <div>Itaque perspiciatis consequuntur iusto repellat aperiam nesciunt expedita dolorem
+            veniam!</div>
+        </div>
+        <div class="info-item">
+          <h2>rose</h2>
+          <div>Rem dignissimos consequatur fugit fugiat et non aliquid sequi animi?</div>
+        </div>
+        <div class="info-item">
+          <h2>yellow</h2>
+          <div>Nulla minima nam perspiciatis magnam libero repellendus, dignissimos sit
+            laudantium.</div>
+        </div>
+      </div>
+    </div>
+    <div class="btns">
+      <div class="btn prev"><i class='bx bx-chevron-left'></i></div>
+      <div class="btn next"><i class='bx bx-chevron-right'></i></div>
+    </div>
+  </div>
+  <script>
+    const btnPrev = document.querySelector('.prev');
+    const btnNext = document.querySelector('.next');
+    const infoWrap = document.querySelector('.info-wrap');
+    const imgBox = document.querySelector('.img-box');
+    const bgs = document.querySelectorAll('.bg');
+    let ind = 0
+
+    btnNext.addEventListener('click', () => {
+
+      bgs.forEach(bg => {
+        bg.classList.remove('active')
+      })
+
+      ind = (ind < 3) ? ind + 1 : 0
+
+      infoWrap.style.transform = `translateY(${-100 * ind}%)`
+      imgBox.style.transform = `translateY(${-100 * ind}%)`
+
+      bgs[ind].classList.add('active')
+    })
+
+    btnPrev.addEventListener('click', () => {
+
+      bgs.forEach(bg => {
+        bg.classList.remove('active')
+      })
+
+      ind--
+      if (ind < 0) {
+        ind = 3
+      }
+
+      infoWrap.style.transform = `translateY(${-100 * ind}%)`
+      imgBox.style.transform = `translateY(${-100 * ind}%)`
+
+      bgs[ind].classList.add('active')
+    })
+
+
+  </script>
+</body>
+
+</html>

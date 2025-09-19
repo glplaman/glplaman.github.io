@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nav Sample</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4235521_lhkl4vzbxy.css);
+
+    :root {
+      --main-color: #0a0;
+      --w: 150px;
+      --h: 40px;
+      --perspective: 1200px;
+      --offset: 11px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: Arial, Helvetica, sans-serif;
+      text-decoration: none;
+      color: inherit;
+      font: inherit;
+    }
+
+    .clear::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+    }
+
+    .w {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .nav-wrap {
+      background-color: #eee;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 10px;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo {
+      font-weight: 600;
+    }
+
+    .menu {
+      margin-bottom: 20vh;
+    }
+
+    .menu li {
+      cursor: pointer;
+    }
+
+    .menu-item {
+      position: relative;
+      display: inline-block;
+      width: 80px;
+      text-align: center;
+    }
+
+    .sub-menu {
+      display: none;
+      position: absolute;
+      width: 100%;
+      background-color: #000;
+    }
+
+    .sub-menu a {
+      display: block;
+      color: #fff;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .menu-item:hover .sub-menu {
+      display: block;
+    }
+
+    .menu-item:hover>div {
+      background-color: var(--main-color);
+      color: #fff;
+    }
+
+    .sub-menu a:hover {
+      background-color: #222;
+      color: #fff;
+    }
+
+    /* case */
+    .nav-item {
+      display: inline-block;
+      text-transform: capitalize;
+      width: 60px;
+      text-align: center;
+    }
+
+    .nav-item:hover {
+      background-color: var(--main-color);
+      color: #fff;
+    }
+
+    /* float */
+    .float .logo {
+      float: left;
+    }
+
+    .float .nav {
+      float: right;
+    }
+
+    /* float-lh */
+    .float-lh .logo {
+      float: left;
+    }
+
+    .float-lh .nav {
+      float: right;
+    }
+
+    /* float-ul */
+    .float-ul .logo {
+      float: left;
+    }
+
+    .float-ul .nav {
+      /* float: right; */
+      list-style: none;
+    }
+
+    .float-ul .nav .nav-item {
+      float: right;
+    }
+
+    /* flex */
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .flex .nav-item {
+      position: relative;
+    }
+
+    .flex .nav-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 4px;
+      background-color: var(--main-color);
+      transition: 0.5s;
+    }
+
+    .flex .nav-item:hover {
+      background-color: unset;
+      color: unset;
+    }
+
+    .flex .nav-item:hover::before {
+      width: 100%;
+    }
+
+    /* flex element */
+    .flex-el {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .flex-el .nav {
+      display: flex;
+      position: relative;
+    }
+
+    .flex-el .line {
+      position: absolute;
+      left: 0%;
+      bottom: -2px;
+      width: 60px;
+      height: 4px;
+      background-color: var(--main-color);
+      transition: left 0.5s;
+    }
+
+    .flex-el .nav-item:hover {
+      background-color: unset;
+      color: unset;
+    }
+
+    .flex-el .nav-item:nth-child(1):hover~.line {
+      left: 0;
+    }
+
+    .flex-el .nav-item:nth-child(2):hover~.line {
+      left: 60px;
+    }
+
+    .flex-el .nav-item:nth-child(3):hover~.line {
+      left: 120px;
+    }
+
+    .flex-el .nav-item:nth-child(4):hover~.line {
+      left: 180px;
+    }
+
+    /* grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+
+    .grid .nav-item {
+      background-image: linear-gradient(to right, var(--main-color), var(--main-color));
+      background-position: right bottom;
+      background-size: 0px 4px;
+      /* MUST background-size */
+      transition: background-size 0.5s;
+      background-repeat: no-repeat;
+    }
+
+    .grid .nav-item:hover {
+      background-color: unset;
+      color: unset;
+      background-position: left bottom;
+      background-size: 100% 4px;
+    }
+
+    /* docker */
+    .docker {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 10px 0;
+      height: 150px;
+    }
+
+    .docker .item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #eee;
+      transition: .2s;
+      cursor: pointer;
+    }
+
+    .docker .item:has(+.item:hover),
+    .docker .item:hover+.item {
+      width: 50px;
+      height: 50px;
+    }
+
+    .docker .item:hover {
+      width: 60px;
+      height: 60px;
+      color: var(--main-color);
+    }
+
+    .docker .item:hover .iconfont {
+      font-size: 20px;
+    }
+
+    /* icon verticle */
+    .icon-v {
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .icon-v .nav-item {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      transition: 0.5s;
+    }
+
+    .icon-v .nav-item.active,
+    .icon-v .nav-item:hover {
+      transform: translateY(-40px);
+    }
+
+    /* transform skew */
+    .skew {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .skew .nav {
+      display: flex;
+      /* gap: 10px; */
+    }
+
+    .skew .nav a {
+      display: flex;
+      padding: 0 20px;
+      /* background-color: #fff; */
+      transform: skew(-30deg);
+      /* border-left: 1px solid var(--main-color); */
+      /* border-right: 1px solid var(--main-color); */
+      transition: 0.5s;
+    }
+
+    .skew .nav a span {
+      transform: skew(30deg);
+    }
+
+    .skew .nav a.active,
+    .skew .nav a:hover {
+      background-color: var(--main-color);
+      color: #fff;
+    }
+
+    /* 3D nav */
+
+    .wrap-3d {
+      display: flex;
+      gap: 10px;
+      perspective: var(--perspective);
+      margin-top: 4rem;
+    }
+
+    .wrap-3d .item {
+      position: relative;
+      width: var(--w);
+      height: var(--h);
+      /* background-color: #eee; */
+      transform-style: preserve-3d;
+      transform: rotateX(0deg);
+      transition: 1s linear;
+      cursor: pointer;
+    }
+
+    .wrap-3d .item:hover {
+      transform: rotateX(240deg);
+    }
+
+    .wrap-3d .item span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wrap-3d .item span:nth-child(1) {
+      transform: rotateX(-10deg) translateZ(var(--offset));
+      background-color: #f40;
+    }
+
+    .wrap-3d .item span:nth-child(2) {
+      transform: rotateX(-130deg) translateZ(var(--offset));
+      background-color: #0a0;
+    }
+
+    .wrap-3d .item span:nth-child(3) {
+      transform: rotateX(-250deg) translateZ(var(--offset));
+      background-color: #0aa;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <ul class="nav-wrap menu">
+      <li class="menu-item">
+        <div><span class="iconfont icon-home"></span> Home</div>
+        <nav class="sub-menu">
+          <a href="#">Lorem</a>
+          <a href="#">Hic!</a>
+          <a href="#">Reae?</a>
+        </nav>
+      </li>
+      <li class="menu-item">
+        <div><span class="iconfont icon-account"></span> Team</div>
+        <nav class="sub-menu">
+          <a href="#">Lorem.</a>
+          <a href="#">Culpa!</a>
+          <a href="#">Culpa!</a>
+          <a href="#">Eaque.</a>
+        </nav>
+      </li>
+      <li class="menu-item">
+        <div><span class="iconfont icon-edit"></span> Blog</div>
+        <nav class="sub-menu">
+          <a href="#">Lorem.</a>
+          <a href="#">Maiors.</a>
+          <a href="#">Cuate!</a>
+        </nav>
+      </li>
+      <li class="menu-item">
+        <div><span class="iconfont icon-settings1"></span> Setup</div>
+        <nav class="sub-menu">
+          <a href="#1">Corpos?</a>
+          <a href="#4">Votes.</a>
+        </nav>
+      </li>
+    </ul>
+    <p>ul + li + nav + a :hover inline-block line-height</p>
+    <div class="nav-wrap float clear">
+      <a href="#" class="logo">
+        <h1>Float</h1>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="#">home</a>
+        <a class="nav-item" href="#">work</a>
+        <a class="nav-item" href="#">team</a>
+        <a class="nav-item" href="#">about</a>
+      </nav>
+    </div>
+    <p>nav + a float margin inline-block</p>
+    <div class="nav-wrap float-lh clear">
+      <a href="#" class="logo">
+        <h1>Float</h1>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="#">home</a>
+        <a class="nav-item" href="#">work</a>
+        <a class="nav-item" href="#">team</a>
+        <a class="nav-item" href="#">about</a>
+      </nav>
+    </div>
+    <p>nav + a + float line-height</p>
+    <div class="nav-wrap float-ul clear">
+      <a href="#" class="logo">
+        <h1>Float</h1>
+      </a>
+      <ul class="nav clear">
+        <li><a class="nav-item" href="#">home</a></li>
+        <li><a class="nav-item" href="#">work</a></li>
+        <li><a class="nav-item" href="#">team</a></li>
+        <li><a class="nav-item" href="#">about</a></li>
+      </ul>
+    </div>
+    <p>ul + li + a + float</p>
+    <div class="nav-wrap flex">
+      <a href="#" class="logo">
+        <h1>Flex</h1>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="#">home</a>
+        <a class="nav-item" href="#">work</a>
+        <a class="nav-item" href="#">team</a>
+        <a class="nav-item" href="#">about</a>
+      </nav>
+    </div>
+    <p>nav + a + flex + bg-color</p>
+    <div class="nav-wrap flex-el">
+      <a href="#" class="logo">
+        <h1>Flex</h1>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" style="--pos:0" href="#">home</a>
+        <a class="nav-item" style="--pos:1" href="#">work</a>
+        <a class="nav-item" style="--pos:2" href="#">team</a>
+        <a class="nav-item" style="--pos:3" href="#">about</a>
+        <div class="line"></div>
+      </nav>
+    </div>
+    <p>nav + a + flex + el/line</p>
+    <div class="nav-wrap grid">
+      <a href="#" class="logo">
+        <h1>Grid</h1>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="#">home</a>
+        <a class="nav-item" href="#">work</a>
+        <a class="nav-item" href="#">team</a>
+        <a class="nav-item" href="#">about</a>
+      </nav>
+    </div>
+    <p>nav + a + grid + bg-img</p>
+    <div class="nav-wrap icon-v">
+      <a href="#" class="logo">
+        <h1>Icon</h1>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="#">
+          <span class="iconfont icon-home"></span>
+          <span>home</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="iconfont icon-statis"></span>
+          <span>work</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="iconfont icon-account"></span>
+          <span>team</span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="iconfont icon-settings1"></span>
+          <span>about</span>
+        </a>
+      </nav>
+    </div>
+    <p>icon vertical</p>
+
+    <div class="nav-wrap skew">
+      <a href="#" class="logo">
+        <h1>Icon</h1>
+      </a>
+      <nav class="nav">
+        <a href=""><span>Lorem</span></a>
+        <a href=""><span>Minus</span></a>
+        <a href=""><span>Ipsum</span></a>
+      </nav>
+    </div>
+    <p>transition skew</p>
+
+    <div class="wrap-3d">
+      <div class="item">
+        <span>Lorem.</span>
+        <span>Saepe.</span>
+        <span>Sapiente.</span>
+      </div>
+      <div class="item">
+        <span>Lorem.</span>
+        <span>Saepe.</span>
+        <span>Sapiente.</span>
+      </div>
+      <div class="item">
+        <span>Lorem.</span>
+        <span>Saepe.</span>
+        <span>Sapiente.</span>
+      </div>
+      <div class="item">
+        <span>Lorem.</span>
+        <span>Saepe.</span>
+        <span>Sapiente.</span>
+      </div>
+      <div class="item">
+        <span>Lorem.</span>
+        <span>Saepe.</span>
+        <span>Sapiente.</span>
+      </div>
+    </div>
+    <p>3D nav</p>
+
+    <div class="docker">
+      <div class="item"><span class="iconfont icon-home"></span></div>
+      <div class="item"><span class="iconfont icon-account"></span></div>
+      <div class="item"><span class="iconfont icon-male"></span></div>
+      <div class="item"><span class="iconfont icon-female"></span></div>
+      <div class="item"><span class="iconfont icon-edit"></span></div>
+      <div class="item"><span class="iconfont icon-settings1"></span></div>
+      <div class="item"><span class="iconfont icon-statis"></span></div>
+    </div>
+    <p>docker</p>
+
+
+  </div>
+</body>
+
+</html>

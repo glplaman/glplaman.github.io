@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Bubble variable</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    .bubble {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .item {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #0aa;
+      box-shadow:
+        0 0 10px #0aa,
+        0 0 20px #0aa,
+        0 0 40px #0aa;
+      filter: hue-rotate(calc(var(--i) * 10deg));
+      /* animation: floating calc(100s/var(--i)) linear infinite; */
+      animation-name: floating;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes floating {
+
+      0% {
+        transform: translateY(110vh) scale(0);
+      }
+
+      50% {
+        transform: translateY(50vh) scale(1);
+      }
+
+      100% {
+        transform: translateY(-10vh) scale(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bubble">
+    <div class="item" style="--i:1"></div>
+    <div class="item" style="--i:2"></div>
+    <div class="item" style="--i:3"></div>
+    <div class="item" style="--i:4"></div>
+    <div class="item" style="--i:5"></div>
+    <div class="item" style="--i:6"></div>
+    <div class="item" style="--i:7"></div>
+    <div class="item" style="--i:8"></div>
+    <div class="item" style="--i:9"></div>
+    <div class="item" style="--i:10"></div>
+    <div class="item" style="--i:11"></div>
+    <div class="item" style="--i:12"></div>
+    <div class="item" style="--i:13"></div>
+    <div class="item" style="--i:14"></div>
+    <div class="item" style="--i:15"></div>
+    <div class="item" style="--i:16"></div>
+    <div class="item" style="--i:17"></div>
+    <div class="item" style="--i:18"></div>
+    <div class="item" style="--i:19"></div>
+    <div class="item" style="--i:20"></div>
+    <div class="item" style="--i:21"></div>
+    <div class="item" style="--i:22"></div>
+    <div class="item" style="--i:23"></div>
+    <div class="item" style="--i:24"></div>
+    <div class="item" style="--i:25"></div>
+    <div class="item" style="--i:26"></div>
+    <div class="item" style="--i:27"></div>
+    <div class="item" style="--i:28"></div>
+    <div class="item" style="--i:29"></div>
+    <div class="item" style="--i:30"></div>
+    <div class="item" style="--i:31"></div>
+    <div class="item" style="--i:32"></div>
+    <div class="item" style="--i:33"></div>
+    <div class="item" style="--i:34"></div>
+    <div class="item" style="--i:35"></div>
+    <div class="item" style="--i:36"></div>
+    <!-- <div class="item" style="--i:1"></div>
+        <div class="item" style="--i:25"></div>
+        <div class="item" style="--i:18"></div>
+        <div class="item" style="--i:31"></div>
+        <div class="item" style="--i:3"></div>
+        <div class="item" style="--i:15"></div>
+        <div class="item" style="--i:20"></div>
+        <div class="item" style="--i:6"></div>
+        <div class="item" style="--i:7"></div>
+        <div class="item" style="--i:21"></div>
+        <div class="item" style="--i:9"></div>
+        <div class="item" style="--i:10"></div>
+        <div class="item" style="--i:29"></div>
+        <div class="item" style="--i:11"></div>
+        <div class="item" style="--i:4"></div>
+        <div class="item" style="--i:14"></div>
+        <div class="item" style="--i:34"></div>
+        <div class="item" style="--i:17"></div>
+        <div class="item" style="--i:5"></div>
+        <div class="item" style="--i:30"></div>
+        <div class="item" style="--i:19"></div>
+        <div class="item" style="--i:2"></div>
+        <div class="item" style="--i:35"></div>
+        <div class="item" style="--i:23"></div>
+        <div class="item" style="--i:12"></div>
+        <div class="item" style="--i:24"></div>
+        <div class="item" style="--i:8"></div>
+        <div class="item" style="--i:26"></div>
+        <div class="item" style="--i:33"></div>
+        <div class="item" style="--i:13"></div>
+        <div class="item" style="--i:28"></div>
+        <div class="item" style="--i:32"></div>
+        <div class="item" style="--i:27"></div>
+        <div class="item" style="--i:16"></div>
+        <div class="item" style="--i:22"></div>
+        <div class="item" style="--i:36"></div> -->
+  </div>
+  <script>
+    const items = document.querySelectorAll('.item');
+    items.forEach(item => {
+      item.style.animationDuration = Math.random() * 5 + 5 + 's';
+    })
+  </script>
+</body>
+
+</html>

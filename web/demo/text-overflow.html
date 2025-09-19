@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打点溢出 Text</title>
+  <style>
+    :root {
+      --cn-red: #DE2910;
+      --cn-y: #FFDE00;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    p {
+      text-indent: 2em;
+      text-align: justify;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--p-m-g);
+      height: 100vh;
+    }
+
+    table {
+      width: 96%;
+      max-width: 600px;
+      border-collapse: collapse;
+      line-height: 30px;
+    }
+
+    tr:has(th) {
+      background-color: var(--cn-red);
+      color: #fff;
+      text-align: left;
+      text-transform: capitalize;
+    }
+
+    tr:not(:has(th)):hover {
+      background-color: #eee;
+    }
+
+    td {
+      cursor: pointer;
+    }
+
+    tr th:nth-child(1) {
+      text-align: center;
+    }
+
+    tr td:nth-child(1) {
+      text-align: center;
+    }
+
+    tr td:nth-child(2) {
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    tr td:nth-child(3) {
+      text-align: center;
+      color: var(--cn-red);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <tr>
+      <th>item</th>
+      <th>desc</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, non!</td>
+      <td>more</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Laborum nulla voluptatibus doloribus nihil ducimus soluta qui hic temporibus!</td>
+      <td>more</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Harum expedita dolor tenetur sit animi, nulla cum ipsa nesciunt.</td>
+      <td>more</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Ipsa exercitationem impedit veritatis temporibus rerum deserunt facilis molestiae nostrum.</td>
+      <td>more</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Mollitia beatae sunt ut necessitatibus omnis laboriosam ullam eos odit.</td>
+      <td>more</td>
+    </tr>
+  </table>
+</body>
+
+</html>

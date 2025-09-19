@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单 登录 Form Login</title>
+  <link href='//at.alicdn.com/t/c/font_4375346_fgaaclszyu.css' rel='stylesheet'>
+  <style>
+    :root {
+      --main-color: #5988b0;
+      --second-color: #de5096;
+      --txt-color: #fff;
+      --mb: 20px;
+      accent-color: var(--second-color)
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      list-style: none;
+      border: none;
+      outline: none;
+      color: inherit;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    input {
+      font: inherit;
+      background-color: transparent;
+    }
+
+    input::placeholder {
+      color: var(--txt-color);
+      text-transform: capitalize;
+    }
+
+    button {
+      font: inherit;
+      background-color: transparent;
+      text-transform: capitalize;
+      cursor: pointer;
+    }
+
+    html {
+      font-size: 62.6%;
+    }
+
+    body {
+      display: flex;
+      font-size: 1.6rem;
+      height: 100vh;
+      overflow: hidden;
+      background-image: url(/utils/wallpaper/w4.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    h1 {
+      text-align: center;
+      text-transform: capitalize;
+      margin-bottom: var(--mb);
+      height: 60px;
+      line-height: 60px;
+      letter-spacing: 0.1em;
+    }
+
+    form {
+      margin: auto;
+      width: 94%;
+      max-width: 400px;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      padding: 40px 20px;
+      color: #fff;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .ipt-box {
+      position: relative;
+      margin-bottom: var(--mb);
+    }
+
+    .ipt-box::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--txt-color);
+    }
+
+    .ipt-box input {
+      width: 100%;
+      height: 50px;
+    }
+
+    .ipt-box i {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      color: var(--txt-color);
+      transform: translateY(-50%);
+      font-size: 20px;
+    }
+
+    .ipt-box:has(input:valid)::before,
+    .ipt-box:has(input:focus)::before {
+      background-image: linear-gradient(to right, var(--second-color), var(--main-color));
+    }
+
+    .ipt-box input:valid+i,
+    .ipt-box input:focus+i {
+      color: var(--second-color);
+    }
+
+    .tips {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: capitalize;
+      margin-bottom: var(--mb);
+    }
+
+    .link:hover {
+      color: var(--second-color);
+    }
+
+    .tips label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .cb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      accent-color: var(--second-color);
+      clip-path: circle(50%);
+    }
+
+    .cb:checked {
+      appearance: auto;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      background-image: linear-gradient(to right, var(--second-color), var(--main-color));
+      color: #fff;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--mb);
+    }
+
+    .sign-up {
+      text-align: center;
+      text-transform: capitalize;
+    }
+
+    .sign-up a {
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="https://www.baidu.com">
+    <h1>user login</h1>
+    <div class="ipt-box">
+      <input type="email" placeholder="your email here" name='email' required>
+      <i class='iconfont icon-mail'></i>
+    </div>
+    <div class="ipt-box">
+      <input type="password" placeholder="your password here" name="pass" required>
+      <i class='iconfont icon-shop'></i>
+    </div>
+    <div class="tips">
+      <label><input class="cb" type="checkbox" id="rem"> remmenber me?</label>
+      <a class="link" href="">forget password?</a>
+    </div>
+    <button>enter</button>
+    <div class="sign-up">Don't have an account? <a class="link" href="./form-register.html">sing up</a></div>
+  </form>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>图文混排 Float</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 1.5;
+		}
+
+		img {
+			width: 120px;
+		}
+
+		body {
+			display: flex;
+			height: 100vh;
+		}
+
+		.wrap {
+			width: 100%;
+			max-width: 800px;
+			columns: 2 300px;
+			margin: auto;
+			padding: 10px;
+		}
+
+		.box {
+			width: 100%;
+			max-width: 800px;
+			text-align: justify;
+			margin-bottom: 10px;
+		}
+
+		.box .xh {
+			float: left;
+		}
+
+		.box .ty {
+			float: left;
+			shape-outside: url(/utils/logo/ty.png);
+		}
+
+		.box .chrome {
+			float: left;
+			shape-outside: circle(50%);
+		}
+
+		.box .git {
+			float: left;
+			shape-outside: polygon(50% 0, 100% 50%, 50% 100%, 0 50%, 50% 0);
+		}
+
+		.indent {
+			column-span: all;
+		}
+
+		.indent::first-letter {
+			float: left;
+			color: #f40;
+			font-size: 3em;
+			margin-right: 20px;
+		}
+
+		p {
+			text-align: center;
+			background-color: #222;
+			color: #dcdcaa;
+			font-size: 14px;
+			line-height: 2;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrap">
+		<div class="box indent">Lorem ipsum dolor sit amet consectetur
+			adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, officia.
+			Dolorum cum at fugit iusto dignissimos molestias nostrum, nobis commodi sequi quisquam iure eum delectus
+			exercitationem reiciendis facilis, dolores cumque labore. Perspiciatis?
+			<p>::first-letter</p>
+		</div>
+		<div class="box">
+			<img class="xh" src="/utils/logo/xh.png" alt="">
+			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt, perspiciatis libero tempora quam consequatur
+			sed quas cumque ipsam blanditiis vero, quasi eos doloribus reprehenderit exercitationem impedit consequuntur
+			iusto et minima.
+			<p>float: left;</p>
+		</div>
+		<div class="box"><img class="ty" src="/utils/logo/ty.png" alt="">Lorem ipsum dolor sit amet consectetur
+			adipisicing elit.
+			Dolorum
+			cum at fugit iusto dignissimos molestias nostrum, nobis commodi sequi quisquam iure eum delectus
+			exercitationem
+			reiciendis facilis, dolores cumque labore. Perspiciatis?
+			<p>shape-outside: url(../../imgs/ty.png);</p>
+		</div>
+		<div class="box"><img class="chrome" src="../../imgs/chrome.jpg" alt="">Lorem ipsum dolor sit amet consectetur
+			adipisicing
+			elit.
+			Dolorum
+			cum at fugit iusto dignissimos molestias nostrum, nobis commodi sequi quisquam iure eum delectus
+			exercitationem
+			reiciendis facilis, dolores cumque labore. Perspiciatis?
+			<p>shape-outside: circle(50%);</p>
+		</div>
+		<div class="box"><img class="git" src="../../imgs/git.jpg" alt="">Lorem ipsum dolor sit amet consectetur
+			adipisicing elit.
+			Dolorum cum at fugit iusto dignissimos molestias nostrum, nobis commodi sequi quisquam iure eum delectus
+			exercitationem Lorem ipsum dolor sit amet.
+			reiciendis facilis, dolores cumque labore. Perspiciatis?
+			<p>polygon(50% 0, 100% 50%, 50% 100%, 0 50%, 50% 0)</p>
+		</div>
+	</div>
+</body>
+
+</html>

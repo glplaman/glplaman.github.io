@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手风琴 Accordion</title>
+  <link rel="stylesheet" href="./css/according.css">
+</head>
+
+<body>
+  <div class="wrap-target">
+    <h2>click to show tips</h2>
+    <input type="radio" name="rb" id="rb0">
+    <label for="rb0">:target</label>
+    <section class="cont0">
+      <p>利用锚点的:target属性，动态设置锚点内容的高度</p>
+      <pre>
+input[id='rb0']:checked~.cont0,
+input[id='rb1']:checked~.cont1,
+input[id='rb2']:checked~.cont2,
+input[id='rb3']:checked~.cont3,
+input[id='rb4']:checked~.cont4 {
+  max-height: 360px;
+}</pre>
+    </section>
+    <input type="radio" name="rb" id="rb1">
+    <label for="rb1">position</label>
+    <section class="cont1">
+      <p>item采用相对定位，为伪元素提供定位参考</p>
+      <pre>
+label {
+  position: relative;
+  display: block;
+  line-height: 50px;
+  font-size: 1.2rem;
+  padding: 0 1rem;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+  background-color: #089;
+  color: #fff;
+}</pre>
+    </section>
+    <input type="radio" name="rb" id="rb2">
+    <label for="rb2">::before</label>
+    <section class="cont2">
+      <p>item的::before设计一个小方块，旋转45deg后定位于下侧，作为指示器</p>
+      <pre>
+label::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  bottom: -4px;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background-color: #089;
+}</pre>
+    </section>
+    <input type="radio" name="rb" id="rb3">
+    <label for="rb3">::after</label>
+    <section class="cont3">
+      <p>item的::after使用CSS实体设计一个箭头并选中时旋转</p>
+      <pre>
+label::after {
+  content: '\003E';
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  line-height: 50px;
+  transition: .5s;
+}</pre>
+    </section>
+    <input type="radio" name="rb" id="rb4">
+    <label for="rb4">footer</label>
+    <section class="cont4">
+      <p>
+        每个item通过父相子绝做了小设计；默认情况下，小三角指示器会被后面的item覆盖；但是最后的&lt;footer&gt;没有提升层级，所以导致小三角显示出来。解决方案：设置&lt;footer&gt;为相对定位，进行层级提升
+      </p>
+    </section>
+    <footer>2023-2024&commat;Cnplaman, PLA54414</footer>
+  </div>
+</body>
+
+</html>

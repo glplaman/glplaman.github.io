@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用须知 Notification</title>
+  <style>
+    @import url(/css/fonts_Quicksand.css);
+
+    body,
+    div,
+    h2,
+    p,
+    button {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Quicksand, "微软雅黑", "Microsoft YaHei", Arial, Helvetica, sans-serif;
+    }
+
+    @property --deg-r {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    body {
+      --deg-r: 0deg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: linear-gradient(var(--deg-r), #16a085, #9b59b6, #2980b9, #c67732, #8e44ad);
+      animation: roll 10s linear infinite;
+    }
+
+    @keyframes roll {
+      to {
+        --deg-r: 360deg;
+      }
+    }
+
+    .notice {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      width: 80%;
+      max-width: 800px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+    }
+
+    .tips {
+      height: 300px;
+      text-align: justify;
+      overflow-y: auto;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+
+    .tips::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .tips::-webkit-scrollbar-track {
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tips::-webkit-scrollbar-thumb {
+      background-color: #f1c40f;
+    }
+
+
+    .tips p {
+      margin-bottom: 1em;
+    }
+
+    .btn {
+      display: block;
+      border: none;
+      outline: none;
+      color: #666;
+      background-color: #ddd;
+      width: 120px;
+      height: 40px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn.active {
+      background-color: #f1c40f;
+      cursor: pointer;
+      color: #fff;
+      pointer-events: all;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="notice">
+    <h2>Notice</h2>
+    <div class="tips">
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi molestias enim libero exercitationem
+        asperiores a expedita, fuga quisquam consequuntur, iure voluptate suscipit culpa natus deleniti cumque,
+        recusandae cum! Eligendi doloremque, asperiores ipsam veritatis non, hic officiis nihil, voluptatibus nulla
+        ab inventore pariatur incidunt magnam dolorum ullam aliquid quasi odio omnis? Nihil impedit distinctio
+        accusamus deleniti minima porro modi saepe alias fuga quos. Accusamus reprehenderit, non eligendi optio
+        accusantium facilis et minus dolores voluptates ducimus unde eos, molestiae placeat? Dolor cupiditate facere
+        quisquam dignissimos vero quod rerum, optio quaerat soluta modi officiis sunt ipsam dolores impedit fuga,
+        accusamus magnam? Repudiandae, repellat?</p>
+      <p>Tempore eligendi explicabo culpa, praesentium assumenda velit placeat ipsam reiciendis, rem natus
+        aspernatur architecto obcaecati aliquid quidem cum quaerat perferendis, quis ipsum. Saepe amet modi impedit
+        eveniet, autem, eos praesentium, nulla neque fugit corrupti quaerat explicabo exercitationem labore qui
+        excepturi recusandae accusamus? Veritatis ad aspernatur ipsa? Quisquam ab doloremque debitis et cumque
+        fugiat sed corrupti ullam deserunt ut asperiores quo cupiditate expedita eos accusantium rerum similique
+        quod enim, adipisci delectus deleniti! Fugit, animi. Magnam porro omnis, aliquid atque repellat cupiditate
+        officia deleniti impedit corrupti harum consequatur quos vero reiciendis itaque adipisci ex beatae, modi
+        laborum recusandae doloremque dicta possimus nesciunt?</p>
+      <p>Assumenda at pariatur totam perspiciatis perferendis quidem expedita dolor suscipit nulla cupiditate,
+        officia laborum ducimus exercitationem! Quisquam recusandae totam maiores soluta aliquid, culpa labore! Ipsa
+        aut placeat soluta asperiores labore? Assumenda obcaecati consequatur dolorum nostrum tempore adipisci
+        voluptatem. Eaque iste maiores, impedit beatae quasi sit quisquam itaque ex praesentium? Debitis impedit
+        veritatis mollitia magni suscipit cum corrupti, rem modi quo praesentium esse cupiditate reprehenderit
+        voluptatum nihil ea dolore temporibus ullam saepe optio? Hic maiores aut quidem mollitia ullam perspiciatis
+        sed sint fuga vero recusandae facere, dolore cum eaque repudiandae vel excepturi blanditiis repellat
+        officia. Iure maiores odit error reprehenderit expedita?</p>
+      <p>Dolore, tempore minus dolorum incidunt maiores fugiat quisquam repellat amet architecto neque, et obcaecati
+        id fugit reiciendis non doloribus earum aliquid provident consectetur in voluptatum deserunt nostrum. Est,
+        dolor unde. Labore, hic dignissimos corrupti ea magnam delectus animi voluptate pariatur quas in neque
+        numquam unde dicta repudiandae error reiciendis eveniet non ut doloremque! Tempora aperiam aliquid molestias
+        hic iure? Doloremque sunt fugit aliquam impedit optio placeat sequi nam, illo suscipit doloribus animi
+        distinctio dolore deserunt nobis quo, illum molestias laudantium similique perspiciatis expedita perferendis
+        voluptatibus unde eligendi culpa! Magnam quam dolores iusto consequuntur sed numquam reprehenderit eum vitae
+        quia iste.</p>
+    </div>
+    <button class="btn">I Agree</button>
+  </div>
+  <script>
+    let tips = document.querySelector('.tips');
+    let btn = document.querySelector('.btn');
+    tips.addEventListener('scroll', () => {
+      let per = tips.scrollTop / (tips.scrollHeight - tips.offsetHeight);
+      if (per >= 0.9) {
+        btn.removeAttribute('disabled');
+        btn.classList.add('active');
+      }
+    })
+    btn.addEventListener('click', () => {
+      location.href = './up2u.html'
+    })
+  </script>
+</body>
+
+</html>

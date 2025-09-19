@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简历 Resume</title>
+  <link rel="stylesheet" href="/utils/lib/swiper-bundle.min.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    :root {
+      --bg-color: #202632;
+      --main-color: #0ef;
+      --second-color: #363c48;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .swiper {
+      width: 90%;
+      height: 90%;
+    }
+
+    .swiper-slide {
+      background-color: var(--bg-color);
+      color: #fff;
+    }
+
+    .swiper-pagination-bullet {
+      background-color: #fff;
+    }
+
+    .swiper-pagination-bullet-active {
+      background-color: var(--main-color);
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      color: var(--main-color);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="promotion-swiper swiper">
+    <ul class="swiper-wrapper">
+      <li class="promotion-card swiper-slide">Slide 1</li>
+      <li class="promotion-card swiper-slide">Slide 2</li>
+      <li class="promotion-card swiper-slide">Slide 3</li>
+      <li class="promotion-card swiper-slide"><i class='bx bxs-home'></i></li>
+    </ul>
+
+    <div class="swiper-pagination"></div>
+
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+  <script src="/utils/lib/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper('.swiper', {
+      // Optional parameters
+      loop: true,
+      clickable: true,
+      effect: 'cube',
+
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    });
+  </script>
+</body>
+
+</html>

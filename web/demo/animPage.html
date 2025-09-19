@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Animation</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4061940_6dyoea80rpg.css);
+
+    :root {
+      --main-color: #0ff;
+      --second-color: #e5d76f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    button {
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body {
+      height: 100vh;
+      background-image: url("/imgs/island_beach_coast_162390_1920x1080.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-size: 1.8rem;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .page {
+      position: relative;
+      width: 80%;
+      height: 80%;
+      border-radius: 10px;
+      border: 2px solid rgba(211, 211, 211, 0.2);
+      backdrop-filter: blur(8px);
+      display: grid;
+      grid-template-rows: 6rem 1fr 6rem;
+      gap: 2rem;
+    }
+
+    header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      opacity: 0;
+      animation: top-in 0.5s ease-in-out forwards;
+    }
+
+    .logo {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      text-transform: capitalize;
+    }
+
+    .logo span {
+      color: #293b07;
+    }
+
+    .ham {
+      display: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    a {
+      text-transform: capitalize;
+      text-decoration: none;
+      font-size: 2rem;
+      color: inherit;
+    }
+
+    a:hover {
+      color: var(--main-color);
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      padding: 2rem;
+    }
+
+    .left {
+      align-self: center;
+    }
+
+    .left h2 {
+      text-transform: capitalize;
+      color: var(--second-color);
+      font-size: 3rem;
+      opacity: 0;
+      animation: left-in 0.5s ease-in-out 0.2s forwards;
+    }
+
+    .left p {
+      margin-bottom: 2rem;
+      margin-top: 4rem;
+      line-height: 1.5;
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: left-in 0.5s ease-in-out 0.4s forwards;
+    }
+
+    .left button {
+      position: relative;
+      width: 15rem;
+      height: 4rem;
+      border: 1px solid var(--second-color);
+      background-color: #fff;
+      color: rgba(0, 0, 0, 0.7);
+      font-weight: 600;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: left-in 0.5s ease-in-out 0.6s forwards;
+      overflow: hidden;
+    }
+
+    .left button::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 120%;
+      height: 100%;
+      background-color: var(--second-color);
+      transform-origin: right bottom;
+      transform: translateX(-100%) skew(30deg);
+      transition: 0.5s;
+      z-index: -1;
+    }
+
+    .left button:hover {
+      color: #fff;
+    }
+
+    .left button:hover::before {
+      transform: translateX(0%) skew(30deg);
+    }
+
+    .right .img-box {
+      width: 50%;
+      filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.5));
+      animation: roll 30s linear infinite;
+    }
+
+
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: btm-in 0.5s ease-in-out 0.8s forwards;
+    }
+
+    footer .iconfont {
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.4s;
+    }
+
+    footer .iconfont:hover {
+      border-color: var(--main-color);
+      color: var(--main-color);
+      transform: scale(1.2);
+    }
+
+    @keyframes top-in {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes btm-in {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes left-in {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes roll {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      html {
+        font-size: 50%;
+      }
+
+      nav {
+        position: absolute;
+        right: -100%;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+        padding-top: 6rem;
+        padding-right: 2rem;
+        transition: 0.5s;
+      }
+
+      nav.active {
+        right: 0;
+      }
+
+      .ham {
+        display: block;
+        z-index: 2;
+      }
+
+      .left {
+        grid-column: span 2;
+      }
+
+      .right {
+        position: absolute;
+        bottom: -4rem;
+        right: -4rem;
+        width: 40%;
+      }
+
+      footer {
+        padding-left: 2rem;
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body class="center">
+  <div class="page">
+    <header>
+      <div class="logo">gl<span>pla</span></div>
+      <div class="ham">
+        <span class="iconfont icon-menu-button"></span>
+      </div>
+      <nav>
+        <a href="">home</a>
+        <a href="">work</a>
+        <a href="">team</a>
+        <a href="">favorite</a>
+        <a href="">contact</a>
+      </nav>
+    </header>
+    <div class="main">
+      <div class="left">
+        <h2>do your share</h2>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi perferendis reprehenderit iusto, iste
+          aperiam voluptatum. Pariatur soluta enim fugit aspernatur numquam obcaecati ullam repellendus,
+          laboriosam ipsum consequatur beatae ex temporibus.</p>
+        <button>more</button>
+      </div>
+      <div class="right center">
+        <div class="img-box">
+          <img src="/utils/logo/xh.png" alt="">
+        </div>
+      </div>
+    </div>
+    <footer>
+      <span class="iconfont icon-qq center"></span>
+      <span class="iconfont icon-weixin0 center"></span>
+      <span class="iconfont icon-xinfeng center"></span>
+      <span class="iconfont icon-dianhua center"></span>
+    </footer>
+  </div>
+  <script>
+    const ham = document.querySelector('.ham');
+    const nav = document.querySelector('nav');
+    ham.addEventListener('click', function () {
+      nav.classList.toggle('active');
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>inset()</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1e1e1e;
+      padding: 10px;
+    }
+
+    div {
+      width: max-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+    }
+
+    p {
+      color: #fff;
+    }
+
+    .box {
+      width: 150px;
+      height: 200px;
+      background-color: #353536;
+      clip-path: inset(0px round 0px);
+    }
+
+    .box::before {
+      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, magnam illum? Beatae odit voluptatum voluptatem quo earum reprehenderit aliquid cupiditate nemo, at aperiam, provident repellat magnam assumenda deleniti laborum odio!';
+      color: #ff06;
+      text-align: justify;
+    }
+
+    .inset0 {
+      clip-path: inset(0px round 10px);
+    }
+
+    .inset1 {
+      clip-path: inset(10px round 10px);
+    }
+
+    .inset2 {
+      clip-path: inset(10px round 0px 100px);
+    }
+
+    .inset3 {
+      clip-path: inset(10px round 0px 100px 0px 100px);
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="box"></div>
+    <p>original</p>
+  </div>
+  <div>
+    <div class="box inset0"></div>
+    <p>inset(0px round 10px);</p>
+  </div>
+  <div>
+    <div class="box inset1"></div>
+    <p>inset(10px round 10px);</p>
+  </div>
+  <div>
+    <div class="box inset2"></div>
+    <p>inset(10px round 0px 100px);</p>
+  </div>
+  <div>
+    <div class="box inset3"></div>
+    <p>inset(10px round 0px 100px 0px 100px);</p>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>导航 Navigation</title>
+  <style>
+    :root {
+      --main-color: #f40;
+      --txt-color: #333;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      font-size: 1.6rem;
+      color: var(--txt-color);
+    }
+
+    a {
+      font: inherit;
+      text-decoration: none;
+      color: inherit;
+      padding: 0 10px;
+    }
+
+    a:hover,
+    a.active {
+      color: var(--main-color);
+    }
+
+    header {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 8%;
+      background-color: transparent;
+      transition: 0.5s;
+      z-index: 99;
+    }
+
+    header.sticky {
+      position: sticky;
+      top: 0;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      font-weight: 600;
+    }
+
+    .ham {
+      display: none;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 10rem 9% 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 768px) {
+      .ham {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        padding-top: 8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: right 0.5s;
+      }
+
+      .nav.active {
+        right: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="#">Logo</a>
+    <div class="ham">
+      <span>menu</span>
+    </div>
+    <nav class="nav">
+      <a class="nav-item" href="#nav1" class="active">Home</a>
+      <a class="nav-item" href="#nav2">Work</a>
+      <a class="nav-item" href="#nav3">Team</a>
+      <a class="nav-item" href="#nav4">Info</a>
+      <a class="nav-item" href="#nav5">About</a>
+    </nav>
+  </header>
+  <section id="nav1">
+    <div class="cont">Home</div>
+  </section>
+  <section id="nav2">
+    <div class="cont">Work</div>
+  </section>
+  <section id="nav3">
+    <div class="cont">Team</div>
+  </section>
+  <section id="nav4">
+    <div class="cont">Info</div>
+  </section>
+  <section id="nav5">
+    <div class="cont">About</div>
+  </section>
+  <script>
+    const header = document.querySelector('header')
+    const ham = document.querySelector('.ham');
+    const nav = document.querySelector('.nav');
+    const sections = document.querySelectorAll('section')
+    const links = header.querySelectorAll('.nav-item')
+    ham.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    })
+    window.addEventListener('scroll', () => {
+
+      // nav
+      const top = window.scrollY
+      sections.forEach(section => {
+
+        const offset = section.offsetTop - 100
+        const height = section.offsetHeight
+
+        const id = section.getAttribute('id')
+        const itemTarget = document.querySelector(`a[href*=${id}]`)
+
+        if (top >= offset && top < offset + height) {
+          itemTarget.classList.add('active')
+        } else {
+          itemTarget.classList.remove('active');
+        }
+      })
+
+      // header
+      header.classList.toggle('sticky', window.scrollY > 100)
+    })
+  </script>
+</body>
+
+</html>

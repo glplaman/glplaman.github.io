@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>circle()</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1e1e1e;
+      padding: 10px;
+    }
+
+    div {
+      width: max-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px auto;
+    }
+
+    p {
+      color: #fff;
+    }
+
+    .box {
+      width: 150px;
+      height: 200px;
+      background-color: #353536;
+    }
+
+    .box::before {
+      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, magnam illum? Beatae odit voluptatum voluptatem quo earum reprehenderit aliquid cupiditate nemo, at aperiam, provident repellat magnam assumenda deleniti laborum odio!';
+      color: #ff06;
+      text-align: justify;
+    }
+
+    .inset0 {
+      clip-path: circle(50%);
+    }
+
+    .inset1 {
+      clip-path: circle(50% at 0 50%);
+    }
+
+    .inset2 {
+      clip-path: circle(50% at 100% 50%);
+    }
+
+    .inset3 {
+      clip-path: circle(50% at 100% 100%);
+    }
+
+    .inset4 {
+      clip-path: circle(50% at 50% 100%);
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="box"></div>
+    <p>original</p>
+  </div>
+  <div>
+    <div class="box inset0"></div>
+    <p>clip-path: circle(50%);</p>
+  </div>
+  <div>
+    <div class="box inset1"></div>
+    <p>circle(50% at 0 50%);</p>
+  </div>
+  <div>
+    <div class="box inset2"></div>
+    <p>circle(50% at 100% 50%);</p>
+  </div>
+  <div>
+    <div class="box inset3"></div>
+    <p>circle(50% at 100% 100%)</p>
+  </div>
+  <div>
+    <div class="box inset4"></div>
+    <p>circle(50% at 50% 100%)</p>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll to show</title>
+  <style>
+    :root {
+      --per: 0;
+    }
+
+    body,
+    ul,
+    li,
+    h1,
+    p {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin: 80px auto;
+    }
+
+    p {
+      width: 90%;
+      margin: 0 auto;
+      text-indent: 2em;
+      text-align: justify;
+      line-height: 30px;
+      margin-bottom: 30px;
+    }
+
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+
+    .wrap {
+      overflow: hidden;
+    }
+
+    li {
+      list-style: none;
+      width: 320px;
+      height: 180px;
+      margin: 10px auto;
+      background-image: var(--url);
+      background-size: cover;
+      transform: scale(calc(1.8 - 0.8*var(--per))) translateY(calc(-60px*(1 - var(--per))));
+      opacity: var(--per);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Show You</h1>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <span style="color:#f40;">Guilin&nbsp;China</span>
+    praesentium,
+    necessitatibus fugiat
+    mollitia
+    error
+    iusto et, repellat aperiam id laudantium in cupiditate sequi nostrum corrupti amet vitae culpa impedit voluptatum?
+  </p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam rerum accusantium quaerat omnis repellendus,
+    incidunt est sed fuga beatae ducimus aut quam odio voluptate ad expedita ullam, blanditiis, pariatur minus?</p>
+  <p>Maiores quia sint nulla officia pariatur consectetur provident hic, nobis ipsum fugit ad dicta ratione quod
+    aliquam, excepturi quasi reiciendis ut neque incidunt veritatis distinctio. Quae rerum quia ratione tenetur.</p>
+  <p>Libero illum iusto minus, nobis obcaecati aperiam dignissimos vero nisi sed officia rem? Ducimus aperiam doloribus
+    tempore quaerat, quo ab similique neque vel repellat vitae, delectus velit qui expedita possimus.</p>
+  <p>Maiores, a consectetur sequi architecto delectus vitae! Delectus aperiam placeat eos eaque odit tempora quaerat
+    sint nisi ex officia, asperiores pariatur porro dolore accusantium! Qui veritatis autem sunt blanditiis
+    necessitatibus?</p>
+  <div class="wrap">
+    <ul>
+      <li style="--url:url(../../../utils/view/view0.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view1.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view2.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view3.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view4.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view5.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view6.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view7.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view8.jpg)"></li>
+      <li style="--url:url(../../../utils/view/view9.jpg)"></li>
+    </ul>
+  </div>
+  <script>
+    let lis = document.querySelectorAll('li');
+    let html = document.documentElement;
+    document.addEventListener('scroll', () => {
+      let per = html.scrollTop / (html.scrollHeight - html.clientHeight);
+
+      let total = 1 / lis.length;
+      for (let [index, li] of lis.entries()) {
+        let start = total * index;
+        let end = total * (index + 1);
+        let pro = (per - start) / (end - start);
+        if (pro >= 1) pro = 1;
+        if (pro <= 0) pro = 0;
+        li.style.setProperty('--per', pro);
+      }
+    })
+  </script>
+</body>
+
+</html>

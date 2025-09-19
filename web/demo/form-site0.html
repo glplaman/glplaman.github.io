@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册和登录 Register & Login</title>
+  <link rel="stylesheet" href="./css/reglogin.css">
+</head>
+
+<body>
+  <a href="./up2u.html" class="logo">
+    <h1>大树小站</h1>
+  </a>
+  <div class="box">
+    <div class="form-wrap">
+      <form action="http://www.baidu.com" target="_blank" id="register-form">
+        <h2>register</h2>
+        <div class="ipt-item">
+          <input class="ipt" type="text" name="rname" maxlength="12" required>
+          <i class="iconfont icon-customer icon"></i>
+        </div>
+        <div class="ipt-item">
+          <input class="ipt" type="password" name="rpass" maxlength="12" required>
+          <i class="iconfont icon-lock icon"></i>
+        </div>
+        <div class="ipt-item">
+          <input class="ipt" type="email" name="rmail" maxlength="12" required>
+          <i class="iconfont icon-xinfeng icon"></i>
+        </div>
+        <div class="ck-item">
+          <input class="rck" type="checkbox" name="rck" id="rck" value="yes">
+          <label for="rck">I agree with the items.</label>
+        </div>
+        <button class="submit btn">enter</button>
+        <div class="ck-item rem-item">
+          <span>Aready have an account?</span>
+          <a id="login-link" class="tips-a" href="">Login</a>
+        </div>
+      </form>
+      <form action="http://www.baidu.com" target="_blank" id="login-form">
+        <h2>login</h2>
+        <!-- <div class="ipt-item">
+          <input class="ipt" type="text" name="lname" maxlength="12" required>
+          <i class="ri-user-3-fill icon"></i>
+        </div> -->
+        <div class="ipt-item">
+          <input class="ipt" type="password" name="lpass" maxlength="12" required>
+          <i class="iconfont icon-lock icon"></i>
+        </div>
+        <div class="ipt-item">
+          <input class="ipt" type="email" name="lmail" maxlength="12" required>
+          <i class="iconfont icon-xinfeng icon"></i>
+        </div>
+        <div class="ck-item">
+          <input class="lck" type="checkbox" name="lck" id="lck" value="yes">
+          <label for="lck">Remember me?</label>
+          <a class="tips-a" href="">Forgot password?</a>
+        </div>
+        <button class="login btn">enter</button>
+        <div class="ck-item rem-item">
+          <span>Don't have an account?</span>
+          <a id="register-link" class="tips-a" href="">Register</a>
+        </div>
+        <div class="third-party">
+          <i class="iconfont icon-qq"></i>
+          <i class="iconfont icon-weixin0"></i>
+          <i class="iconfont icon-dianhua"></i>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <span>Copyright reserved &copy;2023-2024</span>
+    <img src="../../imgs/avatar.jpg" alt="">
+    <span>https://glpla.github.io</span>
+  </footer>
+  <script src="../../utils/lib/snow.js"></script>
+  <script>
+    let login = document.querySelector('#login-link')
+    let register = document.querySelector('#register-link')
+    let formWrap = document.querySelector('.form-wrap')
+    login.addEventListener('click', (e) => {
+      e.preventDefault()
+      formWrap.classList.add('form-wrap-active')
+    })
+    register.addEventListener('click', (e) => {
+      e.preventDefault()
+      formWrap.classList.remove('form-wrap-active')
+    })
+  </script>
+</body>
+
+</html>

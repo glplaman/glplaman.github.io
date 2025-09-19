@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二维码 Qrcode</title>
+  <link rel="stylesheet" href="../css/styleNew.css">
+  <script src="../../js/jquery-3.6.0.min.js"></script>
+  <script src="../../js/qrcode.min.js"></script>
+  <style>
+    #qrcode-default {
+      width: 256px;
+      height: 256px;
+      margin: 16px auto;
+    }
+
+    #qrcode {
+      width: 128px;
+      height: 128px;
+      margin: 16px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;QRCode</h1>
+  </header>
+  <dl>
+    <dt>简介</dt>
+    <dd>二维码非常方便分享内容；qrcode是jquery的一个类库，应该先引入jQuery库再引入qrcode.js；</dd>
+    <dd>
+      <pre>
+&lt;script src="js/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+&lt;script src="js/qrcode.min.js"&gt;&lt;/script&gt;</pre>
+    </dd>
+    <dd>
+      <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">更多内容，请访问qrcode仓库</a>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 默认二维码</dd>
+    <dd>. 默认大小是256*256</dd>
+    <div id="qrcode-default"></div>
+    <dd>
+      <pre>
+new QRCode(document.getElementById("qrcode-default"), "https://glpla.github.io");</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 定制二维码</dd>
+    <div id="qrcode"></div>
+    <dd>
+      <pre>
+new QRCode(document.getElementById("qrcode"), {
+    text: "https://glpla.github.io",
+    width: 128,
+    height: 128,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H
+});</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    window.onload = function () {
+      // default
+      let def = new QRCode(document.getElementById("qrcode-default"), "http://cnplaman.xyz");
+      // custom
+      let cus = new QRCode(document.getElementById("qrcode"), {
+        text: "http://cnplaman.xyz",
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  </script>
+</body>
+
+</html>

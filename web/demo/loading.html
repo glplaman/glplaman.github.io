@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 100vh;
+      color: #fff;
+      background: #000 linear-gradient(to bottom, #4286f4, #043556);
+    }
+
+    .desc {
+      width: 360px;
+    }
+
+    .desc span {
+      text-transform: capitalize;
+    }
+
+    .img {
+      float: left;
+      width: 240px;
+      shape-outside: url(../../imgs/running.png);
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 360px;
+      height: 10px;
+      background-color: #000;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .item {
+      width: 0;
+      height: 100%;
+      background-color: #fff;
+      animation: loading 5s steps(10) forwards;
+    }
+
+    .tips {
+      color: #ff0;
+    }
+
+    @keyframes loading {
+      100% {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="desc">
+    <img class="img" src="../../imgs/running.png" alt="">
+    <span>action</span>
+    <span>brave</span>
+    <span>cherish</span>
+    <span>delight</span>
+    <span>energy</span>
+    <span>fight</span>
+    <span>grateful</span>
+    <span>h</span>
+    <span>i</span>
+    <span>join</span>
+    <span>k</span>
+    <span>love</span>
+    <span>motivated</span>
+    <span>n</span>
+    <span>operation</span>
+    <span>positive</span>
+    <span>question</span>
+    <span>read</span>
+    <span>stick</span>
+    <span>team</span>
+    <span>u</span>
+    <span>v</span>
+    <span>watch</span>
+    <span>x</span>
+    <span>y</span>
+    <span>zealous</span>
+  </div>
+  <span class="tips">Loading...</span>
+  <dd class="wrap">
+    <div class="item"></div>
+  </dd>
+  <script src="../../utils/lib/snow.js"></script>
+  <script>
+    const item = document.querySelector('.item')
+    const nav = () => {
+      location.href = './notice.html'
+    }
+    item.addEventListener('animationend', nav)
+
+    window.addEventListener('beforeunload', (event) => {
+      item.removeEventListener('animationend', nav)
+    });
+  </script>
+</body>
+
+</html>

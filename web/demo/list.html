@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表 lists</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4235521_79vlv07932p.css);
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    ul.news,
+    ul.marker,
+    ul.icon {
+      list-style: none;
+    }
+
+    ul.marker li::marker {
+      content: "\2610";
+    }
+
+    ul.marker li.check::marker {
+      content: "\2611";
+      color: #f40;
+    }
+
+    ul.news li::before {
+      content: "\2610";
+    }
+
+    ul.news li.check::before {
+      content: "\2611";
+      color: #f40;
+    }
+
+    ul.icon li::before {
+      content: "\e728";
+      font-family: 'iconfont';
+    }
+
+    ul.icon li.check::before {
+      content: "\e6ed";
+      font-family: 'iconfont';
+      color: #f40;
+    }
+
+    .wrap {
+      width: 96%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin: 1em 0;
+      background-color: #FFFDFA;
+      border: 1px solid #F5F5F5;
+      line-height: 2;
+    }
+
+    ol.rank {
+      list-style: none;
+      counter-reset: sn;
+    }
+
+    ol.rank li {
+      counter-increment: sn;
+    }
+
+    ol.rank li::before {
+      content: counter(sn)'. ';
+    }
+
+    ol.reference {
+      list-style: none;
+      counter-reset: sn;
+    }
+
+    ol.reference li {
+      counter-increment: sn;
+    }
+
+    ol.reference li::before {
+      content: '[' counter(sn)'] ';
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <section>
+      <h2>Case 1：To do</h2>
+      <ul class="">
+        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</li>
+        <li>Laboriosam aut perspiciatis accusamus quaerat impedit vero consequuntur?</li>
+        <li class="check">Eveniet similique voluptatibus, temporibus consequuntur sed deleniti a.</li>
+        <li class="check">Alias sapiente adipisci delectus, tempore praesentium consectetur quod!</li>
+        <li>Velit consequatur facilis itaque, error facere accusantium totam.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Case 2：To do with ::marker Entity/Unicode</h2>
+      <ul class="marker">
+        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</li>
+        <li>Laboriosam aut perspiciatis accusamus quaerat impedit vero consequuntur?</li>
+        <li class="check">Eveniet similique voluptatibus, temporibus consequuntur sed deleniti a.</li>
+        <li class="check">Alias sapiente adipisci delectus, tempore praesentium consectetur quod!</li>
+        <li>Velit consequatur facilis itaque, error facere accusantium totam.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Case 3：To do with ::before Entity/Unicode</h2>
+      <ul class="news">
+        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</li>
+        <li>Laboriosam aut perspiciatis accusamus quaerat impedit vero consequuntur?</li>
+        <li class="check">Eveniet similique voluptatibus, temporibus consequuntur sed deleniti a.</li>
+        <li class="check">Alias sapiente adipisci delectus, tempore praesentium consectetur quod!</li>
+        <li>Velit consequatur facilis itaque, error facere accusantium totam.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Case 4：To do with ::before iconfont</h2>
+      <ul class="icon">
+        <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</li>
+        <li>Laboriosam aut perspiciatis accusamus quaerat impedit vero consequuntur?</li>
+        <li class="check">Eveniet similique voluptatibus, temporibus consequuntur sed deleniti a.</li>
+        <li class="check">Alias sapiente adipisci delectus, tempore praesentium consectetur quod!</li>
+        <li>Velit consequatur facilis itaque, error facere accusantium totam.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Case 5：rank</h2>
+      <ol>
+        <li>Lorem ipsum dolor sit amet.</li>
+        <li>Esse velit repudiandae deleniti optio.</li>
+        <li>Consectetur voluptatem architecto corrupti magni.</li>
+        <li>A quas enim consequuntur quam!</li>
+        <li>Incidunt numquam id recusandae eius.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Case 7：rank with ::before counter</h2>
+      <ol class="rank">
+        <li>Lorem ipsum dolor sit amet.</li>
+        <li>Esse velit repudiandae deleniti optio.</li>
+        <li>Consectetur voluptatem architecto corrupti magni.</li>
+        <li>A quas enim consequuntur quam!</li>
+        <li>Incidunt numquam id recusandae eius.</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Case 7：reference with ::before counter</h2>
+      <ol class="reference">
+        <li>Lorem ipsum dolor sit amet.</li>
+        <li>Esse velit repudiandae deleniti optio.</li>
+        <li>Consectetur voluptatem architecto corrupti magni.</li>
+        <li>A quas enim consequuntur quam!</li>
+        <li>Incidunt numquam id recusandae eius.</li>
+      </ol>
+    </section>
+  </div>
+</body>
+
+</html>

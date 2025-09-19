@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>:Not & :hover</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+      color: #fff;
+    }
+
+    ul {
+      perspective: 1000px;
+      list-style: none;
+    }
+
+    li {
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      cursor: pointer;
+      transition: transform 0.2s linear, opacity 0.2s linear;
+    }
+
+    li::before {
+      content: '. ';
+    }
+
+    ul:hover>li:not(:hover) {
+      transform: rotateY(30deg);
+      opacity: 0.2;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>Lorem.</li>
+    <li>Et.</li>
+    <li>Nostrum.</li>
+    <li>Dolor?</li>
+    <li>Amet?</li>
+    <li>Nostrum!</li>
+    <li>Similique.</li>
+    <li>Nihil!</li>
+    <li>Suscipit!</li>
+    <li>Magnam?</li>
+  </ul>
+  <script>
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>主题切换 Theme</title>
+  <style>
+    select {
+      height: 30px;
+      outline: none;
+      border: 1px solid #fff;
+    }
+
+    option[data-bg="#f40"] {
+      background-color: #f40;
+      color: #fff;
+    }
+
+    option[data-bg="#089"] {
+      background-color: #089;
+      color: #fff;
+    }
+
+    option[data-bg="#890"] {
+      background-color: #890;
+      color: #fff;
+    }
+
+    option[data-bg="#890"]:hover {
+      background-color: #fff;
+      color: #890;
+    }
+  </style>
+</head>
+
+<body>
+  <select name="theme" id="theme" class="theme">
+    <option value="">请选择主题色</option>
+    <option value="#f40" data-bg="#f40">红色</option>
+    <option value="#089" data-bg="#089">蓝色</option>
+    <option value="#890" data-bg="#890">绿色</option>
+  </select>
+  <script>
+    const body = document.body
+    const theme = document.getElementById('theme')
+    theme.addEventListener('change', () => {
+      body.style.background = theme.value
+      // theme.style.backgroundColor = theme.value
+    })
+  </script>
+</body>
+
+</html>

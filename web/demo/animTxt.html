@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Text</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      height: 100vh;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .data {
+      max-width: 800px;
+      text-align: justify;
+    }
+
+    .data span {
+      /* position: relative; */
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="data">
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt quo commodi labore modi
+    harum
+    corporis? Autem,
+    magnam! Minus facere labore nemo veniam voluptatibus expedita modi, error repellendus ut adipisci quisquam!
+  </div>
+  <script src="/utils/lib/anime.min.js"></script>
+  <script>
+    let data = document.querySelector('.data');
+    data.innerHTML = data.textContent.replace(/\S/g, ' <span>$&</span>')
+    let animTxt = anime.timeline({
+      targets: '.data span',
+      easing: 'easeInOutExpo',
+      duration: 1000,
+      loop: true,
+    })
+    animTxt.add({
+      rotate: () => anime.random(-360, 360),
+      translateX: () => anime.random(-400, 400),
+      translateY: () => anime.random(-400, 400),
+      delay: anime.stagger(20),
+    })
+    animTxt.add({
+      rotate: 0,
+      translateX: 0,
+      translateY: 0,
+      delay: anime.stagger(20),
+    })
+  </script>
+</body>
+
+</html>

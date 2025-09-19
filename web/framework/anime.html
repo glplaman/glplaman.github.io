@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime</title>
+  <base target="_blank">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    .bar-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bar {
+      position: absolute;
+      width: 5px;
+      height: 20px;
+      background-color: var(--main-color);
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .num {
+      border: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 24px;
+      color: #fff;
+      text-align: center;
+      background-color: transparent;
+    }
+
+    .box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      height: 200px;
+      padding: 10px;
+    }
+
+    .rect {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #f40;
+    }
+
+    .grid-anime,
+    .timeline-anime {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 280px;
+      height: 180px;
+      margin: 0 auto;
+    }
+
+    .grid-anime span,
+    .timeline-anime span {
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      scale: 0.8
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Anime</h1>
+    <div class="bar-wrap"></div>
+  </header>
+  <dl>
+    <dd>
+      <div>只有想不到，没有动不了 - Animate anything.</div>
+      <div>除了单独使用外，还可以和 <a href="./swiper.html">Swiper</a>、<a href="./scrollreveal.html">Scrollreveal</a> 配合使用</div>
+      <div>更多信息，请访问 <a href="https://animejs.com/">官网 - animejs</a></div>
+    </dd>
+    <dt>CSS样式动画</dt>
+    <dd>通常是根据选择器选中目标 targets 并指定样式 properties</dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 旋转并位移标签是 div 的元素</dd>
+    <dd class="sn">
+      <div>本地下载 - <a href="/utils/lib/anime.min.js" title="单击下载">anime.min.js</a></div>
+      <div>引入 - 注意路径</div>
+      <pre>&lt;script src="/utils/lib/anime.min.js"&gt;&lt;/script&gt;</pre>
+      <div>应用动画 - 指定动画目标，设置动画属性、指定背景和动画持续时间</div>
+      <pre>
+anime({
+  targets: 'div',
+  translateX: 250,
+  rotate: '1turn',
+  backgroundColor: '#FFF',
+  duration: 800,
+  // loop: true,
+  // autoplay: true,
+  // direction: 'alternate',
+  // easing: 'linear'
+});</pre>
+    </dd>
+    <dt>DOM属性动画</dt>
+    <dd>DOM元素的任何数值型 Attributes 都可以应用动画 - 仅限于 &lt;input&gt;</dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 数值增加 - 利用样式去掉 &lt;input&gt; 的边框</dd>
+    <dd>
+      <div class="box">
+        <input type="text" class="num" value="0">
+      </div>
+      <pre>&lt;input type="text" class="num"&gt;</pre>
+      <pre>
+anime({
+  targets: '.num',
+  value: [0, 1000],
+  round: 1,
+  easing: 'easeInOutExpo'
+});</pre>
+    </dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 改进版数值增加 - 控制动画</dd>
+    <dd>封装动画，通过鼠标单击控制播放和停止；封装动画后，可以添加 add 更多动画，参考 时间轴动画 一节</dd>
+    <dd>增加循环loop，看看你能不能击中666</dd>
+    <dd>
+      <button class="btn-play">play</button>
+      <button class="btn-pause">pause</button>
+      <pre>
+const animNum = anime({
+  targets: '.num',
+  value: [0, 1000],
+  round: 1,
+  easing: 'easeInOutExpo'
+});
+
+let btnPlay = document.querySelector('.btn-play');
+let btnPause = document.querySelector('.btn-pause');
+btnPlay.addEventListener('click', () => {
+  animNum.play();
+});
+btnPause.addEventListener('click', () => {
+  animNum.pause();
+});    </pre>
+    </dd>
+    <dt>关键帧动画 keyframes</dt>
+    <dd>通过数组指定若干关键帧实现各帧之间的过渡动画</dd>
+    <dd>如果没有指定时间 duration，则每帧动画时间相等</dd>
+    <dd>
+      <div class="box">
+        <div class="rect"></div>
+      </div>
+      <pre>
+anime({
+  targets: '.rect div',
+  keyframes: [
+    { translateX: 80 },
+    { translateY: 170 },
+    { translateX: -80 },
+    { translateY: 0 }
+  ],
+  duration: 2000,
+  loop: true
+})</pre>
+    </dd>
+    <dt>交错动画 Staggering </dt>
+    <dd>适合 <span class="warn">多个元素</span>；效果惊人。。。</dd>
+    <dd>多用于指定延迟：可以指定起始值 start、从何值开始 from、方向 direction、区间 values[]、网格 grid 和 坐标轴 axis等</dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 涟漪 - grid</dd>
+    <dd>
+      <div> 基于2维数组 based a 2D array</div>
+      <pre>anime.stagger(value, {grid: [rows, columns]}, from: '')</pre>
+      <div class="box">
+        <div class="grid-anime">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <pre>
+  anime({
+    targets: '.grid-anime span',
+    scale: [
+      { value: .1, easing: 'easeOutSine', duration: 500 },
+      { value: 1, easing: 'easeInOutQuad', duration: 1200 }
+    ],
+    delay: anime.stagger(200, { grid: [14, 9], from: 'center' }),
+    loop: true,
+  });</pre>
+    </dd>
+    <dt>时间轴动画 timeline</dt>
+    <dd>控制<span class="warn">多个元素</span></dd>
+    <dd>默认后面添加的动画在前面播放结束后才开始</dd>
+    <dd class="box">
+      <div class="timeline-anime">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ]综合动画</dd>
+    <dd>
+      <p>创建动画 - 指定基本属性</p>
+      <pre>
+let timelineAnime = anime.timeline({
+  targets: '.timeline-anime span',
+  easing: 'easeInOutExpo',
+  delay: anime.stagger(200, { grid: [14, 9], from: 'center' }),
+  loop: true,
+});
+</pre>
+      <p>添加动画</p>
+      <pre>
+timelineAnime.add({
+  rotateZ: 180,
+  translateY: anime.stagger(-10, { grid: [14, 9], from: 'center', axis: 'y' }),
+  translateX: anime.stagger(-10, { grid: [14, 9], from: 'center', axis: 'x' }),
+})
+timelineAnime.add({
+  borderRadius: 50
+})
+timelineAnime.add({
+  scale: 0.2,
+  opacity: 0.2
+})
+timelineAnime.add({
+  opacity: 1,
+  scale: [
+    { value: .1, easing: 'easeOutSine', duration: 100 },
+    { value: 1, easing: 'easeInOutQuad', duration: 500 }
+  ],
+  delay: anime.stagger(100, { grid: [14, 9], from: 'center' }),
+})
+timelineAnime.add({
+  rotateZ: 180,
+  translateY: anime.stagger(0, { grid: [14, 9], from: 'center', axis: 'y' }),
+  translateX: anime.stagger(0, { grid: [14, 9], from: 'center', axis: 'x' }),
+})
+timelineAnime.add({
+  borderRadius: 0
+})</pre>
+    </dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 综合动画</dd>
+    <dd>
+      <div>动态生成DOM节点 .bar</div>
+      <div>在弹性容器内水平垂直居中 - 便于随机分布</div>
+      <div>封装函数；结束 complete 时，重复调用</div>
+      <div>获取随机位置 anime.random()</div>
+      <pre>
+let barAnime = () => {
+  anime({
+    targets: '.bar',
+    translateX: () => anime.random(-1024, 1024),
+    translateY: () => anime.random(-120, 120),
+    scale: () => anime.random(1, 5),
+    easing: 'linear',
+    delay: anime.stagger(10),
+    duration: 3000,
+    complete: barAnime
+  })
+}
+barAnime()</pre>
+    </dd>
+    <dd><a href="../demo/animTxt.html">飞翔的文字</a></dd>
+    <dd class="question">如何使用滤镜 filter？</dd>
+    <!-- <dd>filter: ['hue-rotate(0deg)', 'hue-rotate(180deg)']</dd> -->
+    <!-- <dd>filter: () => `hue-rotate(${anime.random(0, 360)}deg)`</dd> -->
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/lib/anime.min.js"></script>
+  <script>
+    let header = document.querySelector('.bar-wrap');
+    for (let i = 0; i < 50; i++) {
+      let bar = document.createElement('span')
+      bar.classList.add('bar')
+      header.appendChild(bar)
+    }
+    let barAnime = () => {
+      anime({
+        targets: '.bar',
+        translateX: () => anime.random(-800, 800),
+        translateY: () => anime.random(-120, 120),
+        scale: () => anime.random(1, 5),
+        // filter: ['hue-rotate(0deg)', 'hue-rotate(180deg)'],
+        filter: () => `hue-rotate(${anime.random(0, 60)}deg)`,
+        easing: 'linear',
+        delay: anime.stagger(10),
+        duration: 3000,
+        complete: barAnime
+      })
+    }
+    barAnime()
+
+    anime({
+      targets: '.num',
+      value: [0, 1000],
+      round: 1,
+      easing: 'easeInOutExpo'
+    });
+
+    const animNum = anime({
+      targets: '.num',
+      value: [0, 1000],
+      round: 1,
+      duration: 4000,
+      easing: 'easeInOutExpo',
+      // loop: true
+    });
+    let btnPlay = document.querySelector('.btn-play');
+    let btnPause = document.querySelector('.btn-pause');
+    btnPlay.addEventListener('click', () => {
+      animNum.play();
+    });
+    btnPause.addEventListener('click', () => {
+      animNum.pause();
+    });
+
+    anime({
+      targets: '.rect',
+      keyframes: [
+        { translateX: 80 },
+        { translateY: 80 },
+        { translateX: -80 },
+        { translateY: 0 }
+      ],
+      duration: 4000,
+      loop: true
+    })
+
+    let grigAnime = anime({
+      targets: '.grid-anime span',
+      scale: [
+        { value: .1, easing: 'easeOutSine', duration: 500 },
+        { value: 1, easing: 'easeInOutQuad', duration: 1200 }
+      ],
+      delay: anime.stagger(200, { grid: [14, 9], from: 'center' }),
+      loop: true,
+    })
+
+    let timelineAnime = anime.timeline({
+      targets: '.timeline-anime span',
+      easing: 'easeInOutExpo',
+      delay: anime.stagger(200, { grid: [14, 9], from: 'center' }),
+      loop: true,
+    });
+    timelineAnime.add({
+      rotateZ: 180,
+      translateY: anime.stagger(-10, { grid: [14, 9], from: 'center', axis: 'y' }),
+      translateX: anime.stagger(-10, { grid: [14, 9], from: 'center', axis: 'x' }),
+    })
+    timelineAnime.add({
+      borderRadius: 50
+    })
+    timelineAnime.add({
+      scale: 0.2,
+      opacity: 0.2
+    })
+    timelineAnime.add({
+      opacity: 1,
+      scale: [
+        { value: .1, easing: 'easeOutSine', duration: 100 },
+        { value: 1, easing: 'easeInOutQuad', duration: 500 }
+      ],
+      delay: anime.stagger(100, { grid: [14, 9], from: 'center' }),
+    })
+    timelineAnime.add({
+      rotateZ: 180,
+      translateY: anime.stagger(0, { grid: [14, 9], from: 'center', axis: 'y' }),
+      translateX: anime.stagger(0, { grid: [14, 9], from: 'center', axis: 'x' }),
+    })
+    timelineAnime.add({
+      borderRadius: 0
+    })
+
+  </script>
+</body>

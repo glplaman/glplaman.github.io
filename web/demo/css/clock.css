@@ -1,0 +1,157 @@
+@import url(../../../css/fonts_Michroma.css);
+
+:root {
+  --main-color: #eb2c58;
+  --second-color: #22a6b3;
+  --thiird-color: #3498db;
+  --fourth-color: #ff0;
+  --main-bg-color: #333;
+  --roll-deg: 0deg;
+}
+
+@property --roll-deg {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+body,
+div {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  height: 100vh;
+  background-color: #000;
+}
+
+.clock {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 20px var(--main-bg-color) inset;
+}
+
+.clock::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background-image: conic-gradient(from var(--roll-deg), var(--main-color), var(--second-color), var(--fourth-color), var(--thiird-color), var(--main-color));
+  z-index: -1;
+  animation: --roll 5s linear infinite;
+  box-shadow: 0 0 16px rgba(255, 255, 0, 1);
+}
+
+@keyframes --roll {
+  to {
+    --roll-deg: 360deg;
+  }
+}
+
+.clock::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  z-index: 99;
+}
+
+.track {
+  position: absolute;
+  height: 100%;
+  /* point to the right center */
+  display: flex;
+  justify-content: center;
+  transform: rotateZ(calc(var(--track) * -6deg));
+  z-index: 1;
+}
+
+.track::after {
+  content: '';
+  width: 1px;
+  height: 10px;
+  background-color: var(--main-bg-color);
+}
+
+.track:nth-child(5n+1)::after {
+  width: 2px;
+  height: 20px;
+}
+
+.track:nth-child(15n+1)::after {
+  width: 6px;
+  height: 20px;
+}
+
+.num {
+  position: absolute;
+  height: 100%;
+  transform: rotateZ(calc(90deg * var(--deg)));
+}
+
+.num i {
+  display: block;
+  margin-top: 20px;
+  color: var(--main-color);
+  font-family: 'MR';
+  font-size: 18px;
+  font-style: normal;
+  transform: rotateZ(calc(-90deg * var(--deg)));
+}
+
+.hour,
+.min,
+.sec {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+.hour {
+  width: 50%;
+  height: 50%;
+}
+
+.min {
+  width: 70%;
+  height: 70%;
+}
+
+.sec {
+  width: 90%;
+  height: 90%;
+}
+
+.hour::before {
+  content: '';
+  width: 4px;
+  height: 60%;
+  background-color: #333;
+}
+
+.min::before {
+  content: '';
+  width: 2px;
+  height: 60%;
+  background: var(--main-bg-color);
+}
+
+.sec::before {
+  content: '';
+  width: 1px;
+  height: 60%;
+  background: #f40;
+}

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ham Media</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4078036_uw9fb6lqhv.css">
+  <style>
+    :root {
+      --header-h: 60px;
+      --main-color: #ffa040;
+      --p-m-g: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    a {
+      font: inherit;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--header-h);
+    }
+
+    body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: var(--main-color);
+    }
+
+    .w {
+      width: 100%;
+      max-width: 1024px;
+      margin: 0 auto;
+      background-color: #f7f7f7;
+    }
+
+    section {
+      min-height: 100vh;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      height: var(--header-h);
+      background-color: var(--main-color);
+      color: #f7f7f7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 var(--p-m-g);
+    }
+
+    .ham {
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--p-m-g);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 6px var(--p-m-g);
+    }
+
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      transform: scaleX(0);
+      transition: 0.5s;
+    }
+
+    .nav-links a:hover::before {
+      transform: scaleX(1)
+    }
+
+    .back2top {
+      position: fixed;
+      right: 2rem;
+      bottom: -5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: var(--main-color);
+      color: #fff;
+      transition: 0.5s;
+    }
+
+    .back2top::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid var(--main-color);
+    }
+
+    .back2top:hover::before {
+      animation: fading 0.5s linear infinite;
+    }
+
+    .back2top.show {
+      bottom: 5rem;
+    }
+
+    @keyframes fading {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .back2top .iconfont {
+      font-size: 2rem;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--p-m-g);
+      font-size: 12px;
+      padding: 2rem 0;
+    }
+
+    .footer img {
+      width: 40px;
+      border-radius: 50%;
+    }
+
+    @media screen and (max-width: 768px) {
+      body.active {
+        overflow: hidden;
+      }
+
+      .ham {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 30px;
+        height: 20px;
+      }
+
+      .ham div {
+        width: 100%;
+        height: 4px;
+        background-color: #fff;
+        transition: 0.5s;
+      }
+
+      body.active .ham {
+        position: relative;
+        justify-content: center;
+      }
+
+      body.active .ham div {
+        position: absolute;
+      }
+
+      body.active .ham div:nth-child(1) {
+        transform: rotateZ(45deg);
+      }
+
+      body.active .ham div:nth-child(2) {
+        display: none;
+      }
+
+      body.active .ham div:nth-child(3) {
+        transform: rotateZ(-45deg);
+      }
+
+      .nav-links {
+        /* !!! */
+        position: fixed;
+        right: 0;
+        top: 0;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: var(--header-h) 1rem;
+        background-color: var(--main-color);
+        transform: translateX(100%);
+        transition: 0.5s;
+        z-index: -1;
+      }
+
+      .nav-links a {
+        transform: translateX(100%);
+        transition: 0.5s calc(var(--delay) * 0.1s);
+      }
+
+      body.active .nav-links {
+        transform: translateX(0);
+      }
+
+      body.active .nav-links a {
+        transform: translateX(0);
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .footer img {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="w nav" id="nav">
+    <a href="" class="logo">
+      <h1>logo</h1>
+    </a>
+    <div class="ham" id="ham">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <a style="--delay:0" href="#home">Lorem.</a>
+      <a style="--delay:1" href="#info">Itaque.</a>
+      <a style="--delay:2" href="#work">Modi.</a>
+      <a style="--delay:3" href="#team">In?</a>
+      <a style="--delay:4" href="#about">Eum.</a>
+    </div>
+  </nav>
+  <section class="w" id="home">home</section>
+  <section class="w" id="info">info</section>
+  <section class="w" id="work">work</section>
+  <section class="w" id="team">team</section>
+  <section class="w" id="about">about</section>
+  <a href="#" class="back2top" id="back2top">
+    <span class="iconfont icon-rocket"></span>
+  </a>
+  <footer class="w footer" id="footer"></footer>
+  <script>
+    const body = document.querySelector('body')
+    const ham = document.querySelector('#ham')
+    const links = document.querySelector('#nav-links')
+    const items = document.querySelectorAll('.nav-links a')
+    const back2top = document.querySelector('#back2top')
+
+    ham.addEventListener('click', () => {
+      body.classList.toggle('active')
+    })
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        body.classList.remove('active')
+      })
+    })
+
+    window.addEventListener('scroll', () => {
+      back2top.classList.toggle('show', window.scrollY > 300)
+    })
+
+    window.addEventListener('load', () => {
+      fetch('/common/footer-2024.html')
+        .then(res => res.text())
+        .then(res => {
+          document.querySelector('#footer').innerHTML = res
+        })
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Isotope</title>
+  <base target="_blank">
+  <link rel="stylesheet" href="../../css/common.css">
+  <style>
+    .item-wrap {
+      margin: 0 auto;
+    }
+
+    .item {
+      width: calc(97% / 4);
+      aspect-ratio: 16/9;
+      padding: 1%;
+    }
+
+    .gutter-sizer {
+      width: 1%;
+    }
+
+    /* .item48 {
+      width: 48%;
+    } */
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Isotope</h1>
+  </header>
+  <dl>
+    <dt>简介 Overview</dt>
+    <dd>. 用于动态创建 <span class="warn">网格</span> 布局</dd>
+    <dd>. 根据指定的关键字，分类汇总内容，如过滤、排序</dd>
+    <dd>. 支持 CDN 和 Package 模式引入库</dd>
+    <div>. 支持使用 Vanilla JavaScript 原生 JS 和 jQuery 初始化实例并使用；也可以不使用js直接初始化HTML</div>
+    <dd>. 进入 <a href="https://isotope.metafizzy.co/">官网 - Isotope</a>，参照文档，创建自己的效果</dd>
+    <dt>功能 Functionality</dt>
+    <dd class="sn">
+      <div>过滤 Filtering - 匹配的项目显示，否则不显示；默认选择所有</div>
+      <pre>{ filter: '*' }</pre>
+      <div>排序 Sorting - 根据项目的数据排序；默认不排序</div>
+      <pre>{ sortBy: '' }</pre>
+      <div>布局 - 可以是瀑布流 masonry、行fitRows、垂直 vertical等</div>
+    </dd>
+    <dd class="example-sn">根据关键字过滤/分类显示指定内容</dd>
+    <dd>
+      <div class="btns-wrap">
+        <button class="btn active" data-filter="*">web</button>
+        <button class="btn" data-filter=".h5">html5</button>
+        <button class="btn" data-filter=".css">css</button>
+        <button class="btn" data-filter=".js">javascript</button>
+      </div>
+      <div class="item-wrap">
+        <div class="gutter-sizer"></div>
+        <div class="item web h5"><img alt="" src="../../utils/view/view0.jpg" /></div>
+        <div class="item web css"><img alt="" src="../../utils/view/view1.jpg" /></div>
+        <div class="item web css"><img alt="" src="../../utils/view/view2.jpg" /></div>
+        <div class="item item48 web js"><img alt="" src="../../utils/view/view3.jpg" /></div>
+        <div class="item css"><img alt="" src="../../utils/view/view4.jpg" /></div>
+        <div class="item h5"><img alt="" src="../../utils/view/view5.jpg" /></div>
+        <div class="item h5"><img alt="" src="../../utils/view/view6.jpg" /></div>
+        <div class="item item48 js"><img alt="" src="../../utils/view/view7.jpg" /></div>
+        <div class="item css"><img alt="" src="../../utils/view/view8.jpg" /></div>
+        <div class="item css"><img alt="" src="../../utils/view/view9.jpg" /></div>
+      </div>
+    </dd>
+    <dd class="sn">
+      <div>引入库 - CDN 方式</div>
+      <pre>&lt;script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"&gt;&lt;/script&gt;</pre>
+      <div>待选项 - 通过类名区分；item是基类，决定样式，web、js、html、css是分类依据</div>
+      <pre>
+&lt;div class="item-wrap"&gt;
+  // 预留辅助节点
+  &lt;div class="item web h5"&gt;&lt;img alt="" src="/utils/view/view0.jpg" /&gt;&lt;/div&gt;
+  &lt;div class="item web css"&gt;&lt;img alt="" src="/utils/view/view2.jpg" /&gt;&lt;/div&gt;
+  &lt;div class="item web js"&gt;&lt;img alt="" src="/utils/view/view3.jpg" /&gt;&lt;/div&gt;
+  &lt;div class="item css"&gt;&lt;img alt="" src="/utils/view/view4.jpg" /&gt;&lt;/div&gt;
+  &lt;div class="item h5"&gt;&lt;img alt="" src="/utils/view/view5.jpg" /&gt;&lt;/div&gt;
+  &lt;div class="item js"&gt;&lt;img alt="" src="/utils/view/view7.jpg" /&gt;&lt;/div&gt;
+  &lt;div class="item css"&gt;&lt;img alt="" src="/utils/view/view9.jpg" /&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>过滤器 - 使用自定义数据 data-filter 指定过滤类，*表示选择所有</div>
+      <pre>
+&lt;div class="btns-wrap"&gt;
+  &lt;button class="btn active" data-filter="*"&gt;web&lt;/button&gt;
+  &lt;button class="btn" data-filter=".h5"&gt;html5&lt;/button&gt;
+  &lt;button class="btn" data-filter=".css"&gt;css&lt;/button&gt;
+  &lt;button class="btn" data-filter=".js"&gt;javascript&lt;/button&gt;
+&lt;/div&gt;</pre>
+      <div>初始化 - 根据容器类名实例化；指定根容器元素 .item-wrap 和过滤的容器元素 .item</div>
+      <p>这里采用 fitRows，适合等高的元素项</p>
+      <pre>
+const iso = new Isotope( '.item-wrap', {
+  itemSelector: '.item',
+  layoutMode: 'fitRows'
+});</pre>
+      <p>可以为待选项指定多个样式类来均匀分布；如js有2项，可以占用48%</p>
+      <pre>&lt;div class="item item48 web js"&gt;&lt;img alt="" src="/utils/view/view3.jpg" /&gt;&lt;/div&gt;</pre>
+      <div>为过滤器绑定事件，获取自定义属性，调用 arrange() 实现过滤</div>
+      <pre>
+let btns = document.querySelectorAll('.btn');
+btns.forEach(btn => {
+  btn.addEventListener('click', function (e) {
+    console.log(e);
+    let filter = e.target.getAttribute('data-filter');
+    iso.arrange({
+      filter: filter
+    });
+  })
+})</pre>
+      <div>样式</div>
+      <p>如果不指定间隔，默认情况下，各项挨在一起</p>
+      <p>为了分开，要计算：每个项的百分比和间隔 gutter</p>
+      <p>gutter默认单位是像素；可以指定一个预置类来使用百分比；同时显式的配置为使用百分比；调整配置如下</p>
+      <pre>
+const iso = new Isotope( '.item-wrap', {
+  itemSelector: '.item',
+  layoutMode: 'fitRows',
+  percentPosition: true,
+  fitRows: {
+    gutter: '.gutter-sizer'
+  },
+});</pre>
+      <pre>
+.gutter-sizer {
+  width: 4%;
+}      </pre>
+      <p>为了应用分隔，待选项结构上要增加一个辅助子节点 - <span class="warn">重要</span></p>
+      <pre>&lt;div class="gutter-sizer"&gt;&lt;/div&gt;</pre>
+      <p>为了垂直方向分隔项目，各项指定一定量的padding；结合 gutter 和每行个数而定</p>
+      <pre>
+.item {
+  width: calc(97% / 4);
+  aspect-ratio: 16/9;
+  padding: 1%;
+}
+
+.gutter-sizer {
+  width: 1%;
+}      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/lib/isotope/isotope.pkgd.min.js"></script>
+  <script>
+    let btns = document.querySelectorAll('.btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        console.log(e);
+        let filter = e.target.getAttribute('data-filter');
+        iso.arrange({
+          filter: filter
+        });
+      })
+    })
+    const iso = new Isotope('.item-wrap', {
+      itemSelector: '.item',
+      layoutMode: 'fitRows',
+      percentPosition: true,
+      fitRows: {
+        // gutter: 4,
+        gutter: '.gutter-sizer'
+      },
+      filter: '*'
+    });
+
+  </script>
+</body>

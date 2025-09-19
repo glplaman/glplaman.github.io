@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>环图 Ring</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+    }
+
+    .ring-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: auto;
+    }
+
+    .ring {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background-image:
+        radial-gradient(#fff 40%, transparent 0),
+        conic-gradient(from 30deg,
+          #1393c7 15%,
+          #e44545 0 40%,
+          #00F260 0 70%,
+          #fd871c 0 100%);
+    }
+
+    .legend,
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .legend span::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      font-size: 12px;
+    }
+
+    .legend span:nth-child(1)::before {
+      background-color: #1393c7;
+    }
+
+    .legend span:nth-child(2)::before {
+      background-color: #e44545;
+    }
+
+    .legend span:nth-child(3)::before {
+      background-color: #00F260;
+    }
+
+    .legend span:nth-child(4)::before {
+      background-color: #fd871c;
+    }
+
+
+    @media screen and (max-width: 768px) {
+      .legend {
+        position: fixed;
+        right: 1rem;
+        top: 2rem;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .legend span::before {
+        order: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ring-box">
+    <div class="ring"></div>
+    <div class="legend">
+      <span>Lorem 15%</span>
+      <span>Adipisci 25%</span>
+      <span>Iure 30%</span>
+      <span>Optio 30%</span>
+    </div>
+  </div>
+</body>
+
+</html>

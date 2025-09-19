@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform Logo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      background-image: radial-gradient(#333, #000);
+    }
+
+    .wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo {
+      position: relative;
+      width: 150px;
+      height: 160px;
+      overflow: hidden;
+      filter: drop-shadow(0 0 10px rgba(250, 250, 250, 0.2));
+    }
+
+    .logo::before,
+    .logo::after {
+      content: "";
+      position: absolute;
+      top: 0%;
+      width: 50%;
+      aspect-ratio: 9/16;
+    }
+
+    .logo::before {
+      left: 0;
+      background-color: #f40;
+      transform: skewY(30deg);
+    }
+
+    .logo::after {
+      right: 0;
+      background-color: #a00;
+      transform: skewY(-30deg);
+    }
+
+    h1 {
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>HTML</h1>
+    <div class="logo"></div>
+  </div>
+</body>
+
+</html>

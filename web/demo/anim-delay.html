@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delay Animation</title>
+  <style>
+    :root {
+      --header-h: 100px;
+      --footer-h: 60px;
+      --aside-w: 100px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-image: linear-gradient(#089, #0af);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .wrap {
+      position: relative;
+      width: 94%;
+      max-width: 800px;
+      aspect-ratio: 16/9;
+      background-color: rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .wrap>* {
+      position: absolute;
+      background-color: #fff6;
+    }
+
+    header {
+      left: 0;
+      top: calc(-1*var(--header-h));
+      width: 100%;
+      height: var(--header-h);
+      animation: --down 1s forwards;
+    }
+
+    aside {
+      top: var(--header-h);
+      left: calc(-1*var(--aside-w));
+      width: var(--aside-w);
+      height: calc(100% - var(--header-h) - var(--footer-h));
+      animation: --right 1s 0.5s forwards;
+    }
+
+    main {
+      top: var(--header-h);
+      right: -100%;
+      width: calc(100% - var(--aside-w));
+      height: calc(100% - var(--header-h) - var(--footer-h));
+      animation: --left 1s 0.5s forwards;
+    }
+
+    footer {
+      left: 0;
+      bottom: calc(-1*var(--footer-h));
+      width: 100%;
+      height: var(--footer-h);
+      animation: --bottom 1s forwards;
+    }
+
+    @keyframes --down {
+      to {
+        top: 0;
+      }
+    }
+
+    @keyframes --right {
+      to {
+        left: 0;
+      }
+    }
+
+    @keyframes --left {
+      to {
+        right: 0;
+      }
+    }
+
+    @keyframes --bottom {
+      to {
+        bottom: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>header</header>
+    <aside>aside</aside>
+    <main>main</main>
+    <footer>footer</footer>
+  </div>
+</body>
+
+</html>

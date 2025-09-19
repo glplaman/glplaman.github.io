@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GSAP</title>
+  <link rel="stylesheet" href="../../css/common.css" />
+  <base target="_blank" />
+</head>
+
+<body>
+  <header>
+    <h1>&commat;GSAP</h1>
+  </header>
+  <dl>
+    <dd class="sn">
+      <p>强大的动画库，包括5大工具类：</p>
+      <div>Core</div>
+      <div>SVG</div>
+      <div>Scroll</div>
+      <div>UI</div>
+      <div>Text</div>
+      <p>更多信息，请访问 <a href="https://gsap.com/">官网 - GSAP</a></p>
+    </dd>
+    <dt>过程 Procedure</dt>
+    <dd class="sn">
+      <div>html - 准备元素；略</div>
+      <div>css - 定制样式；略</div>
+      <div>引入GSAP动画库js - 以CDN或本地库的方式引入</div>
+      <pre>&lt;script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"&gt;&lt;/script&gt;</pre>
+      <div>自定义js - 为元素指定动画 - 旋转2秒；这里使用元素的样式类名</div>
+      <pre>
+&lt;script&gt;
+  // This tween will rotate an element with a class of .my-element
+  gsap.to('.my-element', {
+    rotation: 360,
+    duration: 2,
+    ease: 'bounce.out'
+  })
+&lt;/script&gt;</pre>
+    </dd>
+    <dt>语法 Syntax</dt>
+    <dd>
+      <pre>gsap.method(targets, vars)</pre>
+    </dd>
+    <dt>方法 Methods</dt>
+    <dd>4种过渡类型 - four types of tweens</dd>
+    <dd class="sn">
+      <div>to(targets, {})：最常用的方式；从当前状态过渡到指定的状态</div>
+      <div>from(targets, {})：从指定的状态过渡到当前状态</div>
+      <div>fromTo(targets, {}, {})：从一个指定的状态过渡到另外一个指定的状态</div>
+      <div>set(targets, {})：直接设置状态，相当于过渡时间为0的 to()</div>
+    </dd>
+    <dt>动画属性 properties</dt>
+    <dd class="sn">
+      <p>几乎可以使用任何CSS属性，包括 SVG attributes 和 Canvas；使用最多的是变换 transform 和透明 opacity</p>
+      <p>复合属性请是小驼峰 camelCase，如backgroundColor</p>
+      <p>可以使用函数定制返回值</p>
+      <div>Transforms</div>
+      <p>.x</p>
+      <p>.y</p>
+      <p>.scale</p>
+      <p>... ...</p>
+      <div>opacity</div>
+      <div>colors</div>
+      <div>padding</div>
+      <div>border</div>
+      <div>radius</div>
+      <div>... ...</div>
+    </dd>
+    <dd class="tips">
+      <p>If you're not sure, give it a try!</p>
+      <p>recommend sticking to transforms and opacity when possible. </p>
+    </dd>
+    <dt>控制属性 Control</dt>
+    <dd class="sn">
+      <p>用来控制/设置动画过程</p>
+      <p>通常写在结束状态中</p>
+      <div>duration</div>
+      <div>ease</div>
+      <div>delay</div>
+      <div>stagger</div>
+      <div>repeat</div>
+      <div>yoyo</div>
+      <div>onComplete</div>
+      <div>... ...</div>
+      <pre>
+gsap.to('.span', {
+  scale: 1,
+  opacity: 1,
+  stagger: 0.1,
+})</pre>
+      <pre>
+gsap. .fromTo('.span',
+  {
+    scale: 0,
+    opacity: 0,
+  },
+  {
+    scale: 1,
+    opacity: 1,
+    stagger: 0.1,
+    x: () => Math.random() * 1000
+  })
+</pre>
+      <p class="tips">staggerFromTo 已经不是 GSAP 的标准方法</p>
+    </dd>
+  </dl>
+  <dl>
+    <dt>时间轴 Timeline</dt>
+    <dd>
+      <div>除了使用stagger依次触发多个相同元素的动画外，还可以使用时间轴依次触发多个元素的动画</div>
+      <div>多个动画 - sequencing tool</div>
+      <div>依次执行 - one after the other，有效避免使用多个 GSAP 实例并指定 delay</div>
+      <div>可以指定时间轴动画的重复 repeat、往返 yoyo 等属性</div>
+      <div>可以指定动画的位置参数 position parameter/相邻间隔</div>
+      <div>.符号：提前 &lt; 和上一个最近的动画同时触发；滞后 &gt;</div>
+      <div>.数字：提前多少 +=num、滞后多少 -=num；也可以是百分比%</div>
+      <div>可以使用js控制实例的播放 pause()、播放 play()、恢复 resume() 等方法</div>
+      <div>更多信息，请访问 <a href="https://gsap.com/docs/v3/GSAP/Timeline">GSAP - Timeline</a></div>
+    </dd>
+    <dd class="sn">
+      <div>创建时间轴实例</div>
+      <pre>
+const tl = gsap.timeline(
+  { 
+    repeat: 2,
+    yoyo: true
+   }
+)</pre>
+      <div>链式调用动画方法</div>
+      <p>如果不指定位置参数，则依次输出1 end、2 end；指定了 &lt; 后，第2个动画提前和第1个动画同时触发，同时结束，同时输出提示信息</p>
+      <pre>
+tl
+  .to('.my-element', {
+    x: -300,
+    backgroundColor: '#ff4400',
+    rotation: 180,
+    onComplete: () => console.log('1 end')
+  })
+  .to('.box', {
+    x: 500,
+    scale: 1.5,
+    opacity: 1,
+    onComplete: () => console.log('2 end')
+  }, '&lt;')</pre>
+      <p>也可以依次调用</p>
+      <pre>
+tl.to()
+tl.to()</pre>
+      <div>5秒后播放动画</div>
+      <pre>
+tl.pause();
+setTimeout(() => {
+  tl.play();
+}, 5000);</pre>
+    </dd>
+  </dl>
+  <div class="chap">滚动触发 ScrollTrigger</div>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>GSAP的插件 <a href="https://gsap.com/docs/v3/Plugins">Plugins</a> 之一，增加额外功能 - adds extra capabilities</div>
+      <div>页面滚动时，某个元素符合条件时，触发动画；效果酷炫吊炸天(jaw-dropping scroll-based animations)</div>
+      <div>默认情况下，页面加载时会自动触发 - only plays when that element is in the viewport</div>
+      <div>需要额外引入对应的库</div>
+      <div>可以简写；也可以作为配置对象 Config Object 使用</div>
+      <div>更多信息，请访问 <a href="https://gsap.com/scroll/">GSAP - ScrollTrigger</a></div>
+    </dd>
+    <dt>概念 Concept</dt>
+    <dd class="sn">
+      <div>触发容器 scroller：默认是视口 - viewport by default</div>
+      <div>触发器 trigger：默认为动画目标元素自身；也可以是其它元素</div>
+    </dd>
+    <dt>过程 Procedure</dt>
+    <dd class="sn">
+      <div>引入插件</div>
+      <pre>&lt;script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"&gt;&lt;/script&gt;</pre>
+      <div>注册插件</div>
+      <pre>gsap.registerPlugin(ScrollTrigger) </pre>
+      <div>使用插件</div>
+      <pre>
+gsap.to('.box', {
+  x: 500,
+  scrollTrigger: '.wrap', // start animation when ".wrap" enters the viewport
+});      </pre>
+    </dd>
+    <dt>配置对象 Config Object</dt>
+    <dd class="sn">
+      <p>定义触发动画的各种条件和行为</p>
+      <div>trigger：触发器，触发 ScrollTrigger 行为的元素，默认为<span class="warn">动画目标元素</span>自身；使用选择器指定；默认是开始触发器</div>
+      <div>endTrigger：结束触发器；如果不指定，则使用 trigger</div>
+      <div>start：触发开始位置 - starting position of the ScrollTrigger</div>
+      <p>3.1 String：使用关键字 top、bottom、left、right 表示触发的位置</p>
+      <p>表示 trigger 和 scroller 相遇mee的位置</p>
+      <p>top top：trigger 的顶端到达 scroller 的顶端时，触发动画</p>
+      <p>top center：trigger 的顶端达到 scroller 的中心时，触发动画</p>
+      <p>可以使用百分比表示从 scroller 顶端开始的位置</p>
+      <p>3.2 Number：scroller 的滚动距离/大小；如视口滚动了200；可以使用 window 的 scroll 事件调试</p>
+      <p>3.3 Function：</p>
+      <div>end：触发结束位置 - the ending position of the ScrollTrigger；含义同 start</div>
+      <p>String：如果指定了 endTrigger，则使用 endTrigger，否则使用 trigger</p>
+      <p>Number：</p>
+      <p>Function：</p>
+      <div>markers: 是否显示标记，默认为 false；很直观的显示触发器和触发容器；可用于开发环境进行调试；可以定制标记样式</div>
+      <pre>markers: {startColor: "white", endColor: "white", fontSize: "18px", fontWeight: "bold", indent: 20}</pre>
+      <div>scrub</div>
+      <p>动画会根据滚动的速度实时改变，提供平滑的滚动同步效果，默认是 false</p>
+      <p>也可以指定数值，表示跟随滚动条变化的时间</p>
+      <div>pin:</div>
+      <p>大头针效果；是否将触发元素固定在视口的某个位置，默认为 false</p>
+      <p>如果使用元素a作为 trigger 去触发元素b的动画，则元素a被固定在视口</p>
+      <!-- <div>toggleActions：定义在不同滚动方向上触发的动作</div> -->
+      <div>toggleClass：动画触发过程中，添加到触发器的类；开始之前和结束之后将移除；应小心设计触发容器范围，如果结束end时，还没有达到开始start，就不会触发</div>
+      <div>onEnter: 进入触发区域时执行的回调函数</div>
+      <div>onLeave: 离开触发区域时执行的回调函数</div>
+      <div>onEnterBack：反向进入</div>
+      <div>onLeaveBack：反向离开</div>
+    </dd>
+  </dl>
+  <div class="chap">NPM</div>
+  <dl>
+    <dd>通过npm安装并引入使用</dd>
+    <dt>Vue</dt>
+  </dl>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</body>
+
+</html>
+
+</html>

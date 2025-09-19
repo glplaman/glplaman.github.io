@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pie</title>
+  <!-- <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4061940_d4a3anpnxh5.css"> -->
+  <!-- <script src="/lib/snowstorm-min.js"></script> -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      background-image: radial-gradient(#333, #000);
+      font-size: 1.6rem;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .wrap {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      /* background-color: #fff; */
+      border-radius: 50%;
+    }
+
+    .bar {
+      position: absolute;
+      width: 2px;
+      height: 10px;
+      background-color: #000;
+      left: 50%;
+      top: 0px;
+      transform-origin: 50% 150px;
+      transform: translateX(-50%) rotate(calc(var(--per)*3.6deg));
+    }
+
+    .bar:nth-child(-n+90) {
+      animation: flash 0.1s linear calc(0.02s*var(--per)) forwards;
+    }
+
+    .bar:nth-child(5n+1) {
+      height: 20px;
+    }
+
+    @keyframes flash {
+      to {
+        background-color: #f40;
+        box-shadow: 0 0 4px #f40, 0 0 8px #f40, 0 0 16px #f40;
+      }
+    }
+
+    h2 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+    }
+
+    .rate {
+      font-size: 4rem;
+    }
+
+    .info {
+      position: fixed;
+      color: #fff;
+      text-shadow: 0 0 4px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .h5 p::before {
+      content: '\220e' ' ';
+    }
+
+    .css p::after,
+    .js p::after {
+      content: ' \220e';
+    }
+
+    .h5 {
+      left: 2rem;
+      top: 2rem;
+    }
+
+    .css {
+      text-align: right;
+      top: 2rem;
+      right: 1rem;
+    }
+
+    .js {
+      bottom: 2rem;
+      right: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h2>
+      <span class="rate" data-tar="90">0</span>
+      <sup>%</sup>
+    </h2>
+  </div>
+  <div class="info h5">
+    <p>&lt;h2></p>
+    <p>&lt;div></p>
+    <p>&lt;span></p>
+    <p>&lt;sup></p>
+    <p>data-</p>
+  </div>
+  <div class="info css">
+    <p>flex</p>
+    <p>position</p>
+    <p>animation</p>
+    <p>transform</p>
+    <p>nth-child</p>
+    <p>var()</p>
+    <p>calc()</p>
+  </div>
+  <div class="info js">
+    <p>for</p>
+    <p>querySelector</p>
+    <p>getAttribute</p>
+    <p>setInterval</p>
+    <p>clearInterval</p>
+    <p>innerHTML</p>
+    <p>innerText</p>
+  </div>
+  <script>
+    let wrap = document.querySelector('.wrap')
+    let str = ''
+    for (let index = 0; index < 100; index++) {
+      str += `<div class="bar" style='--per:${index}'></div>`
+    }
+    wrap.innerHTML += str
+    let rate = document.querySelector('.rate')
+    let tar = rate.getAttribute('data-tar')
+    rate.innerText = 0
+    let cd = () => {
+      let val = ++rate.innerText
+      rate.innerText = val
+      if (val >= tar) {
+        clearInterval(inter)
+      }
+    }
+    let inter = setInterval(cd, 20)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>轮播 Swiper</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    img {
+      object-fit: cover;
+    }
+
+    .container {
+      position: relative;
+      height: 100vh;
+    }
+
+    .bg-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bg-slide,
+    .bg-slide .circle,
+    .bg-slide .circle img,
+    .circle-trans {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg-slide .circle {
+      user-select: none;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    /*  active */
+    .bg-slide.active .circle {
+      z-index: 10;
+    }
+
+    .bg-slide .circle.large,
+    .circle-trans {
+      clip-path: circle(50% at 50% 50%);
+    }
+
+    .bg-slide .circle.small {
+      clip-path: circle(30% at 50% 50%);
+      z-index: 12;
+    }
+
+    /* active */
+    /* .bg-slide.active .circle.small {
+            z-index: 12;
+        } */
+
+    .bg-slide .circle img {
+      transform: rotate(0) scale(4);
+      opacity: 0;
+      transition: transform 1.0s, opacity 0.5s;
+    }
+
+    .bg-slide.active .circle img {
+      transform: rotate(360deg) scale(1);
+      opacity: 1;
+    }
+
+    .bg-slide.after-active .circle img {
+      transform: rotate(0deg) scale(4);
+      opacity: 0;
+    }
+
+    .bg-slide.active .circle.bg img,
+    .bg-slide.after-active .circle.bg img {
+      transition-delay: 0.6s;
+    }
+
+    .bg-slide.active .circle.large img,
+    .bg-slide.after-active .circle.large img {
+      transition-delay: 0.4s;
+    }
+
+    .bg-slide.active .circle.small img,
+    .bg-slide.after-active .circle.small img {
+      transition-delay: 0.2s;
+    }
+
+    .bg-slide .cont-text {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.2em;
+      text-transform: capitalize;
+      line-height: 2;
+      color: #fff;
+      z-index: 100;
+    }
+
+    .bg-slide .cont-text h1,
+    .bg-slide .cont-text h2 {
+      opacity: 0;
+      transition: 0.5s 1s;
+    }
+
+    .bg-slide .cont-text h1 {
+      transform: translateY(100%);
+    }
+
+    .bg-slide .cont-text h2 {
+      transform: translateY(-100%);
+    }
+
+    /* active */
+    .bg-slide.active .cont-text {
+      z-index: 101;
+    }
+
+    .bg-slide.active .cont-text h1,
+    .bg-slide.active .cont-text h2 {
+      opacity: 1;
+      transform: translateY(0);
+      overflow: hidden;
+    }
+
+    .bg-slide.after-active .cont-text h1 {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+
+    .bg-slide.after-active .cont-text h2 {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    .circle-trans {
+      background-color: rgba(0, 0, 0, 0.2);
+      z-index: 11;
+    }
+
+    .line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 4px;
+      background-color: #fff;
+      z-index: 100;
+    }
+
+    .spin {
+      position: absolute;
+      right: 2rem;
+      bottom: 2rem;
+      width: 60px;
+      height: 60px;
+      background-image: url(/imgs/stamp.png);
+      background-size: cover;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .spin:hover {
+      box-shadow: 0 0 20px #fff;
+    }
+
+    .spin.active {
+      box-shadow: 0 0 20px #fff;
+      pointer-events: none;
+      transform: rotate(360deg);
+      transition: 0.5s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="bg-slide active">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w0.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w0.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w0.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">spring</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w1.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w1.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w1.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">fall</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w2.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w2.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w2.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">winter</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w3.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w3.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w3.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">summer</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w4.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w4.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w4.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">night view</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w5.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w5.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w5.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">outdoor</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w6.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w6.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w6.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">work out</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w7.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w7.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w7.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">be with you</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w8.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w8.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w8.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">dream</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="bg-slide">
+      <div class="circle bg">
+        <img src="/utils/wallpaper/w9.jpg" alt="">
+      </div>
+      <div class="circle large">
+        <img src="/utils/wallpaper/w9.jpg" alt="">
+      </div>
+      <div class="circle small">
+        <img src="/utils/wallpaper/w9.jpg" alt="">
+      </div>
+      <div class="cont-text">
+        <h1 class="place">love</h1>
+        <h2 class="country">Lorem, ipsum dolor.</h2>
+      </div>
+    </div>
+    <div class="circle-trans"></div>
+    <div class="line"></div>
+    <div class="spin"></div>
+  </div>
+  <script>
+    const spin = document.querySelector('.spin');
+    const slides = document.querySelectorAll('.bg-slide');
+    const len = slides.length;
+    let ind = 0
+    spin.addEventListener('click', () => {
+      spin.classList.add('active')
+      setTimeout(() => {
+        spin.classList.remove('active')
+      }, 1000)
+      slides.forEach(slide => {
+        if (slide.classList.contains('active')) {
+          slide.classList.add('after-active')
+        } else {
+          slide.classList.remove('after-active')
+        }
+      })
+
+      slides[ind].classList.remove('active');
+
+      ind++
+      ind = ind % len
+      slides[ind].classList.add('active');
+    })
+  </script>
+</body>
+
+</html>

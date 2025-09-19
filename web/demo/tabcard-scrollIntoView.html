@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollIntoView() - 标签页 TabCard</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_3859342_3uwkhw73sh3.css);
+    @import url(../../css/fonts_Inconsolata.css);
+
+    :root {
+      --main-color: #fe6ea1;
+      --seconde-color: #ffe038;
+      --w: 800px;
+      --offset: calc(var(--w));
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inconsolata', sans-serif;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      line-height: 1.8;
+    }
+
+    .wrap {
+      display: flex;
+      width: 96%;
+      max-width: var(--w);
+      aspect-ratio: 16/9;
+    }
+
+    .nav {
+      flex-basis: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--p-m-g);
+      background-color: var(--seconde-color);
+    }
+
+    .iconfont {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      border-radius: 50%;
+      transition: 0.5s;
+      cursor: pointer;
+    }
+
+    main {
+      flex: 1;
+      background-color: #fffbfc;
+      overflow: hidden;
+    }
+
+    .item {
+      display: grid;
+      align-content: flex-start;
+      gap: calc(var(--p-m-g)*2);
+      height: 100%;
+      margin: var(--p-m-g);
+      overflow-y: auto;
+    }
+
+    .item::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .item::-webkit-scrollbar-thumb {
+      background-color: var(--main-color);
+    }
+
+    .title {
+      position: sticky;
+      top: 0;
+      background-color: #fffbfc;
+    }
+
+    .title h2::after {
+      content: '\e7d6';
+      font-family: 'iconfont';
+      margin-left: 0.5em;
+      font-size: 14px;
+    }
+
+    .label {
+      display: inline-block;
+      text-align-last: justify;
+      width: 3em;
+    }
+
+    .iconfont.active {
+      color: #fff;
+      background-color: var(--main-color);
+      box-shadow: 0 0 0px 6px #fe6ea166;
+    }
+
+    ol {
+      counter-reset: li-sn;
+    }
+
+    ol li {
+      counter-increment: li-sn;
+    }
+
+    ol li::before {
+      content: counter(li-sn);
+      color: #fff;
+      margin-right: 0.5em;
+      padding: 0 4px;
+      background-color: var(--main-color);
+    }
+
+    ul li::before {
+      content: '\e8af';
+      font-family: 'iconfont';
+      color: var(--main-color);
+      margin-right: 0.5em;
+    }
+
+    ul.summary li::before {
+      content: '\e894';
+    }
+
+    @media screen and (max-width: 768px) {
+      .wrap {
+        width: 100vw;
+        height: 100vh;
+        flex-direction: column;
+      }
+
+      .nav {
+        flex-direction: row;
+      }
+
+      .item::-webkit-scrollbar {
+        height: 6px;
+        width: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <main class="cont">
+      <div class="item">
+        <div class="title">
+          <h2>概述</h2>
+          <h3>Overview</h3>
+        </div>
+        <ul>
+          <li><span class="label">使用</span>：单击导航，显示对应的内容</li>
+          <li><span class="label">桌面端</span>：水平布局</li>
+          <li><span class="label">移动端</span>：垂直方向布局</li>
+          <li><span class="label">应用</span>：页面导航</li>
+          <li><span class="label">应用</span>：轮播图</li>
+          <li><span class="label">应用</span>：标签页</li>
+          <li><span class="label">应用</span>：手风琴</li>
+        </ul>
+      </div>
+      <div class="item">
+        <div class="title">
+          <h2>结构</h2>
+          <h3>HTML5</h3>
+        </div>
+        <pre>
+&lt;div class="wrap"&gt;
+    &lt;main class="cont"&gt;
+        &lt;div class="item"&gt;&lt;/div&gt;
+        &lt;div class="item"&gt;&lt;/div&gt;
+        &lt;div class="item"&gt;&lt;/div&gt;
+        &lt;div class="item"&gt;&lt;/div&gt;
+        &lt;div class="item"&gt;&lt;/div&gt;
+        &lt;div class="item"&gt;&lt;/div&gt;
+    &lt;/main&gt;
+    &lt;nav class="nav"&gt;
+        &lt;span class="iconfont icon-home1 link active"&gt;&lt;/span&gt;
+        &lt;span class="iconfont icon-htm link"&gt;&lt;/span&gt;
+        &lt;span class="iconfont icon-css link"&gt;&lt;/span&gt;
+        &lt;span class="iconfont icon-js link"&gt;&lt;/span&gt;
+        &lt;span class="iconfont icon-xiangyingshi link"&gt;&lt;/span&gt;
+        &lt;span class="iconfont icon-ToDo-List link"&gt;&lt;/span&gt;
+    &lt;/nav&gt;
+&lt;/div&gt;</pre>
+      </div>
+      <div class="item">
+        <div class="title">
+          <h2>样式</h2>
+          <h3>CSS3</h3>
+        </div>
+        <pre>
+@import url(//at.alicdn.com/t/c/font_3859342_3uwkhw73sh3.css);
+@import url(../../css/fonts_Inconsolata.css);
+
+:root {
+    --main-color: #fe6ea1;
+    --w: 800px;
+    --offset: calc(var(--w));
+    --p-m-g: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inconsolata', sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.wrap {
+    display: flex;
+    width: 96%;
+    max-width: var(--w);
+    aspect-ratio: 16/9;
+}
+
+.nav {
+    flex-basis: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--p-m-g);
+    background-color: var(--seconde-color);
+}
+
+.iconfont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border-radius: 50%;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+main {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fffbfc;
+}
+
+.item {
+    display: grid;
+    align-content: flex-start;
+    gap: var(--p-m-g);
+    height: 100%;
+    padding: var(--p-m-g);
+    overflow-y: auto;
+}
+
+.item::-webkit-scrollbar {
+    width: 6px;
+}
+
+.item::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+}
+
+.iconfont.active {
+    color: #fff;
+    background-color: var(--main-color);
+    box-shadow: 0 0 0px 6px #fe6ea166;
+}
+
+ol {
+    counter-reset: li-sn;
+}
+
+ol li {
+    counter-increment: li-sn;
+}
+
+ol li::before {
+    content: counter(li-sn);
+    color: #fff;
+    margin-right: 1em;
+    padding: 0 4px;
+    background-color: var(--main-color);
+}
+
+ul li::before {
+    content: '\e8af';
+    font-family: 'iconfont';
+    color: var(--main-color);
+}</pre>
+      </div>
+      <div class="item">
+        <div class="title">
+          <h2>逻辑</h2>
+          <h3>JavaScript</h3>
+        </div>
+        <ol>
+          <li>获取元素 - 导航 .link 和内容 .item</li>
+          <li>遍历导航，添加事件侦听器 - 单击 click</li>
+          <li>单击时，对应的内容进入视图 - scrollIntoView()</li>
+          <li>先遍历移除活动类 .active</li>
+          <li>再为当前导航添加活动类 .active</li>
+        </ol>
+        <pre>
+const links = document.querySelectorAll('.link')
+const items = document.querySelectorAll('.item')
+links.forEach((link, ind) => {
+    link.addEventListener('click', () => {
+        items[ind].scrollIntoView({ behavior: 'smooth', block: 'center' })
+        links.forEach(link => link.classList.remove('active'))
+        link.classList.add('active')
+    })
+})</pre>
+      </div>
+      <div class="item">
+        <div class="title">
+          <h2>媒体查询</h2>
+          <h3>Media Query</h3>
+        </div>
+        <pre>
+@media screen and (max-width: 768px) {
+    .wrap {
+        width: 100vw;
+        height: 100vh;
+        flex-direction: column;
+    }
+
+    .nav {
+        flex-direction: row;
+    }
+
+    .item::-webkit-scrollbar {
+        height: 6px;
+    }
+}</pre>
+      </div>
+      <div class="item">
+        <div class="title">
+          <h2>总结</h2>
+          <h3>Summary</h3>
+        </div>
+        <ul class="summary">
+          <li>弹性盒子布局 Flex</li>
+          <li>阿里字体图标 Iconfont</li>
+          <li>谷歌字体 GoogleFonts</li>
+          <li>盒阴影 Box-Shadow</li>
+          <li>滚动条设计 ScrollBar</li>
+          <li>无序列表设计 ul</li>
+          <li>有序列表设计 ol - 计算器 Counter</li>
+          <li>CSS变量和函数</li>
+        </ul>
+      </div>
+    </main>
+    <nav class="nav">
+      <span class="iconfont icon-home1 link active"></span>
+      <span class="iconfont icon-htm link"></span>
+      <span class="iconfont icon-css link"></span>
+      <span class="iconfont icon-js link"></span>
+      <span class="iconfont icon-xiangyingshi link"></span>
+      <span class="iconfont icon-ToDo-List link"></span>
+    </nav>
+  </div>
+  <script>
+    const links = document.querySelectorAll('.link')
+    const items = document.querySelectorAll('.item')
+    links.forEach((link, ind) => {
+      link.addEventListener('click', () => {
+        items[ind].scrollIntoView({ behavior: 'smooth', block: 'center' })
+        links.forEach(link => link.classList.remove('active'))
+        link.classList.add('active')
+      })
+    })
+  </script>
+</body>
+
+</html>

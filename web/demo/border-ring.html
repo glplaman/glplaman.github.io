@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>环环相扣 Ring Border-radius</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .ring {
+      position: relative;
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      border: 20px solid #000;
+      border-radius: 50%;
+      margin: -50px;
+    }
+
+    .right {
+      border-color: #f40;
+    }
+
+    .left::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      bottom: -20px;
+      left: -20px;
+      border: 20px solid transparent;
+      border-radius: 50%;
+      border-top-color: #000;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="ring left"></div>
+    <div class="ring right"></div>
+  </div>
+</body>
+
+</html>

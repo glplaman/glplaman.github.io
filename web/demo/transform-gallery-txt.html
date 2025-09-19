@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D画廊 - Gallery text</title>
+  <style>
+    :root {
+      --w: 640px;
+      --z: 1000px;
+      --ar: 16/9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      min-height: 100vh;
+      overflow: hidden;
+      perspective: var(--z);
+    }
+
+    .gal {
+      position: relative;
+      width: 50%;
+      max-width: var(--w);
+      aspect-ratio: var(--ar);
+      background-color: #eee6;
+      transform-style: preserve-3d;
+      animation: gal-rotate 30s linear infinite;
+    }
+
+    .gal div {
+      position: absolute;
+      inset: 0;
+      background-color: #f40;
+      transform: rotateY(calc(180deg + var(--rot) * 60deg)) translateZ(calc(-1*var(--z)));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      color: #fff;
+    }
+
+    @keyframes gal-rotate {
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      :root {
+        --z: 400px;
+        --ar: 9/16;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gal">
+    <div style="--rot:0">1</div>
+    <div style="--rot:1">2</div>
+    <div style="--rot:2">3</div>
+    <div style="--rot:3">4</div>
+    <div style="--rot:4">5</div>
+    <div style="--rot:5">6</div>
+  </div>
+  <script>
+  </script>
+</body>
+
+</html>

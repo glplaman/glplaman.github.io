@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart Select</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 100vh;
+    }
+
+    select {
+      position: relative;
+      appearance: none;
+      width: 200px;
+      height: 40px;
+      outline: none;
+      font: inherit;
+      font-size: 18px;
+      padding: 0 10px;
+      border: 1px solid #ccc;
+      background-color: transparent;
+    }
+
+    select::after {
+      content: '123';
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .cont {
+      width: 800px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    select:has(option[value="jd"]:checked)+.cont img.jd {
+      display: block;
+    }
+
+    select:has(option[value="jd"]:checked)+.cont img:not(.jd) {
+      display: none;
+    }
+
+    select:has(option[value="tb"]:checked)+.cont img.tb {
+      display: block;
+    }
+
+    select:has(option[value="tb"]:checked)+.cont img:not(.tb) {
+      display: none;
+    }
+
+    select:has(option[value="pdd"]:checked)+.cont img.pdd {
+      display: block;
+    }
+
+    select:has(option[value="pdd"]:checked)+.cont img:not(.pdd) {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <select name="" id="">
+    <option value="all">all</option>
+    <option value="jd">jd</option>
+    <option value="tb">tb</option>
+    <option value="pdd">pdd</option>
+  </select>
+  <div class="cont">
+    <img class="jd" src="/utils/view/view0.jpg" alt="">
+    <img class="jd" src="/utils/view/view1.jpg" alt="">
+    <img class="tb" src="/utils/view/view2.jpg" alt="">
+    <img class="jd" src="/utils/view/view3.jpg" alt="">
+    <img class="tb" src="/utils/view/view4.jpg" alt="">
+    <img class="jd" src="/utils/view/view5.jpg" alt="">
+    <img class="pdd" src="/utils/view/view6.jpg" alt="">
+    <img class="jd" src="/utils/view/view7.jpg" alt="">
+    <img class="pdd" src="/utils/view/view8.jpg" alt="">
+  </div>
+</body>
+
+</html>

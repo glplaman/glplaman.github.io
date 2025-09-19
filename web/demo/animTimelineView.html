@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间轴动画 view() - Animation Timeline</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      line-height: 2;
+      overflow-y: auto;
+    }
+
+    .wrap {
+      width: 94%;
+      max-width: 600px;
+      padding-top: 80vh;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .box {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      margin: 0 auto;
+      /* font-size: 10px; */
+      line-height: 30px;
+    }
+
+    .box div {
+      background-color: #fff;
+    }
+
+    .box::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #f406;
+      animation-name: --fadein;
+      animation-timing-function: linear;
+      /* animation-fill-mode: both; */
+      animation-timeline: view(40% 60%);
+      transform-origin: top;
+      /* z-index: -1; */
+    }
+
+    @keyframes --fadein {
+      from {
+        transform: scaleY(0);
+      }
+
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .bg {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    .bg div {
+      display: flex;
+      align-items: flex-end;
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .bg div:nth-child(odd) {
+      height: 10vh;
+      width: 100%;
+      background-color: #ddd;
+    }
+
+    .bg div:nth-child(even) {
+      height: 10vh;
+      width: 100%;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+  </div>
+  <div class="wrap">
+    <p>Lorem ipsum dolor sit amet.</p>
+    <p>Necessitatibus dolore placeat exercitationem repudiandae!</p>
+    <p>Amet laudantium illum delectus eaque.</p>
+    <p>Aspernatur ea iste consequuntur officiis.</p>
+    <p>Blanditiis similique magnam accusantium neque?</p>
+    <p>Molestias, suscipit. Beatae, dolorem amet.</p>
+    <p>Omnis beatae aut eveniet amet.</p>
+    <p>Iusto doloremque earum animi! Sunt.</p>
+    <p>Inventore et perferendis ea eius.</p>
+    <p>Natus provident alias minima nostrum?</p>
+    <p>Deserunt in odit quia. Qui!</p>
+    <p>Similique inventore assumenda cum? Debitis.</p>
+    <p>Magnam tempore dolorum temporibus obcaecati?</p>
+    <p>Dicta nostrum atque ad minus.</p>
+    <p>Molestiae molestias corporis earum illum.</p>
+    <p>Tenetur ea quos qui incidunt?</p>
+    <p>Lorem ipsum dolor sit amet.</p>
+    <p>Necessitatibus dolore placeat exercitationem repudiandae!</p>
+    <p>Amet laudantium illum delectus eaque.</p>
+    <p>Aspernatur ea iste consequuntur officiis.</p>
+    <p>Blanditiis similique magnam accusantium neque?</p>
+    <p>Molestias, suscipit. Beatae, dolorem amet.</p>
+    <p>Omnis beatae aut eveniet amet.</p>
+    <p>Iusto doloremque earum animi! Sunt.</p>
+    <p>Inventore et perferendis ea eius.</p>
+    <p>Natus provident alias minima nostrum?</p>
+    <p>Deserunt in odit quia. Qui!</p>
+    <p>Similique inventore assumenda cum? Debitis.</p>
+    <p>Magnam tempore dolorum temporibus obcaecati?</p>
+    <p>Dicta nostrum atque ad minus.</p>
+    <p>Molestiae molestias corporis earum illum.</p>
+    <p>Tenetur ea quos qui incidunt?</p>
+    <div class="box">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+      <div>0</div>
+    </div>
+    <p>At nam exercitationem suscipit itaque.</p>
+    <p>Suscipit dolore numquam reprehenderit quas!</p>
+    <p>Dolorem obcaecati delectus quasi in.</p>
+    <p>Impedit repellat cumque voluptatum excepturi.</p>
+    <p>Ullam temporibus dolorem excepturi laborum?</p>
+    <p>Suscipit alias eaque sint quaerat?</p>
+    <p>Provident, alias. Pariatur, veritatis quisquam.</p>
+    <p>Voluptas aliquid similique eaque est?</p>
+    <p>Blanditiis ex assumenda sit magnam.</p>
+    <p>Veritatis quaerat laborum reiciendis cupiditate.</p>
+    <p>Soluta maxime quo error esse?</p>
+    <p>Quibusdam dolorem fugiat placeat recusandae.</p>
+    <p>Dolores velit blanditiis necessitatibus ipsum!</p>
+    <p>Nam ratione inventore recusandae quos?</p>
+    <p>At nam exercitationem suscipit itaque.</p>
+    <p>Suscipit dolore numquam reprehenderit quas!</p>
+    <p>Dolorem obcaecati delectus quasi in.</p>
+    <p>Impedit repellat cumque voluptatum excepturi.</p>
+    <p>Ullam temporibus dolorem excepturi laborum?</p>
+    <p>Suscipit alias eaque sint quaerat?</p>
+    <p>Provident, alias. Pariatur, veritatis quisquam.</p>
+    <p>Voluptas aliquid similique eaque est?</p>
+    <p>Blanditiis ex assumenda sit magnam.</p>
+    <p>Veritatis quaerat laborum reiciendis cupiditate.</p>
+    <p>Soluta maxime quo error esse?</p>
+    <p>Quibusdam dolorem fugiat placeat recusandae.</p>
+    <p>Dolores velit blanditiis necessitatibus ipsum!</p>
+    <p>Nam ratione inventore recusandae quos?</p>
+  </div>
+</body>
+
+</html>

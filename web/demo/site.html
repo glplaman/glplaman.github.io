@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全站布局 Full Site Layout</title>
+  <link rel="stylesheet" href="./css/site.css">
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class=" page">
+    <div class="item top">top</div>
+    <div class="item header">header</div>
+    <div class="item nav">
+      <div class="logo">
+        <img src="../../imgs/avatar.jpg" alt="">
+        <div class="spin"></div>
+      </div>
+      <div class="ham" id="ham">
+        <span class="iconfont icon-menu"></span>
+      </div>
+      <nav id="nav">
+        <div class="nav-item"><span class="iconfont icon-example"></span><span class="nav-title">Lorem</span></div>
+        <div class="nav-item"><span class="iconfont icon-timerauto"></span><span class="nav-title">Porro</span></div>
+        <div class="nav-item"><span class="iconfont icon-bangzhu2"></span><span class="nav-title">Corrupti</span></div>
+        <div class="nav-item"><span class="iconfont icon-palette"></span><span class="nav-title">Et</span></div>
+        <div class="nav-item"><span class="iconfont icon-warning"></span><span class="nav-title">A</span></div>
+        <div class="nav-item"><span class="iconfont icon-assignment"></span><span class="nav-title">Consectetur</span>
+        </div>
+        <div class="nav-item"><span class="iconfont icon-mail"></span><span class="nav-title">Fuga</span></div>
+        <div class="nav-item"><span class="iconfont icon-iconfontshoucang"></span><span
+            class="nav-title">Consequatur</span></div>
+      </nav>
+    </div>
+    <div class="item user">user</div>
+    <div class="item device">device</div>
+    <div class="item news">
+      <div class="title">latest</div>
+      <ul>
+        <li class="news-item">
+          <div class="news-title ellipsis">Lorem ipsum dolor sit amet.</div>
+          <span>1</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Perferendis quas dolorum magni explicabo.</div>
+          <span>2</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Quam nihil sit alias soluta.</div>
+          <span>3</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Officiis laudantium saepe unde? Odit.</div>
+          <span>4</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Cupiditate quia repudiandae facere rerum.</div>
+          <span>5</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Rerum nemo quas magni veritatis.</div>
+          <span>6</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Eveniet cupiditate adipisci optio officiis!</div>
+          <span>7</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Accusamus alias provident natus architecto?</div>
+          <span>8</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Asperiores quibusdam est officia blanditiis?</div>
+          <span>9</span>
+        </li>
+        <li class="news-item">
+          <div class="news-title ellipsis">Perferendis hic quaerat ea fugit.</div>
+          <span>10</span>
+        </li>
+      </ul>
+    </div>
+    <div class="item stats">
+      <div id="stats"></div>
+    </div>
+    <div class="item update1">update1</div>
+    <div class="item update2">update2</div>
+    <div class="item update3">update3</div>
+    <div class="item update4">update4</div>
+    <div class="item overview">
+      <div id="overview"></div>
+    </div>
+    <div class="item lists">lists</div>
+    <div class="item charts charts1" id="echarts1" style="--color:#29c9ce">
+      <span class="iconfont icon-chrome"></span>
+      <div class="charts-cont">
+        <div class="title">chrome</div>
+        <div class="ellipsis">Lorem ipsum dolor sit amet consectetur.</div>
+      </div>
+    </div>
+    <div class="item charts charts2" id="echarts2" style="--color:#f64b6c">
+      <span class="iconfont icon-edge"></span>
+      <div class="charts-cont">
+        <div class="title">edge</div>
+        <div class="ellipsis">Architecto tenetur vitae ipsa excepturi tempora.</div>
+      </div>
+    </div>
+    <div class="item charts charts3" id="echarts3" style="--color:#fdb329">
+      <span class="iconfont icon-opera"></span>
+      <div class="charts-cont">
+        <div class="title">opera</div>
+        <div class="ellipsis">Deleniti nam sunt repellat id reiciendis?</div>
+      </div>
+    </div>
+    <div class="item charts charts4" id="echarts4" style="--color:#148af2">
+      <span class="iconfont icon-firefox"></span>
+      <div class="charts-cont">
+        <div class="title">firefox</div>
+        <div class="ellipsis">Quam autem totam error sint recusandae.</div>
+      </div>
+    </div>
+    <div class="item footer">All rights reserved © glpla 2022-2026</div>
+  </div>
+  <script src="/utils/lib/echarts.min.js"></script>
+  <script>
+    const nav = document.getElementById('nav');
+    const ham = document.getElementById('ham')
+    ham.addEventListener('click', () => {
+      nav.classList.toggle('active')
+    })
+  </script>
+  <script>
+    // 获取元素
+    const stats = document.getElementById('stats')
+    // 初始化
+    const statsChart = echarts.init(stats)
+    // 配置项
+    const statsOption = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar'
+        }
+      ]
+    }
+    // 应用配置项
+    statsChart.setOption(statsOption)
+
+    const overview = document.getElementById('overview')
+    const overviewChart = echarts.init(overview)
+    overviewOption = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          padAngle: 5,
+          itemStyle: {
+            borderRadius: 10
+          },
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: 1048, name: 'Search Engine' },
+            { value: 735, name: 'Direct' },
+            { value: 580, name: 'Email' },
+            { value: 484, name: 'Union Ads' },
+            { value: 300, name: 'Video Ads' }
+          ]
+        }
+      ]
+    };
+    overviewChart.setOption(overviewOption)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3922652_5ahyffgnim4.css">
+</head>
+
+<body>
+  <audio></audio>
+  <div class="info">
+    <span class="cur-txt">0</span>/<span class="total-txt">0</span>
+  </div>
+  <div class="desc">
+    <div class="title-song"></div>
+    <div class="singer-song"></div>
+  </div>
+  <div class="ctrl">
+    <button onclick="mute()"><span class="iconfont icon-24gl-volumeCross"></span></button>
+    <button onclick="prevSong()"><span class="iconfont icon-zuiqian"></span></button>
+    <button class="play-btn" onclick="ctrlPlay()"><span class="iconfont icon-24gl-playCircle"></span></button>
+    <button onclick="nextSong()"><span class="iconfont icon-zuihou"></span></button>
+    <button onclick="autoPlay()"><span class="iconfont icon-24gl-repeat2"></span></button>
+  </div>
+  <p>vol <span class="vol-txt">100</span></p>
+  <input type="range" name="" id="" min="0" max="100" value="100" onchange="changeVol()" class="vol-slider">
+  <p>duration</p>
+  <input type="range" name="" id="" min="0" max="100" value="0" onchange="changeDur()" class="dur-slider">
+  <script>
+    // el
+    let track = document.querySelector('audio');
+    let playBtn = document.querySelector('.play-btn');
+    let curTxt = document.querySelector('.cur-txt');
+    let totalTxt = document.querySelector('.total-txt');
+    let titleSong = document.querySelector('.title-song');
+    let singerSong = document.querySelector('.singer-song');
+    let volSlider = document.querySelector('.vol-slider');
+    let volTxt = document.querySelector('.vol-txt');
+    let durSlider = document.querySelector('.dur-slider');
+
+    // data
+    let baseUrl = '/utils/music/'
+    let timer = 0;
+    let song_ind = 0;
+    let play_flag = false;
+    let autoplay_flag = false;
+    let tracks = [{
+      singer: 'Alizee',
+      title: 'La Isla Bonita',
+      path: 'Alizee-LaIslaBonita.mp3'
+    }, {
+      singer: 'Bandari',
+      title: 'New Morning',
+      path: 'Bandari-NewMorning.mp3'
+    }, {
+      singer: 'Disclosure',
+      title: 'F For You',
+      path: 'Disclosure-FForYou.mp3'
+    }, {
+      singer: 'Maksim Mrvica',
+      title: '出埃及记',
+      path: 'MaksimMrvica-出埃及记.mp3'
+    }, {
+      singer: 'Shakira',
+      title: 'Whenever, Wherever',
+      path: 'Shakira-WheneverWherever.mp3'
+    }, {
+      singer: '王菲',
+      title: '微风细雨',
+      path: 'wang.mp3'
+    }, {
+      singer: 'Ava Max',
+      title: "OMG What's Happening",
+      path: "AvaMax-OMGWhat'sHappening.ogg"
+    }, {
+      singer: 'Luciano',
+      title: "Melode Carla Cintia",
+      path: "Luciano-MelodeCarlaCintia.ogg"
+    }, {
+      singer: '周澎',
+      title: "有我在",
+      path: "周澎-有我在.mp3"
+    }, {
+      singer: 'Sissel',
+      title: "ShouldItMatter",
+      path: "Sissel-ShouldItMatter.mp3"
+    }, {
+      singer: '吴奇隆',
+      title: "祝你一路顺风",
+      path: "吴奇隆 - 祝你一路顺风 (Single Version).ogg"
+    }]
+
+    // functions
+    function resetSlider() {
+      durSlider.value = 0;
+    }
+    function loadSong() {
+      clearInterval(timer);
+      resetSlider();
+      track.src = baseUrl + tracks[song_ind].path;
+      titleSong.innerHTML = tracks[song_ind].title;
+      singerSong.innerHTML = tracks[song_ind].singer;
+      track.load();
+
+      curTxt.innerHTML = song_ind + 1;
+      totalTxt.innerHTML = tracks.length;
+
+      timer = setInterval(sliderCtrl, 1000);
+    }
+    function ctrlPlay() {
+      play_flag ? pauseSong() : playSong();
+    }
+    function playSong() {
+      track.play();
+      play_flag = true;
+      playBtn.innerHTML = '<span class="iconfont icon-24gl-pauseCircle"></span>'
+    }
+    function pauseSong() {
+      track.pause();
+      play_flag = false;
+      playBtn.innerHTML = '<span class="iconfont icon-24gl-playCircle"></span>'
+    }
+    function prevSong() {
+      song_ind--;
+      if (song_ind < 0) {
+        song_ind = 0;
+        return;
+      }
+      loadSong();
+      playSong();
+    }
+    function nextSong() {
+      song_ind++;
+      if (song_ind > tracks.length - 1) {
+        song_ind = tracks.length - 1;
+        return;
+      }
+      loadSong();
+      playSong();
+    }
+    function changeVol() {
+      track.volume = volSlider.value / 100;
+      volTxt.innerHTML = volSlider.value;
+    }
+    function changeDur() {
+      track.currentTime = track.duration * durSlider.value / 100;
+    }
+    function autoPlay() {
+      autoplay_flag = !autoplay_flag;
+    }
+    function mute() {
+      track.volume = 0;
+      volSlider.value = 0;
+      volTxt.innerHTML = 0;
+    }
+    // setInterval
+    function sliderCtrl() {
+      let pos = 0;
+      if (!isNaN(track.duration)) {
+        pos = track.currentTime / track.duration * 100;
+        durSlider.value = pos;
+      }
+      if (track.ended) {
+        playBtn.innerHTML = '<span class="iconfont icon-24gl-playCircle"></span>';
+        if (autoplay_flag) {
+          song_ind++;
+          if (song_ind > tracks.length - 1) {
+            song_ind = 0;
+          }
+          loadSong();
+          playSong();
+        }
+      }
+    }
+    // logic
+    loadSong(song_ind);
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据类型 DateType</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <link rel="stylesheet" href="../../css/ts.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>数据类型</h1>
+    <span>&commat;DateType</span>
+  </header>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://www.tslang.cn/index.html">TypeScript</a></dd>
+    <dt>any</dt>
+    <dd>
+      <div>可以是任何类型</div>
+      <div>更多的是体现容错的处理，如包含多种数据类型的数组</div>
+      <pre>let arr: any[] = [1, "hi,there.", true];</pre>
+      <div>如果每个元素类型固定，可以使用联合类型</div>
+      <div>如果元素位置的类型固定，可以使用元组 tuple</div>
+    </dd>
+    <dt>void</dt>
+    <dd>
+      <div>不指定任何类型</div>
+      <div>函数没有返回值，可以指定 void</div>
+      <pre>
+function sayHi(): void {
+  console.log("hi,there.");
+}</pre>
+    </dd>
+    <dt>union</dt>
+    <dd>
+      <div>元素类型可以灵活变化，但仍然保持一定的类型约束</div>
+      <div>类型安全；更好的开发体验</div>
+      <div>使用 | 分隔类型</div>
+      <pre>let arr: (number | string | boolean)[] = [1, "hi, there.", true];</pre>
+      <pre>
+function sayHi(str: number | string): string {
+  return "hi, " + str;
+}
+sayHi(9527);
+sayHi("glpla");</pre>
+    </dd>
+    <dt>tuple</dt>
+    <dd>
+      <div>严格控制数组中每个位置的元素类型</div>
+      <div>精确控制；防止意外赋值</div>
+      <pre>let arr: [number, string, boolean] = [1, "hi, there.", true];</pre>
+    </dd>
+    <dt>Type Assertion</dt>
+    <dd>
+      <div>类型断言 - 类似类型转换</div>
+      <div>编译时运行；告诉编译器某个值的具体类型，通常在编译器 <span class="warn">无法</span> 自动推断类型或者你比编译器 <span class="warn">更清楚</span>
+        某个值的类型时使用</div>
+      <div>如果已经指定了类型，则不需要断言</div>
+      <div>只有在不确定类型的时候，如传递的联合类型参数，应该区分不同类型的参数如何相应的处理</div>
+      <div>语法1：Angle-bracket syntax</div>
+      <pre>&lt;string&gt;str</pre>
+      <div>语法2：as keyword</div>
+      <pre>str as string</pre>
+    </dd>
+    <dt>Type Inference</dt>
+    <dd>
+      <div>类型推断- 允许编译器根据变量的初始值自动推断其类型，而无需显式地指定类型</div>
+      <div>类型推断使得代码更加简洁和易读，同时仍然保持类型安全</div>
+      <div>如果没有指定类型，则系统会推断为 any</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BGM</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="ctrl">play/pause</button>
+  <!-- <audio id="audio" src="/utils/music/4.mp3" controls></audio> -->
+  <script>
+    // const audio = document.getElementById('audio');
+    const ctrlBtn = document.getElementById('ctrl');
+    const audio = new Audio();
+    audio.src = '/utils/music/Alizee-LaIslaBonita.mp3'
+    audio.pause();
+    const play = () => {
+      audio.paused ? audio.play() : audio.pause();
+    };
+    ctrlBtn.addEventListener('click', play)
+    audio.addEventListener('loadstart', (e) => {
+      console.log('loadstart');
+    })
+    audio.addEventListener('progress', (e) => {
+      console.log('progress');
+    })
+    audio.addEventListener('durationchange', (e) => {
+      console.log('durationchange', audio.duration);
+    })
+    audio.addEventListener('loadedmetadata', (e) => {
+      console.log('loadedmetadata');
+    })
+    audio.addEventListener('loadeddata', (e) => {
+      console.log('loadeddata');
+    })
+    audio.addEventListener('timeupdate', (e) => {
+      console.log('currentTime', audio.currentTime);
+    })
+    audio.addEventListener('canplay', (e) => {
+      console.log('canplay');
+    })
+    audio.addEventListener('canplaythrough', (e) => {
+      console.log('canplaythrough');
+    })
+    audio.addEventListener('play', (e) => {
+      console.log('play');
+    })
+    audio.addEventListener('playing', (e) => {
+      console.log('playing');
+    })
+    audio.addEventListener('pause', (e) => {
+      console.log('pause');
+    })
+    audio.addEventListener('waiting', (e) => {
+      console.log('waiting');
+    })
+    audio.addEventListener('ended', (e) => {
+      console.log('ended');
+    })
+    audio.addEventListener('seeked', (e) => {
+      console.log('seeked');
+    })
+    audio.addEventListener('seeking', (e) => {
+      console.log('seeking');
+    }) 
+  </script>
+</body>
+
+</html>

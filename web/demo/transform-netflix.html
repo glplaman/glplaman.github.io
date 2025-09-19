@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform Netflix</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .netflix {
+      position: relative;
+      width: 150px;
+      height: 200px;
+      cursor: pointer;
+      color: #f40;
+    }
+
+    .l,
+    .mid,
+    .r {
+      position: absolute;
+      width: 50px;
+      background-color: #f40;
+    }
+
+    .l {
+      left: 0;
+      bottom: 0;
+      height: 0;
+      animation: scan 1s 1s linear forwards;
+    }
+
+    .mid {
+      left: 0;
+      top: 0;
+      height: 0;
+      transform-origin: top left;
+      transform: skewx(26.5deg);
+      box-shadow: 0 0 10px 4px #000;
+      animation: scan 1s linear 2s forwards;
+      z-index: 1;
+    }
+
+    .r {
+      right: 0;
+      bottom: 0;
+      height: 0;
+      animation: scan 1s linear 3s forwards;
+    }
+
+    @keyframes scan {
+      to {
+        height: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="netflix">
+    <div class="l"></div>
+    <div class="mid"></div>
+    <div class="r"></div>
+  </div>
+</body>
+
+</html>

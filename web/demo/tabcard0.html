@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>标签页 TabCard</title>
+  <style>
+    :root {
+      --main-color: #0ac;
+      --border: 2px solid #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .tabcard {
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .nav {
+      text-align: center;
+      padding: 20px 10px;
+      background-image: linear-gradient(#0af, #0ac);
+    }
+
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      padding: 4px 10px;
+    }
+
+    .nav-link:hover {
+      border-bottom: var(--border);
+    }
+
+    .cont {
+      width: 100%;
+      aspect-ratio: 16/9;
+      margin-top: 10px;
+      border-bottom: 1px solid #0ac;
+    }
+
+    .nav-target {
+      display: none;
+      height: 100%;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .nav-target::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .nav-target::-webkit-scrollbar-thumb {
+      background-image: linear-gradient(#0af, #0ac);
+    }
+
+    .nav-target p {
+      margin-bottom: 10px;
+      text-align: justify;
+    }
+
+    .nav-target:target {
+      display: block;
+    }
+
+    .nav:has(+.cont #home:target) .home {
+      border-bottom: var(--border);
+    }
+
+    .nav:has(+.cont #info:target) .info {
+      border-bottom: var(--border);
+    }
+
+    .nav:has(+.cont #work:target) .work {
+      border-bottom: var(--border);
+    }
+
+    .nav:has(+.cont #team:target) .team {
+      border-bottom: var(--border);
+    }
+
+    .nav:has(+.cont #about:target) .about {
+      border-bottom: var(--border);
+    }
+
+    /* header */
+    header {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+    }
+
+    header h1 {
+      color: var(--color);
+    }
+
+    header h1:nth-child(1) .z-layer:not(:first-child) {
+      color: #bf9105;
+    }
+
+    header h1:nth-child(2) .z-layer:not(:first-child) {
+      color: #689238;
+    }
+
+    header h1:nth-child(3) .z-layer:not(:first-child) {
+      color: #027fb7;
+    }
+
+    header h1:nth-child(4) .z-layer:not(:first-child) {
+      color: #b73229;
+    }
+
+    header h1:nth-child(5) .z-layer:not(:first-child) {
+      color: #2f3d88;
+    }
+
+    header h1:nth-child(6) .z-layer:not(:first-child) {
+      color: #007166;
+    }
+
+    header h1:nth-child(7) .z-layer:not(:first-child) {
+      color: #bf7200;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 data-z style="--color:#ffc107">T</h1>
+    <h1 data-z style="--color:#8bc34a">a</h1>
+    <h1 data-z style="--color:#03a9f4">b</h1>
+    <h1 data-z style="--color:#f44336">c</h1>
+    <h1 data-z style="--color:#3f51b5">a</h1>
+    <h1 data-z style="--color:#009688">r</h1>
+    <h1 data-z style="--color:#ff9800">d</h1>
+  </header>
+  <div class="tabcard">
+    <nav class="nav">
+      <a class="nav-link home" href="#home">Home</a>
+      <a class="nav-link info" href="#info">Info</a>
+      <a class="nav-link work" href="#work">Work</a>
+      <a class="nav-link team" href="#team">Team</a>
+      <a class="nav-link about" href="#about">About!</a>
+    </nav>
+    <div class="cont">
+      <div class="nav-target" id="home">
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam error dolorum laborum quo voluptatum earum.
+          Atque rerum eius quod quo quam sit nobis. Iure quos assumenda, eius mollitia consectetur adipisci.</p>
+      </div>
+      <div class="nav-target" id="info">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae perspiciatis rerum eos a temporibus qui
+          tempora, atque pariatur dicta, laudantium odio in alias inventore accusamus! Quam laudantium maiores aut est.
+        </p>
+        <p>Aliquam nulla fugit natus minus accusamus tenetur pariatur eveniet soluta consectetur doloribus. Quos numquam
+          fuga quidem non necessitatibus atque iusto veniam cumque at ex voluptate, ducimus nulla saepe consectetur
+          accusamus.</p>
+        <p>Soluta cumque, nostrum quis incidunt fugit laudantium quos sit itaque sapiente. Dicta rerum explicabo facilis
+          vitae, hic assumenda aliquam iusto voluptate soluta distinctio, ad non ipsum labore excepturi et blanditiis.
+        </p>
+      </div>
+      <div class="nav-target" id="work">
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor laborum, ipsam voluptas quos aliquid
+          perspiciatis dolorum excepturi expedita maxime in deleniti, illum accusamus distinctio magnam odio ipsa sit
+          iusto iure.</p>
+        <p>Illum rerum inventore necessitatibus omnis minus odio. Esse pariatur tempore voluptatem culpa natus voluptas
+          excepturi nam quam fuga dolores est voluptate, odio iste neque, veniam a rerum! Dolorum, ipsam reiciendis?</p>
+        <p>Reprehenderit dolore voluptatem vero iure quidem laudantium error fuga blanditiis quis quasi accusantium
+          porro optio aut reiciendis deserunt doloribus molestias, impedit sapiente consectetur voluptate beatae. Ut eum
+          dolore laboriosam numquam.</p>
+      </div>
+      <div class="nav-target" id="team">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum nesciunt deserunt, dignissimos veniam officia
+          quia repudiandae ullam temporibus? Quidem laudantium saepe, perferendis quasi officia similique eos
+          reprehenderit voluptatum numquam sit?</p>
+        <p>Earum quibusdam optio excepturi omnis ex ipsa soluta possimus ad, doloremque adipisci beatae voluptatum eaque
+          cumque magnam. Illum nemo error, veniam, quibusdam quasi voluptatibus eveniet repellendus ipsa atque repellat
+          laborum.</p>
+        <p>Dicta, quis excepturi aliquid dolorum earum quibusdam laudantium possimus nisi asperiores unde sunt eaque
+          delectus quos modi velit, veniam debitis. Laborum, tempora dignissimos qui veniam repellat ex ut blanditiis
+          architecto?</p>
+        <p>Nemo quia, sunt aut dignissimos totam animi repellendus porro ullam molestias necessitatibus quod quas atque
+          voluptate accusantium fugiat libero, ea esse nisi voluptatum autem? Ab quaerat laboriosam voluptates obcaecati
+          iusto.</p>
+      </div>
+      <div class="nav-target" id="about">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam vero quam deleniti libero maxime unde
+          explicabo aut consequatur, deserunt, minima neque ullam sed labore autem, hic repellendus! Officiis, nobis
+          minima.</p>
+        <p>Accusamus, quasi saepe temporibus iure velit tempore nesciunt dolor fugit dolorem qui ut officiis sequi
+          similique ipsam commodi nobis consectetur, soluta dignissimos ad. Hic fuga animi molestias aut assumenda quis!
+        </p>
+        <p>Autem provident consequuntur unde quisquam accusantium magnam cum aut temporibus, maxime repellat quidem
+          corrupti aperiam repudiandae mollitia, cumque et excepturi, quas aspernatur placeat expedita impedit laborum
+          facere consequatur! Commodi, magnam!</p>
+      </div>
+    </div>
+  </div>
+  <script src="/utils/lib/ztext.min.js"></script>
+  <script>
+    var ztxt = new Ztextify("h1 span", {
+      layers: 20,
+      fade: true,
+      direction: "forwards",
+      depth: '0.6em',
+      event: "pointer",
+      eventRotation: "40deg"
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字时钟</title>
+  <style>
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css);
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: linear-gradient(#22a6b3, #3498db);
+    }
+
+    .logo {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+    }
+
+    .logo h1 {
+      font-size: 2.4rem;
+      color: #fff;
+    }
+
+    .clock {
+      position: relative;
+      width: 30rem;
+      height: 30rem;
+      border-radius: 50%;
+      background-color: #fff;
+      border: 1rem solid #fff;
+      box-shadow: .5rem .5rem 1rem rgba(0, 0, 0, 0.2) inset;
+    }
+
+    .item {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      transform: rotateZ(calc(var(--deg)*6deg));
+      pointer-events: none;
+    }
+
+    .item::before {
+      content: '';
+      width: 1px;
+      height: 1rem;
+      background-color: #333;
+    }
+
+    .item:nth-child(5n)::before {
+      width: 1px;
+      height: 1.6rem;
+    }
+
+    .item:nth-child(15n)::before {
+      width: 4px;
+      height: 2rem;
+    }
+
+    .sec,
+    .min,
+    .hour,
+    .dot {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .sec::before {
+      content: '';
+      width: 1px;
+      height: 45%;
+      margin-top: 10%;
+      background-color: #f40;
+    }
+
+    .min {
+      transform: rotateZ(6deg);
+    }
+
+    .min::before {
+      content: '';
+      width: 2px;
+      height: 35%;
+      margin-top: 20%;
+      background-color: #333;
+    }
+
+    .hour {
+      transform: rotateZ(60deg);
+    }
+
+    .hour::before {
+      content: '';
+      width: 4px;
+      height: 20%;
+      margin-top: 35%;
+      background-color: #000;
+    }
+
+    .dot {
+      align-items: center;
+    }
+
+    .dot::before {
+      content: '';
+      width: 1.4rem;
+      height: 1.4rem;
+      background-color: #f40;
+      border-radius: 50%;
+    }
+
+    footer {
+      position: fixed;
+      width: 100%;
+      left: 0;
+      bottom: 2rem;
+      display: flex;
+      align-items: center;
+      margin: 2rem auto;
+    }
+
+    footer span {
+      flex: 1;
+      font-size: 1.4rem;
+      color: #fff;
+    }
+
+    footer span:first-child {
+      text-align: right;
+    }
+
+    footer img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 1rem;
+    }
+
+    @media screen and (max-width:768px) {
+      footer {
+        flex-direction: column;
+      }
+
+      footer img {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="./up2u.html" class="logo">
+    <h1>大树小站</h1>
+  </a>
+  <div class="clock">
+    <div class="item" style="--deg:1"></div>
+    <div class="item" style="--deg:2"></div>
+    <div class="item" style="--deg:3"></div>
+    <div class="item" style="--deg:4"></div>
+    <div class="item" style="--deg:5"></div>
+    <div class="item" style="--deg:6"></div>
+    <div class="item" style="--deg:7"></div>
+    <div class="item" style="--deg:8"></div>
+    <div class="item" style="--deg:9"></div>
+    <div class="item" style="--deg:10"></div>
+    <div class="item" style="--deg:11"></div>
+    <div class="item" style="--deg:12"></div>
+    <div class="item" style="--deg:13"></div>
+    <div class="item" style="--deg:14"></div>
+    <div class="item" style="--deg:15"></div>
+    <div class="item" style="--deg:16"></div>
+    <div class="item" style="--deg:17"></div>
+    <div class="item" style="--deg:18"></div>
+    <div class="item" style="--deg:19"></div>
+    <div class="item" style="--deg:20"></div>
+    <div class="item" style="--deg:21"></div>
+    <div class="item" style="--deg:22"></div>
+    <div class="item" style="--deg:23"></div>
+    <div class="item" style="--deg:24"></div>
+    <div class="item" style="--deg:25"></div>
+    <div class="item" style="--deg:26"></div>
+    <div class="item" style="--deg:27"></div>
+    <div class="item" style="--deg:28"></div>
+    <div class="item" style="--deg:29"></div>
+    <div class="item" style="--deg:30"></div>
+    <div class="item" style="--deg:31"></div>
+    <div class="item" style="--deg:32"></div>
+    <div class="item" style="--deg:33"></div>
+    <div class="item" style="--deg:34"></div>
+    <div class="item" style="--deg:35"></div>
+    <div class="item" style="--deg:36"></div>
+    <div class="item" style="--deg:37"></div>
+    <div class="item" style="--deg:38"></div>
+    <div class="item" style="--deg:39"></div>
+    <div class="item" style="--deg:40"></div>
+    <div class="item" style="--deg:41"></div>
+    <div class="item" style="--deg:42"></div>
+    <div class="item" style="--deg:43"></div>
+    <div class="item" style="--deg:44"></div>
+    <div class="item" style="--deg:45"></div>
+    <div class="item" style="--deg:46"></div>
+    <div class="item" style="--deg:47"></div>
+    <div class="item" style="--deg:48"></div>
+    <div class="item" style="--deg:49"></div>
+    <div class="item" style="--deg:50"></div>
+    <div class="item" style="--deg:51"></div>
+    <div class="item" style="--deg:52"></div>
+    <div class="item" style="--deg:53"></div>
+    <div class="item" style="--deg:54"></div>
+    <div class="item" style="--deg:55"></div>
+    <div class="item" style="--deg:56"></div>
+    <div class="item" style="--deg:57"></div>
+    <div class="item" style="--deg:58"></div>
+    <div class="item" style="--deg:59"></div>
+    <div class="item" style="--deg:60"></div>
+    <div class="sec"></div>
+    <div class="min"></div>
+    <div class="hour"></div>
+    <div class="dot"></div>
+  </div>
+  <footer>
+    <span>Copyright reserved &copy;2023-2024</span>
+    <img src="../../imgs/avatar.jpg" alt="">
+    <span>https://glpla.github.io</span>
+  </footer>
+  <script src="./js/clock.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+:root {
+  --aside-w: 20%;
+  --aside-bg-color: #fed;
+  --padding: 2rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+ul {
+  list-style: none;
+}
+
+summary {
+  display: block;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+
+summary::before {
+  content: '+';
+}
+
+details[open] summary::before {
+  content: '-';
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary+ul li {
+  cursor: pointer;
+}
+
+summary+ul li:hover {
+  background: #f40;
+  color: #fff;
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--aside-w);
+  height: 100vh;
+  background-color: var(--aside-bg-color);
+  padding: var(--padding);
+  overflow-y: auto;
+}
+
+.main {
+  width: calc(100vw - var(--aside-w));
+  margin-left: var(--aside-w);
+  padding: var(--padding);
+  scroll-padding-top: var(--padding);
+}
+
+h1[id] {
+  margin: var(--padding) 0;
+  font-weight: 600;
+}
+
+h1[id]:target {
+  border-bottom: 1px solid #f40;
+}
+
+a[href] {
+  display: block;
+  text-decoration: none;
+  padding: 0.2rem;
+}
+
+a[href]:hover {
+  color: #f40;
+  background-color: #fff;
+}
+
+aside details:not(:first-child) summary {
+  margin-top: calc(var(--padding)/2);
+}
+
+p {
+  margin-bottom: var(--padding);
+  text-align: justify;
+}

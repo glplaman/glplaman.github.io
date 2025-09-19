@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代办事项 Todo</title>
+  <link rel="stylesheet" href="./css/todo.css">
+</head>
+
+<body>
+  <div class="msg-box">
+    <h1>Message Me</h1>
+    <form class="input-field" action="">
+      <input type="text" placeholder="Message here, Press Enter to submit" maxlength="20" id='msg' required>
+      <button id="sub-btn" class="sub-btn"><span class="iconfont icon-plus"></span></button>
+    </form>
+    <ul class="msg-list" id='list'>
+    </ul>
+    <div class="footer">
+      <span>You have <span id="num">0</span> items.</span>
+      <button id="clear-btn" class="clear-btn">Clear All</button>
+    </div>
+  </div>
+  <div class="modal-box" id="modal-box">
+    <div class="modal">
+      <div class="header">Tips</div>
+      <div class="cont">确定要删除所有数据吗？</div>
+      <div class="btns">
+        <button class="btn" id="confirm-btn">confirm</button>
+        <button class="btn" id="cancel-btn">cancle</button>
+      </div>
+      <span class="close-btn" id="close-btn">&times;</span>
+    </div>
+  </div>
+  <script>
+    let listArr;
+    let msg = document.querySelector('#msg');
+    let form = document.querySelector('form');
+    let subBtn = document.querySelector('#sub-btn');
+    let clearBtn = document.querySelector('#clear-btn');
+    let list = document.querySelector('#list');
+    let num = document.querySelector('#num');
+
+    let modalBox = document.querySelector('#modal-box');
+    let confirmBtn = document.querySelector('#confirm-btn');
+    let cancleBtn = document.querySelector('#cancel-btn');
+    let closeBtn = document.querySelector('#close-btn');
+
+    showList();
+
+    msg.addEventListener('keyup', () => {
+      if (msg.value.trim() == '') {
+        subBtn.classList.remove('msg-active');
+      } else {
+        subBtn.classList.add('msg-active');
+      }
+    })
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let userIpt = msg.value;
+      listArr = JSON.parse(localStorage.getItem('msgs')) || [];
+      listArr.unshift(userIpt)
+      localStorage.setItem('msgs', JSON.stringify(listArr));
+      form.reset();
+      subBtn.classList.remove('msg-active');
+      showList();
+    })
+
+    clearBtn.addEventListener('click', () => {
+      modalBox.classList.toggle('active')
+    })
+
+    modalBox.addEventListener('click', (e) => {
+      // if (e.target.id == 'modal-box') {
+      //   modalBox.classList.remove('active')
+      // }
+      if (e.target == modalBox) {
+        modalBox.classList.remove('active')
+      }
+    })
+    closeBtn.addEventListener('click', () => {
+      modalBox.classList.remove('active')
+    })
+    cancleBtn.addEventListener('click', () => {
+      modalBox.classList.remove('active')
+    })
+    confirmBtn.addEventListener('click', () => {
+      modalBox.classList.remove('active')
+      clearList();
+    })
+
+    function del(ind) {
+      listArr = JSON.parse(localStorage.getItem('msgs')) || [];
+      listArr.splice(ind, 1);
+      localStorage.setItem('msgs', JSON.stringify(listArr));
+      showList();
+    }
+
+    function showList() {
+      listArr = JSON.parse(localStorage.getItem('msgs')) || [];
+      let cont = '';
+      listArr.forEach((item, index) => {
+        // +“（”+index+")"
+        console.log(item, index);
+        cont += `<li>${item}<span onclick="del(${index})" class="iconfont icon-trash-alt"></span></li>`;
+      })
+      list.innerHTML = cont;
+      num.innerHTML = listArr.length;
+      if (listArr.length) {
+        clearBtn.classList.add('msg-active');
+      } else {
+        clearBtn.classList.remove('msg-active');
+      }
+    }
+
+    function clearList() {
+      listArr = [];
+      localStorage.clear();
+      showList();
+    }
+  </script>
+</body>
+
+</html>

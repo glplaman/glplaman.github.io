@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url(imgs/cover.jpg) no-repeat;
+      background-size: cover;
+    }
+
+    .wrap {
+      width: 80%;
+      max-width: 500px;
+      height: 40%;
+      transform-style: preserve-3d;
+      perspective: 800px;
+    }
+
+    .card-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: .6s;
+    }
+
+    .card-box>div {
+      box-sizing: border-box;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      text-transform: capitalize;
+      backface-visibility: hidden;
+    }
+
+    .card-f {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(43, 61, 79, 0.5);
+      font-size: 1.4rem;
+      border-radius: 1rem;
+    }
+
+    .card-b {
+      padding: 1rem;
+      line-height: 2;
+      background: rgb(39, 174, 96);
+      transform: rotateX(180deg);
+      border-radius: 1rem;
+    }
+
+    .card-b i {
+      line-height: 2;
+      font-size: 1rem;
+    }
+
+    .wrap:hover .card-box {
+      transform: rotateX(180deg);
+    }
+
+    .card-b .user {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-b .user .iconfont {
+      font-size: 3.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card-box">
+      <div class="card-f">hover for more</div>
+      <div class="card-b">
+        <div class="card user">
+          <span class="iconfont">&#xe841;</span>
+          <span>Cnplaman</span>
+        </div>
+        <div class="card">
+          <span class="iconfont">&#xe81f;</span>
+          <span>+86 137 0773 5481</span>
+        </div>
+        <div class="card">
+          <span class="iconfont">&#xe7fe;</span>
+          <span>1942194789@qq.com</span>
+        </div>
+        <div class="card">
+          <span class="iconfont">&#xe80e;</span>
+          <span>Room 2114</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

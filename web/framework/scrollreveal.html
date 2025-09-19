@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScrollReveal</title>
+  <base target="_blank">
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body>
+  <header>
+    <h1>滚动显示</h1>
+    <span>&commat;ScrollReveal</span>
+  </header>
+  <dl>
+    <dd>
+      <div>随着屏幕的滚动，逐渐显示指定内容</div>
+      <div>可以指定类型丰富的显示效果</div>
+      <div>无法操作伪元素</div>
+      <div class="tips">应用动画时，可能会撑开容器，注意设置溢出隐藏或最大宽度</div>
+    </dd>
+    <dt>获取库文件</dt>
+    <dd class="sn">
+      <div>进入 <a href="https://ScrollRevealjs.org/">官网 - scrollrevealjs</a>，使用提供的在线资源</div>
+      <pre>&lt;script src="https://unpkg.com/scrollreveal"&gt;&lt;/script&gt;</pre>
+      <div>使用 <a href="https://cdnjs.com/">cdnjs</a> ，查找 ScrollReveal 并使用</div>
+      <pre>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/scrollReveal.js/4.0.9/scrollreveal.min.js"&gt;&lt;/script&gt;</pre>
+      <div>使用老师提供的本地资源 <a href="/utils/lib/scrollreveal.min.js" title="单击下载">scrollreveal.min.js</a>，单击下载并引入</div>
+      <div>进入 <a href="https://scrollrevealjs.org/">官网 - scrollrevealjs</a> 对应的 <a
+          href="https://github.com/jlmakes/scrollreveal">Github - scrollreveal</a> → dist → scrollreveal.min.js → raw →
+        另存为，然后在项目中引入</div>
+    </dd>
+    <dt>基本使用</dt>
+    <dd class="sn">
+      <div>配置 - 实例化</div>
+      <p>以 JSON 值对的形式，为实例和元素指定选项，设置丰富的显示效果；涉及到的时间单位是毫秒 ms</p>
+      <p>区分实例配置和元素配置</p>
+      <p>可以为实例统一指定，再单独为特定元素增加或修改</p>
+      <table>
+        <caption>实例选项</caption>
+        <tr>
+          <th>属性</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>distance</td>
+          <td>距离</td>
+        </tr>
+        <tr>
+          <td>delay</td>
+          <td>延迟显示时间</td>
+        </tr>
+        <tr>
+          <td>duration</td>
+          <td>持续时间</td>
+        </tr>
+        <tr>
+          <td>origin</td>
+          <td>统一指定显示来向：top | right | bottom | left</td>
+        </tr>
+        <tr>
+          <td>reset</td>
+          <td>每次触发都显示效果</td>
+        </tr>
+      </table>
+      <table>
+        <caption>元素选项</caption>
+        <tr>
+          <th>属性</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>delay</td>
+          <td>延迟显示时间</td>
+        </tr>
+        <tr>
+          <td>interval</td>
+          <td>多个元素时，显示的间隔</td>
+        </tr>
+        <tr>
+          <td>origin</td>
+          <td>单独指定显示来向：top | right | bottom | left</td>
+        </tr>
+      </table>
+      <pre>
+const sr = ScrollReveal({
+    distance: '40px',
+    duration: 2000,
+    delay: 400,
+    reset: true
+})</pre>
+      <div>应用到元素</div>
+      <p>可以指定/追加新属性</p>
+      <pre>
+sr.reveal('.banner-item', {
+    interval: 100
+})
+
+sr.reveal('.i0', {
+    origin: 'top'
+})
+</pre>
+      <p>也可以应用到多个类；多个类以逗号,区分</p>
+      <pre>
+sr.reveal('.i4, .breath-item, .info-item', {
+    origin: 'bottom',
+    interval: 100
+})</pre>
+    </dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 显示指定元素；先写配置再应用到实例 -
+      通过展开并追加属性可以为不同的元素应用不同的时间间隔</dd>
+    <dd>
+      <div>这里使用先指定配置参数，再使用静态方法操作元素</div>
+      <pre>
+const revealOption = {
+  delay: 300,
+  distance: "50px",
+  duration: 500,
+  easing: "ease-in-out",
+  origin: "bottom",
+};
+
+ScrollReveal().reveal(".swiper-info", { 
+  ...revealOption,
+   interval: 350
+});</pre>
+    </dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] 显示完毕后执行数字动画 - <a href="../demo/companies.html">个人网站</a>；同时使用 <a
+        href="./anime.html">Anime.js库</a></dd>
+    <dd>
+      <pre>
+&lt;div class="data-item"&gt;
+  &lt;input type="text" class="num" value="234" data-val="234"&gt;
+&lt;/div&gt;
+&lt;div class="data-item"&gt;
+  &lt;input type="text" class="num" value="168" data-val="168"&gt;
+&lt;/div&gt;</pre>
+      <pre>
+ScrollReveal().reveal(".data-item", {
+  afterReveal: (el) => {
+    let ipt = el.querySelector('.num');
+    console.log('ipt', ipt);
+    anime({
+      targets: ipt,
+      value: [0, ipt.value],
+      duration: 2000,
+      round: 1,
+      easing: 'easeInExpo',
+    })
+  }
+});</pre>
+    </dd>
+    <dd class="tips">
+      <div>是通过 transform 实现，如果还需要使用 :hover 触发 transform，应使用 !important 提权</div>
+    </dd>
+    <dd>
+      <pre>
+.team-item:hover {
+  transform: translateY(-10px) scale(1.02) !important;
+  //
+}</pre>
+    </dd>
+    <dd>[ <span class="iconfont icon-keyboard"></span> ] <a href="../opening.html">教学评价</a> - 从缩放0.5和透明0逐一放到完全显示</dd>
+    <dd>
+      <div>ScrollReveal 无法操作伪元素，所以使用了多个DOM元素</div>
+      <pre>
+ScrollReveal().reveal('.eva-bar', { 
+  scale: 0.5, 
+  opacity: 0, 
+  reset: true, 
+  interval: 200 
+});      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/lib/scrollreveal.min.js"></script>
+  <script>
+    const sr = ScrollReveal({
+      distance: '40px',
+      duration: 500,
+      delay: 100,
+      reset: true
+    })
+    sr.reveal('table tr', {
+      interval: 200,
+    })
+  </script>
+</body>

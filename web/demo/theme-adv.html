@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scheme</title>
+  <style>
+    /* 包含匹配；元素可能还有其它内联样式 */
+    :root[style*="--theme: light"] {
+      --theme-color: #f40;
+      color-scheme: light;
+    }
+
+    :root[style*="--theme: dark"] {
+      --theme-color: #089;
+      color-scheme: dark;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --theme: light;
+        color-scheme: light;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --theme: dark;
+        color-scheme: dark;
+      }
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes move-in {
+      from {
+        translate: 0 -100%;
+      }
+
+      to {
+        translate: 0 0;
+      }
+    }
+
+    /* @keyframes move-out {
+      from {
+        translate: 0 0;
+      }
+
+      to {
+        translate: 0 -100%;
+      }
+    } */
+
+    @keyframes circle-in {
+      from {
+        clip-path: circle(0% at 50% 50%);
+      }
+
+      to {
+        clip-path: circle(100% at 50% 50%);
+      }
+    }
+
+    @keyframes circle-top-in {
+      from {
+        clip-path: circle(0% at 50% 0%);
+      }
+
+      to {
+        clip-path: circle(100% at 50% 0%);
+      }
+    }
+
+    @keyframes circle-top-right-in {
+      from {
+        clip-path: circle(0% at 100% 0%);
+      }
+
+      to {
+        clip-path: circle(160% at 100% 0%);
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation-delay: 1s;
+    }
+
+    ::view-transition-new(root) {
+      animation: move-in 1s;
+      animation-timing-function: linear(0, 0.223 11.7%, 0.392 18.4%, 0.619 24.8%, 0.999 33.3%, 0.748 40%, 0.691 42.7%, 0.672 45.3%, 0.69 47.8%, 0.743 50.4%, 0.999 57.7%, 0.883 61.8%, 0.856 63.6%, 0.848 65.3%, 0.855 67%, 0.879 68.8%, 0.999 74.5%, 0.953 77.5%, 0.94 80.2%, 0.95 82.7%, 1 88.2%, 0.987 91.9%, 1);
+    }
+
+    /* apply */
+    body {
+      color-scheme: var(--theme, light);
+      background-color: var(--theme-color);
+    }
+
+    /* other */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .item {
+      width: 100%;
+      max-width: 350px;
+    }
+  </style>
+</head>
+
+<body>
+  <select name="" id="select">
+    <option value="system">system</option>
+    <option value="light">light</option>
+    <option value="dark">dark</option>
+  </select>
+  <h1>Scheme</h1>
+  <ol>
+    <li class="item">为 &lt;html &gt; 添加内联变量 --theme，其值有 &lt;select&gt; 决定</li>
+    <li class="item">Sint officiis maiores dolore aperiam voluptate minus asperiores sequi facere?</li>
+    <li class="item">Exercitationem iusto repellendus eligendi voluptatem deserunt, quos totam id quibusdam.</li>
+    <li class="item">Fugit voluptate quisquam magnam necessitatibus culpa nesciunt quas. Magnam, in.</li>
+    <li class="item">Provident nam aperiam repellat quidem ullam ut! Obcaecati, optio eveniet?</li>
+    <li class="item">Culpa est possimus dignissimos quos obcaecati earum ex, repudiandae deserunt.</li>
+    <li class="item">Sint maiores, eum sed voluptas amet a nihil quo recusandae?</li>
+    <li class="item">Perspiciatis animi nam ullam pariatur odio velit nesciunt, natus suscipit?</li>
+  </ol>
+</body>
+<script>
+  const select = document.getElementById('select');
+
+  select.addEventListener('change', (e) => {
+    // 兼容性处理
+    if (!document.startViewTransition) {
+      updateTheme(e.target.value)
+      return
+    }
+    document.startViewTransition(() => {
+      updateTheme(e.target.value)
+    })
+  });
+
+  function updateTheme(theme) {
+    if (theme === 'system') {
+      document.documentElement.style.removeProperty('--theme')
+    } else {
+      document.documentElement.style.setProperty('--theme', theme)
+    }
+  }
+</script>
+
+</html>

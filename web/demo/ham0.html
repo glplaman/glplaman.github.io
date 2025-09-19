@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ham Media</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4078036_62ehidgkie7.css">
+  <style>
+    :root {
+      --main-color: #ffa040;
+      --p-m-g: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #eee;
+    }
+
+    nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--main-color);
+      color: #fff;
+      padding: 0 1rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-close,
+    .nav-toggle {
+      display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+      .nav-menu {
+        position: fixed;
+        top: -120%;
+        left: 0;
+        width: 100%;
+        padding: 3rem 1rem;
+        background-color: var(--main-color);
+        transition: 0.5s;
+      }
+
+      .nav-menu.active {
+        top: 0;
+      }
+
+      .nav-menu {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-close {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="logo">logo</div>
+    <div class="nav-menu" id="nav-menu">
+      <a href="#home">Lorem.</a>
+      <a href="#info">Quaerat!</a>
+      <a href="#about">Assumenda.</a>
+      <a href="#team">Laborum.</a>
+      <a href="#blog">Animi?</a>
+      <div class="nav-close" id="nav-close"><span class="iconfont icon-cross"></span></div>
+    </div>
+    <div class="nav-toggle" id="nav-toggle"><span class="iconfont icon-menu"></span></div>
+  </nav>
+  <script>
+    const close = document.querySelector('#nav-close')
+    const toggle = document.querySelector('#nav-toggle')
+    const menu = document.querySelector('#nav-menu')
+    const navs = document.querySelectorAll('.nav-menu a')
+    close.addEventListener('click', () => {
+      menu.classList.remove('active')
+    })
+    toggle.addEventListener('click', () => {
+      menu.classList.add('active')
+    })
+    navs.forEach(nav => {
+      nav.addEventListener('click', () => {
+        menu.classList.remove('active')
+      })
+    })
+  </script>
+</body>
+
+</html>

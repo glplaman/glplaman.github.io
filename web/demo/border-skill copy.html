@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技能条 Border</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_3834292_zxqb2r9tra.css);
+
+    :root {
+      --color: 100px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+    }
+
+    .skill {
+      width: 350px;
+      margin: auto;
+    }
+
+    .bar {
+      position: relative;
+      height: 20px;
+      border-radius: 10px;
+      border: 2px solid var(--color);
+      padding: 2px;
+      margin-bottom: 3rem;
+    }
+
+    .bar::before {
+      content: var(--info);
+      position: absolute;
+      left: 0;
+      top: -200%;
+      font-family: 'iconfont';
+      color: var(--color);
+      font-size: 24px;
+    }
+
+    .bar::after {
+      content: var(--num)'%';
+      position: absolute;
+      right: 0;
+      top: -150%;
+    }
+
+    .per {
+      width: calc(var(--per)*1%);
+      height: 100%;
+      /* background-color: var(--color); */
+      background-image: linear-gradient(to right, var(--color), var(--color2));
+      border-radius: 20px;
+    }
+
+    .demo::before {
+      content: var(--info);
+      font-family: 'iconfont';
+    }
+  </style>
+</head>
+
+<body>
+  <div class="skill">
+    <div class="bar" style="--num:'85';--color:#089;--color2:#0896;--info:'\e881';--per:85">
+      <div class="per"></div>
+    </div>
+    <div class="bar" style="--num:'90';--color:#890;--color2:#8906;--info:'\e69a';--per:90">
+      <div class="per"></div>
+    </div>
+    <div class="bar" style="--num:'70';--color:#f40;--color2:#f406;--info:'\e72e';--per:70">
+      <div class="per"></div>
+    </div>
+    <div class="bar" style="--num:'80';--color:#908;--color2:#9086;--info:'\ec34';--per:80">
+      <div class="per"></div>
+    </div>
+  </div>
+</body>
+
+</html>

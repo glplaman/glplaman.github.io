@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>水滴 Drops</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .section {
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      background-color: #000;
+      filter: contrast(20);
+    }
+
+
+    .water {
+      position: relative;
+      width: 300px;
+      height: 120px;
+      margin: auto;
+      display: grid;
+      place-items: center;
+      filter: blur(10px);
+    }
+
+    .water::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 120px;
+      border-radius: 20px;
+      background-color: #fff;
+      z-index: 1;
+    }
+
+    .dot {
+      position: absolute;
+      width: 30px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background-color: #fff;
+      animation: drop 2s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes drop {
+      0% {
+        transform: translateY(calc(-60vh - 100%));
+      }
+
+      25% {
+        transform: translateY(calc(-100%));
+      }
+
+      50% {
+        transform: translateY(calc(0%));
+      }
+
+      75% {
+        transform: translateY(calc(100%));
+      }
+
+      100% {
+        transform: translateY(calc(60vh - 100%));
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section">
+    <div class="water">water</div>
+  </div>
+  <script>
+    const water = document.querySelector('.water');
+    let dot;
+    setInterval(() => {
+      dot = document.createElement('div');
+      dot.setAttribute('class', 'dot');
+      dot.style.left = Math.random() * water.clientWidth + 'px';
+      dot.style.width = `${Math.random() * 100 + 10}px`;
+      water.appendChild(dot);
+      setTimeout(() => {
+        dot.remove();
+      }, 2000)
+    }, 200)
+  </script>
+</body>
+
+</html>

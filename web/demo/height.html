@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>等高布局 Height</title>
+  <style>
+    :root {
+      --main-color: #34495e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+    dt {
+      background-color: var(--main-color);
+      color: #fff;
+      line-height: 40px;
+      padding: 0 10px;
+    }
+
+    /* flex */
+    .flex {
+      display: flex;
+      gap: 10px;
+    }
+
+    .flex .left {
+      flex: 1;
+      background-image: url(https://glpla.github.io/imgs/flag.jpg);
+      background-size: cover;
+      min-height: 200px;
+    }
+
+    .flex .right {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* gird */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 10px;
+    }
+
+    .grid .left {
+      background-image: url(https://glpla.github.io/imgs/flag.jpg);
+      background-size: cover;
+      min-height: 200px;
+    }
+
+    p {
+      text-indent: 2em;
+      margin-bottom: 1em;
+      text-align: justify;
+    }
+
+    .last {
+      margin-bottom: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    @media screen and (max-width:768px) {
+      .flex {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <dl>
+      <dt>特点</dt>
+      <dd>1.左右等高</dd>
+      <dd>2.内容无空白</dd>
+      <dd>3.如果有文本，则溢出打点</dd>
+      <dd>4.移动端上下布局</dd>
+      <dt>弹性盒子布局 flex</dt>
+      <dd class="flex">
+        <div class="left"></div>
+        <div class="right">
+          <h1>Lorem, ipsum.</h1>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem aliquam placeat maiores itaque.
+            Blanditiis suscipit quis ut. Nisi error laboriosam quam corrupti molestias repellendus quisquam provident
+            vel temporibus, nemo officiis?</p>
+          <p>Vero expedita veritatis cumque ipsum doloribus labore facilis rerum cum culpa magnam mollitia omnis nulla
+            earum, aperiam, blanditiis cupiditate nemo tenetur reiciendis quam. Cupiditate ipsa quod, libero debitis
+            alias minima.</p>
+          <p class="last">Nobis tempore a vel cumque nesciunt quos, iure necessitatibus quidem veritatis animi, ipsum
+            exercitationem!
+            Vero, consequatur aperiam. In, totam ab facere facilis obcaecati non, explicabo recusandae quas accusamus,
+            maiores commodi!</p>
+        </div>
+      </dd>
+      <dt>网格布局 grid</dt>
+      <dd class="grid">
+        <div class="left"></div>
+        <div class="right">
+          <h1>Lorem, ipsum.</h1>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem aliquam placeat maiores itaque.
+            Blanditiis suscipit quis ut. Nisi error laboriosam quam corrupti molestias repellendus quisquam provident
+            vel temporibus, nemo officiis?</p>
+          <p>Vero expedita veritatis cumque ipsum doloribus labore facilis rerum cum culpa magnam mollitia omnis nulla
+            earum, aperiam, blanditiis cupiditate nemo tenetur reiciendis quam. Cupiditate ipsa quod, libero debitis
+            alias minima.</p>
+          <p class="last">Nobis tempore a vel cumque nesciunt quos, iure necessitatibus quidem veritatis animi, ipsum
+            exercitationem!
+            Vero, consequatur aperiam. In, totam ab facere facilis obcaecati non, explicabo recusandae quas accusamus,
+            maiores commodi!</p>
+        </div>
+      </dd>
+      <dt>比较</dt>
+      <dd>1.flex虽然可以实现弹性布局，但是响应式开发必须使用媒体查询@media；grid不用</dd>
+      <dd>2.flex需要设置子项；grid不用</dd>
+    </dl>
+  </div>
+</body>
+
+</html>

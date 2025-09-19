@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类 Class</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <link rel="stylesheet" href="../../css/ts.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>类</h1>
+    <span>&commat;Class</span>
+  </header>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://www.tslang.cn/index.html">TypeScript</a></dd>
+    <dt>Overview</dt>
+    <dd>
+      <div>结构和接口差不多，是属性和方法的集合体</div>
+      <div>构造函数：特殊的方法</div>
+      <div>syntax</div>
+      <pre>
+class ClassName {
+  // 属性
+  propertyName: propertyType;
+
+  // 构造函数 - 可以指定默认值
+  constructor(param1: paramType, param2: paramType) {
+    // 初始化代码
+  }
+
+  // 方法
+  methodName(): returnType {
+    // 方法体
+  }
+}</pre>
+      <div>demo</div>
+      <pre>
+class Teacher {
+  age: number;
+  gender: string;
+  constructor(age: number = 24, gender: string = "male") {
+    this.age = age;
+    this.gender = gender;
+  }
+  sayHi() {
+    console.log("hi,there.");
+  }
+}</pre>
+    </dd>
+    <dt>implements</dt>
+    <dd>
+      <div>类和接口的关系可以用实现描述</div>
+      <div>类可以实现 implements 接口 - 接口是抽象的；类是具体的</div>
+      <div>类可以实现一个或多个接口</div>
+      <div>syntax</div>
+      <pre>
+interface InterfaceName {
+  propertyName: propertyType;
+  methodName(): returnType;
+}
+
+class ClassName implements InterfaceName {
+  propertyName: propertyType;
+
+  methodName(): returnType {
+    // 方法的具体实现
+  }
+}</pre>
+      <div>demo</div>
+      <pre>class Teacher implements Person{}</pre>
+      <pre>class Teacher implements Person, Teenager{}</pre>
+    </dd>
+    <dt>extends</dt>
+    <dd>
+      <div>类和类的关系可以用继承描述</div>
+      <div>可以继承一个或多个类</div>
+      <div>子类可以重写父类的方法，以提供特定的实现</div>
+      <div>子类可以添加新的属性和方法</div>
+      <div>子类可以使用 super 关键字来访问父类的构造函数和方法</div>
+      <div>syntax</div>
+      <pre>
+class ParentClass {
+  // 父类的属性和方法
+}
+
+class ChildClass extends ParentClass {
+  // 子类的属性和方法
+}</pre>
+      <div>demo</div>
+      <pre></pre>
+    </dd>
+    <dt>Polymorphism</dt>
+    <dd>
+      <div>允许对象以多种形式存在</div>
+      <div>通过继承和接口来实现</div>
+      <div>多态使得代码更加灵活和可扩展 - 允许不同的类以统一的方式进行处理</div>
+      <div>.方法重写 Method Overriding</div>
+      <div>.接口实现 Interface Implementation</div>
+      <div>.基类/父类引用指向子类对象</div>
+    </dd>
+  </dl>
+  <div class="chap">modifier</div>
+  <dl>
+    <dd>描述类成员变量、方法和构造函数的可访问性</dd>
+    <dt>public</dt>
+    <dd>
+      <div>默认的访问修饰符，表示该成员变量、方法或构造函数是公共的，可以在任何地方访问</div>
+    </dd>
+    <dt>private</dt>
+    <dd>
+      <div>表示该成员变量、方法或构造函数是私有的，只能在类的内部访问</div>
+      <div>子类也无法访问</div>
+    </dd>
+    <dt>protected</dt>
+    <dd>
+      <div>表示该成员变量、方法或构造函数只能在类及其子类中访问</div>
+    </dd>
+    <dt>static</dt>
+    <dd>
+      <div>静态成员 - 无须实例化即可访问 / 通过类名直接访问</div>
+      <div>适合用于工具类或实用函数</div>
+      <div>构造函数无法使用 static 修饰</div>
+      <div>每个类默认有一个 name 属性，注意规避</div>
+    </dd>
+  </dl>
+  <div class="chap">Abstract</div>
+  <dl>
+    <dt>抽象类</dt>
+    <dd>
+      <div>通常用于定义其他类的基类</div>
+      <div>使用 abstract 定义</div>
+      <div>抽象类可以包含抽象方法（没有实现的方法）和具体方法（有实现的方法）；抽象方法必须在派生类中实现</div>
+      <pre>
+abstract class Animal {
+  // 抽象属性
+  abstract name: string;
+
+  // 抽象方法
+  abstract makeSound(): void;
+
+  // 具体方法
+  move(): void {
+    console.log("Moving along...");
+  }
+}
+
+// 尝试实例化抽象类会报错
+// const animal = new Animal(); // Error: Cannot create an instance of an abstract class.</pre>
+      <div>派生类实现抽象类</div>
+      <pre>
+class Dog extends Animal {
+  name: string;
+
+  constructor(name: string) {
+    super();
+    this.name = name;
+  }
+
+  makeSound(): void {
+    console.log("Woof! Woof!");
+  }
+}
+
+const dog = new Dog("Buddy");
+dog.makeSound(); // 输出: Woof! Woof!
+dog.move(); // 输出: Moving along...</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

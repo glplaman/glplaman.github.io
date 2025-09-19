@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DNA</title>
+  <style>
+    :root {
+      --w: 300px;
+      --ball-size: 20px;
+      --offset: calc(var(--w)/2);
+      --num: 36;
+      --bg-color: #000;
+      --txt-color: #fff;
+      --dur: 2s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: var(--bg-color);
+      color: var(--txt-color);
+      transition: background-color 0.5s, color 0.5s 0.2s;
+    }
+
+    .wrap {
+      position: relative;
+      width: var(--w);
+      height: var(--w);
+      perspective: 1000px;
+    }
+
+    .ball {
+      position: absolute;
+      width: var(--ball-size);
+      height: var(--ball-size);
+      left: 50%;
+      top: -10px;
+      margin-left: -10px;
+      transform-origin: center var(--offset);
+      transform-style: preserve-3d;
+      transform: rotateZ(calc(var(--deg)*360deg/var(--num)));
+    }
+
+    .ball::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #f40;
+      animation: down var(--dur) calc(-1*var(--dur)/var(--num)*var(--deg)*6) infinite;
+    }
+
+    .ball::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: #fff;
+      animation: up var(--dur) calc(-1*var(--dur)/var(--num)*var(--deg)*6) infinite;
+    }
+
+    @keyframes down {
+      0% {
+        animation-timing-function: ease-in;
+      }
+
+      25% {
+        /* transform: translateY(100%) translateZ(20px); */
+        transform: translate3d(0, 100%, 20px);
+        animation-timing-function: ease-out;
+      }
+
+      50% {
+        /* transform: translateY(200%) translateZ(0px); */
+        transform: translate3d(0, 200%, 0px);
+        animation-timing-function: ease-in;
+      }
+
+      75% {
+        /* transform: translateY(100%) translateZ(-20px); */
+        transform: translate3d(0, 100%, -20px);
+        animation-timing-function: ease-out;
+      }
+    }
+
+    @keyframes up {
+      0% {
+        animation-timing-function: ease-in;
+      }
+
+      25% {
+        /* transform: translateY(-100%) translateZ(-20px); */
+        transform: translate3d(0, -100%, -20px);
+        animation-timing-function: ease-out;
+      }
+
+      50% {
+        /* transform: translateY(-200%) translateZ(0px); */
+        transform: translate3d(0, -200%, 0px);
+        animation-timing-function: ease-in;
+      }
+
+      75% {
+        /* transform: translateY(-100%) translateZ(20px); */
+        transform: translate3d(0, -100%, 20px);
+        animation-timing-function: ease-out;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="ball" style="--deg:0"></div>
+    <div class="ball" style="--deg:1"></div>
+    <div class="ball" style="--deg:2"></div>
+    <div class="ball" style="--deg:3"></div>
+    <div class="ball" style="--deg:4"></div>
+    <div class="ball" style="--deg:5"></div>
+    <div class="ball" style="--deg:6"></div>
+    <div class="ball" style="--deg:7"></div>
+    <div class="ball" style="--deg:8"></div>
+    <div class="ball" style="--deg:9"></div>
+    <div class="ball" style="--deg:10"></div>
+    <div class="ball" style="--deg:11"></div>
+    <div class="ball" style="--deg:12"></div>
+    <div class="ball" style="--deg:13"></div>
+    <div class="ball" style="--deg:14"></div>
+    <div class="ball" style="--deg:15"></div>
+    <div class="ball" style="--deg:16"></div>
+    <div class="ball" style="--deg:17"></div>
+    <div class="ball" style="--deg:18"></div>
+    <div class="ball" style="--deg:19"></div>
+    <div class="ball" style="--deg:20"></div>
+    <div class="ball" style="--deg:21"></div>
+    <div class="ball" style="--deg:22"></div>
+    <div class="ball" style="--deg:23"></div>
+    <div class="ball" style="--deg:24"></div>
+    <div class="ball" style="--deg:25"></div>
+    <div class="ball" style="--deg:26"></div>
+    <div class="ball" style="--deg:27"></div>
+    <div class="ball" style="--deg:28"></div>
+    <div class="ball" style="--deg:29"></div>
+    <div class="ball" style="--deg:30"></div>
+    <div class="ball" style="--deg:31"></div>
+    <div class="ball" style="--deg:32"></div>
+    <div class="ball" style="--deg:33"></div>
+    <div class="ball" style="--deg:34"></div>
+    <div class="ball" style="--deg:35"></div>
+  </div>
+</body>
+
+</html>
