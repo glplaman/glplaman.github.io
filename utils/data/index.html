@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rank Admin</title>
+  <link rel="stylesheet" href="../css/reset2024.css">
+  <link rel="stylesheet" href="../css/common2024.css">
+  <link rel="stylesheet" href="../css/sn.css">
+  <style>
+    input,
+    button {
+      width: 100%;
+      height: 40px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      font: inherit;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      color: #fff;
+      margin-bottom: 4rem;
+    }
+
+    input {
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+
+    dl {
+      padding: 6px;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 75px 65px 1fr 40px 40px 40px;
+      align-items: center;
+      gap: 6px;
+      text-transform: capitalize;
+      margin-bottom: 1rem;
+    }
+
+    .oper {
+      background-color: var(--tips-bold-color);
+      color: #fff;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .add-btn {
+      background-color: var(--warn-color);
+    }
+
+    i {
+      color: var(--warn-color);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>排行榜管理</h1>
+    <span>Admin</span>
+  </header>
+  <dl>
+    <dd> <input type="text" placeholder="sn" required name="usn" maxlength="8" id="usn"> </dd>
+    <dd> <input type="text" placeholder="name" required name="uname" maxlength="4" id="uname"> </dd>
+    <dd> <button class="add-btn">submit</button> </dd>
+    <dd class="item">
+      <span class='sn'>sn</span>
+      <span class='name'>name</span>
+      <span class='stars'>stars</span>
+      <span class="">inc</span>
+      <span class="">dec</span>
+      <span class="">del</span>
+    </dd>
+    <dd id="cont"></dd>
+  </dl>
+  <script>
+    let url = 'http://127.0.0.1:3000'
+    let cont = document.querySelector('#cont');
+    let addBtn = document.querySelector('.add-btn')
+    const deleteStu = (id) => {
+      fetch(url + `/cont/${id}`, {
+        method: 'delete',
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    const loadJson = () => {
+      let arr = []
+      let iconStr = "<i class='ri-star-fill'></i>"
+      fetch(url + '/cont')
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+          arr = [...res]
+          let str = arr.map((item, ind) => {
+            return `<div class='item'>
+          <span class='sn'>${item.sn}</span>
+          <span class='name'>${item.name}</span>
+          <div class='stars'>${iconStr.repeat(item.stars)}</div>
+          <span class="oper inc" data-num='${item.stars}' data-id='${item.id}'>+</span>    
+          <span class="oper dec" data-num='${item.stars}' data-id='${item.id}'>-</span>    
+          <span class="oper del" data-id='${item.id}'>D</span>    
+         </div>
+          `
+          }).join('')
+          cont.innerHTML = str;
+          let incBtn = document.querySelectorAll('.inc')
+          let decBtn = document.querySelectorAll('.dec')
+          let delBtn = document.querySelectorAll('.del')
+          incBtn.forEach(item => {
+            item.addEventListener('click', incStar)
+          })
+          decBtn.forEach(item => {
+            item.addEventListener('click', decStar)
+          })
+          delBtn.forEach(item => {
+            item.addEventListener('click', delStar)
+          })
+        })
+    }
+    const incStar = (e) => {
+      fetch(url + `/cont/${e.target.dataset.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          stars: parseInt(e.target.dataset.num) + 1
+        })
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    const decStar = (e) => {
+      let num = parseInt(e.target.dataset.num) - 1
+
+      if (num == 0) {
+        // delete
+        deleteStu(e.target.dataset.id)
+      }
+      else {
+        // dec
+        fetch(url + `/cont/${e.target.dataset.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            stars: num
+          })
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }
+    }
+    const delStar = (e) => {
+      let id = e.target.dataset.id
+      deleteStu(id);
+    }
+    loadJson();
+    addBtn.addEventListener('click', (e) => {
+      fetch(url + '/cont', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          sn: usn.value,
+          name: uname.value,
+          stars: 1
+        })
+      })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    })
+  </script>
+</body>
+
+</html>
