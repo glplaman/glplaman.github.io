@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频 Video</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <base target="_blank">
+  <style>
+    video {
+      display: block;
+      width: 320px;
+      margin: 1rem auto;
+      aspect-ratio: 16/9;
+    }
+
+    .pre {
+      width: 320px;
+      margin: 1rem auto;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Video</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">概述</li>
+      <li class="nav-item">H5属性</li>
+      <li class="nav-item">媒体属性</li>
+      <li class="nav-item">媒体事件</li>
+      <li class="nav-item">案例</li>
+    </ul>
+  </header>
+  <dl>
+    <dt>素材准备</dt>
+    <dd><span class="iconfont icon-layer-group"></span> 点击下载素材<a href="./video/alizee.mp4" download>Alizee.mp4</a>或自行准备
+    </dd>
+    <dt class="nav-cont">概述</dt>
+    <dd>.inline</dd>
+    <dd>.播放视频，如MP4、avi</dd>
+    <dd>.桌面端单击视频窗口可以触发播放或暂停；移动端不能，只能使用控制栏</dd>
+    <dt>语法</dt>
+    <dd>.默认情况下，没有播放控件，需要通过js控制</dd>
+    <dd>
+      <pre>&lt;video src=""&gt;&lt;/video&gt;</pre>
+    </dd>
+    <dd>.使用播放控件属性可视化控制</dd>
+    <dd>
+      <pre>&lt;video src="" controls&gt;&lt;/video&gt;</pre>
+    </dd>
+    <dt class="nav-cont">HTML属性</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>视频的URL，推荐使用MP4格式</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>自动播放</td>
+        </tr>
+        <tr>
+          <td>controls</td>
+          <td>播放控制条</td>
+        </tr>
+        <tr>
+          <td>loop</td>
+          <td>重复播放</td>
+        </tr>
+        <tr>
+          <td>muted</td>
+          <td>静音播放</td>
+        </tr>
+        <tr>
+          <td>preload</td>
+          <td>预加载；如果使用autoplay，则忽略该属性</td>
+        </tr>
+        <tr>
+          <td>poster</td>
+          <td>视频封面图像；可以使用gif；大小应该和视频保持一致</td>
+        </tr>
+      </table>
+    </dd>
+    <dt class="nav-cont">媒体属性</dt>
+    <dd>.大多和HTML标签属性一一对应</dd>
+    <dt class="nav-cont">媒体事件</dt>
+    <dd>.利用事件对视频流进行控制</dd>
+    <dd>
+      <pre>
+video.addEventListener('loadstart', () => {
+    console.log('1.loadstart');
+    console.log('duration', video.duration);
+})
+video.addEventListener('durationchange', () => {
+    console.log('2.durationchange');
+    console.log('duration', video.duration);
+})
+video.addEventListener('loadedmetadata', () => {
+    console.log('3.loadedmetadata');
+    console.log('duration', video.duration);
+})
+video.addEventListener('loadeddata', () => {
+    console.log('4.loadeddata');
+})
+video.addEventListener('progress', () => {
+    console.log('progress');
+})
+video.addEventListener('canplay', () => {
+    console.log('5.canplay');
+})
+video.addEventListener('play', () => {
+    console.log('play');
+})
+video.addEventListener('playing', () => {
+    console.log('playing');
+})
+video.addEventListener('pause', () => {
+    console.log('pause');
+})
+video.addEventListener('seeking', () => {
+    console.log('seeking');
+})
+video.addEventListener('seeked', () => {
+    console.log('seeked');
+})
+video.addEventListener('ended', () => {
+    console.log('ended');
+})
+video.addEventListener('error', () => {
+    console.log('error');
+})
+video.addEventListener('timeupdate', () => {
+    let current = video.currentTime;
+    console.log('timeupdate', current);
+})</pre>
+    </dd>
+    <dt>初始化样式</dt>
+    <dd>.默认情况下，视频采用16*9的比例，最小尺寸是640*360</dd>
+    <dd>.调整视频时，应保证比例不变</dd>
+    <dd>.以下各例均采用初始化样式</dd>
+    <dd>
+      <pre>
+video {
+    width: 100%;
+    aspect-ratio: 16/9;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">案例</div>
+  <dl>
+    <dt>[<span class="iconfont icon-keyboard"></span>] 视频的可视化使用</dt>
+    <dd>.添加controls属性方便可视化控制</dd>
+    <dd>.添加preload属性可以预加载视频，避免卡顿</dd>
+    <dd>.添加封面poster可以避免视频剪辑过程中头部的黑场/空白帧</dd>
+    <dd>
+      <video src="./video/alizee.mp4" controls preload poster="./imgs/alizee.jpg">您的浏览器不支持video标签</video>
+    </dd>
+    <dd>
+      <pre>
+&lt;video src="./video/alizee.mp4" controls preload poster="../imgs/alizee.jpg"&gt;您的浏览器不支持video标签&lt;/video&gt;</pre>
+    </dd>
+    <dt>[<span class="iconfont icon-keyboard"></span>] 视频预览和播放</dt>
+    <dd>.鼠标移入mouseover循环播放视频，同时显示播放控件，方便用户进一步操作</dd>
+    <dd>.鼠标移出mouseout暂停播放，取消播放控件</dd>
+    <dd>.元素获取要在window.onload之后</dd>
+    <dd>
+      <video src="./video/cup.mp4" class="pre"></video>
+    </dd>
+    <dd>
+      <pre>
+window.onload = function () {
+    let pre = document.querySelector(".pre");
+    pre.loop = true;
+    pre.addEventListener('mouseover', () => {
+        pre.controls = true;
+        pre.play();
+    })
+    pre.addEventListener('mouseout', () => {
+        pre.controls = false;
+        pre.pause();
+    })
+}</pre>
+    </dd>
+    <dt>[<span class="iconfont icon-keyboard"></span>] 更多案例</dt>
+    <dd>.<a href="./demo/hotline.html">响应式开发</a></dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>.视频 &lt;video&gt;的使用</dd>
+    <dd class="quote">
+      <div>. 为了首页加载速度，通常不直接在主页放置视频；而是通过链接的方式转到单独的页面播放</div>
+      <div>. 如果坚持在首页展示，一般设置 mute和 preload，同时禁止 autoplay</div>
+    </dd>
+    <dt>作业</dt>
+    <dd>1. 完成上述内容的练习</dd>
+    <dd>2. 制作个人视频，扩充并完善到个人网站</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+  <script>
+    window.onload = function () {
+      let pre = document.querySelector(".pre");
+      pre.loop = true;
+      pre.addEventListener('mouseover', () => {
+        pre.controls = true;
+        pre.play();
+      })
+      pre.addEventListener('mouseout', () => {
+        pre.controls = false;
+        pre.pause();
+      })
+    }
+  </script>
+</body>
+
+</html>

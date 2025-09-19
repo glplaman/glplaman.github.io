@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>渐变背景 Gradient Background</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/bg3.css">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Gradient Background</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">Linear-gradient</li>
+      <li class="nav-item">Radial-gradient</li>
+      <li class="nav-item">Conic-gradient</li>
+    </ul>
+  </header>
+  <dl>
+    <dt>复合属性</dt>
+    <dd>
+      <pre>background:bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">线性渐变 Linear-gradient</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 线性渐变Linear Gradients - 向下/向上/向左/向右/对角方向</dd>
+    <dd>. 创建一个线性渐变，至少定义两个色块</dd>
+    <dd>. 可以指定色块的大小/范围和方向</dd>
+    <dd>. 不特别指明都是从0开始，到100%结束；这俩个位置可以省略</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>background-image: linear-gradient(direction, color-stop1, color-stop2, ...);</pre>
+    </dd>
+    <dt>普通渐变</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 默认渐变：从上到下[180deg]</dd>
+    <dd class="basic default-bg"></dd>
+    <dd>
+      <pre>background-image: linear-gradient(#f40, #ff0);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 0deg渐变：从下到上，可以看出，它的0deg并不是向右的，而是朝上↑</dd>
+    <dd class="basic deg0-bg"></dd>
+    <dd>
+      <pre>background-image: linear-gradient(0deg, #f40, #ff0);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 45deg渐变：左下到右上</dd>
+    <dd class="basic deg45-bg"></dd>
+    <dd>
+      <pre>background-image: linear-gradient(0deg, #f40, #ff0);</pre>
+    </dd>
+    <dt>断点渐变</dt>
+    <dd>. 断点处使用相同的色块大小；使用0表示和前面色块的范围相同</dd>
+    <dd>. 利用角度实现切角的效果</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 切割色块</dd>
+    <dd class="price-bg"></dd>
+    <dd>
+      <pre>
+background-image: linear-gradient(135deg, 
+    #f40 50%, transparent 0);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 斑马渐变</dd>
+    <dd class="zebra-bg"></dd>
+    <dd>
+      <pre>
+background-image: linear-gradient(90deg, 
+    #f40 10%, 
+    transparent 0, transparent 20%, 
+    #f40, 0,  #f40 30%, 
+    transparent 0, transparent 40%, 
+    #f40, 0,  #f40 50%, 
+    transparent 0, transparent 40%, 
+    #f40, 0,  #f40 50%, 
+    transparent 0, transparent 60%, 
+    #f40, 0,  #f40 70%, 
+    transparent 0, transparent 80%, 
+    #f40, 0,  #f40 90%, 
+    transparent 0, transparent 100%)</pre>
+    </dd>
+    <dt>单切角渐变</dt>
+    <dd>. 断点渐变中，将其中一个色块设置为透明</dd>
+    <dd>. 可以是某个颜色到透明的渐变；也可以是透明到某个色块的渐变</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 右上切角</dd>
+    <dd class="rt-bg"></dd>
+    <dd>
+      <pre>linear-gradient(225deg, transparent 10px, #f40, 0, #f40 100%);</pre>
+    </dd>
+    <dt>多切角渐变</dt>
+    <dd>. 多个背景图片叠加而成</dd>
+    <dd>. 每个背景图片以,分隔</dd>
+    <dd>. 先出现的在上面，后出现的在后面</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 左上右上切角</dd>
+    <dd>. 两块：宽50%；高100%；一左一右放置</dd>
+    <dd>. 多个背景叠加，需要使用复合属性 background</dd>
+    <dd>. 不重复</dd>
+    <dd class="ltrt-bg"></dd>
+    <dd>
+      <pre>
+background: 
+    linear-gradient(135deg, transparent 10px, #f40, 0, #f40 100%),
+    linear-gradient(225deg, transparent 10px, #f40, 0, #f40 100%) right;
+background-size: 50% 100%;
+background-repeat: no-repeat;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 四角切角</dd>
+    <dd>. 4块；宽高各为50%；分别放置4个角</dd>
+    <dd>. 不重复</dd>
+    <dd class="basic all-bg"></dd>
+    <dd>
+      <pre>
+background: 
+    linear-gradient(45deg, transparent 10px, #f40, 0, #f40 100%) bottom left, 
+    linear-gradient(135deg, transparent 10px, #f40, 0, #f40 100%) top left,
+    linear-gradient(225deg, transparent 10px, #f40, 0, #f40 100%) top right, 
+    linear-gradient(325deg, transparent 10px, #f40, 0, #f40 100%) bottom right;
+background-size: 50% 50%;
+background-repeat: no-repeat;
+//background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%;
+//background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 遮罩背景-利用透明的渐变背景和图片背景实现</dd>
+    <dd>. 图片位于底层；透明的渐变位于上层，所以渐变要写在前面</dd>
+    <dd class="mask-bg"></dd>
+    <dd>
+      <pre>
+.mask-bg {
+  height: 300px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1)), url(../imgs/1.jpg) center/cover;
+}</pre>
+    </dd>
+
+    <dd class="quote">
+      <div><span class="iconfont icon-bell"></span></div>
+      <div>. 0deg是从下到上↑，顺时针方向增加；默认是180deg，从上到下↓</div>
+      <div>. 如果使用多个渐变，请使用复合属性background；可以单独指定不重复</div>
+      <div>. 实际运用时，先画个草图，大概确定下背景图片的组成、大小和位置，再使用样式实现</div>
+      <div>. 除此外，还有重复线性渐变：repeating-linear-gradient()</div>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">径向渐变 Radial-gradient</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 径向渐变Radial Gradients - 由它们的中心和到容器边或角的大小决定</dd>
+    <dd>. 同线性渐变一样：创建一个径向渐变，至少定义两个色块；可以定义每个色块的渐变范围；可以指定大小；可以定义多重径向渐变等等</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>background-image: radial-gradient([shape] [size] at position, start-color, ..., last-color);</pre>
+    </dd>
+    <dd>参数说明：</dd>
+    <dd>. shape： 椭圆eclipse[默认]，圆circle</dd>
+    <dd>. size：到容器的边或角的距离；closest-side、farthest-side、closest-corner、farthest-corner[默认]</dd>
+    <dd>. position：为中心；可以使用关键字指定位置；可以使用数字；可以百分比</dd>
+    <dd><img class="tips-bg" src="./imgs/bg0.png" alt=""></dd>
+    <dt>普通渐变</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 默认渐变：从中心向外</dd>
+    <dd class="basic default-radial"></dd>
+    <dd>
+      <pre>background-image: radial-gradient(#f40, #ff0);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 圆形从左上向外渐变</dd>
+    <dd class="basic lt-radial"></dd>
+    <dd>
+      <pre>background-image: radial-gradient(circle at left top, #f40, #ff0);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 圆形从左上向外断点渐变</dd>
+    <dd class="basic lt-clip-radial"></dd>
+    <dd>
+      <pre>background-image: radial-gradient(circle at top left, #f40 50%, #ff0 0);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 放置于右上角的50px的圆形</dd>
+    <dd class="basic rt-clip-radial"></dd>
+    <dd>
+      <pre>background-image: radial-gradient(circle at top left, #f40 50%, #ff0 0);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 底部弧度</dd>
+    <dd class="radial-basic single-radial"></dd>
+    <dd>
+      <pre>background-image: radial-gradient(at 0% 0%, transparent 71%, #f40 0);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 多重渐变-信息卡</dd>
+    <dd>. 可以使用background-image或background</dd>
+    <dd class="radial-basic ad-radial"></dd>
+    <dd>
+      <pre>
+background: 
+    radial-gradient(circle at -10% 10%, transparent 70%, rgba(255, 68, 0, 0.3) 0), 
+    radial-gradient(circle at 5% 20%, transparent 70%, rgba(255, 68, 0, 0.6) 0), 
+    radial-gradient(circle at 10% 10%, transparent 75%, rgb(255, 68, 0) 0);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 指定图形大小</dd>
+    <dd class="radial-basic size-bg"></dd>
+    <dd>
+      <pre>
+background: 
+    radial-gradient(30px circle at 0 0, transparent 50%, #f40 0),
+    radial-gradient(30px circle at 100% 0, transparent 50%, #f40 0) right top,
+    radial-gradient(30px circle at 100% 100%, transparent 50%, #f40 0) right bottom, 
+    radial-gradient(30px circle at 0% 100%, transparent 50%, #f40 0) left bottom;
+background-repeat: no-repeat;
+background-size: 50% 50%;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-bell"></span>]重复径向渐变：repeating-radial-gradient()</dd>
+  </dl>
+  <div class="chap nav-cont">锥向渐变 Conic-gradient</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 角度渐变</dd>
+    <dd>. 适合做圆锥图/饼状图</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>conic-gradient([from angle] [at position,] color degree, color degree, ...);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 圆锥图</dd>
+    <dd>. 从0到360deg的渐变</dd>
+    <dd>
+      <div class="basic pie0"></div>
+    </dd>
+    <dd>
+      <pre>
+.pie {
+    background-image: conic-gradient(#f3f3f3, #078);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 饼图</dd>
+    <dd>. 整个圆周划分3个区域：0-40deg、40-120deg、120-360deg</dd>
+    <dd>
+      <div class="basic pie1"></div>
+    </dd>
+    <dd>
+      <pre>
+.pie {
+    background-image: conic-gradient(
+        hsl(188, 100%, 40%) 0deg, 
+        hsl(188, 100%, 40%) 40deg, 
+        hsl(188, 100%, 27%) 40deg, 
+        hsl(188, 100%, 27%) 120deg, 
+        hsl(188, 100%, 20%) 120deg, 
+        hsl(188, 100%, 20%) 360deg);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">图像混和 Background-blend-mode</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>screen</td>
+          <td>滤色模式</td>
+        </tr>
+        <tr>
+          <td>overlay</td>
+          <td>叠加模式</td>
+        </tr>
+        <tr>
+          <td>darken</td>
+          <td>变暗模式</td>
+        </tr>
+        <tr>
+          <td>lighten</td>
+          <td>变亮模式</td>
+        </tr>
+        <tr>
+          <td>color-dodge</td>
+          <td>颜色减淡模式</td>
+        </tr>
+        <tr>
+          <td>saturation</td>
+          <td>饱和度模式</td>
+        </tr>
+        <tr>
+          <td>color</td>
+          <td>颜色模式</td>
+        </tr>
+        <tr>
+          <td>luminosity</td>
+          <td>亮度模式</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 图像融合</dd>
+    <dd>. 原始图片、遮罩图片和合成图片</dd>
+    <dd>. 遮罩图片请使用高对比度素材</dd>
+    <dd>. </dd>
+    <dd class="grid3">
+      <img src="./imgs/bg.jpg" alt="">
+      <img src="./imgs/mask0.jpg" alt="">
+      <div class="blend-img"></div>
+    </dd>
+    <dd>
+      <pre>
+.blend-img {
+    width: 320px;
+    height: 180px;
+    background: url(../imgs/bg.jpg), url(../imgs/mask.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-blend-mode: screen;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. 渐变背景的使用</dd>
+    <dt>作业</dt>
+    <dd>. 参照下图的设计，应用到个人网站，如信息介绍、导航背景等等</dd>
+    <dd class="home-flex">
+      <img src="./imgs/card0.png" alt="">
+      <img src="./imgs/card1.png" alt="">
+    </dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

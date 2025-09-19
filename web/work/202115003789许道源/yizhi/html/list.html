@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表 List</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/list.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;List</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">ordered list</li>
+      <li class="nav-item">unordered list</li>
+      <li class="nav-item">definition list</li>
+    </ul>
+  </header>
+  <div class="chap nav-cont">有序列表 ordered list</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. &lt;ol&gt;：无序列表 ordered list；block</dd>
+    <dd>. &lt;li&gt;：列表项，list item；block</dd>
+    <dd>. 元素按照一定规则排列，如：从小到大</dd>
+    <dd>. 可以按照数字、字母等顺序排序/编号</dd>
+    <dd>. 可以嵌套使用</dd>
+    <dd>. 使用较少</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>
+&lt;ol type="" start="" reversed&gt;
+    &lt;li&gt;&lt;/li&gt;
+    //... ...
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;</pre>
+    </dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>type</td>
+          <td>1：按数字；默认排序方式<br>
+            A：按大写字母<br>
+            a：按小写字母<br>
+            I：按大写罗马字母<br>
+            i：按小写罗马字母</td>
+        </tr>
+        <tr>
+          <td>start</td>
+          <td>起始值；只适用于数字排序</td>
+        </tr>
+        <tr>
+          <td>reversed</td>
+          <td>倒序；减到0会成为负数</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 从4开始排序</dd>
+    <dd>
+      <ol start=4>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ol>
+    </dd>
+    <dd>
+      <pre>
+&lt;ol start=4&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 从3开始倒序排序</dd>
+    <dd>
+      <ol start=3 reversed>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ol>
+    </dd>
+    <dd>
+      <pre>
+&lt;ol start=3 reversed&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 按照小写罗马字母排序</dd>
+    <dd>
+      <ol type="i">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ol>
+    </dd>
+    <dd>
+      <pre>
+&lt;ol type="i"&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 按照大写字母降序排序</dd>
+    <dd>
+      <ol type="A" reversed>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ol>
+    </dd>
+    <dd>
+      <pre>
+&lt;ol type="A" reversed&gt;
+    &lt;li&gt;list1&lt;/li&gt;
+    &lt;li&gt;... ...&lt;/li&gt;
+    &lt;li&gt;list5&lt;/li&gt;
+&lt;/ol&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">无序列表 unordered list</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. &lt;ul&gt;：无序列表 unordered list；block</dd>
+    <dd>. &lt;li&gt;：列表项，list item；block</dd>
+    <dd>. 元素彼此之间没有顺序</dd>
+    <dd>. 可以嵌套使用</dd>
+    <dd>. 可以使用点、方块、圆圈等不同的标记标识数据项</dd>
+    <dd>. 广泛用于 <span class="warn">导航</span> ：ul→li->a；结构清晰；避免被SEO降权</dd>
+    <dd>. &lt;ul&gt;默认有margin和padding，会破坏页面布局；通常取消其默认样式，再根据设计利用CSS重新指定样式，如：使用伪元素自定义列表标记</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>
+&lt;ul type=""&gt;
+    &lt;li&gt;&lt;/li&gt;
+    //... ...
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre>
+    </dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>type</td>
+          <td>disc：点<br>
+            square：方块<br>
+            circle：圆圈</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>样式初始化</dt>
+    <dd>. 以下示例均初始化列表样式</dd>
+    <dd>
+      <pre>
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}</pre>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 默认使用点标识：会破坏页面布局</dd>
+    <dd>
+      <ul style="list-style: unset;">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ul>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 使用 <a href="./pseudo.html">伪元素</a>自定义标记样式</dd>
+    <dd>1. 使用普通字符</dd>
+    <dd>
+      <ul class="ul-custom0">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ul>
+    </dd>
+    <dd>
+      <pre>
+.ul li::before {
+    content: '>';
+}
+</pre>
+    </dd>
+    <dd class="mt2"> 2. 使用 <a href="https://www.w3school.com.cn/cssref/css_entities.asp">CSS 实体</a>
+    </dd>
+    <dd>
+      <ul class="ul-custom1">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ul>
+    </dd>
+    <dd>
+      <pre>
+.ul li::before {
+    content: '\21E8';
+}
+</pre>
+    </dd>
+    <dd class="mt2">3. 使用 <a href="./background.html">背景图片</a></dd>
+    <dd>
+      <ul class="ul-custom2">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ul>
+    </dd>
+    <dd>
+      <pre>
+.ul li {
+    display: flex;
+    align-items: center;
+}
+
+.ul li::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background-image: url(../imgs/logo1.png);
+    background-size: cover;
+    border-radius: 50%;
+}</pre>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 导航设计 - 使用内部样式完善个人网站的锚点跳转</dd>
+    <dd>. hover时，使用文字下划线提示</dd>
+    <dd>. 后期使用伪元素可以设计更为丰富的效果，如伸缩、位移等</dd>
+    <dd>
+      <ul class="self-nav">
+        <li><a href="javascript:;">主页</a></li>
+        <li><a href="javascript:;">随笔</a></li>
+        <li><a href="javascript:;">作品</a></li>
+        <li><a href="javascript:;">美文</a></li>
+        <li><a href="javascript:;">推荐</a></li>
+      </ul>
+    </dd>
+    <dd>1. 使用导航标准结构 ul->li->a 调整个人网站</dd>
+    <dd>2. 初始化ul样式</dd>
+    <dd>3. 初始化a样式</dd>
+    <dd>4. 修改li样式：inline-block；填充padding</dd>
+    <dd>5. 其它样式设计</dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ]<a href="https://www.jd.com/">京东</a>
+    <dd>[ <span class="iconfont icon-bell"></span> ]二级导航</dd>
+  </dl>
+  <div class="chap nav-cont">自定义列表 definition list</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. &lt;dl&gt;：自定义列表；block</dd>
+    <dd>. &lt;dt&gt;：定义列表项标题，definition title；block</dd>
+    <dd>. &lt;dd&gt;：定义列表项描述，definition description；block</dd>
+    <dd>. 一个&lt;dl&gt;可以有多个&lt;dt&gt;、多个&lt;dd&gt;</dd>
+    <dd>. &lt;dt&gt;是对&lt;dd&gt;的总结或分类</dd>
+    <dd>. 各大门户网站底部的信息和版权等</dd>
+    <dd>. 也可以使用&lt;ul&gt;代替</dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 淘宝</dd>
+    <dd>. &lt;dd&gt;的子项&lt;span&gt;指定右边框</dd>
+    <dd>
+      <dl class="tbao">
+        <dt>您是不是想找:</dt>
+        <dd>
+          <span>口红</span><span>书包</span><span>新款外套</span><span>拖鞋</span><span>安踏</span><span>女裤</span><span>男手表</span><span>阿玛尼</span><span>男拖鞋</span><span>床</span>
+        </dd>
+      </dl>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-keyboard"></span> ] 小米 - <a href="https://www.mi.com/about">关于</a>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>1. 有序列表&lt;ol&gt;的使用</dd>
+    <dd>2. 无序列表&lt;ul&gt;的样式和使用</dd>
+    <dd>3. 自定义列表&lt;dl&gt;的使用</dd>
+    <dd>4. 列表的样式初始化</dd>
+    <dd class="quote">
+      <div>. &lt;ol&gt;、&lt;ul&gt;的子元素只能是&lt;li&gt;</div>
+      <div>. 实际开发中，多使用&lt;ul&gt;和&lt;dl&gt;</div>
+      <div>. 可以使用 <a href="./counter.html">计数器</a> 为列表定制序号</div>
+      <div>. 过多使用技巧，请访问 <a
+          href="https://css-tricks.com/everything-you-need-to-know-about-the-gap-after-the-list-marker/">list
+          marker</a></div>
+    </dd>
+    <dt>作业</dt>
+    <dd>1. 使用列表完善个人网站</dd>
+    <dd>2. 筹备并完善自己的初始化样式表</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

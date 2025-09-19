@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&lt;a&gt; tag</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/sidebar.css">
+  <link rel="stylesheet" href="./css/a.css">
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li class="title"><svg t="1678196298559" class="icon" viewBox="0 0 1024 1024" version="1.1"
+          xmlns="http://www.w3.org/2000/svg" p-id="2781" width="32" height="32">
+          <path
+            d="M548.59542 146.573615q0-14.842898-10.844272-25.719159t-25.719159-10.844272-25.719159 10.844272-10.844272 25.719159 10.844272 25.719159 25.719159 10.844272 25.719159-10.844272 10.844272-25.719159zM1023.856049 676.695386l0 201.082878q0 12.571678-11.420074 17.146106-4.574428 1.151604-6.845647 1.151604-7.421449 0-13.147481-5.15023l-53.133735-53.133735q-67.976633 81.699916-181.953454 129.39552t-245.355659 47.695605-245.355659-47.695605-181.953454-129.39552l-53.133735 53.133735q-5.15023 5.15023-13.147481 5.15023-2.271219 0-6.845647-1.151604-11.420074-4.574428-11.420074-17.146106l0-201.082878q0-7.997251 5.15023-13.147481t13.147481-5.15023l201.082878 0q12.571678 0 17.146106 11.420074 4.574428 10.844272-3.998625 19.993127l-57.132361 57.132361q38.258849 51.982131 108.250789 87.681859t155.08269 47.119803l0-369.60095-109.690294 0q-14.842898 0-25.719159-10.844272t-10.844272-25.719159l0-73.126863q0-14.842898 10.844272-25.719159t25.719159-10.844272l109.690294 0 0-93.11999q-33.140608-19.417325-53.133735-52.845834t-19.993127-73.414764q0-60.555184 42.833276-103.38846t103.38846-42.833276 103.38846 42.833276 42.833276 103.38846q0 39.986255-19.993127 73.414764t-53.133735 52.845834l0 93.11999 109.690294 0q14.842898 0 25.719159 10.844272t10.844272 25.719159l0 73.126863q0 14.842898-10.844272 25.719159t-25.719159 10.844272l-109.690294 0 0 369.60095q85.122739-11.420074 155.08269-47.119803t108.250789-87.681859l-57.132361-57.132361q-8.573053-9.148855-3.998625-19.993127 4.574428-11.420074 17.146106-11.420074l201.082878 0q7.997251 0 13.147481 5.15023t5.15023 13.147481z"
+            p-id="2782"></path>
+        </svg>&lt;A&gt;</li>
+      <li><a class='nav-btn' style="--deg:0">简介</a></li>
+      <li><a class='nav-btn' style="--deg:1">锚点跳转</a></li>
+      <li><a class='nav-btn' style="--deg:2">页面跳转</a></li>
+      <li><a class='nav-btn' style="--deg:3">内容预览</a></li>
+      <li><a class='nav-btn' style="--deg:4">其它应用</a></li>
+      <li><a class='nav-btn' style="--deg:5">总结</a></li>
+      <li><a class='nav-btn' style="--deg:6">作业</a></li>
+    </ul>
+  </nav>
+  <div class="cont">
+    <div class="chap">简介</div>
+    <dl class="item">
+      <dd>. inline</dd>
+      <dd>. 实现页面内部/锚点、页面之间之前的跳转</dd>
+      <dt>语法</dt>
+      <dd>
+        <pre>&lt;a href="" target=""&gt; text &lt;/a&gt;</pre>
+      </dd>
+      <dd>href：链接的目标URL；可以是<span class="warn">锚点URL</span> 、<span class="warn">相对路径URL</span>、<span
+          class="warn">绝对路径URL</span>；除了传统的H5页面外，还可以是：普通文件、图片、视频等；如果使用js实现跳转，应指定href为空：javascript:;
+      </dd>
+      <dd class="mt2">
+        <img src="./imgs/anchor.png" alt="">
+      </dd>
+      <dd>target：打开目标URL的位置；选项如下：</dd>
+      <dd>
+        <table>
+          <tr>
+            <th>类别</th>
+            <th>说明</th>
+          </tr>
+          <tr>
+            <td>_self</td>
+            <td>当前页面加载；默认</td>
+          </tr>
+          <tr>
+            <td>_blank</td>
+            <td>新窗口打开；使用较多</td>
+          </tr>
+          <tr>
+            <td>_parent</td>
+            <td>加载到当前框架的父框架；如果没有，同_self</td>
+          </tr>
+          <tr>
+            <td>_top</td>
+            <td>加载进入当前框架顶层/祖先；如果没有，同_self</td>
+          </tr>
+        </table>
+      </dd>
+      <dd>. 除此之外，target还可以是内联框架&lt;iframe&gt;。更多信息，请参考<a href="./iframe.html">&lt;iframe&gt;</a></dd>
+      <dt>样式初始化</dt>
+      <dd>. 为保证风格统一，通常覆盖&lt;a&gt;的默认样式，重新设计</dd>
+      <dd>. 以下各例均使用初始化样式</dd>
+      <dd>
+        <pre>
+a {
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+}</pre>
+      </dd>
+    </dl>
+    <div class="chap">锚点跳转</div>
+    <dl class="item">
+      <dd>. 跳转到当前页面内部或其它页面内部某个元素位置</dd>
+      <dd>. 定义：在目标元素中，使用 <span class="warn">id</span> 属性定义一个锚点</dd>
+      <dd>. 使用：在&lt;a&gt;的href属性中，使用 <span class="warn">#</span> 标识一个锚点</dd>
+      <dd>. 页面返回时不能直接退出当前页面；后期多使用js实现跳转</dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 锚点跳转</dd>
+      <dd>1. 定义锚点：利用id给目标元素添加锚点</dd>
+      <dd>
+        <pre>&lt;div id='cont'&gt;目标元素&lt;/div&gt;</pre>
+      </dd>
+      <dd>2. 用#为&lt;a&gt;的href属性指定目标锚点</dd>
+      <dd>
+        <pre>&lt;a href="#cont"&gt; 跳转去目标元素 &lt;/a&gt;</pre>
+      </dd>
+      <dd>3.特别的，仅仅指定#或为空可以返回当前页面；多用于页面logo部分</dd>
+      <dd>
+        <pre>&lt;a href=""&gt; 返回顶部 &lt;/a&gt;</pre>
+      </dd>
+      <dd>
+        <pre>&lt;a href="#"&gt; 返回顶部 &lt;/a&gt;</pre>
+      </dd>
+      <dd>4. 可以指定空动作，不跳转</dd>
+      <dd>
+        <pre>&lt;a href="javascript:;"&gt; 不跳转 &lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 综合练习-个人网站</dd>
+      <dd class="mt2">[阶段1] 基本功能</dd>
+      <dd>1. 创建项目，并创建必要的资源，如主页文件、CSS文件夹</dd>
+      <dd>2. 在主页内准备若干段&lt;h2&gt;和&lt;p&gt;作为目标元素，并为&lt;h2&gt;添加id属性作为锚点</dd>
+      <dd>3. 创建超链接&lt;a&gt;，设置href属性为对应目标内容的锚点，使用#</dd>
+      <dd>4. 使用live server查看锚点跳转效果；并检查可能出现的问题</dd>
+      <dd class="mt2">[阶段2] 改善用户体验</dd>
+      <dd>高亮当前跳转到的目标:target</dd>
+      <dd>丝滑滚动scroll-behavior</dd>
+      <dd></dd>
+    </dl>
+    <div class="chap">页面跳转</div>
+    <dl class="item">
+      <dd>. 页面之间的跳转</dd>
+      <dd>. 根据页面是否属于同一个网站，又可以分：站内跳转和站外跳转</dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]
+        站内跳转：同一个网站内部页面之间的跳转，多使用<span class="warn">相对路径</span> ；也可以转跳转到站内其它页面的某个锚点</dd>
+      <dd>
+        <pre>&lt;a href="./greeting.html"&gt; 目标页面 &lt;/a&gt;</pre>
+      </dd>
+      <dd>
+        <pre>&lt;a href="./blog.html#cont"&gt; 目标页面某个元素 &lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]
+        站外跳转：跳转到其它网站的页面，多使用<span class="warn">绝对路径</span> ；可以不指定网络协议，由系统自行判断；也可以跳转到站外其它页面的某个锚点[应用较少]</dd>
+      <dd>
+        <pre>&lt;a href="https://www.baidu.com"&gt; www.baidu.com &lt;/a&gt;</pre>
+      </dd>
+      <dd>
+        <pre>&lt;a href="//www.baidu.com"&gt; www.baidu.com &lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 综合练习-个人网站</dd>
+      <dd class="mt2">[阶段3] 拓展功能</dd>
+      <dd>跳转到百度主页或其它网页</dd>
+    </dl>
+    <div class="chap">内容预览</div>
+    <dl class="item">
+      <dd>. 查看/预览文件的内容；可以是普通文档txt、OA文档、多媒体资源，如图片、音频、视频</dd>
+      <dd>. 添加title属性，完善用户体验</dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 图片</dd>
+      <a class="pre-img" href="./imgs/alizee.jpg" title="点击查看大图" target="_blank"></a>
+      <dd>
+        <pre class="code">
+&lt;a href="./alizee.jpg" title="点击查看" target="_blank"&gt;&lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 音乐</dd>
+      <a class="pre-music" href="./music/Alizee-La Isla Bonita.mp3" title="点击播放" target="_blank"></a>
+      <dd>
+        <pre class="code">
+&lt;a href="./Alizee-La Isla Bonita.mp3" title="点击播放" target="_blank"&gt;&lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 视频</dd>
+      <a class="pre-video" href="./video/alizee.mp4" title="点击播放" target="_blank">
+        <video poster='./imgs/alizee.jpg'></video>
+      </a>
+      <dd>
+        <pre class="code">
+&lt;a href="../video/alizee.mp4" title="点击播放"&gt;
+    &lt;video poster='./alizee.jpg' title="点击播放" target="_blank"&gt;&lt;/video&gt;
+&lt;/a&gt;</pre>
+      </dd>
+      <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 其它类型文件</dd>
+      <dd>
+        <a href="../../data2022/course.json" target="_blank">课程表原始数据[json]</a>
+      </dd>
+      <dd>
+        <pre>&lt;a href="./course.json" target="_blank"&gt;课程表原始数据[json]&lt;/a&gt;</pre>
+      </dd>
+      <dd>
+        <a href="../web/css/dom.css" target="_blank">样式文件[CSS]</a>
+      </dd>
+      <dd>
+        <pre>&lt;a href="./dom.css" target="_blank"&gt;样式文件[CSS]&lt;/a&gt;</pre>
+      </dd>
+    </dl>
+    <div class="chap">其它应用</div>
+    <dl class="item">
+      <dt>下载文件</dt>
+      <dd>. 指定download属性</dd>
+      <dd>. 如果系统识别不了href提供的资源，就会触发下载</dd>
+      <dd>. 默认情况下，浏览器以预览的方式打开链接；如果仅仅提供下载链接，应显式的指定download属性</dd>
+      <dd><a href='../../tool/Snipaste-1.16.2-x64.rar' download title="单击下载"> 单击下载截图工具Snipaste </a></dd>
+      <dd>
+        <pre>&lt;a href='./Snipaste-1.16.2-x64.rar' title="单击下载" download&gt; 截图工具Snipaste &lt;/a&gt;</pre>
+      </dd>
+      <dt>发送邮件</dt>
+      <dd>. 需要特定环境的支持，如需要安装outlook等邮件系统</dd>
+      <dd>. 多用于企业级</dd>
+      <dd>
+        <a href='mailTo:1942194789@qq.com'> Sending a mail </a>
+      </dd>
+      <dd>
+        <pre>&lt;a href='mailTo:1942194789@qq.com'&gt; Sending a mail &lt;/a&gt;</pre>
+      </dd>
+      <dt>拨打电话</dt>
+      <dd>. 移动端使用比较方便</dd>
+      <dd>. 桌面端需要系统支持的设备；通过扫码或PIN完成配对后才可以使用</dd>
+      <dd>
+        <a href='tel:13707735481'>Make a call</a>
+      </dd>
+      <dd>
+        <pre>&lt;a href='tel:13707735481'&gt;Make a call&lt;/a&gt;</pre>
+      </dd>
+    </dl>
+    <div class="chap">总结</div>
+    <dl class="item">
+      <dt>&lt;a&gt;的各种使用</dt>
+      <dd>1. 返回顶部</dd>
+      <dd>2. 单击页面LOGO打开主页</dd>
+      <dd>3. 打开百度首页</dd>
+      <dd>4. 预览图片</dd>
+      <dd>5. 预览音频</dd>
+      <dd>6. 预览视频</dd>
+      <dd>7. 预览文件，如word、css、js、pdf等等</dd>
+      <dd>8. 下载资源</dd>
+      <dd class="quote">
+        <div>1. &lt;a&gt;必须有可识别的文字，否则会警告；link MUST have discernible
+          text；所以，使用背景图片自定义超链接的时候，通过文本缩进text-indent把必须的文本挪出去</div>
+        <div>2. 可以包含其它tag，但不可以嵌套&lt;a&gt;</div>
+        <div>3. 在&lt;head&gt;区加上&lt;base target=""&gt;指定默认打开方式</div>
+        <div>4. 指定scroll-behavior: smooth;实现平滑滚动</div>
+        <div>5. 使用选择器:target设置目标锚点样式</div>
+      </dd>
+    </dl>
+    <div class="chap">作业</div>
+    <dl class="item">
+      <dt>内容</dt>
+      <dd>. 合理使用&lt;a&gt;实现个人网站，分别完善页面的统一打开方式、平滑滚动、目标样式等措施</dd>
+      <dd>. 学完第一部分内容后再提交</dd>
+      <dt>要求</dt>
+      <dd>1. 应体现&lt;a&gt;的不同用法</dd>
+      <dd>2. 完整项目以学号+姓名的格式打包后提交到课堂派，如202300001069张树彬.rar</dd>
+      <dd>3. 压缩类型不限</dd>
+      <dd>4. 未按要求提交视为无效作业，不得分</dd>
+    </dl>
+  </div>
+  <script>
+    window.onload = function () {
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+          FastClick.attach(document.body);
+        }, false);
+      }
+
+      let btns = document.querySelectorAll('.nav-btn')
+      let tars = document.querySelectorAll('.chap')
+
+      btns.forEach((item, index) => {
+        item.addEventListener('click', function (e) {
+          // e.preventDefault();
+          setTimeout(function () {
+            tars[index].scrollIntoView()
+          }, 100)
+          let info = item.getBoundingClientRect()
+          let x = e.clientX - info.left;
+          let y = e.clientY - info.top;
+          let ripple = document.createElement('span');
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          item.appendChild(ripple);
+          setTimeout(() => {
+            item.removeChild(ripple)
+          }, 500)
+        })
+      })
+    }
+  </script>
+</body>
+
+</html>

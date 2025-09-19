@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高级背景 Advanced Background</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/bg2.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Advanced Background</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">Origin</li>
+      <li class="nav-item">Clip</li>
+      <li class="nav-item">Attachment</li>
+    </ul>
+  </header>
+  <div class="chap nav-cont">背景起点 Background-origin</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 背景图片[<span class="warn">NOT</span>背景颜色]使用/渲染时的起点位置</dd>
+    <dd>. 用来控制background-position位置的属性</dd>
+    <dd>[提示]盒模型包括：边框区border、填充区padding和内容区content</dd>
+    <dd>
+      <pre>background-origin: padding-box|border-box|content-box;</pre>
+    </dd>
+    <dd>. padding-box：默认值；背景图片从padding区开始渲染，border区不会出现</dd>
+    <dd>. border-box：背景图片从border区开始渲染；可创建透明边框效果</dd>
+    <dd>. content-box：背景图片只会出现在内容区域，padding和border都不会出现</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] background-origin</dd>
+    <dd>background-origin: </dd>
+    <dd>
+      <input type="radio" name="origin" id="padding" checked>
+      <label for="padding">padding-box</label>
+      <input type="radio" name="origin" id="border">
+      <label for="border">border-box</label>
+      <input type="radio" name="origin" id="content">
+      <label for="content">content-box</label>
+    </dd>
+    <dd>background-size: </dd>
+    <dd>
+      <input type="radio" name="size" id="none" checked>
+      <label for="none">不使用</label>
+      <input type="radio" name="size" id="contain">
+      <label for="contain">contain</label>
+      <input type="radio" name="size" id="cover">
+      <label for="cover">cover</label>
+      <input type="radio" name="size" id="full">
+      <label for="full">100% 100%</label>
+    </dd>
+    <dd class="bg-origin" id="bgOrigin"></dd>
+    <dd>
+      <pre>
+.bg-origin {
+    border: 20px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    background-color: #ff0;
+    background-image: url(../imgs/bg.jpg);
+    background-repeat: no-repeat;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">背景裁剪 Background-clip</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 背景[背景颜色 <span class="warn">和</span> 背景图片]的裁剪区域</dd>
+    <dd>
+      <pre>background-clip: border-box | padding-box | content-box;</pre>
+    </dd>
+    <dd>.
+      border-box：背景从border区域向外裁剪，即超出border区的背景将被裁剪掉；如果有border，则border会覆盖背景；换句话说，背景填充到border区，只不过被border覆盖住了；设置一个dashed的border就可看到背景是在border的下方
+    </dd>
+    <dd>. padding-box： 背景从padding区域向外裁剪，超过padding区的背景将被裁剪掉</dd>
+    <dd>.
+      content-box：背景从content区域向外裁剪，超过context区的背景将被裁剪掉；如果有padding，但是只指定了background-image而没有指定background-color，则padding区为默认的白色；所以保险起见，通常要设置一个背景色，避免background-image无效
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] background-clip</dd>
+    <dd>. 设置了背景颜色和背景图片；其它样式不做设置</dd>
+    <dd class="bg-clip bg-clip-border"></dd>
+    <dd>
+      <pre>background-clip: border-box;</pre>
+    </dd>
+    <dd class="bg-clip bg-clip-padding"></dd>
+    <dd>
+      <pre>background-clip: padding-box;</pre>
+    </dd>
+    <dd class="bg-clip bg-clip-content"></dd>
+    <dd>
+      <pre>background-clip: content-box;</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">背景铺贴 Background-attachment</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 背景图片显示方式/是否随窗口滚动</dd>
+    <dd>. 背景图片和内容的附着方式</dd>
+    <dd>. 多用于营造视觉差效果，更多实例，请访问 <a href="./demo/resume.html">简历</a>一节</dd>
+    <dd>
+      <pre>background-attachment: scroll | fixed | local; </pre>
+    </dd>
+    <dd>. scroll：默认背景图片会随着窗口/页面滚动而滚动；背景图片和自己保持固定；自己滚动不影响，别人滚动会影响</dd>
+    <dd>. fixed：背景图片不会随着窗口/页面滚动而滚动背景，即：背景图片固定不动/相对于视口固定</dd>
+    <dd>. local：背景图片会随着元素内容的滚动而滚动</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 默认情况</dd>
+    <dd>. 背景图片不跟随内容滚动；但跟随窗口/视口滚动：整体滚动</dd>
+    <dd class="basic bg-attach-default">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis at nostrum fugiat ratione
+        reprehenderit eius officia, tempore voluptatum incidunt nihil, iusto laborum? Cupiditate autem ipsam
+        illum totam excepturi aliquam sit.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, doloribus libero at nihil temporibus ipsa
+        quisquam, nulla sapiente voluptates fuga, porro sequi unde labore explicabo. Unde dolore omnis
+        distinctio molestias?</p>
+    </dd>
+    <dd>
+      <pre>
+.bg-attach-default {
+    overflow-y: auto;
+    background-image: url(../imgs/bg.jpg);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 固定</dd>
+    <dd>. 背景图片不跟随内容滚动，但是相对窗口/视口固定</dd>
+    <dd>. 参考页面顶部</dd>
+    <dd class="basic bg-attach-fixed">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis at nostrum fugiat ratione
+        reprehenderit eius officia, tempore voluptatum incidunt nihil, iusto laborum? Cupiditate autem ipsam
+        illum totam excepturi aliquam sit.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, doloribus libero at nihil temporibus ipsa
+        quisquam, nulla sapiente voluptates fuga, porro sequi unde labore explicabo. Unde dolore omnis
+        distinctio molestias?</p>
+    </dd>
+    <dd>
+      <pre>
+.bg-attach-local {
+    overflow-y: auto;
+    background-image: url(../imgs/bg.jpg);
+    background-attachment: local;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 本地</dd>
+    <dd>. 背景图片跟随内容滚动；跟随窗口/视口滚动</dd>
+    <dd>. 背景图片通常需要重复</dd>
+    <dd class="basic bg-attach-local">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis at nostrum fugiat ratione
+        reprehenderit eius officia, tempore voluptatum incidunt nihil, iusto laborum? Cupiditate autem ipsam
+        illum totam excepturi aliquam sit.</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, doloribus libero at nihil temporibus ipsa
+        quisquam, nulla sapiente voluptates fuga, porro sequi unde labore explicabo. Unde dolore omnis
+        distinctio molestias?</p>
+    </dd>
+    <dd>
+      <pre>
+.bg-attach-local {
+    overflow-y: auto;
+    background-image: url(../imgs/bg.jpg);
+    background-attachment: local;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. background-origin</dd>
+    <dd>. background-clip</dd>
+    <dd>. background-attachment</dd>
+    <dt>作业</dt>
+    <dd>. 综合使用背景属性完善个人网站，如网站背景滚动、头像边框</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+  <script>
+    window.onload = function () {
+      let border = document.querySelector('#border')
+      let padding = document.querySelector('#padding')
+      let content = document.querySelector('#content')
+      let bgOrigin = document.querySelector('#bgOrigin')
+
+      let none = document.querySelector('#none')
+      let contain = document.querySelector('#contain')
+      let cover = document.querySelector('#cover')
+      let full = document.querySelector('#full')
+
+      border.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundOrigin = 'border-box'
+      })
+      padding.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundOrigin = 'padding-box'
+      })
+      content.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundOrigin = 'content-box'
+      })
+
+
+      none.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundSize = 'unset'
+      })
+      contain.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundSize = 'contain'
+      })
+      cover.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundSize = 'cover'
+      })
+      full.addEventListener('change', (e) => {
+        bgOrigin.style.backgroundSize = '100% 100%'
+      })
+
+    }
+  </script>
+</body>
+
+</html>

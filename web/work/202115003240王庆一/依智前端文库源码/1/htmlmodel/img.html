@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图像 Img</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/img.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;&lt;img&gt;</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">Overview</li>
+      <li class="nav-item">Usage</li>
+      <li class="nav-item">Blank</li>
+      <li class="nav-item">Initialization</li>
+      <li class="nav-item">Cases</li>
+      <li class="nav-item">Other</li>
+    </ul>
+  </header>
+  <div class="chap nav-cont">概述 Overview</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>.显式图片：功能性、修饰性</dd>
+    <dd>.inline，同别的inline不同，它可以设置宽度</dd>
+    <dd>.单标签；不同IDE的处理方式不尽相同</dd>
+    <dd>.常用图片格式：jpg、png、gif和web格式</dd>
+    <dd>.和&lt;a&gt;一样，转换为block更加方便处理</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>&lt;img src="" alt="" title=""&gt;</pre>
+    </dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>图片URL；可以使用本地图片；也可以使用在线图片；还可以是图片的base64编码</td>
+        </tr>
+        <tr>
+          <td>alt</td>
+          <td>图片异常时的提示信息</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>说明信息，当鼠标移入时显示，很多标签都可以使用title属性增加用户体验；实用于桌面端</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>常用样式</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>width</td>
+          <td>宽度</td>
+        </tr>
+        <tr>
+          <td>height</td>
+          <td>高度</td>
+        </tr>
+        <tr>
+          <td>object-fit</td>
+          <td>图片铺贴方式：contain | cover</td>
+        </tr>
+        <tr>
+          <td>vertical-align</td>
+          <td>对齐方式：top | middle | bottom | baseline</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">基本使用 Usage</div>
+  <dl>
+    <dd>.以下各例使用的原始图片大小为640x300</dd>
+    <dt>1.直接使用图片</dt>
+    <dd>1.1 直接使用，按照图片原始大小显示，布局受影响</dd>
+    <dd>1.2 仅仅指定图片宽度，其高度自适应。图片高度太大，布局被撑开；图片高度太小，布局被压缩</dd>
+    <dd>1.3 同时指定宽度width、高度height；如果宽高比例和图片比例不一致，导致图片变形</dd>
+    <dd>1.4 同时指定宽度width、高度height、图片填充模式object-fit；布局不会打乱；元素指定了宽度和高度的情况下才有效</dd>
+    <dd>
+      <pre>object-fit: contain | cover;</pre>
+    </dd>
+    <dd>.contain，图片会被缩放至被空间完全包含，定义的尺寸可间会有留白</dd>
+    <dd>.cover，图片会被裁切，在定义的空间内最大范围的显示图片</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 图片使用-指定背景色观察更直接</dd>
+    <dd>
+      <span>width:</span>
+      <input type="radio" name="obj-w" id="unset-w" checked>
+      <label for="unset-w">不指定</label>
+      <input type="radio" name="obj-w" id="assign-w">
+      <label for="assign-w">320px</label><br>
+      <span>height:</span>
+      <input type="radio" name="obj-h" id="unset-h" checked>
+      <label for="unset-h">不指定</label>
+      <input type="radio" name="obj-h" id="assign-h">
+      <label for="assign-h">320px</label><br>
+      <span>object-fit:</span>
+      <input type="radio" name="obj-fit" id="unset-fit">
+      <label for="unset-fit">不指定</label>
+      <input type="radio" name="obj-fit" id="contain">
+      <label for="contain">contain</label>
+      <input type="radio" name="obj-fit" id="cover">
+      <label for="cover">cover</label>
+      <img class="img0" src="./img/alizee.jpg" alt="">
+    </dd>
+    <dt>2.使用容器包裹图片</dt>
+    <dd>.容器指定宽高、溢出隐藏</dd>
+    <dd>.更多的时候，容器体现的是布局的职能</dd>
+    <dd>.flex布局中，如果直接使用&lt;img&gt;和其它元素，借助flex属性等分布局，则&lt;img&gt;仍然会撑开，导致布局失效；所以必须使用容器包裹图片</dd>
+    <dd>2.1 图片指定宽度100%，和容器保持一致，其高度自适应</dd>
+    <dd>.容器高度太大，留有空白</dd>
+    <dd>.容器高度太小，图片展示不完全</dd>
+    <dd>2.2.图片宽、高100%同容器，图片填充模式选择cover填充[如果图片使用contain呢？]</dd>
+    <dd class="basic">
+      <img class="img1" src="./img/alizee.jpg" alt="">
+    </dd>
+    <dt>3.其它方案</dt>
+    <dd>.不使用容器，直接指定图片宽度、高度，配合使用cover属性</dd>
+    <dd>.考虑到布局，通常不这么处理：有容器更容易添加设计</dd>
+    <dd>
+      <img class="img2" src="./img/alizee.jpg" alt="">
+    </dd>
+    <dd>
+      <pre>
+.img {
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">图片空白 Blank</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>.使用容器包裹图片时，当容器加上边框时，不管图片是cover还是contain，容器底部都会有空白</dd>
+    <dd>.这个情况只在特定场合会暴露问题：仅仅使用容器和图片，并非普遍存在</dd>
+    <dd>.主要是图片的inline特性导致：彼此间有一定的缝隙</dd>
+    <dd>.还有就是早期WEB的开发还没有规范可以遵循</dd>
+    <dd>.不加边框虽然没有影响，但是问题始终在那里</dd>
+    <dd>
+      <div class="wrap">
+        <img class="img3" src="./img/alizee.jpg" alt="">
+      </div>
+    </dd>
+    <dt>解决方案</dt>
+    <dd>1.元素方面</dd>
+    <dd>1.1 转换&lt;img&gt;的显示属性为块元素block；任何能将其转换为block元素的方法都可以，如下面的使用弹性盒子；或其它如定位、网格布局等等</dd>
+    <dd>1.2 让&lt;img&gt;浮动起来；需要清除浮动；更多信息，请访问 <a href="./float.html">float</a> 一节</dd>
+    <dd>1.3 设置&lt;img&gt;的对齐方式为非baseline，如middle；更多信息，请访问 <a href="./focus.html">vertical-align</a> 相关内容</dd>
+    <dd>
+      <span>img {</span><br>
+      <input type="radio" name="dis" id="dis0">
+      <label for="dis0">display: block;</label><br>
+      <input type="radio" name="dis" id="dis1">
+      <label for="dis1">float: left;</label><br>
+      <input type="radio" name="dis" id="dis2">
+      <label for="dis2">vertical-align: middle;</label><br>
+      <span>}</span>
+      <div class="wrap">
+        <img class="img3" src="./img/alizee.jpg" alt="">
+      </div>
+    </dd>
+    <dd>2.容器方面</dd>
+    <dd>2.1 设置容器的字体大小font-size为0[行高line-height为0]</dd>
+    <dd>2.2 容器使用特定布局，如弹性盒子flex，容器各子项将被强制转换为block</dd>
+    <dd>
+      <span>.wrap {</span><br>
+      <input type="radio" name="wrap" id="wrap0">
+      <label for="wrap0">font-size: 0;</label><br>
+      <input type="radio" name="wrap" id="wrap1">
+      <label for="wrap1">line-height: 0;</label><br>
+      <input type="radio" name="wrap" id="wrap2">
+      <label for="wrap2">display: flex;</label><br>
+      <div class="wrap">
+        <img class="img3" src="./img/alizee.jpg" alt="">
+      </div>
+    </dd>
+    <dd>3.其它</dd>
+    <dd>.指定容器比盒子小，并设置溢出隐藏，可以解决表面的显式问题</dd>
+  </dl>
+  <div class="chap nav-cont">初始化 Initialization</div>
+  <dl>
+    <dt>使用容器/布局元素</dt>
+    <dd>
+      <pre>
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}</pre>
+    </dd>
+    <dt>直接使用&lt;img&gt;</dt>
+    <dd>1.指定宽度，图片填充模式 object-fit 为 cover</dd>
+    <dd>
+      <pre>
+img {
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+}</pre>
+    </dd>
+    <dd>2.指定宽度，设置图片比例 aspect-ratio</dd>
+    <dd>
+      <pre>
+img {
+    display: block;
+    max-width: 100%;
+    aspect-ratio:4/3;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">案例 Cases</div>
+  <dl>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 个人头像</dd>
+    <dd><span class="iconfont icon-Notebook"></span> border-radius: 50%可以使元素边角圆角化</dd>
+    <dd>注意：padding对设计的影响；容器有padding时，需要同时设置容器和图片的圆角，但容器不需要溢出隐藏；容器无padding时，只需要设置容器的圆角和溢出隐藏</dd>
+    <dd class="avatar-img">
+      <img src="./img/alizee.jpg" alt="">
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]
+      使用图片优化个人网站主导航-右键单击图片下载到本地使用，或自行准备素材，完成后检查页面各元素的网络加载情况</dd>
+    <dd>方案1.使用传统图片方式实现[√]</dd>
+    <dd>方案2.使用背景图片实现</dd>
+    <dd>方案3.使用伪元素和背景图片实现</dd>
+    <dd>方案4.使用字体图标实现</dd>
+    <dd>
+      <ul class="main-nav">
+        <li class="nav-item">
+          <img class="ob-img" data-src="./imgs/nav0.png" alt="">
+          <a href="javascript:;">个人主页</a>
+        </li>
+        <li class="nav-item">
+          <img class="ob-img" data-src="./imgs/nav1.png" alt="">
+          <a href="javascript:;">教育背景</a>
+        </li>
+        <li class="nav-item">
+          <img class="ob-img" data-src="./imgs/nav2.png" alt="">
+          <a href="javascript:;">培训经历</a>
+        </li>
+        <li class="nav-item">
+          <img class="ob-img" data-src="./imgs/nav3.png" alt="">
+          <a href="javascript:;">愿景规划</a>
+        </li>
+        <li class="nav-item">
+          <img class="ob-img" data-src="./imgs/nav4.png" alt="">
+          <a href="javascript:;">作品精选</a>
+        </li>
+      </ul>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">其它应用 Other</div>
+  <dl>
+    <dt>SVG</dt>
+    <dd>.将图片转换成&lt;svg&gt;使用；从<span class="warn">结构</span> 上优化页面；如字体图标网站 <a href="https://www.iconfont.cn/">iconfont</a>
+      可以将图标文件转换为&lt;svg&gt;</dd>
+    <dd>.适合少量、小体积、装饰性图片</dd>
+    <dd>.更多信息，请访问 <a href="./svg.html">SVG</a></dd>
+    <dt>Base64</dt>
+    <dd>.对图片编码，然后指定给src或背景图片；从<span class="warn">样式</span> 上优化页面</dd>
+    <dd>.更多信息，请访问 <a href="https://c.runoob.com/front-end/59/">Base64</a></dd>
+    <dd>
+      <pre>
+background-image: url(data:image/jpeg;base64...);</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>1.图片 &lt;img&gt;使用</dd>
+    <dd>2.显示比例 aspect-ratio</dd>
+    <dd>3.其它：边框 border | 圆角边框 border-radius | 填充 padding</dd>
+    <dd class="quote">
+      <div>.布局元素只做布局的事，内容元素由各功能标签完成</div>
+      <div>.开发时，应尽量保证图片和展示尺寸保持一致</div>
+      <div>.功能型图片，使用&lt;img&gt;；修饰型图片，建议使用背景图片</div>
+      <div>.图片的获取和加载特别耗费时间。修饰性图片可以转换为base64、或使用SVG、或使用精灵图、或使用字体图标，都能显著改善加载效果</div>
+      <div>.object-fit: fill | cover | contain;</div>
+      <div>.object-position: center center;</div>
+      <div>.aspect-ratio</div>
+      <div>.过多图片使用技巧，请访问 <a href="https://css-tricks.com/a-fancy-hover-effect-for-your-avatar/">hover avatar</a>
+      </div>
+    </dd>
+    <dt>作业</dt>
+    <dd>.使用图片完善个人网站，如导航、头像、相册等等</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/lazyload.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

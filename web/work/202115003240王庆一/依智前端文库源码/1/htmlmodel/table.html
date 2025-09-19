@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表格 Table</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/table.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Table</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">概述</li>
+      <li class="nav-item">结构</li>
+      <li class="nav-item">样式</li>
+      <li class="nav-item">基本使用</li>
+      <li class="nav-item">进阶使用</li>
+    </ul>
+  </header>
+  <dl>
+    <dt class="nav-cont">概述</dt>
+    <dd>. 功能1：展示数据</dd>
+    <dd>. 功能2：布局，如表单的使用，多使用表格布局；其它布局多使用div+CSS实现</dd>
+    <dd>. &lt;tabel&gt;的display类型为tabel，inline-block元素；由行&lt;tr&gt;和单元格&lt;td&gt;或&lt;th&gt;组成</dd>
+    <dd>. &lt;tr&gt;的子元素只能是&lt;td&gt;或&lt;th&gt;</dd>
+    <dd>. &lt;tr&gt;的display类型是table-row</dd>
+    <dd>. &lt;td&gt; &lt;th&gt;的display类型是table-cell</dd>
+    <dd>. 每行&lt;tr&gt;至少有一个单元格&lt;td&gt;有数据；否则空行会被压缩</dd>
+    <dd>. 更多信息，请访问 <a href="https://css-tricks.com/complete-guide-table-element/">complete guide table element</a>
+    </dd>
+    <dt class="nav-cont">完整结构</dt>
+    <dd>. &lt;caption&gt;：表格标题</dd>
+    <dd>. 系统会默认添加表头&lt;thead&gt;、表体&lt;tbody&gt;、表尾&lt;tfoot&gt;；我们通常只关注添加行和单元格，他们会自动放在&lt;tbody&gt;中</dd>
+    <dd>
+      <pre>
+&lt;table&gt;
+    &lt;caption&gt;title&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfooter&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tfooter&gt; 
+&lt;table&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">样式 Style</div>
+  <dl>
+    <dt>HTML属性/内联样式</dt>
+    <dd>. 除了直接在表格上应用合并单元格属性 colspan 和 rowspan外，其它样式建议由CSS完成</dd>
+    <dd>
+      <table>
+        <colgroup>
+          <col style="text-align: right;">
+          <col style="text-align: left;">
+        </colgroup>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>border</td>
+          <td>边框</td>
+        </tr>
+        <tr>
+          <td>width</td>
+          <td>宽度</td>
+        </tr>
+        <tr>
+          <td>height</td>
+          <td>高度；通常由内容自动撑开</td>
+        </tr>
+        <tr>
+          <td>cellspacing</td>
+          <td>单元格间距</td>
+        </tr>
+        <tr>
+          <td>cellpadding</td>
+          <td>单元格填充</td>
+        </tr>
+        <tr>
+          <td>align</td>
+          <td>水平对齐；默认左对齐</td>
+        </tr>
+        <tr>
+          <td>valign</td>
+          <td>垂直对齐；默认居中middle</td>
+        </tr>
+        <tr>
+          <td>colspan</td>
+          <td>列合并（向右）</td>
+        </tr>
+        <tr>
+          <td>rowspan</td>
+          <td>行合并（向下）</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>高频CSS样式</dt>
+    <dd>width：表格宽度</dd>
+    <dd>border-collapse：边框是否重叠，默认不重叠；只有指定了重叠，才可以设置行的边框</dd>
+    <dd>border-spacing：单元格间距；边框重叠时，无效</dd>
+    <dd>empty-cells：空单元格显示与否/不在空单元格周围绘制边框。默认显示/绘制；仅仅使用于边框不重叠的情况</dd>
+    <dd>border：表格边框/单元格边框</dd>
+  </dl>
+  <div class="chap nav-cont">基本使用 Usage</div>
+  <dl>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 双轴表格</dd>
+    <dd>. &lt;th&gt;并不一定只出现在首行，可以出现在任何位置</dd>
+    <dd>
+      <span>border-collapse: </span>
+      <input type="radio" name="bc" id="sp" checked>
+      <label for="sp">separate</label>
+      <input type="radio" name="bc" id="cl">
+      <label for="cl">collapse</label><br>
+      <span>border-spacing: </span>
+      <input type="radio" name="br" id="bs0" checked>
+      <label for="bs0">2px[default]</label>
+      <input type="radio" name="br" id="bs1">
+      <label for="bs1">10px</label>
+      <table class="dual-tbl">
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Age</th>
+        </tr>
+        <tr>
+          <th>桂林</th>
+          <td>漓江</td>
+          <td>象鼻山</td>
+          <td>大榕树</td>
+        </tr>
+        <tr>
+          <th>厦门</th>
+          <td>鼓浪屿</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>广州</th>
+          <td>小蛮腰</td>
+          <td>珠江</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>海口</th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 斑马纹、hover虚化背景表格</dd>
+    <dd>. :nth-child()结构伪类选择器-选择奇数行或偶数行</dd>
+    <dd>. :hover选择器-先让所有&lt;td&gt;虚化，再让当前行高亮</dd>
+    <dd>. 虚化通过设置字体颜色变淡实现，后期可以使用文字阴影，更加逼真</dd>
+    <dd>
+      <table class="personal-tbl">
+        <caption>personal infomation</caption>
+        <tr>
+          <td>name</td>
+          <td>cnplaman</td>
+          <td>glpla</td>
+        </tr>
+        <tr>
+          <td>gender</td>
+          <td>male</td>
+          <td>female</td>
+        </tr>
+        <tr>
+          <td>age</td>
+          <td>18</td>
+          <td>24</td>
+        </tr>
+        <tr>
+          <td>unit</td>
+          <td>www.hkc.edu.cn/</td>
+          <td>glpla.github.io</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <pre>
+table tr:nth-child(2n+1) {
+    background-color: #efe;
+}
+
+.personal-tbl:hover td {
+  color: #ccc;
+  text-shadow: 0 0 4px #ccc;
+}
+
+.personal-tbl tr:hover td {
+  background-color: #ff0;
+  color: #333;
+}</pre>
+    </dd>
+    <dd>[ <span class="iconfont icon-bell"></span> ]如果显式的添加了&lt;th&gt;，如何设计斑马纹？</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 圆角表格</dd>
+    <dd>方案1：在不设置边框重叠的情况，给&lt;table&gt;指定border-radius</dd>
+    <dd>
+      <table class="radius-tbl">
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <pre>
+.radius-tbl {
+  border-collapse: separate;
+  border-radius: 8px;
+  border: 1px solid #666;
+}
+.radius-tbl td {
+  border-bottom: 1px solid var(--main-color-green);
+}
+
+.radius-tbl tr:last-child td {
+  border: none;
+}</pre>
+    </dd>
+    <dd>方案2：边框重叠的情况下，单独给第一行左右2个和最后一行左右2个单独设置对应方向的border-radius</dd>
+    <dd>. 为体现效果，以红色显示</dd>
+    <dd>
+      <table class="radius-tbl-self">
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <pre>
+.radius-tbl-self tbody tr:first-child td:first-child {
+  border-top-left-radius: 8px;
+  background-color: #f40;
+}
+
+.radius-tbl-self tbody tr:first-child td:last-child {
+  border-top-right-radius: 8px;
+  background-color: #f40;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 表格1</dd>
+    <dd>. 边框不重叠</dd>
+    <dd>. 空单元格不显示，营造一种流的感觉</dd>
+    <dd class="tbl-box" style="text-indent: 2em;">
+      <span>empty-cells: </span>
+      <input type="radio" name="cell-hide" id="show" checked>
+      <label for="show">show</label>
+      <input type="radio" name="cell-hide" id="hide">
+      <label for="hide">hide</label>
+      <table class="bold0">
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 表格2</dd>
+    <dd>. 单元格重叠的情况下，空单元格属性无效</dd>
+    <dd>
+      <table class="bold1">
+        <tr>
+          <td>bold</td>
+          <td colspan="3">colspan="3"</td>
+        </tr>
+        <tr>
+          <td rowspan="2">rowspan="2"</td>
+          <td>bold</td>
+          <td>bold</td>
+          <td>bold</td>
+        </tr>
+        <tr>
+          <td>bold</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;bold&lt;/td&gt;
+        &lt;td colspan="3"&gt;colspan="3"&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td rowspan="2"&gt;rowspan="2"&lt;/td&gt;
+        &lt;td&gt;bold&lt;/td&gt;
+        &lt;td&gt;bold&lt;/td&gt;
+        &lt;td&gt;bold&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;bold&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</pre>
+    </dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 4px double #888;
+    empty-cells: hide;//无效
+}
+table th, table td {
+    border: 1px solid #888;
+}  </pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 歌单</dd>
+    <dd>. 使用表格布局，借助:nth-child()选择器实现</dd>
+    <dd>[ <span class="iconfont icon-bangzhu2"></span> ] 数据的使用和保存</dd>
+    <dd>[ <span class="iconfont icon-bangzhu2"></span> ] 使用 <a href="./counter.html">计数器</a> 自动编号</dd>
+    <dd>[ <span class="iconfont icon-bangzhu2"></span> ] 桌面端和移动端的适配</dd>
+    <dd>
+      <table class="list">
+        <tr>
+          <th>序号</th>
+          <th>歌手</th>
+          <th>曲名</th>
+          <th>状态</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Alizee</td>
+          <td>La Isla Bonita</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Ava Max</td>
+          <td>OMG What's Happening</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Bandari</td>
+          <td>New Morning</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Disclosure</td>
+          <td>F For You</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Luciano</td>
+          <td>Melô de Carla Cintia</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Maksim Mrvica</td>
+          <td>出埃及记</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Shakira</td>
+          <td>Whenever, Wherever</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>Sissel</td>
+          <td>Should It Matter</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>王菲</td>
+          <td>微风细雨</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>周澎</td>
+          <td>有我在</td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <pre>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem auto;
+}
+
+tr {
+  border-bottom: 1px solid var(--main-color-green);
+}
+
+th {
+  background-color: var(--main-color-green);
+  color: #fff;
+  height: 40px;
+}
+
+.list tr th:nth-child(1),
+.list tr td:nth-child(1) {
+  width: 10%;
+}
+
+.list tr th:nth-child(2) {
+  width: 20%;
+}
+
+.list tr th:nth-child(4) {
+  width: 10%;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">进阶使用 Advanced</div>
+  <dl>
+    <dt>自适应表格</dt>
+    <dd>. 针对桌面端和移动端表格的展示，给出其中一种自适应表格的思路</dd>
+    <dd>. 按 F12 选择检查，查看表格效果[取消公有样式中，首个单元格width:20%的限定]</dd>
+    <dd>. 更多信息，请查看 <a href="https://css-tricks.com/responsive-data-tables/" target="_blank">Responsive Data
+        Tables</a>
+    </dd>
+    <dd>
+      <table class="pc">
+        <thead>
+          <tr>
+            <th>sn</th>
+            <th>name</th>
+            <th>unit</th>
+            <th>gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>guilin</td>
+            <td>54414</td>
+            <td>female</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>beijing</td>
+            <td>75716</td>
+            <td>male</td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+    <dd class="mt2">[ <span class="iconfont icon-bell"></span> ]</dd>
+    <dd>1. 隐藏表头&lt;thead&gt;。方法很多；最好不要none掉，而应使用定位将其移走</dd>
+    <dd>2. 将&lt;tr&gt;显示属性由table-row（类inline-block）调整为block，以便独占一行</dd>
+    <dd>3. 将&lt;td&gt;显示属性由table-cell（类inline-block）调整为block，从而将数据由一行展示改为多行展示</dd>
+    <dd>4. 设置&lt;td&gt;为相对定位，并保持左侧50%的padding，预留给其伪元素</dd>
+    <dd>5. 为每个&lt;td&gt;设置不同的伪元素::before内容，和隐藏的表头内容相对应</dd>
+    <dd>6. 根据需要指定行和单元格的其它样式，如边框、背景色(略)</dd>
+    <dd>7. 其它布局应根据实际情况具体分析</dd>
+    <dd>
+      <pre>
+thead tr {
+    display: none;
+}
+
+tr {
+    display: block;
+}
+
+td {
+    //这里采用flex，是为了垂直方向对齐内容和其伪元素
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 50%;
+}    
+
+td::before {
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+}
+
+td:nth-child(1)::before {
+    content: 'sn';
+}
+
+td:nth-child(2)::before {
+    content: 'name';
+}
+
+td:nth-child(3)::before {
+    content: 'unit';
+}
+
+td:nth-child(4)::before {
+    content: 'gender';
+}</pre>
+    </dd>
+    <dt>固定表头表格</dt>
+    <dd>. 请参考 <a href="./sticky.html">粘性定位一节</a></dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. &lt;table&gt;的使用和样式</dd>
+    <dd>. 结构伪类选择器 :nth-child()</dd>
+    <dt>作业</dt>
+    <dd>. 使用表格完善个人网站</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

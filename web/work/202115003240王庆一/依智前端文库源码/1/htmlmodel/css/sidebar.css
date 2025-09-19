@@ -1,0 +1,85 @@
+:root {
+    --nav-width: 140px;
+    --cont-chap: 120px;
+    --hue-deg: 45deg;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: var(--nav-width);
+    height: 100vh;
+    background-color: #fff;
+}
+
+.title {
+    line-height: var(--cont-chap);
+    text-align: center;
+    font-size: 1.4rem;
+    background-color: #f40;
+    color: #fff;
+    user-select: none;
+}
+
+.cont {
+    margin-left: var(--nav-width);
+}
+
+.item {
+    min-height: calc(100vh - var(--cont-chap));
+}
+
+.nav-btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    text-align: center;
+    text-transform: capitalize;
+    cursor: pointer;
+    line-height: 50px;
+    color: #fff;
+    font-weight: unset;
+    border-bottom: 2px solid #fff;
+    background-image: linear-gradient(to right, #f40, #f5ce62);
+    background-position: left top;
+    background-size: 200% 100%;
+    transition: .5s;
+    filter: hue-rotate(calc(var(--deg)*var(--hue-deg)));
+    user-select: none;
+    overflow: hidden;
+}
+
+.nav-btn span {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    animation: fade .5s linear forwards;
+}
+
+@keyframes fade {
+    0% {
+        opacity: .5;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(5);
+    }
+}
+
+.nav-btn:hover {
+    letter-spacing: 4px;
+    color: #fff;
+    background-position: right top;
+}
+
+@media screen and (max-width:768px) {
+    :root {
+        --nav-width: 100px;
+        --cont-chap: 60px
+    }
+}

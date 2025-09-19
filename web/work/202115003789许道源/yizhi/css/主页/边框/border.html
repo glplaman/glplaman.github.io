@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>边框 border</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/border.css">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Border</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">border</li>
+      <li class="nav-item">border-radius</li>
+      <li class="nav-item">border-image</li>
+      <li class="nav-item">border-block</li>
+    </ul>
+  </header>
+  <dl>
+    <dt class="nav-cont">边框 border</dt>
+    <dd>. 为元素添加指定宽度、样式和颜色的边框</dd>
+    <dd>. 元素有4个边，默认是设置4个边：top、right、bottom、left-上右下左</dd>
+    <dd>. 可以单独设置每个边的宽度、样式和颜色</dd>
+    <dd>. 通常使用复合属性border: border-width border-style border-color</dd>
+    <dd>
+      <pre>border: border-width border-style border-color</pre>
+    </dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>border-width</td>
+          <td>线条宽度：以像素为单位</td>
+        </tr>
+        <tr>
+          <td>border-style</td>
+          <td>线条样式：默认是实线solid；点线dotted、短划dashed、双线double</td>
+        </tr>
+        <tr>
+          <td>border-color</td>
+          <td>线条颜色：默认和元素的文字颜色保持一致</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 基本使用：同时设置4个边</dd>
+    <dd class="basic basic0"></dd>
+    <dd>
+      <pre>
+.basic0 {
+    border: 1px #f40 solid;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 单独设置某个边</dd>
+    <dd class="basic basic1"></dd>
+    <dd>
+      <pre>
+.basic1 {
+    border-top: 4px dotted #f08;
+    border-right: 4px dashed #089;
+    border-bottom: 4px solid #f40;
+    border-left: 4px double #890;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 0元素边框-0尺寸大边框</dd>
+    <dd class="zero0"></dd>
+    <dd>
+      <pre>
+.zero0 {
+    width: 0;
+    height: 0;
+    margin: 1rem auto;
+    border-width: 20px;
+    border-style: solid;
+    border-top-color: #f08;
+    border-right-color: #089;
+    border-bottom-color: #f40;
+    border-left-color: #890;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 三角形：利用0尺寸和大边框生成三角形</dd>
+    <dd>. 将其中一个或几个边框颜色隐去transparent</dd>
+    <dd class="zero1"></dd>
+    <dd>
+      <pre>
+.zero1 {
+    width: 0;
+    height: 0;
+    margin: 1rem auto;
+    border: 20px solid transparent;
+    border-bottom-color: #f40;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 其它三角形</dd>
+    <dd>. 左三角形</dd>
+    <dd>. 右三角形</dd>
+    <dd>. 上下三角形</dd>
+    <dd>. 左右三角形</dd>
+    <dd>[<span class="iconfont icon-bell"></span>]受WEB早期发展限制，多使用这种hack手段进行设计；随着字体图标和其它方式的流行，这种设计手段渐渐淡出视野</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 透明边框 - 纯色背景[进阶]</dd>
+    <dd>. 指定边框透明色</dd>
+    <dd class="basic basic2"></dd>
+    <dd>
+      <pre>
+.basic2 {
+    border: 20px dashed rgba(255, 255, 255, 0.2);
+    background-color: #f40;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 透明边框 - 背景图片[进阶]</dd>
+    <dd>. 有背景图片的情况下，不能直接指定透明边框颜色</dd>
+    <dd>. 必须指定背景图片起点为border区</dd>
+    <dd class="basic basic3"></dd>
+    <dd>
+      <pre>
+.basic3 {
+    padding: 1rem;
+    border: 20px dashed rgba(255, 255, 255, 0.4);
+    background-color: #f40;//容错
+    background-image: url(../imgs/bg.jpg);
+    background-size: cover;
+    background-origin: border-box;//MUST
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">边框圆角 border-radius</div>
+  <dl>
+    <dd class="mt2 txt-center"><img src="./imgs/border-radius.png" alt=""></dd>
+    <dd>. 边框的圆角半径</dd>
+    <dd>. 圆角边框；50%为正圆</dd>
+    <dd>. 可单独设置每个角的变化</dd>
+    <dd>. 四个值的顺序是：左上角，右上角，右下角，左下角。如果省略左下角，右上角是相同的。如果省略右下角，左上角是相同的。如果省略右上角，左上角是相同的</dd>
+    <dd>. 也可以在x和y方向上设置角的半径变化；/前面是4个角水平方向的半径；/后面是4个角垂直方向的半径</dd>
+    <dd> . 更多应用，请点击<a href="https://9elements.github.io/fancy-border-radius/" target="_blank">fancy-border-radius</a>
+    </dd>
+    <dt>语法1</dt>
+    <dd>. 1个值：四个角</dd>
+    <dd>. 2个值：[左上、右下]和[右上、左下]</dd>
+    <dd>. 3个值：[左上]、[右上、左下]、[右下]</dd>
+    <dd>
+      <pre>border-radius: length|%;</pre>
+    </dd>
+    <dt>语法2</dt>
+    <dd>. 单独设置x轴、y轴的圆角半径</dd>
+    <dd>
+      <pre>border-radius:x x x x/y y y y</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 正圆 - 四个角</dd>
+    <dd class="basic radiu0"></dd>
+    <dd>
+      <pre>
+border-radius: 50%;
+//简写形式
+border-radius: 50% / 50%;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 扇形 - 一个角</dd>
+    <dd class="basic radiu1"></dd>
+    <dd>
+      <pre>
+border-top-left-radius: 100%;
+//简写形式
+border-radius: 100% 0 0 0/100% 0 0 0;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 扇形 - 二个角</dd>
+    <dd class="basic radiu4"></dd>
+    <dd>
+      <pre>
+.radiu4 {
+  background-color: var(--main-color);
+  border-radius: 0 100% 100% 0/50%;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 扇形 - 二个角</dd>
+    <dd class="basic radiu2"></dd>
+    <dd>
+      <pre>
+border-top-right-radius: 50%;
+border-bottom-left-radius: 50%;
+//简写形式
+border-radius: 0 50% /0 50%;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 扇形 - 三个角</dd>
+    <dd class="basic radiu3"></dd>
+    <dd>
+      <pre>
+border-top-right-radius: 50%;
+border-bottom-right-radius: 50%;
+border-bottom-left-radius: 50%;
+//简写形式
+border-radius: 0 50% 50%/0 50% 50%;    
+</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] egg</dd>
+    <dd class="egg"></dd>
+    <dd>
+      <pre>border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 公告信息栏</dd>
+    <dd>. 左边框 border-left</dd>
+    <dd>. 盒阴影 box-shadow</dd>
+    <dd>. 弹性布局 flex</dd>
+    <dd class="bullet">
+      <div class="icon"><span class="iconfont icon-keyboard"></span></div>
+      <div>Warning: NOT to do!!!</div>
+    </dd>
+    <dd>[CSS]核心</dd>
+    <dd>
+      <pre>
+border-left: 4px solid var(--main-color);
+border-radius: 10px;
+background-color: #fff;
+box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.2);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 进度条</dd>
+    <dd>
+      <div class="bar" style="--per:15;--color:#089;">
+        <div></div>
+      </div>
+      <div class="bar" style="--per:20;--color:#890;">
+        <div></div>
+      </div>
+      <div class="bar" style="--per:35;--color:#f40;">
+        <div></div>
+      </div>
+      <div class="bar" style="--per:30;--color:#908;">
+        <div></div>
+      </div>
+    </dd>
+    <dd class="mt2" id="border-radius">[<span class="iconfont icon-keyboard"></span>] 圆角导航</dd>
+    <dd>.使用子元素撑开容器</dd>
+    <dd class="border-nav">
+      <ul>
+        <li>Lorem</li>
+        <li>Ipsa</li>
+        <li>Ipsa</li>
+        <li>Placeat</li>
+      </ul>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 水滴</dd>
+    <dd>. 第三方库 fancy-border-radius</dd>
+    <dd>. 盒阴影 box-shadow</dd>
+    <dd>. 过渡动画 transition</dd>
+    <dd>. :hover</dd>
+    <dd class="water-wrap">
+      <input type="radio" name="wc" id="w" checked>
+      <label for="w">白色 rgba(0, 0, 0, 0.05)</label>
+      <input type="radio" name="wc" id="b">
+      <label for="b">蓝色 rgba(5, 169, 243, 0.05)</label>
+      <div class="water"></div>
+    </dd>
+    <dd>
+      <pre>
+.water {
+  width: 180px;
+  height: 180px;
+  margin: 2rem auto;
+  box-shadow:
+    inset 20px 20px 20px rgba(0, 0, 0, 0.05),
+    20px 20px 20px rgba(0, 0, 0, 0.05),
+    inset -20px -20px 20px rgba(255, 255, 255, 0.05);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  transition: 1s;
+  cursor: pointer;
+}
+
+.water:hover {
+  border-radius: 50%;
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">边框图像 border-image</div>
+  <dl>
+    <dd>. 除了背景可以使用背景图片外，边框也可以使用背景图片</dd>
+    <dd>. 必须有边框</dd>
+    <dt>属性</dt>
+    <dd>独立属性</dd>
+    <dd>1. border-image-source</dd>
+    <dd>. 背景图片；可以是线性渐变或径向渐变</dd>
+    <dd>2. border-image-slice</dd>
+    <dd>. 到边框图像上、下、左、右的裁剪，将边框图像裁剪成9份-九宫格</dd>
+    <dd>. 可以是 数值 或 % 或 fill；不带单位，</dd>
+    <dd>. 数字：默认单位像素px；不能为负值</dd>
+    <dd>. %：默认100%；如果为50%，因为左右俩端已经各占了50%，中间区域没有内容；当&lt;50%时，中间端才会有内容；这部分的内容会根据铺贴的方式进行渲染</dd>
+    <dd>. fill：保留边框图像的中间部分；默认不保留</dd>
+    <dd>. 当border-image-slice小于图像的一半50%时，border-image-repeat的特性才会体现出来</dd>
+    <dd>3. border-image-width</dd>
+    <dd>. 边框占用图像的宽度；默认是100%，即背景图片全部覆盖容器；可以使用px</dd>
+    <dd>4. border-image-outset</dd>
+    <dd>. 图像向外扩展的区域；默认0；不可以是负数</dd>
+    <dd>5. border-image-repeat</dd>
+    <dd>. 图像重复的方式：stretch[默认]、repeat、round[衔接更顺滑]</dd>
+    <dd class="mt2">复合属性：border-image</dd>
+    <dt>应用</dt>
+    <dd>. 相框类设计</dd>
+    <dd class="mt2">[<span class="iconfont icon-jingshi"></span>] 样例原图 81x81</dd>
+    <dd><img class="b-img" src="./imgs/border-img.png" alt="" title="原图"></dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 默认边框背景</dd>
+    <dd class="basic b-img0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati maiores consequuntur
+      fugiat, praesentium voluptatibus, molestiae dignissimos cumque similique culpa dolores architecto
+      repellendus debitis vel est! Voluptatum quis.</dd>
+    <dd>
+      <pre>
+border: 27px solid #f40;
+border-image: url(../imgs/border-img.png);
+//等同于
+border-image-source: url(../imgs/border-img.png);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 定制边框背景</dd>
+    <dd>. 1/3裁剪背景图片为9份，并round铺满；如果默认，则2、4、6、8被拉伸</dd>
+    <dd class="basic b-img1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam commodi, sunt enim sed
+      labore sapiente ipsa libero hic incidunt necessitatibus sit consectetur. Ratione veritatis distinctio
+      perspiciatis, odio dignissimos aliquid totam!</dd>
+    <dd>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: 27;
+border-image-repeat: round;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 定制边框背景</dd>
+    <dd>. 1/2裁剪背景图片为4份；四个角各占1份，所以中间没有预留空间，是否拉伸不起作用</dd>
+    <dd>. 当&lt;50%时，中间区域才会有内容</dd>
+    <dd class="basic b-img2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quas error iusto sapiente aut
+      repudiandae accusantium id tempora. Consequuntur culpa nulla officiis voluptatum fuga suscipit impedit,
+      distinctio deleniti dolor adipisci. Quibusdam!</dd>
+    <dd>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: 50%;
+border-image-repeat: round;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 定制边框背景</dd>
+    <dd>. 1/6裁剪背景图片为9份</dd>
+    <dd class="basic b-img3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eaque quae! Harum
+      commodi amet porro eum nesciunt ut nemo, explicabo quibusdam a aspernatur consectetur! Nemo suscipit optio
+      corrupti eius magnam.</dd>
+    <dd>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: calc(100%/6);
+border-image-repeat: round;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 定制边框背景</dd>
+    <dd>. 1/3裁剪；宽度为1/2，所以容器被4个边角覆盖，中间没有预留空间；是否拉伸不起作用</dd>
+    <dd class="basic b-img4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis maxime perspiciatis
+      quasi animi laudantium placeat? Numquam reiciendis ipsum natus, hic accusamus dicta aliquam. Temporibus
+      tenetur quidem nam aliquid eum dolorem.</dd>
+    <dd>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: calc(100%/3);
+border-image-width: 50%;</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 定制边框背景</dd>
+    <dd>. 1/6裁剪；宽度为1/20</dd>
+    <dd class="basic b-img5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo dicta, omnis numquam
+      totam veniam ea suscipit voluptates nemo optio placeat iusto ipsa? A nobis ea possimus amet sit nesciunt
+      quae!</dd>
+    <dd>
+      <pre>
+border: 27px solid #f40;
+border-image-source: url(../imgs/border-img.png);
+border-image-slice: calc(100%/6);
+border-image-width: 5%;
+border-image-repeat: round;</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">边框块 border-block</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 指定边框块的起始/顶部start和结束/底部end样式</dd>
+    <dd>. 浏览器支持不是很好，建议使用SVG实现</dd>
+    <dd>
+      <pre>
+border-block-start
+border-block-end</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] loading</dd>
+    <dd>. 起始透明</dd>
+    <dd>. 结束加粗</dd>
+    <dd>. :hover旋转1周</dd>
+    <dd class="border-blk"></dd>
+    <dd>
+      <pre>
+.border-blk {
+    width: 60px;
+    height: 60px;
+    margin: 2rem auto;
+    border-radius: 50%;
+    border: 1px solid #f40;
+    border-block-start-color: transparent;
+    border-block-end: 4px dashed #089;
+    transition: 1s;
+}
+
+.border-blk:hover {
+    transform: rotate(360deg);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. 边框 border的使用和样式</dd>
+    <dt>作业</dt>
+    <dd>1. 绘制透明椭圆头像框</dd>
+    <dd>2. 优化个人网站，如导航按钮、信息介绍</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

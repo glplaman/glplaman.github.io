@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盒阴影 box-shadow</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/boxshadow.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;box-shadow</h1>
+  </header>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 为元素添加阴影</dd>
+    <dd>. 阴影由 2-4 个长度值、可选的颜色值以及可选的 inset 关键词来规定。省略长度的值是 0</dd>
+    <dd>. 多个阴影使用逗号分隔</dd>
+    <dd>.更多阴影使用，请参考<a href="https://neumorphism.io">neumorphism</a></dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>box-shadow: h-shadow v-shadow blur spread color inset;</pre>
+    </dd>
+  </dl>
+  <div class="chap">案例</div>
+  <dl>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]表单元素-checkbox</dd>
+    <dd>.边框 border</dd>
+    <dd>.变形 transform</dd>
+    <dd>.过渡动画 transition</dd>
+    <dd>.相邻兄弟选择器+</dd>
+    <dd>.其它设计方案见<a href="./form.html">form</a>样式一节</dd>
+    <dd>[<span class="iconfont icon-bell"></span>]如果使用&lt;label&gt;包裹&lt;input&gt;，请移除for属性</dd>
+    <dd>[<span class="iconfont icon-bell"></span>]请使用outline相关属性实现</dd>
+    <dd>
+      <label class="cb">
+        <input type="checkbox" hidden>
+        <span></span>
+      </label>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]发光小球-叠加多个阴影</dd>
+    <dd class="glow"></dd>
+    <dd>
+      <pre>
+box-shadow:
+  0 0 10px 4px rgba(255, 0, 0, 0.4),
+  0 0 20px 8px rgba(255, 0, 0, 0.4),
+  0 0 40px 16px rgba(255, 0, 0, 0.4);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 光环-拓展一个同色透明的阴影实现|双边框</dd>
+    <dd id="circle"></dd>
+    <dd>
+      <pre>
+#circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgb(56, 166, 255);
+    box-shadow: 0 0 0 1rem rgba(56, 166, 255, .2);
+    margin: 1rem auto;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 内阴影模拟边框</dd>
+    <dd>.利用z-index叠放在下面；不能设置父级容器背景颜色</dd>
+    <dd>
+      <div class="img-box">
+        <img src="./imgs/bg.jpg" alt="">
+      </div>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 透明边框特效</dd>
+    <dd>.用白色遮盖</dd>
+    <dd>
+      <img class="img-bs" src="./imgs/bg.jpg" alt="">
+    </dd>
+    <dd>
+      <pre>
+.img-bs {
+  box-shadow:
+    0 0 0 10px #890,
+    0 0 0 35px #fff,
+    40px 40px #f40,
+    -40px -40px #f40;
+  margin: 6rem auto;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 3D图标-<input type="radio" id="rect" name="bs" checked>
+      <label for="rect">矩形</label>
+      <input type="radio" id="water" name="bs">
+      <label for="water">水滴</label>
+      <div class="panel"></div>
+    </dd>
+    <dd>. 左上角的深色内阴影</dd>
+    <dd>. 右下角的浅色内阴影</dd>
+    <dd>. 右下角的多层深色阴影[外]</dd>
+    <dd>
+      <pre>
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+    margin: 1rem auto;
+    background-color: #f40;
+    border-radius: 30px;
+    color: #fff;
+    border: 4px solid #eef1f5;
+    box-shadow: 
+        inset 0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.5);
+        inset -0.4rem -0.4rem 1rem rgba(255, 255, 255, 0.5), 
+        0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.2), 
+        0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.2), 
+}</pre>
+    </dd>
+
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 社交分享按钮-使用伪元素、阴影和过渡动画综合实现；鼠标:hover查看效果</dd>
+    <dd class="cont share">
+      <span class="icon"><span class="iconfont icon-shouye_o"></span></span>
+      <span class="icon"><span class="iconfont icon-gerentouxiang_o"></span></span>
+      <span class="icon"><span class="iconfont icon-xiai_o"></span></span>
+      <span class="icon"><span class="iconfont icon-dianhua_o"></span></span>
+    </dd>
+    <dd>
+      <pre>
+.share .icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    transform: scale(0.8);
+    transition: .5s;
+}
+        
+.share .icon:hover::before {
+    box-shadow: 0 0 1rem 2px #e1251b;
+    transform: scale(1.2);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 汉堡菜单</dd>
+    <dd>. 本例采用利用伪元素和阴影实现</dd>
+    <dd>. 单击更换css类</dd>
+    <dd>其它方案</dd>
+    <dd>. 使用编码字符&#9776[去掉空格]来代替&#9776</dd>
+    <dd>. 使用字体图标实现</dd>
+    <dd>. 使用js</dd>
+    <dd id="ham"></dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+#ham {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background-color: #38a6ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+}
+
+#ham::before {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 0 #fff;
+    transition: .2s;
+}
+
+#ham::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background-color: #fff;
+    transform: translateY(10px);
+    transition: .2s;
+}
+
+#ham.ham-active {
+    background-color: #e1251b;
+}
+
+#ham.ham-active::before {
+    box-shadow: unset;
+    transform: translateY(0px) rotateZ(45deg);
+}
+
+#ham.ham-active::after {
+    transform: translateY(0px) rotateZ(-45deg);
+}</pre>
+    </dd>
+    <dd>[JavaScript]</dd>
+    <dd>
+      <pre>
+let ham = document.querySelector('#ham')
+ham.addEventListener('click', () => {
+    ham.classList.toggle('ham-active')
+})</pre>
+    </dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    window.onload = function () {
+      let ham = document.querySelector('#ham')
+      ham.addEventListener('click', () => {
+        ham.classList.toggle('ham-active')
+      })
+    }
+  </script>
+</body>
+
+</html>

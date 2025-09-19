@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS变量 Variable</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <style>
+    :root {
+      --main-color: #01b4ff;
+      --main-layout: repeat(3, 1fr);
+    }
+
+    header {
+      background-image: linear-gradient(315deg, var(--main-color) 25%, #647eff);
+    }
+
+    .mixer {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+    }
+
+    .mixer span {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #fff;
+      cursor: pointer;
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: var(--main-layout);
+    }
+
+    dt {
+      position: relative;
+      color: var(--main-color);
+      display: flex;
+      align-items: center;
+    }
+
+    dt::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--main-color);
+    }
+
+    @media screen and (max-width:768px) {
+      :root {
+        --main-layout: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Variable</h1>
+    <div class="mixer">
+      <span style="background-color: #ff0f5b;"></span>
+      <span style="background-color: #be01fe;"></span>
+      <span style="background-color: #01b4ff;"></span>
+    </div>
+  </header>
+  <dl>
+    <dt>说明</dt>
+    <dd>.也称自定义属性</dd>
+    <dd>.使用两个短划线--开始的变量名表示</dd>
+    <dd>.元素在CSS中使用时，使用var()引用</dd>
+    <dd>.一次定义、多次使用；适合一个属性值在多处被使用；相当于定义了一个当前CSS文件内的全局变量</dd>
+    <dd>.优势：方便运维，特别适合全站换肤</dd>
+    <dd>.变量的使用经常配合计算函数 calc() 使用</dd>
+    <dt>全局变量</dt>
+    <dd>.在CSS中，使用根选择器:root声明，所有元素都可使用</dd>
+    <dd>
+      <pre>
+:root {
+    --main-color: #f40;
+    --main-layout: repeat(3, 1fr);
+}
+
+.wrap {
+    display: grid;
+    grid-template-columns: var(--main-layout);
+}
+
+@media screen and (max-width:768px) {
+    :root {
+        --main-layout: 1fr;
+    }
+}</pre>
+    </dd>
+    <dt>局部变量</dt>
+    <dd>.在CSS中，如果变量定义在某个选择器，则只有该选择器选中的元素和它的所有后代元素使用-局部变量</dd>
+    <dd>
+      <pre>
+.wrap{
+    --el-color: #890;
+}</pre>
+    </dd>
+    <dt>内联变量</dt>
+    <dd>.在HTML元素中，使用style定义内联CSS变量，供当前元素在CSS使用</dd>
+    <dd>
+      <pre>&lt;div style="--alpha:0"&gt;0&lt;/div&gt;</pre>
+    </dd>
+    <dt>与JS交互</dt>
+    <dd>.动态调整</dd>
+    <dd>.获取元素节点，修改其属性</dd>
+    <dd>
+      <pre>
+let mixer = document.querySelectorAll('.mixer span');
+let root = document.querySelector(':root');
+console.log(root);
+mixer.forEach(item => {
+    item.addEventListener('click', (e) => {
+        console.log(e.target.style.backgroundColor);
+        root.style.setProperty('--main-color', e.target.style.backgroundColor)
+    })
+})</pre>
+    </dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let mixer = document.querySelectorAll('.mixer span');
+    let root = document.querySelector(':root');
+    console.log(root);
+    mixer.forEach(item => {
+      item.addEventListener('click', (e) => {
+        console.log(e.target.style.backgroundColor);
+        root.style.setProperty('--main-color', e.target.style.backgroundColor)
+      })
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #d8f3d9;
+            color: #333333;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .photoRow {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .albumPhoto {
+            width: 200px;
+            height: 250px;
+
+            margin: 0 10px;
+            border-radius: 10px;
+        }
+
+        .back-fixed {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            cursor: pointer;
+        }
+
+        .top-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            position: relative;
+        }
+
+        nav ul li:not(:last-child)::after {
+            content: '•';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        section h2 {
+            text-align: center;
+        }
+
+        a {
+            color: rgb(20, 117, 83);
+            text-decoration: none;
+        }
+
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .cc {
+            text-align: center;
+        }
+
+        section ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 100%;
+            background: linear-gradient(-45deg, #b6b821 0%, #21b8b6 50%, #2165b8 100%);
+            transition: width 0.3s ease;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar-nav li {
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .sidebar-nav a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .sidebar:hover {
+            width: 300px;
+        }
+
+        .sidebar:hover .sidebar-nav a {
+            opacity: 1;
+        }
+
+        .photoRow {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .photoRow:hover {
+            transform: scale(1.05);
+            /* 悬停时放大 */
+        }
+
+        .albumPhoto {
+            width: 200px;
+            height: 250px;
+            margin: 0 10px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .albumPhoto:hover {
+            transform: scale(1.05);
+            /* 悬停时放大 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* 悬停时添加阴影 */
+        }
+
+        /* 优化侧边栏在移动设备上的显示 */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                transform: none;
+                background: linear-gradient(to bottom, #b6b821, #21b8b6, #2165b8);
+                /* 修改背景渐变方向 */
+            }
+
+            .sidebar-nav {
+                padding: 20px;
+            }
+
+            .sidebar-nav a {
+                opacity: 1;
+                /* 默认情况下显示链接 */
+            }
+
+            .sidebar-nav li {
+                padding: 10px 0;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .photoRow {
+                flex-direction: column;
+                /* 改为垂直布局 */
+                align-items: center;
+            }
+
+            .albumPhoto {
+                margin-bottom: 20px;
+                /* 增加底部间距 */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="#about">关于我</a></li>
+            <li><a href="#experience">参赛经验</a></li>
+            <li><a href="#education">教育背景</a></li>
+            <li><a href="#hobby">爱好</a></li>
+            <li><a href="#photoAlbum">相册</a></li>
+            <li><a href="#contact">联系方式</a></li>
+            <li><a href="./index.html">向我提问</a></li>
+            <li><a href="./33.html">动画演示</a></li>
+            <li><a href="./22.html">留下您的联系方式</a></li>
+        </ul>
+    </aside>
+    <audio controls>
+        <source src="123.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container">
+        <header>
+            <h1>个人主页</h1>
+            <nav>
+                <ul>
+                    <li><a href="#about">关于我</a></li>
+                    <li><a href="#experience">参赛经验</a></li>
+                    <li><a href="#education">教育背景</a></li>
+                    <li><a href="#hobby">爱好</a></li>
+                    <li><a href="#photoAlbum">相册</a></li>
+                    <li><a href="#contact">联系方式</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section id="about">
+            <h2>关于我</h2>
+            <p class="cc">广州新华学院2023级软件工程专业学生，学生会外联部干事及学社联联拓部干事，菁英班成员。</p>
+            <img src="1.jpg" alt="个人照片" class="profile-photo">
+        </section>
+
+        <section id="experience">
+            <h2>参赛经验及持有证书</h2>
+            <ul>
+                <li>百千万工程广东省100品牌团队</li>
+                <li>传智杯网页设计大赛 一等奖</li>
+                <li> 中国国际大学生创新大赛 校赛金奖</li>
+                <li> 中国国际大学生创新大赛 校赛优胜奖</li>
+                <li>“粤嵌杯”大学生创新设计大赛 优秀奖</li>
+                <li>百千万工程及“三下乡”暑期社会实践突击队 省级立项</li>
+                <li>全国党史学习竞赛 省级二等奖</li>
+                <li>广州新华学院排球杯 冠军</li>
+                <li>广州新华学院排球比赛 季军</li>
+                <li>高教社全国大学生数学建模竞赛</li>
+                <li>广州新华学院“东宝杯” 金奖</li>
+                <li>菁英班优秀学员</li>
+                <li>软件著作权登字第14605370号-高考志愿智能匹配与推荐信息检测平台 V1.0</li>
+                <li>轻型民用无人驾驶航空器安全操作员证</li>
+
+
+            </ul>
+        </section>
+        <section id="education">
+            <h2>教育背景</h2>
+            <ul>
+                <li>
+                    <p>本科：广州新华学院</p>
+                </li>
+                <li>
+                    <p>高中：深圳市光明区高级中学</p>
+                </li>
+            </ul>
+        </section>
+        <section id="hobby">
+            <h2>爱好</h2>
+            <ul>
+                <li>排球</li>
+                <li>音乐</li>
+            </ul>
+        </section>
+        <section id="photoAlbum">
+            <h2>相册</h2>
+            <div class="photoRow">
+                <img src="2.jpg" alt="照片1" class="albumPhoto">
+                <img src="3.jpg" alt="照片2" class="albumPhoto">
+                <img src="4.jpg" alt="照片3" class="albumPhoto">
+            </div>
+            <div class="photoRow">
+                <img src="5.jpg" alt="照片4" class="albumPhoto">
+                <img src="6.jpg" alt="照片5" class="albumPhoto">
+                <img src="7.jpg" alt="照片6" class="albumPhoto">
+            </div>
+        </section>
+        <section id="contact">
+            <h2>联系方式</h2>
+            <p>邮箱:552541656@qq.com</p>
+            <p>电话: 185-8902-2391</p>
+        </section>
+    </div>
+
+    <header>
+        <h4>友情链接</h4>
+        <nav>
+            <ul>
+                <li><a href="https://www.weixin.qq.com ">微信</a></li>
+                <li><a href="https://wap.mail.qq.com">qq邮箱</a></li>
+            </ul>
+        </nav>
+    </header>
+
+</body>
+
+</html>

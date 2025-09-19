@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件 File</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/file.css">
+  <!-- <script type="text/javascript" src="../../js/xlsx.core.min.js"></script> -->
+  <script src="../../js/xlsx.full.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>&commat;File</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">Overview</li>
+      <li class="nav-item">FileReader</li>
+      <li class="nav-item">Cases</li>
+      <li class="nav-item">Drag</li>
+    </ul>
+  </header>
+  <dl>
+    <dt class="nav-cont">概述</dt>
+    <dd>. 文件选择是一种特殊的&lt;input&gt;，类型为file</dd>
+    <dd>. 用来选择指定类型的文件</dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>
+&lt;input type="file" name="" id="" multiple accept=""&gt;</pre>
+    </dd>
+    <dd>file：作为文件选择，input类型应指定为file</dd>
+    <dd>multiple：默认选择单个文件；多选时应指定multiple</dd>
+    <dd>accept：是选择文件的类型，类型之间使用,分割，也可以使用通配符*</dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>text/*</td>
+          <td>plain|css|csv|html|javascript|rtf|xml</td>
+        </tr>
+        <tr>
+          <td>image/*</td>
+          <td>jpg|png|gif|jpeg|tiff</td>
+        </tr>
+        <tr>
+          <td>application/*</td>
+          <td>json|xml-dtd|rtf|msword|vnd.ms-powerpoint|vnd.ms-excel|xml|zip</td>
+        </tr>
+        <tr>
+          <td>audio/*</td>
+          <td>ac3|mpeg|mp3|</td>
+        </tr>
+        <tr>
+          <td>video/*</td>
+          <td>mpeg|mp4|</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">事件 FileReader</div>
+  <dl>
+    <dd>处理选中的文件。根据内容，有3个函数：</dd>
+    <dd>1. readAsText()：处理.txt/.HTML/.js等文本文件；格式应为UTF-8</dd>
+    <dd>2. readAsDataURL()：处理图片，data:image/jpeg;base64格式</dd>
+    <dd>3. readAsArrayBuffer()：处理字节流</dd>
+    <dt>基本步骤</dt>
+    <dd>1. 选择文件</dd>
+    <dd>2. 使用合适的文件处理函数</dd>
+    <dd>3. 渲染文件处理结果</dd>
+  </dl>
+  <div class="chap nav-cont">图片的使用 Image</div>
+  <dl>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 用户头像</dd>
+    <dd>. 定制文件按钮：隐藏默认的input元素，设计新元素，并把新元素的click事件转接到原来的input元素</dd>
+    <dd>. 定制用户头像：选择图片，经过处理后，更新用户头像</dd>
+    <dd class="avatar-wrap">
+      <img src="./imgs/avatar.png" alt="图片不可用" class='avatar-img'>
+      <input type="file" accept="image/*" class='avatar-ipt' hidden>
+      <button type="button" class='avatar-btn'>Choose File</button>
+      <div class='avatar-per'>0%</div>
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;div class="avatar-wrap"&gt;
+    &lt;img src="./imgs/avatar.png" alt="图片不可用" class='avatar-img'&gt;
+    &lt;input type="file" accept="image/*" class='avatar-ipt' hidden&gt;
+    &lt;button type="button" class='avatar-btn'&gt;Choose File&lt;/button&gt;
+    &lt;div class='avatar-per'&gt;0%&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd>[JavaScript]</dd>
+    <dd>
+      <pre>
+let imgIpt = document.querySelector('.avatar-ipt')
+let imgBtn = document.querySelector('.avatar-btn')
+let img = document.querySelector('.avatar-img')
+let imgPer = document.querySelector('.avatar-per')
+imgBtn.addEventListener('click', function () {
+    imgIpt.click()
+})
+// 这里需要使用this获取文件列表，所以不能使用箭头函数
+imgIpt.addEventListener('change', function () {
+    console.log(this.files);
+    let fr = new FileReader()
+    fr.readAsDataURL(this.files[0]);
+    fr.addEventListener('load', function () {
+        img.src = this.result;
+    })
+    fr.onprogress = function (e) {
+        console.log(e.loaded);
+        imgPer.innerHTML = Number(e.loaded / e.total * 100).toFixed(2) + '%';
+    }
+})</pre>
+    </dd>
+    <dd>或者使用URL直接生成src</dd>
+    <dd>
+      <pre>
+imgIpt.addEventListener('change', function () {
+  let file = this.files[0]
+  console.log(file);
+  imgEl.src = URL.createObjectURL(file);
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap">办公文档 OA</div>
+  <dl>
+    <dd>. 办公文档使用比较多的是txt和excel</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 读取本地文本文件并显示其内容</dd>
+    <dd>
+      <input type="file" id="txt-ipt" accept="text/*">
+    </dd>
+    <dd>[文件内容] <span id='txt-cont'></span></dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;input type="file" id="txt-ipt" accept="text/*"&gt;
+&lt;div id='txt-cont'&gt;.&lt;/div&gt;</pre>
+    </dd>
+    <dd>[JavaScript]</dd>
+    <dd>
+      <pre>
+let txtIpt = document.querySelector('#txt-ipt')
+let txtCont = document.querySelector('#txt-cont')
+txtIpt.addEventListener('change', function () {
+    let file = this.files[0]
+    let fr = new FileReader()
+    fr.readAsText(file)
+    fr.onload = function (e) {
+        console.log(e.target.result);
+        txtCont.innerHTML = e.target.result
+    }
+})</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 读取OA文档-excel</dd>
+    <dd>. 借助第三方库<a href="https://docs.sheetjs.com/" class="link" target="_blank">SheetJS Community Edition</a>实现
+    </dd>
+    <dd id='excel-cont'>. 提示：请选择excel文档</dd>
+    <dd>
+      <input type="file" name="excel" id="excel-ipt" accept="application/*">
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>&lt;input type="file" name="excel" id="excel-ipt" accept="application/*"&gt;</pre>
+    </dd>
+    <dd>[JavaScript]</dd>
+    <dd>
+      <pre>
+let excelCont = document.querySelector('#excel-cont')
+let excel = document.querySelector('#excel')
+excel.addEventListener('change', function () {
+    let fr = new FileReader()
+    fr.readAsArrayBuffer(this.files[0])
+    fr.addEventListener('load', function () {
+        let res = this.result;
+        let workbook = XLSX.read(res, { type: 'array' });
+        let sheetName = workbook.SheetNames[0];
+        let sheet = workbook.Sheets[sheetName];
+        console.log(sheet);
+        excelCont.innerHTML = XLSX.utils.sheet_to_html(sheet);
+    })
+})
+//请查看sheet内容，定制excel文档</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 表格table转换为OA文档-excel</dd>
+    <dd>. 借助第三方库<a href="//gitee.com/mirrors/sheetjs-js-xlsx/" class="link" target="_blank">sheetJS</a>实现</dd>
+    <dd>
+      <table id='tbl'>
+        <tr>
+          <th>name</th>
+          <th>age</th>
+          <th>unit</th>
+          <th>cell</th>
+          <th>email</th>
+        </tr>
+        <tr>
+          <td>gl</td>
+          <td>gz</td>
+          <td>nj</td>
+          <td>sz</td>
+          <td>cq</td>
+        </tr>
+        <tr>
+          <td>hz</td>
+          <td>bj</td>
+          <td>xm</td>
+          <td>lz</td>
+          <td>sz</td>
+        </tr>
+        <tr>
+          <td>sh</td>
+          <td>sy</td>
+          <td>nn</td>
+          <td>zz</td>
+          <td>wh</td>
+        </tr>
+      </table>
+      <button id='tblBtn' class="btn-custom">table to book</button>
+    </dd>
+    <dd>
+      <pre>
+let tblBtn = document.querySelector('#tblBtn')
+let tbl = document.querySelector('#tbl')
+tblBtn.addEventListener('click', () => {
+    let tblBook = XLSX.utils.table_to_book(tbl);
+    XLSX.writeFile(tblBook, 'out.xlsx');
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">文件拖拽 Drag</div>
+  <dl>
+    <dt>说明</dt>
+    <dd>. 定义拖拉区并指定drop事件</dd>
+    <dd>. 完整过程：拖拽进入 dragenter，拖拽 dragover、拖拽释放drop</dd>
+    <dd>. 注意：系统默认会打开拖入的文件，应取消dragenter和dragover的默认动作</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 拖拉选择文件定制头像</dd>
+    <dd id="zone" class="drag-zone">Drag files here</dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>&lt;div id="zone"&gt;Drag files here&lt;/div&gt;</pre>
+    </dd>
+    <dd>[JavaScript]</dd>
+    <dd>
+      <pre>
+let drag = document.querySelector('#zone')
+drag.addEventListener('dragenter', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+})
+drag.addEventListener('dragover', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+})
+drag.addEventListener('drop', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    let fr = new FileReader()
+    fr.readAsDataURL(e.dataTransfer.files[0]);
+    fr.addEventListener('load', function () {
+        drag.style.backgroundImage = `url(${this.result})`
+    })
+})</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 拖动多个图片并显示</dd>
+    <dd>. 可持续添加</dd>
+    <dd id="mul-drag" class="drag-zone">Drag multiple files here</dd>
+    <dd class="mul-dis"></dd>
+    <dd>[JavaScript] 获取的多个文件列表信息不是数组，所以不能使用forEach处理，只能使用普通的for</dd>
+    <dd>
+      <pre>
+function dealFiles(files) {
+    for (let i = 0; i &le; files.length; i++) {
+        console.log(files[i]);
+        let img = document.createElement('img')
+        let fr = new FileReader()
+        fr.readAsDataURL(files[i]);
+        fr.addEventListener('load', function () {
+            img.src = this.result;
+            mulDis.appendChild(img);
+        })
+    }
+}</pre>
+    </dd>
+    <dd class="quote">
+      <div><span class="iconfont icon-bangzhu2"></span> 如何知道单个文件的信息</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 如何选择多个文件</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 如何查看选择文件的个数</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 文件类型都有哪些</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 如何指定选择文件的类型</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 如何自定义UI</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 如何拖拉获取文件信息</div>
+      <div><span class="iconfont icon-bangzhu2"></span> 如果查看文件内容</div>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. file的使用：定制和拖拽</dd>
+    <dt>作业</dt>
+    <dd>1. 定制个人头像和相册，并更新到个人网站</dd>
+    <dd>3. 根据提供的学生花名册文档定制内容并展示</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+  <script>
+    window.onload = function () {
+      // single image file
+      let imgIpt = document.querySelector('.avatar-ipt')
+      let imgBtn = document.querySelector('.avatar-btn')
+      let img = document.querySelector('.avatar-img')
+      let imgPer = document.querySelector('.avatar-per')
+      imgBtn.addEventListener('click', function () {
+        imgIpt.click()
+      })
+      imgIpt.addEventListener('change', function () {
+        console.log(this.files);
+        let fr = new FileReader()
+        fr.readAsDataURL(this.files[0]);
+        // addEventListener
+        fr.addEventListener('load', function () {
+          img.src = this.result;
+        })
+        // loading time > 50ms
+        fr.onprogress = function (e) {
+          console.log(e.loaded);
+          imgPer.innerHTML = Number(e.loaded / e.total * 100).toFixed(2) + '%';
+        }
+      })
+
+      // read txt
+      let txtIpt = document.querySelector('#txt-ipt')
+      let txtCont = document.querySelector('#txt-cont')
+      txtIpt.addEventListener('change', function () {
+        let file = this.files[0]
+        let fr = new FileReader()
+        fr.readAsText(file)
+        // onload
+        fr.onload = function (e) {
+          console.log(e.target.result);
+          txtCont.innerHTML = e.target.result
+        }
+      })
+
+      // read oa-excel
+      let excelIpt = document.querySelector('#excel-ipt')
+      let excelCont = document.querySelector('#excel-cont')
+      excelIpt.addEventListener('change', function () {
+        let fr = new FileReader()
+        fr.readAsArrayBuffer(this.files[0])
+        fr.addEventListener('load', function () {
+          let res = this.result;
+          let workbook = XLSX.read(res, { type: 'array' });
+          let sheetName = workbook.SheetNames[0];
+          let sheet = workbook.Sheets[sheetName];
+          console.log(sheet);
+          excelCont.innerHTML = XLSX.utils.sheet_to_html(sheet);
+        })
+      })
+
+      // table to oa-excel
+      let tblBtn = document.querySelector('#tblBtn')
+      let tbl = document.querySelector('#tbl')
+      tblBtn.addEventListener('click', () => {
+        let tblBook = XLSX.utils.table_to_book(tbl);
+        XLSX.writeFile(tblBook, 'out.xlsx');
+      })
+
+      // // file custom avatar
+      // let fileCoustom = document.querySelector('#file-custom')
+      // let fileBtn = document.querySelector('#file-btn')
+      // fileBtn.addEventListener('click', function () {
+      //     fileCoustom.click()
+      // })
+      // fileCoustom.addEventListener('change', function () {
+      //     console.log(this.files);
+      // })
+
+      // drag
+      let drag = document.querySelector('#zone')
+      drag.addEventListener('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      })
+      drag.addEventListener('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      })
+      drag.addEventListener('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        let fr = new FileReader()
+        fr.readAsDataURL(e.dataTransfer.files[0]);
+        fr.addEventListener('load', function () {
+          drag.style.backgroundImage = `url(${this.result})`
+        })
+      })
+      // drag mul
+      let dragM = document.querySelector('#mul-drag')
+      let mulDis = document.querySelector('.mul-dis')
+      dragM.addEventListener('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      })
+      dragM.addEventListener('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      })
+      dragM.addEventListener('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        console.log(e.dataTransfer.files);
+        dealFiles(e.dataTransfer.files)
+
+      })
+      function dealFiles(files) {
+        for (let i = 0; i < files.length; i++) {
+          console.log(files[i]);
+          let img = document.createElement('img')
+          let fr = new FileReader()
+          fr.readAsDataURL(files[i]);
+          fr.addEventListener('load', function () {
+            img.src = this.result;
+            mulDis.appendChild(img);
+          })
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

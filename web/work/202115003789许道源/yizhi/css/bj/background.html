@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>背景 Background</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/bg.css">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Background</h1>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">概述</li>
+      <li class="nav-item">属性</li>
+      <li class="nav-item">案例</li>
+    </ul>
+  </header>
+  <div class="chap nav-cont">概述 Overview</div>
+  <dl>
+    <dd>.背景background样式包含多个属性，如</dd>
+    <dd> 背景颜色 background-color</dd>
+    <dd> 背景图片 background-image</dd>
+    <dd> 背景图片位置 background-position</dd>
+    <dd> 背景图片大小 background-size</dd>
+    <dd> 背景图片重复 background-repeat</dd>
+    <dd>.通常单个属性共同使用</dd>
+    <dd>.也可以使用复合属性，但是可读性不好，不建议</dd>
+    <dd>
+      <pre>background:bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;</pre>
+    </dd>
+  </dl>
+  <div class="chap nav-cont">属性 Attributes</div>
+  <dl>
+    <dt>背景颜色 Background-color</dt>
+    <dd>. 为了后向兼容/容错，指定背景图片的同时，也指定颜色；俩者互不冲突；通常结合在一起使用</dd>
+    <dd>. 指定背景颜色还可以提示用户体验，避免大图片加载时的页面空白</dd>
+    <dt>背景图片 Background-image</dt>
+    <dd>. 可以使用传统的图片作为背景，也可以使用渐变背景作为图片[线性渐变、径向渐变、锥向渐变]；更多使用细节，参考后面专题</dd>
+    <dd>. 可以使用多个背景图片，使用逗号分隔；前面的图片会覆盖后面的图片</dd>
+    <dd>. 默认情况下，背景图像按照图片原始大小显示；当容器尺寸和图片尺寸不一致时，就会出现图片重复铺贴或图片被裁剪的情况</dd>
+    <dd>. 容器的尺寸&gt;背景图片的尺寸，则默认情况下，背景图片会在水平和垂直方向上重复贴铺</dd>
+    <dd>. 容器的尺寸&lt;背景图片的尺寸，图片被裁剪/部分显示；实际上背景图片还是会在水平和垂直方向上重复铺贴，只不过受容器尺寸大小限制，没有呈现出来</dd>
+    <dt>图像位置 Background-position</dt>
+    <dd>. 根据图片坐标/位置显示指定的内容；默认从左上角开始</dd>
+    <dd>. 可以使用关键字，如top、left、right、bottom；如前例</dd>
+    <dd>. 也可以使用具体数字或百分比</dd>
+    <dd>. 还可以关键字和数字、百分比组合使用</dd>
+    <dd>. 主要应用：精灵图和图片分隔</dd>
+    <dt>图像大小 Background-size</dt>
+    <dd>. 调整背景图像的尺寸大小</dd>
+    <dd>. 容器大，则重复平铺；容器小，则显示部分图片</dd>
+    <dd>. 背景图片大小；默认使用图片原始尺寸大小</dd>
+    <dd>. 终端尺寸变化时，易导致显示缺失；不能媒体自适应</dd>
+    <dd>. 使用复合属性时，应在background-position属性后面使用</dd>
+    <dd>
+      <pre>background-size: length|percentage|cover|contain;</pre>
+    </dd>
+    <dd>. 可以指定2个参数：宽、高‘通常只指定宽，高为auto，系统会按照图片比例，自动调整图片高度</dd>
+    <dd>. length：固定数值设置背景图片大小</dd>
+    <dd>. percentage：参考容器大小设置背景大小；200%就是2倍的容器大小；50%就是容器的一半</dd>
+    <dd>. cover：<span class="warn">等比例最大化</span> 显示图片；容器被占满、图片可能被裁剪</dd>
+    <dd>. contain：<span class="warn">完全</span> 显示图片；容器易出现留白</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 按照指定像素大小显示背景图片</dd>
+    <pre>background-size: 100px 100px;</pre>
+    <dd class="size px"></dd>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 按照容器宽度百分比显示背景图片- 20%：水平方向显示5张背景图片</dd>
+    <dd>
+      <pre>background-size: 20%</pre>
+    </dd>
+    <dd class="size per"></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 关键字cover</dd>
+    <dd>. 始终充满容器的显示图片；图片可能被裁剪</dd>
+    <dd>
+      <pre>
+.bg-size {
+    width:750px;
+    max-width: 100%;
+    height: 300px;
+    background-image: url(../imgs/bg.jpg);
+    background-size: cover;
+}</pre>
+    </dd>
+    <dd class="size cover"></dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] contain</dd>
+    <dd>. 始终完整显示图片/包含图片</dd>
+    <dd>. 如果允许重复，则会显示多个图片背景；如果不允许，容器将呈现部分留白</dd>
+    <dd>
+      <pre>
+.bg-size {
+    width:750px;
+    max-width: 100%;
+    height: 300px;
+    background-image: url(../imgs/bg.jpg);
+    background-size: contain;
+}</pre>
+    </dd>
+    <dd class="size contain"></dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 改进方案</dd>
+    <dd>. 通常指定cover，并调整其位置position居中center显示</dd>
+    <dd>. 需要美工精心设计，保证图片的重点内容能够直观的表达出来</dd>
+    <dd>
+      <pre>
+.bg-size {
+    width:750px;
+    max-width: 100%;
+    margin: 0 auto;
+    height: 300px;
+    background-image: url(../imgs/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}</pre>
+    </dd>
+    <dd class="size cover-center"></dd>
+    <dt>图形重复 Background-repeat</dt>
+    <dd>. 背景图片重复铺贴</dd>
+    <dd>
+      <pre>background-repeat: auto|no-repeat|repeat-x|repeat-y</pre>
+    </dd>
+    <dd>. auto：默认情况下，图片会水平和垂直方向上铺满整个容器</dd>
+    <dd>. no-repeat：不重复</dd>
+    <dd>. repeat-x：x轴重复</dd>
+    <dd>. repeat-y：y轴重复</dd>
+    <dd>. 如果图片尺寸大于容器尺寸，看不出重复效果；实际上也是铺贴了的</dd>
+  </dl>
+  <div class="chap nav-cont">案例 Cases</div>
+  <dl>
+    <dt>使用原则</dt>
+    <dd>.装饰型元素多使用Background-image</dd>
+    <dd>.功能性元素多使用img；或者说如果去掉图片仍能正常显示就使用Background-image，否则应使用img</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 背景点缀 - 位置、大小、不重复</dd>
+    <dd>1. 单背景：背景图片定位于右下角</dd>
+    <dd class="single-img"></dd>
+    <dd>[独立属性]</dd>
+    <dd>
+      <pre>
+.single-img {
+    height: 200px;
+    background-color: rgba(255, 68, 0, 0.4);
+    background-image: url(../imgs/logo0.png);
+    background-position: right bottom;
+    background-size: 50px;
+    background-repeat: no-repeat;
+}</pre>
+    </dd>
+    <dd>[复合属性]</dd>
+    <dd>
+      <pre>
+background: #a8e073 url(../imgs/logo0.png) right bottom/50px no-repeat;</pre>
+    </dd>
+    <dd>2. 多背景：背景图片分别定位于左上角和右下角</dd>
+    <dd class="multi-img"></dd>
+    <dd>[独立属性]</dd>
+    <dd>
+      <pre>
+.multi-img {
+    height: 200px;
+    background-color: rgba(255, 68, 0, 0.4);
+    background-image: url(../imgs/lg.png), url(../imgs/glc.png);
+    background-position: right bottom, top left;
+    background-size: 50px;
+    background-repeat: no-repeat;
+}</pre>
+    </dd>
+    <dd>[复合属性]background-color放在后面</dd>
+    <dd>
+      <pre>
+background: url(../imgs/logo0.png) right bottom/50px no-repeat, url(../imgs/logo1.png) top left/50px no-repeat;
+background-color: #a8e073;</pre>
+    </dd>
+    <dt>精灵图 sprite</dt>
+    <dd>. 为减少服务器的资源请求次数，将多个图片/图标有规则的排列在一张图上：根据具体位置，使用对应的图片</dd>
+    <dd>. 适合小图片/图标使用</dd>
+    <dd>. 由美工完成精灵图的制作</dd>
+    <dd>. 图片通常不做缩放</dd>
+    <dd>. 优点：一次请求，多次使用</dd>
+    <dd>. 缺点：图片尺寸调整后，需要重新制作精灵图；且不适合媒体自适应</dd>
+    <dd>. 现在大多使用字体图标代替</dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 京东宣传</dd>
+    <dd class="sprite">
+      <div class="item">
+        <div class="icon more">多</div>
+        <div>品类齐全，轻松购物</div>
+      </div>
+      <div class="item">
+        <div class="icon fast">块</div>
+        <div>多仓直发，极速配送</div>
+      </div>
+      <div class="item">
+        <div class="icon good">好</div>
+        <div>正品行货，精致服务</div>
+      </div>
+      <div class="item">
+        <div class="icon save">省</div>
+        <div>天天低价，畅选无忧</div>
+      </div>
+    </dd>
+    <dd>[提示]</dd>
+    <dd>.坐标轴向下是正y；向右是正x</dd>
+    <dd>.取消重复，只保留一个图片</dd>
+    <dd>.原始图片是308*234；对应的图片大小约为36*45，应该从[0,-189]开始显式；如果计算不出来，使用开发者视图F12调整：从左边顶部(0,0)开始调整至合适</dd>
+    <dd>[CSS]参考代码</dd>
+    <dd>
+      <pre>
+.sprite .icon {
+  width: 36px;
+  height: 45px;
+  background-image: url(./web/imgs/jd.png);
+  background-repeat: no-repeat;
+}
+
+.sprite .more {
+    background-position: 0 -189px;
+}
+
+.sprite .fast {
+    background-position: -41px -189px;
+}
+
+.sprite .good {
+    background-position: -82px -189px;
+}
+
+.sprite .save {
+    background-position: -123px -189px;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 自定义目录 - 水平方向重复铺贴</dd>
+    <dd class="rpt">
+      <ul>
+        <li>
+          <span>背景图片尺寸小于容器尺寸</span>
+          <div class="dot"></div>
+          <span>1</span>
+        </li>
+        <li>
+          <span>背景图片采用水平重复</span>
+          <div class="dot"></div>
+          <span>6</span>
+        </li>
+        <li><span>采用flex布局</span>
+          <div class="dot"></div>
+          <span>9</span>
+        </li>
+      </ul>
+    </dd>
+    <dd>[传统方法]为什么整个百分比加起来不是100%？</dd>
+    <dd>
+      <pre>
+.cont span:nth-child(1) {
+  width: 5%;
+  display: inline-block;
+}
+
+.dot-bg {
+  display: inline-block;
+  width: 90%;
+  height: 3px;
+  background-image: url(./web/imgs/dot.png);
+  background-repeat: repeat-x;
+  vertical-align: middle;
+}
+
+.cont span:nth-child(3) {
+  width: 3%;
+  display: inline-block;
+}</pre>
+    </dd>
+    <dd>[flex]</dd>
+    <dd>
+      <pre>
+.dot-bg {
+    flex: 1;
+    height: 3px;
+    background-image: url(../imgs/dot.png);
+    background-repeat: repeat-x;
+}</pre>
+    </dd>
+    <dt>图片分割</dt>
+    <dd>. 将图片水平分隔为若干片，每个元素显示其中一片</dd>
+    <dd>. 每个元素显示的图片位置为：(当前片数-1) /（总片数-1)：从0到100%分成若干段；第一段从0开始；最后一段在100%结束</dd>
+    <dd>. 为了媒体自适应，每片的背景图片大小background-size应为总片数*100%</dd>
+    <dd>. 为查看效果，以下各例采用hover触发特效，且采用公共类tile；任意调试尺寸均无异常</dd>
+    <dd>
+      <pre>
+.tile {
+    width: 320px;
+    height: 180px;
+    margin: 2rem auto;
+    display: flex;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 2片</dd>
+    <dd>.2个点平分100%</dd>
+    <dd>.第一片在开始0，第二片在结束100%；每片的位置：0、100%</dd>
+    <dd class="tile tile-2">
+      <div></div>
+      <div></div>
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-2"&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+.tile-2>div {
+    flex: 1;//2等分
+    background-image: url(../imgs/bg.jpg);
+    background-size: 200%;//2倍大小
+    background-repeat: no-repeat;
+}
+
+.tile-2>div:nth-child(1) {
+    background-position: 0;
+}
+
+.tile-2>div:nth-child(2) {
+    background-position: 100%;
+}
+
+.tile-2>div:hover {
+    transform: translateY(1rem);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 3片</dd>
+    <dd>.3个点平分100%</dd>
+    <dd>.第一片在开始0，第三片在结束100%；第二片在中间50%；每片的位置：0、50%、100%</dd>
+    <dd class="tile tile-3">
+      <div></div>
+      <div></div>
+      <div></div>
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-3"&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+.tile-3>div {
+    flex: 1;
+    background-image: url(../imgs/bg.jpg);
+    background-size: 300%;//3倍
+    background-repeat: no-repeat;
+}
+
+.tile-3>div:nth-child(1) {
+    background-position: 0;
+}
+
+.tile-3>div:nth-child(2) {
+    background-position: 50%;
+}
+
+.tile-3>div:nth-child(3) {
+    background-position: 100%;
+}
+
+.tile-3>div:hover {
+    transform: translateY(1rem);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 4片</dd>
+    <dd>.4个点平分100%</dd>
+    <dd>.第一片在开始0，第四片在结束100%；每片的位置：0、33.3%、66.7%、100%</dd>
+    <dd class="tile tile-4">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-4"&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+.tile-4>div {
+    flex: 1;
+    background-image: url(../imgs/bg.jpg);
+    background-size: 400%;//4倍
+    background-repeat: no-repeat;
+}
+
+.tile-4>div:nth-child(1) {
+    background-position: 0;
+}
+
+.tile-4>div:nth-child(2) {
+    background-position: 33.3%;
+}
+
+.tile-4>div:nth-child(3) {
+    background-position: 66.7%;
+}
+
+.tile-4>div:nth-child(4) {
+    background-position: 100%;
+}
+
+.tile-4>div:hover {
+    transform: translateY(1rem);
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 使用内联变量优化</dd>
+    <dd class="tile tile-4 adv">
+      <div style="--pos:0"></div>
+      <div style="--pos:1"></div>
+      <div style="--pos:2"></div>
+      <div style="--pos:3"></div>
+    </dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;div class="tile tile-4 adv"&gt;
+    &lt;div style='--pos:0'&gt;&lt;/div&gt;
+    &lt;div style='--pos:1'&gt;&lt;/div&gt;
+    &lt;div style='--pos:2'&gt;&lt;/div&gt;
+    &lt;div style='--pos:3'&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+.tile-4.adv div {
+  background-position: calc(var(--pos)*100%/(4 - 1));
+}</pre>
+    </dd>
+    <dd class="mt2" id="banner">[<span class="iconfont icon-keyboard"></span>] banner滑动</dd>
+    <dd>. 使用过渡动画 transition</dd>
+    <dd>. 静态采用默认位置</dd>
+    <dd>. hover时采用右上位置</dd>
+    <dd>. 图片要大于容器</dd>
+    <dd class="slider-bg"></dd>
+    <dd>
+      <pre>
+.slider-bg {
+    height: 150px;
+    background-image: url(../imgs/banner.jpg);
+    transition: 2s;
+}
+
+.slider-bg:hover {
+    background-position: right top;
+}</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 综合应用 - 折角/狗耳朵[进阶]</dd>
+    <dd class="basic dog"></dd>
+    <dd>
+      <pre>
+.dog {
+    position: relative;
+    background-image: linear-gradient(210deg, transparent 3em, #ddd 0);
+    border-radius: 1em;
+    overflow: hidden;
+}
+
+.dog::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(-120deg, #888 3em, transparent 0);
+    border-radius: 1em;
+    transform-origin: top right;
+    transform: rotate(150deg) translate(5em, -3em);
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. 背景 background的使用</dd>
+    <dd>. 过渡动画 transition</dd>
+    <dd>. 伪类选择器 :hover</dd>
+    <dt>作业</dt>
+    <dd>1. 完成精灵图</dd>
+    <dd>2. 分别完成2张、3张、4张、5张图片的分割，并总结其规律；将其应用到个人网站顶部的banner或其它地方</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html" id="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+</body>
+
+</html>

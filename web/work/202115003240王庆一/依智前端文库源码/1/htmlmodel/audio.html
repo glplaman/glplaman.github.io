@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音频 Audio</title>
+  <link rel="stylesheet" href="./css/styleNew.css">
+  <link rel="stylesheet" href="./css/audio.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Audio</h1>
+    <span class="switch">off</span>
+    <span class="ham iconfont icon-menu"></span>
+    <ul class="nav">
+      <li class="nav-item">概述</li>
+      <li class="nav-item">H5属性</li>
+      <li class="nav-item">媒体属性</li>
+      <li class="nav-item">媒体事件</li>
+      <li class="nav-item">进阶使用</li>
+    </ul>
+  </header>
+  <dl>
+    <dt>素材准备</dt>
+    <dd><span class="iconfont icon-layer-group"></span> 点击下载素材 <a href="./music/Alizee-La Isla Bonita.mp3"
+        download>Alizee-La Isla Bonita.mp3</a>或自行准备</dd>
+    <dt class="nav-cont">概述</dt>
+    <dd>. inline</dd>
+    <dd>. 播放音频文件，如.mp3、.ogg、.wav</dd>
+    <dd>. 默认情况下，只有src属性，元素不可见，需要通过js控制</dd>
+    <dd>
+      <pre>&lt;audio src=""&gt;&lt;/audio&gt;</pre>
+    </dd>
+    </dd>
+    <dd>. 指定播放控制属性，则元素可视化控制</dd>
+    <dd>
+      <pre>&lt;audio src="" controls&gt;&lt;/audio&gt;</pre>
+    </dd>
+    <dt class="nav-cont">HTML属性</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>音频的URL，推荐使用MP3格式</td>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>自动播放；布尔属性</td>
+        </tr>
+        <tr>
+          <td>controls</td>
+          <td>播放控制条；布尔属性</td>
+        </tr>
+        <tr>
+          <td>loop</td>
+          <td>重复播放；布尔属性</td>
+        </tr>
+        <tr>
+          <td>muted</td>
+          <td>静音播放；布尔属性</td>
+        </tr>
+        <tr>
+          <td>preload</td>
+          <td>预加载；如果使用autoplay，则忽略该属性</td>
+        </tr>
+        <tr>
+          <td>hidden</td>
+          <td>隐藏；同display:none;隐藏后，仍然可以使用js控制!!!</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>[<span class="iconfont icon-keyboard"></span>] 背景音乐</dd>
+    <dd>阶段1：页面加载后自动循环播放，且隐藏</dd>
+    <dd>. 优点：简单直接</dd>
+    <dd>. 缺点：用户体验差，参与度低，不方便个性化定制</dd>
+    <dd>
+      <pre>
+&lt;audio src="./mp3/Alizee-La Isla Bonita.mp3" autoplay loop hidden&gt;您的浏览器不支持audio标签&lt;/audio&gt;</pre>
+    </dd>
+    <dt class="nav-cont">媒体属性</dt>
+    <dd>. 大多和HTML标签属性一一对应；此外还有</dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>autoplay</td>
+          <td>设置或返回是否在就绪（加载完成）后随即播放音频</td>
+        </tr>
+        <tr>
+          <td>currentTime</td>
+          <td>设置或返回音频中的当前播放位置；以秒计）</td>
+        </tr>
+        <tr>
+          <td>ended</td>
+          <td>返回音频的播放是否已结束</td>
+        </tr>
+        <tr>
+          <td>muted</td>
+          <td>设置或返回是否关闭声音</td>
+        </tr>
+        <tr>
+          <td>paused</td>
+          <td>设置或返回音频是否暂停</td>
+        </tr>
+        <tr>
+          <td>played</td>
+          <td>播放状态；返回表示音频已播放部分的 TimeRanges 对象</td>
+        </tr>
+        <tr>
+          <td>src</td>
+          <td>设置或返回音频的 src 属性的值</td>
+        </tr>
+        <tr>
+          <td>volume</td>
+          <td>设置或返回音频的音量： 0.0（静音）- 1.0（最大声）</td>
+        </tr>
+      </table>
+    </dd>
+    <dt class="nav-cont">媒体事件</dt>
+    <dd>. 媒体在加载和使用中的各种事件；更多媒体事件，请查看底部链接</dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Audio()</td>
+          <td>构造方法；创建一个不可视的音频组件，如播放背景</td>
+        </tr>
+        <tr>
+          <td>loadstart</td>
+          <td>开始加载</td>
+        </tr>
+        <tr>
+          <td>durationchange</td>
+          <td>时长发生变化触发；加载完毕后，从NaN变为实际的数值</td>
+        </tr>
+        <tr>
+          <td>loadedmetadata</td>
+          <td>加载元数据：时长、尺寸大小（视频）、文本轨道等等</td>
+        </tr>
+        <tr>
+          <td>loadeddata</td>
+          <td>当前帧的数据加载完毕，下一帧还未就绪</td>
+        </tr>
+        <tr>
+          <td>progress</td>
+          <td>媒体正在下载中</td>
+        </tr>
+        <tr>
+          <td>canplay</td>
+          <td>媒体就绪，可以播放</td>
+        </tr>
+        <tr>
+          <td>canplaythrough</td>
+          <td>媒体就绪，可以正常播放且无需停顿和缓冲</td>
+        </tr>
+        <tr>
+          <td>play</td>
+          <td>播放</td>
+        </tr>
+        <tr>
+          <td>pause</td>
+          <td>暂停</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>. &lt;audio&gt;的媒体事件触发顺序为</dd>
+    <dd class="sn"> loadstart </dd>
+    <dd class="sn"> durationchange</dd>
+    <dd class="sn"> loadedmetadata - 可以获取duration</dd>
+    <dd class="sn"> loadeddata</dd>
+    <dd class="sn"> progress</dd>
+    <dd class="sn"> canplay</dd>
+    <dd class="sn"> canplaythrough</dd>
+    <dt>辅助函数</dt>
+    <dd>. 获取的时间通常要转化为一定的格式，如mm:ss，参考代码如下</dd>
+    <dd>
+      <pre>
+function time(secs) {
+  let min = Math.floor(secs / 60);
+  let sec = Math.floor(secs % 60);
+  let secRes = sec > 9 ? `${sec}` : `0${sec}`;
+  let minRes = min > 9 ? `${min}` : `0${min}`;
+  return `${minRes}:${secRes}`;
+}</pre>
+    </dd>
+    <dt>[<span class="iconfont icon-keyboard"></span>] 背景音乐</dd>
+    <dd>阶段2：定制样式，采用js控制背景的播放</dd>
+    <dd>. 优点：用户可控</dd>
+    <dd>. 缺点：音频src不可调</dd>
+    <dd>1. H5结构：&lt;audio&gt;和播放控制</dd>
+    <dd>
+      <pre>
+&lt;span id="play"&gt;play&lt;/span&gt;
+&lt;span id="stop"&gt;stop&lt;/span&gt;
+&lt;audio src="Alizee.mp3"&gt;&lt;/audio&gt;</pre>
+    </dd>
+    <dd>2. CSS：自行完成UI设计</dd>
+    <dd>3. JS控制：在&lt;body&gt;区末尾添加&lt;script&gt;并完成js逻辑：获取元素；点击播放或暂停</dd>
+    <dd>
+      <pre>
+&lt;script&gt;
+  window.onload = function () {
+    let playBtn = document.querySelector('#play-btn');
+    let stopBtn = document.querySelector('#stop-btn');
+    let audioBg = document.querySelector('#audio-bg');
+    playBtn.onclick = function () {
+      audioBg.play();
+    }
+    stopBtn.onclick = function () {
+      audioBg.pause();
+    }
+  }
+&lt;/script&gt;</pre>
+    </dd>
+    <dd>阶段3：利用Audio构造函数生成音频实例，并动态指定src，增加更多控制，如音量[后续]</dd>
+  </dl>
+  <div class="chap nav-cont">进阶使用</div>
+  <dl>
+    <dt>[<span class="iconfont icon-keyboard"></span>] 音乐开关</dt>
+    <dd>. 见顶部</dd>
+    <dd>. 除了显式的使用&lt;audio&gt;外[记得隐藏]，还可以使用构造函数new一个音频对象</dd>
+    <dd>. 除了根据音频属性paused状态判断是否暂停外，还可以根据元素文字判断，或者根据类判断[如果使用属性played判断。。。]</dd>
+    <dd>. 除了文字外，还可以使用图片或字体图标设计UI</dd>
+    <dd>
+      <pre>
+let bg = new Audio();
+bg.src = '/music/Alizee-La Isla Bonita.mp3'
+bg.pause();
+let switch = document.querySelector('.switch')
+switch.addEventListener('click', () => {
+    if (bg.paused) {
+        switch.innerHTML = 'on'
+        bg.play();
+    } else {
+        switch.innerHTML = 'off'
+        bg.pause();
+    }
+    switch.classList.toggle('active')
+})</pre>
+    </dd>
+    <dt>[<span class="iconfont icon-keyboard"></span>] MINI音乐播放器1</dt>
+    <dd class="custom-audio">
+      <audio id='audio'>您的浏览器不支持audio标签</audio>
+      <span>Alizee-La Isla Bonita</span>
+      <div class="cur">00:00</div>
+      <div id="ctrl" class="play"></div>
+      <div class="dur">00:00</div>
+    </dd>
+    <dd class="mt2">[思路]</dd>
+    <dd class="sn"> 使用&lt;audio&gt;元素构造函数创建音频对象并指定src</dd>
+    <dd class="sn"> 根据设计创建播放列表样式，包括资源说明和控制按钮</dd>
+    <dd class="sn"> 根据播放状态切换控制按钮为播放按钮或暂停按钮</dd>
+    <dd class="sn"> 利用js事件控制&lt;audio&gt;的播放和暂停</dd>
+    <dd class="sn"> 根据当前播放时长currentTime和总时长duration，获取播放进度百分比，设置元素的内联变量--per属性，并由其伪元素使用，设置相应的百分比进度条</dd>
+    <dd>[HTML]</dd>
+    <dd>
+      <pre>
+&lt;div class="custom-audio"&gt;
+  &lt;audio id='audio'&gt;您的浏览器不支持audio标签&lt;/audio&gt;
+  &lt;span&gt;Alizee-La Isla Bonita&lt;/span&gt;
+  &lt;div class="cur"&gt;00:00&lt;/div&gt;
+  &lt;div id="ctrl" class="play"&gt;&lt;/div&gt;
+  &lt;div class="dur"&gt;00:00&lt;/div&gt;
+&lt;/div&gt;</pre>
+    </dd>
+    <dd>[CSS]</dd>
+    <dd>
+      <pre>
+.custom-audio {
+    --per: 0%;
+    position: relative;
+    //...
+}
+.custom-audio::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: var(--per);
+  height: 2px;
+  background-color: var(--warn-color);
+}
+#ctrl {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    cursor: pointer;
+}
+.play {
+    background-image: url(../imgs/Play.png);
+}
+.pause {
+    background-image: url(../imgs/Pause.png);
+}</pre>
+    </dd>
+    <dd>[JavaScript]这里利用控制按钮的类名[更改背景图片]判断播放状态，也可以通过定义bool变量判断</dd>
+    <dd>
+      <pre>
+let audio = new Audio();
+audio.src = '/music/Alizee-La Isla Bonita.mp3';
+let tag = document.querySelector('.custom-audio');
+let ctrl = document.querySelector('#ctrl');
+let cur = document.querySelector('.cur');
+let dur = document.querySelector('.dur');
+audio.addEventListener('loadedmetadata', () => {
+  dur.innerHTML = time(audio.duration);
+})
+audio.addEventListener('timeupdate', () => {
+  let secs = audio.currentTime;
+  cur.innerHTML = time(audio.currentTime);
+  let per = (audio.currentTime / audio.duration) * 100 + '%';
+  tag.style.setProperty('--per', per);
+})
+audio.addEventListener('click', function () {
+  ctrl.click()
+})
+ctrl.addEventListener('click', function () {
+  if (ctrl.className == 'play') {
+    audio.play()
+    ctrl.className = 'pause'
+  } else {
+    audio.pause()
+    ctrl.className = 'play'
+  }
+})</pre>
+    </dd>
+    <dt>[<span class="iconfont icon-keyboard"></span>] MINI音乐播放器2</dt>
+    <dd>. <a href="./demo/player.html">player</a> - 无CSS</dd>
+  </dl>
+  <div class="chap">总结与作业 Summary & Homework</div>
+  <dl>
+    <dt>总结</dt>
+    <dd>. 音频的使用和定制</dd>
+    <dd class="quote">
+      <div>1. 谨慎使用背景音乐</div>
+      <div>2. 为了首页加载速度，通常不直接在主页放置音频/视频；而是通过超链接的方式转到单独的页面播放</div>
+      <div>3. 如果坚持在首页展示，一般设置 mute（音频不可以设置mute）和 preload，同时禁止 autoplay</div>
+      <div>4. js控制时，不允许未经任何交互直接播放：play() failed because the user didn't interact with the document first.</div>
+      <div>5. 更多使用技巧，请访问 <a href="https://css-tricks.com/lets-create-a-custom-audio-player/">custom-audio-player</a>
+      </div>
+    </dd>
+    <dt>作业</dt>
+    <dd>. 分别使用可视化控制和js控制实现背景音乐的播放</dd>
+    <dd>. 定制音乐开关按钮</dd>
+    <dd>. 定制音乐播放列表</dd>
+    <dd>. 扩充并完善到个人网站</dd>
+  </dl>
+  <iframe src="../../common/Html.html" frameborder="0" scrolling="no" title="html"
+    onload="this.height=this.contentDocument.body.scrollHeight"></iframe>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="./lib/ham.js"></script>
+  <script>
+    // bg
+    let onOff = document.querySelector('.switch')
+    let bg = new Audio();
+    bg.src = '/music/Alizee-La Isla Bonita.mp3'
+    onOff.addEventListener('click', () => {
+      if (bg.paused) {
+        onOff.innerHTML = 'on'
+        bg.play();
+      } else {
+        onOff.innerHTML = 'off'
+        bg.pause();
+      }
+      onOff.classList.toggle('active')
+    })
+
+    // player
+    let audio = new Audio();
+    audio.src = '/music/Alizee-La Isla Bonita.mp3';
+    let tag = document.querySelector('.custom-audio');
+    let ctrl = document.querySelector('#ctrl');
+    let cur = document.querySelector('.cur');
+    let dur = document.querySelector('.dur');
+    audio.addEventListener('loadedmetadata', () => {
+      dur.innerHTML = time(audio.duration);
+    })
+    audio.addEventListener('timeupdate', () => {
+      let secs = audio.currentTime;
+      cur.innerHTML = time(audio.currentTime);
+      let per = (audio.currentTime / audio.duration) * 100 + '%';
+      tag.style.setProperty('--per', per);
+    })
+    audio.addEventListener('click', function () {
+      ctrl.click()
+    })
+    ctrl.addEventListener('click', function () {
+      if (ctrl.className == 'play') {
+        audio.play()
+        ctrl.className = 'pause'
+      } else {
+        audio.pause()
+        ctrl.className = 'play'
+      }
+    })
+    function time(secs) {
+      let min = Math.floor(secs / 60);
+      let sec = Math.floor(secs % 60);
+      let secRes = sec > 9 ? `${sec}` : `0${sec}`;
+      let minRes = min > 9 ? `${min}` : `0${min}`;
+      return `${minRes}:${secRes}`;
+    }
+  </script>
+</body>
+
+</html>

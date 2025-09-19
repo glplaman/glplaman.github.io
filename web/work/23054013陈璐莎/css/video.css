@@ -1,0 +1,239 @@
+html, body {
+    height: 100%;  /* 确保页面的高度占满整个视口 */
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    transition: 0.4s;
+}
+
+/* 顶部导航 */
+nav {
+    display: block;
+    width: 100%;
+    height: 55px;
+    background-color: rgba(2, 28, 6, 0.8);
+}
+
+nav ul {
+    height: 100%;
+    margin-left: 5%;
+    list-style-type: none; /* 去掉默认的列表样式 */
+}
+
+nav ul li {
+    position: relative;
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    height: 100%;
+    padding: 0 22px;
+    line-height: 55px;
+    text-align: center;
+    color: #609b5a;
+    font-family: Arial, sans-serif; /* 统一字体 */
+    font-size: 20px; /* 字体大小为 20px */
+    text-decoration: none; /* 去掉链接下划线 */
+}
+
+nav ul li a:hover {
+    background-color: #8dda64; /* hover 背景颜色 */
+    color: #000;
+}
+
+/* 下拉菜单的样式 */
+nav ul li.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+nav ul li .dropbtn {
+    background-color: transparent; /* 去掉背景色，和其他菜单项一致 */
+    color: #609b5a; /* 与其他菜单项颜色一致 */
+    padding: 0 22px; /* 与其他菜单项的左右间距一致 */
+    line-height: 55px; /* 与其他菜单项的行高一致 */
+    font-family: Arial, sans-serif; /* 统一字体 */
+    font-size: 20px; /* 字体大小为 20px */
+    border: none;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+nav ul li .dropbtn:hover {
+    background-color: #8dda64; /* hover 背景颜色 */
+    color: #000;
+}
+
+/* 下拉菜单的样式 */
+nav ul li .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(96, 155, 90, 0.65); /* 设置背景色 */
+    width: 100%; /* 使下拉菜单宽度与按钮一致 */
+    box-sizing: border-box; /* 包含内边距和边框 */
+    z-index: 1;
+    padding: 0; /* 移除上下内边距，保证高度为 30px */
+}
+
+/* 下拉菜单项的样式 */
+nav ul li .dropdown-content a {
+    color: black;
+    padding: 0 16px; /* 左右内边距保持一致，移除上下内边距 */
+    line-height: 40px; /* 使菜单项内容垂直居中 */
+    text-decoration: none;
+    display: block;
+    font-family: Arial, sans-serif; /* 统一字体 */
+    font-size: 20px; /* 字体大小为 20px */
+    height: 40px; /* 每个下拉菜单项的高度设置为 30px */
+}
+
+/* hover 状态下的样式 */
+nav ul li .dropdown-content a:hover {
+    background-color: #ddd; /* 悬停时背景颜色 */
+}
+
+/* 当鼠标悬停时显示下拉菜单 */
+nav ul li.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* 底部 */
+footer {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(2, 28, 6, 0.8);
+    margin-top: auto;  /* 确保footer总是位于页面底部 */
+}
+
+footer p {
+    text-align: center;
+}
+
+footer a {
+    color: #000;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+body {
+    flex-direction: column;
+    height: 100%;
+}
+
+footer {
+    margin-top: auto;  /* 使footer总是位于页面底部 */
+}
+
+
+/* 作品展示栏容器样式 */
+/* 作品展示栏容器 */
+.zhuti {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap; /* 启用换行 */
+    gap: 15px; /* 视频之间的间隙 */
+    justify-content: space-between; /* 水平对齐 */
+}
+
+/* 每个视频项的样式 */
+.sp {
+    width: 50%; /* 每个视频项占容器宽度的30%，每行显示三个视频 */
+    box-sizing: border-box; /* 防止内边距影响元素宽度 */
+}
+
+/* 视频自适应 */
+video {
+    width: 100%; /* 视频占满容器的宽度 */
+    border-radius: 8px; /* 视频边角圆润效果 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 增加轻微的阴影效果 */
+}
+
+/* 小屏幕时调整每行显示一个视频 */
+@media (max-width: 768px) {
+    .sp {
+        width: 100%; /* 每个视频宽度为100% */
+    }
+}
+
+.yy{
+    margin: 10px;
+}
+
+/* 容器样式 */
+.container {
+    text-align: center;
+    width: 90%;  /* 控制内容宽度 */
+    max-width: 800px; /* 设置最大宽度 */
+    margin: auto;
+}
+
+/* 标题样式 */
+.title h1 {
+    font-size: 24px;
+    color: #4caf50;
+    margin-top: 20px;
+}
+
+
+.image-container {
+    position: relative;
+    width: 300px; /* 容器宽度 */
+    height: 300px; /* 容器高度 */
+    overflow: hidden; /* 隐藏溢出的部分 */
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 防止线条阻挡图片的点击事件 */
+  }
+  
+  .vertical-line,
+  .horizontal-line {
+    position: absolute;
+    background-color: #f2eded; /* 线条颜色 */
+    width: 2px; /* 线条宽度 */
+    height: 100%;
+  }
+  
+  .vertical-line {
+    left: 33.33%;
+  }
+  
+  .vertical-line + .vertical-line {
+    left: 66.66%;
+  }
+  
+  .horizontal-line {
+    height: 2px;
+    width: 100%;
+    top: 33.33%;
+  }
+  
+  .horizontal-line + .horizontal-line {
+    top: 66.66%;
+  }
