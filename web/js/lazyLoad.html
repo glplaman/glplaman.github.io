@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>懒加载 LazyLoading</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <style>
+    .dd-title-item {
+      background-color: #9fcff9;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>懒加载</h1>
+    <span>&commat;LazyLoading</span>
+  </header>
+  <dl>
+    <dt>说明</dt>
+    <dd>
+      <div>以下内容适合图片的懒加载</div>
+      <div>当内容进入到可视区时，触发加载，即：图片/视频的 src 属性一开始为空[不渲染]；当页面滚动到一定位置时[通常是3倍视口高度]，指定其 src 属性，开始渲染</div>
+      <div>.节省带宽</div>
+      <div>.不会吃流量</div>
+      <div>.改善用户体验更流畅</div>
+    </dd>
+    <dt>关键点</dt>
+    <dd>两个高度</dd>
+    <dd>1.视口高度/可视区高度：documentElement.clientHeight[视口宽度document.documentElement.clientWidth]</dd>
+    <dd>2.元素到视口上边的高度/距离：el.getBoundingClientRect().top</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]利用 window 的 resize 事件查看可视区高度变化</dd>
+    <dd>
+      <pre>
+window.addEventListener('resize', (e) => {
+    console.log(document.documentElement.clientHeight);
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]懒加载实现</dd>
+    <dd>
+      <div>如何改进性能？[重复加载]</div>
+      <pre>
+function lazyLoad() {
+  imgs.forEach(item => {
+    if (item.getBoundingClientRect().top &lt; window.innerHeight) {
+      item.src = item.getAttribute('data-src');
+    }
+  })
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]图片预览 - 按 F12，滚动窗口；检查 Network 懒加载情况；</dd>
+    <dd>
+      <div><img src="" alt="" data-src="/utils/view/view1.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view2.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view3.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view4.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view5.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view6.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view7.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view8.jpg"></div>
+      <div><img src="" alt="" data-src="/utils/view/view9.jpg"></div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let imgs = document.querySelectorAll('img');
+    let ch = document.documentElement.clientHeight;
+    // console.log(ch, window.innerHeight);
+    window.addEventListener('load', () => {
+      lazyLoad()
+    })
+    window.addEventListener('resize', () => {
+      lazyLoad()
+    })
+    window.addEventListener('scroll', () => {
+      lazyLoad()
+    })
+    function lazyLoad() {
+      imgs.forEach(item => {
+        if (item.getBoundingClientRect().top < window.innerHeight) {
+          item.src = item.getAttribute('data-src')
+        }
+      })
+    }
+    // function lazyLoad() {
+    //   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    //   imgs.forEach(item => {
+    //     if (item.getBoundingClientRect().top + scrollTop < ch + scrollTop) {
+    //       if (item.src.slice(-5) == '.html') {
+    //         item.src = item.getAttribute('data-src')
+    //       }
+    //     }
+    //   })
+    // }
+
+    // let cb = () => {
+    //   console.log('see or unsee');
+    // }
+    // let observer = new IntersectionObserver(cb)
+  </script>
+</body>
+
+</html>

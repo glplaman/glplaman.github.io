@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>BOM - Browser Object Model</title>
+  <link rel="stylesheet" href="../../css/common_202406.css">
+  <style>
+    body {
+      height: auto;
+    }
+
+    .dd-title-item {
+      background-color: #9fcff9;
+      color: #333;
+    }
+
+
+
+    @media screen and (max-width:768px) {
+      .back2top {
+        right: 0;
+      }
+    }
+  </style>
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="header">
+    <h1>&commat;BOM</h1>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">概述</a>
+      <a href="" style="--delay:1" class="nav-item">页面事件</a>
+      <a href="" style="--delay:2" class="nav-item">元素事件</a>
+      <a href="" style="--delay:3" class="nav-item">定时事件</a>
+      <a href="" style="--delay:4" class="nav-item">网络事件</a>
+    </nav>
+  </div>
+  <div class="chap">BOM 概述</div>
+  <dl class="nav-cont">
+    <dt>JS的操作对象分两种：</dt>
+    <dd>DOM：操作HTML/document</dd>
+    <dd>BOM：操作浏览器/window</dd>
+    <dd>注意区分：属性或事件是DOM范畴还是BOM范畴</dd>
+    <dt>BOM</dt>
+    <dd>浏览器对象模型；浏览器对象模型提供了独立于内容的、可以与浏览器窗口进行互动的对象结构</dd>
+    <dd>BOM由多个对象组成，其中代表浏览器窗口的Window对象是BOM的顶层对象，其他对象都是该对象的子对象</dd>
+    <dd>BOM缺乏标准。JS有标准化组织ECMA；DOM有标准化组织W3C</dd>
+    <dd>BOM包含DOM</dd>
+    <dt>window</dt>
+    <dd>.Window是顶级对象</dd>
+    <dd>.属性和事件在使用时，可以略去window关键字。如属性scrollY；方法：alert、prompt、setTimeout、setInterval等</dd>
+    <dd>.部分属性、方法和DOM的属性功能相同，可以根据需求选择</dd>
+  </dl>
+  <div class="chap">页面事件</div>
+  <dl class="nav-cont">
+    <dd>1. 加载完毕 onload</dd>
+    <dd>
+      <div>.为了保证JS执行时，相关的元素已经准备完毕，JS代码通常写在&lt;body&gt;最后面。如果使用onload就可以把代码放在任何地方</div>
+      <div>.如果加载内容过多，onload会占用更多时间，影响用户体验。可以采用DOMContentLoaded方法。只要DOM框架出来即可，不需要渲染CSS/FLASH/图片，且不影响交互</div>
+      <div>.如果两个事件都定义了，则先执行DOMContentLoaded再执行onload</div>
+      <pre>
+window.onload = function () { 
+    //... ...
+}</pre>
+    </dd>
+    <dd>
+      <pre>
+window.addEventListener('DOMContentLoaded', () => { 
+    //... ...
+})</pre>
+    </dd>
+    <dd>2. 窗口缩放 onresize</dd>
+    <dd>
+      <div>.窗口尺寸/大小发生变化触发事件</div>
+      <div>.响应式布局经常用到</div>
+      <pre>
+window.addEventListener('resize', () => {
+    //... ...
+})</pre>
+    </dd>
+    <dd>3. 窗口滚动 onscroll</dd>
+    <dd>.只有当出现滚动条时，scroll事件才会触发</dd>
+    <dd>.利用DOM的scrollTop或window的scrollY进行特别的设计，如调整字体大小、延时出现返回顶部按钮、调整导航条样式等等</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 动态调整字体大小</dd>
+    <dd>.20是选定的参考字体大小；通常选择16px，可以根据需要调整</dd>
+    <dd>.320是选定的设备宽度，通常参照苹果某个型号，如iPhone6/7/8是375px</dd>
+    <dd>.40是最大字号</dd>
+    <dd>.如果使用16px、375px，检查元素并使用iPhone6/7/8，发现HTML字体大小被动态设置为16px</dd>
+    <dd>.以下代码要放到&lt;head&gt;，优先执行</dd>
+    <dd>
+      <pre>
+&lt;script&gt;
+  let setFontSize = () => {
+    let w = document.documentElement.clientWidth;
+    let size = (20 * (w / 320) > 40 ? 40 + 'px' : (20 * (w / 320) + 'px'))
+    document.documentElement.style.fontSize = size;
+  }
+  window.addEventListener('load', setFontSize)
+  window.addEventListener('resize', setFontSize)
+&lt;/script&gt;</pre>
+    </dd>
+    <dd>4. 响应媒体查询</dd>
+    <dd>
+      <div>定义媒体查询</div>
+      <pre>let mediaQuery = window.matchMedia("(max-width: 768px)");</pre>
+      <div>监听媒体查询的变化</div>
+      <pre>mediaQuery.addListener(handleMediaChange);</pre>
+      <div>初始化处理函数</div>
+      <pre>handleMediaChange(mediaQuery);      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 返回顶部按钮</dd>
+    <dd>.分别利用DOM的scrollTop和window的scrollY查看页面滚动</dd>
+    <dd>.页面位于顶端时，返回按钮不出现，且取消事件响应</dd>
+    <dd>.当页面滚动到一定位置，如一个窗口内部高度时，返回按钮出现，可以响应事件，点击可以返回顶部</dd>
+    <dd>.添加帧动画，使返回按钮的出现更顺滑</dd>
+    <dd>.还可以使用window的pageYOffset、innerHeight属性判断</dd>
+    <dd>
+      <pre>
+window.addEventListener('scroll', () => {
+    let stop = document.documentElement.scrollTop || document.body.scrollTop;
+    console.log('scrollTop', stop.toFixed(0));
+    console.log('scrollY', window.scrollY.toFixed(0));
+    console.log('pageYOffset', window.pageYOffset.toFixed(0));
+    back2top.classList.toggle('active', scrollY > innerHeight)
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 页面滚动禁止</dd>
+    <dd>.移动端弹出菜单时，通常应禁止页面继续滚动；如汉堡菜单#ham点击时，出现顶层菜单，下方的页面不应该再响应事件和滚动；再次单击，顶层菜单消失，下方页面恢复正常；通过汉堡菜单的单击，切换页面的隐藏类</dd>
+    <dd>[ CSS ]</dd>
+    <dd>
+      <pre>
+.hidden {
+    overflow: hidden;
+}</pre>
+    </dd>
+    <dd>[ JavaScript ]</dd>
+    <dd>
+      <pre>
+ham.addEventListener('click', function () {
+    //... ...
+    document.body.classList.toggle('hidden')
+})</pre>
+    </dd>
+  </dl>
+  <div class="chap">元素事件</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>.获取DOM元素；参考浏览器：检查F12->计算属性标签页</dd>
+    <table>
+      <tr>
+        <th>类别</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td>获取样式</td>
+        <td>getComputedStyle(el)</td>
+      </tr>
+    </table>
+  </dl>
+  <div class="chap">网络事件</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>.网络链接状态检测</dd>
+    <dd>.状态变化时才会触发</dd>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>online</td>
+          <td>网络链接</td>
+        </tr>
+        <tr>
+          <td>offline</td>
+          <td>网络断开</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 网络事件</dd>
+    <dd>
+      <pre>
+window.addEventListener('online', () => {
+    console.log('online');
+})
+window.addEventListener('offline', () => {
+    console.log('offline');
+})</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script>
+    // scroll
+    let back2top = document.querySelector('.back2top')
+    window.addEventListener('scroll', () => {
+      let stop = document.documentElement.scrollTop || document.body.scrollTop;
+      back2top.classList.toggle('active', scrollY > innerHeight)
+    })
+  </script>
+</body>
+
+</html>

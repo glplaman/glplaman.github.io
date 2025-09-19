@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>默认事件 Event Default</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+  <style>
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      height: 20vh;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>默认事件</h1>
+    <span>&commat;Event Default</span>
+  </header>
+  <dl>
+    <dd>常见的默认事件有</dd>
+    <dd class="sn">
+      <div>&lt;a&gt; 的默认跳转</div>
+      <div>&lt;form&gt; 的默认提交跳转</div>
+      <div>右键菜单</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止 &lt;a&gt; 默认跳转</dd>
+    <dd>
+      <pre>
+a.addEventListener('click', (e) => {
+  e.preventDefault();
+})</pre>
+      <div>.简单粗暴型的，直接在结构上拍死</div>
+      <pre>&lt;a href="javascript:;"&gt;link&lt;/a&gt;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止 &lt;form&gt; 默认提交跳转</dd>
+    <dd>
+      <pre>
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+})</pre>
+      <div>.或</div>
+      <pre>
+form.addEventListener('submit', (e) => {
+  return false;
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止右键菜单</dd>
+    <dd>
+      <pre>
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+})</pre>
+      <div>.或</div>
+      <pre>
+document.oncontextmenu = function () {
+  return false;
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

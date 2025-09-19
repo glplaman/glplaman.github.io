@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse follow inside</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        p {
+            text-indent: 2em;
+            margin-bottom: 1em;
+            text-align: justify;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .w {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .box {
+            position: relative;
+            height: 600px;
+            margin: 100px auto;
+            background-color: #f40;
+            overflow: hidden;
+        }
+
+        .img {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #ff0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w box">
+        <div class="img" id="inner-cursor"></div>
+    </div>
+    <main class="w">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores labore vero fugit molestiae, animi ipsam
+            vitae dolore cum in neque quidem voluptates? Quos eligendi consequatur explicabo odio temporibus quod omnis.
+        </p>
+        <p>Enim, soluta quisquam itaque veritatis illum maiores architecto accusantium iure ea minima eos accusamus
+            laboriosam delectus provident corrupti quod vel? Dolores deleniti dolorem culpa adipisci. Animi tempora aut
+            id illo.</p>
+        <p>Quas, voluptate minus eos ex, ut cumque vel fugit quos laborum obcaecati dignissimos velit blanditiis a
+            temporibus adipisci provident hic dolorem iusto eligendi soluta quis animi sit architecto. Laborum,
+            incidunt.</p>
+        <p>Iste, similique. Voluptates sapiente dolorum, blanditiis voluptatem amet distinctio et vero est consectetur
+            illum culpa porro asperiores praesentium. Nesciunt voluptatem modi corrupti aperiam. Corrupti iusto quod
+            dignissimos dicta inventore id!</p>
+        <p>Officiis omnis ipsam ad, accusantium, voluptates a quis animi quam culpa quaerat excepturi doloribus cum,
+            maxime saepe dolore ratione vitae vel porro mollitia deleniti? Corporis quae repellendus nostrum minus
+            iusto.</p>
+        <p>Laudantium magni ut, distinctio excepturi, in nostrum provident voluptatem modi numquam laboriosam error
+            rerum placeat ab saepe perspiciatis, veritatis recusandae mollitia unde veniam. Nihil harum quia
+            voluptatibus laboriosam et! Sunt.</p>
+        <p>Perferendis quaerat cupiditate, iste rerum nemo sequi soluta earum dignissimos quis nesciunt molestiae
+            similique dolor vel nulla qui, unde iure deleniti? Ad magnam molestias perspiciatis magni iusto voluptatem
+            expedita minima?</p>
+        <p>Aperiam quis nesciunt, ut officia autem laborum repellat iste, error delectus culpa libero dolores labore
+            laboriosam harum ab recusandae veritatis voluptatem quos distinctio. Molestiae atque animi ipsam consectetur
+            sequi exercitationem?</p>
+        <p>Ab ad perspiciatis dignissimos animi pariatur laudantium eligendi repellendus fugit voluptate adipisci fugiat
+            repellat, corrupti excepturi eum illum rerum tempore similique sapiente quo placeat ipsam debitis iste eos
+            quae? Nisi!</p>
+        <p>Obcaecati necessitatibus quos enim distinctio suscipit voluptates dicta dolorum sunt, quas tenetur a quasi
+            voluptate odit. Quas harum deleniti voluptas id consequatur, ratione fuga eum possimus pariatur. Libero,
+            magnam enim!</p>
+    </main>
+    <script>
+        let box = document.querySelector('.box');
+        let img = document.querySelector('.img');
+        box.addEventListener('mousemove', fn);
+        function fn(e) {
+            let x = e.pageX - box.offsetLeft - 15;
+            let y = e.pageY - box.offsetTop - 15;
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+        }
+    </script>
+</body>
+
+</html>

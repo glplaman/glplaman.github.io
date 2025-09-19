@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原生 JavaScript</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <style>
+    header {
+      background-image: url(../imgs/js/js_banner.jpg);
+      margin-bottom: 0;
+    }
+
+    header h1 {
+      text-align: right;
+    }
+
+    nav {
+      background-color: #c23523;
+      color: #fff;
+      line-height: 40px;
+    }
+
+    .logo {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      right: 1rem;
+      top: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="w">
+    <header id="top">
+      <!-- <h1>图 Graph</h1> -->
+      <img class="logo" src="../imgs/cnplaman.png" alt="">
+    </header>
+    <!-- <nav>
+            <ul class="flex-h">
+                <li><a href="#con" id="tocon">概念</a></li>
+                <li><a href="#sto" id="tosto">存储</a></li>
+                <li><a href="#alg" id="toalg">算法</a></li>
+                <li><a href="#dis" id="todis">遍历</a></li>
+                <li><a href="#app" id="toapp">应用</a></li>
+            </ul>
+        </nav> -->
+    <dl>
+      <dt>返回顶部</dt>
+      <dd class="code">
+        <pre>
+
+    function backToTop(win, el) {
+        win.addEventListener('scroll', function () {
+            if (win.pageYOffset > 2 * win.innerHeight) {
+                el.style.opacity = 1;
+                el.style.pointerEvents = 'all';
+            } else {
+                el.style.opacity = 0;
+                el.style.pointerEvents = 'none';
+            }
+        })
+    }
+                </pre>
+      </dd>
+      <dt>iframe嵌入代码自适应窗口</dt>
+      <dd class="code">
+        <pre>
+
+    .iframe-box, .dd-iframe-item {
+        position: relative;
+        overflow: hidden;
+        padding-top: 56.25%;
+    }
+    
+    .iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0
+    }
+                </pre>
+      </dd>
+      <dt>fastclick</dt>
+      <dd>避免和移动端的双击冲突，所以click事件有300ms的延迟；还可以避免事件穿透；</dd>
+      <dd>方案1.视口禁止缩放</dd>
+      <dd>方案2.使用fastclick.js；一般在&lt;head&gt;引入[尽早]</dd>
+      <dd class="code">
+        <pre>
+
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;script src="js/fastclick.js"&gt;&lt;/script&gt;    
+                </pre>
+      </dd>
+      <dd>在&lt;script&gt;使用</dd>
+      <dd class="code">
+        <pre>
+
+    if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function () {
+            FastClick.attach(document.body);
+        }, false);
+    }
+                </pre>
+      </dd>
+    </dl>
+    <a href="#top" id="back2top"></a>
+    <footer>
+      <div class="copyright">
+        <span>&copy; All Copyrights Reserved, 2022-2024</span>
+        <img src="../imgs/avatar.jpg" alt="">
+        <span>Cnplaman from No 54414, PLA</span>
+      </div>
+      <span>2022-05-22</span>
+    </footer>
+  </section>
+</body>
+
+</html>

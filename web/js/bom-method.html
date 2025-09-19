@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>BOM Method - Browser Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>BOM 方法</h1>
+    <span>&commat;Methods</span>
+  </header>
+  <dl>
+    <dd>更多 window 方法，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window#instance_methods">window -
+        methods</a></dd>
+    <dt>资源获取 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch">fetch()</a></dt>
+    <dd>
+      <div>.资源获取</div>
+      <div>.更多信息，请访问 <a href="../../node/fetch.html">window - fetch</a></div>
+    </dd>
+    <dt>响应媒体查询 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia">matchMedia()</a></dt>
+    <dd>
+      <div>检测当前浏览器窗口是否匹配某个CSS媒体查询的函数</div>
+      <div>返回一个 MediaQueryList 对象；该对象包含一个 matches 属性，表示媒体查询是否与当前窗口大小匹配</div>
+      <div>可以通过监听 MediaQueryList 对象的 change 事件来响应窗口大小的变化，或者直接检查 matches 属性来获取当前状态</div>
+      <div>定义媒体查询</div>
+      <pre>let mediaQuery = window.matchMedia("(max-width: 768px)");</pre>
+      <div>监听媒体查询的变化</div>
+      <pre>mediaQuery.addListener(handleMediaChange);</pre>
+      <div>自定义处理函数</div>
+      <pre>
+    function handleMediaChange(e){
+      if (e.matches) {
+        // less than or equal to 768px
+        // 媒体查询匹配
+      } else {
+        // wider than 768px
+        // 媒体查询不匹配
+      }
+    }</pre>
+    </dd>
+    <dt>定时器 Timer</dt>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window#instance_methods">window的方法</a>；高频使用</div>
+      <div>.可以定时触发，也可以延迟触发；时间单位是毫秒；需要执行的业务以回调函数 callback 的形式给出</div>
+      <div>.为节省系统开销，业务处理完毕应及时清除定时器；需指定 id</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval">setInterval()</a></td>
+          <td>按照时间间隔定时执行</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/clearInterval">clearInterval()</a></td>
+          <td>清除定时器</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout">setTimeout()</a></td>
+          <td>延迟执行；仅执行1次</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/clearTimeout">clearTimeout()</a></td>
+          <td>清除延迟</td>
+        </tr>
+      </table>
+      <pre>
+//固定时间间隔触发函数：setInterval
+let timeId = setInterval(cb, [time]);
+clearInterval(timeId)</pre>
+      <pre>
+//定时/延迟触发函数：setTimeout
+let timeId = setTimeout(cb, [time]);
+clearTimeout(timeId)</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 数字时钟</dd>
+    <dd>. 原生实现</dd>
+    <dd>. <a href="http://momentjs.cn/" target="_blank" class="link">momentjs</a>实现</dd>
+    <dd style="text-align: center;">
+      <span id='yy'></span>-<span id='mon'></span>-<span id='day'></span>
+      <span id='week'></span>
+      <span class="timer-txt"></span>
+    </dd>
+    <dd>
+      <pre>
+let week_arr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+let year = document.querySelector('#yy');
+let mon = document.querySelector('#mon');
+let day = document.querySelector('#day');
+let week = document.querySelector('#week');
+let timerTxt = document.querySelector('.timer-txt');
+let inter = setInterval(clock, 1000)
+function clock() {
+  let date = new Date();
+  year.innerHTML = date.getFullYear();
+  mon.innerHTML = date.getMonth() + 1;
+  day.innerHTML = date.getDate();
+  week.innerHTML = week_arr[date.getDay()];
+  timerTxt.innerHTML = double2(date.getHours()) + ':' + double2(date.getMinutes()) + ':' + double2(date.getSeconds());
+}
+function double2(num) {
+  return num > 9 ? num : '0' + num;
+}
+clock();</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 图片时钟</dd>
+    <dd>. 通过更改&lt;img&gt;的src切换图片</dd>
+    <dd>. 不断向服务器请求图片</dd>
+    <dd>
+      <pre>
+time.split('').forEach((num, ind) => {
+  imgs[ind].style.backgroundImage = `url(../imgs/number/number-${num}.png)`;
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 更多数字时钟案例 <a href="../demo/clock.html">Clock</a>、<a
+        href="../demo/clock_adv.html">Clock</a>、<a href="https://codepen.io/glpla/full/poYjBZY">Clock -
+        CodePen</a></dd>
+    <dd>
+      <pre>
+.clock div::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.hour::before {
+  width: 4px;
+  margin-top: 30%;
+  height: 25%;
+  background-color: #000;
+}
+
+.min::before {
+  width: 2px;
+  margin-top: 20%;
+  height: 35%;
+  background-color: #ff0;
+}
+
+.sec::before {
+  width: 1px;
+  margin-top: 10%;
+  height: 45%;
+  background-color: #fff;
+}</pre>
+      <pre>
+let date, h, m, s;
+let oHour = document.querySelector('.hour');
+let oMin = document.querySelector('.min');
+let oSec = document.querySelector('.sec');
+function getTime() {
+  date = new Date();
+  h = date.getHours() * 30;
+  m = date.getMinutes() * 6;
+  s = date.getSeconds() * 6;
+  oHour.style.transform = `rotateZ(${h + m / 12}deg)`;
+  oMin.style.transform = `rotateZ(${m}deg)`;
+  oSec.style.transform = `rotateZ(${s}deg)`;
+
+}
+getTime();
+let tId = setInterval(getTime, 1000);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 日期倒计时</dd>
+    <dd style="text-align: center;">
+      <span id="ref-time" data-time="2022-09-10">距离2024-12-31 00:00:00还有</span><br>
+      <span><span id="cd"></span>天<span id="ch"></span>小时<span id="cm"></span>分钟<span id="cs"></span>秒</span>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 秒表倒计时</dd>
+    <dd style="text-align: center;">
+      <span id="cds">10</span><br>
+      <span>10秒倒计时</span>
+    </dd>
+    <dt>样式</dt>
+    <dd>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle">getComputedStyle(el)</a>
+      </div>
+      <div>获取元素定义的所有样式声明 CSSStyleDeclaration ，甚至是复合样式</div>
+      <pre>
+.box {
+  width: 320px;
+  height: 180px;
+  margin: 0 auto;
+  background-color: #f40;
+}</pre>
+      <pre>
+let box = document.querySelector('.box');
+console.log(getComputedStyle(box));//所有的样式声明
+console.log(getComputedStyle(box).padding);//10px
+console.log(getComputedStyle(box).width);//320px
+console.log(getComputedStyle(box).background);//所有背景相关的样式</pre>
+    </dd>
+  </dl>
+  <div class="chap">其它方法</div>
+  <dl>
+    <dd>
+      <div>.较少使用</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>open()</td>
+          <td>打开窗口；默认是_blank</td>
+        </tr>
+        <tr>
+          <td>close()</td>
+          <td>关闭窗口；只能关闭使用open()打开的窗口；兼容性差，基本不用</td>
+        </tr>
+        <tr>
+          <td>write()</td>
+          <td>输出；[Violation] Avoid using document.write().</td>
+        </tr>
+        <tr>
+          <td>alert()</td>
+          <td>警告对话框</td>
+        </tr>
+        <tr>
+          <td>prompt()</td>
+          <td>信息输入对话框；获得的都是字符串</td>
+        </tr>
+        <tr>
+          <td>confirm()</td>
+          <td>确认对话框</td>
+        </tr>
+        <tr>
+          <td>print()</td>
+          <td>打印</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 单击按钮打开 baidu</dd>
+    <dd>
+      <pre>
+let btn = document.querySelector('button');
+btn.addEventListener('click', () => {
+  open('http://www.baidu.com', '_blank');
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 查看提示信息类型</dd>
+    <dd>
+      <pre>
+let age = window.prompt('your age');
+console.log(typeof (age));</pre>
+      <div>.转化数据类型</div>
+      <pre>
+let age = parseInt(window.prompt('your age'));
+console.log(typeof (age));</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 输入一个小于10的数字，求其阶层 n!</dd>
+    <dd>
+      <pre>
+function fn(n) {
+  // if (n == 0) {
+  //   return 1;
+  // } else {
+  //   return n * fn(n - 1);
+  // }
+  return n == 0 ? 1 : n * fn(n - 1);
+}
+let n = parseInt(window.prompt('请输入1个小于10的数字'))
+window.alert(fn(n));</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 支付确认-点击支付并确认后跳转到支付成功页面</dd>
+    <dd>
+      <div>[拓展]支付成功页面3秒后返回主页，也可以单击立即按钮返回主页</div>
+      <pre>
+btn.onclick = function () {
+  let res = window.confirm('确认要支付吗？');
+  console.log(res);
+  if (res) {
+    // window.alert('zhifu success');
+    //立即返回
+    //window.location.href = './result.html'
+    //延时返回
+    setTimeout(() => {
+      window.location.href = 'http://www.baidu.com';
+    }, 3000);
+  }
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 打印指定内容</dd>
+    <dd>
+      <div>也可以使用 <a href="../media.html">媒体查询 - print</a></div>
+      <pre>
+const dom = document.querySelector('.ham')
+const cont = document.querySelector('.cont')
+dom.addEventListener('click', () => {
+  console.log(dom, cont);
+  document.body.innerHTML = cont.innerHTML
+  window.print()
+})      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    // mediaQuery
+    let mediaQuery = window.matchMedia("(max-width: 768px)");
+    mediaQuery.addListener(handleMediaChange);
+    function handleMediaChange(e) {
+      if (e.matches) {
+        // less than or equal to 768px
+        console.log('媒体查询匹配');
+      } else {
+        // wider than 768px
+        console.log('媒体查询不匹配');
+      }
+    }
+
+    // clock
+    let week_arr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+    let year = document.querySelector('#yy');
+    let mon = document.querySelector('#mon');
+    let day = document.querySelector('#day');
+    let week = document.querySelector('#week');
+    let timerTxt = document.querySelector('.timer-txt');
+    let inter = setInterval(clock, 1000)
+    function clock() {
+      let date = new Date();
+      year.innerHTML = date.getFullYear();
+      mon.innerHTML = date.getMonth() + 1;
+      day.innerHTML = date.getDate();
+      week.innerHTML = week_arr[date.getDay()];
+      timerTxt.innerHTML = double2(date.getHours()) + ':' + double2(date.getMinutes()) + ':' + double2(date.getSeconds());
+    }
+    function double2(num) {
+      return num > 9 ? num : '0' + num;
+    }
+    clock();
+
+    // count down
+    let cd = document.querySelector('#cd');
+    let ch = document.querySelector('#ch');
+    let cm = document.querySelector('#cm');
+    let cs = document.querySelector('#cs');
+    let oldday = new Date('2024-12-31 00:00:00');
+    let cinter = setInterval(cdown, 1000);
+    function cdown() {
+      let newday = new Date()
+      let secs = parseInt((oldday - newday) / 1000)
+      if (secs < 0) {
+        clearInterval(cinter)
+        return
+      }
+      cd.innerHTML = parseInt(secs / 60 / 60 / 24)
+      ch.innerHTML = parseInt(secs / 60 / 60 % 24)
+      cm.innerHTML = parseInt(secs / 60 % 60)
+      cs.innerHTML = secs % 60 > 9 ? secs % 60 : '0' + secs % 60
+    }
+    cdown()
+
+    // cds
+    let cds = document.querySelector('#cds')
+    let time = 10
+    let cdsinter = setInterval(() => {
+      time--
+      if (time < 0) {
+        clearInterval(cdsinter)
+        return
+      }
+      cds.innerHTML = time
+    }, 1000)
+  </script>
+</body>
+
+</html>

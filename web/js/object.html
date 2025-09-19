@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象 Object</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>对象</h1>
+    <span>&commat;Object</span>
+  </header>
+  <section>
+    <h3>简洁 Introduction</h3>
+    <ul>
+      <li>值对的集合 - collections of key-value pairs</li>
+      <li>每个 key 都是唯一的 - each key is unique</li>
+      <li>使用 {} 定义 - Define objects using curly braces</li>
+      <li>使用点语法或数组语法访问值对 - using dot notation or square brackets</li>
+      <li>更多信息，请参考 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 基本使用</div>
+    <ul>
+      <li>key 唯一；值可以是普通数据类型，也可以是函数</li>
+    </ul>
+    <pre>
+let example = {
+  id: 1001,
+  date: '2025/1/12',
+  sayHello: function () {
+    console.log("Hello");
+  },
+};
+example.sayHello(); // Outputs: 'Hello'</pre>
+    <h3>静态方法 Static methods</h3>
+    <div>. 直接使用，无须实例化</div>
+    <ul>
+      <li>Object.keys()：返回对象键 key 组成的数组</li>
+      <li>Object.values()：返回对象值 value 组成的数组</li>
+      <li>Object.entries()：返回对象入口|键值对组成的数组</li>
+      <li>Object.assign(obj,obj1)：赋值；将 obj1 的内容给 obj；要求各值对一一对应</li>
+    </ul>
+  </section>
+  <h2>对象常用运算符</h2>
+  <section>
+    <h3>解构 {}</h3>
+    <ul>
+      <li>提取对应属性名的值</li>
+      <li>依赖属性名匹配，顺序不重要</li>
+      <li>对象解构使用花括号 {}；<a href="./array.html">数组</a> 解构使用 []；多个变量以逗号 , 分隔</li>
+      <li>高频使用；更多信息，请访问 <a
+          href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">Destructuring
+          Assignment</a></li>
+      <div>1. 重命名变量</div>
+      <div>2. 嵌套解构</div>
+      <div>3. 设置默认值</div>
+    </ul>
+    <h3>展开 ...</h3>
+    <ul>
+      <li>对象拷贝</li>
+      <li>对象合并</li>
+      <li>对象属性更新</li>
+      <li>解构赋值中的剩余属性</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 框架中按需结构包</div>
+    <pre>
+import { createApp } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue';
+const { add, dec } = require('./module/test')</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 示例数据</div>
+    <div>
+      <pre>let obj = { name: 'cnplaman', age: 18, address: { city: 'gz', code: 541000 } }</pre>
+      <div>普通解构赋值 - 获取obj中的属性赋值给同名变量</div>
+      <pre>let { name, age } = obj</pre>
+      <div>重命名赋值 - 使用冒号:指定新变量名</div>
+      <pre>let { name: uname, age: uage } = obj</pre>
+      <div>默认赋值 - 解构时修改属性值或增加一个新属性</div>
+      <pre>let { name: uname, age: uage, gender = 'male' } = obj</pre>
+      <div>嵌套解构赋值</div>
+      <pre>let { name, age, address: { city } } = obj</pre>
+      <pre>let { name, age, address: { code: postcode } } = obj</pre>
+    </div>
+  </section>
+  <h2>使用 Usage</h2>
+  <section>
+    <h3>增/改</h3>
+    <pre>
+let obj = { name: 'cnplaman', age: 18 }
+obj.gender = 'male';
+obj.marriage = true;
+obj.age = 24;
+console.log(obj.name);
+console.log(obj['name']);
+console.log(obj);</pre>
+    <h3>删</h3>
+    <pre>
+delete obj.marriage;
+console.log(obj);</pre>
+    <h3>查</h3>
+    <div>. 定义查询字符串</div>
+    <pre>
+let sql = 'age' in obj
+console.log(sql);</pre>
+    <h3>长度</h3>
+    <div>. 无法直接获取；通过对象Object的静态方法：entries()、keys()或values()间接获取；这三个方法返回入口、键和值的数组</div>
+    <pre>
+console.log(Object.keys(obj).length);
+console.log(Object.values(obj).length);
+console.log(Object.entries(obj).length);</pre>
+    <h3>遍历对象</h3>
+    <div>. for-in；枚举</div>
+    <pre>
+// 遍历的是key，要想获取值value，则配合对象使用
+for (item in obj) {
+  console.log(item, obj[item]);
+}
+
+//fail
+// obj.forEach(item => {
+//   console.log(item);
+// })
+
+// fail: TypeError: obj is not iterable
+// for (item of obj) {
+//   console.log(item);
+// }
+
+//也可以先entries()、keys()或values()，再使用数组遍历方法，如for()或forEach()
+Object.keys(obj).forEach(item => {
+  console.log(item);
+})
+Object.values(obj).forEach(item => {
+  console.log(item);
+})
+Object.entries(obj).forEach((item) => {
+  console.log(item);
+})
+//解构再输出
+Object.entries(obj).forEach(([value, key]) => {
+  console.log(key, value);
+})</pre>
+    <div>. 函数的参数传递是传值；但是函数内部对对象的访问是引用</div>
+    <pre>
+function setObj(obj) {
+    obj.name = 'glpla';
+}
+let stu = new Object();
+setObj(stu);
+console.log(stu.name);</pre>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则表达式 RegExp</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>正则表达式</h1>
+    <span>&commat;RegExp</span>
+  </header>
+  <section>
+    <h3>Overview</h3>
+    <ul>
+      <li>功能强大</li>
+      <li>在 / / 内定义正则表达式</li>
+      <li>更多信息，请访问 <a href="https://ihateregex.io/">i hate regex</a></li>
+      <table>
+        <caption>正则表达式元数据</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>*</td>
+            <td>0个或多个</td>
+          </tr>
+          <tr>
+            <td>+</td>
+            <td>1个或多个</td>
+          </tr>
+          <tr>
+            <td>^</td>
+            <td>首/开始</td>
+          </tr>
+          <tr>
+            <td>$</td>
+            <td>尾/结束</td>
+          </tr>
+          <tr>
+            <td>g</td>
+            <td>全局标志，表示在整个字符串中进行匹配，而不是在找到第一个匹配项后停止</td>
+          </tr>
+          <tr>
+            <td>{}</td>
+            <td>重复次数</td>
+          </tr>
+          <tr>
+            <td>()</td>
+            <td>分组；使用$和数字表示第几个分组</td>
+          </tr>
+          <tr>
+            <td>\d</td>
+            <td>数字</td>
+          </tr>
+          <tr>
+            <td>\S</td>
+            <td>匹配任何非空白字符。空白字符包括空格、制表符、换行符等</td>
+          </tr>
+        </tbody>
+      </table>
+    </ul>
+    <h3>match</h3>
+    <ul>
+      <li>查找匹配的串并输出结果</li>
+      <pre>
+> let re=/\d+/g;
+undefined
+> re
+/\d+/g
+> console.log('123 234 456'.match(re))
+[ '123', '234', '456' ]</pre>
+    </ul>
+    <h3>replace</h3>
+    <ul>
+      <li>替换匹配的串</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 隐藏手机中间4位</div>
+    <ul>
+      <li>隐藏前：52188881314</li>
+      <li>隐藏后：521****1314</li>
+      <pre>
+let cell = '52188881314';
+let reg = /^(\d{3})\d{4}(\d{4})$/
+let res = 'cell'.replace(reg, '$1****$2')</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] DD打车只显示手机后4位</div>
+    <ul>
+      <li>隐藏前：52188881314</li>
+      <li>隐藏后：*******1314</li>
+      <pre>
+let cell = '52188881314'
+let reg = /^\d{7}(\d{4})$/
+let res = cell.replace(reg, '*******$1')</pre>
+      </li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 移除空格</div>
+    <ul>
+      <li>移除串前面的所有空格</li>
+      <pre>str = str.replace(/^\s+/, '');</pre>
+      <li>移除串后面的所有空格</li>
+      <pre>str = str.replace(/\s+$/, '');</pre>
+      <li>移除串前面、后面的所有空格 - 分俩次处理即可</li>
+      <li>为什么使用 + 而不使用 *<span class="iconfont icon-help"></span></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 编辑结构 - 将每个非空白字符都套上1个&lt;span&gt;</div>
+    <ul>
+      <pre>
+let msg = 'hi,there.'
+let res = msg.replace(/\S/g, '&lt;span&gt;$&&lt;/span&gt;')</pre>
+      <li>$&：一个特殊的替换模式，用于表示整个匹配的子字符串</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 编辑结构 - 瑞幸咖啡(高新万达店) 处理为 高新万达店</div>
+  </section>
+  <h2>Form</h2>
+  <section>
+    <ul>
+      <li>&lt;form&gt;自带校验属性 pattern；比事件处理中的校验优先级高；如果同时存在，事件处理的校验无效</li>
+      <pre>
+&lt;form @submit.prevent="submit"&gt;
+  &lt;input type="text" v-model="user.name" placeholder="6位数字" :pattern="reg" title="请输入6位数字"&gt;
+  &lt;p v-if="errorMsg" style="color: red;"&gt;{{ errorMsg }}&lt;/p&gt;
+  &lt;button&gt;submit&lt;/button&gt;
+&lt;/form&gt;</pre>
+      <pre>
+const reg = /^\d{6}$/;
+const errorMsg = ref('');
+const user = ref({
+  name: ''
+})
+const submit = () => {
+  const value = user.value.name;
+
+  if (!reg.test(value)) {
+    errorMsg.value = '请输入正确的6位数字';
+    return;
+  }
+
+  errorMsg.value = '';
+  console.log('提交成功:', value);
+};</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie</title>
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Cookie</h1>
+  </header>
+  <dl>
+    <dt>特点</dt>
+    <dd>
+      <div>.在浏览器端|客户端|C端保存一定大小的数据</div>
+      <div>.同级域名可以共享数据；同一网站中，所有页面共享一套cookie</div>
+      <div>.有一定的生存时间expires，过期则自动清除；默认是跟随浏览器的进程，即关闭浏览器，就清除cookie</div>
+      <div>.存储数据大小、数量有限制：4K</div>
+      <div>.不安全；敏感数据不要使用</div>
+      <div>.属于DOM范畴，是document的一个属性</div>
+      <div>.在 开发者视图F12→应用Application→Cookies中查看</div>
+    </dd>
+    <dt>语法</dt>
+    <dd>
+      <pre>document.cookie</pre>
+    </dd>
+    <dt>属性</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>name=value</td>
+          <td>存储的信息标识</td>
+        </tr>
+        <tr>
+          <td>expire</td>
+          <td>过期时间；默认随浏览器|会话Session结束而结束；通常按天计算</td>
+        </tr>
+        <tr>
+          <td>path</td>
+          <td>存储位置；默认是根目录/</td>
+        </tr>
+        <tr>
+          <td>priority</td>
+          <td>优先级/</td>
+        </tr>
+      </table>
+    </dd>
+    <dd class="txt-center">
+      <img src="../imgs/cookie.png" alt="">
+    </dd>
+    <dt>设置</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>]查看cookie的生存</dd>
+    <dd>
+      <div>1.设置默认生存时间的cookie：name</div>
+      <div>2.设置指定生存时间的cookie：id</div>
+      <div>3.打开开发者视图，查看cookie的保存情况</div>
+      <div>4.关闭浏览器</div>
+      <div>5.注释掉设置cookie的相关代码，重新打开浏览器，检测cookie的保存情况</div>
+      <pre>
+document.cookie = 'name=cnplaman';
+let d = new Date();
+d.setDate(d.getDate() + 10);
+document.cookie = 'id=5481;expires=' + d;</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]设置Cookie函数封装</dd>
+    <dd>
+      <div>.封装一个设置值对、过期时间[默认2天]的函数</div>
+      <div>.如何做数据有效性检测?</div>
+      <pre>
+let setCookie = function (name, value, day = 2) {
+  let d = new Date();
+  d.setDate(d.getDate() + day);
+  document.cookie = `${name}=${value};expires=${d}`;
+}</pre>
+    </dd>
+    <dt>获取</dt>
+    <dd>
+      <div>.同设置Cookie，只是不需要赋值</div>
+      <div>.结果是以分号+空格来分隔值对的字符串</div>
+      <div>.字符串的拆分：使用split()多次拆分，获取子串</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]获取Cookie函数封装</dd>
+    <dd>
+      <div>.return不能终止forEach，只能使用传统的for</div>
+      <pre>
+let getCookie = function (name) {
+  let arr = document.cookie.split('; ');
+  for (let i = 0; i < arr.length; i++) {
+    let tmp = arr[i].split('=');
+    if (name == tmp[0]) {
+      return tmp[1];
+    }
+  }
+  return '';
+}</pre>
+    </dd>
+    <dt>清除</dt>
+    <dd>
+      <div>.设置一个同名Cookie：过期时间提前、值任意，由系统判断并删除</div>
+      <pre>setCookie(name, '', -1);</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]清除Cookie函数封装</dd>
+    <dd>
+      <pre>
+let clearCookie = function (name) {
+  setCookie(name, '', -1);
+}</pre>
+    </dd>
+    <dt>应用</dt>
+    <dd>[<span class="iconfont icon-keyboard"></span>]记住用户</dd>
+    <dd>
+      <form action="/" id="rem">
+        <input type="text" name="uname" class="ipt" id="uname" required placeholder="your name">
+        <input type="password" name="upass" class="ipt" id="upass" required placeholder="your pass">
+        <div class="tips">
+          <label><input type="checkbox" name="cb" class="cb" id="cb">Remember me</label>
+          <a href="javascript:;" id="clear-btn">clear info</a>
+        </div>
+        <button class="btn">Login</button>
+      </form>
+      <pre>
+let form = document.querySelector('#rem');
+let uname = form.querySelector('#uname');
+let cb = form.querySelector('#cb');
+let clearBtn = form.querySelector('#clear-btn');
+
+let setCookie = function (name, value, day = 2) {
+  let d = new Date();
+  d.setDate(d.getDate() + day);
+  document.cookie = `${name}=${value};expires=${d}`;
+}
+let getCookie = function (name) {
+  let arr = document.cookie.split('; ');
+  for (let i = 0; i &le; arr.length; i++) {
+    let tmp = arr[i].split('=');
+    if (name == tmp[0]) {
+      return tmp[1];
+    }
+  }
+  return '';
+}
+let clearCookie = function (name) {
+  setCookie(name, '', -1);
+}
+
+//
+if (getCookie('name')) {
+  uname.value = getCookie('name');
+  cb.checked = true;
+}
+
+form.addEventListener('submit', (e) => {
+  if (cb.checked) {
+    setCookie('name', uname.value);
+  }
+})
+clearBtn.addEventListener('click', () => {
+  clearCookie('name');
+  uname.value = '';//
+  cb.checked = false;//
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]换肤</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]存档</dd>
+  </dl>
+  <div class="chap">总结 Summary</div>
+  <dl>
+    <dd>1.Cookie的特点</dd>
+    <dd>2.Cookie的设置、获取和清除</dd>
+    <dd>3.Cookie的常见应用</dd>
+  </dl>
+  <div class="chap">练习 Homework</div>
+  <dl>
+    <dd>1. 完成以上操作，体会Cookie的特点和基本使用</dd>
+    <dd>2. 将封装好的函数存放到单独的js文件中，方便共享使用</dd>
+    <dd>3. 利用Cookie，完善和优化个人网站</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../lib/cookie.js"></script>
+</body>
+
+</html>

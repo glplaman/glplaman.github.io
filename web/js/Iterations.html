@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>迭代器 Iterations</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>迭代器</h1>
+    <span>&commat;Iterations</span>
+  </header>
+  <dl>
+    <dd>.更多语句，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements">Statements</a>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for">for</a></dt>
+    <dd>
+      <div>.先初始化条件[只执行一次]；初始化也可以在 for 外面进行</div>
+      <div>.再判定条件是否满足；如果满足就执行语句 statement；如果不满足，就结束</div>
+      <div>.条件变化，重复判断并决定继续还是结束</div>
+      <div>.省略判定条件后，变为无限循环</div>
+      <div>.如果要退出某次循环，继续/开始下一次循环，请使用 continue</div>
+      <div>.如果要退出/终止循环，请使用 break，同 switch语句</div>
+      <pre>
+for (初始化;判定条件;条件变化) {
+  statement; 
+}</pre>
+      <div>.基本使用；let 声明的变量 i 只能作用于for循环，具备块级作用域</div>
+      <pre>
+for (let i = 0; i &lt; 10; i++;) {
+  console.log(i);
+}</pre>
+      <div>.初始化放在 for 外面，变量 i 可以被其它访问；条件变化放在循环体内</div>
+      <pre>
+let i = 0;
+for (; i &lt; 10;) {
+  console.log(i);
+  i++;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] for - continue/break</div>
+      <div>查询数组中，是否存在小于18的数</div>
+      <pre></pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of">for...of</a>
+    </dt>
+    <dd>
+      <div>.用于遍历可迭代对象（如数组、字符串、Map、Set 等）的 <span class="warn">值 - value</span></div>
+      <div>.不适用于对象</div>
+      <div>.支持中断：可以使用 break 和 continue 控制循环的中断和跳过</div>
+      <div>.可以把 forEach 看作是 for-of 的特例</div>
+      <pre>
+let arr = [{ name: 'gl', age: 18 }, { name: 'gz', age: 20 }, { name: 'cq', age: 22 }]
+
+for (const item of arr) {
+    console.log(item);
+    console.log(item['name']);
+    console.log(item['age']);
+}</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in">for...in</a>
+    </dt>
+    <dd>
+      <div>.for-in 语句是一种精准的迭代语句，可以用来枚举/遍历对象的 key 属性 - 遍历的是 <span class="warn">键 - key</span></div>
+      <div>.建议在使用 for-in 循环之前，先检测确认该对象的值不是 null 或 undefined</div>
+      <div>.控制语句中的 var/let 操作符不是必需的。但是，为了保证使用局部变量，推荐使用</div>
+      <div>.主要应用场合：Object、JSON</div>
+      <pre>
+let obj = { "name": "guilin", "age": 18, "marriage": true };
+for (let key in obj) {
+  console.log(key, obj[key]);
+}</pre>
+      <div>查看 window 对象</div>
+      <pre>
+for (var propName in window) { 
+    document.write(propName); 
+}</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/while">while</a></dt>
+    <dd>
+      <div>.先判定条件再执行</div>
+      <div>.可以和 for 相互转化</div>
+      <div>.特情况下，可以使用死循环，如 WSN</div>
+      <pre>
+while(1){
+  //
+}</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/do...while">do...while</a>
+    </dt>
+    <dd>
+      <div>.先执行1次再判定</div>
+      <div>.使用较少</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

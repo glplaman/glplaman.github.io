@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件 Event</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+  <style>
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      height: 20vh;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>事件</h1>
+    <span>&commat;Event</span>
+  </header>
+  <figure>
+    <img src="../imgs/event.png" alt="">
+    <figcaption>思维导图</figcaption>
+  </figure>
+  <section>
+    <h3>标签属性 Tag Attributes</h3>
+    <ul>
+      <li>事件以 onXXX 的形式作为元素的一个属性 Properties 写在<span class="warn">结构</span>元素上；事件处理逻辑可以写在结构中也可以写在脚本中</li>
+      <li>可以携带参数</li>
+      <li>内联事件 - 只能满足当前元素的需求</li>
+      <li>只能处理冒泡阶段</li>
+      <li>适合简单逻辑</li>
+      <li>不符合结构 - 样式 - 逻辑分离的开发原则，较少使用</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 完全耦合 - 全部写在结构中</div>
+    <pre>&lt;div onclick="alert('hi,there.')"&gt;点击我&lt;/div&gt;</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 结构逻辑分离</div>
+    <pre>&lt;div onclick="fn()"&gt;点击我&lt;/div&gt;</pre>
+    <pre>
+function fn() {
+  alert('hi,there.')
+}</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 携带形参；参数类型可以是简单数据类型，也可以是复杂数据类型</div>
+    <pre>&lt;div onclick="fn_para({id:1,name:'glpla'})"&gt;点击我&lt;/div&gt;</pre>
+    <pre>
+function fn_para(p) {
+    console.log(this);
+    console.log(p);
+}</pre>
+    <h3>实例属性 Instance Properties</h3>
+    <ul>
+      <li>以实例属性 Properties 的形式分配事件 onXXX</li>
+      <li>先获取对象实例再分配事件 - <span class="warn">脚本</span>中处理</li>
+      <li>兼容性好</li>
+      <li>只能满足当前元素；且元素只能绑定一个事件</li>
+      <li>事件函数可以接受参数；可以使用形参 e 获取事件对象；可以使用 this 获取执行事件函数的元素；也可以显式的指明参数</li>
+      <li>需要等页面加载完成 onload 后才能获取元素</li>
+      <li>不方便传递参数</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] onXXX 事件 - 默认形参 this 和事件对象 e</div>
+    <pre>
+const el = document.querySelector('div')
+el.onclick = function () {
+    console.log(this);
+}</pre>
+    <pre>
+const el = document.querySelector('div')
+el.onclick = function (e) {
+    console.log(e);
+    console.log(this);
+}</pre>
+    <div class="tips">
+      <div>如果使用箭头函数，则 this 指向为 window</div>
+      <div>事件对象为形参，可以使用任何合法标识符，通常使用 e 或 event</div>
+    </div>
+    <h3>事件侦听 Event AddEventListene</h3>
+    <ul>
+      <li>为元素添加/注册事件监听器，允许注册多个</li>
+      <li>支持事件捕获、冒泡阶段处理，更容易管理事件</li>
+      <li>符合结构 - 样式 - 逻辑分离的开发原则</li>
+    </ul>
+    <div>1. 事件注册 addEventListener</div>
+    <pre>el.addEventListener(event-type, event-handle, capture)</pre>
+    <ol>
+      <li>event-type - 不需要带 on，如click、mouseover</li>
+      <li>event-handle - 当事件发生时调用的函数，也叫响应；可以使用形参 e 获取事件对象，访问事件的详细信息</li>
+      <li>capture - 事件处理的时机，默认是冒泡 false；如果为 true，则是捕获；实际开发中，更关注冒泡</li>
+    </ol>
+    <div>2. 事件移除 removeEventListener</div>
+    <pre>el.removeEventListener(event-type, event-handle, capture)</pre>
+    <ul>
+      <li>性能考虑，有事件注册就应该有事件清除</li>
+      <li>正常起见，必须传入与注册中完全相同的函数引用；怎么注册就怎么清除</li>
+      <li>避免调试干扰：如果你在开发阶段频繁刷新或测试页面跳转逻辑，保留未解绑的监听器可能会导致行为异常，例如旧监听器被意外触发</li>
+      <li>防止某些特殊情况下的内存泄漏：在一些老旧浏览器或复杂 SPA 架构中，如果组件/模块没有正确销毁，监听器未解绑可能导致内存无法释放</li>
+      <li>编码规范 & 可维护性：主动解除绑定是一种良好的编程习惯，有助于代码可读性和资源管理意识</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 绑定多个事件侦听器</div>
+    <pre>
+//具名函数
+wrap.addEventListener('click', fn)
+
+//匿名函数；无法清除
+wrap.addEventListener('click', (e) => {
+console.log('wrap', e.target);
+})
+    
+function fn(e) {
+console.log('wrap fn', e.target);
+}
+
+//在另外一个元素的点击事件中，移除 wrap 的事件侦听器，只有 fn 可以被移除；另外一个事件继续生效
+card.addEventListener('click', (e) => {
+console.log('card', e.target);
+wrap.removeEventListener('click', fn)
+})</pre>
+    <div class="tips">
+      <div>部分事件如：blur / focus / submit / change / reset / select / mouseleave / mouseenter 没有冒泡</div>
+      <div>事件处理函数尽量不要采用匿名函数的方式，否则无法清除</div>
+      <div>适用于函数表达式</div>
+      <div>使用开发者工具 → 事件侦听器，查看事件的添加和移除</div>
+      <div>使用 beforeunload 比 unload 更合适；unload 的兼容性和执行稳定性较差（部分浏览器限制 JS 执行）</div>
+    </div>
+  </section>
+  <h2>事件传参 Parameter/todo</h2>
+  <section>
+    <ul>
+      <li>不能直接使用，否则会被立即执行</li>
+      <li>需要使用匿名函数，在匿名函数里执行封装的带参函数</li>
+      <div>[<span class="iconfont icon-keyboard"></span>] 封装表单域的获取焦点和失去焦点函数</div>
+      <pre>
+function setBg(color) {
+console.log('hi');
+console.log(ta);
+ta.style.background = color;
+}</pre>
+      <li>获取元素并侦听事件，发现函数被立即执行了其中的log，但是元素并没有按照设想改变颜色；继续交互同样不会执行</li>
+      <pre>
+ta.addEventListener('focus', setBg('#f40'));
+ta.addEventListener('blur', setBg('#ccc'));</pre>
+      <li>将封装的带参函数，放在匿名函数中执行。问题解决</li>
+      <pre>
+ta.addEventListener('focus', function () {
+setBg('#f40')
+});
+ta.addEventListener('blur', function () {
+setBg('#ccc')
+});</pre>
+      <li>也可以使用箭头函数，同时获取事件对象e</li>
+      <pre>
+ta.addEventListener('focus', (e) => {
+console.log(e);
+setBg('#f40')
+});
+ta.addEventListener('blur', (e) => {
+console.log(e);
+setBg('#ccc')
+});</pre>
+    </ul>
+  </section>
+  <h2>事件对象 Event object</h2>
+  <section>
+    <ul>
+      <li>事件产生时，由系统自动创建；包含事件的详细信息</li>
+      <li>在事件处理函数中作为形式参数，名字任意，通常使用 event、e、evt 等语义化名字</li>
+      <li>包含事件类型 bubbles [冒泡与否]、发生位置 [screen、page]、大小 [offset、client]、时间 timestamp、响应事件的目标 target
+        等信息；如果有多个元素或多层嵌套，则响应事件的目标元素也不同</li>
+      <li>可以利用事件对象阻止 <a href="./event_default.html">默认事件</a></li>
+      <li>如果元素使用了 data- 自定义数据，应该在目标元素 target 的 dateset 去获取</li>
+    </ul>
+    <h3>事件目标 target</h3>
+    <ul>
+      <li>事件对象的一个属性，表示实际触发事件的元素</li>
+      <li>target 始终指向实际触发事件的元素，而不是绑定事件监听器的元素，无论该元素是否绑定事件；即：与元素是否绑定事件监听器无关，只要元素存在于 DOM 中并且被点击，它就会成为 target 的值</li>
+      <li>事件监听器只是决定了哪个函数会被执行，但不影响 e.target 的值</li>
+    </ul>
+    <h3>当前事件目标 currentTarget</h3>
+    <ul>
+      <li>响应事件的当前目标；随着事件流的变化，事件当前目标也在变化</li>
+      <li>中间的元素只有绑定事件，才会有事件对象；如果没有绑定事件，依然会在事件流中，但是不会有响应</li>
+    </ul>
+    <h3>冒泡 Bubbling 和捕获 Capture</h3>
+    <ul>
+      <li>页面接受事件的顺序，即：事件发生时，在元素节点之间按照特定的顺序传播的过程</li>
+      <li>三个阶段：捕获阶段 capture phrase → 目标阶段 target phrase → 冒泡阶段 bubbling phrase</li>
+      <li>捕获阶段：从元素的根节点/祖先元素开始，向下传播，直到到达目标元素</li>
+      <li>目标阶段：事件到达目标元素</li>
+      <li>冒泡阶段：事件逐层向上传递回根元素</li>
+      <li>先捕获事件才能处理；事件捕获：网景提出；事件冒泡：微软提出|IE提出</li>
+      <li>JavaScript <span class=" warn">只能</span> 执行冒泡或捕获中的一个阶段；默认是<span class="warn">冒泡</span></li>
+      <li>使用 e.stopPropagation | e.cancelBubble 可以取消冒泡</li>
+      <li>更多信息，请访问 <a href="https://mp.weixin.qq.com/s/WrvHOTnPVcVsNH_-5cm_bg">一个DOM元素绑定多个事件时，先执行冒泡还是捕获</a></li>
+    </ul>
+    <div class="tips">
+      <div>stopPropagation 和 cancelBubble 都可以阻止浏览器默认的事件冒泡行为</div>
+      <div>cancelBubble 方法不符合W3C标准，只支持 IE 浏览</div>
+      <div>stopPropagation 符合 W3C 标准，适用于 FireFox 等浏览器，不支持 IE</div>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 冒泡事件和捕获事件</div>
+    <div>
+      <div>. 三个嵌套盒子</div>
+      <pre>
+&lt;div class="box1"&gt;box1
+  &lt;div class="box2"&gt;box2
+    &lt;div class="box3"&gt;box3&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>1. 冒泡：默认方式；单击里层的元素，事件会逐步冒泡到外层</div>
+      <div>. 单击 box1，输出 box1 clicked</div>
+      <div>. 单击 box2，从 box2 开始，向上冒泡到 box1，依次输出 box2 clicked、box1 clicked</div>
+      <div>. 单击 box3，从 box3 开始，逐步向上冒泡到 box2、box1，依次输出 box3 clicked、box2 clicked、box1 clicked</div>
+      <pre>
+const box1 = document.querySelector('.box1')
+const box2 = document.querySelector('.box2')
+const box3 = document.querySelector('.box3')
+box1.addEventListener('click', (e) => {
+  console.log('box1 clicked');
+})
+box2.addEventListener('click', (e) => {
+  console.log('box2 clicked');
+})
+box3.addEventListener('click', (e) => {
+  console.log('box3 clicked');
+})</pre>
+      <div>2. 捕获：开启捕获；单击里层的元素，事件首先由外层捕获并逐步传递到内层</div>
+      <div>. 单击 box1，输出 box1 clicked</div>
+      <div>. 单击 box2，首先由 box1 捕获并向内层传递，依次输出 box1 clicked、box2 clicked</div>
+      <div>. 单击 box3，首先由 box1 捕获并向内层传递，依次输出 box1 clicked、box2 clicked、box3 clicked</div>
+      <pre>
+let box1 = document.querySelector('.box1')
+let box2 = document.querySelector('.box2')
+let box3 = document.querySelector('.box3')
+box1.addEventListener('click', (e) => {
+  console.log('box1 clicked');
+}, true)
+box2.addEventListener('click', (e) => {
+  console.log('box2 clicked');
+}, true)
+box3.addEventListener('click', (e) => {
+  console.log('box3 clicked');
+}, true)</pre>
+      <div>. 借助事件对象e，取消事件传递；如果是冒泡，单击哪个元素，触发哪个元素的事件；如果是捕获，则始终是顶层元素</div>
+      <pre>
+box1.addEventListener('click', (e) => {
+  e.stopPropagation();
+  console.log('box1 clicked');
+})
+box2.addEventListener('click', (e) => {
+  e.stopPropagation();
+  console.log('box2 clicked');
+})
+box3.addEventListener('click', (e) => {
+  e.stopPropagation();
+  console.log('box3 clicked');
+})</pre>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] target 和 currentTarget - 以冒泡为例</div>
+    <div>
+      <div>. 单击 outer：点的是 outer；向上没有父级或者说没有冒泡，响应事件的也是 outer，所以 target 和 currentTarget 都是 outer</div>
+      <div>. 单击inner：首先 inner 响应事件，所以 target 和 currentTarget 都是 inner；然后事件冒泡到 outer，outer 响应的是 inner 绑定的事件，所以
+        target 是 inner，currentTarget 是 outer</div>
+      <pre>
+&lt;div class="outer"&gt;
+  &lt;div class="inner"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+outer.addEventListener('click', (e) => {
+    console.log('outer', e.target, e.currentTarget);
+})
+inner.addEventListener('click', (e) => {
+    console.log('inner', e.target, e.currentTarget);
+})
+</pre>
+    </div>
+    <div class="tips">如果只有一个元素，则 currentTarget 为 null；所以更多的是操作 target</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 模态框 - <a href="../demo/up2u.html">图册</a></div>
+    <ul>
+      <li>单击关闭按钮关闭模态框</li>
+      <li>单击背景区域按钮关闭模态框</li>
+      <li>对象的类名、ID、标签名都可以作为判定的依据，但是必须能唯一确定</li>
+      <pre>
+const mask = document.getElementById("mask")
+const close = document.getElementById("close")
+mask.addEventListener('click', (e) => {
+  if (e.target.id === 'mask') {
+    console.log('close');
+  }
+})
+
+close.addEventListener('click', (e) => {
+  if (e.target.id === 'close') {
+    console.log('close');
+  }
+})</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 共用事件 - 汉堡菜单的展开和折叠</div>
+    <div>
+      <div>为菜单类或容器类增加或减少状态类实现</div>
+      <div>移花接木</div>
+      <pre>
+.nav {
+  left: -300px;
+  transition: 0.4s;
+}
+
+body.open .nav {
+  left: 0;
+}</pre>
+      <pre>
+const navs = document.querySelectorALL('.nav');
+const openBtn = document.getElementById('open');
+const closeBtn = document.getElementById('close');
+
+openBtn.addEventListener('click', () => {
+  document.body.classList.toggle('open')
+})
+
+closeBtn.addEventListener('click', () => {
+  openBtn.click()
+})
+
+navs.forEach(nav=>{
+  nav.addEventListener('click', (e)=>{
+    openBtn.click()
+  })
+})</pre>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 单元素自定义数据 data- 的获取</div>
+    <ul>
+      <li>事件对象e对应的target、currentTarget相同</li>
+      <li>注意函数 fn 的封装</li>
+      <pre>&lt;div class="tmp" data-id="1001"&gt;单元素自定义数据的获取&lt;/div></pre>
+      <pre>
+let el = document.querySelector('.tmp');
+
+//传统方式 - 元素属性
+el.onclick = fn;
+
+//侦听方式
+el.addEventListener('click', fn)
+function fn(e) {
+  console.log(this.getAttribute('data-id'));
+  // 推荐
+  console.log(e.target.dataset.id);
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 父元素自定义数据 data- 的获取</div>
+    <ul>
+      <li>多个元素存在，data- 数据在父级元素</li>
+      <li>事件目标通常是子元素，如果使用 dataset，就会导致自定义数据获取失败；只能使用 this 来获取属性</li>
+      <pre>
+&lt;div class="tmp" data-id="1001"&gt;
+  &lt;div&gt;child&lt;/div&gt;
+  &lt;div&gt;child&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <li>使用同样的 JavaScript，则第2个 log 是 undefined。因为事件目标是子元素，它没有对应的自定义数据</li>
+    </ul>
+    <div>[ <span class="iconfont icon-bell"></span> ] 破解方案</div>
+    <div>
+      <div>方案1. 判断目标是否是当前标签[要采用大写形式]，如果不是，就查找其父元素；直到找到最外层的父级；也可以用根据当前目标是否有某个属性判断</div>
+      <pre>
+function fn(e) {
+  console.log(this.getAttribute('data-id'));
+  let tar = e.target
+  while (tar.nodeName != 'DIV') {
+      tar = tar.parentNode
+  }
+  console.log(tar.dataset.id);
+}</pre>
+      <div>方案2. 取消父级所有后代的事件响应，只保留父元素的事件行为，所以事件目标一定就是父元素；简单粗暴</div>
+      <pre>
+.tmp * {
+  pointer-events: none;
+}</pre>
+    </div>
+  </section>
+  <h2>事件代理 Event Delegation</h2>
+  <section>
+    <ul>
+      <li>默认情况下，子元素的事件会冒泡到父元素</li>
+      <li>所以父元素可以响应任何一个子元素的事件；利用这个特性可以让父元素作为各个子元素的 <a
+          href="https://stackoverflow.com/questions/1687296/what-is-dom-event-delegation">Event
+          Delegation</a></li>
+      <li>适合子元素多，且动态变化的情况</li>
+      <li>单击 outer，target 是 outer；没有冒泡，currentTarget 也是 outer</li>
+      <li>单击 &lt;p&gt;，target 是 &lt;p&gt;；冒泡到 outer，currentTarget 是 outer</li>
+      <li>同理，单击 &lt;span&gt;，target 是 &lt;span&gt;；冒泡到 outer，currentTarget 是 outer</li>
+      <pre>
+&lt;div class="outer" @click="doOut"&gt;
+  &lt;p class="inner"&gt;1111&lt;/p&gt;
+  &lt;span class="inner"&gt;2222&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <li>通过判断 target 来确定单击了哪个子元素；可以根据子元素的标签名（大写）或自定义数据 data-判断</li>
+      <pre>
+const doOut = (e) => {
+  console.log(e.target.tagName);
+  console.log(e.target.dataset.id);
+  console.log(e.target.innerHTML);
+}</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 模态框 - 代理</div>
+    <ul>
+      <li>仅 mask 绑定事件；如果事件对象 target 的 id 是 mask 或 close，就关闭模态框</li>
+    </ul>
+    <pre>
+const mask = document.getElementById("mask")
+mask.addEventListener('click', (e) => {
+  if (e.target.id === 'mask' || e.target.id === 'close') {
+    console.log('close');
+  }
+})</pre>
+    <div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 单击标签页，显示对应的内容</div>
+      <pre>
+&lt;ul&gt;
+  &lt;li&gt;Lorem.&lt;/li&gt;
+  &lt;li&gt;Magni.&lt;/li&gt;
+  &lt;li&gt;Nihil.&lt;/li&gt;
+  &lt;li&gt;Id?&lt;/li&gt;
+  &lt;li&gt;Ipsa!&lt;/li&gt;
+  &lt;li&gt;Earum?&lt;/li&gt;
+  &lt;li&gt;Laboriosam.&lt;/li&gt;
+  &lt;li&gt;Voluptatum?&lt;/li&gt;
+  &lt;li&gt;Veniam.&lt;/li&gt;
+  &lt;li&gt;Aliquid.&lt;/li&gt;
+&lt;/ul&gt;
+    </pre>
+      <div>1. 默认方式 - 遍历所有子元素并绑定事件</div>
+      <pre>
+let ul = document.querySelector('ul');
+let lis = ul.querySelectorAll('li');
+lis.forEach(li => {
+  li.addEventListener('click', () => {
+    console.log(li.innerHTML);
+  })
+})</pre>
+      <div>2. 事件委托方式 - 给父级元素指定事件，只有 target 是 LI 才响应，即：只有点到了 LI 才响应</div>
+      <pre>
+let ul = document.querySelector('ul');
+ul.addEventListener('click', (e) => {
+  console.log(e.target.tagName);
+  if(e.target.tagName==='LI'){
+    //do
+  }
+})</pre>
+    </div>
+  </section>
+  <h2>事件分类 Event classification</h2>
+  <section>
+    <h3>表单事件</h3>
+    <ul>
+      <li>表单中的按钮，单击时默认情况是提交表单 - 触发表单提交事件</li>
+      <li>默认情况下，表单提交时，页面会发生跳转；类似的还有 &lt;a&gt;</li>
+      <li>可以根据需要取消该默认行为</li>
+      <li>更多信息，请访问 <a href="./event_form.html">表单事件 Form</a></li>
+    </ul>
+    <table>
+      <caption>表单事件</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event">submit</a></td>
+        <td>表单提交</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset_event">reset</a></td>
+        <td>表单重置</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/formdata_event">formdata</a></td>
+        <td>表单提交时构建数据</td>
+      </tr>
+    </table>
+    <h3>表单元素事件</h3>
+    <ul>
+      <li>单行输入</li>
+      <li>更多信息，请访问 <a href="./event_input.html">输入事件 Form</a></li>
+    </ul>
+    <table>
+      <caption>输入事件</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event">input</a></td>
+        <td>单行文本、多行文本输入时触发；通常需要采用 <a href="./debounce.html">防抖节流</a> 措施</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event">change</a></td>
+        <td>&lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;改变且失去焦点时触发</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus">focus</a></td>
+        <td>单行文本、多行文本获取焦点</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur">blur</a></td>
+        <td>单行文本、多行文本失去焦点</td>
+      </tr>
+    </table>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="../textarea.html#js">&lt;textarea&gt;</a></div>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="../select.html#js">&lt;select&gt;</a></div>
+    <h3><a href="./event_default.html">按键事件</a></h3>
+    <ul>
+      <li>keypress 已被废弃</li>
+    </ul>
+    <table>
+      <caption>按键事件</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event">keydown</a></td>
+        <td>按键按下</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/keyup_event">keyup</a></td>
+        <td>按键释放</td>
+      </tr>
+    </table>
+    <h3><a href="./event_drag.html">拖拽事件</a></h3>
+  </section>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    let btns = document.querySelector('.btns');
+    const changeColor = (color) => {
+      btns.style.color = color;
+    }
+    const changeBg = (bg) => {
+      btns.style.backgroundImage = `URL(../imgs/${bg})`;
+    }
+  </script>
+</body>
+
+</html>

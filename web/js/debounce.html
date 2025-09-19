@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖和节流</title>
+  <link rel="stylesheet" href="../../css/common.css">
+</head>
+
+<body>
+  <header>
+    <h1>防抖和节流</h1>
+    <span>De-bounce vs throttle</span>
+  </header>
+  <dl>
+    <dd>从优化性能入手，减少系统资源消耗</dd>
+  </dl>
+  <div class="chap">防抖 De-bounce</div>
+  <dl>
+    <dd>
+      <div>. 防止事件处理函数 <span class="warn">频繁</span> 触发</div>
+      <div>. 借助定时器实现 - 每次事件更新都重置定时器；事件停止后一定时间才触发事件处理函数</div>
+      <div>. 事件处理函数结束完毕后，重置定时器，等待下一个事件过程</div>
+      <div>. 只执行最后一次处理</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 搜索场景中，不需要每次keyup都触发检索事件处理</dd>
+    <dd>
+      <div>. 设置定时器，每次事件触发时，就检查定时器是否启用，如果启用，说明事件还在持续中，不应该触发事件处理函数，所以应该：清空定时器，并再重新开启定时；只有当事件触发后一定时间，没有再检测到事件，才触发事件处理函数
+      </div>
+      <pre>
+let timer = null;
+el.addEventListener('keyup', (e) => {
+  if (timer) {
+    clearTimeout(timer);
+  }
+  timer = setTimeout(() => {
+    console.log(el.value);
+  }, 500)
+})</pre>
+      <div>. 封装防抖函数 - 采用闭包的形式</div>
+      <pre>
+function Debounce(fn, delay = 500) {
+  let timer = null;
+  return function () {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, arguments);
+    }, delay)
+  }
+}
+
+el.addEventListener('keyup', Debounce(() => {
+  console.log(el.value);
+}, 500))</pre>
+    </dd>
+  </dl>
+  <div class="chap">节流 throttle</div>
+  <dl>
+    <dd>
+      <div>. 防止事件处理函数 <span class="warn">马上</span> 触发</div>
+      <div>. 借助定时器实现</div>
+      <div>. 按照固定时间间隔触发；事件发生过程中，如果定时器已经启用，则返回直到定时器到时才触发事件处理函数</div>
+      <div>. 事件处理结束完毕后，重置定时器，等待下一个事件过程</div>
+      <div>. 按照固定时间间隔开门放水，不随便放水，所以叫节流</div>
+      <div>. 事件处理函数结束完毕后，重置定时器，等待下一个事件过程</div>
+      <div>. 应用场合：鼠标拖拽 drag、鼠标移动 mousemove、屏幕缩放 resize、屏幕滚动 scroll、快速点击、下列刷新等</div>
+      <div>. 更多细节，请参考 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Throttle">Throttle</a></div>
+      <div class="tips">以下时间处理采用onXXX的形式</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] mousemove</dd>
+    <dd>
+      <div>. 不做任何处理，鼠标移动时频繁触发</div>
+      <pre>
+window.onmousemove = function (e) {
+  console.log(e.clientY);
+}</pre>
+      <div>. 借助定时器采用节流措施；一般延时100ms，为了直观，采用500ms</div>
+      <pre>
+let timer = null;
+window.onmousemove = function (e) {
+  if (timer) {
+    return;
+  }
+  timer = setTimeout(() => {
+    console.log(e.clientY);
+  }, 500)
+}</pre>
+      <div>. 封装节流函数</div>
+      <pre>
+function Throttle(fn, delay = 100) {
+  let timer = null;
+  return function () {
+    if (timer) {
+      return;
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, arguments);
+    }, 500)
+  }
+}
+window.onmousemove = Throttle((e) => {
+  console.log(e.clientY);
+}, 500)</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    // let el = document.querySelector('.debounce');
+    // function Debounce(fn, delay = 500) {
+    //   let timer = null;
+    //   return function () {
+    //     if (timer) {
+    //       clearTimeout(timer);
+    //     }
+    //     timer = setTimeout(() => {
+    //       fn.apply(this, arguments);
+    //       timer = null;
+    //     }, delay)
+    //   }
+    // }
+    // el.addEventListener('keyup', Debounce(() => {
+    //   console.log(el.value);
+    // }, 500))
+
+    // p1
+    // el.addEventListener('keyup', (e) => {
+    //     if (timer) {
+    //         clearTimeout(timer);
+    //     }
+    //     timer = setTimeout(() => {
+    //         console.log(el.value);
+    //         timer = null;
+    //     }, 500)
+    // })
+    // p0
+    // el.addEventListener('keyup', (e) => {
+    //     console.log(el.value);
+    // })
+    //
+    // window.onmousemove = function (e) {
+    //     console.log(e.clientY);
+    // }
+    function Throttle(fn, delay = 100) {
+      let timer = null;
+      return function () {
+        if (timer) {
+          return;
+        }
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+          timer = null;
+        }, 500)
+      }
+    }
+    // window.addEventListener('mousemove', Throttle((e) => {
+    //     console.log(e.clientY);
+    // }, 500))
+    window.onmousemove = Throttle((e) => {
+      console.log(e.clientY);
+    }, 500)
+  </script>
+</body>
+
+</html>

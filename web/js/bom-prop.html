@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>BOM Properties - Browser Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>BOM 属性</h1>
+    <span>&commat;Properties</span>
+  </header>
+  <dl>
+    <dt>Window</dt>
+    <dd>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">Window</a> 是顶级对象</div>
+      <div>属性和事件在使用时，可以略去window关键字。如属性scrollY；方法：alert、prompt、setTimeout、setInterval等</div>
+      <div>部分属性、方法和DOM的属性功能相同，可以根据需求选择</div>
+      <div>更多 window 属性，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window#instance_properties">window
+          - properties</a></div>
+    </dd>
+    <dt>innerWidth、innerHeight</dt>
+    <dd>
+      <div>浏览器内容区的宽度、高度，包括滚动条，不包括标签页、菜单栏、地址栏和状态栏</div>
+      <div>使用 resize 事件，在开发者视图中查看浏览器窗口调整时的情况</div>
+      <pre>
+window.addEventListener('resize', () => {
+    console.log(window.innerWidth, window.innerHeight);
+})</pre>
+    </dd>
+    <dt>location</dt>
+    <dd>
+      <div>包括当前页面 host、hostname、href、pathname、port、protocol 等一系列属性</div>
+      <div>可读、可写</div>
+      <div>利用 href 属性可以实现页面跳转</div>
+      <div>&lt;a&gt; 标签跳转 | 脚本跳转</div>
+      <pre>console.log(window.location);</pre>
+    </dd>
+    <dt>navigator</dt>
+    <dd>
+      <div>"Netscape" 是 IE11、Chrome、Firefox 以及 Safari 的应用程序名称的统称。</div>
+      <div>客户端/浏览器的相关属性</div>
+      <pre>console.log(window.navigator);</pre>
+    </dd>
+    <dt>history</dt>
+    <dd>
+      <div>浏览器访问历史</div>
+      <div>history.back() - 等同于在浏览器点击后退按钮</div>
+      <div>history.forward() - 等同于在浏览器中点击前进按钮</div>
+      <div>更多信息，请查看 <a href="https://mp.weixin.qq.com/s/Cim-Y_wG95aXUG00UQZkQA">浏览器 - History 对象</a></div>
+      <pre>console.log(window.history);</pre>
+    </dd>
+    <dd class="tips">
+      <div>在开发者视图中查看当前页面 location、history、Navigator 信息，并使用 history 前进 forward() 和后退 back() 浏览页面</div>
+    </dd>
+    <dt>scrollX、scrollY</dt>
+    <dd>
+      <div>文档水平或垂直滚动的距离</div>
+      <div>对应的别名是：pageXOffset、pageYOffset</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 根据页面的滚动，添加特定效果；如显式菜单、转换菜单</div>
+      <pre>
+window.addEventListener("scroll",  () => {
+  let header = document.querySelector("header");
+  header.classList.toggle("active", window.scrollY > 200);
+})</pre>
+      <pre>
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  max-width: 1280px;
+  background-color: #fff;
+  transition: .4s;
+  z-index: 99;
+}
+
+header.hover {
+  background-color: #111;
+}</pre>
+    </dd>
+    <dd class="tips">
+      <div>DOM的 scrollTop：元素内部滚动条的滚动位置，而不是视口的滚动位置。它是相对于元素内容滚动的距离</div>
+      <div>页面滚动检测使用 scrollY 或 pageYOffset</div>
+      <div>元素滚动检测使用 scrollTop</div>
+    </dd>
+    <dt>screenX、screenY</dt>
+    <div>浏览器视口的左边到屏幕左边的距离
+      <br>使用较少；浏览器窗口化时，可能用到
+      <br>distance from the left border of the user's browser viewport to the left side of the screen
+    </div>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 复制代码</dd>
+    <dd>结构 - 固定形式，便于共享</dd>
+    <dd>
+      <pre>
+&lt;pre&gt;
+  &lt;span class="copy"&gt;copy&lt;/span&gt;
+  // code here
+&lt;/pre&gt;</pre>
+    </dd>
+    <dd>逻辑 - 获取所有 .copy 元素并分配事件；在事件处理函数中获取当前元素的下一个兄弟节点的文本内容 textContent，最后复制文本内容到剪贴板</dd>
+    <dd>
+      <pre>
+let copy = document.querySelectorAll('.copy')
+copy.forEach(item => {
+  item.addEventListener('click', () => {
+    console.log(item.nextSibling.textContent);
+    navigator.clipboard.writeText(item.nextSibling.textContent)
+  })
+})</pre>
+    </dd>
+    <dd>样式 - 绝对定位在 pre 右上方；略</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    console.log(window.location);
+  </script>
+</body>
+
+</html>

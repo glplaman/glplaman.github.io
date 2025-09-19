@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOM Events - Browser Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>BOM 事件</h1>
+    <span>&commat;Events</span>
+  </header>
+  <dl>
+    <dt>内容 Contents</dt>
+    <dd class="sn">
+      <div>beforeunload</div>
+      <div>load</div>
+      <div>resize</div>
+      <div>online/offline</div>
+      <div>copy/cut/paste</div>
+    </dd>
+    <dd>.除了这些事件，还有很多事件可以从 <a href="./document.html">Document</a> 冒泡过来 - many events can bubble from the Document
+      contained in the window object</dd>
+    <dd>.更多 Window 事件，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window#events">Window -
+        events</a></dd>
+    <dt>加载完毕 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event">load</a></dt>
+    <dd>
+      <div>.为了保证 JavaScript 执行时，相关的元素已经准备完毕， JavaScript 代码通常写在&lt;body&gt;最后面。如果使用 load 就可以把代码放在任何地方</div>
+      <div>.如果加载内容过多，load 会占用更多时间，影响用户体验。可以采用 DOMContentLoaded方法。只要 DOM 框架出来即可，不需要渲染CSS/FLASH/图片，且不影响交互</div>
+      <div>.如果两个事件都定义了，则先执行 DOMContentLoaded 再执行 load</div>
+      <div>.通常用作初始化</div>
+      <pre>
+window.addEventListener('load', () => {
+    console.log('load');
+})      </pre>
+      <pre>
+window.onload = function () { 
+    //... ...
+}</pre>
+      <pre>
+window.addEventListener('DOMContentLoaded', () => { 
+    //... ...
+})</pre>
+    </dd>
+    <dt>卸载前 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event">beforeunload</a>
+    </dt>
+    <dd>
+      <div>.设置返回值，这将触发浏览器的标准确认对话框，无法自定义UI</div>
+      <pre>
+window.addEventListener('beforeunload', (event) => {
+    event.returnValue = '您确定要离开此页面吗？';
+    console.log('beforeunload');
+});</pre>
+    </dd>
+    <dt>窗口缩放 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event">resize</a></dt>
+    <dd>
+      <div>.窗口尺寸/大小发生变化触发事件</div>
+      <div>.响应式布局经常用到</div>
+      <pre>
+window.addEventListener('resize', () => {
+    //... ...
+})</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 动态调整字体大小</div>
+      <div>
+        <div>.20是选定的参考字体大小；通常选择16px，可以根据需要调整</div>
+        <div>.320是选定的设备宽度，通常参照苹果某个型号，如iPhone6/7/8是375px</div>
+        <div>.40是最大字号</div>
+        <div>.如果使用16px、375px，检查元素并使用iPhone6/7/8，发现HTML字体大小被动态设置为16px</div>
+        <div>.以下代码要放到 &lt;head&gt;，优先执行</div>
+        <pre>
+let setFontSize = () => {
+  let w = document.documentElement.clientWidth;
+  let size = (20 * (w / 320) > 40 ? 40 + 'px' : (20 * (w / 320) + 'px'))
+  document.documentElement.style.fontSize = size;
+}
+window.addEventListener('load', setFontSize)
+window.addEventListener('resize', setFontSize)</pre>
+      </div>
+    </dd>
+    <dt>网络连接事件 Connection events</dt>
+    <dd>
+      <div>.网络链接状态检测</div>
+      <div>.状态变化时才会触发</div>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/online_event">online</a></div>
+      <td>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/offline_event">offline</a></td>
+      <pre>
+window.addEventListener('online', () => {
+    console.log('online');
+})
+window.addEventListener('offline', () => {
+    console.log('offline');
+})</pre>
+    </dd>
+    <dt>剪切板事件 Clipboard events</dt>
+    <dd class="sn">
+      <p>.针对窗口的操作，不限于文档内容外，还有其它内容，如复制 URL，涵盖面更广</p>
+      <p>.事件的原始目标是 <a href="./element.html">元素 Element</a>，可以在捕获或冒泡阶段响应并处理</p>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/copy_event">copy</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/cut_event">cut</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/paste_event">paste</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止页面复制和粘贴</dd>
+    <dd>
+      <pre>
+window.addEventListener('copy', (e) => {
+    e.preventDefault()
+})
+window.addEventListener('paste', (e) => {
+    e.preventDefault()
+})      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <script src="/utils/custom/back2top.js"></script>
+  <!-- <script>
+        window.addEventListener('copy', (e) => {
+            e.preventDefault()
+            alert('禁止复制')
+        })
+        window.addEventListener('paste', (e) => {
+            e.preventDefault()
+            alert('禁止粘贴')
+        })
+    </script> -->
+</body>
+
+</html>

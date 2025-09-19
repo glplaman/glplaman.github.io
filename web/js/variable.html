@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>变量 Variable</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>变量</h1>
+    <span>&commat;Variable</span>
+  </header>
+  <dl>
+    <dd>
+      <div>.变量声明 - Declaring variables</div>
+      <div>.JavaScript 具有隐含的全局概念，意味着你不声明的任何变量都会成为一个全局对象属性</div>
+      <div>.JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型</div>
+      <div>.更多语句，请访问 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements">Statements</a>
+      </div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var">var</a></dt>
+    <dd>
+      <div>.默认是全局变量</div>
+      <div>.编译时，存在变量提升，并且被初始化为 undefined；意味着你可以在声明之前访问变量，但它的值会是 undefined</div>
+      <div>.使用较少</div>
+      <pre>
+console.log(num);//undefined
+var num;</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">let</a></dt>
+    <dd>
+      <div>.块作用域 - Declares a block scope local variable</div>
+      <div>.编译时，存在变量提升，但是不会被初始化，因此在变量声明之前访问它会导致引用错误 - ReferenceError。这种情况称为暂时性死区 TDZ - Temporal Dead Zone</div>
+      <div>.应：<span class="warn">先声明再使用</span></div>
+      <div>.应用较多</div>
+      <pre>
+console.log(num);//Uncaught ReferenceError: Cannot access 'num' before initialization
+let num;</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">const</a></dt>
+    <dd>
+      <div>.block-scoped local variables</div>
+      <div>.read-only</div>
+    </dd>
+    <dt>变量提升 Variable hoisting</dt>
+    <dd>
+      <div>.代码执行前，变量声明和函数声明提升到当前作用域的顶部，即：先处理变量声明和函数声明</div>
+      <div>.如果有重复声明，则后面的声明覆盖前面的声明；然后再处理其它逻辑，如赋值</div>
+      <div>.赋值不会触发提升</div>
+      <div>.更多信息，请访问 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variable_hoisting">variable_hoisting</a>、<a
+          href="./precompile.html">预编译 pre-compiler</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 变量提升 - msg</dd>
+    <dd>
+      <div>.原始代码</div>
+      <pre>
+console.log(msg);
+var msg = 'hi,there.'
+console.log(msg);</pre>
+      <div>.JavaScript 编译后，代码逻辑为</div>
+      <pre>
+//提升
+var msg;
+//执行
+console.log(msg);
+msg = 'hi,there.'
+console.log(msg);</pre>
+      <div>.所以俩次log结果依次为：undefined、hi,there</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 变量 a 和函数 foo 提升</dd>
+    <dd>
+      <div>.原始代码</div>
+      <pre>
+var a = 1;
+function foo() {
+  console.log('1', a);
+  var a = 3
+  console.log('2', a);
+}
+console.log('3', a);
+foo()</pre>
+      <div>.JavaScript 编译后，代码逻辑为</div>
+      <pre>
+//提升
+var a;
+function foo;
+  var a;
+//执行
+a = 1
+console.log('3', a); //a = 1
+foo()
+  console.log('1', a);//undefined - 当前作用域只声明还没有赋值
+  a = 3
+  console.log('2', a);//3</pre>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+  </script>
+</body>
+
+</html>

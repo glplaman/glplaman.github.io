@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>文档</h1>
+    <span>&commat;Document</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">属性 Properties</a>
+      <a href="" style="--delay:1" class="nav-item">方法 Methods</a>
+      <a href="" style="--delay:2" class="nav-item">事件 Events</a>
+    </nav>
+  </header>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document">Document</a> 是 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</div>
+      <div>.代表浏览器加载的WEB页面 - any web page loaded in the browser</div>
+      <div>.DOM树的入口节点 - entry point into the web page's content, which is the DOM tree.</div>
+      <div>.示例结构如下</div>
+      <pre>&lt;div id="box" class="wrap container"&gt;hi,there.&lt;/div&gt;</pre>
+    </dd>
+  </dl>
+  <div class="chap">属性 Properties</div>
+  <dl class="nav-cont">
+    <dd>. 很多属性都是只读 - Read only</dd>
+    <dt>Document.activeElement</dt>
+    <dd>
+      <div>. 返回当前获取焦点/处于聚焦状态的 <a href="./element.html">元素 Element</a></div>
+      <div>. 通常是单行输入框 &lt;input&gt;或多行文本输入 &lt;textarea&gt;</div>
+    </dd>
+    <dt>Document.documentElement</dt>
+    <dd>
+      <div>. 返回文档的根元素，即 &lt;html&gt; - the root element of the document</div>
+    </dd>
+    <dt>Document.body</dt>
+    <dd>
+      <div>. 返回 &lt;body&gt;</div>
+    </dd>
+    <dt>Document.title</dt>
+    <dd>
+      <div>. 页面的标题/网站名</div>
+      <div>. 可以获取或修改</div>
+    </dd>
+    <dt>Document.fullscreenElement</dt>
+    <dd>.当前是否处于全屏模式；非空 null 就是在全屏模式</dd>
+  </dl>
+  <div class="chap">方法 Methods</div>
+  <dl class="nav-cont">
+    <dt>创建</dt>
+    <dd>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement">Document.createElement()</a>
+      <div>. 使用给定的标签创建新元素</div>
+    </dd>
+    <dt>添加</dt>
+    <dd>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/append">Document.append()</a>
+      <div>. 尾插节点 - 在文档末尾添加节点对象或字符串</div>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/prepend">Document.prepend()</a>
+      <div>. 头插节点</div>
+      <pre>
+const body = document.body
+const div = document.createElement('div')
+div.textContent = 'hi,there.'
+body.prepend(div)
+body.append('from glpla')</pre>
+    </dd>
+    <dt>获取</dt>
+    <dd>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById">Document.getElementById()</a>
+      <div>. 根据 id 获取一个元素 - returns an Element object</div>
+      <div>. id 应该唯一；否则只匹配会第一个元素</div>
+      <pre>const dom = document.getElementById('box');</pre>
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName">Document.getElementsByClassName()</a>
+      <div>. 根据类名获取元素，返回类数组对象 - an array-like object / HTMLCollection</div>
+      <div>. 多个类名以空格分开，表示 <span class="warn">同时</span> 具备这些类</div>
+      <div>. 动态获取；当 DOM 发生变化时，结果相应的改变 - This is a <span class="warn">live</span> HTMLCollection. Changes in the DOM
+        will reflect in the array as the changes occur</div>
+      <div class="warn">. 循环中，谨慎使用</div>
+      <pre>
+const dom = document.getElementsByClassName('wrap');
+const dom = document.getElementsByClassName('wrap container');</pre>
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName">Document.getElementsByTagName()</a>
+      <div>.根据标签名获取元素 - an HTMLCollection of elements with the given tag name</div>
+      <pre>const dom = document.getElementsByTagName('div');</pre>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector">Document.querySelector()</a>
+      <div>. the first Element node that matches</div>
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll()</a>
+      <div>. a list of all the Element nodes that matche</div>
+      <div>. 这2个方法返回 NodeList()</div>
+      <pre>const dom = document.querySelector('#box');</pre>
+      <pre>const dom = document.querySelectorAll('.wrap');</pre>
+    </dd>
+    <dd class="tips">上述获取元素是在整个文档范围内检索 - the entire document；通常配合 <a href="./element.html">Element</a> 一起使用</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 获取元素</dd>
+    <dd>
+      <pre>
+&lt;div class="box"&gt;
+  &lt;div class="item"&gt;Lorem.&lt;/div&gt;
+  &lt;div class="item"&gt;Accusamus.&lt;/div&gt;
+  &lt;div class="item"&gt;Cupiditate.&lt;/div&gt;
+  &lt;div class="item"&gt;Ea.&lt;/div&gt;
+  &lt;div class="item"&gt;Iste.&lt;/div&gt;
+  &lt;div class="item"&gt;Rem?&lt;/div&gt;
+  &lt;div class="item"&gt;Doloremque?&lt;/div&gt;
+  &lt;div class="item"&gt;Aspernatur.&lt;/div&gt;
+  &lt;div class="item"&gt;Sit?&lt;/div&gt;
+  &lt;div class="item"&gt;Doloribus.&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const box = document.querySelector('.box')
+const items = box.querySelectorAll('.item')</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 函数封装 - 将元素获取方法封装为一个函数，简化操作</dd>
+    <dd>
+      <pre>
+function fn(el) {
+    return document.querySelector(el)
+}</pre>
+    </dd>
+    <dt>其它</dt>
+    <dd>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/exitFullscreen">Document.exitFullscreen()</a>
+      <div>.某个元素退出全屏模式</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../demo/todo.html">代办事项</a></dd>
+  </dl>
+  <div class="chap">事件 Events</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>.建议以事件侦听器的方式使用</div>
+      <pre>
+document.addEventListener('eventName', () => {
+    console.log('xxx');
+})</pre>
+    </dd>
+    <dt>加载/卸载事件 Load & unload events</dt>
+    <dd class="sn">
+      <div><a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event">DOMContentLoaded</a>
+      </div>
+      <p>.页面加载完毕，包括DOM解析完毕和脚本文件下载完毕并执行，但是不会等样式文件、图片和其它资源都加载完毕</p>
+      <p>.window 的 load 事件则是完全加载 - 所有资源都加载完毕</p>
+      <p>.所以 DOMContentLoaded 事件比 load 事件更早触发</p>
+      <pre>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('document ready');
+})
+
+window.addEventListener('load', () => {
+    console.log('window loaded');
+})</pre>
+      <div></div>
+    </dd>
+    <dt>滚动事件 Scroll events</dt>
+    <dd>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event">scroll</a></div>
+      <div>.页面滚动时触发 - 只有当出现滚动条时，scroll 事件才会触发</div>
+      <div>.建议使用节流方式 - recommended to throttle the event using requestAnimationFrame(), setTimeout(), or a
+        CustomEvent</div>
+      <div>.利用 DOM 的 scrollTop 或 window 的 scrollY 进行特别的设计，如调整字体大小、延时出现返回顶部按钮、调整导航条样式等等</div>
+      <div>.事件会冒泡到浏览器，所以 <a href="./bom-event.html">BOM</a> 也可以响应文档的滚动</div>
+      <div>.如果某个 <a href="./element.html">Element</a> 出现滚动条，也可以响应自己的滚动事件</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/scrollend_event">scrollend</a>
+      </div>
+      <div>.滚动结束触发</div>
+      <pre>
+document.addEventListener('scroll', function () {
+    console.log('scrolling');
+})
+document.addEventListener('scrollend', function () {
+    console.log('end');
+})</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 返回顶部按钮</div>
+      <a class="back2top" target="_self" href="#">
+        <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+          p-id="31526" width="32" height="32">
+          <path
+            d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+            fill="#ffffff" p-id="31527"></path>
+        </svg>
+      </a>
+      <div>
+        <div>.分别利用DOM的 scrollTop 和 window 的 scrollY 查看页面滚动</div>
+        <div>.页面位于顶端时，返回按钮不出现，且取消事件响应</div>
+        <div>.当页面滚动到一定位置，如一个窗口内部高度时，返回按钮出现，可以响应事件，点击可以返回顶部</div>
+        <div>.添加动画，使返回按钮的出现更顺滑</div>
+        <div>.还可以使用 window的 pageYOffset、innerHeight 属性判断</div>
+        <pre>
+document.addEventListener('scroll', () => {    
+    back2top.classList.toggle('active', scrollY > innerHeight)
+})</pre>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 页面滚动禁止</div>
+      <div>
+        <div>.移动端弹出菜单时，通常应禁止页面继续滚动；如汉堡菜单#ham点击时，出现顶层菜单，下方的页面不应该再响应事件和滚动</div>
+        <div>再次单击，顶层菜单消失，下方页面恢复正常；通过汉堡菜单的单击，切换页面的隐藏类</div>
+        <pre>
+.hidden {
+    overflow: hidden;
+}</pre>
+        <pre>
+ham.addEventListener('click', function () {
+    //... ...
+    document.body.classList.toggle('hidden')
+})</pre>
+      </div>
+    </dd>
+    <dt>全屏事件 Fullscreen events</dt>
+    <dd class="sn">
+      <div><a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Document/fullscreenchange_event">fullscreenchange</a>
+      </div>
+      <p>.当一个元素进入或退出全屏模式时，会触发 fullscreenchange 事件 - F11全屏模式</p>
+      <p>.事件首先被发送给正在过渡到全屏模式或从全屏模式退出的元素</p>
+      <p>.然后冒泡事件到 document，所以 document 可以监听该事件</p>
+      <p>.单纯的切换全屏模式并不会触发该事件</p>
+      <pre>
+&lt;div class="wrap"&gt;
+    &lt;div class="switch-btn"&gt;Fullscreen&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const fullScreenElement = document.querySelector('.wrap');
+const btn = document.querySelector('.switch-btn');
+
+btn.addEventListener('click', () => {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        fullScreenElement.requestFullscreen();
+    }
+})
+document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+        console.log("Entered fullscreen mode.");
+    } else {
+        console.log("Leaving fullscreen mode.");
+    }
+})            </pre>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/fullscreenerror_event">fullscreenerror</a>
+      </div>
+      <p>.全屏事件异常时触发</p>
+    </dd>
+    <dt>剪切板事件 Clipboard events</dt>
+    <dd class="sn">
+      <p>.针对文档内容的操作</p>
+      <p>.事件的原始目标是 <a href="./element.html">元素 Element</a>，可以在捕获或冒泡阶段响应并处理</p>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/copy_event">copy</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/cut_event">cut</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/paste_event">paste</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止页面复制和粘贴</dd>
+    <dd>
+      <pre>
+document.addEventListener('copy', (e) => {
+    e.preventDefault()
+})
+document.addEventListener('paste', (e) => {
+    e.preventDefault()
+})      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <!-- <script>
+        document.addEventListener('copy', (e) => {
+            e.preventDefault()
+            alert('禁止复制')
+        })
+        document.addEventListener('paste', (e) => {
+            e.preventDefault()
+            alert('禁止粘贴')
+        })
+    </script> -->
+</body>
+
+</html>

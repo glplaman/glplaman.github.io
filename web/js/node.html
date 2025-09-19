@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Node - Document Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>节点</h1>
+    <span>&commat;node</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">属性 Properties</a>
+      <a href="" style="--delay:1" class="nav-item">方法 Methods</a>
+      <a href="" style="--delay:2" class="nav-item">事件 Events</a>
+    </nav>
+  </header>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node">Node</a> 是 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</div>
+      <div>.是一个抽象类 - abstract base</div>
+      <div>.是其它DOM类的基类 - many other DOM API objects are based upon</div>
+      <div>.常见的子类有 文档类、元素类- Most notable are Document, Element</div>
+      <div>.整个WEB页面是由各种各样的节点/元素组成；通常使用元素表示具体的标签</div>
+    </dd>
+  </dl>
+  <div class="chap">属性 Properties</div>
+  <dl class="nav-cont">
+    <dt>节点基本属性</dt>
+    <dd>
+      <div>1. 节点名称 nodeName：只读属性；如元素节点的名称是大写的标签名，如A</div>
+      <div>2. 节点类型 nodeType：以数字区分，如1表示元素节点</div>
+      <div>.元素节点/标签节点</div>
+      <div>.文本节点：标签之间由于格式化自动产生的的回车，空白和空格都是文本节点</div>
+      <div>.注释节点</div>
+      <div>3. 节点值 nodeValue</div>
+      <table>
+        <caption>节点分类</caption>
+        <tr>
+          <th style="width: 25%;">分类</th>
+          <th>nodeName</th>
+          <th>nodeType</th>
+          <th>nodeValue</th>
+        </tr>
+        <tr>
+          <td>元素节点 ELEMENT_NODE</td>
+          <td>标签名；大写</td>
+          <td>1</td>
+          <td>null</td>
+        </tr>
+        <tr>
+          <td>属性节点 ATTRIBUTE_NODE</td>
+          <td></td>
+          <td>2</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>文本节点 TEXT_NODE</td>
+          <td>#text</td>
+          <td>3</td>
+          <td>文本节点的内容</td>
+        </tr>
+        <tr>
+          <td>注释节点 COMMENT_NODE</td>
+          <td>#comment</td>
+          <td>8</td>
+          <td>注释的文本内容</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>节点关系</dt>
+    <dd>
+      <div>.父子、兄弟、后代、祖先等</div>
+      <table>
+        <caption>节点间的关系</caption>
+        <tr>
+          <th style="width: 25%;">类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Node.childNodes</td>
+          <td>动态更新的子节点
+            <br>Returns a <span class="warn">live / automatically updated</span> NodeList, including elements, text and
+            comments
+          </td>
+        </tr>
+        <tr>
+          <td>Node.firstChild</td>
+          <td>第一个节点
+            <br>the first <span class="warn">direct</span> child node
+          </td>
+        </tr>
+        <tr>
+          <td>Node.lastChild</td>
+          <td>第一个节点
+            <br>the last <span class="warn">direct</span> child node
+          </td>
+        </tr>
+        <tr>
+          <td>Node.nextSibling</td>
+          <td>下一个兄弟节点
+            <br>the next node in the DOM tree
+          </td>
+        </tr>
+        <tr>
+          <td>Node.previousSibling</td>
+          <td>上一个兄弟节点
+            <br>the previous node in the DOM tree
+          </td>
+        </tr>
+        <tr>
+          <td>Node.parentNode</td>
+          <td>父节点；无则返回null；只能有一个亲爸爸
+            <br>the parent of this node
+          </td>
+        </tr>
+        <tr>
+          <td>Node.offsetParent</td>
+          <td>参考的定位的父节点；如果没有就一直往上找，直到BODY</td>
+        </tr>
+        <tr>
+          <td>Node.textContent</td>
+          <td>文本内容，包括其所有的后代节点；无论是否渲染
+            <br>the textual content of an element and all its descendants
+          </td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <div class="chap">方法 Methods</div>
+  <dl class="nav-cont">
+    <dd>
+      <div>操作节点的方法，如增加、删除、复制</div>
+      <table>
+        <caption>节点方法</caption>
+        <tr>
+          <th style="width: 25%;">类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild">appendChild(node)</a> </td>
+          <td>尾插节点；如果该节点已经存在DOM树中，则是移动位置</td>
+        </tr>
+        <tr>
+          <td>prepend()</td>
+          <td>头插节点</td>
+        </tr>
+        <tr>
+          <td>insertBefore(node, node)</td>
+          <td>在某个节点前插入节点</td>
+        </tr>
+        <tr>
+          <td>removeChild(node)</td>
+          <td>删除节点</td>
+        </tr>
+        <tr>
+          <td>cloneNode(node,bool)</td>
+          <td>克隆节点</td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Touch</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <style>
+    .demo {
+      width: 600px;
+      height: 300px;
+      background-color: #ff6347;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <dl class="keypoint">
+      <dt>知识点</dt>
+      <dd>touchstart：触摸开始</dd>
+      <dd>touchmove：触摸滑动</dd>
+      <dd>touchend：触摸结束</dd>
+      <dd>clientX-clientY：相对于视图左上角的距离；对于不同的设备而言，视口大小是固定的</dd>
+      <dd>pageX-pageY：相对于当前页面左上角的距离；一般情况下，页面和视口大小是一致的，如果页面内容过多导致出现滚动条，如水平滚动条，则页面会大于视口尺寸</dd>
+      <dd>screenX-screenY：相对于屏幕左上角的距离</dd>
+    </dl>
+    <div class="demo"></div>
+    <script>
+      window.onload = function () {
+        let demo = document.querySelector('.demo')
+        demo.addEventListener('touchstart', (e) => {
+          console.log(e.touches[0]);
+        })
+      }
+    </script>
+  </div>
+</body>
+
+</html>

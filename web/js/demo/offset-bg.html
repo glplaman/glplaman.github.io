@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offset widht/height left/top</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      min-height: 100vh;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .wrap {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+    }
+
+    .item::before {
+      content: '';
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      background-image: radial-gradient(var(--color), transparent, transparent);
+      opacity: 0;
+    }
+
+    .item::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background-color: #222;
+    }
+
+
+    .item:hover::before {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="item" style="--color:#ff0"></div>
+    <div class="item" style="--color:#f0f"></div>
+    <div class="item" style="--color:#0ff"></div>
+    <div class="item" style="--color:#ff0"></div>
+    <div class="item" style="--color:#f0f"></div>
+    <div class="item" style="--color:#0ff"></div>
+    <div class="item" style="--color:#ff0"></div>
+    <div class="item" style="--color:#f0f"></div>
+    <div class="item" style="--color:#0ff"></div>
+  </div>
+  <!-- <div id="light"></div> -->
+  <script>
+    const items = document.querySelectorAll('.item');
+
+    items.forEach(item => {
+      item.addEventListener('mousemove', (e) => {
+        let diffx = e.clientX - item.offsetLeft;
+        let diffy = e.clientY - item.offsetTop;
+        item.style.setProperty('--x', `${diffx}px`);
+        item.style.setProperty('--y', `${diffy}px`);
+      })
+    })
+  </script>
+</body>
+
+</html>

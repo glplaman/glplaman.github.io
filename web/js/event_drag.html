@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拖拽事件 Drag - Event</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>拖拽事件</h1>
+    <span>&commat;Drag</span>
+  </header>
+  <dl>
+    <dt>说明</dt>
+    <dd>3个事件：分别对应三个阶段</dd>
+    <dd>dragenter<span class="dot"></span>拖拽进去</dd>
+    <dd>dragover<span class="dot"></span>拖拽悬停</dd>
+    <dd>drop<span class="dot"></span>拖拽释放</dd>
+    <dd>
+      <pre>
+let drag = document.querySelector('#drag')
+drag.addEventListener('dragenter', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+})
+drag.addEventListener('dragover', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+})
+drag.addEventListener('drop', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log(e.dataTransfer.files);
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 使用鼠标事件实现拖拽</dd>
+    <dd>
+      <div class="move"></div>
+    </dd>
+    <dd>[传统事件方式]</dd>
+    <dd>
+      <pre>
+let move = document.querySelector('.move');
+move.onmousedown = function (e) {
+  let left = e.clientX - move.offsetLeft;
+  let top = e.clientY - move.offsetTop;
+  move.onmousemove = function (ev) {
+    move.style.left = ev.clientX - left + 'px';
+    move.style.top = ev.clientY - top + 'px';
+  }
+  move.onmouseup = function () {
+    move.onmousemove = null;
+  }
+}</pre>
+    </dd>
+    <dd>[事件侦听方式]</dd>
+    <dd>.为了避免移动速度过快导致鼠标移动到元素外面，给文档mousemove事件和mouseup事件</dd>
+    <dd>.限制在当前视口移动：上下左右移动</dd>
+    <dd>
+      <pre>
+move.addEventListener('mousedown', fmd);
+move.addEventListener('mouseup', fmu);
+let leftPos, topPos;
+function fmd(e) {
+  leftPos = e.clientX - move.offsetLeft;
+  topPos = e.clientY - move.offsetTop;
+  document.addEventListener('mousemove', fmm);
+}
+function fmm(e) {
+  let disX = e.clientX - leftPos;
+  let disY = e.clientY - topPos;
+  if (disX < 0) {
+    disX = 0;
+  } else if (disX >= document.documentElement.clientWidth - move.offsetWidth) {
+    disX = document.documentElement.clientWidth - move.offsetWidth;
+  }
+  console.log(document.documentElement.clientHeight);
+  if (disY < 0) {
+    disY = 0;
+  } else if (disY > document.documentElement.clientHeight - move.offsetHeight) {
+    disY = document.documentElement.clientHeight - move.offsetHeight;
+  }
+  move.style.left = disX + 'px';
+  move.style.top = disY + 'px';
+}
+function fmu() {
+  document.removeEventListener('mousemove', fmm);
+}</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

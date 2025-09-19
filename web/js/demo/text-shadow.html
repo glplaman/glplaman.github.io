@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Shadow</title>
+  <style>
+    :root {
+      --w: 640px;
+      --z: 1000px;
+      --offset: calc(var(--w));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    #txt {
+      font-size: 200px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #fff
+    }
+
+    #light {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: 0 0 10px #fff, 0 0 50px #fff, 0 0 150px #fff, 0 0 200px #fff, 0 0 500px #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="txt">Lorem, ipsum.</div>
+  <div id="light"></div>
+  <script>
+    const txt = document.querySelector('#txt');
+    console.log(txt.offsetWidth, txt.offsetHeight);
+
+    const light = document.querySelector('#light');
+    document.addEventListener('mousemove', (e) => {
+      light.style.left = (e.clientX - 25) + 'px';
+      light.style.top = (e.clientY - 25) + 'px';
+      let diffx = e.clientX - txt.offsetLeft - txt.offsetWidth / 2;
+      let diffy = e.clientY - txt.offsetTop - txt.offsetHeight / 2;
+      console.log(diffx, diffy);
+      let boxShadow = '';
+      for (let i = 0; i < 100; i++) {
+        boxShadow += (boxShadow ? ',' : '') + `${-diffx * (i / 100)}px ${-diffy * (i / 100)}px 0 rgba(33,33,33,${1 - i / 100})`;
+      }
+      txt.style.textShadow = boxShadow;
+    });
+  </script>
+</body>
+
+</html>

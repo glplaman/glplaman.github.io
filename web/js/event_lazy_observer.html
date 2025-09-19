@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event-Lazy Loading</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/linux.css">
+  <style>
+    header {
+      background-image: url(../imgs/lg.jpg);
+    }
+
+    .dd-title-item {
+      background-color: #9fcff9;
+      color: #333;
+    }
+
+    .test {
+      height: 200vh;
+    }
+  </style>
+</head>
+
+<body class="container">
+  <header class="w">
+    <h1>懒加载 Lazy Loading</h1>
+    <span class="timestamp">2022-06-20</span>
+  </header>
+  <div class="w cont">
+    <dl>
+      <dt>IntersectionObserver</dt>
+      <dd>触发条件：</dd>
+      <dd>观察到元素，触发一次；</dd>
+      <dd>观察不到元素，触发一次；</dd>
+      <dd>观察元素：根据回调函数cb[callback]的isIntersecting判断是否进入，并执行相应的业务逻辑；；如果已经观察到了，就解除观察；</dd>
+      <pre class="code">
+    let imgs = document.querySelectorAll('img')//获取dom
+    let cb = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {//观察到元素，开始渲染
+                let img = entry.target
+                img.src = img.getAttribute('data-src')
+                observer.unobserve(img)//渲染完毕后解除观察
+            }
+        })
+    }
+    let observer = new IntersectionObserver(cb)
+    imgs.forEach(item => {//循环为每个元素绑定观察
+        observer.observe(item)
+    })</pre>
+      <dt>图片预览</dt>
+      <dd>滚动窗口；检查network懒加载情况；</dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1511300636408-a63a89df3482?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FsbHBhcGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1508739773434-c26b3d09e071?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8d2FsbHBhcGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1501696461415-6bd6660c6742?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1580137189272-c9379f8864fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1620503374956-c942862f0372?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1498429089284-41f8cf3ffd39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjZ8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1461301214746-1e109215d6d3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1575761344173-aa186491c120?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+      </dd>
+      <dd><img src="" alt=""
+          data-src="https://images.unsplash.com/photo-1499678329028-101435549a4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDZ8fHdhbGxwYXBlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60">
+      </dd>
+    </dl>
+    <footer class="w copyright">
+      <div class="copyright-item">All Copyrights Reserved, &copy; 2022-2024</div>
+      <img class="copyright-item" src="" data-src="../imgs/avatar.jpg" alt="">
+      <div class="copyright-item">Cnplaman from No 54414, PLA</div>
+    </footer>
+  </div>
+  <script>
+    let imgs = document.querySelectorAll('img')
+    let cb = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          let img = entry.target
+          img.src = img.getAttribute('data-src')
+          console.log('see');
+          observer.unobserve(img)
+        }
+      })
+    }
+    let observer = new IntersectionObserver(cb)
+    imgs.forEach(item => {
+      observer.observe(item)
+    })
+  </script>
+</body>
+
+</html>

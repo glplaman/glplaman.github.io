@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数 Function</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>函数</h1>
+    <span>&commat;Function</span>
+  </header>
+  <figure>
+    <img src="../imgs/function.png" alt="">
+    <figcaption>思维导图</figcaption>
+  </figure>
+  <section>
+    <h3>概述 Overview</h3>
+    <ul>
+      <li>封装需要重复执行的代码，有助于模块化开发 - 黑盒子</li>
+      <li>可以在任何地方、任何时候调用执行</li>
+      <li>一等公民 First-class citizens - 可以存储在变量中；可以作为参数；可以作为返回值</li>
+      <li>函数也是对象</li>
+      <li>更多信息，请访问 <a target="_blank"
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions">MDN -
+          Functions</a>、<a target="_blank"
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">MDN -
+          Functions Guide</a></li>
+    </ul>
+    <div class="tips">Functions are blocks of code designed to perform a specific task and can be executed when
+      called.</div>
+  </section>
+  <h2>函数定义 Defining functions</h2>
+  <section>
+    <h3>函数声明 function declaration</h3>
+    <ul>
+      <li>Use the function keyword, followed by a name, parameters and a body</li>
+      <li>一个标准的函数声明，由关键字 function 、函数名、形式参数和函数体组成</li>
+      <li>也叫命名函数、具名函数</li>
+      <li>可以放在任何地方 - <span class="warn">预处理 - 提升</span></li>
+      <pre>
+function 函数名 (形式参数列表) { 
+  //函数逻辑实现
+  return 返回值; 
+}</pre>
+      <div>1. 函数名</div>
+      <li>能体现函数功能的语义化标识符</li>
+      <li>通常使用动词+名词形式</li>
+      <div>2. 形式参数列表</div>
+      <li>函数复用时的定制/个性化特点；通过不同的参数实现类似的业务；此时的参数是形式参数 - 形参[占位符]</li>
+      <li>函数的形参也可以是函数</li>
+      <li>个数：根据函数功能，可以使用参数也可以不使用参数；也可以使用任意多的参数：以逗号,分隔</li>
+      <li>使用：函数逻辑实现过程中，通常直接使用形参，也可以使用 <span class="warn">arguments</span> 数组接受不定个数的形参，见后续内容</li>
+      <li>传值：所有参数传递的都是值，不可能通过引用传递参数；有不少开发人员在这一点上可能会感到困惑，因为访问变量有按值和按引用两种方式，而参数只能按值传递；可以指定参数默认值</li>
+      <div>3. 函数体|函数逻辑</div>
+      <li>函数功能的具体实现</li>
+      <li>通常需要借助局部变量完成</li>
+      <li>建议使用 let 声明变量，将其作用域限制在当前函数快内</li>
+      <li>使用 var 声明的变量也是局部变量，只能在函数内部访问它</li>
+      <li>可以在不同的函数中使用名称相同的局部变量</li>
+      <li>局部变量比同名全局变量的优先级高，所以局部变量会隐藏同名的全局变量</li>
+      <li>函数运行完毕，局部变量会被删除</li>
+      <div>4. 返回值</div>
+      <li>函数的执行结果</li>
+      <li>可以有返回值；也可以没有返回值</li>
+      <li>没有显示的指定返回值，函数的返回都是 undefined</li>
+      <li>可以使用 return 退出函数或返回结果</li>
+      <li>位于 return 语句之后的任何代码不会执行</li>
+      <li>如果没有返回值，也可以省略 return：所有逻辑执行完毕后，自动退出函数</li>
+      <li>逻辑处理过程中，可以随时使用 return退出函数，如数组遍历中，已经拿到了需要的数据，不需要继续执行后面的代码</li>
+      <li>推荐：让函数始终都返回一个值，便于调试</li>
+      <li>返回值可以是函数；返回的函数仍然需要执行才能拿到最后的结果</li>
+    </ul>
+    <h3>函数表达式 Function Expression</h3>
+    <ul>
+      <li>函数没有名称，而且位于一条赋值语句右边，被赋给一个常量，又叫 <span class="warn">匿名函数</span></li>
+      <li>因为是赋值语句，所以最好末尾加上;</li>
+      <li>通常作为回调函数 callback/cb 在异步编程中使用</li>
+      <li>必须<span class="warn">先声明后使用</span>，否则告警：Cannot access 'xxx' before initialization</li>
+      <pre>
+const sum = function (形参列表) { 
+  //函数逻辑实现
+  return 返回值; 
+};</pre>
+    </ul>
+    <div class="tips">
+      <div>没有重载；后定义的同名函数会覆盖先定义的函数</div>
+      <div>每个函数都是 Function 类型的实例，而且都与其他引用类型一样具有属性和方法</div>
+      <div>由于函数是对象，因此函数名实际上也是一个指向函数对象的指针，不会与某个函数绑定</div>
+      <div>将函数名想象为指针，也有助于理解为什么 ECMAScript 中没有函数重载的概念</div>
+      <div>解析器会率先读取函数声明/预处理 - 提升 hoisting，并使其在执行任何代码之前可用/可访问</div>
+      <div>函数表达式，则必须等到解析器执行到它所在的代码行，才会真正被解释执行</div>
+    </div>
+  </section>
+  <h2>函数调用 Function calling</h2>
+  <section>
+    <ul>
+      <li>函数要调用才能执行：函数名加上一对圆括号()</li>
+      <li>调用函数时，根据函数声明，传递个数对应的参数[实际参数-实参]；多余的参数会被忽略</li>
+      <li>函数体可以调用其它函数</li>
+      <li>函数可以调用自己 - 递归函数</li>
+      <li>函数调用可以在函数声明前调用；也可以在函数声明后调用；实际上，浏览器会预先提升 hoisting 处理变量声明和函数声明</li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 示例</div>
+    <ul class="sn">
+      <li>不指定返回；执行完逻辑，自动结束</li>
+      <pre>
+function dis() {
+  console.log('hi');
+}
+console.log(dis());//undefined</pre>
+      <li>默认参数</li>
+      <pre>
+function dis(age = 18) {
+  return age
+}</pre>
+      <li>显式指定返回</li>
+      <pre>
+function dis(num1, num2) {
+  return num1 + num2;//有返回值
+}
+console.log(dis(1, 2));//3</pre>
+    </ul>
+  </section>
+  <h2>其它函数 Other</h2>
+  <section>
+    <h3>箭头函数 Arrow function</h3>
+    <ul>
+      <li>使用 => 表示</li>
+      <li>也是匿名函数，需要保存到变量中</li>
+      <li>更简洁</li>
+      <pre>
+const sum = (num1, num2) => {
+  return num1 + num2;
+};</pre>
+      <li>如果只有返回语句，没有更多逻辑，可以省略花括号 {} 和 return - If only one expression, implicit return.</li>
+      <pre>const sum = (num1, num2) => num1 + num2;</pre>
+      <li>多个表达式，必须使用 {} - If multiple expressions, use {} and return keyword.</li>
+      <pre>
+const sum = (num1, num2) => {
+  let res = num1 + num2
+  return res;
+};</pre>
+      <li>如果只有一个参数，可以省略形参列表的圆括号 ()</li>
+      <pre>let double = num1 => num1 * 2;</pre>
+      <li>如果没有参数，不可以省略圆括号 ()</li>
+      <pre>let sum = () => console.log('hello, world');</pre>
+    </ul>
+    <div>
+      <div>.事件侦听中，如果使用箭头函数，则 this 指的是的 window，不再是事件对象</div>
+      <pre>
+btn.addEventListener('click', () => {
+  console.log(this);//window
+})
+
+btn.addEventListener('click', function () {
+  console.log(this);//具体的事件对象，如按钮 button
+})</pre>
+    </div>
+    <h3>立即执行函数 IIFE</h3>
+    <ul>
+      <li>Immediately Invoked Function Expression</li>
+      <li>定义一个匿名函数并立即调用这个函数/执行</li>
+      <li>函数仅仅执行1次；不需要多次调用函数</li>
+      <li>创建一个独立的作用域，避免变量污染全局命名空间</li>
+      <li>数据隐私</li>
+      <li>状态初始化</li>
+      <li>执行异步代码</li>
+      <li>使用普通函数</li>
+      <pre>
+;(function() {
+  // 函数体
+})();</pre>
+      <li>使用箭头函数</li>
+      <pre>
+;(()=> {
+// 函数体
+})();</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 加载数据</div>
+    <ul>
+      <li>避免封装函数</li>
+      <li>使用异步等待 async-await <a href="../../node/fetch.html">加载数据 Fetch</a>、<a
+          href="https://supabase.com/">Supabase.com</a></li>
+      <pre>
+; (async () => {
+  let res = await fetch('https://glpla.github.io/utils/data/coffee.json')
+  let data = await res.json()
+  console.log(data)
+})();</pre>
+    </ul>
+    <h3>递归函数 Function</h3>
+    <ul>
+      <li>自己调用自己</li>
+      <li>找规律、找出口</li>
+    </ul>
+    <div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 输入一个小于10的数字，求其阶层n!</div>
+      <pre>
+function fn(n) {
+  // if (n == 0) {
+  //   return 1;
+  // } else {
+  //   return n * fn(n - 1);
+  // }
+  return n == 0 ? 1 : n * fn(n - 1);
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 输入一个小于10的数字，求其斐波那契数列Fibonacci
+        sequence：f(n)=f(n-1)+f(n-2); n&ge;2; f(0)=1; f(1)=1;
+      </div>
+      <pre>
+function fn(n) {
+  if (n == 0 || n == 1) {
+    return 1;
+  } else {
+    return fn(n - 1) + fn(n - 2);
+  }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 数组扁平化 flat()- 将2维数组或多维数组都处理为1维数组</div>
+      <div>. 可以封装在对象原型函数prototype上</div>
+      <ol>
+        <li>创建空数组</li>
+        <li>遍历每一个数据项，如果也是数组，就继续深入遍历</li>
+        <li>如果不是数组，是一个普通数据，就添加到空数组</li>
+        <li>返回创建的数组，实现数组扁平化</li>
+      </ol>
+      <pre>
+Array.prototype.flat = function () {
+  let flatArr = []
+  for (let item of this) {
+    if (Array.isArray(item)) {
+      flatArr = flatArr.concat(item.flatArr())
+    } else {
+      flatArr.push(item)
+    }
+  }
+  return flatArr;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 数组去重 - unique()</div>
+    </div>
+    <h3>纯函数 Pure function</h3>
+    <ol>
+      <li>确定性</li>
+      <p>.相同的输入始终得到相同的输出</p>
+      <p>.大多数的操作都是以数组为对象，所以后续各例都以数组为例</p>
+      <p>.如果一个函数的执行会修改到数组，则这个函数不是纯函数</p>
+      <p>.如果一个函数没有参数，那它就不是纯函数</p>
+      <li>无副作用</li>
+      <p>.不会修改外部环境，如全局变量</p>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] slice(start, end)：返回一个拷贝，从start开始到end结束，不包括end；是纯函数</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] splice(start, count)、 revers()、sort() ：不是纯函数</div>
+    <h3>函数的函数</h3>
+    <ul>
+      <li>函数名本身就是变量，所以函数也可以作为值来使用。也就是说，不仅可以像传递参数一样把一个函数传递给另一个函数，而且可以将一个函数作为另一个函数的结果返回</li>
+      <li>返回的函数必须执行才能拿到最后的结果</li>
+      <div>[<span class="iconfont icon-keyboard"></span>] 声明一个函数，使其执行另外一个函数</div>
+      <pre>
+  function cb(fn, para) {
+    return fn(para);
+  }
+  
+  function add(num) {
+    return num + 10;
+  }
+  
+  let res = cb(add, 10);
+  console.log(res);</pre>
+    </ul>
+  </section>
+  <H2>闭包 Closure</H2>
+  <section>
+    <ul>
+      <li>函数的嵌套：在一个函数内部定义另外一个函数，并返回该内部函数；该内部函数形成闭包，可以访问外部的函数和变量</li>
+      <li>保护变量
+        <p>利用创建私有变量来保护数据、隐藏数据；外部无法直接访问，只能通过内部函数访问</p>
+        <p>尽量少使用全局变量；避免全局变量污染环境</p>
+        <p>通常使用 return 把内部变量/临时变量，如 instance，暴露出去给外部使用</p>
+      </li>
+      <li>数据封装</li>
+      <li>记忆效果</li>
+      <li>函数工厂</li>
+      <li>异步操作</li>
+    </ul>
+    <pre>
+const singleton = (() => {
+  let instance;
+  
+  return () => {
+    if (!instance)
+      //创建instance
+    return instance
+  }
+})()</pre>
+    <h3>给变量赋值/返回值</h3>
+    <div>
+      <div>. 执行其它函数/闭包函数获取返回值</div>
+      <pre>
+let a;
+function fa() {
+    let tmp = 10;
+    return res => () {
+        return tmp;
+    }
+}
+a = fa();
+console.log(a());</pre>
+      <div>. 还可以携带参数</div>
+      <pre>
+function fb() {
+    let a = 10;
+    return res => (inc) {
+        a += inc;
+        return a;
+    }
+}
+let b = fb();
+console.log(b(2));
+console.log(b(2));</pre>
+    </div>
+    <h3>给函数赋值</h3>
+    <div>
+      <div>. 执行一个其它函数/闭包函数来给某个函数赋值；和上述略有不同</div>
+      <pre>
+let fn;
+function assign() {
+    let tmp = 12;
+    fn = () => {
+        return tmp;
+    }
+}
+assign();
+console.log(fn());</pre>
+    </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 统计函数调用次数</div>
+    <ul>
+      <li>传统方法：使用全局变量</li>
+      <pre>
+let num = 0;
+function fn() {
+    num++;
+    console.log('fn() done ', num);
+    return num;
+}</pre>
+      <li>按F12在控制台调试；因为使用全局变量，当该变量被手动修改后，结果就会错误</li>
+      <pre>
+fn()
+fn() done  1
+1
+fn()
+fn() done  2
+2
+fn()
+fn() done  3
+3
+fn()
+fn() done  4
+4
+num=100
+100
+fn()
+fn() done  101
+101</pre>
+      <li>使用闭包：以函数的形式返回执行结果</li>
+      <pre>
+function fn() {
+    let num = 0;
+    return ()  => {
+        num++;
+        console.log('fn() done ', num);
+    }
+}
+let a = fn();</pre>
+      <li>按F12调试，结果正常</li>
+      <pre>
+a()
+fn() done  1
+undefined
+a()
+fn() done  2
+undefined
+num=100
+100
+a()
+fn() done  3
+undefined
+a()
+fn() done  4
+undefined</pre>
+    </ul>
+  </section>
+  <h2>内部属性和方法</h2>
+  <section>
+    <h3>arguments</h3>
+    <div>. 它是一个类数组对象，包含着传入函数中的所有参数</div>
+    <h3>length</h3>
+    <ul>
+      <li>函数希望接收的命名参数的个数</li>
+      <li>使用 arguments 后，甚至不需要声明形参</li>
+      <li>显示指定参数</li>
+      <pre>
+function sum(num0, num1) {
+  return num0 + num1;
+}</pre>
+      <li>不指定参数</li>
+      <pre>
+function sum() {
+  let res = 0;
+  for (let i = 0; i &lt; arguments.length; i++) {
+    res += arguments[i];
+  }
+  return res;
+}
+
+sum(1, 2);
+
+sum(1, 2, 3);</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 查看形参和实参</div>
+    <pre>
+function fn(a, b) {
+  console.log(fn.length);//2 - 形参个数为2
+  console.log(arguments.length)//4 - 实际传入4个参数
+}
+
+fn(1, 2, 3, 4)</pre>
+    <h3>this</h3>
+    <ul>
+      <li>this 引用的是函数据以执行的环境对象——或者也可以说是 this 值</li>
+      <li>当在网页的全局作用域中调用函数时， this 对象引用的就是 window</li>
+    </ul>
+    <h3>prototype</h3>
+    <ul>
+      <li>在 ECMAScript 核心所定义的全部属性中，最耐人寻味的就要数 prototype 属性了。对于
+        ECMAScript 中的引用类型而言，prototype 是保存它们所有实例方法的真正所在</li>
+      <li>prototype 属性是不可枚举的，因此使用 for-in 无法发现</li>
+    </ul>
+    <h3>apply()</h3>
+    <h3>call()</h3>
+    <h3>bind()</h3>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

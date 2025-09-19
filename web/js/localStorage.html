@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本地存储 LocalStorage</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>本地存储</h1>
+    <span>&commat;LocalStorage</span>
+  </header>
+  <dl>
+    <dt>Feature</dt>
+    <dd>
+      <div>.window 的全局函数</div>
+      <div>.以值对 key-value pairs 的形式存储在本地</div>
+      <div>.持久化保存，除非用户主动清除</div>
+      <div>.读取方便</div>
+      <div>.存储容量大，约20MB</div>
+      <div>.不会出现在请求头中，可以节省带宽</div>
+      <div>.不会被网络爬虫抓取</div>
+      <div>.不同浏览器保存的数据不能共享</div>
+      <div>.存的数据都是<span class="warn">字符串 String</span>！！！</div>
+      <div>.如果数据不存在，返回null；如果存在返回字符串[黑色] </div>
+    </dd>
+    <dt>Method</dt>
+    <dd>
+      <table>
+        <caption>常用方法</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>保存</td>
+          <td>localStorage.setItem(key,value)</td>
+        </tr>
+        <tr>
+          <td>获取</td>
+          <td>localStorage.getItem(key)</td>
+        </tr>
+        <tr>
+          <td>删除</td>
+          <td>localStorage.removeItem(key)</td>
+        </tr>
+        <tr>
+          <td>清空</td>
+          <td>localStorage.clear()</td>
+        </tr>
+      </table>
+      <div class="tips">
+        <div>F12 → Application → Storage → Loacal Storage</div>
+        <div>浏览器调试时，console.log 的文字的颜色：<span style="color: #000;font-weight :700;">黑色</span>为字符串；<span
+            style="color: #369;font-weight:700;">蓝色</span>为数字</div>
+        <div>可以根据索引获取：localStorage.key(n)</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">Usage</div>
+  <dl>
+    <dt>String</dt>
+    <dd>
+      <pre>
+localStorage.setItem('str', 'male')
+</pre>
+      <pre>
+let str = localStorage.getItem('str')
+console.log(str);</pre>
+    </dd>
+    <dt>Number</dt>
+    <dd>
+      <pre>
+localStorage.setItem('num', 2114)
+</pre>
+      <pre>
+let num = localStorage.getItem('num')
+console.log(num);
+//类型转换为数值型[蓝色]
+console.log(Number(num));</pre>
+    </dd>
+    <dt>Array</dt>
+    <dd>
+      <div>.直接存储会被转化为字符串</div>
+      <pre>
+let arr = [1, 2, 3, 4, 5];
+let res;
+console.log('before set: ', arr);
+localStorage.setItem('arr', arr)
+res = localStorage.getItem('arr')
+console.log('after get ', res);</pre>
+      <div>.存储时，使用 JSON.stringify 将数据序列化处理后再保存，否则无法还原</div>
+      <pre>localStorage.setItem('arr1', JSON.stringify(arr));</pre>
+      <div>.获取时，使用 JSON.parse 转换为原始数据类型；如果不解析仍然是字符串</div>
+      <pre>
+res = JSON.parse(localStorage.getItem('arr1'));
+console.log('解析获取：res:', res);</pre>
+      <div><span class="warn">最佳编码体验</span>：如果为 null，则赋值为对应的空值，如空数组</div>
+      <pre>res = JSON.parse(localStorage.getItem('arr1')) || [];</pre>
+    </dd>
+    <dt>Object</dt>
+    <dd>
+      <div>.同数组一样，对象的保存和获取也要处理</div>
+      <div>.直接存储，查看时，显示为[object Object]</div>
+      <pre>
+let obj = { name: 'glc' }
+//使用JSON.stringify转换
+localStorage.setItem('obj', JSON.stringify(obj))
+// 使用JSON.parse解析
+let obj1 = JSON.parse(localStorage.getItem('obj'))
+console.log(obj1);</pre>
+      <div><span class="warn">最佳编码体验</span>：如果为 null，则赋值为空对象</div>
+      <pre>obj1 = JSON.parse(localStorage.getItem('obj')) || {};</pre>
+    </dd>
+    <!-- <dt>Boolean</dt>
+    <dd>
+      <pre>
+localStorage.setItem('bool', true)
+</pre>
+      <pre>
+let bool = localStorage.getItem('bool')
+console.log(bool, Boolean(bool));</pre>
+    </dd> -->
+  </dl>
+  <div class="chap">Summary & Homework</div>
+  <dl>
+    <dt>Summary</dt>
+    <dd class="sn">
+      <div>数据的设置和获取默认都是为 <span class="warn">字符串</span></div>
+      <div>如果存储的是数值型数据，获取时应类型转换，如使用 Number() 转换为数字</div>
+      <div>复合数据类型如数组和对象，保存时应使用 JSON.stringify() 序列化处理；获取时应使用 JSON.parse() 解析；两者要配合使用</div>
+      <div>不管什么类型的数据，如果不存在，返回为 <span class="warn">null</span></div>
+    </dd>
+    <dt>Homework</dt>
+    <dd class="sn">
+      <div>完成以上操作，体会本地存储的特点</div>
+      <div>体会保存数组对象 [{}] 的基本操作，并思考和其它数据类型的异同</div>
+      <div>创建一个登陆表单，实现保存用户名和密码的操作，以便于下次直接登陆</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

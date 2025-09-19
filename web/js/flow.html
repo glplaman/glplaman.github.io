@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>流控制 Control flow</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>流控制</h1>
+    <span>&commat;Flow</span>
+  </header>
+  <section>
+    <h3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else">if...else</a>
+    </h3>
+    <ul>
+      <li>如果条件 condition 为真，执行语句 statement</li>
+      <pre>
+if (condition) {
+  statement;
+}</pre>
+      <li>如果条件 condition 为真，执行语句 statement1；否则执行语句 statement2</li>
+      <pre>
+if (condition) {
+  statement1;
+} else {
+  statement2;
+}</pre>
+      <li>如果条件 condition1 为真，执行语句 statement1；否则，如果 condition2 为真，则执行语句 statement2</li>
+      <pre>
+if (condition1) {
+  statement1;
+} else if (condition2){
+  statement2;
+}</pre>
+      <li>多分支语句请使用 switch-case</li>
+    </ul>
+    <h3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch">switch</a>
+    </h3>
+    <ul>
+      <li>多分支匹配或 <span class="warn">相等</span> 判定：如果给定的值 value 匹配到某个分支的条件值，就执行该分支</li>
+      <li>这个 value 也可以是一个表达式，判断表达式的结果是否和分支匹配</li>
+      <li>每个匹配分支应显示指定 break 来终止后续其它分支的判断；否则会逐一匹配每个分支</li>
+      <li>适合特定值，不适合范围值</li>
+      <li>case 是完全匹配：数值和类型都相同才能匹配；不会隐式数据类型转换</li>
+      <li>指定 default 分支，可以提高代码健壮性</li>
+      <li>大概率条件分支应放在前面</li>
+      <pre>
+switch (value) {
+  case 条件1:
+    break;
+  case 条件2:
+    break;
+  case 条件3:
+    break;
+  //...
+  default:
+    break;
+}</pre>
+    </ul>
+    <h3><a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch">try...catch</a>
+    </h3>
+    <ul>
+      <li>用以处理异常，如 <a href="../../node/fetch.html">数据请求 Fetch</a></li>
+      <pre>
+try {
+  tryStatements
+} catch (exceptionVar) {
+  catchStatements
+} finally {
+  finallyStatements
+}</pre>
+    </ul>
+    <h3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/break">break</a></h3>
+    <div>. 终止/结束/跳出循环</div>
+    <h3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue">continue</a>
+    </h3>
+    <ul>
+      <li>结束本次循环</li>
+      <li>开始下一次迭代/循环</li>
+    </ul>
+    <h3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/return">return</a></h3>
+    <div>. 更多语句，请访问 <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements">Statements</a></div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    try {
+      fetch('/utils/data/cart.json')
+        .then(res => res.json())
+        .then(res => console.log(res)
+        )
+    } catch (e) {
+      console.log('e', e);
+    } finally {
+      console.log('done');
+    }
+  </script>
+</body>
+
+</html>

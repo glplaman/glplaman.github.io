@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Follow</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background-color: #000;
+      overflow: hidden;
+    }
+
+    span {
+      position: absolute;
+      pointer-events: none;
+      animation: fade 1.1s linear;
+    }
+
+    span::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: url(../../imgs/leaf.png);
+      background-size: cover;
+      animation: move 1s linear;
+    }
+
+    @keyframes move {
+
+      100% {
+        transform: translate(100px) rotate(360deg);
+      }
+    }
+
+    @keyframes fade {
+
+      0%,
+      100% {
+        opacity: 0;
+      }
+
+      20%,
+      60% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    let body = document.querySelector('body');
+    window.addEventListener('mousemove', (e) => {
+      let heart = document.createElement('span');
+      heart.style.left = e.offsetX + 'px';
+      heart.style.top = e.offsetY + 'px';
+      heart.style.transform = `rotate(${Math.random() * 360}deg)`
+      let size = Math.random() * 32;
+      heart.style.width = size + 32 + 'px';
+      heart.style.height = size + 32 + 'px';
+      body.appendChild(heart);
+      heart.addEventListener('animationend', () => {
+        body.removeChild(heart);
+      })
+    })
+  </script>
+</body>
+
+</html>

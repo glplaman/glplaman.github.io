@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标单击 falling</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'demo', 'Poppins', Helvetica, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .bubble {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 3/4;
+            margin: auto;
+        }
+
+        .item {
+            width: 4%;
+            aspect-ratio: 1/1;
+            background-color: #222;
+            border: 1px solid #000;
+            cursor: pointer;
+            flex: auto;
+        }
+
+        .item:hover {
+            background-color: #0a0;
+            box-shadow: 0 0 10px #0a0;
+        }
+
+        .item.active {
+            background-color: #0a0;
+            box-shadow: 0 0 10px #0a0;
+            animation: drop 1s linear forwards;
+        }
+
+        @keyframes drop {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bubble"></div>
+    <script>
+        const bubble = document.querySelector('.bubble');
+        const items = document.querySelectorAll('.item');
+        const num = 1000
+        for (let index = 0; index < num; index++) {
+            let item = document.createElement('div')
+            item.className = 'item'
+            bubble.appendChild(item)
+        }
+        bubble.addEventListener('click', (e) => {
+            let tar = e.target
+            let dur = Math.random() * 5 + 5
+            if (tar.className === 'item') {
+                tar.classList.add('active');
+                tar.style.animationDuration = dur + 's'
+            }
+        })
+    </script>
+</body>
+
+</html>

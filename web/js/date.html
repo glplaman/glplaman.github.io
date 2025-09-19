@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>日期 Date</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>&commat;Date</h1>
+  </header>
+  <dl>
+    <dd>Date 类型使用自 UTC（Coordinated Universal Time，国际协调时间）1970 年 1 月 1 日午夜（零时）开始经过的毫秒数来保存日期</dd>
+    <dd>Date 类型保存的日期能够精确到 1970 年 1 月 1 日之前或之后的 285 616 年</dd>
+    <dd>在调用 Date 构造函数而不传递参数的情况下，新创建的对象自动获得当前日期和时间</dd>
+    <dd>
+      <pre>let now = new Date(); </pre>
+    </dd>
+    <dd>
+      <table>
+        <caption>日期函数</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>getFullYear()</td>
+          <td>年：完整4位</td>
+        </tr>
+        <tr>
+          <td>getMonth()</td>
+          <td>月：0-11</td>
+        </tr>
+        <tr>
+          <td>getDate()</td>
+          <td>日：1-31</td>
+        </tr>
+        <tr>
+          <td>getDay()</td>
+          <td>星期：0-6；0代表星期天</td>
+        </tr>
+      </table>
+
+    </dd>
+    <dd>
+      <table>
+        <caption>时间函数</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>getHours()</td>
+          <td>小时：0-23</td>
+        </tr>
+        <tr>
+          <td>getMinutes()</td>
+          <td>分钟：0-59</td>
+        </tr>
+        <tr>
+          <td>getSeconds()</td>
+          <td>秒：0-59</td>
+        </tr>
+        <tr>
+          <td>getMilliseconds()</td>
+          <td>毫秒：0-999</td>
+        </tr>
+        <tr>
+          <td>getTime()</td>
+          <td>返回自1970年1月1日午夜以来与指定日期的毫秒数；多用于取插值以便计算</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <table>
+        <caption>转换函数</caption>
+        <tr>
+          <th>分类</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>toLocaleString()</td>
+          <td>将Date对象转换为字符串</td>
+        </tr>
+        <tr>
+          <td>toLocaleDateString()</td>
+          <td>将日期部分转换为字符串</td>
+        </tr>
+        <tr>
+          <td>toLocaleTimeString()</td>
+          <td>将时间部分转换为字符串</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>
+      <pre>
+使用区域设置约定
+2021/12/13 上午9:57:34
+2021/12/13
+上午9:59:41  </pre>
+    </dd>
+    <dd>setFullYear(digit)<span class="dot"></span>年：完整4位</dd>
+    <dd>setMonth(digit)<span class="dot"></span>月：0-11</dd>
+    <dd>setDate(digit)<span class="dot"></span>日：1-31</dd>
+    <dd>setHours(digit)<span class="dot"></span>小时：0-23</dd>
+    <dd>setMinutes(digit)<span class="dot"></span>分钟：0-59</dd>
+    <dd>setSeconds(digit)<span class="dot"></span>秒：0-59</dd>
+    <dd>setMilliseconds(digit)<span class="dot"></span>毫秒：0-999</dd>
+    <dd>setTime()：从1970年1月1日午夜开始添加或减去指定的毫秒数来设置日期和时间</dd>
+    <dd>
+      <pre>
+let date = new Date()//当前时间
+console.log(date.toLocaleString());//2021/12/13 上午10:41:45
+date.setTime(3600000 * 24)//时间重置：在标准时间的基础上加上1天：24*60*60*1000
+console.log(date.toLocaleString());//1970/1/2 上午8:00:00
+date.setTime(-3600000 * 24)//时间重置：在标准时间的基础上减去1天
+console.log(date.toLocaleString());1969/12/31 上午8:00:00</pre>
+    </dd>
+    <dd class="tips">
+      <div>需要指定有效的数值；超过范围的将被取余</div>
+      <div>没有设置星期setDay()</div>
+    </dd>
+  </dl>
+  <div class="chap">案例</div>
+  <dl>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 数字时钟 - <button class="btn clock-btn">开始</button></dd>
+    <dd class="txt-center">
+      <span id='yy'></span>-<span id='mon'></span>-<span id='day'></span>
+      <span id='week'></span>
+      <span id='hh'></span>:<span id='min'></span>:<span id='sec'></span>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 日期倒计时-<span>距离2023-07-01 00:00:00还有</span></dd>
+    <dd class="txt-center">
+      <span id="cd"></span>天<span id="ch"></span>小时<span id="cm"></span>分钟<span id="cs"></span>秒
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 倒计时 - <button class="btn cds-btn">开始</button></dd>
+    <dd>.特殊的，60秒以内的，可以直接减</dd>
+    <dd>.任意时间，需要处理</dd>
+    <dd id="cds" class="txt-center"> 10 </dd>
+    <dd>
+      <pre>
+let cdTime = 1 * 60 * 60;
+let cdTimer = setInterval(() => {
+  let h = Math.floor(cdTime / 3600);
+  let m = Math.floor(cdTime % 3600 / 60);
+  let s = cdTime % 60;
+  cdTime--;
+  if (cdTime < 0) {
+    clearInterval(cdTimer);
+  }
+  cds.innerHTML = h + ':' + m + ':' + s;
+}, 1000);</pre>
+    </dd>
+    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>] 数字时钟 <a href="../demo/clock.html">Clock</a></dd>
+    <dd>
+      <pre>
+let date, h, m, s;
+let oHour = document.querySelector('.hour');
+let oMin = document.querySelector('.min');
+let oSec = document.querySelector('.sec');
+function getTime() {
+  date = new Date();
+  h = date.getHours() * 30;
+  m = date.getMinutes() * 6;
+  s = date.getSeconds() * 6;
+  oHour.style.transform = `rotateZ(${h + m / 12}deg)`;
+  oMin.style.transform = `rotateZ(${m}deg)`;
+  oSec.style.transform = `rotateZ(${s}deg)`;
+
+}
+getTime();
+let tId = setInterval(getTime, 1000);</pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../lib/date.js"></script>
+</body>
+
+</html>

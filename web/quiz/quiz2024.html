@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单设计 期中测试 2024</title>
+  <style>
+    @import url(//at.alicdn.com/t/c/font_4375346_l1o2ciprhw.css);
+
+    :root {
+      --main-color: #a00;
+      --bg-color: #fbf4f6;
+      --border-radius: 6px;
+      --border-color: #ccc;
+      --padding-marging: 10px;
+      accent-color: var(--main-color);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'poppins', Arial, Helvetica, sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      font: inherit;
+      color: inherit;
+    }
+
+    input,
+    button,
+    textarea {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      resize: none;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    /* init done */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: var(--bg-color);
+      font-size: 15px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .left {
+      position: relative;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--padding-marging);
+      background-image: linear-gradient(45deg, #a00, #f40);
+      color: #fff;
+      text-align: center;
+    }
+
+    .left .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #ccc;
+      background-image: url(../imgs/wangfei.png);
+      background-size: cover;
+      background-position: center;
+      border: 4px solid #fff;
+    }
+
+    .left h2 {
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .left a {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      transition: .5s;
+    }
+
+    .left a:hover {
+      letter-spacing: 2px;
+    }
+
+    .form {
+      width: 50%;
+      padding: var(--padding-marging) calc(2*var(--padding-marging));
+      background-color: #fff;
+    }
+
+    h1 {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: calc(2*var(--padding-marging));
+      text-transform: capitalize;
+    }
+
+    h1 span {
+      color: var(--main-color);
+    }
+
+    .ipt-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--padding-marging);
+    }
+
+    .form-cont {
+      flex: auto;
+    }
+
+    .ipt {
+      width: 100%;
+      height: 40px;
+      padding: 0 var(--padding-marging);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+    }
+
+    .ipt::selection {
+      background-color: var(--main-color);
+      color: #fff;
+    }
+
+    .ipt:focus {
+      border-color: var(--main-color);
+    }
+
+    .leading .iconfont {
+      font-size: 20px;
+    }
+
+    .leading.cb {
+      align-self: self-start;
+    }
+
+    .cb-tips-label {
+      display: block;
+      position: relative;
+      width: 30px;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 10px;
+    }
+
+    .cb-tips-label::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+
+    .cb-tips:checked+.cb-tips-label {
+      background-color: #a00;
+    }
+
+    .cb-tips:checked+.cb-tips-label::before {
+      left: calc(100% - 16px - 2px);
+    }
+
+    .ta {
+      height: 70px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      padding: var(--padding-marging);
+    }
+
+    .ta::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .ta::-webkit-scrollbar-thumb {
+      background-color: var(--main-color);
+      border-radius: var(--border-radius);
+    }
+
+    .btn-box {
+      justify-content: flex-end;
+    }
+
+    .btn {
+      width: 80px;
+      height: 40px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--main-color);
+      background-image: linear-gradient(90deg, #a00, #f40);
+      color: #fff;
+      text-transform: capitalize;
+      background-position: left;
+      background-size: 200% 100%;
+      transition: 0.5s;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-position: right;
+    }
+
+    .tips {
+      text-align: center;
+      margin-top: var(--padding-marging);
+    }
+
+    .tips a {
+      color: inherit;
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+
+    .tips a:hover {
+      color: var(--main-color);
+    }
+
+    @media screen and (max-width: 768px) {
+      .wrap {
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      .left {
+        flex-direction: row;
+        text-align: left;
+        min-height: 200px;
+      }
+
+      .left .avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      .left,
+      .form {
+        width: 100%;
+        flex: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="left bg">
+      <div class="avatar"></div>
+      <div>
+        <h2>glpla</h2>
+        <p>2023011221</p>
+      </div>
+      <a href="https://glpla.github.io" target="_blank"><span class="iconfont icon-internet"></span>
+        https://glpla.github.io</a>
+    </div>
+    <form class="form" action="https://www.baidu.com">
+      <h1>sign <span>up!</span></h1>
+      <div class="ipt-box">
+        <label class="leading" for="uname"><span class="iconfont icon-shop"></span></label>
+        <div class="form-cont">
+          <input class="ipt" type="text" id="uname" placeholder="your name here" required maxlength="12"
+            name="uname"></input>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <label class="leading" for="upass"><span class="iconfont icon-user"></span></label>
+        <div class="form-cont">
+          <input class="ipt" type="password" id="upass" placeholder="your password here" required maxlength="12"
+            name="upass"></input>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <label class="leading"><span class="iconfont icon-heart"></span></label>
+        <div class="form-cont ipt-radio">
+          <input class="cb-tips" type="checkbox" id="tips" name="utips" hidden>
+          <label class="cb-tips-label" for="tips"></label>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <label class="leading"><span class="iconfont icon-gender-male"></span></label>
+        <div class="form-cont grid3">
+          <div>
+            <input type="radio" name="ugender" id="male" checked value="male">
+            <label for="male">male</label>
+          </div>
+          <div>
+            <input type="radio" name="ugender" id="female" value="female">
+            <label for="female">female</label>
+          </div>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <label class="leading cb"><span class="iconfont icon-star"></span></label>
+        <div class="form-cont grid3">
+          <div>
+            <input type="checkbox" name="uhobby" value="code" id="code" checked>
+            <label for="code">code</label>
+          </div>
+          <div>
+            <input type="checkbox" name="uhobby" value="read" id="read">
+            <label for="read">read</label>
+          </div>
+          <div>
+            <input type="checkbox" name="uhobby" value="sing" id="sing">
+            <label for="sing">sing</label>
+          </div>
+          <div>
+            <input type="checkbox" name="uhobby" value="dance" id="dance">
+            <label for="dance">dance</label>
+          </div>
+          <div>
+            <input type="checkbox" name="uhobby" value="gym" id="gym" checked>
+            <label for="gym">gym</label>
+          </div>
+          <div> <input type="checkbox" name="uhobby" value="game" id="game">
+            <label for="game">game</label>
+          </div>
+        </div>
+      </div>
+      <div class="ipt-box">
+        <label class="leading cb" for="umsg"><span class="iconfont icon-edit"></span></label>
+        <div class="form-cont ipt-radio">
+          <textarea class="ta" name="umsg" id="umsg" maxlength="30" required></textarea>
+        </div>
+      </div>
+      <div class="ipt-box btn-box">
+        <button type="submit" class="btn">submit</button>
+        <button type="reset" class="btn">reset</button>
+      </div>
+      <div class="tips">Already has a count? <a href="">sign in</a></div>
+    </form>
+  </div>
+</body>
+
+</html>

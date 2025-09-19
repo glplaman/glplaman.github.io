@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标单击 rating</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4690841_08vyhb7495oi.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            height: 100vh;
+        }
+
+        .rating {
+            display: flex;
+            justify-content: center;
+        }
+
+        .rating .iconfont {
+            font-size: 2rem;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .rating .active {
+            color: #f40;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rating">
+        <span class="iconfont icon-star-fill"></span>
+        <span class="iconfont icon-star-fill"></span>
+        <span class="iconfont icon-star-fill"></span>
+        <span class="iconfont icon-star-fill"></span>
+        <span class="iconfont icon-star-fill"></span>
+    </div>
+    <div id="txt">请打分</div>
+    <script>
+        const rate = ['很差', '差', '一般', '好', '很好'];
+        const rating = document.querySelector('.rating');
+        const imgs = rating.querySelectorAll('span');
+        const txt = document.querySelector('#txt');
+        imgs.forEach((img, ind) => {
+            img.addEventListener('click', () => {
+                imgs.forEach(img => {
+                    img.classList.remove('active');
+                })
+                for (let i = 0; i <= ind; i++) {
+                    imgs[i].classList.add('active');
+                }
+                txt.innerHTML = rate[ind];
+            })
+        })
+    </script>
+</body>
+
+</html>

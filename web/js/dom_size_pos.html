@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Size vs Position - Document Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="../../css/sn.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1 id="el">DOM</h1>
+    <span>Size vs Position</span>
+  </header>
+  <dl class="nav-cont">
+    <dd class="tips">
+      <div>元素本身的大小</div>
+      <div>元素在视口 viewpoint 的位置</div>
+      <div>元素在页面 page 的位置</div>
+      <div>元素在父元素中的位置</div>
+    </dd>
+    <dt>Client系列</dt>
+    <dd>.只读属性；单位像素</dd>
+    <dd>clientWidth：元素内部的宽度；clientWidth = width + 左右 padding</dd>
+    <dd>clientHeigh：元素内部的高度；clientHeigh = height + 上下 padding</dd>
+    <dd>.元素的 clientWidth、clientHeight <span class="warn">不包括 border</span>；注意 box-sizing 对盒子大小的影响</dd>
+    <dd>clientTop：一个元素顶部边框的宽度；clientTop = boder.top (上边框的宽度)</dd>
+    <dd>clientLeft：一个元素左边框的宽度；clientLeft = boder.left (左边框的宽度)</dd>
+    <dd class="example-sn">获取页面|文档窗口大小 - 在开发者视图中刷新并查看</dd>
+    <dd>
+      <pre>
+console.log(document.body.clientHeight);//body高度；如果在body样式中指定了高度，就是这个值
+console.log(document.documentElement.clientHeight);//实际上是视口高度；不包括滚动条</pre>
+    </dd>
+    <dt>offset系列</dt>
+    <dd>.只读属性；单位像素[vs code好像没有代码提示]</dd>
+    <dd>.元素尺寸<span class="warn">包括border</span>，即：width + border + padding</dd>
+    <dd>.offset 原意是偏移，所以需要一个参考元素来确定自己的大小和位置</dd>
+    <dd>.参考元素：<span class="warn">最近</span> 的一个具有定位属性的元素；如果没有，就往上一直找到 &lt;body&gt;</dd>
+    <dd>.参考对象的 position 必须是 relative、absolute、fixed之一</dd>
+    <dd>offsetTop、offsetLeft：元素到相对元素顶部和左边的位置偏移</dd>
+    <dd>offsetWidth、offsetHeight：元素大小</dd>
+    <dd>offsetParent：当前元素的参考父级；可以在事件对象属性中查看 e.target</dd>
+    <dd class="tips">
+      <div>.开发中，如果需要相对的位置关系，一般使用 offset 系列</div>
+      <div>.因为有参考元素的限制，所以超出1屏后，如果没有显式的指定当前的参考，将会以 &lt;body&gt; 为目标，最后的位置获取将会异常</div>
+      <div>解决方案</div>
+      <div>1. 为当前元素的父级[如果有]指定定位属性；如果没有，就额外增加1个容器</div>
+      <div>2. 使用 getBoundingClientRect()</div>
+    </dd>
+    <dd class="example-sn"> <a href="../demo/nav.html">联动导航</a></dd>
+    <dd>
+      <div>使用&lt;a&gt;导航</div>
+      <div>页面滚动时，可以触发对应的导航项</div>
+      <div>如果页面滚动的距离 scrollDown 大于目标元素的顶部距离 itemTop，并且同时小于等于目标元素的顶部距离加上其自身高度</div>
+      <div>多见于移动端</div>
+      <div>也可以使用第三方库实现</div>
+      <div>每次滚动都会触发循环检测，如何节流？</div>
+      <pre>
+const sections = document.querySelectorAll('section[id]');
+
+const scrollActive = () => {
+
+  const scrollDown = window.scrollY;
+
+  sections.forEach(item => {
+
+    const itemH = item.offsetHeight;
+    const itemTop = item.offsetTop - 60;
+
+    const itemId = item.getAttribute('id');
+    const itemClass = document.querySelector('nav a[href*=' + itemId + ']');
+
+    if (scrollDown > itemTop && scrollDown &lt;= itemTop + itemH) {
+      itemClass.classList.add('active');
+    } else {
+      itemClass.classList.remove('active');
+    }
+  })
+}
+window.addEventListener('scroll', scrollActive);</pre>
+    </dd>
+  </dl>
+  <div class="chap">元素位置</div>
+  <dl class="nav-cont">
+    <dt>说明</dt>
+    <dd>
+      <div>鼠标事件 MouseEvent 相关的位置属性</div>
+      <div>页面 page：整个HTML5页面；不包括浏览器的收藏夹栏、地址栏、状态栏</div>
+      <div>视图 view：也称视口，页面可见区域；不包括浏览器的收藏夹栏、地址栏、状态栏等</div>
+      <div>屏幕 screen：你的显示器；包括浏览器的收藏夹栏、地址栏、状态栏</div>
+    </dd>
+    <dt>Page系列</dt>
+    <dd>
+      <div>只读属性</div>
+      <div>鼠标事件MouseEvent相关</div>
+      <div>MouseEvent.pageX、MouseEvent.pageY：返回触发事件的位置相对于整个 document 的 X、Y 坐标值</div>
+      <div>始终以页面为参考，即使页面出现滚动条</div>
+    </dd>
+    <dt>Screen系列</dt>
+    <dd>
+      <div>只读属性；和浏览器无关；和<span class="warn">硬件</span>有关</div>
+      <div>鼠标事件 MouseEvent 相关</div>
+      <div>MouseEvent.screenX、MouseEvent.screenY</div>
+      <div>元素在屏幕 screen 上的位置，以屏幕为参考</div>
+      <div>浏览器窗口化或移动时，都会导致数值发生变化</div>
+      <div>screenY通常取不到0，因为一般的窗口都有状态栏、菜单栏、工具栏等区域</div>
+    </dd>
+    <dt>scroll系列</dt>
+    <dd>请查看 <a href="./scroll.html" class="link">Scroll</a></dd>
+
+    <dd class="example-sn"> 窗口滚动 scroll 时，查看红色矩形顶部到视口的距离</dd>
+    <dd class="rect" style="width: 180px;height: 180px;background-color: #f40;margin: 2rem auto;"></dd>
+    <dd>
+      <pre>
+let rect = document.querySelector('.rect')
+window.onscroll = () => {
+  let obj = rect.getBoundingClientRect()
+  console.log(obj.top);
+}      </pre>
+    </dd>
+    <dd>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque nostrum ipsam perferendis blanditiis repellat?
+      Excepturi blanditiis tempore maxime! Fugit nulla voluptatum voluptas repellendus! Eum placeat beatae laudantium
+      illo neque quisquam eius magni temporibus nesciunt. Consequuntur vel quidem, commodi obcaecati porro earum
+      delectus, aperiam velit voluptates provident voluptatum repudiandae quaerat doloribus exercitationem, veniam rem
+      debitis expedita iusto cupiditate architecto possimus minus a alias veritatis! Ab, incidunt? Dolorum pariatur
+      voluptate reiciendis ea doloremque facere aperiam debitis? Voluptate nobis ipsa repudiandae inventore voluptates
+      sed, unde iure mollitia cum voluptatem minus libero iste! Nihil voluptate quisquam porro delectus quibusdam fugiat
+      voluptatem quae? Nam, nulla!</dd>
+    <dd>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora quisquam consequatur vitae natus. Repellat
+      enim harum dolorem ipsum inventore consectetur magni commodi, nihil, odio iusto expedita iure mollitia aperiam
+      quaerat tenetur sint facere asperiores fugit. Nemo magnam neque minus iste. Sint recusandae, iste dolorem esse
+      nisi consectetur amet voluptatum eaque, aut dolorum magni sapiente, at facere sunt obcaecati rem? Quis, earum
+      error ad, doloribus quidem explicabo ex, consequuntur iure consequatur nobis deleniti. Laborum obcaecati
+      exercitationem earum aut odio. Ex dolorum praesentium harum pariatur consequuntur dolore aspernatur ut quo autem
+      necessitatibus! Nesciunt sunt, molestias explicabo quod quibusdam illo. Esse, deserunt tenetur?</dd>
+    <dd class="example-sn"><a href="./lazyLoad.html" class="link">懒加载 - LazyLoading</a></dd>
+    <dd>思路：判断元素的顶部是否进入指定位置，如元素快进入视口时|顶部比视口大一定的距离，则开始渲染，等元素进入视口时，正常展示</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let rect = document.querySelector('.rect')
+    window.onscroll = () => {
+      let obj = rect.getBoundingClientRect()
+      console.log(obj.top);
+    }      
+  </script>
+</body>
+
+</html>

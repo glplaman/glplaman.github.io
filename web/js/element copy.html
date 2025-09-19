@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Element - Document Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>元素</h1>
+    <span>&commat;Element</span>
+  </header>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a> 是 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</div>
+      <div>.最通用的的基类 - the most general base class</div>
+      <div>.节点 Node 的一个子集：元素节点 ELEMENT_NODE；同样可以继承并使用节点的属性、方法和事件</div>
+    </dd>
+  </dl>
+  <div class="chap">属性 Properties</div>
+  <dl>
+    <dt>基本属性</dt>
+    <dd class="sn">
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes">Element.attributes</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/children">Element.children</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/id">Element.id</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a></div>
+      <p>.带标记的内容 - the HTML or XML markup contained within the element</p>
+    </dd>
+    <dd>.类似的属性还有：</dd>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText">HTMLElement.innerText</a>
+      </div>
+      <div>.返回已经渲染的节点和其后代的文本内容 - the rendered text content of a node and its descendants</div>
+      <div>.使用内联样式 style 隐藏的元素不在获取范围 - 未被渲染；而样式文件中，隐藏的元素仍然可以被获取 - 因为它已经被渲染，但是被隐藏了</div>
+      <div>.如果设置该属性，就删除原有的所有后代元素 - Setting innerText on a node removes all of the node's children and replaces them with
+        a single text node with the given string value</div>
+      <div>. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">Node.textcontent</a></div>
+      <div>.无论是否被渲染，都可以获取</div>
+      <pre>
+&lt;div id="box" class="wrap container"&gt;
+    hi,there.
+    &lt;span style="display: none;"&gt;hidden text with style&lt;/span&gt;
+    &lt;p&gt;hidden text with class&lt;/p&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const dom = document.querySelector('#box');
+console.log(dom.innerHTML);//所有内容，包括标签
+console.log(dom.innerText);//不包括 hidden text with style
+console.log(dom.textContent);//包括所有文本内容
+      </pre>
+    </dd>
+    <dt>class 系列</dt>
+    <dd>
+      <div>.开发的灵魂和重点</div>
+      <div>.通常结合静态类和动态类以及过渡动画等实现交互效果</div>
+      <div>.直接使用类名即可，不需要使用.</div>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/className">Element.className</a></div>
+      <div>.以字符串的形式返回元素应用的类；多个类名以空格分隔</div>
+      <div>.对该属性赋值将会增加、删除类</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">Element.classList</a></div>
+      <div>.以数组的形式返回元素应用的类</div>
+      <pre>&lt;div id="box" class="wrap container"&gt;hi,there.&lt;/div&gt;</pre>
+      <pre>
+console.log(box);
+console.log(box.classList);//DOMTokenList(2)
+console.log(box.className);//wrap container</pre>
+    </dd>
+    <dt>client 系列</dt>
+    <dd>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth">Element.clientWidth</a>
+      </div>
+      <div>如果没有指定样式设置大小或者是 inline 元素，则为 0</div>
+      <div>元素的样式高度，不包括隐藏部分、border、margin、滚动条 - the inner height of the element</div>
+      <div>includes padding but excludes borders, margins, and vertical scrollbars</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight">Element.clientHeight</a>
+      </div>
+      <div>the inner width of the element</div>
+      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientLeft">Element.clientLeft</a></div>
+      <div>the width of the left border of the element</div>
+      <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientTop">Element.clientTop</a></div>
+      <div>the width of the top border of the element</div>
+    </dd>
+    <dt>scroll 系列</dt>
+    <dd>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollWidth">Element.scrollWidth</a>
+      </div>
+      <div>元素滚动视图的宽高；整数 - round the value to an integer</div>
+      <div>包括 padding、不可见的部分，不包括 border、滚动条</div>
+      <div>the scroll view width of the element</div>
+      <div>a measurement of the width of an element's content, including content not visible on the screen due to
+        overflow</div>
+      <div>includes the element's padding, but not its border, margin</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight">Element.scrollHeight</a>
+      </div>
+      <div>the scroll view height of the element</div>
+      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft">Element.scrollLeft</a>、
+      </div>
+      <div>the left scroll offset of the element</div>
+      <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTop">Element.scrollTop</a></div>
+      <div>the top of the element is scrolled vertically</div>
+      <div class="tips">
+        <div>日常开发中，更多关注 scrollHeight 和 scrollTop</div>
+      </div>
+    </dd>
+    <!-- <dt>获取 Get</dt>
+    <div>
+      <div>.可以获取 &lt;HTML&gt; 中任何元素；通常获取 &lt;body&gt; 中的元素</div>
+      <div>.获取到元素后，可以访问元素的所有属性，如样式、内容等</div>
+      <div>.隐藏元素 display: none; 也可以获取</div>
+      <div>.指定了 id 的元素在脚本中可以直接使用！！！但是不建议</div>
+      <div>.获取的元素可以删除。el.remove()</div>
+      <div>.获取元素是操作元素的第一步</div>
+    </div> -->
+  </dl>
+  <div class="chap">方法 Methods</div>
+  <dl>
+    <dt>类 class</dt>
+    <dd>
+      <div>.和元素的类相关的方法</div>
+      <table>
+        <caption>元素的类方法</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>el.classList.<a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/add">add()</a></td>
+          <td>增加类</td>
+        </tr>
+        <tr>
+          <td>el.classList.<a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/remove">remove()</a>
+          </td>
+          <td>删除类</td>
+        </tr>
+        <tr>
+          <td>el.classList.<a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/toggle">toggle()</a>
+          </td>
+          <td>切换类</td>
+        </tr>
+        <tr>
+          <td>el.classList.<a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/contains">contains()</a>
+          <td>包含类</td>
+          </td>
+        </tr>
+      </table>
+    </dd>
+    <dt>属性 Attribute</dt>
+    <dd>
+      <div>.和元素的属性相关的方法</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>Element.getAttribute()</td>
+          <td>获取属性</td>
+        </tr>
+        <tr>
+          <td>Element.hasAttribute()</td>
+          <td>拥有单个属性</td>
+        </tr>
+        <tr>
+          <td>Element.hasAttributes()</td>
+          <td>拥有多个属性</td>
+        </tr>
+        <tr>
+          <td>Element.setAttribute()</td>
+          <td>设置属性</td>
+        </tr>
+        <tr>
+          <td>Element.removeAttribute()</td>
+          <td>删除属性</td>
+        </tr>
+        <tr>
+          <td>Element.toggleAttribute()</td>
+          <td>切换属性；有则删除，无则添加</td>
+        </tr>
+      </table>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView">Element.scrollIntoView()</a>
+    </dt>
+    <dd>
+      <div>.滚动进入视图 - 滚动容器，使当前元素可见</div>
+      <div>.默认和可滚动的祖先容器顶部对齐 - aligned to the top of the visible area of the scrollable ancestor</div>
+      <div>.选项可以指定和容器的对齐方式：顶部 start、底部 bottom、中部 center对齐等</div>
+      <div>.选项可以指定滚动行为 behavior；也可以有 CSS 实现</div>
+      <div>.可以代替 &lt;a&gt;实现页面内部导航/锚点跳转</div>
+      <pre>
+const links = document.querySelectorAll('.nav-item')
+const conts = document.querySelectorAll('.nav-cont')
+links.forEach((link, ind) => {
+    link.addEventListener('click', () => {
+        conts[ind].scrollIntoView({ behavior: 'smooth' })
+    })
+})</pre>
+    </dd>
+    <dt><a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen">Element.requestFullscreen()</a>
+    </dt>
+    <dd>.请求全屏，更多应用，请访问 <a href="./document.html">文档 Document - 全屏事件</a></dd>
+  </dl>
+  <div class="chap">事件 Events</div>
+  <dl>
+    <dd>
+      <div>.元素的标签属性，如id、class、style、name、value、type、maxLength等；甚至可以是自定义属性data-</div>
+      <div>应用：换肤 - 获取自定义属性，如颜色、图片等，改变全局的样式；见后续案例</div>
+      <table>
+        <caption>元素属性 Attribute</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>el.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute">setAttribute(att,
+              value)</a></td>
+          <td>设置属性</td>
+        </tr>
+        <tr>
+          <td>el.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute">getAttribute(att)</a>
+          </td>
+          <td>获取指定属性</td>
+        </tr>
+        <tr>
+          <td>el.<a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttribute">removeAttribute(att)</a>
+          </td>
+          <td>删除属性</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 显示密码 - 修改input的属性type为text</dd>
+    <dd>
+      <pre>
+let pw = document.querySelector('#pw')
+let btn = document.querySelector('#btn')
+btn.addEventListener('click', () => {
+  pw.setAttribute('type', 'text')
+})</pre>
+    </dd>
+    <dt>内联样式 Style</dt>
+    <dd>
+      <div>.样式 style 由属性 Property 和属性值 value 组成</div>
+      <div>.多用于元素的交互效果 - 动态样式</div>
+      <div>.访问属性，需要借助style操作；获取样式 getPropertyValue，只能获取内联样式定义的属性；class 中定义的获取不到</div>
+      <div>.直接访问 - 建议</div>
+      <div>.通过方法访问</div>
+      <div>.元素最终样式由外联样式、内部样式和内联样式按照权值综合计算确定，请查看 F12 → 已计算 computed</div>
+      <div>.修改样式时，建议采用小驼峰；也可以使用连字符-，连字符需要使用数组写法</div>
+      <table>
+        <caption>元素样式 style</caption>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>获取样式</td>
+          <td>el.style.propertyName</td>
+        </tr>
+        <tr>
+          <td>修改样式</td>
+          <td>el.style.propertyName = value</td>
+        </tr>
+        <tr>
+          <td>获取样式</td>
+          <td>style.getPropertyValue(name)</td>
+        </tr>
+        <tr>
+          <td>修改样式</td>
+          <td>style.setProperty(name, value)</td>
+        </tr>
+        <tr>
+          <td>currentStyle</td>
+          <td>IE；请忽略</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>]内部样式、行内样式和最终样式</dd>
+    <dd>
+      <pre>&lt;div class="box" style="padding: 10px;"&gt;Lorem, ipsum.&lt;/div&gt;</pre>
+      <pre>
+.box {
+  width: 320px;
+  height: 180px;
+  margin: 0 auto;
+  background-color: #f40;
+}</pre>
+      <pre>
+let box = document.querySelector('.box');
+console.log(box.style.padding);//10px
+console.log(box.style.width);//空，因为没有对应的行内样式
+box.style.width = 800 + 'px'</pre>
+    </dd>
+    <dt>自定义属性 data-</dt>
+    <dd>
+      <div>.data-写在元素标签上，用于临时保存数据</div>
+      <div>.获取时使用：el.dataset，不需要加上data；也可以使用 el.getAttribute(att) 获取</div>
+      <div>.事件处理函数写在当前元素上才能获取；事件代理的方式获取不到</div>
+      <div>.长属性应采用连字符法，如：data-ind、data-good-name</div>
+      <div>.实际使用时，注意单元素和多元素的区别；更多信息，请参考 <a href="../js/event.html">事件对象</a> 一节</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 换肤 - 将换肤数据绑定到 data-上</dd>
+    <dd>
+      <pre>
+&lt;div class="red" data-color="#f40"&gt;red&lt;/div&gt;
+&lt;div class="blue" data-color="#089"&gt;blue&lt;/div&gt;
+&lt;div class="yellow" data-color="#ff0"&gt;yellow&lt;/div&gt;</pre>
+      <pre>
+btnRed.addEventListener('click', (e) => {
+  body.style.backgroundColor = e.target.dataset.color;
+})
+btnBlue.addEventListener('click', (e) => {
+  body.style.backgroundColor = e.target.dataset.color;
+})
+btnYellow.addEventListener('click', (e) => {
+  body.style.backgroundColor = e.target.dataset.color;
+})</pre>
+      <div>函数封装 - 逻辑优化</div>
+      <pre>
+btnRed.addEventListener('click', fn);
+btnBlue.addEventListener('click', fn);
+btnYellow.addEventListener('click', fn);
+function fn(e) {
+  body.style.backgroundColor = e.target.dataset.color;
+}</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 创建节点并指定 data-</dd>
+    <dd>
+      <pre>
+let div = document.createElement('div')
+div.dataset.id = 'hi'
+wrap.appendChild(div)</pre>
+    </dd>
+  </dl>
+  <div class="chap">案例 Cases</div>
+  <dl>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 将文本内容替换为独立的 span</dd>
+    <dd>
+      <div>方案1：运用正则表达式</div>
+      <pre>
+let data = document.querySelector('.data');
+data.innerHTML = data.textContent.replace(/\S/g, ' &lt;span&gt;$&&lt;/span&gt;')      </pre>
+      <div>方案2：如果有空格，就生成 &amp;nbsp;而不是普通的空格/空标签</div>
+      <pre>
+let div = document.querySelector('div')
+let str = 'hello wolrd.'
+for (let char of str) {
+  let span = document.createElement('span')
+  span.textContent = char === ' ' ? '\u00a0' : char
+  div.appendChild(span)
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 全选</dd>
+    <dd>
+      <pre>
+let allBtn = document.querySelector('#all-btn');
+let ipts = document.querySelectorAll('input');
+allBtn.addEventListener('click', () => {
+  //for (let ind = 0; ind &lt; ipts.length; ind++) {
+  //  ipts[ind].checked = true;
+  //}
+  ipts.forEach(ipt => {
+    ipt.checked = true;
+  })
+})</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 代办事项 <a href="../demo/todo.html">to-do list</a> </dd>
+    <dd>.动态添加/删除样式类</dd>
+    <dd>.元素获取 querySelector</dd>
+    <dd>.键盘事件 keyup</dd>
+    <dd>.鼠标事件 click</dd>
+    <dd>.创建元素节点</dd>
+    <dd>.本地存储 localStorage</dd>
+    <dd>.数组:unshift、splice</dd>
+    <dd>.JSON</dd>
+    <dd class="tips">更换状态的类必须出现在当前动态类的后面</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../tabcard.html">选项卡 | 手风琴</a></dd>
+    <dd>.更换元素的 class 或内联样式 style</dd>
+    <dd>.导航：首先遍历所有导航，移除 active，然后为当前导航添加活动类 active</dd>
+    <dd>.内容：首先遍历所有内容，设置 display为none，然后设置当前内容的 display为block</dd>
+    <dd>.初始：为第一个导航和第一个内容，赋予相应的活动类和样式</dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./skin.html">换肤</a></dd>
+    <dd>
+      <div>1. 更换HTML页面的&lt;link&gt;引入的样式表</div>
+      <div>.以id标识样式文件</div>
+      <pre>
+&lt;hdead&gt;
+  &lt;link rel="stylesheet" href="./tmp.css" id="css"&gt;
+//...
+&lt;/hdead&gt;
+
+&lt;body&gt;
+  &lt;button id="btn0"&gt;#fff&lt;/button&gt;
+  &lt;button id="btn1"&gt;#089&lt;/button&gt;
+&lt;/body&gt;</pre>
+      <pre>
+let css = document.querySelector('#css');
+let btn0 = document.querySelector('#btn0');
+let btn1 = document.querySelector('#btn1');
+btn0.addEventListener('click', () => {
+  css.href = './css1.css';
+})
+btn1.addEventListener('click', () => {
+  css.href = './css2.css';
+})</pre>
+      <div>2. 更换元素 style 的 Property 属性或<a href="https://codepen.io/glpla/full/ZEPbbvR">修改 :root 全局变量 -
+          CodePen</a></div>
+      <div>3. 更换元素style的 Property 属性</div>
+      <pre>
+btnRed.addEventListener('click', () => {
+  body.style.setProperty('background-color', '#f40');
+  //无效
+  //body.style.setProperty('backgroundColor', '#f40');
+})</pre>
+    </dd>
+    <dd class="tips">
+      <div>设置或获取时<span class="warn">只能</span>使用连字符-</div>
+      <div>推荐使用 style.attrName 来设置或获取元素应用的样式</div>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown</title>
+  <style>
+    .timer {
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .timer .txt {
+      color: #fff;
+      background-color: #ff6347;
+      padding: 0 .5rem;
+    }
+
+    .tips {
+      text-align: center;
+      margin: 0 auto;
+      display: none;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="timer">
+    <span class="txt">8</span>
+    <span class="txt">8</span>
+    <span>:</span>
+    <span class="txt">8</span>
+    <span class="txt">8</span>
+    <span>:</span>
+    <span class="txt">8</span>
+    <span class="txt">8</span>
+  </div>
+  <div class="tips">time up</div>
+  <script>
+    window.onload = function () {
+      let tips = document.querySelector('.tips')
+      let timer = document.querySelector('.timer')
+      let span = timer.querySelectorAll('span')
+      let [secs, inter] = [10, 0]
+      countdown()
+      function countdown() {
+        inter = setInterval(function () {
+          secs--;
+          if (secs < 0) {
+            clearInterval(inter)
+            timer.style.display = 'none'
+            tips.style.display = 'block'
+            return
+          }
+          let hour = Math.floor(secs / 3600)
+          let min = Math.floor(secs % 3600 / 60)
+          //或： let min = Math.floor((secs - hour * 3600) / 60)
+          let sec = secs % 60
+          span[0].innerHTML = Math.floor(hour / 10)
+          span[1].innerHTML = hour % 10
+
+          span[3].innerHTML = Math.floor(min / 10)
+          span[4].innerHTML = min % 10
+
+          span[6].innerHTML = Math.floor(sec / 10)
+          span[7].innerHTML = sec % 10
+        }, 1000)
+      }
+
+    }
+  </script>
+</body>
+
+</html>

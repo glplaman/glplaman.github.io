@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作用域 Scope</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>作用域</h1>
+    <span>&commat;Scope</span>
+  </header>
+  <dl>
+    <dd>. JavaScript 没有块级作用域</dd>
+    <dd>. 全局变量</dd>
+    <dd>. 执行环境：每个函数都有自己的执行环境。当执行流进入一个函数时，函数的环境就会被推入一个环境栈中。而在函数执行之后，栈将其环境弹出，把控制权返回给之前的执行环境</dd>
+    <dd>. 当代码在一个环境中执行时，会创建变量对象的一个作用域链（scope chain</dd>
+    <dd>. 查询标识符：标识符解析是沿着作用域链一级一级地搜索标识符的过程。搜索过程始终从作用域链的前端开始，然后逐级地向后回溯，直至找到标识符为止</dd>
+    <dd>. 插手基层敏感事务</dd>
+    <dd>. 使用 var 声明的变量会自动被添加到最接近的环境中；如果初始化变量时没有使用 var 声明，该变量会自动被添加到全局环境：使用var声明sum，它被当作1个局部变量；略去var，它将被当作1个全局变量</dd>
+    <dd>. 强烈建议在初始化变量之前，一定要先声明，这样就可以避免类似问题</dd>
+    <dd>
+      <pre>
+  function add(a, b) {
+      sum = a + b;
+      return sum;
+  }
+  var num = add(2, 4);
+  console.log(sum);</pre>
+    </dd>
+    <dd>. </dd>
+    <dd>. </dd>
+
+  </dl>
+  <div class="chap">局部变量</div>
+  <dl>
+    <dd>. 局部变量只在函数执行的过程中存在</dd>
+    <dd>. 生存周期：而在函数执行过程中，会为局部变量在栈（或堆）内存上分配相应的空间，以便存储它们的值。然后在函数中使
+      用这些变量，直至函数执行结束。此时，局部变量就没有存在的必要了，因此可以释放它们的内存以供将来使用</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

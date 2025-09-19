@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模块化开发 Module</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>模块化开发</h1>
+    <span>&commat;Module</span>
+  </header>
+  <dl>
+    <dt>目标</dt>
+    <dd>
+      <div>每个 .js 文件都是一个模块；其中的变量和方法都是私有的，别的模块无法使用</div>
+      <div>只有把变量和方法导出 <span class="warn">export</span>，才能被其他模块使用；别的模块需要导入 <span class="warn">import</span> 才能使用</div>
+      <div>高内聚低耦合</div>
+      <div>一个模块通常只写一个逻辑</div>
+      <div>多个逻辑可以分别导出；一个逻辑可以默认导出</div>
+      <div>导出时，可以改名；导入时，也可以改名</div>
+      <div>&lt;script&gt; 需要指定 module</div>
+    </dd>
+    <dd class="tips">模块化的本质是将暴露的变量和方法与其对应的值关联起来；如果只有变量或方法，但是没有对应的值就是报错</dd>
+    <dt>分别导出，按需导入</dt>
+    <dd class="sn">
+      <p>需要知道模块暴露出来的变量和方法的名字，否则无法导入</p>
+      <div>测试文件 test.js - 导出一个变量 config、一个函数 greeting</div>
+      <pre>
+const config = {
+  "author": "glpla",
+  "desc": "only for test",
+  "url": "glpla.github.io",
+  "version": "1.0.0",
+}
+
+const greeting = (name) => {
+  console.log(`output->name`, name)
+}
+export { config, greeting }</pre>
+      <div>使用文件 app.js - 仅导入 config 使用</div>
+      <pre>
+&lt;script type="module"&gt;
+  import {config} from './test.js'
+  console.log(config.author)
+&lt;/script&gt;</pre>
+      <div>多个导出还可以使用对象接受 - 使用 <span class="warn">as</span> 将导出的变量和方法统一到一个对象 obj</div>
+      <pre>
+&lt;script type="module"&gt;
+  import * as obj from './test.js'
+  console.log(obj.config);
+  console.log(obj.greeting);
+&lt;/script&gt;</pre>
+    </dd>
+    <dt>默认导出</dt>
+    <dd class="sn">
+      <p>使用 <span class="warn">default</span> 默认导出一个变量或一个方法</p>
+      <p>一个模块中仅能有一个默认导出</p>
+      <p>应用最为广泛</p>
+      <div>测试文件 test.js - 默认导出一个方法；无需使用关键字 function 声明方法或 使用函数表达式指定类型</div>
+      <pre>
+export default (name) => {
+  console.log(`${name}, hi, there.`)
+}</pre>
+      <div>使用文件 app.js - 导入时需指定名字，因为默认导出时没有名字</div>
+      <pre>
+&lt;script type="module"&gt;
+  import sayHi from './test.js'
+  sayHi('glpla')
+&lt;/script&gt;</pre>
+    </dd>
+    <dd class="example-sn">求和+10 <button id="add">10</button>、求乘*10 <button id="time">10</button></dd>
+    <dd class="sn">
+      <div>传统方式：松散 - 不同的数据和逻辑都混在一起；容易命名冲突</div>
+      <pre>
+let x = 10
+let y = 20
+function add() {
+  return x + 10
+}
+function time() {
+  return y * 10
+}
+add()
+time()</pre>
+      <div>模块化方式：多个模块、默认导出</div>
+      <p>文件 modAdd.js</p>
+      <pre>
+export default function () {
+  const dom = document.querySelector('#add')
+  const x = 10
+  function add() {
+    dom.innerHTML = Number(dom.textContent) + x
+  }
+  return { x, add }
+}
+</pre>
+      <p>文件 modTime.js</p>
+      <pre>
+export default function () {
+  const dom = document.querySelector('#time')
+  const y = 10
+  function time() {
+    dom.innerHTML = Number(dom.textContent) * y
+  }
+  return { y, time }
+}
+</pre>
+      <p>文件 app.js - 引入并使用模块；需要指定 &lt;script&gt; 类型 type 为 module</p>
+      <pre>
+&lt;script type="module"&gt;
+  import modAdd from './modAdd.js'
+  import modTime from './modTime.js'
+  let addBtn = document.querySelector('#add')
+  let timeBtn = document.querySelector('#time')
+  const { x, add } = modAdd()
+  const { y, time } = modTime()
+  addBtn.addEventListener('click', add)
+  timeBtn.addEventListener('click', time)
+&lt;/script&gt;</pre>
+    </dd>
+    <dd class="tips">可以将 modAdd 和 modTime 整合到一个 js 文件中，集中导出</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="../../utils/custom/clipboard.js"></script>
+  <script type="module">
+    import modAdd from './modAdd.js'
+    import modTime from './modTime.js'
+    let addBtn = document.querySelector('#add')
+    let timeBtn = document.querySelector('#time')
+    const { x, add } = modAdd(addBtn)
+    const { y, time } = modTime(timeBtn)
+    addBtn.addEventListener('click', add)
+    timeBtn.addEventListener('click', time)
+  </script>
+</body>
+
+</html>

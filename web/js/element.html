@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Element - Document Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+  <style>
+    .cards-wrap {
+      background-color: #000;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      width: 96%;
+      max-width: 800px;
+      gap: var(--p-m-g);
+      margin: 0 auto;
+      padding: var(--p-m-g);
+    }
+
+    .cards .card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background-color: #000;
+      border-radius: var(--p-m-g);
+      overflow: hidden;
+    }
+
+    .cards .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(closest-side circle, #fff 0%, #0000 100%);
+      transform: translate(var(--x, -1000px), var(--y, -1000px));
+    }
+
+    .cards .item {
+      position: absolute;
+      inset: 2px;
+      border-radius: var(--p-m-g);
+      background-color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>元素</h1>
+    <span>&commat;Element</span>
+    <span class="ham"></span>
+    <nav class="nav">
+      <a href="" style="--delay:0" class="nav-item">属性 Properties</a>
+      <a href="" style="--delay:1" class="nav-item">方法 Methods</a>
+      <a href="" style="--delay:2" class="nav-item">事件 Events</a>
+    </nav>
+  </header>
+  <dl>
+    <dt>概述 Overview</dt>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a> 是 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</div>
+      <div>.最通用的的基类 - the most general base class</div>
+      <div>.节点 Node 的一个子集：元素节点 ELEMENT_NODE；同样可以继承并使用节点的属性、方法和事件</div>
+    </dd>
+  </dl>
+  <div class="chap">属性 Properties</div>
+  <dl class="nav-cont">
+    <dt>基本属性</dt>
+    <dd class="sn">
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes">Element.attributes</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/children">Element.children</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/id">Element.id</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a></div>
+      <p>.带标记的内容 - the HTML or XML markup contained within the element</p>
+    </dd>
+    <dd>.类似的属性还有：</dd>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText">HTMLElement.innerText</a>
+      </div>
+      <div>.返回已经渲染的节点和其后代的文本内容 - the rendered text content of a node and its descendants</div>
+      <div>.使用内联样式 style 隐藏的元素不在获取范围 - 未被渲染；而样式文件中，隐藏的元素仍然可以被获取 - 因为它已经被渲染，但是被隐藏了</div>
+      <div>.如果设置该属性，就删除原有的所有后代元素 - Setting innerText on a node removes all of the node's children and replaces them with
+        a single text node with the given string value</div>
+      <div>. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">Node.textcontent</a></div>
+      <div>.无论是否被渲染，都可以获取</div>
+      <pre>
+&lt;div id="box" class="wrap container"&gt;
+    hi,there.
+    &lt;span style="display: none;"&gt;hidden text with style&lt;/span&gt;
+    &lt;p&gt;hidden text with class&lt;/p&gt;
+&lt;/div&gt;</pre>
+      <pre>
+const dom = document.querySelector('#box');
+console.log(dom.innerHTML);//所有内容，包括标签
+console.log(dom.innerText);//不包括 hidden text with style
+console.log(dom.textContent);//包括所有文本内容
+      </pre>
+    </dd>
+    <dt>class 系列</dt>
+    <dd>
+      <div>.开发的灵魂和重点</div>
+      <div>.通常结合静态类和动态类以及过渡动画等实现交互效果</div>
+      <div>.直接使用类名即可，不需要使用.</div>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/className">Element.className</a></div>
+      <div>.以字符串的形式返回元素应用的类；多个类名以空格分隔</div>
+      <div>.对该属性赋值将会增加、删除类</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">Element.classList</a></div>
+      <div>.以数组的形式返回元素应用的类</div>
+      <pre>&lt;div id="box" class="wrap container"&gt;hi,there.&lt;/div&gt;</pre>
+      <pre>
+console.log(box);
+console.log(box.classList);//DOMTokenList(2)
+console.log(box.className);//wrap container</pre>
+    </dd>
+    <dt>client 系列</dt>
+    <dd>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth">Element.clientWidth</a>
+      </div>
+      <div>如果没有指定样式设置大小或者是 inline 元素，则为 0</div>
+      <div>元素的样式高度，不包括隐藏部分、border、margin、滚动条 - the inner height of the element</div>
+      <div>includes padding but excludes borders, margins, and vertical scrollbars</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight">Element.clientHeight</a>
+      </div>
+      <div>the inner width of the element</div>
+      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientLeft">Element.clientLeft</a></div>
+      <div>the width of the left border of the element</div>
+      <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientTop">Element.clientTop</a></div>
+      <div>the width of the top border of the element</div>
+    </dd>
+    <dt>scroll 系列</dt>
+    <dd>
+      <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollWidth">Element.scrollWidth</a>
+      </div>
+      <div>元素滚动视图的宽高；整数 - round the value to an integer</div>
+      <div>包括 padding、不可见的部分，不包括 border、滚动条</div>
+      <div>the scroll view width of the element</div>
+      <div>a measurement of the width of an element's content, including content not visible on the screen due to
+        overflow</div>
+      <div>includes the element's padding, but not its border, margin</div>
+      <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight">Element.scrollHeight</a>
+      </div>
+      <div>the scroll view height of the element</div>
+      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft">Element.scrollLeft</a>、
+      </div>
+      <div>the left scroll offset of the element</div>
+      <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTop">Element.scrollTop</a></div>
+      <div>the top of the element is scrolled vertically</div>
+      <div class="tips">
+        <div>日常开发中，更多关注 scrollHeight 和 scrollTop</div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">方法 Methods</div>
+  <dl class="nav-cont">
+    <dt>获取元素相关 Element</dt>
+    <dd>
+      <div>.在指定元素的后代中获取元素 - Element.getElementsByTagName is similar to Document.getElementsByTagName(), except that it
+        only
+        searches for elements that are descendants of the specified element.</div>
+      <div>.更广泛使用的是 <a href="./document.html">Document</a> 的方法获取</div>
+      <div>.通常先使用 Document 获取一个元素，再使用 Element 获取内部的元素，可以减少检索的范围，提升检索效率</div>
+      <div>.没有 getElementById 方法</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByTagName">getElementsByTagName</a>
+          </td>
+          <td>根据标签名获取</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByClassName">getElementsByClassName</a>
+          </td>
+          <td>根据类名获取</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector">querySelector</a>
+          </td>
+          <td>获取匹配选择器的第一个元素</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelectorAll">querySelectorAll</a>
+          </td>
+          <td>获取匹配选择器的所有元素</td>
+        </tr>
+      </table>
+    </dd>
+    <dt>属性相关 Attribute</dt>
+    <dd>
+      <div>.和元素的属性相关的方法</div>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>getAttribute()</td>
+          <td>获取属性</td>
+        </tr>
+        <tr>
+          <td>hasAttribute()</td>
+          <td>拥有单个属性</td>
+        </tr>
+        <tr>
+          <td>hasAttributes()</td>
+          <td>拥有多个属性</td>
+        </tr>
+        <tr>
+          <td>setAttribute()</td>
+          <td>设置属性</td>
+        </tr>
+        <tr>
+          <td>removeAttribute()</td>
+          <td>删除属性</td>
+        </tr>
+        <tr>
+          <td>toggleAttribute()</td>
+          <td>切换属性；有则删除，无则添加</td>
+        </tr>
+      </table>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView">scrollIntoView()</a>
+    </dt>
+    <dd>
+      <div>.滚动进入视图 - 滚动父级容器，使当前元素可见</div>
+      <div>.默认和可滚动的祖先容器顶部对齐 - aligned to the top of the visible area of the scrollable ancestor</div>
+      <div>.选项可以指定和容器的对齐方式：顶部 start、底部 bottom、中部 center对齐等</div>
+      <div>.选项可以指定滚动行为 behavior；也可以有 CSS 实现</div>
+      <div>.可以代替 &lt;a&gt;实现页面内部导航/锚点跳转</div>
+      <div>.适合用于导航、焦点定位等场景</div>
+      <pre>
+const links = document.querySelectorAll('.nav-item')
+const conts = document.querySelectorAll('.nav-cont')
+links.forEach((link, ind) => {
+    link.addEventListener('click', () => {
+        conts[ind].scrollIntoView({ behavior: 'smooth' })
+    })
+})</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTo">scrollTo()</a></dt>
+    <dd>
+      <div>.滚动指定元素的内容，使其内部的滚动位置发生变化 - 平滑滚动到特定位置</div>
+      <div>.当你需要精确控制元素内部的滚动位置时使用</div>
+      <div>.适合用于实现自定义滚动效果或复杂布局</div>
+      <div>.可以使用选项式指定位置</div>
+      <div>.响应用户交互，如点击按钮滚动到特定内容 </div>
+      <div>.实现无限滚动和分页加载 </div>
+      <div>.固定头部或侧边栏等复杂布局需求</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 返回顶部</dd>
+    <dd>
+      <div>使用 window</div>
+      <pre>window.scrollTo(0, 0);</pre>
+      <div>不要使用 body</div>
+      <pre>document.body.scrollTo({ top: 0, left: 0, behavior: 'smooth' });</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen">requestFullscreen()</a>
+    </dt>
+    <dd>.请求全屏，更多应用，请访问 <a href="./document.html">文档 Document - 全屏事件</a></dd>
+    <dt><a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">getBoundingClientRect()</a>
+    </dt>
+    <dd>
+      <div>.只读属性</div>
+      <div>.获取元素位置的高频操作；用了都说好；更加方便</div>
+      <div>.返回一个 DOMRect 对象，其提供了元素的大小及其相对于 <span class="warn">视口</span> 的位置 - the size of an element and its position
+        relative to the viewport</div>
+      <div>.描述整个矩形的位置和大小：left、top、right、bottom、x、y、width 、height</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 背景跟随</dd>
+    <dd>
+      <div>CSS 变量</div>
+      <div class="cards-wrap">
+        <div class="cards">
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+          <div class="card">
+            <div class="item"></div>
+          </div>
+        </div>
+      </div>
+    </dd>
+  </dl>
+  <div class="chap">事件 Events</div>
+  <dl class="nav-cont">
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#mouse_events">Mouse events</a></dt>
+    <dd>
+      <div>.更多鼠标事件信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent">MouseEvent</a></div>
+      <div>.鼠标事件</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event">click</a></td>
+          <td>鼠标单击</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/dblclick_event">dblclick</a></td>
+          <td>鼠标双击</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event">mouseenter</a>
+          </td>
+          <td>鼠标进入</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event">mouseleave</a></td>
+          <td>鼠标离开；不冒泡</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mousemove_event">mousemove</a></td>
+          <td>鼠标进入</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event">mouseout</a></td>
+          <td>鼠标离开；冒泡</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event">mouseover</a></td>
+          <td>鼠标悬停</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event">mouseup</a></td>
+          <td>鼠标释放</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event">contextmenu</a></td>
+          <td>右键菜单</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 鼠标单击</dd>
+    <dd>
+      <div>1. <a href="./demo/mouse-falling.html">坠落 falling</a></div>
+      <div>.帧动画 animation</div>
+      <div>.变换 transform</div>
+      <div>.DOM</div>
+      <div>.BOM</div>
+      <div>2. <a href="./demo/mouse-rating.html">评分 rating</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 鼠标跟随</dd>
+    <dd>
+      <div>1. <a href="./demo/mouse-follow.html">视口跟随</a></div>
+      <div>.通常跟随鼠标在视口内移动 clientY、clientY - 元素应脱离文档流 固定定位 fixed</div>
+      <div class="cursor" id="cursor"></div>
+      <pre>
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX - 15 + 'px'
+  cursor.style.top = e.clientY - 15 + 'px'
+})</pre>
+      <div>2. <a href="./demo/mouse-follow-light.html">探照灯</a>、<a href="https://codepen.io/glpla/full/bGZdXEM">探照灯 -
+          CodePen</a></div>
+      <div>.鼠标跟随</div>
+      <div>.路径剪切 clip-path</div>
+      <pre>
+const light = document.querySelector('.light')
+document.addEventListener('mousemove', (e) => {
+  let posx = e.clientX
+  let posy = e.clientY
+  light.style.setProperty('--x', `${posx}px`)
+  light.style.setProperty('--y', `${posy}px`)
+})      </pre>
+      <div>3. <a href="./demo/mouse-follow-inside.html">元素跟随</a></div>
+      <div>.鼠标仅仅在某个元素内部跟随</div>
+      <div>.脱离文档流 绝对定位 absolute</div>
+      <div>.局部范围内可以使用 pageX、pageY 配合 offsetX、offsetY</div>
+      <pre>
+box.addEventListener('mousemove', fn);
+function fn(e) {
+    let x = e.pageX - box.offsetLeft - 15;
+    let y = e.pageY - box.offsetTop - 15;
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+}      </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 禁止右键菜单</dd>
+    <dd>
+      <pre>
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault()
+})</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#keyboard_events">Keyboard events</a></dt>
+    <dd>
+      <div>.按键事件</div>
+      <div>.返回按键对应的编码 - provide a code indicating which key is pressed</div>
+      <div>.部分事件不能使用侦听，只能使用传统事件 onXXX</div>
+      <div class="tips">keypress 已废弃；请使用 keydown 代替</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event">keydown</a></td>
+          <td>按键按下 - when a key is pressed；fired for all keys</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/keyup_event">keyup</a></td>
+          <td>按钮释放 - when a key is released</td>
+        </tr>
+      </table>
+      <table>
+        <caption>常用属性</caption>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>e.key</td>
+          <td>按键名；如，enter、f、F12</td>
+        </tr>
+        <tr>
+          <td>e.keycode</td>
+          <td>按键编码|键值|键码；规范已不建议使用</td>
+        </tr>
+      </table>
+      <table>
+        <caption>常用键名</caption>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>数字1-9</td>
+          <td>1-9</td>
+        </tr>
+        <tr>
+          <td>字母a-zA-Z</td>
+          <td>a-zA-Z</td>
+        </tr>
+        <tr>
+          <td>回车</td>
+          <td>Enter</td>
+        </tr>
+        <tr>
+          <td>功能键F1-F12</td>
+          <td>F1-F12</td>
+        </tr>
+        <tr>
+          <td>上键</td>
+          <td>ArrowUp</td>
+        </tr>
+        <tr>
+          <td>下键</td>
+          <td>ArrowDown</td>
+        </tr>
+        <tr>
+          <td>左键</td>
+          <td>ArrowLeft</td>
+        </tr>
+        <tr>
+          <td>右键</td>
+          <td>ArrowRight</td>
+        </tr>
+        <tr>
+          <td>其它</td>
+          <td>Escape、Tab、Capslock、Shift、Control、Meta、Alt、Delete、Backspace</td>
+        </tr>
+        <tr>
+          <td>复合键，如shift+8是*</td>
+          <td>!、 @、 #、 $、 %、 ^、 &、 *、 (、 )</td>
+        </tr>
+      </table>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] JD搜索优化</dd>
+    <dd>
+      <div>.页面任何位置按下 s，激活搜索框；为了避免在按下 s 键时，s 被当作值输入到输入框中，需要在触发 sqlBtn.focus() 后阻止默认行为</div>
+      <pre>
+const sql = document.getElementById('sql');
+
+document.addEventListener('keydown', (e) => {
+  if (sqlBtn != document.activeElement && e.key === 's') {
+    e.preventDefault()
+    sqlBtn.focus()
+  }
+})
+</pre>
+      <div>.如果搜索框是聚焦状态，按下 Escape，搜索框失去焦点</div>
+      <pre>
+document.addEventListener('keyup', (e) => {
+  console.log('keyup', e.key);
+  if (sql === document.activeElement && e.key === 'Escape') {
+    sql.blur()
+  }
+})</pre>
+      <div>.输入过程中，按 Ctrl + Enter，提交信息</div>
+      <div>.如果要使用组合键，则可以利用 event.ctrlKey，event.shiftKey，event.altKey 判断是否按下了 Ctrl 键、Shift 键以及 Alt 键</div>
+      <pre>
+  document.addEventListener('keydown', (e) => {
+    if (sql === document.activeElement && e.ctrlKey && e.key === 'Enter') {
+      console.log('hi');
+    }
+  })</pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] JD快递单号查询</dd>
+    <dd>
+      <div>.为方便阅读，在原搜索框上方额外显示一个字体略大的提示框</div>
+      <div>.获取焦点时，如果内容不为空，则显示提示框</div>
+      <div>.失去焦点时，隐藏提示框</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 禁止 F12 键</dd>
+    <dd>
+      <pre>
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'F12') {
+    e.preventDefault()
+  }
+})</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#focus_events">Focus events</a></dt>
+    <dd>
+      <div>.表单元素事件；更多表单运用，请访问 <a href="./event_form.html">表单事件</a></div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event">blur</a>
+          </td>
+          <td>失去焦点</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event">focus</a>
+          </td>
+          <td>获取焦点</td>
+        </tr>
+      </table>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#animation_events">Animation events</a></dt>
+    <dd>
+      <div>.帧动画事件</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event">animationend</a>
+          </td>
+          <td>动画完全结束</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animationstart_event">animationstart</a>
+          </td>
+          <td>动画开始</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animationcancel_event">animationcancel</a>
+          </td>
+          <td>动画取消</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animationiteration_event">animationiteration</a>
+          </td>
+          <td>动画开始下一次迭代；多次动画</td>
+        </tr>
+      </table>
+      <div>如果一个元素的帧动画执行2次，那么会依次输出 start iteration end</div>
+      <pre>
+const box = document.querySelector('.box');
+box.addEventListener('animationstart', () => {
+    console.log('start');
+
+})
+box.addEventListener('animationend', () => {
+    console.log('end');
+
+})
+box.addEventListener('animationiteration', () => {
+    console.log('iteration');
+})    </pre>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../demo/loading.html">页面跳转/加载页</a></dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#transition_events">Transition events</a></dt>
+    <dd>
+      <div>.过渡动画事件</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionend_event">transitionend</a>
+          </td>
+          <td>动画完全结束</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionstart_event">transitionstart</a>
+          </td>
+          <td>动画开始</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Element/transitioncancel_event">transitioncancel</a>
+          </td>
+          <td>动画取消</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionrun_event">transitionrun</a>
+          </td>
+          <td>动画运行中</td>
+        </tr>
+      </table>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#scroll_events">Scroll events</a></dt>
+    <dd>
+      <div>.元素的滚动事件</div>
+      <div>.元素应出现滚动条</div>
+      <div>.通常会采取 <a href="./debounce.html">节流</a> 措施 - fire at a high rate</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event">scroll</a>
+          </td>
+          <td>元素滚动时</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollend_event">scrollend</a>
+          </td>
+          <td>元素滚动结束</td>
+        </tr>
+      </table>
+      <pre>
+const wrap = document.querySelector('.wrap');
+wrap.addEventListener('scroll', function () {
+    console.log('scrolling');
+})
+wrap.addEventListener('scrollend', function () {
+    console.log('end');
+})</pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#clipboard_events">Clipboard events</a></dt>
+    <dd class="sn">
+      <p>.针对特定元素的内容的操作</p>
+      <p>.为了避免一个一个元素的操作，通常由 <a href="./document.html">Document</a>、<a href="./bom-event.html">Window</a>统一处理</p>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/copy_event">copy</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/cut_event">cut</a></div>
+      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event">paste</a></div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止页面复制和粘贴</dd>
+    <dd>
+      <pre>
+document.addEventListener('copy', (e) => {
+  e.preventDefault()
+})
+document.addEventListener('paste', (e) => {
+  e.preventDefault()
+})      </pre>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#touch_events">Touch events</a></dt>
+    <dd>
+      <div>.触摸事件；移动端</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchstart_event">touchstart</a></td>
+          <td>触摸开始；触发一次</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchmove_event">touchmove</a></td>
+          <td>触摸并移动；持续触发</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchend_event">touchend</a></td>
+          <td>触摸结束；触发一次</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchcancel_event">touchcancel</a></td>
+          <td>触摸取消/中断</td>
+        </tr>
+      </table>
+      <div>.触摸事件属性</div>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>targetTouches</td>
+          <td>触摸的手指个数</td>
+        </tr>
+        <tr>
+          <td>changedTouches</td>
+          <td>发生改变的触摸的手指个数；通常使用这个属性作为判断的依据</td>
+        </tr>
+      </table>
+      <div>.优先触发移动端事件[移动优先]，普通单击事件会有延迟：为了判断用户是否要双击，所以第一次单击后，要延迟一定时间[300ms]，等待用户下一次单击。如果有，就是双击，否则判定为单击</div>
+      <div>.300ms 是早期的一个评估值，和硬件设备和用户操作有关系；目前通常在 100ms 左右</div>
+      <div>[解决方案]</div>
+      <div>.使用第三方插件 <a href="https://github.com/ftlabs/fastclick">fastclick</a>；既不影响桌面端使用，也可以在移动端正常使用</div>
+      <div>.封装 touch 函数</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 事件触发顺序</div>
+      <pre>
+let box = document.querySelector('.cont');
+let data0, data1;
+box.addEventListener('click', () => {
+  data1 = new Date();
+  console.log(data1 - data0);
+  console.log('click');
+})
+box.addEventListener('touchstart', () => {
+  data0 = new Date();
+  console.log('touchstart');
+})
+box.addEventListener('touchend', () => {
+  console.log('touchend');
+})</pre>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2024.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+  <script>
+    // document.addEventListener('copy', (e) => {
+    //   e.preventDefault()
+    //   alert('禁止复制')
+    // })
+    // document.addEventListener('paste', (e) => {
+    //   e.preventDefault()
+    //   alert('禁止粘贴')
+    // })
+
+    const cards = document.querySelectorAll('.card');
+    window.addEventListener('mousemove', (e) => {
+      for (const card of cards) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        card.style.setProperty('--x', `${x}px`);
+        card.style.setProperty('--y', `${y}px`);
+      }
+    })
+  </script>
+</body>
+
+</html>

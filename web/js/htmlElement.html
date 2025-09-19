@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTMLElement - Document Object Model</title>
+  <link rel="stylesheet" href="../../css/common.css">
+
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>Html元素</h1>
+    <span>&commat;HTMLElement</span>
+  </header>
+  <dl>
+    <dd>
+      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTMLElement</a> 是 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</div>
+      <div>.继承于 <a href="./element.html">Element</a></div>
+      <div>.泛指任何 Html 元素/标签，更具体 - represents any HTML element；而 Element 适用于所有 DOM 元素，更通用；包括 Html 元素、svg 元素等其它元素</div>
+    </dd>
+  </dl>
+  <div class="chap">属性 Properties</div>
+  <dl>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText">innerText</a></dt>
+    <dd>
+      <div>返回已经渲染的节点和其后代的文本内容 - the rendered text content of a node and its descendants</div>
+      <div>更多元素内容，请访问 <a href="./node.html">Node.textContent</a>、<a href="./element.html">Element.innerHtML</a></div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset">dataset</a></dt>
+    <dd>
+      <div>获取元素的 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*">全局属性 - 自定义数据</a>
+      </div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/popover">popover</a></dt>
+    <dd>
+      <div>弹窗/模态框</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetWidth">offsetWidth</a>、<a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetHeight">offsetHeight</a>
+    </dt>
+    <dd>
+      <div>.元素的CSS大小 - in pixels of the element's CSS width/height, including any borders, padding, and
+        vertical/horizontal scrollbars </div>
+    </dd>
+    <dt><a href="">offsetLeft</a>、<a href="">offsetTop</a></dt>
+    <dd>
+      <div>.元素的左上角相对于定位祖先元素左边和顶部的偏移距离 - upper left corner of the current element is offset to the left/from the outer
+        border of the current element (including its margin) to the top padding edge</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetParent">offsetParent</a>
+    </dt>
+    <dd>
+      <div>.最近的有定位的祖先元素 - the closest (nearest in the containment hierarchy) positioned ancestor element</div>
+      <div>.如果没有，则返回 &lt;body&gt;</div>
+      <div>.offset 原意是偏移，所以需要一个参考元素来确定自己的大小和位置；这个参考对象就是定位祖先元素</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 分析解读</dd>
+    <dd>
+      <div>case1：容器是 body，弹性布局，水平垂直居中；子项红色300*40；开发者视图调整容器尺寸为600*400</div>
+      <div>offsetWidth*offsetHeight：300*40</div>
+      <div>offsetLeft*offsetTop：150*180 = (600 - 300)/2 * (400 - 40)/2</div>
+      <div>offsetParent：&lt;body&gt;</div>
+      <img src="../imgs/dom0.png" alt="">
+    </dd>
+    <dd>
+      <div>case2：为红色增加一个父级 wrap - 白色 400*100，相对定位</div>
+      <div>offsetWidth*offsetHeight：300*40；不变</div>
+      <div>offsetLeft*offsetTop：0*0</div>
+      <div>offsetParent：&lt;wrap&gt;</div>
+      <img src="../imgs/dom1.png" alt="">
+    </dd>
+    <dd>
+      <div>case3：为白色指定绝对定位于右下角</div>
+      <div>offsetWidth*offsetHeight：300*40；不变</div>
+      <div>offsetLeft*offsetTop：100*60 = (400 - 300) * (100 - 40)</div>
+      <div>offsetParent：&lt;wrap&gt;；不变</div>
+      <img src="../imgs/dom2.png" alt="">
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/offset.html">波纹按钮</a>、<a href="../a.html">超链接 -
+        &lt;a&gt;</a>、<a href="https://codepen.io/glpla/full/gOEpdLo">波纹按钮 - codepen</a></dd>
+    <dd>
+      <div>.单击按钮，持续产生波纹，一定时间后消失</div>
+      <div>.按钮使用相对定位 relative，为后续新增加节点提供定位依据</div>
+      <div>.为按钮添加鼠标点击事件</div>
+      <div>.利用鼠标事件对象的clientX/clientY 和元素的offsetLeft/offsetTop得到鼠标点击点在元素上的位置</div>
+      <div>.创建元素节点，并指定类和样式：绝对定位、帧动画 keyframe 等等</div>
+      <div>.延时删除新增加的元素节点 setTimeout；延时时间和动画时间保持一致</div>
+      <div>.取消按钮文字的选择 user-select: none;</div>
+      <div>.取消新增节点的事件响应 pointer-events: none;</div>
+      <pre>
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('click', (e) => {
+  let div = document.createElement('div');
+  let posx = e.clientX - btn.offsetLeft - 15;
+  let posy = e.clientY - btn.offsetTop - 15;
+  div.style.left = posx + 'px';
+  div.style.top = posy + 'px';
+  div.className = 'dot'
+  btn.appendChild(div);
+  setTimeout(() => {
+    btn.removeChild(div);
+  }, 1000);
+});</pre>
+      <div>[ <span class="iconfont icon-bell"></span> ] 频繁创建元素节点对系统资源的消耗</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/offset-bg.html">扫光</a>、<a
+        href="https://codepen.io/glpla/full/XWGbKwv">扫光 - CodePen</a></dd>
+    <dd>
+      <div>.伪元素</div>
+      <div>.鼠标移动时，设置伪元素的定位属性</div>
+    </dd>
+  </dl>
+  <div class="chap">方法 Methods</div>
+  <dl>
+    <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement#instance_methods">methods</a>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus">HTMLElement.focus()</a></dt>
+    <dd>
+      <div>设置焦点 - Makes the element the current keyboard focus.</div>
+    </dd>
+    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur">HTMLElement.blur()</a></dt>
+    <dd>
+      <div>移除焦点 - Removes keyboard focus from the currently focused element.</div>
+    </dd>
+  </dl>
+  <div class="chap">事件 Events</div>
+  <dl>
+    <dt>拖拽事件 Drag & drop events</dt>
+    <dd>
+      <table>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+        <tr>
+          <td>drag</td>
+          <td>拖拽中 - being dragged</td>
+        </tr>
+        <tr>
+          <td>dragend</td>
+          <td>拖拽结束</td>
+        </tr>
+        <tr>
+          <td>dragenter</td>
+          <td>拖拽进入</td>
+        </tr>
+        <tr>
+          <td>dragleave</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>dragover</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>dragstart</td>
+          <td>拖拽开始 - starts dragging</td>
+        </tr>
+        <tr>
+          <td>drop</td>
+          <td></td>
+        </tr>
+      </table>
+    </dd>
+  </dl>
+  <a class="back2top" target="_self" href="#">
+    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="31526" width="32" height="32">
+      <path
+        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+        fill="#ffffff" p-id="31527"></path>
+    </svg>
+  </a>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/back2top.js"></script>
+</body>
+
+</html>

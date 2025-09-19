@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>multiple checkbox</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/reset.css">
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>您上过的课程</h1>
+  <div>
+    <label>
+      <input type="checkbox" name="" id="all">
+      <span>全选/全不选</span>
+    </label>
+    <div class="cb-item">
+      <label>
+        <input type="checkbox" name="" id="i0">
+        <span>编译原理</span>
+      </label>
+      <label>
+        <input type="checkbox" name="" id="i1">
+        <span>计算机网络</span>
+      </label>
+      <label>
+        <input type="checkbox" name="" id="i2">
+        <span>WEB开发</span>
+      </label>
+      <label>
+        <input type="checkbox" name="" id="i3">
+        <span>计算机基础</span>
+      </label>
+    </div>
+  </div>
+  <!-- <div>
+        <input type="checkbox" name="" id="all"><label for="all">全选/全不选</label>
+        <div class="cb-item">
+            <input type="checkbox" name="" id="i0"><label for="i0">编译原理</label>
+            <input type="checkbox" name="" id="i1"><label for="i1">计算机网络</label>
+            <input type="checkbox" name="" id="i2"><label for="i2">WEB开发</label>
+            <input type="checkbox" name="" id="i3"><label for="i3">计算机基础</label>
+        </div>
+    </div> -->
+  <script>
+    let all = document.querySelector('#all')
+    let items = document.querySelectorAll('.cb-item input')
+    all.addEventListener('click', selectAll)
+    function selectAll() {
+      for (let i = 0; i < items.length; i++) {
+        items[i].checked = all.checked
+      }
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      items[i].onclick = function () {
+        let flag = true
+        for (let i = 0; i < items.length; i++) {
+          if (!items[i].checked) {
+            console.log('inner', i, 'not checked');
+            flag = false
+            break
+          }
+          console.log('outer', i);
+        }
+        all.checked = flag
+      }
+    }
+  </script>
+</body>
+
+</html>

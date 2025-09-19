@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>换肤 Skin</title>
+  <link rel="stylesheet" href="../../css/common.css">
+  <base target="_blank">
+  <style>
+    html {
+      --bg-color: #f1f1f1;
+      --txt-color: #303133;
+      --code-color: #dcdcaa;
+      --code-bg-color: #000;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      background-color: var(--bg-color);
+      transition: 0.5s;
+    }
+
+    html.dark-theme {
+      --bg-color: #131313;
+      --txt-color: #f1f1f1;
+      --code-color: #000;
+      --code-bg-color: #f1f1f1;
+      --shadow-color: rgba(255, 255, 255, 0.1);
+    }
+
+    pre {
+      background-color: var(--code-bg-color);
+      color: var(--code-color);
+    }
+
+    #theme {
+      cursor: pointer;
+      color: #fff;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>换肤&commat;Skin</h1>
+    <span class="iconfont icon-daytime-mode-fill" id="theme"></span>
+  </header>
+  <dl>
+    <dd class="sn">
+      <p>获取关键数据修改目标元素样式达到换肤的效果；注意权值</p>
+      <p>关键数据可以来自：</p>
+      <div>元素属性，如：样式的类、内联样式、样式属性值或其它属性，如自定义属性</div>
+      <div>变量，如全局变量或局部变量</div>
+      <p>同样的，修改目标元素的样式，可以通过修改:</p>
+      <div>样式的类、内联样式、样式属性值或其它属性</div>
+      <div>变量，如全局变量或局部变量</div>
+    </dd>
+    <dt>内联样式 style</dt>
+    <dd>
+      <p>说明：本节案例，重在关键数据的获取</p>
+      <p>获取某个元素的内联样式，修改另外一个元素的内联样式</p>
+      <pre>&lt;div id="red" style="background-color: #ff0f5b; --color: #ff0f5b" data-color='#ff0f5b'&gt;red&lt;/div&gt;</pre>
+      <p>获取元素</p>
+      <pre>
+let body = document.body
+let colorObj = document.querySelector('#color')</pre>
+      <div>方案1：直接获取对象样式 backgroundColor</div>
+      <pre>
+colorObj.addEventListener('click', () => {
+  let color= colorObj.style.backgroundColor
+  body.style.backgroundColor = color
+})      </pre>
+      <div>方案2：获取事件对象 target</div>
+      <pre>
+colorObj.addEventListener('click', (e) => {
+  let color = e.target.style.getPropertyValue('background-color')
+  body.style.backgroundColor = color
+})</pre>
+      <div>方案3：获取内联变量 --color</div>
+      <pre>
+colorObj.addEventListener('click', (e) => {
+  let color = e.target.style.getPropertyValue('--color')
+  body.style.backgroundColor = color
+})</pre>
+      <div>方案4：获取自定义属性 data-color</div>
+      <pre>
+colorObj.addEventListener('click', (e) => {
+  let color = e.target.dataset.color
+  body.style.backgroundColor = color
+})</pre>
+    </dd>
+    <dt>类 class</dt>
+    <dd>
+      <p>指定不同的类而应用不同的样式</p>
+      <div>方案1：切换类 - 两套变量；推荐</div>
+      <pre>
+:root {
+  --txt-color: #303133;
+  --bg-color: #f1f1f1;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark {
+  --txt-color: #f1f1f1;
+  --bg-color: #131313;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}      </pre>
+      <p>单击时，切换主题类</p>
+      <pre>
+btnTheme.addEventListener('click', () => {
+  body.classList.toggle('dark')
+})      </pre>
+      <div>方案2：为根元素 body 设置白天和黑夜两套全局变量，使用属性选择器加以区分</div>
+      <pre>
+:root {
+  --txt-color: #303133;
+  --bg-color: #ffffff;
+}
+
+[data-theme="dark"] {
+  --txt-color: #e5eaf3;
+  --bg-color: #131313;
+}</pre>
+      <p>默认是白天，单击/交互时，&lt;html&gt;添加主题属性，修改为暗夜模式</p>
+      <pre>document.documentElement.setAttribute('data-theme', 'dark');</pre>
+      <p>或：新增加一个变量，保存当前模式；根据当前模式切换主题；可以使用 <a href="../js/localStorage.html">本地存储 - localStorage</a>
+        或远端保存用户选择；还可以使用特定设计，如 <a href="../clip-path.html">路径剪切 clip-path</a> 实现过渡效果</p>
+      <pre>document.documentElement.setAttribute('data-theme', isDarkMode.value ? 'dark' : 'light');</pre>
+    </dd>
+    <dt>全局变量</dt>
+    <dd>
+      <p>比较优雅且现代 - 只需要提供一套变量定义；修改少量关键变量即可实现</p>
+      <pre>
+:root {
+  --txt-color: #303133;
+  --bg-color: #f1f1f1;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}      </pre>
+      <div>单击时，修改变量的值；可以加入更多设计</div>
+      <pre>
+btnTheme.addEventListener('click', () => {
+  document.documentElement.style.setProperty('--txt-color', '#f1f1f1')
+  document.documentElement.style.setProperty('--bg-color', '#303133')
+})      </pre>
+    </dd>
+    <dt>媒体查询 @media</dt>
+    <dd>
+      <div>使用媒体查询检测用户的系统偏好设置，由用户操作系统触发；建议配合js，由用户触发</div>
+      <div>Win + I → 个性化 → 颜色 → 选择模式 → 深色</div>
+      <div>不是：系统 → 屏幕 → 夜间模式</div>
+      <div>使用 console.log() 在 JavaScript 中输出 window.matchMedia('(prefers-color-scheme: dark)').matches 的结果，确认是否返回预期的布尔值
+      </div>
+      <pre>
+:root {
+  --txt-color: #303133;
+  --bg-color: #f1f1f1;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --txt-color: #f1f1f1;
+    --bg-color: #131313;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+  }
+}</pre>
+    </dd>
+  </dl>
+  <div class="chap">主题 Theme</div>
+  <dl>
+    <dt>操作对象</dt>
+    <dd class="sn">
+      <div>操作 &lt;html&gt; 标签</div>
+      <p>更加全局，影响整个文档</p>
+      <p>可以用于应用全局样式，如字体大小、颜色主题等</p>
+      <p>在响应式设计中，有时会用 &lt;html&gt; 的类来控制全局的缩放或布局</p>
+      <div>操作 &lt;body&gt; 标签</div>
+      <p>影响 &lt;body&gt; 内的所有内容，不包括 &lt;head&gt; 部分</p>
+      <p>适用于页面内容的样式更改，如背景色、字体等</p>
+      <p>如果样式仅应用于页面可见区域，使用 &lt;body&gt; 可能更合适</p>
+    </dd>
+    <dt>实现</dt>
+    <dd>
+      <div>通常还借助 <a href="./localStorage.html">本地存储 - LocalStorage</a> 保存用户选择的主题</div>
+      <div>方案1：通过添加或移除类</div>
+      <pre>
+html {
+  --txt-color: #303133;
+  --bg-color: #f1f1f1;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+html.dark-theme {
+  --txt-color: #f1f1f1;
+  --bg-color: #131313;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}      </pre>
+      <pre>
+  function toggleTheme() {
+    /* html*/
+    document.documentElement.classList.toggle('dark-theme');
+    /* 或 body*/
+    document.body.classList.toggle('dark-theme');
+  }
+</pre>
+      <div>方案2：通过添加或移除属性 - :root是&lt;html&gt;的一个属性</div>
+      <pre>
+/* light theme */
+:root {
+  --txt-color: #303133;
+  --bg-color: #f1f1f1;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* dark theme */
+:root[data-theme="dark"] {
+  --txt-color: #f1f1f1;
+  --bg-color: #131313;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}      </pre>
+      <pre>document.documentElement.setAttribute('data-theme', isDarkMode.value ? 'dark' : 'light'); </pre>
+      <div>方案3：直接修改变量的值；详情请查看 <a href="./variable.html">CSS变量</a></div>
+      <div>其它方案：。。。</div>
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../demo/site0.html">主题切换</a></dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let themeInd = 0
+    const theme = document.querySelector('#theme');
+    const isDarkMode = window.localStorage.getItem('dark-mode') === 'true';
+    if (isDarkMode) {
+      theme.className = 'iconfont icon-night-mode-fill';
+    } else {
+      theme.className = 'iconfont icon-daytime-mode-fill';
+    }
+    theme.addEventListener('click', toggleTheme);
+    function toggleTheme() {
+      themeInd = (themeInd + 1) % 2;
+      themeInd ? theme.className = 'iconfont icon-night-mode-fill' : theme.className = 'iconfont icon-daytime-mode-fill';
+      document.documentElement.classList.toggle('dark-theme');
+    }
+  </script>
+</body>
+
+</html>

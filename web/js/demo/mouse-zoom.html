@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Zoom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .magnifier {
+            position: relative;
+            display: inline-block;
+        }
+
+        #original {
+            width: 640px;
+            /* 根据需求调整 */
+            height: auto;
+        }
+
+        #lens {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            background-color: rgba(255, 255, 255, 0.7);
+            cursor: crosshair;
+        }
+
+        #zoomed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            /* 初始隐藏 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="magnifier">
+        <img src="../../../imgs/demo-small.jpg" id="original" alt="Original Image">
+        <img src="../../../imgs/demo.jpg" id="zoomed" alt="Zoomed Image">
+        <div id="lens"></div>
+    </div>
+    <script>
+        const originalImage = document.getElementById('original');
+        const zoomedImage = document.getElementById('zoomed');
+        const lens = document.getElementById('lens');
+
+        // 放大倍率
+        let zoomLevel = 5;
+
+        // 计算并设置放大镜大小
+        function setLensSize() {
+            let w = (originalImage.offsetWidth / zoomLevel);
+            let h = (originalImage.offsetHeight / zoomLevel);
+            lens.style.width = `${w}px`;
+            lens.style.height = `${h}px`;
+        }
+
+        // 当页面加载或窗口大小改变时调整放大镜尺寸
+        window.onload = setLensSize;
+        window.onresize = setLensSize;
+
+        originalImage.addEventListener('mousemove', (e) => {
+            // 确保鼠标位于图片内
+            if (e.offsetX > 0 && e.offsetY > 0 && e.offsetX < originalImage.clientWidth && e.offsetY < originalImage.clientHeight) {
+                // 显示放大区域
+                zoomedImage.style.display = 'block';
+                lens.style.display = 'block';
+
+                // 计算放大位置
+                const x = e.pageX - (lens.offsetWidth / 2);
+                const y = e.pageY - (lens.offsetHeight / 2);
+
+                // 更新位置
+                lens.style.left = `${x}px`;
+                lens.style.top = `${y}px`;
+
+                // 调整放大图像的位置与内容
+                zoomedImage.style.backgroundPosition = `-${(e.offsetX * zoomLevel - (lens.offsetWidth / 2))}px -${(e.offsetY * zoomLevel - (lens.offsetHeight / 2))}px`;
+            } else {
+                // 鼠标移出图片后隐藏放大部分
+                zoomedImage.style.display = 'none';
+                lens.style.display = 'none';
+            }
+        });
+
+        originalImage.addEventListener('mouseout', () => {
+            zoomedImage.style.display = 'none';
+            lens.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>

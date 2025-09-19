@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>输入事件 Input - Event</title>
+  <link rel="stylesheet" href="../../css/common2025.css">
+  <base target="_blank">
+  <style>
+    .ipt-wrap {
+      width: 100%;
+      max-width: 350px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 5rem auto;
+    }
+
+    input[type=text],
+    input[type=password] {
+      outline: none;
+      font: inherit;
+      color: inherit;
+      height: 40px;
+      background-color: transparent;
+      border: 1px solid #ccc;
+      padding-left: 10px;
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>输入事件</h1>
+    <span>&commat;Input</span>
+  </header>
+  <section>
+    <ul>
+      <li>事件处理的业务逻辑在 &lt;script&gt; 中；建议使用外部 .js 文件</li>
+      <li>没有失去焦点的伪类选择器；只能通过事件 onblur 检测</li>
+    </ul>
+    <table>
+      <caption>事件类型</caption>
+      <tr>
+        <th>item</th>
+        <th>desc</th>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event">input</a></td>
+        <td>单行文本、多行文本输入时触发；通常需要采用 <a href="./debounce.html">防抖节流</a> 措施</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event">change</a></td>
+        <td>&lt;input&gt;, &lt;select&gt;, &lt;textarea&gt;改变且失去焦点时触发</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus">focus</a></td>
+        <td>单行文本、多行文本获取焦点</td>
+      </tr>
+      <tr>
+        <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur">blur</a></td>
+        <td>单行文本、多行文本失去焦点</td>
+      </tr>
+    </table>
+    <h3>一般步骤 Steps</h3>
+    <ol>
+      <li>获取 input 元素；更多信息，请参考 <a href="./document.html">DOM - document</a></li>
+      <li>添加事件侦听器 addEventListener；更多信息，请参考 <a href="./event_addEventListener.html">Event</a></li>
+    </ol>
+    <div class="tips">为元素分配 id，可以直接使用，不需要获取元素 - 不建议</div>
+    <pre>
+&lt;input type="text" id="ipt"&gt;
+&lt;input type="text" id="ipt0"&gt;
+&lt;button id="btn"&gt;sub&lt;/button&gt;
+&lt;script&gt;
+  let btn = document.querySelector('#btn')
+  btn.onclick = function () {
+    console.log(ipt.value);
+    console.log(ipt0.value);
+  }
+&lt;/script&gt;</pre>
+    <h3>案例 Cases</h3>
+    <div>[<span class="iconfont icon-keyboard"></span>] 输入长度提示 - 检测 input 的值</div>
+    <ul>
+      <li>获取 input 元素</li>
+      <li>获取 input 元素的 maxlength 属性/最大长度：el.getAttribute()</li>
+      <li>获取当前输入的值的长度：el.value.length</li>
+      <li>将 input 事件分别修改为 change 事件、keyup 事件、blur 事件，体会他们之间的不同</li>
+    </ul>
+    <div class="ipt-wrap">
+      <div id="len-val">还可以输入8</div>
+      <input type="text" name="len" id="len-ipt" maxlength="8" placeholder="text here">
+    </div>
+    <pre>
+let lenIpt = document.querySelector('#len-ipt');
+let lenVal = document.querySelector('#len-val');
+lenIpt.addEventListener('input', () => {
+    lenVal.innerHTML = '还可以输入' + (lenIpt.getAttribute('maxlength') - lenIpt.value.length)
+})</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 显示密码 - 修改 input 类型</div>
+    <ul>
+      <li>部分系统自带有显式密码功能</li>
+      <li>部分系统要求密码框必须位于表单 form 中，且应该指定自动完成 autocomplete</li>
+    </ul>
+    <div class="ipt-wrap">
+      <input type="password" id="sp-ipt" placeholder="your password" maxlength="8" autocomplete>
+      <input type="button" value="显示密码" id="sp-btn" class="btn">
+    </div>
+    <pre>
+let spBtn = document.querySelector('#sp-btn');
+let spIpt = document.querySelector('#sp-ipt');
+spBtn.addEventListener('click', () => {
+    if (spIpt.type == 'text') {
+        spIpt.type = 'password'
+        spBtn.value = '显示密码'
+    } else {
+        spIpt.type = 'text'
+        spBtn.value = '隐藏密码'
+    }
+})</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 全选 - 修改 input 属性</div>
+    <ul>
+      <li>利用元素的 checked 属性判断当前选择状态；如果全选为真/选中，则所有选项都置为真/选中；否则取消全选/置为假</li>
+      <li>统计选中的个数，如果等于选项个数，则全选；如果为0，则全不选</li>
+    </ul>
+    <div class="ipt-wrap">
+      <div>
+        <label>
+          <input type="radio" name="sel" id="all" value="yes">
+          <span>全选</span>
+        </label>
+        <label>
+          <input type="radio" name="sel" id="all-no" value="no">
+          <span>全不选</span>
+        </label>
+        <div>
+          <label><input type="checkbox" name="web" value="HTML" id="h5">HTML</label>
+          <label><input type="checkbox" name="web" value="CSS" id="c3">CSS</label>
+          <label><input type="checkbox" name="web" value="JAVASCRIPT" id="js">JAVASCRIPT</label>
+        </div>
+      </div>
+    </div>
+    <pre>
+let cbs = document.querySelectorAll('input[name="web"]');
+let all = document.querySelector('#all');
+let allNo = document.querySelector('#all-no');
+all.addEventListener('change', function (e) {
+  console.log(this.checked);
+  if (this.checked) {
+    for (let i = 0; i &le; cbs.length; i++) {
+      cbs[i].checked = true
+    }
+  }
+})
+
+allNo.addEventListener('change', function (e) {
+  console.log(this.checked);
+  if (this.checked) {
+    for (let i = 0; i &le; cbs.length; i++) {
+      cbs[i].checked = false
+    }
+  }
+})
+
+cbs.forEach(item => {
+  item.addEventListener('change', function () {
+    let num = 0
+    for (let j = 0; j &le; cbs.length; j++) {
+      if (cbs[j].checked) {
+        num++;
+      }
+    }
+    console.log((num));
+    if (num == 3)
+      all.checked = true;
+    else if (num == 0)
+      allNo.checked = true;
+    else {
+      all.checked = false;
+      allNo.checked = false;
+    }
+  })
+})</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] 播放器进度条</div>
+    <ul>
+      <li>[H5] audio | button | input[range]</li>
+      <li>[C3] appearance</li>
+      <li>[JS] click | input | loadmetadata | timeupdate | querySelector</li>
+    </ul>
+    <div id="player" class="ipt-wrap">
+      <audio src="../../utils/music/alizee.png"></audio>
+      <button class="btn">play</button>
+      <input type="range" name="" id="dur-slider" min="0" max="100" value="0" class="custom-range">
+    </div>
+    <pre>
+#player button {
+  width: 120px;
+}
+
+#player input {
+  width: 100%;
+}
+
+.custom-range {
+  appearance: none;
+  height: 10px;
+  background-color: #01b4ff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+}
+
+.custom-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background-color: #fff;
+  border: 1px solid #01b4ff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.custom-range::-webkit-slider-thumb:hover {
+  background-color: #ff0;
+}</pre>
+    <pre>
+let bool = false;
+let player = document.querySelector('#player');
+let audioIpt = player.querySelector('audio');
+let btnIpt = player.querySelector('button');
+let sliderIpt = player.querySelector('input');
+audioIpt.src = '/music/Alizee-La Isla Bonita.mp3';
+audioIpt.addEventListener('loadedmetadata', () => {
+  sliderIpt.max = audioIpt.duration;
+})
+audioIpt.addEventListener('timeupdate', () => {
+  sliderIpt.value = Math.floor(audioIpt.currentTime);
+})
+audioIpt.addEventListener('ended', () => {
+  sliderIpt.value = 0;
+  // audioIpt.pause();
+  btnIpt.innerHTML = 'play';
+  bool = false;
+})
+btnIpt.addEventListener('click', () => {
+  if (bool) {
+    audioIpt.pause();
+    btnIpt.innerHTML = 'play';
+    bool = false;
+  } else {
+    audioIpt.play();
+    btnIpt.innerHTML = 'pause';
+    bool = true;
+  }
+})
+sliderIpt.addEventListener('input', () => {
+  audioIpt.currentTime = sliderIpt.value;
+  audioIpt.play();
+  btnIpt.innerHTML = 'pause';
+  bool = true;
+})</pre>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    // input
+    // demo1：len input-value
+    let lenIpt = document.querySelector('#len-ipt');
+    let lenVal = document.querySelector('#len-val');
+    lenIpt.addEventListener('input', () => {
+      lenVal.innerHTML = '还可以输入' + (lenIpt.getAttribute('maxlength') - lenIpt.value.length)
+    })
+
+    // demo2：show passw，input-type
+    let spBtn = document.querySelector('#sp-btn');
+    let spIpt = document.querySelector('#sp-ipt');
+    spBtn.addEventListener('click', () => {
+      if (spIpt.type == 'text') {
+        spIpt.type = 'password'
+        spBtn.value = '显示密码'
+      } else {
+        spIpt.type = 'text'
+        spBtn.value = '隐藏密码'
+      }
+    })
+
+    // demo3：all，input-attr
+    let cbs = document.querySelectorAll('input[name="web"]');
+    let all = document.querySelector('#all');
+    let allNo = document.querySelector('#all-no');
+    all.addEventListener('change', function (e) {
+      console.log(this.checked);
+      if (this.checked) {
+        console.log(this.value);
+        for (let i = 0; i < cbs.length; i++) {
+          cbs[i].checked = true
+        }
+      }
+    })
+    allNo.addEventListener('change', function (e) {
+      console.log(this.checked);
+      if (this.checked) {
+        console.log(this.value);
+        for (let i = 0; i < cbs.length; i++) {
+          cbs[i].checked = false
+        }
+      }
+    })
+    cbs.forEach(item => {
+      item.addEventListener('change', function () {
+        let num = 0
+        for (let j = 0; j < cbs.length; j++) {
+          if (cbs[j].checked) {
+            num++;
+          }
+        }
+        console.log((num));
+        if (num == 3)
+          all.checked = true;
+        else if (num == 0)
+          allNo.checked = true;
+        else {
+          all.checked = false;
+          allNo.checked = false;
+        }
+      })
+    })
+
+
+    // player
+    let bool = false;
+    let player = document.querySelector('#player');
+    let audioIpt = player.querySelector('audio');
+    let btnIpt = player.querySelector('button');
+    let sliderIpt = player.querySelector('input');
+    audioIpt.src = '../../utils/music/Alizee-LaIslaBonita.mp3';
+    audioIpt.addEventListener('loadedmetadata', () => {
+      sliderIpt.max = audioIpt.duration;
+    })
+    audioIpt.addEventListener('timeupdate', () => {
+      sliderIpt.value = Math.floor(audioIpt.currentTime);
+    })
+    audioIpt.addEventListener('ended', () => {
+      sliderIpt.value = 0;
+      // audioIpt.pause();
+      btnIpt.innerHTML = 'play';
+      bool = false;
+    })
+    btnIpt.addEventListener('click', () => {
+      if (bool) {
+        audioIpt.pause();
+        btnIpt.innerHTML = 'play';
+        bool = false;
+      } else {
+        audioIpt.play();
+        btnIpt.innerHTML = 'pause';
+        bool = true;
+      }
+    })
+    sliderIpt.addEventListener('input', () => {
+      audioIpt.currentTime = sliderIpt.value;
+      audioIpt.play();
+      btnIpt.innerHTML = 'pause';
+      bool = true;
+    })
+
+  </script>
+</body>
+
+</html>
