@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>模块化模式</h1>
-    <h3 class="sub-title">Module</h3>
+    <h3>Module</h3>
     <dl>
       <dt>概述</dt>
       <dd>最初被定义为在传统软件工程中为类提供私有和公共 <span class="warn">封装</span> 的一种方法</dd>
@@ -31,10 +31,7 @@
       <dd>引用时注意路径的问题，大多数开发环境要求是相对路径</dd>
       <dt>参考代码</dt>
       <dd>默认导出，只能整体引入</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Module：test.js，默认导出全部</figcaption>
-          <pre>
+      <pre>
 let count = 0;
 function dec() {
   return --count;
@@ -45,12 +42,7 @@ function inc() {
 export default {
   dec, inc
 }</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Module：全部导入，纯js需指定script的type为module</figcaption>
-          <pre>
+      <pre>
 &lt;script type="module"&gt;
   import test from './test.js'
   console.log(test);
@@ -58,14 +50,9 @@ export default {
   console.log(test.inc());
   console.log(test.inc());
 &lt;/script&gt;</pre>
-        </figure>
-      </dd>
       <dt>参考代码</dt>
       <dd>普通导出，可以按需引入</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Module：test.js，普通导出</figcaption>
-          <pre>
+      <pre>
 let count = 0;
 function dec() {
   return --count;
@@ -76,45 +63,28 @@ function inc() {
 export {
   dec, inc
 }</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Module：按需导入</figcaption>
-          <pre>
+      <pre>
 &lt;script type="module"&gt;
   import { inc } from './test.js'
   console.log(inc());
   console.log(inc());
   console.log(inc());
 &lt;/script&gt;</pre>
-        </figure>
-      </dd>
       <dt>定义配置信息</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Module：person.js，默认导出</figcaption>
-          <pre>
+      <pre>
 export default {
   "name": 'gl',
   "age": 24
 }</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Module：按需导入</figcaption>
-          <pre>
+      <pre>
 &lt;script type="module"&gt;
   import person from './person.js'
   console.log(person);
 &lt;/script&gt;</pre>
-        </figure>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

@@ -1,134 +1,12 @@
-/* @import url(//at.alicdn.com/t/c/font_3859342_a1zefhweue.css); */
+@import url(/css/reset.css);
 
 :root {
-  --main-color: #ff5d73;
-  --txt-warn-color: #c81623;
-  --nav-bg-color: #9f103a;
-  --blue-color: #4bc2ce;
-  --blue-light-color: #00b1b5;
-  --tbl-color: #1abc9c;
-  --yellow-color: #f1c40f;
-  --bg-tips-color: #e3f7ef;
-  --w-width: 1190px;
-  --header-h: 25vh;
-  --chap-h: 9vh;
-  --padding: 1rem;
-  --margin: 2rem;
-  --scroll-bar-w: 1rem;
-  --scroll-bar-r: 0.5rem;
+  --header-h: 300px;
+  --chap-h: 90px;
 }
 
-body,
-header,
-div,
-h1,
-dl,
-dt,
-dd,
-p,
-table,
-caption,
-tr,
-td,
-th,
-figcaption,
-figure,
-img,
-h3,
-h5 {
-  margin: 0;
+.w {
   padding: 0;
-  box-sizing: border-box;
-  text-align: justify;
-  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 62.5%;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-  line-height: 2;
-}
-
-img {
-  max-width: 100%;
-  border-radius: 8px;
-}
-
-dl {
-  line-height: 2;
-  padding: var(--padding);
-  text-align: justify;
-}
-
-dt {
-  font-weight: 600;
-  line-height: 3;
-  margin-top: 3rem;
-}
-
-dt.txt-center {
-  text-align: center;
-  font-size: 2rem;
-  color: #41211c;
-}
-
-dt.txt-center::before,
-dt.txt-center::after {
-  content: ' ' '\2630' ' ';
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-top: 2px solid var(--tbl-color);
-  border-bottom: 2px solid var(--tbl-color);
-  margin: var(--margin) auto;
-}
-
-table th {
-  text-align: left;
-}
-
-table tr:has(th) {
-  border-bottom: 1px solid var(--tbl-color);
-}
-
-.warn {
-  color: var(--txt-warn-color);
-}
-
-.tips {
-  position: relative;
-  background-color: #edf8db;
-  padding: 10px;
-  border-left: 4px solid #2ed573;
-  margin: 2rem auto;
-}
-
-html {
-  background-color: #fff;
-}
-
-body {
-  background-color: #f2f3f4;
-  font-size: 1.6rem;
-}
-
-body::-webkit-scrollbar {
-  width: var(--scroll-bar-w);
-}
-
-body::-webkit-scrollbar-track {
-  background-color: #fff;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(var(--blue-light-color), transparent);
 }
 
 header {
@@ -136,7 +14,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: var(--padding);
+  padding: var(--p-m-g);
   height: var(--header-h);
   color: #fff;
   background-color: var(--blue-color);
@@ -146,24 +24,14 @@ header {
   overflow: hidden;
 }
 
-header h1 {
-  font-weight: normal;
-  font-family: 'Michroma';
-  font-size: 1.8rem;
-}
-
-header span {
-  font-size: 1.5rem;
-}
-
 header::after {
   content: '';
   position: absolute;
   left: 0;
   bottom: 0;
   width: 200%;
-  height: 6px;
-  background-image: linear-gradient(to right, var(--yellow-color) 0%, var(--blue-color) 50%, var(--yellow-color) 100%);
+  height: 4px;
+  background-image: linear-gradient(to right, #2ed573 0%, #f1c40f 50%, #4bc2ce 100%);
   animation: roll 5s linear infinite alternate;
 }
 
@@ -173,66 +41,40 @@ header::after {
   }
 }
 
-.container {
-  position: relative;
-  max-width: var(--w-width);
-  width: 100%;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-color: #fff;
+.svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
-.cont-wrap {
-  padding: var(--padding);
-}
-
-.chap {
+dt {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   height: var(--chap-h);
-  padding: 4px var(--padding);
+  padding: 4px var(--p-m-g);
   color: #fff;
-  background-color: var(--blue-color);
+  background-color: var(--second-color);
   text-transform: capitalize;
   font-size: 1.8rem;
+  font-weight: normal;
+  margin: 0;
 }
 
-a.link {
-  color: var(--txt-warn-color);
-}
-
-a.link::after {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  width: 16px;
-  aspect-ratio: 1/1;
-  background-image: url(../imgs/external-link.png);
-  background-size: cover;
-}
-
-iframe {
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.item {
+dd {
   display: flex;
   align-items: center;
+  padding: 0 var(--p-m-g);
+  line-height: 2;
+  cursor: pointer;
 }
 
-.item:hover {
-  color: var(--blue-color);
-}
-
-.item::after {
+dd::after {
   content: attr(data-title);
   order: 2;
-  text-transform: capitalize;
 }
 
-.item::before {
+dd::before {
   content: '';
   flex: 1;
   height: 3px;
@@ -241,16 +83,6 @@ iframe {
   order: 1;
 }
 
-.indent {
-  text-indent: 1em;
-}
-
-figure {
-  margin: 2rem auto;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 10px;
+dd:hover {
+  color: var(--second-color);
 }

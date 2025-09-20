@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>策略模式</h1>
-    <h3 class="sub-title">Strategy</h3>
+    <h3>Strategy</h3>
     <dl>
       <dt>概述</dt>
       <dd>对象行为模式</dd>
@@ -28,10 +28,7 @@
       <dd>路由开发</dd>
       <dd>列表渲染</dd>
       <dt>参考代码</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Strategy：根据实际制定策略对象</figcaption>
-          <pre>
+      <pre>
 let Bonus = {
   'A': (salary) => {
     return salary * 2
@@ -52,25 +49,15 @@ let Bonus = {
 function getBonus(level, salary) {
   return Bonus[level](salary)
 }          </pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage</figcaption>
-          <pre>
+      <pre>
 console.log(getBonus('A', 8000));
 console.log(getBonus('B', 8000));
 console.log(getBonus('C', 8000));
 console.log(getBonus('D', 8000));
 console.log(getBonus('E', 8000)); </pre>
-        </figure>
-      </dd>
       <dt>后台评论管理</dt>
       <dd>根据帖子的不同状态，指定不同的类</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>列表区别渲染</figcaption>
-          <pre>
+      <pre>
 // data
 let list = [{
   title: 'gl',
@@ -118,12 +105,10 @@ let flag = {
 news.innerHTML = list.map(item => {
   return `&lt;li class='${flag[item.type].className}'&gt;${item.title}&lt;/li&gt;`
 }).join('')</pre>
-        </figure>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

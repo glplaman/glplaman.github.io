@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>命令者模式</h1>
-    <h3 class="sub-title">Command</h3>
+    <h3>Command</h3>
     <dl>
       <dt>概述</dt>
       <dd>发布者 Invoker：发布指令；不知道接收者的存在；不知道谁在执行；一个实例</dd>
@@ -25,10 +25,7 @@
       <dt>应用</dt>
       <dd>使用组合模式，将页面各个模块的命令组合起来，再统一下达命令，让他们分别开始初始化、渲染等</dd>
       <dt>参考代码</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Command</figcaption>
-          <pre>
+      <pre>
 class Invoker {
   constructor(commander) {
     this.commander = commander
@@ -59,13 +56,8 @@ let receiver = new Receiver()
 let commander = new Commander(receiver)
 let invoker = new Invoker(commander)
 invoker.publish()</pre>
-        </figure>
-      </dd>
       <dt>页面渲染</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Command</figcaption>
-          <pre>
+      <pre>
 class Macro {
   constructor() {
     this.lists = []
@@ -99,12 +91,10 @@ let macro = new Macro()
 macro.add(tabs)
 macro.add(swiper)
 macro.publish()</pre>
-        </figure>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

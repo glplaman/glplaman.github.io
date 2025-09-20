@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>观察者模式</h1>
-    <h3 class="sub-title">Observer</h3>
+    <h3>Observer</h3>
     <dl>
       <dt>概述</dt>
       <dd>包括：观察者和观察目标</dd>
@@ -26,10 +26,7 @@
       <dt>应用</dt>
       <dd>面包屑导航</dd>
       <dt>参考代码</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Observer</figcaption>
-          <pre>
+      <pre>
 class Subject {
   constructor() {
     this.observers = []
@@ -53,30 +50,20 @@ class Observer {
     console.log(this.name + ' updated');
   }
 }</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage</figcaption>
-          <pre>
+      <pre>
 let ob1 = new Observer('gl')
 let ob2 = new Observer('sh')
 let sub = new Subject()
 sub.add(ob1)
 sub.add(ob2)
 sub.notify()</pre>
-        </figure>
-      </dd>
       <dt>面包屑导航</dt>
       <dd>无序列表实现</dd>
       <dd>DOM获取</dd>
       <dd>事件委托</dd>
       <dd>参数传递</dd>
       <dd>DOM更新</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Observer</figcaption>
-          <pre>
+      <pre>
 class Subject {
   constructor() {
     this.observers = []
@@ -107,13 +94,11 @@ news.addEventListener('click', (e) => {
   if (e.target.tagName == 'LI') {
     sub.notify(e.target.innerHTML)
   }
-})          </pre>
-        </figure>
-      </dd>
+})</pre>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

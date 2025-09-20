@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>装饰器模式</h1>
-    <h3 class="sub-title">Decoration</h3>
+    <h3>Decoration</h3>
     <dl>
       <dt>概述</dt>
       <dd>对原有功能的扩充</dd>
@@ -24,10 +24,7 @@
       <dt>功能拓展</dt>
       <dd>前置函数、后置函数：主要功能实现的同时，统计用户行为：日志、点赞、收藏等、Ajax请求中token的使用：有的页面需要，有的页面不需要</dd>
       <dt>参考代码</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Decoration</figcaption>
-          <pre>
+      <pre>
 Function.prototype.before = function (beforeFn) {
   let _this = this
   return function () {
@@ -54,12 +51,7 @@ let fn = test.before(() => {
 }).after(() => {
   console.log('after');
 })</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage：点击查看商品详情页：添加日志</figcaption>
-          <pre>
+      <pre>
 function log() {
   console.log('logging');
 }
@@ -75,12 +67,10 @@ let btn = document.querySelector('button')
 btn.addEventListener('click', () => {
   render()
 })  </pre>
-        </figure>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

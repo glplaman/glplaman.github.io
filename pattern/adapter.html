@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>适配器模式</h1>
-    <h3 class="sub-title">Adapter</h3>
+    <h3>Adapter</h3>
     <dl>
       <dt>概述</dt>
       <dd>将一个类的接口转换成客户希望的另一个接口：让不兼容的类一起协调工作</dd>
@@ -23,10 +23,7 @@
       <dt>地图调用</dt>
       <dd>多个地图可用，执行同一个方法</dd>
       <dt>参考代码</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Adapter：拓展BaiduMap类，使其可以被整合方法renderMap调用</figcaption>
-          <pre>
+      <pre>
 class BaiduMap {
   show() {
     console.log('baidu show');
@@ -51,21 +48,14 @@ class adapterBaidu extends BaiduMap {
 function renderMap(map) {
   map.display()
 }</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage</figcaption>
-          <pre>
+      <pre>
 renderMap(new adapterBaidu())
 renderMap(new GaodeMap())
 </pre>
-        </figure>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

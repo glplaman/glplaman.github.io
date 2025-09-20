@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>组合模式</h1>
-    <h3 class="sub-title">Compose</h3>
+    <h3>Compose</h3>
     <dl>
       <dt>概述</dt>
       <dd>在对象间构建树形结构</dd>
@@ -27,17 +27,11 @@
       <dd>侧边栏：根据用户的权限区别创建</dd>
       <dd>多级菜单</dd>
       <dt>扫描文件夹</dt>
-      <dd>创建</dd>
-      <dd class="number">
-        <div>先创建根文件夹，再创建若干子文件夹</div>
-        <div>然后创建若干文件，并添加到不同的子文件夹</div>
-        <div>最后把子文件夹添加到根文件</div>
-      </dd>
+      <dd>先创建根文件夹，再创建若干子文件夹</dd>
+      <dd>然后创建若干文件，并添加到不同的子文件夹</dd>
+      <dd>最后把子文件夹添加到根文件</dd>
       <dd>扫描：从根文件夹开始扫描</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Compose</figcaption>
-          <pre>
+      <pre>
 const Folder = function (folder) {
   this.folder = folder
   this.lists = []
@@ -93,21 +87,11 @@ rootFolder.add(cssFolder)
 rootFolder.add(jsFolder)
 
 rootFolder.scan()</pre>
-        </figure>
-      </dd>
       <dt>多级菜单</dt>
-      <dd>1. 在Folder的scan中创建一级菜单</dd>
-      <dd>2. 在File的scan中创建二级菜单</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>DOM挂载点</figcaption>
-          <pre>&lt;ul id="menu"&gt;&lt;/ul&gt;</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage</figcaption>
-          <pre>
+      <dd>在Folder的scan中创建一级菜单</dd>
+      <dd>在File的scan中创建二级菜单</dd>
+      <pre>&lt;ul id="menu"&gt;&lt;/ul&gt;</pre>
+      <pre>
 const Folder = function (folder) {
   this.folder = folder
   this.lists = []
@@ -174,12 +158,10 @@ rootFolder.add(cssFolder)
 rootFolder.add(jsFolder)
 
 rootFolder.scan()</pre>
-        </figure>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

@@ -13,9 +13,9 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>订阅发布模式</h1>
-    <h3 class="sub-title">Subscriber</h3>
+    <h3>Subscriber</h3>
     <dl>
       <dt>概述</dt>
       <dd>和观察者一样，包括：观察者和观察目标</dd>
@@ -26,10 +26,7 @@
       <dt>应用</dt>
       <dd>面包屑</dd>
       <dt>参考代码</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Subscriber：以方法test1、test2代替类的方法</figcaption>
-          <pre>
+      <pre>
 const Center = {
   message: {},
   publich(type, data) {
@@ -53,25 +50,15 @@ function test1(data) {
 }
 function test2(data) {
   console.log('test2', data);
-}          </pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage</figcaption>
-          <pre>
+}</pre>
+      <pre>
 Center.subscribe('a', test1)
 Center.subscribe('b', test2)
 Center.subscribe('b', test1)
 Center.publich('a', 111)
 Center.publich('b', 222)</pre>
-        </figure>
-      </dd>
       <dt>面包屑</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>Subscriber</figcaption>
-          <pre>
+      <pre>
 const Center = {
   message: {},
   publich(type, data) {
@@ -97,13 +84,11 @@ news.addEventListener('click', (e) => {
   if (e.target.tagName == 'LI') {
     Center.publich('updateDOM', e.target.innerHTML)
   }
-})          </pre>
-        </figure>
-      </dd>
+})</pre>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>

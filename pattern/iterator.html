@@ -13,17 +13,14 @@
 <body>
   <header>
   </header>
-  <main class="container">
+  <div class="w">
     <h1>迭代器模式</h1>
-    <h3 class="sub-title">Iterator</h3>
+    <h3>Iterator</h3>
     <dl>
       <dt>概述</dt>
       <dd>创建迭代器接口</dd>
       <dd>ES5中自定义迭代器</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Iterator - 具体的业务逻辑由回调函数cb实现，如页面渲染</figcaption>
-          <pre>
+      <pre>
 let iterator = function (arr, cb) {
   arr.forEach((item, ind) => {
     cb(ind, item)
@@ -31,15 +28,10 @@ let iterator = function (arr, cb) {
 }
 iterator([1, 2, 3, 4, 5, 6, 7, 8, 9], (key, val) => {
   console.log(key, val);
-})          </pre>
-        </figure>
-      </dd>
+})</pre>
       <dd>ES6中提供有迭代器 Iterator对象：Array、String、Set、Arguments、NodeLists，使用 <span class="warn">for-of</span> 即可迭代其中的数据</dd>
       <dd>对象Object虽然可以使用 <span class="warn">for-in</span> 遍历，但是这个不是迭代；通过序列化和增加长度属性可以实现迭代</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Iterator - Object不支持迭代</figcaption>
-          <pre>
+      <pre>
 let obj = {
   name: 'gl',
   age: 20,
@@ -54,12 +46,7 @@ for (val in obj) {
 for (val of obj) {
   console.log(val);
 }</pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Iterator - 改造后的obj</figcaption>
-          <pre>
+      <pre>
 let obj = {
   0: "gl",
   1: 20,
@@ -70,27 +57,16 @@ let obj = {
 for (val of obj) {
   console.log(val);
 }</pre>
-        </figure>
-      </dd>
       <dt>应用</dt>
-      <dd></dd>
       <dt>参考代码</dt>
       <dd>
-        <figure class="code">
-          <figcaption>Iterator</figcaption>
-          <pre></pre>
-        </figure>
-      </dd>
-      <dd>
-        <figure class="code">
-          <figcaption>Usage</figcaption>
-          <pre></pre>
-        </figure>
+        <pre></pre>
+        <pre></pre>
       </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </main>
+  </div>
 </body>
 
 </html>
