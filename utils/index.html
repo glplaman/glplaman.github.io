@@ -5,14 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>在线资源 online</title>
-  <link rel="stylesheet" href="../css/course.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
-    .background {
+    .bg {
+      position: fixed;
+      inset: 0;
+    }
+
+    .w {
+      line-height: 2;
+    }
+
+    #canvas {
       position: absolute;
       display: block;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 0;
       background-color: #000;
     }
@@ -23,13 +34,13 @@
 
     details {
       padding: 0 10px;
-      line-height: 2;
     }
 
     summary {
       cursor: pointer;
     }
 
+    a:hover,
     summary:hover {
       color: var(--second-color);
     }
@@ -37,145 +48,166 @@
     iframe {
       aspect-ratio: 16/9;
     }
+
+    dd {
+      display: flex;
+      align-items: center;
+    }
+
+    dd::after {
+      content: attr(data-title);
+      order: 2;
+    }
+
+    dd::before {
+      content: '';
+      flex: 1;
+      height: 3px;
+      background: url(/imgs/dot.png) repeat-x;
+      order: 1;
+    }
   </style>
 </head>
 
 <body>
-  <canvas class="background"></canvas>
+  <div class="bg">
+    <canvas id="canvas"></canvas>
+  </div>
   <div class="w">
     <header>
       <h1>在线资源</h1>
       <span>&commat;online</span>
     </header>
-    <dt>资源服务器 https://glpla.github.io/utils</dt>
-    <details>
-      <summary>库 Lib</summary>
-      <div>
-        <div>/lib/qqmap-wx-jssdk.min.js</div>
-      </div>
-    </details>
-    <details>
-      <summary>字体 Font</summary>
-      <div>
-        <div>/font/Inconsolata/Inconsolata-Regular.ttf</div>
-        <div>/font/Fira_Code_v6.2/ttf/FiraCode-Regular.ttf</div>
-        <div>/font/Poppins/Poppins-Regular.ttf</div>
-        <div>/font/Quicksand/Quicksand-Regular.ttf</div>
-        <div>/font/Roboto/Roboto-Regular.ttf</div>
-        <div>/font/CruiserFortressBevel.ttf</div>
-        <div>/font/FlappyBird.ttf</div>
-        <div>/font/GreatVibes-Regular.ttf</div>
-        <div>/font/Michroma.ttf</div>
-        <div>/font/Monospace.ttf</div>
-        <div>/font/msyh.ttf</div>
-        <div>/font/YuWei.ttf</div>
-        <div>/font/Unipix.ttf</div>
-        <div>/font/Cuprum.zip</div>
-        <div>/font/IBM_Plex_Sans.zip</div>
-        <div>/font/Inconsolata.zip</div>
-      </div>
-    </details>
-    <details>
-      <summary>图片 Image</summary>
-      <div>
-        <div>/ink/maskx.png (x:0-9)</div>
-        <div>/avatar/avatarx.png (x:0-9)</div>
-        <div>/bottle/bottlex.jpg (x:0-9)</div>
-        <div>/car/carx.png (0-9)</div>
-        <div>/coffee/coffeex.jpg (x:0-14)</div>
-        <div>/dessert/dessertx.png (x:0-14)</div>
-        <div>/military/militaryx.jpg (x:0-9)</div>
-        <div>/number/number-x.png (x:0-9)</div>
-        <div>/screen/screenx.jpg (x:0-9)</div>
-        <div>/views/viewx.jpg (x:0-9)</div>
-        <div>/wallpaper/wx.jpg (x:0-9)</div>
-        <div>/wedding/px.jpg (x:0-9)</div>
-        <div>/xinhua/xhx.jpg (x:0-9)</div>
-        <div>/food - 路径已在food.json中给出</div>
-      </div>
-    </details>
-    <details>
-      <summary>数据 Data</summary>
-      <div>
-        <div>/data/goods.json</div>
-        <div>/data/message.json</div>
-        <div>/data/coffee.json</div>
-        <div>/data/cart.json</div>
-        <div>/data/song_list.json</div>
-        <div>/data/swiper.json</div>
-      </div>
-    </details>
-    <details>
-      <summary>视频 Video</summary>
-      <div>
-        <div>/video/有我在.mp4</div>
-        <div>/video/当那一天来临.mp4</div>
-        <div>/video/祖国不会忘记我.mp4</div>
-        <div>/video/vx.mp4 (x:0-9)</div>
-        <div>/video/alizee.mp4</div>
-        <div>/video/beach.mp4</div>
-        <div>/video/cup.mp4</div>
-        <div>/video/forest.mp4</div>
-        <div>/video/flower.mp4</div>
-        <div>/video/gl.mp4</div>
-        <div>/video/liriver.mp4</div>
-        <div>/video/sea.mp4</div>
-        <div>/video/祝你一路顺风.mp4</div>
-        <div>/video/祝你一路顺风钢琴版.mp4</div>
-      </div>
-    </details>
-    <details>
-      <summary>音频 Music</summary>
-      <div>
-        <div>/music/guitar.wav</div>
-        <div>/music/xm3181.wav</div>
-        <div>/music/charge.mp3</div>
-        <div>/music/Alizee-LaIslaBonita.mp3</div>
-        <div>/music/Bandari-NewMorning.mp3</div>
-        <div>/music/Disclosure-FForYou.mp3</div>
-        <div>/music/MaksimMrvica-出埃及记.mp3</div>
-        <div>/music/Shakira-WheneverWherever.mp3</div>
-        <div>/music/Sissel-ShouldItMatter.mp3</div>
-        <div>/music/wang.mp3</div>
-        <div>/music/周澎-有我在.mp3</div>
-        <div>/music/Luciano-MelodeCarlaCintia.ogg</div>
-        <div>/music/AvaMax-OMGWhat'sHappening.ogg</div>
-        <div>/music/吴奇隆 - 祝你一路顺风 (Single Version).ogg</div>
-      </div>
-    </details>
-    <details>
-      <summary>学院狗 https://cdn.pixabay.com/photo/2023</summary>
-      <div>
-        <div>/11/29/13/28/owl-8419617_640.jpg</div>
-        <div>/11/29/13/28/penguin-8419618_640.jpg</div>
-        <div>/11/27/06/48/alphabet-8414766_640.jpg</div>
-        <div>/11/29/05/06/elephant-8418720_640.jpg</div>
-        <div>/11/23/07/44/ai-generated-8407210_640.jpg</div>
-        <div>/11/27/06/48/alphabet-8414769_640.jpg</div>
-        <div>/11/30/09/19/alphabet-8421163_640.jpg</div>
-        <div>/11/30/09/19/alphabet-8421164_640.jpg</div>
-        <div>/11/29/13/28/narwhal-8419616_640.jpg</div>
-        <div>/11/30/09/20/alphabet-8421166_640.jpg</div>
-        <div>/12/01/13/47/dolphin-8423784_640.jpg</div>
-        <div>/11/30/09/17/alphabet-8421138_640.jpg</div>
-        <div>/12/01/13/48/bear-8423785_640.jpg</div>
-        <div>/11/27/06/48/alphabet-8414770_640.jpg</div>
-        <div>/11/27/06/48/alphabet-8414772_640.jpg</div>
-        <div>/11/27/06/48/alphabet-8414773_640.jpg</div>
-        <div>/11/30/09/22/alphabet-8421170_640.jpg</div>
-        <div>/11/30/09/21/alphabet-8421169_640.jpg</div>
-        <div>/12/01/13/48/camel-8423786_640.jpg</div>
-        <div>/11/27/06/48/alphabet-8414771_640.jpg</div>
-      </div>
-    </details>
     <dl>
+      <dt>服务器</dt>
+      <dd data-title="URL">https://glplaman.github.io/utils</dd>
+      <dt>资源</dt>
+      <details>
+        <summary>库 Lib</summary>
+        <div>
+          <div>/lib/qqmap-wx-jssdk.min.js</div>
+        </div>
+      </details>
+      <details>
+        <summary>字体 Font</summary>
+        <div>
+          <div>/font/Inconsolata/Inconsolata-Regular.ttf</div>
+          <div>/font/Fira_Code_v6.2/ttf/FiraCode-Regular.ttf</div>
+          <div>/font/Poppins/Poppins-Regular.ttf</div>
+          <div>/font/Quicksand/Quicksand-Regular.ttf</div>
+          <div>/font/Roboto/Roboto-Regular.ttf</div>
+          <div>/font/CruiserFortressBevel.ttf</div>
+          <div>/font/FlappyBird.ttf</div>
+          <div>/font/GreatVibes-Regular.ttf</div>
+          <div>/font/Michroma.ttf</div>
+          <div>/font/Monospace.ttf</div>
+          <div>/font/msyh.ttf</div>
+          <div>/font/YuWei.ttf</div>
+          <div>/font/Unipix.ttf</div>
+          <div>/font/Cuprum.zip</div>
+          <div>/font/IBM_Plex_Sans.zip</div>
+          <div>/font/Inconsolata.zip</div>
+        </div>
+      </details>
+      <details>
+        <summary>图片 Image</summary>
+        <div>
+          <div>/ink/maskx.png (x:0-9)</div>
+          <div>/avatar/avatarx.png (x:0-9)</div>
+          <div>/bottle/bottlex.jpg (x:0-9)</div>
+          <div>/car/carx.png (0-9)</div>
+          <div>/coffee/coffeex.jpg (x:0-14)</div>
+          <div>/dessert/dessertx.png (x:0-14)</div>
+          <div>/military/militaryx.jpg (x:0-9)</div>
+          <div>/number/number-x.png (x:0-9)</div>
+          <div>/screen/screenx.jpg (x:0-9)</div>
+          <div>/views/viewx.jpg (x:0-9)</div>
+          <div>/wallpaper/wx.jpg (x:0-9)</div>
+          <div>/wedding/px.jpg (x:0-9)</div>
+          <div>/xinhua/xhx.jpg (x:0-9)</div>
+          <div>/food - 路径已在food.json中给出</div>
+        </div>
+      </details>
+      <details>
+        <summary>数据 Data</summary>
+        <div>
+          <div>/data/goods.json</div>
+          <div>/data/message.json</div>
+          <div>/data/coffee.json</div>
+          <div>/data/cart.json</div>
+          <div>/data/song_list.json</div>
+          <div>/data/swiper.json</div>
+        </div>
+      </details>
+      <details>
+        <summary>视频 Video</summary>
+        <div>
+          <div>/video/有我在.mp4</div>
+          <div>/video/当那一天来临.mp4</div>
+          <div>/video/祖国不会忘记我.mp4</div>
+          <div>/video/vx.mp4 (x:0-9)</div>
+          <div>/video/alizee.mp4</div>
+          <div>/video/beach.mp4</div>
+          <div>/video/cup.mp4</div>
+          <div>/video/forest.mp4</div>
+          <div>/video/flower.mp4</div>
+          <div>/video/gl.mp4</div>
+          <div>/video/liriver.mp4</div>
+          <div>/video/sea.mp4</div>
+          <div>/video/祝你一路顺风.mp4</div>
+          <div>/video/祝你一路顺风钢琴版.mp4</div>
+        </div>
+      </details>
+      <details>
+        <summary>音频 Music</summary>
+        <div>
+          <div>/music/guitar.wav</div>
+          <div>/music/xm3181.wav</div>
+          <div>/music/charge.mp3</div>
+          <div>/music/Alizee-LaIslaBonita.mp3</div>
+          <div>/music/Bandari-NewMorning.mp3</div>
+          <div>/music/Disclosure-FForYou.mp3</div>
+          <div>/music/MaksimMrvica-出埃及记.mp3</div>
+          <div>/music/Shakira-WheneverWherever.mp3</div>
+          <div>/music/Sissel-ShouldItMatter.mp3</div>
+          <div>/music/wang.mp3</div>
+          <div>/music/周澎-有我在.mp3</div>
+          <div>/music/Luciano-MelodeCarlaCintia.ogg</div>
+          <div>/music/AvaMax-OMGWhat'sHappening.ogg</div>
+          <div>/music/吴奇隆 - 祝你一路顺风 (Single Version).ogg</div>
+        </div>
+      </details>
+      <details>
+        <summary>学院狗 https://cdn.pixabay.com/photo/2023</summary>
+        <div>
+          <div>/11/29/13/28/owl-8419617_640.jpg</div>
+          <div>/11/29/13/28/penguin-8419618_640.jpg</div>
+          <div>/11/27/06/48/alphabet-8414766_640.jpg</div>
+          <div>/11/29/05/06/elephant-8418720_640.jpg</div>
+          <div>/11/23/07/44/ai-generated-8407210_640.jpg</div>
+          <div>/11/27/06/48/alphabet-8414769_640.jpg</div>
+          <div>/11/30/09/19/alphabet-8421163_640.jpg</div>
+          <div>/11/30/09/19/alphabet-8421164_640.jpg</div>
+          <div>/11/29/13/28/narwhal-8419616_640.jpg</div>
+          <div>/11/30/09/20/alphabet-8421166_640.jpg</div>
+          <div>/12/01/13/47/dolphin-8423784_640.jpg</div>
+          <div>/11/30/09/17/alphabet-8421138_640.jpg</div>
+          <div>/12/01/13/48/bear-8423785_640.jpg</div>
+          <div>/11/27/06/48/alphabet-8414770_640.jpg</div>
+          <div>/11/27/06/48/alphabet-8414772_640.jpg</div>
+          <div>/11/27/06/48/alphabet-8414773_640.jpg</div>
+          <div>/11/30/09/22/alphabet-8421170_640.jpg</div>
+          <div>/11/30/09/21/alphabet-8421169_640.jpg</div>
+          <div>/12/01/13/48/camel-8423786_640.jpg</div>
+          <div>/11/27/06/48/alphabet-8414771_640.jpg</div>
+        </div>
+      </details>
       <dt>WEB</dt>
       <dd data-title="王菲"><a href="../web/demo/player_mini.html">微风细雨</a></dd>
-    </dl>
-    <iframe
-      src="//player.bilibili.com/player.html?isOutside=true&aid=632243809&bvid=BV1wb4y16755&cid=383294235&p=1&autoplay=0"
-      scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-    <dl>
+      <dt>Bilibili</dt>
+      <iframe
+        src="//player.bilibili.com/player.html?isOutside=true&aid=632243809&bvid=BV1wb4y16755&cid=383294235&p=1&autoplay=0"
+        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
       <dd data-title="Selena Gomez">
         <a
           href="https://www.bilibili.com/video/BV1ye41167EB/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">Love
@@ -269,7 +301,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
   <script>
     Particles.init({
-      selector: '.background',
+      selector: '#canvas',
       color: ['#f40', '#ff0', '#ff5d73', '#27ae60', '#fff'],
       minDistance: 120,
       sizeVariations: 5,
