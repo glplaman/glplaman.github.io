@@ -28,12 +28,18 @@
       text-align: center;
     }
 
-    h3 {
-      margin-bottom: 20px;
+    body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
     form {
       width: 100%;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: calc(2*var(--p-m-g));
@@ -72,7 +78,7 @@
       color: var(--warn-color);
     }
 
-    label {
+    .label {
       position: absolute;
       right: var(--p-m-g);
       top: -10px;
@@ -98,79 +104,8 @@
       color: var(--color);
     }
 
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background-image: linear-gradient(var(--color), transparent);
-    }
-
     .iconfont {
       font-size: 20px;
-    }
-
-    .form {
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      max-width: 600px;
-      background-color: #fff;
-      z-index: 1;
-    }
-
-    .msg {
-      position: relative;
-      width: 400px;
-      margin-left: auto;
-    }
-
-    .msg-wrap {
-      padding: var(--p-m-g);
-    }
-
-    .msg-box {
-      height: 100%;
-      overflow-y: auto;
-      text-align: justify;
-    }
-
-    .msg-box::-webkit-scrollbar {
-      width: var(--border-r);
-    }
-
-    .msg-box::-webkit-scrollbar-thumb {
-      background-color: var(--color);
-      cursor: pointer;
-    }
-
-    .msg-item {
-      padding: var(--p-m-g) 0;
-      margin-right: var(--p-m-g);
-    }
-
-    .msg-box .msg-item:not(:last-child) {
-      border-bottom: 1px solid var(--second-color);
-    }
-
-    .msg-title {
-      display: flex;
-      gap: var(--p-m-g);
-      line-height: 2;
-      margin-bottom: var(--p-m-g);
-    }
-
-    .msg-title img {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-    }
-
-    .msg-title p {
-      margin-left: auto;
     }
 
     .input-box {
@@ -182,89 +117,59 @@
       border-color: var(--second-color);
     }
 
-    #footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    @media screen and (max-width: 768px) {
-
-      .form,
-      #footer {
-        position: unset;
-      }
-
-      .form {
-        position: sticky;
-        top: 0;
-        transform: unset;
-      }
-
-      .msg {
-        margin: 0 auto;
-        width: 100%;
-      }
+    .ipt:focus+.label {
+      color: var(--second-color);
     }
   </style>
 </head>
 
 <body>
-  <div class="form">
-    <form id="form">
-      <h3>任何建议，欢迎留言 <span class="iconfont icon-qianming"></span></h3>
-      <div class="input-box">
-        <input class="ipt" type="text" name="name" required maxlength="8" placeholder="your nickname">
-        <label><span class="iconfont icon-User"></span></label>
-      </div>
-      <div class="input-box">
-        <input class="ipt" type="email" name="email" required placeholder="your email">
-        <label><span class="iconfont icon-xinfeng"></span></label>
-      </div>
-      <div class="input-box message">
-        <textarea class="ipt" name="message" required maxlength="60" placeholder="your message"></textarea>
-        <label><span class="iconfont icon-bianjiwenben"></span></label>
-      </div>
-      <div class="btns">
-        <button type="submit" id="btn">提交</button>
-        <button type="reset">重填</button>
-      </div>
-    </form>
-  </div>
-  <div class="msg">
-    <h3>&#9776; 精选留言 &#9776;</h3>
-    <div class="msg-wrap">
-      <div class="msg-box"></div>
+  <form id="form">
+    <h3>任何建议，欢迎留言 <span class="iconfont icon-qianming"></span></h3>
+    <div class="input-box">
+      <input class="ipt" type="text" name="name" required maxlength="8" placeholder="your nickname">
+      <span class="label iconfont icon-User"></span>
     </div>
-    <div id="footer"></div>
-  </div>
+    <div class="input-box">
+      <input class="ipt" type="email" name="email" required placeholder="your email">
+      <span class="label iconfont icon-xinfeng"></span>
+    </div>
+    <div class="input-box message">
+      <textarea class="ipt" name="message" required maxlength="60" placeholder="your message"></textarea>
+      <span class="label iconfont icon-bianjiwenben"></span>
+    </div>
+    <div class="btns">
+      <button type="submit" id="btn">提交</button>
+      <button type="reset">重填</button>
+    </div>
+  </form>
+  <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> -->
   <script src="/utils/lib/email.min.js"></script>
   <script>
-    // msg
-    let msgBox = document.querySelector('.msg-box')
-    let msgs = fetch('/utils/data/data2023/msg.json')
-      .then(res => res.json())
-      .then(res => {
-        msgBox.innerHTML = res.map((item, ind) =>
-          `
-      <div class="msg-item">
-        <div class="msg-title">
-          <img src="https://glpla.github.io/utils/avatar/avatar${ind}.png" alt=""> 
-          <span>${item.name}</span>
-          <p>${item.mail}</p>
-          </div>
-        <p class="msg-cont">${item.msg}</p>
-      </div>
-      `
-        ).join('')
-      })
+    // const msgBox = document.querySelector('.msg-box');
+    // (async () => {
+    //   const msgs = await fetch('/utils/data/data2023/msg.json')
+    //   const res = await msgs.json()
+    //   console.log(res);
+    //   msgBox.innerHTML = res.map((item, ind) =>
+    //     `
+    //   <div class="msg-item">
+    //     <div class="msg-title">
+    //       <img src="https://glpla.github.io/utils/avatar/avatar${ind}.png" alt=""> 
+    //       <span>${item.name}</span>
+    //       <p>${item.mail}</p>
+    //       </div>
+    //     <p class="msg-cont">${item.msg}</p>
+    //   </div>
+    //   `
+    //   ).join('')
+    // })()
 
     emailjs.init('MgQhPPBjNMMss5kbw')
     const btn = document.getElementById('btn');
     const from = document.getElementById('form');
-    console.log(btn.innerHTML);
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
