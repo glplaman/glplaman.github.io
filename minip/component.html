@@ -30,15 +30,18 @@
       <li> properties：接收参数，实现组件传参</li>
       <li> data：数据</li>
       <li> methods：方法</li>
-      <li> options：选项；默认没有，需要手动添加</li>
+      <li> options：选项，如样式使用；默认没有，需要手动添加</li>
+      <li> externalClasses：外部样式类；可以使用外面定义的样式类；数组形式</li>
       <pre>
 Component({
     properties: {},
     data: {},
-    methods: {}
+    methods: {},
+    options:{},
+    externalClasses：{}
 })</pre>
     </ul>
-    <dt>基本步骤</dt>
+    <h3>基本步骤</h3>
     <ol>
       <li>创建</li>
       <li>设计</li>
@@ -80,18 +83,57 @@ Component({
     &lt;copyright&gt;&lt;/copyright&gt;
 &lt;/view&gt;</pre>
     </ol>
-    <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html">组件模板和样式</a>
-    </h3>
+  </section>
+  <h2>CSS & Style</h2>
+  <section>
     <ul>
       <li>请尽量使用类选择器，不要使用标签选择器、id选择器、属性选择器</li>
       <li>组件根容器的样式类名同组件名保持一致，如版权组件 copyright 的根容器类名为 copyright</li>
       <li>app.wxss 的全局样式会影响到组件样式，如类选择器、标签选择器；id选择器、属性选择器请确认再使用</li>
       <li>默认情况下，组件的样式仅仅作用于当前组件 - 样式隔离；不建议修改，避免后期样式冲突</li>
+      <li>可以直接使用外部 CSS 变量！！！</li>
+      <li>更多信息，请参考 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html">组件模板和样式</a>
+      </li>
+    </ul>
+    <h3>直接为组件指定样式</h3>
+    <ul>
+      <li>把组件当作一个普通元素</li>
+      <pre>&lt;copyright class="warn"&gt;&lt;/copyright&gt;</pre>
+    </ul>
+    <h3>样式隔离</h3>
+    <ul>
+      <li>配置 options 选项</li>
+      <li>isolated：启用样式隔离，在自定义组件内外，使用 class 指定的样式将不会相互影响；默认值</li>
+      <li>apply-shared：页面 wxss 样式将影响到自定义组件，但自定义组件 wxss 中指定的样式不会影响页面</li>
+      <li>shared：页面 wxss 样式将影响到自定义组件，自定义组件 wxss 中指定的样式也会影响页面和其他设置了 apply-shared 或 shared 的自定义组件</li>
       <figure class="img-sn">
         <img src="./imgs/pro9.png" alt="">
         <figcaption>组件样式配置</figcaption>
       </figure>
     </ul>
+    <h3>外部样式类</h3>
+    <ul>
+      <li>配置 externalClasses 选项</li>
+      <li>以数组的形式指定需要使用的外部的样式类</li>
+      <li>类多的情况下，比较繁琐，需要一一指定</li>
+      <li>子组件无法修改调整外部类</li>
+      <li>定义组件</li>
+      <pre>externalClasses: ['card-item']</pre>
+      <li>使用组件</li>
+      <pre>&lt;copyright class="warn" card-item='card-item'&gt;&lt;/copyright&gt;</pre>
+    </ul>
+    <h3>字体图标</h3>
+    <ul>
+      <li>通常在 app.wxss 中，以本地方式引入使用</li>
+      <pre>@import './utils/iconfont.wxss';</pre>
+      <li>组件中无法通过外部样式类使用</li>
+      <li>需要使用的组件都需要重新导入 - 注意路径</li>
+      <pre>@import '../../utils/iconfont.wxss';</pre>
+      <li>微信小程序会做去重处理，不会增加小程序的体积</li>
+      <li>更多信息，请参考 <a href="../web/iconfont.html">阿里字体图标 iconfont</a></li>
+    </ul>
+    <div class="tips">简单粗暴型：直接引入对应的样式文件；可以调整或修改外部样式</div>
     <div>[<span class="iconfont icon-keyboard"></span>] 封装空购物车组件</div>
     <ul>
       <li>结构</li>
@@ -100,8 +142,14 @@ Component({
   &lt;text class="iconfont icon-cart-empty txt-xxxl"&gt;&lt;/text&gt;
   &lt;text&gt;购物车空空的，去逛逛吧&lt;/text&gt;
 &lt;/view&gt;</pre>
-      <li>样式：iconfont 样式文件已经在 app.wxss 中引入；为了在组件内部使用 iconfont，需要显式的引入样式文件</li>
+      <li>样式：
+        <p>iconfont 样式文件已经在 app.wxss 中引入；为了在组件内部使用 iconfont，需要显式的引入样式文件</p>
+        <p>其他样式，在组件内定义</p>
+      </li>
       <pre>
+// 仅仅使用字体图标样式
+@import '../../iconfont.wxss';
+// 简单粗暴型 - 引入主样式文件
 @import '../../app.wxss';
 
 .empty-cart {

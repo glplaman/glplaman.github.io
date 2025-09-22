@@ -16,37 +16,25 @@
     <span>&commat;model</span>
   </header>
   <section>
+    <h3>概述 Overview</h3>
     <ul>
       <li>Two-way binding</li>
       <li>视图层可以影响到逻辑层</li>
       <li>逻辑层也可以影响到视图层</li>
       <li class="txt-center">视图层 <i class="iconfont icon-moduanzuoyouzhankai_o"></i> 逻辑层</li>
-      <li>多用于表单元素</li>
-      <li>为 <span class="warn">value</span> 添加 model 修饰符即可实现双向数据绑定</li>
-      <li>可以绑定的熟悉有：value、checked、selected 等</li>
-      <li>省略了触发事件，如 bindchange 或 bindinput</li>
+      <li>多用于表单元素的：value、checked、selected 等</li>
       <li>目前只支持绑定 <span class="warn">简单数据类型</span> （如字符串、数字、布尔值），不支持对象（Object）或数组（Array）等复杂数据结构</li>
-      <li>借助调试器的 AppData 查看绑定情况</li>
       <li>推荐这些元素使用：input 的 value 是字符串 string；checkbox 的 checked 是布尔值 boolean；slider 的 value 是数字 number</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/two-way-bindings.html">简易双向绑定</a></li>
     </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] 数据提交 - 使用双向数据绑定和自定义事件实现；提交了绑定的数据，相当于提交了表单数据</div>
+    <h3>特点 Feature</h3>
     <ul>
-      <li>准备数据：通常以对象的形式出现，便于提交</li>
-      <pre>
-data: {
-    uname:''
-}</pre>
-      <li>调整结构：抛弃传统的表单结构，使用普通结构，按钮也不需要指定表单类型</li>
-      <pre>
-&lt;view class="form"&gt;
-    &lt;input type="text" model:value="{{uname}}" /&gt;
-    &lt;button bind:tap="submitModel"&gt;submit&lt;/button&gt;
-&lt;/view&gt;</pre>
-      <li>自定义事件：提交时，将 data 中 uname 提交给服务器端</li>
-      <pre>
-submitModel() {
-    console.log(this.data.uname);
-}</pre>
+      <li>为 <span class="warn">value</span> 添加 model 修饰符即可实现双向数据绑定</li>
+      <li>只能是一个单一字段的绑定，不支持复杂表达式</li>
+      <li>省略了触发事件，如 bindchange 或 bindinput</li>
+      <li>可以抛弃 &lt;form&gt; 这个壳</li>
+      <li>借助调试器的 AppData 查看绑定情况</li>
     </ul>
   </section>
   <h2>值绑定</h2>
@@ -54,28 +42,9 @@ submitModel() {
     <div>. 绑定的是元素的值 value</div>
     <h3>&lt;input&gt;</h3>
     <ul>
-      <pre>
-data: {
-    msg: 'hi',
-    obj:{
-        id: '20201001'
-        name:'hi,there.'
-    }
-}</pre>
-      <li>普通方式实现双向绑定单一属性 msg - 利用事件bindinput修改数据</li>
-      <pre>
-&lt;view>{{msg}}&lt;/view&gt;
-&lt;input type="text" value='{{msg}}' bindinput="ipt"/&gt;</pre>
-      <pre>
-ipt(e) {
-    console.log(e.detail.value);
-    this.setData({
-        msg:e.detail.value
-    })
-}</pre>
-      <li>model方式实现双向绑定 - 简单粗暴；省略了bindinput事件</li>
+      <li>添加 model 前缀即可</li>
       <pre>&lt;input type="text" model:value='{{msg}}' /&gt;</pre>
-      <li>双向绑定复合数据 obj.name</li>
+      <li>无法双向绑定复合数据</li>
       <pre>&lt;input type="text" model:value='{{obj.name}}' /&gt;</pre>
       <li>失败：仅实现逻辑层到视图层的绑定；Two-way binding does not support complex data paths currently. This two-way binding is
         ignored.</li>
@@ -88,12 +57,56 @@ getName(e) {
     })
 }</pre>
     </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 商品搜索</div>
+    <ul>
+      <li>根据商品名称部分或全部关键字搜索</li>
+      <li>单击搜索按钮触发搜索 - 普通事件</li>
+      <li>输入完毕后，按输入/搜索建触发搜索；需指定确认类型 confirm-type 和确认事件 bindconfirm</li>
+      <li>页面加载时，自动获取焦点</li>
+      <li>搜索前，移除前后空白</li>
+      <li>如果处理结果为空，则给出提示；否则执行搜索，并根据搜索结果渲染页面</li>
+      <li>请分别在模拟器和移动端测试</li>
+      <figure>
+        <img src="./imgs/model.png" alt="">
+        <figcaption>搜索框</figcaption>
+      </figure>
+      <pre>
+&lt;view&gt;
+  &lt;view&gt;
+    &lt;text class="iconfont icon-search"&gt;&lt;/text&gt;
+    &lt;input type="text" 
+      focus 
+      placeholder="请输入你要查询的商品名称" 
+      confirm-type="search" 
+      bindconfirm="doQuery" 
+      model:value='{{keywords}}' /&gt;
+  &lt;/view&gt;
+  &lt;button bind:tap="doQuery"&gt;搜索&lt;/button&gt;
+&lt;/view&gt;</pre>
+      <pre>
+doQuery() {
+  let keywords = this.data.keywords
+  keywords = keywords.replace(/^\s+/, '');
+  keywords = keywords.replace(/\s+$/, '');
+  if (!keywords) {
+    wx.showToast({
+      title: '输入为空',
+    })
+    return
+  }
+  const results = products.filter(item => item.title.includes(keywords))
+  this.setData({
+    keywords,
+    results,
+  })
+}</pre>
+    </ul>
     <h3>&lt;textarea&gt;</h3>
     <h3>&lt;picker&gt;</h3>
     <h3>&lt;slider&gt;</h3>
     <h3>&lt;swiper&gt;</h3>
     <ul>
-      <li>绑定的是当前swiper-item - current</li>
+      <li>绑定的是当前 swiper-item - current</li>
       <li>拖动或设置为自动播放，查看绑定情况</li>
       <pre>cur:1</pre>
       <pre>

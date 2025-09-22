@@ -149,28 +149,167 @@ Component({
   </section>
   <h2>子组件 → 父组件</h2>
   <section>
-    <h3>采用事件绑定</h3>
+    <h3>基本过程</h3>
     <ol>
       <li>子组件绑定传统事件并在事件处理函数中 <span class="warn">触发|发送|triggerEvent</span> 自定义事件给父组件，可以指定传递的参数</li>
       <li>父组件绑定自定义事件并声明事件处理函数</li>
     </ol>
+    <h3>实现</h3>
+    <ol>
+      <li>子组件.wxml - 声明普通事件 tap 并指定事件处理函数 toFa</li>
+      <pre>
+// son.wxml
+&lt;view class='nav-item' bind:tap="toFa"&gt;to father&lt;/view&gt;</pre>
+      <li>子组件.js - 在事件处理函数 toFa 中，使用 triggerEvent() 触发自定义事件 toCal
+        <p>事件的命名建议使用小驼峰，如 toCal</p>
+        <p>可以传递参数；类型任意</p>
+      </li>
+      <pre>
+// son.js
+toFa() {
+    // 建议小驼峰
+    this.triggerEvent('toFa');
+    // 携带参数 para
+    this.triggerEvent('toFa', para);
+    // 也可以使用中划线
+    this.triggerEvent('to-fa');
+}</pre>
+      <li>父组件.json - 使用组件并引入</li>
+      <pre>
+// father.json
+{
+  "usingComponents": {
+    "son":"/components/son/son"
+  }
+}</pre>
+      <li>父组件.wxml - 使用子组件
+        <p>绑定子组件发送的事件 toFa 并指定事件处理函数 dealFa</p>
+        <p>传递什么事件就绑定什么事件</p>
+      </li>
+      <pre>
+// father.wxml
+&lt;son bind:toFa="dealFa"&gt;&lt;/son&gt;
+&lt;son bind:to-Fa="dealFa"&gt;&lt;/son&gt;</pre>
+      <li>父组件.js - 实现事件处理函数 dealFa
+        <p>如果有参数，则使用事件对象 e 获取</p>
+        <p>参数从 e.detail 中获取</p>
+      </li>
+      <pre>
+// father.js
+dealFa(e) {
+    console.log(e);
+    console.log(e.detail);
+}</pre>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 封装标签页组件</div>
     <ul>
-      <p>子组件wxml - 声明普通事件tap并指定事件处理函数toCalendar</p>
-      <pre>&lt;view class='nav-item' bindtap="toCalendar"&gt;navigation&lt;/view&gt;</pre>
-      <p>子组件js - 在事件处理函数 toCalendar 中触发自定义事件 toCal</p>
-      <pre>
-toCalendar() {
-    this.triggerEvent('toCal');
+      <li>单击时，当前项为活动项，active 样式类生效</li>
+      <figure>
+        <img src="./imgs/tabcard.png" alt="">
+        <img src="./imgs/tabcard1.png" alt="">
+        <img src="./imgs/tabcard2.png" alt="">
+        <img src="./imgs/tabcard3.png" alt="">
+        <figcaption>标签页组件</figcaption>
+      </figure>
+      <li>子组件.js
+        <p>定义组件属性 properties：lists，标签列表数据，数组</p>
+        <pre>
+lists: {
+  type: Array,
+  value: []
 }</pre>
-      <p>父组件 - 使用组件 xml - 绑定子组件发送的事件toCal并指定事件处理函数 dealCal</p>
-      <pre>&lt;nav bindtoCal="dealCal"&gt;&lt;/nav&gt;</pre>
-      <p>父组件 - 使用组件js - 实现事件处理函数dealCal</p>
-      <pre>
-dealCal() {
-    wx.navigateTo({
-        url: '../calendar/calendar',
-    })
+        <p>定义自己的数据 data：ind，用来高亮当前项</p>
+        <pre>ind: 0</pre>
+        <p>定义组件方法 method：标签切换及事件触发；携带参数</p>
+        <pre>
+doTab(e) {
+  const ind = e.currentTarget.dataset.ind
+  this.setData({
+    ind
+  })
+  this.triggerEvent('tabTap', ind)
 }</pre>
+      </li>
+      <li>子组件.wxml</li>
+      <pre>
+&lt;view class="tab-card card-item"&gt;
+  &lt;view class="tab-item {{ind==index?'active':''}}" wx:for="{{lists}}" wx:key="id" data-ind='{{index}}' bind:tap="doTab"&gt;
+    &lt;text&gt;{{item.label}}&lt;/text&gt;
+    &lt;text class="iconfont {{item.icon}}"&gt;&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/view&gt;</pre>
+      <li>子组件.wxss
+        <p>引入全局样式</p>
+        <p>补充/调整部分样式</p>
+        <p>增加组件的新样式</p>
+        <p>tab-card 用来标记组件根节点</p>
+      </li>
+      <pre>
+@import '../../app.wxss';
+
+// 调整部分样式
+.card-item {
+  padding: var(--p-m-g);
+}
+
+// 新样式
+.tab-item {
+  position: relative;
+  line-height: 2;
+}
+
+.tab-item.active::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 60%;
+  height: 4rpx;
+  transform: translateX(-50%);
+  background-color: var(--main-color);
+}</pre>
+      <li>父组件.json：引入子组件（略）</li>
+      <li>父组件.wxml
+        <p>额外使用一个 &lt;view&gt;，便于布局，如标签页内容较多时，实现粘性定位</p>
+        <p>绑定自定义事件 tabTap 并分配事件处理函数 onSel</p>
+        <p>指定属性 lists</p>
+      </li>
+      <pre>
+&lt;view class="tabcard"&gt;
+  &lt;tabCard lists='{{tabs}}' bind:tabTap='onSel'&gt;&lt;/tabCard&gt;
+&lt;/view&gt;</pre>
+      <li>父组件.js</li>
+      <pre>
+onSel(e) {
+  let cur = e.detail
+  // switch - case
+}</pre>
+      <li>父组件.wxss
+        <p>为容器指定粘性定位</p>
+      </li>
+      <pre>
+.tabcard {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}</pre>
+    </ul>
+    <h3>思考</h3>
+    <ul>
+      <li>标签页组件使用时，如何应用不同的样式？如调整为垂直方向</li>
+      <!-- <li>使用外部样式类；传入一个类控制；不指定则默认水平</li> -->
+      <figure>
+        <img src="./imgs/tabcard4.png" alt="">
+        <figcaption>垂直方向</figcaption>
+      </figure>
+      <li>如何移除高亮状态？仍然可以触发自定义事件</li>
+      <!-- <li>额外指定一个布尔属性用来控制高亮；默认是真</li> -->
+      <!-- <li>高亮使用外部样式；传入则高亮；不穿就不高亮</li> -->
+      <!-- <li>父组件的提供的数据属性中，每个数据项额外包含一个布尔字段用来控制是否高亮</li> -->
+      <figure>
+        <img src="./imgs/tabcard5.png" alt="">
+        <figcaption>取消高亮</figcaption>
+      </figure>
     </ul>
   </section>
   <!-- <div class="chap">组件行为*</div>

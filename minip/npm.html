@@ -16,10 +16,13 @@
     <span>&commat;NPM</span>
   </header>
   <section>
-    <div>. 需要 <a href="../node/index.html">Node.js</a> 环境支持</div>
+    <ul>
+      <li>需要 <a href="../node/index.html">Node.js</a> 环境支持</li>
+      <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html">NPM</a></li>
+    </ul>
     <h3>Steps</h3>
     <ol>
-      <li>安装依赖</li>
+      <li>在小程序 package.json 所在的目录中执行命令安装 npm 包：也就是项目根目录；不是小程序的 miniprogram 目录</li>
       <li>构建 NPM；构建完毕后，目录 miniprogram 变为 miniprogram_npm</li>
       <li>引入包</li>
       <li>使用包</li>
@@ -41,7 +44,7 @@
     <div>[<span class="iconfont icon-keyboard"></span>] 时间格式化 <a href="https://day.js.org/en/">Day.js</a></div>
     <ol>
       <li>安装依赖</li>
-      <p>. 在小程序根目录，右键 → 打开内建终端|小黑屋</p>
+      <p>. 在小程序项目根目录空白处，右键 → 打开内建终端|小黑屋；或在选择 "在外部终端窗口中打开"</p>
       <pre>npm install dayjs</pre>
       <li>构建 NPM</li>
       <p>. 菜单栏 → 工具 → 构建 npm</p>
@@ -49,8 +52,10 @@
       <p>. 在逻辑中引入</p>
       <pre>const dayjs = require('dayjs')</pre>
       <li>使用包</li>
-      <p>. 默认格式</p>
+      <p>. 默认格式 - 使用当前时间</p>
       <pre>console.log(dayjs().format());</pre>
+      <p>. 指定格式 - 使用某个日期变量</p>
+      <pre>console.log(dayjs(var_date).format('YYYY-MM-DD HH:mm:ss'));</pre>
     </ol>
   </section>
   <div id="footer"></div>
