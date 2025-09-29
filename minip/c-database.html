@@ -166,6 +166,18 @@ db.collection('todos').doc('todo-id').get()
           </tr>
           <tr>
             <td><a
+                href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/reference-sdk-api/database/collection/Collection.field.html">field</a>
+            </td>
+            <td>指定返回结果中记录需返回的字段</td>
+          </tr>
+          <tr>
+            <td><a
+                href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/reference-sdk-api/database/collection/Collection.skip.html">skip</a>
+            </td>
+            <td>指定查询返回结果时从指定序列后的结果开始返回，常用于分页</td>
+          </tr>
+          <tr>
+            <td><a
                 href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/reference-sdk-api/database/collection/Collection.limit.html">limit</a>
             </td>
             <td>指定查询结果集数量上限</td>
@@ -176,34 +188,26 @@ db.collection('todos').doc('todo-id').get()
             </td>
             <td>指定查询排序条件；可按多个字段排序</td>
           </tr>
-          <tr>
-            <td><a
-                href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/reference-sdk-api/database/collection/Collection.skip.html">skip</a>
-            </td>
-            <td>指定查询返回结果时从指定序列后的结果开始返回，常用于分页</td>
-          </tr>
-          <tr>
-            <td><a
-                href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/reference-sdk-api/database/collection/Collection.field.html">field</a>
-            </td>
-            <td>指定返回结果中记录需返回的字段</td>
-          </tr>
         </tbody>
       </table>
       <li>使用 where() 方法配合查询指令或逻辑指令指定查询条件</li>
-      <pre>db.collection('todos').where({price: _.gt(30)}).get().then().catch().finally()</pre>
-      <pre>db.collection('todos').where({price: _.in[10, 20, 30]}).get().then().catch().finally()</pre>
+      <pre>db.collection('todos').where({price: _.gt(30)}).get()</pre>
+      <pre>db.collection('todos').where({price: _.in[10, 20, 30]}).get()</pre>
       <li>全部获取时，控制台可能提示需要使用空的限定指定指令 where({})</li>
-      <pre>db.collection('todos').where({}).get().then().catch().finally()</pre>
-      <li>使用 limit() 方法调整返回记录数；但小程序端不能超过 20 条，云函数端不能超过 100 条</li>
-      <pre>db.collection('todos').limit().get().then().catch().finally()</pre>
-      <li>使用 orderBy() 排序；asc 升序；desc 降序</li>
-      <pre>db.collection('todos').limit().orderBy('age','asc').get().then().catch().finally()</pre>
-      <li>使用 skip() 忽略某些记录，如分页</li>
-      <pre>db.collection('todos').limit().skip(10).orderBy('age','asc').get().then().catch().finally()</pre>
+      <pre>db.collection('todos').where({}).get()</pre>
       <li>使用 field() 返回指定字段；不需要返回所有的字段</li>
-      <pre>db.collection('todos').field({'age':true}).get().then().catch().finally()</pre>
+      <pre>db.collection('todos').field({'age':true}).get()</pre>
+      <li>联合使用</li>
+      <pre>db.collection('todos').where({payStatus:true}).field({'age':true}).get()</pre>
+      <li>使用 skip() 忽略某些记录，如分页；经常配合其他指令一起使用</li>
+      <pre>db.collection('todos').skip(10).get()</pre>
+      <pre>db.collection('todos').skip(10).limit(10).get()</pre>
+      <li>使用 limit() 方法调整返回记录数；但小程序端不能超过 20 条，云函数端不能超过 100 条</li>
+      <pre>db.collection('todos').limit(10).get()</pre>
+      <li>使用 orderBy() 排序；asc 升序；desc 降序</li>
+      <pre>db.collection('todos').limit(10).orderBy('age','asc').get()</pre>
     </ul>
+    <div class="tips">先找到需要的记录 where，再挑选需要的字段 field，然后决定要多少数据 limit，最后指定排序 orderBy</div>
     <div>[<span class="iconfont icon-keyboard"></span>] 最佳编码体验：async-await 方式</div>
     <ul>
       <li>先封装再调用</li>

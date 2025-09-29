@@ -445,6 +445,58 @@ if (existingItem) {
   cart.push({ ...product, quantity: 1 })
 }</pre>
     </div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 更新购物车</div>
+    <div>
+      <div>将购物车 carts 中的商品图片更新为商品列表 products 中对应id的商品图片</div>
+      <pre>
+// 示例数据
+const products = [
+  { id: 1, url: 'https://example.com/1', name: 'Item 1' },
+  { id: 2, url: 'https://example.com/2', name: 'Item 2' },
+  { id: 3, url: 'https://example.com/3', name: 'Item 3' }
+];
+
+const carts = [
+  { id: 1, url: '', name: 'Item B1' },
+  { id: 2, url: 'old-url', name: 'Item B2' }
+];
+
+// 使用 map 更新 carts 中的 url 属性
+const updatedB = carts.map(itemB => {
+  // 在数组 products 中查找 id 相同的项
+  const matchedItem = products.find(itemA => itemA.id === itemB.id);
+  // 如果找到，使用 products 中的 url，否则保持原样
+  return matchedItem ? { ...itemB, url: matchedItem.url } : itemB;
+});
+
+console.log(updatedB);
+// 输出：
+// [
+//   { id: 1, url: 'https://example.com/1', name: 'Item B1' },
+//   { id: 2, url: 'https://example.com/2', name: 'Item B2' }
+// ]</pre>
+      <div>如果 products 较大，每次 find 都会遍历，效率较低。可以先用 Map 或对象建立索引</div>
+      <pre>
+const urlMap = new Map(a.map(item => [item.id, item.url]));
+
+const updatedB = b.map(itemB => ({
+  ...itemB,
+  url: urlMap.get(itemB.id) || itemB.url  // 如果没找到，保持原 url
+}));</pre>
+      <div>为 products 中的每个对象建立一个以 id 为键、url 为值的查找表（索引），以便后续能快速通过 id 获取对应的 url，避免重复遍历数组</div>
+      <div>urlMap：键值对数组</div>
+      <pre>
+[
+  [1, 'https://a.com/1'],
+  [2, 'https://a.com/2'],
+  [3, 'https://a.com/3']
+]</pre>
+      <div>使用 get(key) 快速获取值</div>
+      <div>复杂度从 O(n*m) 降低到 O(n+m)，更适合大数据量场景</div>
+      <div>如果你的数组 a 有 1000 个元素，b 有 500 个，使用 find 总体可能需要最多 50 万次比较，而用 Map 索引只需要约 1500 次操作（1000 构建 + 500 查找），效率提升巨大</div>
+      <div>products.find(item => item.id === id) - 每次都要遍历整个数组 - O(n)</div>
+      <div>urlMap.get(id) - 哈希表查找，极快 - O(1)</div>
+    </div>
     <h3>归并方法 Subtotal</h3>
     <table>
       <caption>归并方法 subtotal</caption>

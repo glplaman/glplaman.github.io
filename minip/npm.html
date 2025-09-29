@@ -22,13 +22,16 @@
     </ul>
     <h3>Steps</h3>
     <ol>
-      <li>在小程序 package.json 所在的目录中执行命令安装 npm 包：也就是项目根目录；不是小程序的 miniprogram 目录</li>
+      <li>定位到小程序的 miniprogram 目录；默认包管理目录</li>
+      <li>初始化；也可以通过安装依赖强制生成，但是会丢失部分信息，不建议</li>
+      <li>安装依赖</li>
       <li>构建 NPM；构建完毕后，目录 miniprogram 变为 miniprogram_npm</li>
-      <li>引入包</li>
+      <li>引入包 - require</li>
       <li>使用包</li>
     </ol>
     <h3>手动构建 NPM</h3>
     <ul>
+      <li>也可以通过修改配置更改小程序的包管理目录，如更改至在项目根目录</li>
       <li>打开项目配置文件 project.config.json，修改相关字段如下</li>
       <li>重新启动开发者工具</li>
       <li>执行构建</li>
@@ -41,22 +44,22 @@
   }
 ],</pre>
     </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] 时间格式化 <a href="https://day.js.org/en/">Day.js</a></div>
-    <ol>
-      <li>安装依赖</li>
-      <p>. 在小程序项目根目录空白处，右键 → 打开内建终端|小黑屋；或在选择 "在外部终端窗口中打开"</p>
-      <pre>npm install dayjs</pre>
-      <li>构建 NPM</li>
-      <p>. 菜单栏 → 工具 → 构建 npm</p>
-      <li>引入包</li>
-      <p>. 在逻辑中引入</p>
-      <pre>const dayjs = require('dayjs')</pre>
-      <li>使用包</li>
-      <p>. 默认格式 - 使用当前时间</p>
-      <pre>console.log(dayjs().format());</pre>
-      <p>. 指定格式 - 使用某个日期变量</p>
-      <pre>console.log(dayjs(var_date).format('YYYY-MM-DD HH:mm:ss'));</pre>
-    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 使用 <a href="https://day.js.org/en/">Day.js</a> 格式化 <a
+        href="./timezone.html">日期和时间</a></div>
+  </section>
+  <h2>云函数端使用</h2>
+  <section>
+    <h3>云函数单独使用</h3>
+    <ul>
+      <li>每个云函数除了主逻辑文件 index.js 外，还有一个 package.json，用以管理 NPM</li>
+      <li>定位到当前云函数目录，安装依赖并引入、使用</li>
+      <li>不需要上传 module</li>
+    </ul>
+    <h3>云函数共享 - todo</h3>
+    <ul>
+      <li>定位到所有云函数的根目录 cloudfunctions</li>
+      <li>安装依赖，共所有云函数使用</li>
+    </ul>
   </section>
   <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>

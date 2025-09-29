@@ -201,7 +201,24 @@ arr: [1, 2, 3, 4, 5]</pre>
   &lt;view&gt;{{item}}&lt;/view&gt;
 &lt;/block&gt;</pre>
     </ul>
-    <div class="tips">可以使用无语义化的模板标签 &lt;block&gt;作为容器，用来分隔多层逻辑或控制一组组件的渲染</div>
+    <h3>wx:for vs wx:if</h3>
+    <ul>
+      <li>有别于 Vue，小程序中俩者可以一起使用</li>
+      <li>wx:for 的优先级高于 wx:if</li>
+      <li>这意味着先执行循环，然后对每个循环项进行条件判断</li>
+      <li>只有满足条件的项才会被渲染</li>
+      <li>只渲染前3条数据
+        <p>错误 - 不支持基本操作</p>
+        <pre>&lt;view wx:for="{{arr.slice(0,3)}}" wx:key="index"&gt;{{item}}&lt;/view&gt;</pre>
+        <p>正确</p>
+        <pre>&lt;view wx:for="{{arr}}" wx:key="index" wx:if="{{index&lt;3}}"&gt;{{item}}&lt;/view&gt;</pre>
+      </li>
+      <li>建议：使用无语义化的模板标签 &lt;block&gt;作为容器，用来分隔多层逻辑或控制一组组件的渲染</li>
+      <pre>
+&lt;block wx:for="{{arr}}" wx:key="index"&gt;
+  &lt;view wx:if="{{index&lt;3}}"&gt;{{item}}&lt;/view&gt;
+&lt;/block&gt;</pre>
+    </ul>
   </section>
   <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>

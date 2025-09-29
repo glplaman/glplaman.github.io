@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微信支付 Pay</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>微信支付</h1>
+    <span>&commat;Pay</span>
+  </header>
+  <section>
+    <h3>支付过程</h3>
+    <ol>
+      <li>订单入库
+        <p>除了商品信息外，还要包括商户单号 outTradeNo，用于后期支付回调更新订单状态</p>
+      </li>
+      <li>统一下单接口 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/reference-sdk-api/open/pay/CloudPay.unifiedOrder.html">unifiedOrder</a>
+        <p>body：支付标题</p>
+        <p>outTradeNo：商户单号；只能使用1次</p>
+        <p>totalFee：支付金额；单位是分，要进行换算</p>
+        <p>functionName：回调函数；支付成功后修改订单状态；云函数，通常命名为 pay_cb</p>
+        <p>subMchId：商户号</p>
+        <pre>
+cloud.cloudPay.unifiedOrder({
+  "body": "邯郸市中西医结合医院",
+  "outTradeNo": event.outTradeNo,
+  "totalFee": Math.round(event.discounted * 100),
+  "functionName": "pay_cb",
+  "subMchId": "1661689915",
+  "envId": "cloudbase-0ghw2h06825e99f7",
+  "spbillCreateIp": "127.0.0.1",
+  "tradeType": 'JSAPI',
+})</pre>
+      </li>
+      <li>微信支付
+        <p>支付成功后，返回交易单号 transactionId 和支付时间 timeEnd 等核心数据</p>
+        <p>这些数据被传递给回调函数，修改订单状态</p>
+      </li>
+      <li>更新订单状态
+        <p>支付回调函数根据商户单号 outTradeNo 更新数据库对应的记录</p>
+        <p>回调函数根据接受到的参数，查询订单并修改订单状态</p>
+        <p>中间还应该加上异常处理，如订单是否存在？状态是否已经更改？</p>
+        <pre>
+const {
+  outTradeNo,
+  transactionId,
+  timeEnd,
+  returnCode,
+  resultCode
+} = event;
+
+const orderRes = await db.collection('orders').where({
+    outTradeNo
+  }).get();
+
+const order = orderRes.data[0];
+
+const updateRe = await db.collection('orders').doc(order._id).update({
+  data: {
+    payStatus: true,
+    transactionId,
+    timeEnd
+  }
+})</pre>
+      </li>
+    </ol>
+    <div>[<span class="iconfont icon-keyboard"></span>] 使用</div>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

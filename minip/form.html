@@ -178,6 +178,7 @@ getAvatar(e){
       <li>单行文本输入框；块元素 block</li>
       <li>原生组件，字体是系统字体，<span class="warn">无法设置</span> font-family</li>
       <table>
+        <caption>常见属性</caption>
         <thead>
           <tr>
             <th>item</th>
@@ -300,6 +301,51 @@ getAvatar(e){
   model:value='{{keyword}}' 
   bindconfirm="queryProducts" 
   confirm-type="search" /&gt;</pre>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 设置用户昵称</div>
+    <ul>
+      <li>可以手动输入</li>
+      <li>可以直接获取昵称</li>
+      <li>使用 bindinput() 和 bindconfirm() 获取数据</li>
+      <li>使用 onBlur() 保存数据</li>
+      <pre>
+&lt;input type="nickname" 
+  confirm-type="done" 
+  placeholder="your nickname" 
+  value="{{userInfo.userName}}" 
+  bindinput="onIpt" 
+  bindconfirm="onIpt" 
+  bindblur="onIptBlur" /&gt;</pre>
+      <pre>
+onIpt(e) {
+  // 只获取不更新试图
+  this.data.userInfo.userName = e.detail.value
+},
+
+// 异步入库
+async onIptBlur(e) {
+  this.setData({
+    'userInfo.userName': e.detail.value
+  })
+  wx.setStorageSync('userInfo', this.data.userInfo);
+  app.globalData.userInfo = this.data.userInfo
+
+  const res = await this.updateLib({
+    userName: e.detail.value
+  })
+  if (res.stats.updated == 1) {
+    wx.showToast({
+      title: '昵称更新完毕',
+    })
+  }
+},
+
+async updateLib(obj) {
+  console.log(this.data.userInfo._id);
+  return await wx.cloud.database().collection('users').doc(this.data.userInfo._id).update({
+    data: obj
+  })
+}</pre>
     </ul>
     <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/radio.html">&lt;radio&gt;
         &lt;radio-group&gt;</a></h3>
