@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>收藏 Favorites</title>
+  <link rel="stylesheet" href="../css/exp2024.css">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="w">
+    <h1>收藏</h1>
+    <h4>Favorites</h4>
+    <dl>
+      <dt>简介 Overview</dt>
+      <dd>
+        <ul>
+          <li>本地缓存 - 由用户自己维护</li>
+          <li>全局数据 - 便于页面共享</li>
+          <li>使用 <a href="../web/js/map.html">映射 Map()</a> 数据结构 - 提高访问效率：存储商品的数据库记录 _id 和收藏日期 createdTime</li>
+          <pre>
+favorites: Map(2)
+  [[Entries]]
+    0: {"c8872b6468ad21f801f386287db82346" => "2025/9/30上午12:52:54"}
+    1: {"c8872b6468ad21f801f386287db82605" => "2025/10/1下午1:39:34"}
+  size: 2</pre>
+        </ul>
+      </dd>
+      <dt>详情页 Details</dt>
+      <dd>
+        <ul>
+          <li>定义数据 isFavor 表示商品收藏状态</li>
+          <li>页面加载时，根据 _id 从全局数据 products 中读取商品</li>
+          <li>从购物车数据中，查找是否已经有添加；有就使用购物车中商品的数量；否则指定为1</li>
+          <li>并从全局数据 favorites 中查找是否存在 _id，如果存在，则商品为收藏状态</li>
+          <pre>
+onLoad(options) {
+  wx.showLoading({
+    title: 'Loading...',
+  })
+  const carts = app.globalData.carts
+  const products = app.globalData.products
+  const favorites = app.globalData.favorites
+
+  const product = products.find(item => item._id == options._id)
+  const cart = carts.find(item => item._id == options._id)
+  product.quantity = cart ? cart.quantity : 1
+  let isFavor = favorites.get(product._id) ? true : false
+  this.setData({
+    product,
+    carts,
+    isFavor
+  })
+  wx.hideLoading()
+}</pre>
+          <li>单击收藏图标，切换收藏状态</li>
+          <li>更新全局数据 favorites</li>
+          <pre>
+toggleFavorite() {
+  let isFavor = this.data.isFavor
+  const product = this.data.product
+  const favorites = app.globalData.favorites
+  isFavor = !isFavor
+
+
+  if (isFavor) {
+    favorites.set(product._id, new Date().toLocaleString())
+    wx.showToast({
+      title: '收藏成功',
+    })
+  } else {
+    favorites.delete(product._id)
+    wx.showToast({
+      title: '收藏取消',
+    })
+  }
+  this.setData({
+    isFavor
+  })
+  app.globalData.favorites = favorites
+  wx.setStorageSync('favorites', Object.fromEntries(favorites))
+}</pre>
+          <li>没有启用下拉刷新</li>
+          <li>没有封装函数</li>
+        </ul>
+      </dd>
+      <dt>收藏页 Favorite</dt>
+      <dd>
+        <ul>
+          <li>页面加载时，调用封装的函数，获取收藏数据</li>
+          <pre>
+onLoad(options) {
+  this.loadFavor()
+}</pre>
+          <li>单击收藏图标时，取消收藏，并更新数据</li>
+          <li>取消收藏，需要征求用户同意</li>
+          <pre>
+cancelFavorite(e) {
+  wx.showModal({
+    title: '温馨提示',
+    content: '确定要取消收藏吗',
+    complete: (res) => {
+      if (res.confirm) {
+        const favorites = app.globalData.favorites
+        const _id = e.currentTarget.dataset._id;
+        favorites.delete(_id)
+
+        app.globalData.favorites = favorites
+        wx.setStorageSync('favorites', Object.fromEntries(favorites))
+
+        this.loadFavor()
+
+        wx.showToast({
+          title: '收藏取消',
+        })
+      }
+    }
+  })
+}</pre>
+          <li>单击商品部分，跳转到详情页</li>
+          <li>这里采用声明式导航，并传递商品记录的 _id 作为查询参数</li>
+          <li>为了避免详情页返回到收藏页的额外处理，使用了重定向</li>
+          <pre>
+&lt;view class="card" wx:for='{{products}}' wx:key="id"&gt;
+  &lt;navigator class="card-item" url="../../details/details?_id={{item._id}}" open-type="redirect"&gt;
+    &lt;product product='{{item}}'&gt;&lt;/product&gt;
+    &lt;view catch:tap="cancelFavorite" data-_id='{{item._id}}'&gt;
+      &lt;text class="iconfont icon-favorites-fill txt-xl warn"&gt;&lt;/text&gt;
+    &lt;/view&gt;
+  &lt;/navigator&gt;
+&lt;/view&gt;</pre>
+          <li>支持下拉刷新</li>
+          <li>需要在页面的配置文件 .json 中开启</li>
+          <pre>
+onPullDownRefresh() {
+  this.loadFavor()
+}</pre>
+          <li>封装数据加载</li>
+          <li>根据全局数据匹配收藏的商品</li>
+          <li>添加收藏字段</li>
+          <li>反向；实现排序</li>
+          <pre>
+loadFavor() {
+  wx.showLoading({
+    title: 'Loading...',
+  })
+  const favorites = app.globalData.favorites
+  const products = app.globalData.products.filter(item => favorites.get(item._id))
+  products.map(item => item.createdTime = favorites.get(item._id))
+  products.reverse()
+
+  this.setData({
+    products
+  })
+  wx.hideLoading();
+  wx.stopPullDownRefresh();
+}</pre>
+          <li>其他</li>
+        </ul>
+      </dd>
+      <figure>
+        <img src="./imgs/pro-favorite.png" alt="">
+        <figcaption>收藏页</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

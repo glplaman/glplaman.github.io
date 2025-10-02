@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>输入 Input</title>
+  <link rel="stylesheet" href="../css/exp2024.css">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="w">
+    <h1>输入</h1>
+    <h4>Input</h4>
+    <dl>
+      <dt>简介 Overview</dt>
+      <dd>
+        <ul>
+          <li>修改数据</li>
+          <li>获取数据</li>
+          <li>更新远程数据</li>
+          <li>不建议使用 model，小程序的支持不太好；有时候无法完成输入</li>
+        </ul>
+      </dd>
+      <dt>昵称 Nickname</dt>
+      <dd>
+        <figure>
+          <img src="./imgs/ipt1.png" alt="">
+          <figcaption>修改昵称</figcaption>
+        </figure>
+        <ul>
+          <li>用户中心</li>
+          <li>可以直接获取昵称</li>
+          <li>还可以手动输入，并使用软键盘确定</li>
+          <pre>
+&lt;input type="nickname" 
+    value="{{userInfo.userName}}" 
+    placeholder="your nickname" 
+    confirm-type="done" 
+    bindinput="onIpt"
+    bindconfirm="onIptConfirm" /&gt;</pre>
+          <li>定义数据绑定</li>
+          <pre>
+userInfo: {
+  userName: ''
+}</pre>
+          <li>使用 bindinput() 修改数据</li>
+          <li>为了防抖，可以把视图更新放在确认 bindconfirm()</li>
+          <pre>
+onIpt(e) {
+  this.data.userInfo.userName = e.detail.value
+}</pre>
+          <li>使用 bindconfirm() 更新数据</li>
+          <li>如果选择了用户昵称，则不会有 log()</li>
+          <li>如果其他业务中有需要更新视图的数据，则一起更新输入数据，避免多次 setData()</li>
+          <pre>
+onIptConfirm(e) {
+  console.log('confirm', e);
+  this.setData({
+    'userInfo.userName': e.detail.value
+  })
+  // 其他业务，如入库
+}</pre>
+        </ul>
+      </dd>
+      <dt>搜索 Search</dt>
+      <dd>
+        <figure>
+          <img src="./imgs/ipt0.png" alt="">
+          <figcaption>商品搜索</figcaption>
+        </figure>
+        <ul>
+          <li>与修改昵称不同，用户还可以单击按钮开始执行逻辑</li>
+          <li>结构上多了一个按钮，并绑定事件处理函数；同输入确认事件函数</li>
+          <li>事件处理函数是共享的，所以只能获取数据；无法获取使用事件对象</li>
+          <li>其它：自动聚焦；软键盘为搜索</li>
+          <pre>
+&lt;input type="text" focus 
+    value='{{keywords}}'
+    placeholder="请输入你要查询的商品名称" 
+    confirm-type="search" 
+    bindinput="setQuery" 
+    bindconfirm="doQuery" /&gt;
+&lt;button bind:tap="doQuery"&gt;搜索&lt;/button&gt;</pre>
+          <pre>
+setQuery(e) {
+  this.data.keywords = e.detail.value
+},
+
+doQuery() {
+  let keywords = this.data.keywords
+  // 搜索业务
+}</pre>
+        </ul>
+      </dd>
+      <dt>价格 Price</dt>
+      <dd>
+        <figure>
+          <img src="./imgs/ipt2.png" alt="">
+          <figcaption>修改价格</figcaption>
+        </figure>
+        <ul>
+          <li>以模态框/弹窗的形式完成</li>
+          <li>单击确定按钮，完成价格的修改</li>
+          <li>使用云函数；提升修改权限</li>
+          <li>请自行完成</li>
+        </ul>
+      </dd>
+      <dt>优化</dt>
+      <dd>
+        <ul>
+          <li>防抖</li>
+          <li>验证</li>
+        </ul>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

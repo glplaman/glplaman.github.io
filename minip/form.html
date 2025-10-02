@@ -265,14 +265,13 @@ getAvatar(e){
       maxlength="8" 
       value="{{user.uname}}" /&gt;
 &lt;/view&gt;</pre>
-      <li>昵称输入 - nickname；会自动拉取你的微信昵称</li>
+      <li>昵称输入 - nickname；会自动拉取你的微信昵称；但是只能获取，无法保存；所以还必须借助其他事件实现；更多信息，请访问 <a href="./pro_input.html">设置用户昵称 - 用户中心</a>
+      </li>
       <pre>
 &lt;view class="item"&gt;
     &lt;text&gt;昵称&lt;/text&gt;
     &lt;input type="nickname" 
-      placeholder="您的昵称" 
-      maxlength="8" 
-      value="{{user.uname}}" /&gt;
+      placeholder="您的昵称"/&gt;
 &lt;/view&gt;</pre>
       <li>密码输入 - safe-password；隐藏真实信息</li>
       <pre>
@@ -301,51 +300,6 @@ getAvatar(e){
   model:value='{{keyword}}' 
   bindconfirm="queryProducts" 
   confirm-type="search" /&gt;</pre>
-    </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] 设置用户昵称</div>
-    <ul>
-      <li>可以手动输入</li>
-      <li>可以直接获取昵称</li>
-      <li>使用 bindinput() 和 bindconfirm() 获取数据</li>
-      <li>使用 onBlur() 保存数据</li>
-      <pre>
-&lt;input type="nickname" 
-  confirm-type="done" 
-  placeholder="your nickname" 
-  value="{{userInfo.userName}}" 
-  bindinput="onIpt" 
-  bindconfirm="onIpt" 
-  bindblur="onIptBlur" /&gt;</pre>
-      <pre>
-onIpt(e) {
-  // 只获取不更新试图
-  this.data.userInfo.userName = e.detail.value
-},
-
-// 异步入库
-async onIptBlur(e) {
-  this.setData({
-    'userInfo.userName': e.detail.value
-  })
-  wx.setStorageSync('userInfo', this.data.userInfo);
-  app.globalData.userInfo = this.data.userInfo
-
-  const res = await this.updateLib({
-    userName: e.detail.value
-  })
-  if (res.stats.updated == 1) {
-    wx.showToast({
-      title: '昵称更新完毕',
-    })
-  }
-},
-
-async updateLib(obj) {
-  console.log(this.data.userInfo._id);
-  return await wx.cloud.database().collection('users').doc(this.data.userInfo._id).update({
-    data: obj
-  })
-}</pre>
     </ul>
     <h3><a href="https://developers.weixin.qq.com/miniprogram/dev/component/radio.html">&lt;radio&gt;
         &lt;radio-group&gt;</a></h3>
@@ -416,6 +370,7 @@ getGender(e){
     &lt;radio color="#3498db" value="女" checked="{{user.ugender=='女'}}" /&gt;女
 &lt;/radio-group&gt;</pre>
       <li>使用 &lt;label&gt; 改写上例，提升用户体验</li>
+      <li>使用 <a href="./api-ui.html">showActionSheet</a> 实现</li>
     </ul>
     <div>[<span class="iconfont icon-keyboard"></span>] 样式</div>
     <ul>
