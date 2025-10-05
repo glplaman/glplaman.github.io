@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件 Components</title>
+  <link rel="stylesheet" href="../css/exp2024.css">
+</head>
+
+<body>
+  <header>
+  </header>
+  <div class="w">
+    <h1>组件</h1>
+    <h4>Components</h4>
+    <dl>
+      <dt class="ol">简介 Overview</dt>
+      <dd>提高代码复用</dd>
+      <dd>简化维护</dd>
+      <dd>指定唯一根节点，使用同名样式类</dd>
+      <dd>先定义组件；再引入并使用组件</dd>
+      <dd>使用时，额外使用一个 &lt;view&gt; 包裹组件，便于布局，如定位</dd>
+      <dt>底线组件 deadline</dt>
+      <dd>页面抵达底部时或者没有更多数据可以加载时，给出提示</dd>
+      <dd>逻辑：需要一个提示信息，字符串类型，指定默认内容</dd>
+      <pre>
+properties: {
+  tips: {
+    type: String,
+    value: '我是有底线的'
+  }
+}</pre>
+      <dd>结构：渲染提示信息</dd>
+      <pre>&lt;view class="deadline"&gt;- {{tips}} -&lt;/view&gt;</pre>
+      <dd>样式略</dd>
+      <dt>空组件 emptyCom</dt>
+      <dd>应用：购物车或收藏等为空时，利用条件渲染展示空组件</dd>
+      <dd>属性：图标和标题；图标使用 <a href="../web/iconfont.html">阿里字体图标 Iconfont</a></dd>
+      <dd>逻辑 - 仅定义图标和标题属性；默认是购物车</dd>
+      <pre>
+properties: {
+  icon: {
+    type: String,
+    value: 'icon-cart-empty'
+  },
+  title: {
+    type: String,
+    value: '购物车'
+  }
+}</pre>
+      <dd>结构</dd>
+      <pre>
+&lt;view class="empty-com"&gt;
+  &lt;text class="iconfont {{icon}}"&gt;&lt;/text&gt;
+  &lt;text&gt;{{title}}空空的，去逛逛吧&lt;/text&gt;
+&lt;/view&gt;</pre>
+      <dd>样式 - 使用到了字体图标，需要额外引用一次；其他略</dd>
+      <pre>@import '../../utils/iconfont.wxss';</pre>
+      <dt>商品组件 product</dt>
+      <dd>展示商品图片、名称和价格等基本信息</dd>
+      <dd>其它信息使用插槽拓展</dd>
+      <dd>逻辑 - 定义一个对象，传递商品信息</dd>
+      <pre>
+properties: {
+  product: Object
+}</pre>
+      <dd>结构</dd>
+      <pre>
+&lt;view class="product"&gt;
+  &lt;view class="img-wrap"&gt;
+    &lt;image src="{{product.imageThumb}}" mode="aspectFit" /&gt;
+  &lt;/view&gt;
+  &lt;view class="info"&gt;
+    &lt;view class="title"&gt;{{product.title}}&lt;/view&gt;
+    &lt;view class="item"&gt;￥&lt;text class="price"&gt;{{product.price}}&lt;/text&gt; 销量{{product.sold}}&lt;/view&gt;
+    &lt;slot name="extra"&gt;&lt;/slot&gt;
+  &lt;/view&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/view&gt;</pre>
+      <dt>标签组件 tabCard</dt>
+      <dd>单击时，当前项为活动项，active 样式类生效</dd>
+      <figure>
+        <img src="./imgs/tabcard.png" alt="">
+        <img src="./imgs/tabcard1.png" alt="">
+        <img src="./imgs/tabcard2.png" alt="">
+        <img src="./imgs/tabcard3.png" alt="">
+        <figcaption>标签页组件</figcaption>
+      </figure>
+      <dd>定义一个数组类型的属性 lists，标签列表数据</dd>
+      <pre>
+lists: {
+  type: Array,
+  value: []
+}</pre>
+      <dd>定义自己的数据 ind，用来指示当前高亮项</dd>
+      <pre>ind: 0</pre>
+      <dd>定义组件方法 selTab：标签切换及事件触发；使用事件对象获取携带的参数</dd>
+      <pre>
+selTab(e) {
+  const ind = e.currentTarget.dataset.ind
+  this.setData({
+    ind
+  })
+  this.triggerEvent('tabTap', ind)
+}</pre>
+      <dd>数据列表渲染；绑定自定义属性；指定事件处理函数</dd>
+      <pre>
+&lt;view class="tab-card card-item"&gt;
+  &lt;view class="tab-item {{ind==index?'active':''}}" wx:for="{{lists}}" wx:key="id" data-ind='{{index}}' bind:tap="doTab"&gt;
+    &lt;text&gt;{{item.label}}&lt;/text&gt;
+    &lt;text class="iconfont {{item.icon}}"&gt;&lt;/text&gt;
+  &lt;/view&gt;
+&lt;/view&gt;</pre>
+      <dd>引入全局样式</dd>
+      <dd>补充/调整部分样式</dd>
+      <dd>增加组件的新样式</dd>
+      <pre>
+@import '../../app.wxss';
+
+// 调整部分样式
+.card-item {
+  padding: var(--p-m-g);
+}
+
+// 新样式
+.tab-item {
+  position: relative;
+  line-height: 2;
+}
+
+.tab-item.active::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 60%;
+  height: 4rpx;
+  transform: translateX(-50%);
+  background-color: var(--main-color);
+}</pre>
+      <dt>父组件使用</dt>
+      <dd>.json：引入子组件（略）</dd>
+      <dd>.wxml：额外使用一个 &lt;view&gt;，便于布局，如标签页内容较多时，实现粘性定位</dd>
+      <pre>
+&lt;view class="tabcard"&gt;
+  &lt;tabCard lists='{{tabs}}' bind:tabTap='onSel'&gt;&lt;/tabCard&gt;
+&lt;/view&gt;</pre>
+      <dd>.js：指定属性 lists；绑定自定义事件 tabTap 并分配事件处理函数 onSel</dd>
+      <pre>
+onSel(e) {
+  let cur = e.detail
+  // switch - case
+}</pre>
+      <dd>.wxss：为容器指定粘性定位</dd>
+      <pre>
+.tabcard {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}</pre>
+      <dt>思考</dt>
+      <dd>标签页组件使用时，如何应用不同的样式？如调整为垂直方向</dd>
+      <!-- <dd>使用外部样式类；传入一个类控制；不指定则默认水平</dd> -->
+      <figure>
+        <img src="./imgs/tabcard4.png" alt="">
+        <figcaption>垂直方向</figcaption>
+      </figure>
+      <dd>如何移除高亮状态？仍然可以触发自定义事件</dd>
+      <!-- <dd>额外指定一个布尔属性用来控制高亮；默认是真</dd> -->
+      <!-- <dd>高亮使用外部样式；传入则高亮；不穿就不高亮</dd> -->
+      <!-- <dd>父组件的提供的数据属性中，每个数据项额外包含一个布尔字段用来控制是否高亮</dd> -->
+      <figure>
+        <img src="./imgs/tabcard5.png" alt="">
+        <figcaption>取消高亮</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

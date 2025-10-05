@@ -7,8 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tracert</title>
   <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="../css/sn.css">
-  <link rel="stylesheet" href="../css/code.css">
 </head>
 
 <body>
@@ -22,11 +20,8 @@
       <dd>多用于内部检测网络故障节点情况；处于安全，外网部分网络主机不允许被追踪，可能出现请求超时的情况</dd>
       <dd>ICMP的体现</dd>
       <dd>Ctrl+C强制退出测试状态</dd>
-      <dt>命令格式</dt>
-      <dd>
-        <figure class="code">
-          <figcaption>使用tracert /?查看完整命令</figcaption>
-          <pre>
+      <dd>使用tracert /?查看完整命令</dd>
+      <pre>
 C:\Users\cnplaman>tracert /?
 
 用法: tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout]
@@ -41,7 +36,6 @@ C:\Users\cnplaman>tracert /?
     -S srcaddr         要使用的源地址(仅适用于 IPv6)。
     -4                 强制使用 IPv4。
     -6                 强制使用 IPv6。</pre>
-        </figure>
       </dd>
       <dd>-d：不解析主机名，只使用IP地址；命令的位置只能在host/IP前面；可以加快追踪时间</dd>
       <dd>-h：指定最大跃点数追踪路由；查跟设备最近的几个连接点的问题，通常在网络问题中，先要排除前端跟设备直接连接的最近的几个设备是否有故障，如果这几个近点跟踪可以正常互通，那么问题可能就出现在后端</dd>
@@ -53,31 +47,27 @@ C:\Users\cnplaman>tracert /?
       <dt>结果分析</dt>
       <dd>发给路由器3个ICMP包，通过往返时间检测网络情况</dd>
       <dd>如果返回的大多是*或请求超时，说明这个IP在各个路由节点都有问题</dd>
-      <dd>
-        <table class="tbl-sn">
-          <caption>结果分析</caption>
-          <tr>
-            <td>参数1</td>
-            <td>参数2</td>
-            <td>参数3</td>
-            <td>参数4</td>
-            <td>参数5</td>
-          </tr>
-          <tr>
-            <td>跃点数</td>
-            <td>第1个ICMP往返时间</td>
-            <td>第2个ICMP往返时间</td>
-            <td>第3个ICMP往返时间</td>
-            <td>途经路由器的IP地址；如果有主机名，还会解析</td>
-          </tr>
-        </table>
-      </dd>
-      <dd class="example-sn">本机到默认网关的路由情况</dd>
-      <dd>. 首先获取本机IP地址和网关，再测试到默认网关的路由情况：显然，只有一跳即可到达默认网关</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>本机到默认网关的路由</figcaption>
-          <pre>
+      <table>
+        <caption>结果分析</caption>
+        <tr>
+          <td>参数1</td>
+          <td>参数2</td>
+          <td>参数3</td>
+          <td>参数4</td>
+          <td>参数5</td>
+        </tr>
+        <tr>
+          <td>跃点数</td>
+          <td>第1个ICMP往返时间</td>
+          <td>第2个ICMP往返时间</td>
+          <td>第3个ICMP往返时间</td>
+          <td>途经路由器的IP地址；如果有主机名，还会解析</td>
+        </tr>
+      </table>
+      <div>[<span class="iconfont icon-mouse1"></span>] 本机到默认网关的路由情况</div>
+      <dd>首先获取本机IP地址和网关，再测试到默认网关的路由情况：显然，只有一跳即可到达默认网关</dd>
+      <dd>本机到默认网关的路由</dd>
+      <pre>
 C:\Users\cnplaman>tracert 172.18.84.254
 
 通过最多 30 个跃点跟踪到 172.18.84.254 的路由
@@ -85,14 +75,10 @@ C:\Users\cnplaman>tracert 172.18.84.254
   1     4 ms     2 ms     2 ms  172.18.84.254
 
 跟踪完成。</pre>
-        </figure>
-      </dd>
-      <dd class="example-sn">本机到大叔小站的路由</dd>
+      <div>[<span class="iconfont icon-mouse1"></span>] 本机到大叔小站的路由</div>
       <dd>第一跳显然应该先到本机的默认网关；</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>本机到baidu的路由</figcaption>
-          <pre>
+      <dd>本机到baidu的路由</dd>
+      <pre>
 C:\Users\cnplaman>tracert glpla.github.io
 
 通过最多 30 个跃点跟踪
@@ -116,14 +102,10 @@ C:\Users\cnplaman>tracert glpla.github.io
  16   345 ms   306 ms   304 ms  cdn-185-199-109-153.github.com [185.199.109.153]
 
 跟踪完成。</pre>
-        </figure>
-      </dd>
-      <dd class="example-sn">本机到baidu的路由情况</dd>
+      <div>[<span class="iconfont icon-mouse1"></span>] 本机到baidu的路由情况</div>
       <dd>第一跳显然应该先到本机的默认网关</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>本机到baidu的路由</figcaption>
-          <pre>
+      <dd>本机到baidu的路由</dd>
+      <pre>
 C:\Users\cnplaman>tracert -d www.baidu.com
 
 通过最多 30 个跃点跟踪
@@ -144,13 +126,9 @@ C:\Users\cnplaman>tracert -d www.baidu.com
  13    12 ms     9 ms    19 ms  14.119.104.254
 
 跟踪完成。</pre>
-        </figure>
-      </dd>
-      <dd class="example-sn">指定最大跃点数追踪路由</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>指定最大跃点数追踪百度路由</figcaption>
-          <pre>
+      <div>[<span class="iconfont icon-mouse1"></span>] 指定最大跃点数追踪路由</div>
+      <dd>指定最大跃点数追踪百度路由</dd>
+      <pre>
 C:\Users\cnplaman>tracert -h 3 www.baidu.com
 
 通过最多 3 个跃点跟踪
@@ -161,13 +139,9 @@ C:\Users\cnplaman>tracert -h 3 www.baidu.com
   3     6 ms     3 ms     4 ms  172.16.10.1
 
 跟踪完成。</pre>
-        </figure>
-      </dd>
-      <dd class="example-sn">追踪响应时间小于5ms的路由情况</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>追踪响应时间小于5ms的路由情况</figcaption>
-          <pre>
+      <div>[<span class="iconfont icon-mouse1"></span>] 追踪响应时间小于5ms的路由情况</div>
+      <dd>追踪响应时间小于5ms的路由情况</dd>
+      <pre>
 C:\Users\cnplaman>tracert -w 5 www.baidu.com
 
 通过最多 30 个跃点跟踪
@@ -188,17 +162,9 @@ C:\Users\cnplaman>tracert -w 5 www.baidu.com
  13    11 ms    10 ms    16 ms  14.119.104.189
 
 跟踪完成。</pre>
-        </figure>
-      </dd>
     </dl>
-    <footer>
-      <div class="copyright">
-        <span>&copy; All Copyrights Reserved, 2022-2024</span>
-        <img src="../imgs/avatar.jpg" alt="">
-        <span>Cnplaman from No 54414, PLA</span>
-      </div>
-      <span>2023-10-13</span>
-    </footer>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
   </section>
 </body>
 

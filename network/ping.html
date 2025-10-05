@@ -28,10 +28,8 @@
       <dd>time：响应时间，单位ms；时间越小，说明连接这个地址速度越快</dd>
       <dd>Time To
         Live：生存时间；表示DNS记录在DNS服务器上存在的时间，是IP协议包的一个值，告诉路由器该数据包何时需要被丢弃</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>ping 172.18.84.190</figcaption>
-          <pre>
+      <dd>ping 172.18.84.190</dd>
+      <pre>
 C:\Users\cnplaman>ping 172.18.84.190
 
 正在 Ping 172.18.84.190 具有 32 字节的数据:
@@ -44,25 +42,19 @@ C:\Users\cnplaman>ping 172.18.84.190
     数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
 往返行程的估计时间(以毫秒为单位):
     最短 = 0ms，最长 = 0ms，平均 = 0ms</pre>
-        </figure>
-      </dd>
-      <dd class="tips">
-        <div>Tips</div>
+      <div class="tips">
         <div>可以通过Ping返回的TTL值大小，粗略地判断目标系统类型是Windows系列还是UNIX/Linux系列</div>
         <div>. 100~130ms之间，Windows系统 </div>
         <div>. 240~255ms之间，UNIX/Linux系统</div>
-      </dd>
+      </div>
     </dl>
-    <div class="chap">常见应用</div>
+    <h2>常见应用</h2>
     <dl>
       <dt>ping -t </dt>
       <dd>不间断地Ping指定计算机，直到管理员Ctrl+c终止中断</dd>
       <dt>ping -a </dt>
       <dd>解析计算机名与NetBios名。就是可以通过ping它的ip地址，可以解析出主机名</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>ping -a</figcaption>
-          <pre>
+      <pre>
 C:\Users\cnplaman>ping -a 172.18.84.190
 
 正在 Ping LAPTOP-VUC8JOSN.zdxh.cn [172.18.84.190] 具有 32 字节的数据:
@@ -75,16 +67,11 @@ C:\Users\cnplaman>ping -a 172.18.84.190
     数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
 往返行程的估计时间(以毫秒为单位):
     最短 = 0ms，最长 = 0ms，平均 = 0ms</pre>
-        </figure>
-      </dd>
       <dt>ping -n </dt>
       <dd>在默认情况下，一般都只发送四个数据包 </dd>
       <dd>通过这个命令可以自己定义发送的个数，对衡量网络速度很有帮助</dd>
       <dd>对于一些不好的网络，比如监控系统中非常卡顿，这样测试，返回的结果可能会显示出丢失出一部分。如果丢失的比较多，说明网络不好，可以很直观的判断出网络的情况</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>ping -n</figcaption>
-          <pre>
+      <pre>
 C:\Users\cnplaman>ping -n 10 172.18.84.190
 
 正在 Ping 172.18.84.190 具有 32 字节的数据:
@@ -103,8 +90,6 @@ C:\Users\cnplaman>ping -n 10 172.18.84.190
     数据包: 已发送 = 10，已接收 = 10，丢失 = 0 (0% 丢失)，
 往返行程的估计时间(以毫秒为单位):
     最短 = 0ms，最长 = 0ms，平均 = 0ms</pre>
-        </figure>
-      </dd>
       <dt>ping -l size </dt>
       <dd>发送size指定大小的到目标主机的数据包 </dd>
       <dd>
@@ -114,10 +99,7 @@ C:\Users\cnplaman>ping -n 10 172.18.84.190
       <dd>例如：ping -l 65500 -t 211.84.7.46；会连续对IP地址执行ping命令，直到被用户以Ctrl+C中断</dd>
       <dt>ping -r count </dt>
       <dd>在“记录路由”字段中记录传出和返回数据包的路由，探测经过的路由个数，但最多只能跟踪到9个路由。</dd>
-      <dd>
-        <figure class="code">
-          <figcaption>ping -r count</figcaption>
-          <pre>
+      <pre>
 C:\Users\cnplaman>ping -n 1 -r 9 www.xhsysu.edu.cn
 
 正在 Ping www.xhsysu.edu.cn [192.168.255.28] 具有 32 字节的数据:
@@ -135,17 +117,9 @@ C:\Users\cnplaman>ping -n 1 -r 9 www.xhsysu.edu.cn
     数据包: 已发送 = 1，已接收 = 1，丢失 = 0 (0% 丢失)，
 往返行程的估计时间(以毫秒为单位):
     最短 = 47ms，最长 = 47ms，平均 = 47ms</pre>
-        </figure>
-      </dd>
     </dl>
-    <footer>
-      <div class="copyright">
-        <span>&copy; All Copyrights Reserved, 2022-2024</span>
-        <img src="../imgs/avatar.jpg" alt="">
-        <span>Cnplaman from No 54414, PLA</span>
-      </div>
-      <span>2023-10-13</span>
-    </footer>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
   </section>
 </body>
 

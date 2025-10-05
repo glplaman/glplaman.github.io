@@ -16,67 +16,65 @@
     <h4>Input</h4>
     <dl>
       <dt>简介 Overview</dt>
-      <dd>
-        <ul>
-          <li>修改数据</li>
-          <li>获取数据</li>
-          <li>更新远程数据</li>
-          <li>不建议使用 model，小程序的支持不太好；有时候无法完成输入</li>
-        </ul>
-      </dd>
+      <dd>修改数据</dd>
+      <dd>获取数据</dd>
+      <dd>更新远程数据</dd>
+      <dd>不建议使用 model，小程序的支持不太好；有时候无法完成输入</dd>
       <dt>昵称 Nickname</dt>
-      <dd>
-        <figure>
-          <img src="./imgs/ipt1.png" alt="">
-          <figcaption>修改昵称</figcaption>
-        </figure>
-        <ul>
-          <li>用户中心</li>
-          <li>可以直接获取昵称</li>
-          <li>还可以手动输入，并使用软键盘确定</li>
-          <pre>
+      <figure>
+        <img src="./imgs/ipt1.png" alt="">
+        <figcaption>修改昵称</figcaption>
+      </figure>
+      <dd>用户中心</dd>
+      <dd>可以直接获取昵称</dd>
+      <dd>还可以手动输入，并使用软键盘确定</dd>
+      <dd>为了避免无效更新，提交数据库更新前，应在前端判断修改前后的值是否相等</dd>
+      <dd>使用真机调试，查看各个事件的log顺序</dd>
+      <pre>
 &lt;input type="nickname" 
     value="{{userInfo.userName}}" 
     placeholder="your nickname" 
     confirm-type="done" 
+    bindfocus="onIptFocus"
     bindinput="onIpt"
-    bindconfirm="onIptConfirm" /&gt;</pre>
-          <li>定义数据绑定</li>
-          <pre>
+    bindconfirm="onIptConfirm"
+    bindblur="onIptBlur" /&gt;</pre>
+      <dd>数据</dd>
+      <pre>
 userInfo: {
-  userName: ''
+  userName: '',
+}
+
+tmp: ''</pre>
+      <dd>使用 onIptFocus()：获取焦点时候，保存当前值</dd>
+      <pre>
+onIptFocus(e) {
+  this.data.tmp = this.data.userInfo.userName
+  console.log('focus');
 }</pre>
-          <li>使用 bindinput() 修改数据</li>
-          <li>为了防抖，可以把视图更新放在确认 bindconfirm()</li>
-          <pre>
+      <dd>使用 bindinput()：改变当前值</dd>
+      <pre>
 onIpt(e) {
   this.data.userInfo.userName = e.detail.value
-}</pre>
-          <li>使用 bindconfirm() 更新数据</li>
-          <li>如果选择了用户昵称，则不会有 log()</li>
-          <li>如果其他业务中有需要更新视图的数据，则一起更新输入数据，避免多次 setData()</li>
-          <pre>
+  console.log('input');
+},</pre>
+      <dd>使用 bindconfirm()：改变当前值</dd>
+      <pre>
 onIptConfirm(e) {
-  console.log('confirm', e);
-  this.setData({
-    'userInfo.userName': e.detail.value
-  })
-  // 其他业务，如入库
-}</pre>
-        </ul>
-      </dd>
+  this.data.userInfo.userName = e.detail.value
+  console.log('confirm');
+},</pre>
+      <dd>onIptBlur()：失去焦点时，判断前后是否相等；相等返回；不等则更新当前值；代码略</dd>
       <dt>搜索 Search</dt>
-      <dd>
-        <figure>
-          <img src="./imgs/ipt0.png" alt="">
-          <figcaption>商品搜索</figcaption>
-        </figure>
-        <ul>
-          <li>与修改昵称不同，用户还可以单击按钮开始执行逻辑</li>
-          <li>结构上多了一个按钮，并绑定事件处理函数；同输入确认事件函数</li>
-          <li>事件处理函数是共享的，所以只能获取数据；无法获取使用事件对象</li>
-          <li>其它：自动聚焦；软键盘为搜索</li>
-          <pre>
+      <figure>
+        <img src="./imgs/ipt0.png" alt="">
+        <figcaption>商品搜索</figcaption>
+      </figure>
+      <dd>与修改昵称不同，用户还可以单击按钮开始执行逻辑</dd>
+      <dd>结构上多了一个按钮，并绑定事件处理函数；同输入确认事件函数</dd>
+      <dd>事件处理函数是共享的，所以只能获取数据；无法获取使用事件对象</dd>
+      <dd>其它：自动聚焦；软键盘为搜索</dd>
+      <pre>
 &lt;input type="text" focus 
     value='{{keywords}}'
     placeholder="请输入你要查询的商品名称" 
@@ -84,7 +82,7 @@ onIptConfirm(e) {
     bindinput="setQuery" 
     bindconfirm="doQuery" /&gt;
 &lt;button bind:tap="doQuery"&gt;搜索&lt;/button&gt;</pre>
-          <pre>
+      <pre>
 setQuery(e) {
   this.data.keywords = e.detail.value
 },
@@ -93,28 +91,18 @@ doQuery() {
   let keywords = this.data.keywords
   // 搜索业务
 }</pre>
-        </ul>
-      </dd>
       <dt>价格 Price</dt>
-      <dd>
-        <figure>
-          <img src="./imgs/ipt2.png" alt="">
-          <figcaption>修改价格</figcaption>
-        </figure>
-        <ul>
-          <li>以模态框/弹窗的形式完成</li>
-          <li>单击确定按钮，完成价格的修改</li>
-          <li>使用云函数；提升修改权限</li>
-          <li>请自行完成</li>
-        </ul>
-      </dd>
+      <figure>
+        <img src="./imgs/ipt2.png" alt="">
+        <figcaption>修改价格</figcaption>
+      </figure>
+      <dd>以模态框/弹窗的形式完成</dd>
+      <dd>单击确定按钮，完成价格的修改</dd>
+      <dd>使用云函数；提升修改权限</dd>
+      <dd>请自行完成</dd>
       <dt>优化</dt>
-      <dd>
-        <ul>
-          <li>防抖</li>
-          <li>验证</li>
-        </ul>
-      </dd>
+      <dd>防抖</dd>
+      <dd>验证</dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
