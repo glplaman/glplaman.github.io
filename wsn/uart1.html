@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>串口异步通信实操 UART</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/wsn exp.css">
+  <style>
+    header {
+      background-image: url(../imgs/wsn/wsn1.jpg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>串口异步通信实操 UART</header>
+    <dl>
+      <dt>实验目的</dt>
+      <dd>掌握CC 2530 UART串口寄存器设置</dd>
+      <dd>掌握UART串口中断函数程序的编程方法</dd>
+      <dt>实验内容</dt>
+      <dd>在IAR集成开发环境中编写定时器中断程序</dd>
+      <dd>通过按键以串行方式发送指定数据；即：上位机PC通过串口助手向CC2530发送一个数据命令</dd>
+      <dd>CC2530先接收，然后判断并执行相应的命令</dd>
+      <dt>预备知识</dt>
+      <dd>串口通信</dd>
+      <dd>了解C语言的基本知识</dd>
+      <dd>了解IAR中编写和调试程序的方法</dd>
+      <dt>实验需求</dt>
+      <dd><span>安装IAR和相关驱动的个人PC</span><span class="dot"></span><span>1台</span></dd>
+      <dd><span>迷你USB线mini USB</span><span class="dot"></span><span>1根</span></dd>
+      <dd><span>仿真器CC Debugger</span><span class="dot"></span><span>1根</span></dd>
+      <dd><span>串并转换线USB to UART</span><span class="dot"></span><span>1根</span></dd>
+      <dd><span>ZigBee通用节点板</span><span class="dot"></span><span>1块</span></dd>
+      <dt>实验步骤</dt>
+      <dd>创建IAR工作空间</dd>
+      <dd>创建基于C的IAR工程</dd>
+      <dd>编辑代码并调试；可参考提供的源码，调试应无差错、无告警</dd>
+      <dd>试验箱上电；使用mini USB分别连接CC Debugger和PC；并将仿真器CC Debugger的另外一端和ZigBee通用节点板上的JTAG插座相连</dd>
+      <dd>按下仿真器CC Debugger的复位按钮RESET，绿灯常亮表示模块连接成功，可以往芯片中烧写程序；每次烧写程序都需要复位，确保仿真器是绿灯状态</dd>
+      <dd>在IAR中点击下载并调试按钮download and debug(CTRL+D)烧写程序</dd>
+      <dd>在IAR的调试窗口中，点击[全速]运行</dd>
+      <dd>用串并转换线USB to UART线连接节点板串口和PC机某USB接口，在PC设备管理器中确认串口端口</dd>
+      <dd>打开PC机上的串口调试助手，选择对应的串口、波特率及8位数据、1位停止、无校验、无流控</dd>
+      <dd>利用串口调试助手操作串口发送数据</dd>
+      <dt>参考源码</dt>
+      <dd>发送字符串</dd>
+      <pre>
+#include "ioCC2530.h"
+#include "string.h"
+#include "../lib/delay.h"
+typedef unsigned char uchar;
+typedef unsigned int  uint;
+#define TX_SIZE    20
+#define TX_STRING  "Hello Zigbee... "
+
+void Init32M( void )
+{
+    CLKCONCMD &= ~0x40;               //设置系统时钟源为32MHZ晶振
+    while( CLKCONSTA & 0x40 );        //等待晶振稳定为32M
+    CLKCONCMD &= ~0x47;               //设置系统主时钟频率为32MHZ
+    SLEEPCMD |= 0x04;                   //关闭不用的RC振荡器
+}
+void InitUart( void )
+{
+    PERCFG = 0x00;           //外设控制寄存器 USART 0的IO位置:0为P0口位置1
+    P0SEL = 0x0c;            //P0_2,P0_3用作串口（外设功能）
+    P2DIR &= ~0XC0;          //P0优先作为UART0
+
+    U0CSR |= 0x80;           //设置为UART方式
+    U0GCR |= 11;
+    U0BAUD |= 216;           //波特率设为115200
+    UTX0IF = 0;              //UART0 TX中断标志初始置位0
+}
+void UartSendString( char *Data, int len )
+{
+    uint i;
+    for( i = 0; i &le; len; i++ )
+    {
+        U0DBUF = *Data++;
+        while( UTX0IF == 0 );
+        UTX0IF = 0;
+    }
+}
+void main( void )
+{
+    char TxData[TX_SIZE];
+    Init32M();
+    InitUart();                       //调置串口相关寄存器
+    memset( TxData, 0, TX_SIZE );     //数据清0
+    memcpy( TxData, TX_STRING, sizeof( TX_STRING ) ); //复制发送字符串到TxData
+
+    while( 1 )
+    {
+        UartSendString( TxData, sizeof( TX_STRING ) ); //串口发送数据
+        delay( 1000 );
+    }
+}</pre>
+      <dd>利用IO发送字符串</dd>
+      <pre>
+#include "ioCC2530.h"
+#include "../lib/delay.h"
+char uart_buffer;
+
+void InitIO( void );
+void InitUART( void );
+void Init32M( void );
+void UartTX_Send_String( unsigned char *Data, int len );
+void UartTX_Send_Data( unsigned char Data, int len );
+
+#pragma vector=URX0_VECTOR
+__interrupt void uart0( void )
+{
+    URX0IF = 0;//清中断标志
+    P0_0 = ~P0_0;
+    uart_buffer = U0DBUF;
+    //UartTX_Send_String("welcome",10);
+    UartTX_Send_Data( uart_buffer, 1 );
+}
+
+void main( void )
+{
+    unsigned char buf[4];
+
+    //InitIO();[NOT MUST]
+    Init32M();
+    InitUART();
+
+    buf[0] = '\t';
+    while( 1 )
+    {
+        P2_0 = ~P2_0;
+        delay( 1000 );
+        if( uart_buffer == 0x01 )               //按照16进制输入[cnplaman]
+        {
+            UartTX_Send_String( "welcome", 7 ); //串口接收要发送的数据
+            UartTX_Send_String( &buf[0], 1 );   //串口发送接收的数据
+        }
+    }
+}
+void InitIO( void )
+{
+    P0DIR |= 0x01;  //设置P0.0为输出方式[P0.4和P0.5为输入方式???]
+    P2DIR |= 0x01;  //设置P2.0为输出方式
+    P0_0 = 1;     //高电平截至
+    P2_0 = 1;     //高电平截至
+}
+void InitUART( void )
+{
+    PERCFG = 0x00;              //外设控制寄存器UART0：P0口位置1:RX0 - P0_2；TX0 - P0_3
+    P0SEL = 0x0C;               //0011 1100：P0_2，P0_3 用作串口(外设功能);[0x3c]
+    P2DIR &= ~0xC0;             //设置P0口优先为UART0,即串口0优先级最高；其次是串口1，再是计时器1；P2DIR[7-6]PRIP0:00
+
+    U0CSR |= 0x80;              //1000 0000；UART方式
+
+    U0GCR |= 10;                //baud_e = 10;
+    U0BAUD |= 216;              //波特率设为57600
+
+    UTX0IF = 0;                 //清除UART0 TX中断标志：置0
+    U0CSR |= 0x40;              //允许接收
+    IEN0 |= 0x84;               //1000 0100开总中断，允许接收中断
+}
+void Init32M( void )
+{
+    CLKCONCMD &= ~0x40;                 //选择32M晶振
+    while( !( SLEEPSTA & 0x40 ) );      //等待XSOC稳定
+    CLKCONCMD = 0xb8;                   //TICHSPD 128分频，CLKSPD 不分频
+    SLEEPCMD |= 0x04;                   //关闭不用的RC 振荡器[cnplaman:not MUST]
+}
+void UartTX_Send_String( unsigned char *Data, int len )
+{
+    for( int j = 0; j &le; len; j++ )
+    {
+        U0DBUF = *Data++;
+        while( UTX0IF == 0 );
+        UTX0IF = 0;
+    }
+}
+void UartTX_Send_Data( unsigned char Data, int len )
+{
+    for( int j = 0; j &le; len; j++ )
+    {
+        U0DBUF = Data;
+        while( UTX0IF == 0 );
+        UTX0IF = 0;
+    }
+}</pre>
+      <dd>利用IO控制LED</dd>
+      <pre>
+#include “ioCC2530.h”
+#define uint unsigned int
+#define uchar unsigned char
+
+#define LED1 P0_0       //定义P0_0为LED1的控制引脚
+#define LED2 P2_0       //定义P2_0为LED2的控制引脚
+
+void InitIO();        //声明LED初始化函数
+void InitUART();      //声明串口0初始化函数
+void Init32M();    //声明初始化32M时钟初始化函数
+void UR0SendByte( unsigned char Byte ); //声明发送一个字节初始化函数
+void UR0SendString( unsigned char *str ); //声明发送字符串初始化函数
+void Execute_CMD();     //声明执行上位机命令初始化函数
+
+char RxBuf;             //定义接收缓冲区
+char Rx_flag;           //定义串口接收标志位
+#pragma vector = URX0_VECTOR
+__interrupt void URX0_ISR()
+{
+    URX0IF = 0;           //清中断标志位
+    RxBuf = U0DBUF;       //将缓冲寄存器的数据给读出来
+    Rx_flag = 1;          //接收标志位置1
+}
+void main()
+{
+    InitIO();           //初始化LED端口
+    InitUART();         //初始化串口0
+    Init32M();       //初始化32M晶振
+
+    UR0SendString( "Hello ZigBee!\r\n" );
+
+    while( 1 )
+    {
+        if( Rx_flag == 1 )  //是否接收到上位机指令
+        {
+            Execute_CMD();    //判断并执行上位机指令
+        }
+    }
+}
+/*===================LED初始化函数==================*/
+void InitIO()
+{
+    P0SEL &= ~0x01;       //将P1_0和P1_1设置为通用I/O端口功能
+    P0DIR |= 0x01;        //将P1_0和P1_1的端口设置为输出
+    P2SEL &= ~0x01;
+    P2DIR |= 0x01;
+    LED1 = 1;             //关闭LED1灯
+    LED2 = 1;             //关闭LED2灯
+}
+void Init32M()
+{
+    CLKCONCMD &= ~0x40;       //系统时钟源选择：外部32MHz 。
+    while( !( SLEEPSTA & 0x40 ) ); //等待晶振稳定
+    CLKCONCMD &= ~0x47;       //128分频 CLKSPD不发分频
+    SLEEPCMD |= 0x04;         //关闭不用的RC振荡器
+}
+void InitUART()
+{
+    PERCFG = 0x00;      //外设控制寄存器USART 0 的IO位置：
+    P0SEL  = 0x0C;      //设置P0_2,P_3为外设功能
+    P2DIR &= ~0xC0;     //设置P0口优先为UART0,即串口0优先级最高
+
+    U0CSR |= 0xC0;      //设置为UART模式
+
+    U0GCR |= 10;        //查表
+    U0BAUD |= 216;      //设置波特率为57600
+
+    U0UCR |= 0x80;      //无流控，8位数据位，清空缓冲区
+
+    UTX0IF = 0;         //串口0TX发送中断标志位清0：清除中断标记
+    URX0IF = 0;         //串口0RX接收中断标志位清0：清除中断标记
+
+    URX0IE = 1;         //开串口0接收中断：使能串口0中断
+    EA = 1;             //开中断总开关
+}
+/*================串口0发送一个字节函数==============*/
+void UR0SendByte( unsigned char Byte )
+{
+    U0DBUF = Byte;        //将要发送的一个字节数据写入U0DBUF
+    while( !UTX0IF );     //等待TX中断标志，即数据发送完成
+    UTX0IF = 0;           //清除TX中断标志，准备下一次发送
+}
+/*================串口0发送字符串函数================*/
+void UR0SendString( unsigned char *str )
+{
+    while( *str != '\0' )
+    {
+        UR0SendByte( *str++ ); //逐个发送字符串中的字节
+    }
+}
+/*================执行上位机指令函数=================*/
+void Execute_CMD()
+{
+    Rx_flag = 0;      //清0接收标志位
+    switch( RxBuf )   //通过上位机发送的命令，判断并执行
+    {
+    case 0xF1:        //如果PC发送00xF1 则点亮LED1 并串口发送字符串
+        LED1 = 0;
+        UR0SendString( "The LED1 is Open!\r\n" );
+        break;
+    case 0xF2:        //如果PC发送0xF2 则熄灭LED1 并串口发送字符串
+        LED1 = 1;
+        UR0SendString( "The LED1 is Closed!\r\n" );
+        break;
+    case 0xF3:        //如果PC发送0xF3 则点亮LED2 并串口发送字符串
+        LED2 = 0;
+        UR0SendString( "The LED2 is Open!\r\n" );
+        break;
+    case 0xF4:        //如果PC发送0xF4 则熄灭LED2 并串口发送字符串
+        LED2 = 1;
+        UR0SendString( "The LED2 is Closed!\r\n" );
+        break;
+    default:
+        UR0SendString( "F1 F2 F3 F4!\r\n" );
+        break;
+    }
+}</pre>
+      <dt>项目提升</dt>
+      <dd>修改波特率</dd>
+      <dd>修改控制字符</dd>
+      <dd>修改发送内容</dd>
+      <dd>修改时钟</dd>
+      <dd>按键发送消息</dd>
+      <dd>控制LED灯</dd>
+      <dd>完善项目</dd>
+      <dt>实验报告</dt>
+      <dd>根据实操部分的内容，完成项目[三选一]</dd>
+      <dd>以纸质的形式提交实验报告</dd>
+      <dd>论文格式请参照范文 <a class="warn" href="../imgs/ds/format.docx">[点击下载]</a></dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
