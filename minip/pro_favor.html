@@ -141,11 +141,13 @@ loadFavor() {
   const favorites = app.globalData.favorites
   const products = app.globalData.products.filter(item => favorites.get(item._id))
   products.map(item => item.createdTime = favorites.get(item._id))
-  products.reverse()
+  
+  products.sort((a, b) => b.createdTime.localeCompare(a.createdTime))
 
   this.setData({
     products
   })
+  
   wx.hideLoading();
   wx.stopPullDownRefresh();
 }</pre>

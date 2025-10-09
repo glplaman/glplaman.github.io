@@ -30,7 +30,7 @@
         <p>静态方法：直接调用，无需创建 Date 实例，性能更好</p>
         <p>返回值：从1970年1月1日00:00:00 UTC 开始的毫秒数</p>
       </li>
-      <li>new Date()getTime()
+      <li>new Date().getTime()
         <p>实例方法：需要先创建 Date 对象，再调用 getTime()</p>
         <p>返回值：同样是从1970年1月1日00:00:00 UTC 开始的毫秒数</p>
         <p>功能相同：与 Date.now() 返回相同结果</p>
@@ -93,7 +93,6 @@ wx.cloud.callFunction({
     <ul>
       <li>优先使用服务器端时间或在服务器端创建时间</li>
       <li>如果需要传递参数，在小程序端传递时间戳给服务器端，由服务器端根据时间戳生成时间</li>
-      <li>如果需要格式化，请在小程序端处理，如借助 <a href="https://day.js.org/en/">dayjs</a> 或手动格式化；否则需要+8个小时</li>
       <pre>
 wx.cloud.callFunction({
   name: 'test',
@@ -102,6 +101,8 @@ wx.cloud.callFunction({
   }
 })</pre>
       <pre>const time = new Date(event.time)</pre>
+      <li>如果直接保存时间，宜采用日期格式，方便排序</li>
+      <li>前端展示时，可以根据需要格式化，如借助 <a href="https://day.js.org/en/">dayjs</a> 或手动格式化；否则需要+8个小时</li>
     </ul>
     <div>[<span class="iconfont icon-keyboard"></span>] 小程序端格式化时间</div>
     <ul>
@@ -130,6 +131,15 @@ console.log(str);</pre>
     <ul>
       <li>在对应的云函数目录下安装依赖并使用</li>
       <li>更多信息，请访问 <a href="./npm.html">NPM</a></li>
+    </ul>
+    <div>[<span class="iconfont icon-keyboard"></span>] 时间排序</div>
+    <ul>
+      <li>日期类型可以直接排序</li>
+      <pre>arr.sort((a, b) => a.time - b.time)</pre>
+      <li>生成的时间转换为String，无法直接排序</li>
+      <pre>time = new Date().toLocaleString()</pre>
+      <li>需借助 localeCompare()</li>
+      <pre>arr.sort((a, b) => a.time.localeCompare(b.time))</pre>
     </ul>
   </section>
   <div id="footer"></div>

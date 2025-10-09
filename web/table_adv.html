@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表格高级运用 &lt;table&gt;</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <link rel="stylesheet" href="./css/table.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>表格高级运用</h1>
+      <span>&lt;table&gt;</span>
+    </header>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table.html">动态表格</a>
+      </div>
+      <ul>
+        <li>标题行样式始终保持不变</li>
+        <li>当鼠标悬停 :hover 时，当前行颜色变化</li>
+        <li>使用 <a href="./transition.html">过渡动画</a> 实现</li>
+      </ul>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table.html">滚动表格</a></div>
+      <ul>
+        <li>内容多的情况下，表头始终显示 - 冻结首行</li>
+        <li>多表格配合使用 - 模拟固定表头表格</li>
+        <li>&lt;tabel&gt;本身并不能实现滚动条，需在&lt;tabel&gt;外面增加一个容器；当&lt;tabel&gt;高度超过容器高度时，让容器出现滚动条</li>
+        <li>也可以使用 <a href="./sticky.html">粘性定位</a>实现</li>
+        <li>现在多使用 <a href="./demo/pager.html">分页器 - pager</a> 设计</li>
+      </ul>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table3.html">渐变边框表格</a></div>
+      <ul>
+        <li>边框不能重叠</li>
+        <li>表格边框使用 <a href="./border.html">边框图像 border-image</a> 实现</li>
+        <li>也可以使用 <a href="./selector_ele.html">伪元素</a> 实现；对边框重叠没有要求</li>
+        <figure>
+          <img src="./imgs/tbl4.png" alt="">
+          <figcaption>渐变边框表格</p>
+        </figure>
+      </ul>
+      <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table.html">排序表格</a></dd>
+      <ul>
+        <li>借助 JavaScript 实现</li>
+        <li>可以是本地数据；也可以通过网络请求数据，如 <a href="../node/fetch.html">Fetch</a></li>
+        <li>图标由阿里字体图标 <a href="./framework/iconfont.html">Iconfont</a> 实现</li>
+      </ul>
+      <div>[<span class="iconfont icon-keyboard"></span>] 单元格间距处理</div>
+      <div>
+        <span>border-collapse: </span>
+        <input type="radio" name="bc" id="sp" checked>
+        <label for="sp">separate</label>
+        <input type="radio" name="bc" id="cl">
+        <label for="cl">collapse</label><br>
+        <span>border-spacing: </span>
+        <input type="radio" name="br" id="bs0" checked>
+        <label for="bs0">2px[default]</label>
+        <input type="radio" name="br" id="bs1">
+        <label for="bs1">10px</label>
+      </div>
+      <table class="dual-tbl">
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Age</th>
+        </tr>
+        <tr>
+          <th>桂林</th>
+          <td>漓江</td>
+          <td>象鼻山</td>
+          <td>大榕树</td>
+        </tr>
+        <tr>
+          <th>厦门</th>
+          <td>鼓浪屿</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>广州</th>
+          <td>小蛮腰</td>
+          <td>珠江</td>
+          <td></td>
+        </tr>
+        <tr>
+          <th>海口</th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 空单元处理</div>
+      <dd>边框不重叠</dd>
+      <dd>空单元格不显示，营造一种流的感觉</dd>
+      <div class="tbl-box" style="text-indent: 2em;">
+        <span>empty-cells: </span>
+        <input type="radio" name="cell-hide" id="show" checked>
+        <label for="show">show</label>
+        <input type="radio" name="cell-hide" id="hide">
+        <label for="hide">hide</label>
+      </div>
+      <table class="bold0">
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <dd>单元格重叠的情况下，空单元格属性无效</dd>
+      <table class="bold1">
+        <tr>
+          <td>bold</td>
+          <td colspan="3">colspan="3"</td>
+        </tr>
+        <tr>
+          <td rowspan="2">rowspan="2"</td>
+          <td>bold</td>
+          <td>bold</td>
+          <td>bold</td>
+        </tr>
+        <tr>
+          <td>bold</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <pre>
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;bold&lt;/td&gt;
+    &lt;td colspan="3"&gt;colspan="3"&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td rowspan="2"&gt;rowspan="2"&lt;/td&gt;
+    &lt;td&gt;bold&lt;/td&gt;
+    &lt;td&gt;bold&lt;/td&gt;
+    &lt;td&gt;bold&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;bold&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+      <pre>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 4px double #888;
+  empty-cells: hide;//无效
+}
+table th, table td {
+  border: 1px solid #888;
+}  </pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 圆角表格</div>
+      <div>方案1：在不设置边框重叠的情况，给&lt;table&gt;指定border-radius</div>
+      <table class="radius-tbl">
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+      </table>
+      <pre>
+.radius-tbl {
+  border-collapse: separate;
+  border-radius: 8px;
+  border: 1px solid #666;
+}
+.radius-tbl td {
+  border-bottom: 1px solid var(--main-color-green);
+}
+
+.radius-tbl tr:last-child td {
+  border: none;
+}</pre>
+      <div>方案2：边框重叠的情况下，单独给第一行左右2个和最后一行左右2个单独设置对应方向的border-radius</div>
+      <dd>为体现效果，以红色显示</dd>
+      <table class="radius-tbl-self">
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+      </table>
+      <pre>
+.radius-tbl-self tbody tr:first-child td:first-child {
+  border-top-left-radius: 8px;
+  background-color: #f40;
+}
+
+.radius-tbl-self tbody tr:first-child td:last-child {
+  border-top-right-radius: 8px;
+  background-color: #f40;
+}</pre>
+    </dl>
+    <h2>Responsive</h2>
+    <dl>
+      <dd>[前置知识点] <a href="./media.html">媒体查询</a></dd>
+      <dd>针对桌面端和移动端表格的展示，给出其中一种自适应表格的思路</dd>
+      <dd>按 F12 选择检查，查看表格效果[取消公有样式中，首个单元格width:20%的限定]</dd>
+      <dd>更多信息，请查看 <a href="https://css-tricks.com/responsive-data-tables/">Responsive Data
+          Tables</a>
+      </dd>
+      <table class="pc">
+        <thead>
+          <tr>
+            <th>sn</th>
+            <th>name</th>
+            <th>unit</th>
+            <th>gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="sn">1</td>
+            <td data-label="name">guilin</td>
+            <td data-label="unit">54414</td>
+            <td data-label="gender">female</td>
+          </tr>
+          <tr>
+            <td data-label="sn">2</td>
+            <td data-label="name">beijing</td>
+            <td data-label="unit">75716</td>
+            <td data-label="gender">male</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>实现方案之一</dt>
+      <ol>
+        <li>隐藏表头 &lt;thead&gt;。方法很多；最好不要 none 掉，而应使用定位将其移走</li>
+        <li>将 &lt;tr&gt; 显示属性由 table-row（类 inline-block）调整为 block，以便独占一行</li>
+        <li>将 &lt;td&gt; 显示属性由 table-cell（类 inline-block）调整为 block，从而将数据由一行展示改为多行展示</li>
+        <li>设置 &lt;td&gt; 为相对定位，并保持左侧50%的 padding，预留给其伪元素；或使用 <a href="./flex.html">弹性盒子</a></li>
+        <li>为每个 &lt;td&gt; 设置不同的伪元素 ::before 内容，和隐藏的表头内容相对应；可以单独指定或使用 <a href="./js/htmlElement.html">自定义数据 data-</a>
+        </li>
+        <li>根据需要指定行和单元格的其它样式，如边框、背景色(略)</li>
+        <li>其它布局应根据实际情况具体分析</li>
+        <pre>
+thead tr {
+  display: none;
+}
+
+tbody tr {
+  display: block;
+}
+
+tbody td {
+  //这里采用flex，是为了垂直方向对齐内容和其伪元素
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}    
+
+tbody td::before {
+  content: attr(data-label);
+}</pre>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+  </section>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

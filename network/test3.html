@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由信息协议 RIP</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>路由信息协议 RIP</h1>
+    </header>
+    <dl>
+      <dt>一、实验目的</dt>
+      <dd>了解RIP协议的基本原理</dd>
+      <dd>掌握RIP协议的配置方法</dd>
+      <dd>进一步熟悉PT的使用</dd>
+      <dt>二、实验要求</dt>
+      <dd>根据网络拓扑完成RIP的配置</dd>
+      <dd>测试网络的连通性</dd>
+      <dd>网络拓扑布局合理、标注信息清晰完整</dd>
+      <dd>关键配置有源码或截图</dd>
+      <dd>测试结果有截图</dd>
+      <dt>三、实验需求</dt>
+      <dd>3台2811路由器</dd>
+      <dd>2台PC</dd>
+      <dt>四、实验过程</dt>
+      <dd>搭建拓扑并配置各主机IP地址；确保各路由连接的是不同的网络</dd>
+      <figure>
+        <img src="../imgs/network/rip/slider15.JPG" alt="">
+        <figcaption>RIP拓扑</figcaption>
+      </figure>
+      <dd>路由器0的配置</dd>
+      <dd>2.1 配置路由器端口，生成直连路由；主要配置命令参考如下：</dd>
+      <pre>
+Router(config)#interface fa0/0
+Router(config-if)#ip address 192.168.1.254 255.255.255.0
+Router(config-if)#no shutdown
+Router(config)#interface fa0/1
+Router(config-if)#ip address 192.168.2.1 255.255.255.0
+Router(config-if)#no shutdown</pre>
+      <dd>2.2 配置路由器RIP协议；主要配置命令如下；</dd>
+      <pre>
+Router(config)#router rip
+Router(config-router)#version 2
+Router(config-router)#no auto-summary
+Router(config-router)#network 192.168.1.0
+Router(config-router)#network 192.168.2.0</pre>
+      </dd>
+      <dd>3. 路由器1、路由器2的配置同路由器0</dd>
+      <dd>4. 查看各路由器的动态路由信息</dd>
+      <figure>
+        <img src="../imgs/network/rip/slider16.JPG" alt="">
+        <figcaption>PT的监视工具</figcaption>
+      </figure>
+      <figure>
+        <img src="../imgs/network/rip/slider17.JPG" alt="">
+        <figcaption>Router#show ip route</figcaption>
+      </figure>
+      <figure>
+        <img src="../imgs/network/rip/slider18.JPG" alt="">
+        <figcaption>Router#show ip protocols</figcaption>
+      </figure>
+      <dd>5. 测试网络的连通性；</dd>
+      <figure>
+        <img src="../imgs/network/rip/slider19.jpg" alt="">
+        <figcaption>ping对方主机</figcaption>
+      </figure>
+      <dt>五、实验分析</dt>
+      <dd>为什么第一次通信失败</dd>
+      <dd>再次ping对方，结果又如何</dd>
+      <dd>请发送简单PDU测试网络连通性</dd>
+      <dd>每个实验阶段的分析和异常处理</dd>
+      <dt>六、实验报告</dt>
+      <dd>根据实操部分的内容，完成RIP协议的配置和测试</dd>
+      <dd>以纸质的形式提交实验报告</dd>
+      <dd>论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a></dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

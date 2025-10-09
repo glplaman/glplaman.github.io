@@ -1,0 +1,113 @@
+ :root {
+   --tbl-color: #fabfb4;
+   --tbl-color-light: #feefec;
+ }
+
+ a {
+   color: var(--main-color);
+   text-decoration: underline;
+ }
+
+ header {
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-end;
+   height: 30vh;
+   color: #fff;
+   background-image: url(../imgs/banner.png);
+   background-size: cover;
+   padding: 10px;
+ }
+
+ h2 {
+   height: 100px;
+   line-height: calc(1.5*100px);
+   font-size: 20px;
+   letter-spacing: 2px;
+   color: #fff;
+   padding-left: 1rem;
+   background-color: #4bc2ce;
+ }
+
+ dl {
+   padding: var(--p-m-g);
+   line-height: 2;
+ }
+
+ dl>dd::before {
+   content: '• ';
+ }
+
+ li>p::before,
+ dd>p::before {
+   content: '- ';
+ }
+
+ thead {
+   background-color: var(--tbl-color);
+ }
+
+ th {
+   text-align: left;
+   font-weight: 600;
+   text-transform: capitalize;
+   background-color: var(--tbl-color);
+ }
+
+ th,
+ td {
+   padding-left: .5rem;
+   padding-right: .5rem;
+ }
+
+ tr:has(th) td {
+   background-color: var(--tbl-color);
+ }
+
+ tr:nth-child(even) td {
+   background-color: var(--tbl-color-light)
+ }
+
+ iframe {
+   width: 100%;
+   max-width: 800px;
+   aspect-ratio: 16/9;
+ }
+
+ .back2top {
+   position: fixed;
+   right: 2rem;
+   bottom: -10rem;
+   width: 4.8rem;
+   height: 4.8rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: var(--warn-color);
+   border-radius: 50%;
+   transition: 0.5s;
+   z-index: 99;
+ }
+
+ .back2top::before {
+   content: '';
+   position: absolute;
+   inset: 0px;
+   border: 1px solid var(--warn-color);
+   border-radius: 50%;
+ }
+
+ .back2top:hover::before {
+   animation: fade-out 0.8s ease-in-out infinite;
+ }
+
+ @keyframes fade-out {
+   to {
+     transform: scale(1.5);
+     opacity: 0;
+   }
+ }
+
+ .back2top.active {
+   bottom: 4rem;
+ }
