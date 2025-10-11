@@ -16,17 +16,72 @@
       <h1>交换机自学习 Self-learning</h1>
     </header>
     <dl>
-      <img src="./imgs/linkLayer2/幻灯片1.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片2.JPG" alt="">
       <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片4.JPG" alt="">
+      <dd>交换机通过维护一个MAC地址表/转发表来实现链路层数据帧的通信</dd>
+      <dd>收到帧后，在MAC地址表中查找帧的目的MAC地址对应的端口，然后通过该端口转发出去</dd>
+      <dt>内容</dt>
+      <dd>接收数据帧的源地址和进入的端口号，所在vlan及有效时间</dd>
+      <dt>容量</dt>
+      <dd>MAC表的大小</dd>
+      <dd>1K、2k、4k</dd>
+      <figure>
+        <img src="./imgs/l2.png" alt="">
+        <figcaption>查看交换机的MAC表</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/l3.png" alt="">
+        <figcaption>查看交换机的MAC表</figcaption>
+      </figure>
+      <dt>维护过程</dt>
+      <dd>转发 forwarding (A → D)</dd>
+      <dd>泛洪 flooding (A → B)</dd>
+      <dd>过滤 filtering (E → A)</dd>
+      <dt>详细过程</dt>
+      <dd>登记
+        <p>查找表中是否有与接收帧的源MAC地址匹配的项目</p>
+        <p>如果有，则更新</p>
+        <p>如果没有，则增加</p>
+      </dd>
+      <dd>转发
+        <p>是否是广播帧：</p>
+        <p>如果是，全端口转发</p>
+        <p>如果不是，则查找表中是否有与接收帧的目的MAC地址匹配的项目：</p>
+        <p>1 如果没有，则泛洪flooding到其他所有端口上</p>
+        <p>2 如果有，则比较进入的端口与登记的端口：</p>
+        <p>2.1 如果不同，则按照登记的端口转发 forwarding</p>
+        <p>2.2 如果相同，表明是同一侧的主机，不需要转发，丢弃 disregarding /过滤 filtering 该帧</p>
+      </dd>
+      <dt>常用命令</dt>
+      <dd>show mac-address-table：查看交换机的MAC表</dd>
+      <dd>clear mac-address-table：清除交换机的MAC表</dd>
       <img src="./imgs/linkLayer2/幻灯片5.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片6.JPG" alt="">
       <img src="./imgs/linkLayer2/幻灯片7.JPG" alt="">
       <img src="./imgs/linkLayer2/幻灯片8.JPG" alt="">
       <img src="./imgs/linkLayer2/幻灯片9.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片10.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片11.JPG" alt="">
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <ol>
+        <li>以太网交换机转发决策时使用的PDU地址是（ ）
+          <p>A目的物理地址</p>
+          <p> B目的IP地址</p>
+          <p> C源物理地址</p>
+          <p> D源IP地址</p>
+        </li>
+        <li>使用脑图或其它工具，画出交换机自学习的流程图</li>
+        <li>用熟悉的算法设计一个数据结构，实现MAC表的维护过程
+          <p>get( MacList, f.srcMac ) ? update( MacList, f.srcMac ) : add( MacList, f.srcMac )</p>
+        </li>
+        <pre>
+// 参考数据结构
+Typedef struct{
+    int desMac;
+    int srcMac;
+    int inPort;
+    int outport;
+} Frame</pre>
+      </ol>
+
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

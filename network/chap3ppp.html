@@ -17,17 +17,108 @@
     </header>
     <dl>
       <img src="./imgs/linkLayer1/幻灯片12.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片13.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片14.JPG" alt="">
+      <dt>PPP协议特点</dt>
+      <dd>简单
+        <p>不需要纠错：由传输层实现</p>
+        <p>不需要流量控制：由传输层实现</p>
+        <p>不需要帧序号</p>
+        <p>仅支持点对点链路，不支持点到多点链路</p>
+        <p>仅支持全双工链路，不支持单工和半双工链路</p>
+      </dd>
+      <dd>封装成帧</dd>
+      <dd>透明</dd>
+      <dd>差错检测
+        <p>检错==纠错？</p>
+      </dd>
+      <dd>其它
+        <p>多种网络协议</p>
+        <p>多种类型链路</p>
+        <p>检测连接状态</p>
+        <p>最大传输单元</p>
+        <p>网络地址协商</p>
+        <p>数据压缩协商</p>
+      </dd>
+      <dd>多应用于广域网</dd>
+      <dt>PPP协议组成要素</dt>
+      <dd>封帧</dd>
+      <dd>链路控制协议LCP</dd>
+      <dd>网络控制协议NCP</dd>
       <img src="./imgs/linkLayer1/幻灯片15.JPG" alt="">
       <img src="./imgs/linkLayer1/幻灯片16.JPG" alt="">
       <img src="./imgs/linkLayer1/幻灯片17.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片18.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片19.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片20.JPG" alt="">
+      <dt>Overview</dt>
+      <dd>The Point-to-Point Protocol is designed for simple links which transport packets between two peers. These
+        links provide full-duplex simultaneous bi-directional operation, and are assumed to deliver packets in order. It
+        is intended that PPP provide a common solution for easy connection of a wide variety of hosts, bridges and
+        routers.</dd>
+      <dt>Encapsulation</dt>
+      <dd>The PPP encapsulation provides for multiplexing of different network-layer protocols simultaneously over the
+        same link. The PPP encapsulation has been carefully designed to retain compatibility with most commonly used
+        supporting hardware.</dd>
+      <dd> Only 8 additional octets are necessary to form the encapsulation when used within the default HDLC-like
+        framing.
+        In environments where bandwidth is at a premium, the encapsulation and framing may be shortened to 2 or 4
+        octets.</dd>
+      <dd>To support high speed implementations, the default encapsulation uses only simple fields, only one of which
+        needs to be examined for demultiplexing. The default header and information fields fall on 32-bit boundaries,
+        and the trailer may be padded to an arbitrary boundary.</dd>
+      <dt>LCP-link control protocol</dt>
+      <dd>The LCP is used to automatically agree upon the encapsulation format options, handle varying limits on sizes
+        of
+        packets, detect a looped-back link and other common misconfiguration errors, and terminate the link. Other
+        optional facilities provided are authentication of the identity of its peer on the link, and determination when
+        a link is functioning properly and when it is failing.</dd>
+      <dt>NCP-network control protocol</dt>
+      <dd>Point-to-Point links tend to exacerbate many problems with the current family of network protocols. For
+        instance, assignment and management of IP addresses , which is a problem even in LAN environments, is especially
+        difficult over circuit-switched point-to-point links (such as dial-up modem servers). These problems are handled
+        by a family of Network Control Protocols (NCPs), which each manage the specific needs required by their
+        respective network-layer protocols. These NCPs are defined in companion documents.</dd>
+      <dt>Protocol field</dt>
+      <dd>The Protocol field is one or two octets, and its value identifies the datagram encapsulated in the Information
+        field of the packet. All Protocols MUST be odd; Also, all Protocols MUST be assigned such that the least
+        significant bit (LSB) of the most significant octet equals "0". Frames received which don't comply with these
+        rules MUST be treated as having an unrecognized Protocol.</dd>
+      <dd>values in the "0***" to "3***" range identify the network-layer protocol of specific packets</dd>
+      <dd>values in the "8***" to "b***" range identify packets belonging to the associated Network Control Protocols
+        (NCPs), if any.</dd>
+      <dd>values in the "4***" to "7***" range are used for protocols with low volume traffic which have no associated
+        NCP.</dd>
+      <dd>values in the "c***" to "f***" range identify packets as link-layer Control Protocols (such as LCP).</dd>
+      <dt>Information Field</dt>
+      <dd>The Information field is zero or more octets. The Information field contains the datagram for the protocol
+        specified in the Protocol field.</dd>
+      <dd>The maximum length for the Information field, including Padding, but not including the Protocol field, is
+        termed
+        the Maximum Receive Unit (MRU), which defaults to 1500 octets. By negotiation, consenting PPP implementations
+        may
+        use other values for the MRU.</dd>
+      <dt>Padding</dt>
+      <dd>On transmission, the Information field MAY be padded with an arbitrary number of octets up to the MRU. It is
+        the
+        responsibility of each protocol to distinguish padding octets from real information.</dd>
+    </dl>
+    <h2>广播信道</h2>
+    <dl>
       <img src="./imgs/linkLayer1/幻灯片21.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片22.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片23.JPG" alt="">
+      <dt>典型应用</dt>
+      <dd>局域网LAN-local area network</dd>
+      <dt>局域网链路层优点</dt>
+      <dd>具有广播功能 broadcast</dd>
+      <dd>资源共享 sharing
+        <p>资源共享</p>
+        <p>信道/介质共享</p>
+      </dd>
+      <dd>便于系统扩展和演变，可灵活调整和改变flexibility</dd>
+      <dd>三高
+        <p>可靠性高 reliability</p>
+        <p>可用性高 availability</p>
+        <p>生存性高 survivability</p>
+      </dd>
+      <dt>拓扑结构</dt>
+      <dd>星型</dd>
+      <dd>环型</dd>
+      <dd>总线型</dd>
       <img src="./imgs/linkLayer1/幻灯片24.JPG" alt="">
     </dl>
     <div id="footer"></div>

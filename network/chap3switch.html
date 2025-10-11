@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交换机 Switch</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/sn.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>交换机 Switch</h1>
+    </header>
+    <h2>分类</h2>
+    <dl>
+      <dt>按交换方式</dt>
+      <dd>存储转发 store and forward
+        <p>接收/缓存完整的数据帧，校验（CRC）、过滤碎片，最后转发。转发是由专门的ASIC交换芯片实现</p>
+        <p>优点：提供差错校验和速率不一致的非对称交换</p>
+        <p>缺点：时延长</p>
+      </dd>
+      <dd>直通式 cut-through
+        <p>不做缓存。不做校验，收到即转发，可能有坏帧；和存储转发的特点刚好相反</p>
+      </dd>
+      <dd>碎片过滤式 fragment free
+        <p>融合了以上2种优势。转发前先检验数据帧的长度是否够64个字节；如果大于或等于就转发；如果不够，就作为碎片丢弃；（以太网帧 >= 64字节）</p>
+        <p>目前硬件的转发速度够快，基本可以忽略时延的影响。路由通常由软件实现</p>
+      </dd>
+      <dt>交换协议</dt>
+      <dd>二层交换机
+        <p>链路层交换；如无特别说明，默认都是指二层交换机</p>
+      </dd>
+      <dd>三层交换机
+        <p>集成了路由功能；路由器默认都是三层</p>
+      </dd>
+      <dd>多层交换机</dd>
+      <dt>按交换结构</dt>
+      <dd>固定端口交换机
+        <p>接入交换机一般都是固定端口的交换机</p>
+        <p>通常有24口、48口</p>
+        <p>24口：24个电（接电脑或终端或用户）的下行端口；还有4个光的上行端口</p>
+        <p>48口：48个电（接电脑或终端或用户）的下行端口；还有4个光的上行端口</p>
+      </dd>
+      <dd>可扩展端口交换机</dd>
+      <dt>按部署层次</dt>
+      <dd>核心交换机</dd>
+      <dd>汇聚交换机
+        <p>楼栋/部门汇聚，一栋楼放1-2台</p>
+      </dd>
+      <dd>接入交换机
+        <p>接用户，每个楼层放3-5台</p>
+      </dd>
+    </dl>
+    <h2>规格</h2>
+    <dl>
+      <dt>端口类型</dt>
+      <dd>电口 RJ45</dd>
+      <dd>光口 SC/GBIC/SFP（千兆口）/SFP+（万兆口）/SFP28）</dd>
+      <dt>传输模式</dt>
+      <dd>半双工</dd>
+      <dd>全双工</dd>
+      <dt>交换容量</dt>
+      <dd>端口数*端口速率*2</dd>
+      <dd>如：48个千兆电+4个千兆光的交换机容量是：( 48*1G+4*1G )*2=104Gbps</dd>
+      <dt>MAC地址数</dt>
+      <dd>交换机MAC地址表中可以存储最大的MAC地址的数量</dd>
+      <dt>Vlan表项</dt>
+      <dd>交换机最大支持的vlan的数量，一般都是4094个，俗称4K</dd>
+      <dt>包转发率</dt>
+      <dd>单位时间内发送64字节数据包的个数 1000Mbps/8/(64+8+12)=1.488Mbps</dd>
+    </dl>
+    <h2>常用命令</h2>
+    <dl>
+      <dt>操作模式</dt>
+      <table>
+        <caption>操作模式</caption>
+        <tbody>
+          <tr>
+            <td>Switch></td>
+            <td>用户模式，en进入特权模式</td>
+          </tr>
+          <tr>
+            <td>Switch#</td>
+            <td>特权模式，conf ter进入全局配置模式</td>
+          </tr>
+          <tr>
+            <td>Switch#conf</td>
+            <td>全局配置</td>
+          </tr>
+          <tr>
+            <td>Switch(config-if)</td>
+            <td>接口配置</td>
+          </tr>
+          <tr>
+            <td>Switch(config-vlan)</td>
+            <td>VLAN配置</td>
+          </tr>
+          <tr>
+            <td>Switch(config-line)</td>
+            <td>console配置</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>Show</dt>
+      <dd>查看命令</dd>
+      <dd>switch>show ver 查看版本信息</dd>
+      <dd>switch#show running-config 查看运行配置</dd>
+      <dd>switch#show flash 查看已用/可用空间</dd>
+      <dd>switch#show arp 查看ARP缓存</dd>
+      <dd>switch#show mac-addr 查看MAC转发表</dd>
+      <dd>switch#show interface 查看所有端口</dd>
+      <dd>switch#show interface fa0/1 查看指定端口fa0/1</dd>
+      <dd>switch#show interface fa0/1 switchport 查看指定端口模式</dd>
+      <dd>switch#show ip interface 查看IP端口信息</dd>
+      <dd>switch#show history 查看历史命令</dd>
+      <dt>Exit</dt>
+      <dd>返回上一级</dd>
+      <dt>End</dt>
+      <dd>直接回到特权模式#</dd>
+      <dt>write</dt>
+      <dd>保存配置参数</dd>
+      <dt>基本配置</dt>
+      <dd>交换机的日常执勤中，很少直接操作交换机</dd>
+      <dd>初始化配置：通常使用PC的串口RS232连接交换机，在PC上操作交换机，配置其基本参数，如主机名、登陆权限等</dd>
+      <dd>日常运维:使用串口；使用telnet远程登陆</dd>
+      <dd>修改交换机的系统网络名</dd>
+      <pre>switch(config)#hostname huali</pre>
+      <dd>配置交换机特权模式密码</dd>
+      <pre>huali(config)#ena pass xxx // 明文密码</pre>
+      <pre>huali(config)#ena secret xxx // 密文密码</pre>
+      <dd>配置交换机串口密码</dd>
+      <pre>huali(config)#line console 0 // 选择console口</pre>
+      <pre>huali(config-line)#password xxx // 配置密码</pre>
+      <pre>huali(config-line)#login // 登陆时检测密码</pre>
+      <dd>配置远程登陆密码</dd>
+      <pre>huali(config)#line vty 0 4</pre>
+      <pre>huali(config-line)#password huali</pre>
+      <pre>huali(config-line)#login</pre>
+    </dl>
+    <h2>实操</h2>
+    <dl>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 串口初始化配置交换机</div>
+      <img src="./imgs/linkLayer2/幻灯片20.JPG" alt="">
+      <img src="./imgs/linkLayer2/幻灯片21.JPG" alt="">
+      <img src="./imgs/linkLayer2/幻灯片22.JPG" alt="">
+      <div> [ <span class="iconfont icon-keyboard"></span> ]Telnet远程登陆交换机</div>
+      <img src="./imgs/linkLayer2/幻灯片23.JPG" alt="">
+      <img src="./imgs/linkLayer2/幻灯片24.JPG" alt="">
+      <img src="./imgs/linkLayer2/幻灯片25.JPG" alt="">
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 搭建局域网</div>
+      <dd>选择学校组织结构中某一个或几个分系统，利用交换机和PC模拟搭建局域网</dd>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <ol>
+        <li>部门之间如何互不影响的通信？</li>
+        <li>学校规模达到一定阶段后，如何更好的组织网络？</li>
+        <li>拓展 <a target="_blank"
+            href="https://www.bilibili.com/video/BV1S64y1e7bj/?spm_id_from=333.1387.favlist.content.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">Telnet远程登陆交换机
+            <span class="iconfont icon-videocam"></span></a>
+        </li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

@@ -20,13 +20,141 @@
       <img src="./imgs/linkLayer1/幻灯片2.JPG" alt="">
       <img src="./imgs/linkLayer1/幻灯片3.JPG" alt="">
       <img src="./imgs/linkLayer1/幻灯片4.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片5.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片6.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片7.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片8.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片9.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片10.JPG" alt="">
-      <img src="./imgs/linkLayer1/幻灯片11.JPG" alt="">
+    </dl>
+    <h2>封帧</h2>
+    <dl>
+      <dd>要发送的数据分别加上首部和尾部再发出去</dd>
+      <dd>封帧后的数据长度不应超过 MTU - Maximum Transfer Unit；最大传输单元</dd>
+      <dt>帧界定符</dt>
+      <dd>SOH - Start Of Header；编码：01</dd>
+      <dd>EOH - End Of Header；编码：04</dd>
+      <table style="width: 210px;">
+        <tbody>
+          <tr>
+            <td>EOH</td>
+            <td>data</td>
+            <td>SOH</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <h2>透明传输</h2>
+    <dl>
+      <dd>Transparent transmission</d>
+      <dd>你发什么，我收到的就是什么</dd>
+      <table style="width: 280px;">
+        <tbody>
+          <tr>
+            <td>EOH</td>
+            <td>...</td>
+            <td>SOH</td>
+            <td>...</td>
+            <td>EOH</td>
+            <td>...</td>
+            <td>SOH</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>字符填充</dt>
+      <dd>数据中包含帧界定符</dd>
+      <dd>使用转义符填充</dd>
+      <dd>不同协议对转义字符的定义是不同的</dd>
+      <table style="width: 360px;">
+        <tbody>
+          <tr>
+            <td>EOH</td>
+            <td>...</td>
+            <td>ESC</td>
+            <td>SOH</td>
+            <td>...</td>
+            <td>ESC</td>
+            <td>EOH</td>
+            <td>...</td>
+            <td>SOH</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <h2>差错控制</h2>
+    <dl>
+      <dt>客观原因</dt>
+      <dd>数据传输没有百分百的准确，总是有误差存在</dd>
+      <dd>常见错误：比特差错；你发送的是1，我收到的是0</dd>
+      <dd>其它错误：帧丢失、帧重复、帧失序</dd>
+      <dt>衡量</dt>
+      <dd>误码率 BER - Bit Error Rate</dd>
+      <dd>某段时间内，传输错误的比特占传输比特总数的比率</dd>
+      <dt>措施</dt>
+      <dd>在数据M的后面附加上供检测用的n位冗余码再发送出去</dd>
+      <dd>冗余码，又称帧校验序列 FCS – Frame Check Sequence</dd>
+      <dt>实现</dt>
+      <dd>循环冗余检测 CRC - Cyclic Redundance Check</dd>
+      <dd>在M的数据后面加上n个0</dd>
+      <dd>用生成多项式P按照模2运算去除M+n</dd>
+      <dd>得到的余数R就是冗余码</dd>
+      <table>
+        <caption>模2</caption>
+        <thead>
+          <tr>
+            <th>a</th>
+            <th>b</th>
+            <th>a%b</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 若消息 M=101001，生成多项式 P=1101，使用3位冗余码，取n=3；
+        <br>
+        则除数为P，被除数为M+000=101001000，模2运算后，余数R为001
+        <br>
+        故发送M+R=101001001
+      </div>
+      <figure>
+        <img src="./imgs/l0.png" alt="">
+        <figcaption>CRC</figcaption>
+      </figure>
+      <dt>思考</dt>
+      <dd>bit差错是不是传输差错?</dd>
+      <dd>有了CRC，是不是就可靠传输?</dd>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>封帧</li>
+        <li>透明传输</li>
+        <li>差错控制</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>要发送的数据是1101 0110 11，采用CRC校验，生成多项式是10011，取n=4，那么发送的数据是？</li>
+        <!-- <li>1101 0110 1111 10</li> -->
+        <!-- <figure>
+          <img src="./imgs/l1.png" alt="">
+          <figcaption>CRC</figcaption>
+        </figure> -->
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
