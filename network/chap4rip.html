@@ -8,6 +8,22 @@
   <title>路由信息协议 RIP</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .item-wrap {
+      text-align: center;
+      margin: 2rem auto;
+    }
+
+    .item-pic {
+      width: 92px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,78 +37,73 @@
       <dd>基于距离矢量DV-distance vector的路由选择协议，使用跳数Hop count作为度量Metric到目标网络的距离，即：路由器到目标网络所经过的路由器个数</dd>
       <dd>特别的：路由器到直连网络不需要经过其它路由器，所以跳数是0，即：距离为0</dd>
       <dd>最大距离15；16表示不可达</dd>
-      <dd>使用UDP协议，按照[固定时间]间隔，以广播RIP报文的方式，和[相邻]路由器交换[全部]路由信息</dd>
+      <dd>使用UDP协议，按照 <span class="warn">固定时间</span> 间隔，以 <span class="warn">广播</span> RIP报文的方式，和 <span
+          class="warn">相邻</span> 路由器交换 <span class="warn">全部</span> 路由信息</dd>
       <dd>路由交换基于直连路由</dd>
-      <dd>更多信息，请访问<a href="https://www.rfc-editor.org/rfc/rfc1058" target="_blank">RFC 1058</a></dd>
+      <dd>更多信息，请访问 <a href="https://www.rfc-editor.org/rfc/rfc1058" target="_blank">RFC 1058</a></dd>
       <figure>
         <img src="../imgs/network/rip/slider14.jpg" alt="">
         <figcaption>RIP的跳数count</figcaption>
       </figure>
       <dt>特点 Features</dt>
-      <dd class="grid grid2">
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon0.png" alt=""></div>
-            <div class="item-title">简单</div>
-            <div class="item-sub-title">Simple</div>
-          </div>
-          <div class="item-desc">RIP简单的认为：距离越短，路由质量越高；</div>
+      <dd>RIP简单的认为：距离越短，路由质量越高</dd>
+      <dd>RIP最大支持15跳，适合小型网络</dd>
+      <dd>RIP具备负载均衡：当路由等价时，轮流使用路由</dd>
+      <dd>RIP通过3个定时器动态维护路由</dd>
+      <div class="grid">
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon0.png" alt=""></div>
+          <div class="item-title">简单</div>
+          <div class="item-sub-title">Simple</div>
         </div>
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon1.png" alt=""></div>
-            <div class="item-title">小型</div>
-            <div class="item-sub-title">Mini</div>
-          </div>
-          <div class="item-desc">RIP最大支持15跳，适合小型网络；</div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon1.png" alt=""></div>
+          <div class="item-title">小型</div>
+          <div class="item-sub-title">Mini</div>
         </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon2.png" alt=""></div>
+          <div class="item-title">均衡</div>
+          <div class="item-sub-title">Balance</div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon3.png" alt=""></div>
+          <div class="item-title">动态</div>
+          <div class="item-sub-title">Dynamic</div>
+        </div>
+      </div>
+      <dt>定时器</dt>
+      <dd>更新定时器
+        <p>每30s更新一次</p>
+        <p>通常会有一个[-5，+5]的随机偏移量</p>
       </dd>
-      <dd class="grid grid2">
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon2.png" alt=""></div>
-            <div class="item-title">均衡</div>
-            <div class="item-sub-title">Balance</div>
-          </div>
-          <div class="item-desc">RIP具备负载均衡：当路由等价时，轮流使用路由；</div>
-        </div>
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon3.png" alt=""></div>
-            <div class="item-title">动态</div>
-            <div class="item-sub-title">Dynamic</div>
-          </div>
-          <div class="item-desc">RIP通过3个定时器动态维护路由：</div>
-        </div>
+      <dd>失效定时器
+        <p>最大时间180s</p>
+        <p>每个条目被添加或被更新时，都会重新开始计时</p>
+        <p>超时，该条目被标记为无效路由，但不会删除，只是不会被RIP广播出去</p>
       </dd>
-      <dd class="grid grid3">
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon4.png" alt=""></div>
-            <div class="item-title">更新</div>
-            <div class="item-sub-title">Time1</div>
-          </div>
-          <div class="item-desc" style="font-size:0.8em ;">每30s更新一次；<br>通常会有一个[-5，+5]的随机偏移量；</div>
-        </div>
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon5.png" alt=""></div>
-            <div class="item-title">失效</div>
-            <div class="item-sub-title">Time2</div>
-          </div>
-          <div class="item-desc" style="font-size:0.8em ;">
-            最大时间180s；<br>每个条目被添加或被更新时，都会重新开始计时；<br>超时，该条目被标记为无效路由，但不会删除，只是不会被RIP广播出去；</div>
-        </div>
-        <div class="flex-h">
-          <div class="item-wrap">
-            <div class="item-pic"><img src="../imgs/network/rip/icon6.png" alt=""></div>
-            <div class="item-title">清除</div>
-            <div class="item-sub-title">Time3</div>
-          </div>
-          <div class="item-desc" style="font-size:0.8em ;">最大时间240s；<br>超过180s会被标记为无效条目；<br>再经过60s，就会被彻底删除；
-          </div>
-        </div>
+      <dd>删除定时器
+        <p>最大时间240s</p>
+        <p>超过180s会被标记为无效条目</p>
+        <p>再经过60s，就会被彻底删除</p>
       </dd>
+      <div class="grid">
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon4.png" alt=""></div>
+          <div class="item-title">更新</div>
+          <div class="item-sub-title">Time1</div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon5.png" alt=""></div>
+          <div class="item-title">失效</div>
+          <div class="item-sub-title">Time2</div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="../imgs/network/rip/icon6.png" alt=""></div>
+          <div class="item-title">清除</div>
+          <div class="item-sub-title">Time3</div>
+        </div>
+      </div>
       <dt>规则 Rules</dt>
       <dd>如果收到的路由条目对应的目标网络不在当前路由表中，则添加-发现新网络</dd>
       <dd>如果路由表已有达到相同目标网络的路由条目，则：
@@ -119,7 +130,7 @@ Router(config-router)#network y.y.y.y       设置与相邻网络的动态路由
     </dl>
     <h2>实例 Demo</h2>
     <dl>
-      <dd>已知路由器D的路由表为表1；路由器C的路由表为表2；分析：经过C的路由交换后，D的路由表信息</dd>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 已知路由器D的路由表为表1；路由器C的路由表为表2；分析：经过C的路由交换后，D的路由表信息</div>
       <table>
         <caption>路由器D的路由表信息</caption>
         <tr>
@@ -186,7 +197,7 @@ Router(config-router)#network y.y.y.y       设置与相邻网络的动态路由
           <td>??</td>
         </tr>
       </table>
-      <dd>[分析]路由器D收到C发送的RIP广播报文，并进行改造：所有的距离+1；且下一跳路由都是C</dd>
+      <dd>路由器D收到C发送的RIP广播报文，并进行改造：所有的距离+1；且下一跳路由都是C</dd>
       <table>
         <caption>路由器D改造收到的路由器C的路由表信息</caption>
         <tr>
@@ -220,7 +231,7 @@ Router(config-router)#network y.y.y.y       设置与相邻网络的动态路由
           <td><span class="warn">C</span></td>
         </tr>
       </table>
-      <dd>[分析]路由器D根据规则更新路由表信息</dd>
+      <dd>路由器D根据规则更新路由表信息</dd>
       <dd>N2路由条目：都是经过C转发；之前经过C到N2需要2跳；现在经过C到N2需要5跳，所以5跳是最新的路由：2-&gt;5</dd>
       <dd><span class="warn">[思考]</span>路由跳数的可能变化</dd>
       <table>

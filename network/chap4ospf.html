@@ -5,16 +5,208 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OSPF 路由协议</title>
+  <title>开放最短路径优先 OSPF</title>
   <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
 </head>
 
 <body>
   <section class="w">
     <header>
-      <h1>OSPF 路由协议</h1>
+      <h1>开放最短路径优先 OSPF</h1>
     </header>
     <dl>
+      <dt>概述 Overview</dt>
+      <dd>Open Shortest Path First，开放最短路径优先</dd>
+      <dd>内部网关协议 IGP，用于在单一自治系统 AS 内路由选择</dd>
+      <dd>基于 <strong>链路状态</strong> 路由状态的协议，路由器会收集并维护整个网络的拓扑信息</dd>
+      <dd>更多信息，请访问 <a href="https://www.rfc-editor.org/rfc/rfc2328">RFC 2328</a></dd>
+      <dt>特点 Features</dt>
+      <dd>快速收敛：能够快速适应网络拓扑变化</dd>
+      <dd>无环路：保证无环路</dd>
+      <dd>支持VLSM：支持可变长子网掩码</dd>
+      <dd>支持认证：提供简单密码认证和MD5认证</dd>
+      <dd>支持多路径负载均衡：最多支持等价多路径负载均衡</dd>
+      <dd>层次化设计：通过划分区域实现网络扩展性</dd>
+      <dd>触发更新：只有在网络状态改变时才发送更新</dd>
+      <dt>基本概念</dt>
+      <dd>区域 Area：OSPF将网络划分为不同区域，减少路由更新流量</dd>
+      <dd>Router ID：路由器的唯一标识符</dd>
+      <dd>邻居关系：路由器之间建立邻居关系来交换路由信息</dd>
+      <dd>邻接关系 Adjacency：形成完全邻接关系的路由器之间交换完整的链路状态数据库</dd>
+      <dd>链路状态通告 LSA：用于在OSPF域内传播路由信息</dd>
+      <dd>链路状态数据库 LSDB：存储区域内所有路由器的链路状态信息</dd>
+      <dd>指定路由器 DR：在多路访问网络中负责收集和分发链路状态信息</dd>
+      <dd>备份指定路由器 BDR：DR的备份，在DR失效时代替DR工作</dd>
+      <dt>OSPF区域类型</dt>
+      <dd>骨干区域 Backbone Area (Area 0)：连接所有其他区域的核心区域</dd>
+      <dd>标准区域 Standard Area：常规的OSPF区域</dd>
+      <dd>末节区域 Stub Area：不接收外部路由信息的区域</dd>
+      <dd>完全末节区域 Totally Stubby Area：Cisco专有特性，只保留默认路由</dd>
+      <dd>次末节区域 NSSA：允许引入外部路由但不传播到其他区域</dd>
+
+      <dt>OSPF路由器类型</dt>
+      <dd>内部路由器 Internal Router：所有接口都在同一区域内的路由器</dd>
+      <dd>区域边界路由器 ABR：连接多个区域的路由器</dd>
+      <dd>自治系统边界路由器 ASBR：连接OSPF域和其他自治系统的路由器</dd>
+      <dd>骨干路由器 Backbone Router：至少有一个接口连接到骨干区域的路由器</dd>
+      <dt>LSA类型详解</dt>
+      <table>
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>name</th>
+            <th>desc</th>
+            <th>creator</th>
+            <th>range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Type 1</td>
+            <td>Router LSA</td>
+            <td>描述路由器接口状态和成本</td>
+            <td>所有路由器</td>
+            <td>本区域内</td>
+          </tr>
+          <tr>
+            <td>Type 2</td>
+            <td>Network LSA</td>
+            <td>描述多路访问网络的链路状态</td>
+            <td>DR</td>
+            <td>本区域内</td>
+          </tr>
+          <tr>
+            <td>Type 3</td>
+            <td>Summary LSA</td>
+            <td>描述区域间路由</td>
+            <td>ABR</td>
+            <td>整个AS内除产生区域外</td>
+          </tr>
+          <tr>
+            <td>Type 4</td>
+            <td>ASBR Summary LSA</td>
+            <td>描述到ASBR的路由</td>
+            <td>ABR</td>
+            <td>整个AS内除产生区域和末节区域外</td>
+          </tr>
+          <tr>
+            <td>Type 5</td>
+            <td>AS External LSA</td>
+            <td>描述到AS外部路由</td>
+            <td>ASBR</td>
+            <td>整个AS内（除末节区域）</td>
+          </tr>
+          <tr>
+            <td>Type 7</td>
+            <td>NSSA External LSA</td>
+            <td>NSSA区域内的外部路由</td>
+            <td>ASBR（NSSA区域内）</td>
+            <td>仅在NSSA区域内</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>OSPF邻居建立过程</dt>
+      <dd>Down状态：初始状态，没有收到邻居的Hello包</dd>
+      <dd>Init状态：收到邻居的Hello包，但对方Hello包中未包含自己的Router ID</dd>
+      <dd>Two-way状态：双方已互相发现，形成双向通信</dd>
+      <dd>Exstart状态：协商主从关系，确定数据库描述包的序列号</dd>
+      <dd>Exchange状态：交换数据库描述包DD，描述各自的LSDB</dd>
+      <dd>Loading状态：请求并发送详细的LSA信息</dd>
+      <dd>Full状态：邻居完全同步，形成邻接关系</dd>
+
+      <dt>OSPF度量值计算</dt>
+      <dd>OSPF使用开销(Cost)作为路由度量值</dd>
+      <dd>默认情况下，Cost = 参考带宽 / 接口带宽</dd>
+      <dd>参考带宽默认为100Mbps，可通过auto-cost reference-bandwidth命令修改</dd>
+      <dd>路径总Cost为经过的所有接口Cost之和</dd>
+
+      <dt>OSPF配置要点</dt>
+      <dd>启用OSPF进程：router ospf [process-id]</dd>
+      <dd>宣告网络：network [network] [wildcard-mask] area [area-id]</dd>
+      <dd>调整接口Cost：ip ospf cost [cost-value]</dd>
+      <dd>设置Router ID：router-id [ip-address]</dd>
+      <dd>配置认证：ip ospf authentication [选项]</dd>
+
+      <dt>OSPF与RIP对比</dt>
+      <dd>管理距离：OSPF为110，RIP为120</dd>
+      <dd>度量值：OSPF使用Cost，RIP使用跳数(Hop Count)</dd>
+      <dd>最大跳数限制：OSPF无跳数限制，RIP最大15跳</dd>
+      <dd>收敛速度：OSPF收敛更快</dd>
+      <dd>资源消耗：OSPF占用更多内存和CPU资源</dd>
+      <dd>适用网络规模：OSPF适用于大型网络，RIP适用于小型网络</dd>
+      <table>
+        <thead>
+          <tr>
+            <th>特性</th>
+            <th>OSPF</th>
+            <th>RIP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>路由协议类型</td>
+            <td>链路状态路由协议</td>
+            <td>距离矢量路由协议</td>
+          </tr>
+          <tr>
+            <td>管理距离</td>
+            <td>110</td>
+            <td>120</td>
+          </tr>
+          <tr>
+            <td>度量值</td>
+            <td>Cost（带宽相关）</td>
+            <td>Hop Count（跳数）</td>
+          </tr>
+          <tr>
+            <td>最大跳数限制</td>
+            <td>无限制</td>
+            <td>15跳（16跳视为不可达）</td>
+          </tr>
+          <tr>
+            <td>收敛速度</td>
+            <td>快速收敛</td>
+            <td>较慢收敛</td>
+          </tr>
+          <tr>
+            <td>资源消耗</td>
+            <td>较高（CPU、内存）</td>
+            <td>较低</td>
+          </tr>
+          <tr>
+            <td>适用网络规模</td>
+            <td>大型网络</td>
+            <td>小型网络（小于15跳）</td>
+          </tr>
+          <tr>
+            <td>更新方式</td>
+            <td>触发更新</td>
+            <td>周期性更新（30秒）</td>
+          </tr>
+          <tr>
+            <td>算法</td>
+            <td>Dijkstra SPF算法</td>
+            <td>Bellman-Ford算法</td>
+          </tr>
+          <tr>
+            <td>网络环路</td>
+            <td>无环路</td>
+            <td>可能产生环路（需水平分割等机制避免）</td>
+          </tr>
+          <tr>
+            <td>VLSM支持</td>
+            <td>支持</td>
+            <td>RIPv2支持，RIPv1不支持</td>
+          </tr>
+          <tr>
+            <td>认证支持</td>
+            <td>支持（明文和MD5）</td>
+            <td>RIPv2支持，RIPv1不支持</td>
+          </tr>
+        </tbody>
+      </table>
+
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

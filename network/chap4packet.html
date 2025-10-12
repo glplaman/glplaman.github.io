@@ -16,8 +16,8 @@
     </header>
     <dl>
       <dt>基本组成</dt>
-      <dd>固定部分：首部，20字节</dd>
-      <dd>可变部分：数据部分，最大为40字节</dd>
+      <dd>首部：固定部分，20字节</dd>
+      <dd>数据部分：可变部分，最大为40字节</dd>
       <table>
         <caption>IP数据报格式</caption>
         <tr style="background-color: #c00;color:#fff;">
@@ -53,34 +53,47 @@
         </tr>
       </table>
       <dt>版本 VER</dt>
-      <dd>4个bit；0100，表示IP v4</dd>
+      <dd>Version</dd>
+      <dd>4个bit</dd>
+      <dd>0100，表示IP v4</dd>
       <dt>首部长度 THL</dt>
-      <dd>4个bit；以4字节为单位</dd>
-      <dd>最小值为0101，所以最短首部长度为：5*4=20字节</dd>
-      <dd>最大值为1111，所以最大首部长度为：(2<sup>4</sup>-1)*4=15*4=60字节</dd>
+      <dd>Total Head Length</dd>
+      <dd>4个bit；以 <strong>4字节</strong> 为单位</dd>
+      <dd>最小值为0101，最短首部长度为：5*4=20字节</dd>
+      <dd>最大值为1111，最大首部长度为：(2<sup>4</sup>-1)*4=15*4=60字节</dd>
       <dt>总长度 TL</dt>
-      <dd>16bit；以字节位单位</dd>
-      <dd>首部和数据部分总和；最大数值为1111 1111 1111 1111，所以最大长度为2<sup>16</sup>-1=65535字节</dd>
+      <dd>Total Length</dd>
+      <dd>16bit；以 <strong>字节</strong> 为单位</dd>
+      <dd>首部和数据部分总和</dd>
+      <dd>最大数值为1111 1111 1111 1111，最大长度为2<sup>16</sup>-1=65535字节</dd>
       <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500字节；长度超过MTU就必须分片，单独封帧再传输</dd>
-      <dt>标识 ID、标记 FLAGS、片偏移部分 FRAG OFFSET</dt>
+      <dt>标识 ID、标记 FLAG、片偏移部分 FRAG OFFSET</dt>
       <dd>这3个字段用于IP数据报分片</dd>
       <dd>标识 ID：16bit；同一个数据报的不同分片应具有相同的标识；每产生一个数据报[不是数据分片]就加1，充当计算器的功能</dd>
-      <dd>标记 FLAG：3bit，包括：MF+DF+保留位0；MF：More Fragment；1：还有分片；0：没有分片；DF：Don’t Fragment；1：不允许分片；0：允许分片</dd>
-      <dd>片偏移部分 FRAG OFFSET：13bit，以<span class="warn">8字节</span>为单位，指出分片数据报的数据部分在原数据报中的偏移部分；必须为整数</dd>
+      <dd>标记 FLAG：3bit，包括：MF+DF+保留位0
+        <p>MF：More Fragment；1：还有分片；0：没有分片</p>
+        <p>DF：Don’t Fragment；1：不允许分片；0：允许分片</p>
+      </dd>
+      <dd>片偏移部分 FRAG OFFSET：13bit，以 <strong>8字节</strong> 为单位，指出分片数据报的数据部分在原数据报中的偏移部分；必须为整数</dd>
       <dt>生存时间 TTL</dt>
-      <dd>8bit，以秒为单位，最大生存时间是255秒</dd>
-      <dd>早期为时间；现在为可通过的路由数/跳数；每次转发时就减1；如果为0就丢弃，不转发</dd>
+      <dd>Time To Live</dd>
+      <dd>8bit，以秒s为单位</dd>
+      <dd>最大生存时间是255s</dd>
+      <dd>早期代表时间；现在表示可通过的路由数/跳数</dd>
+      <dd>每次转发时就减1；如果为0就丢弃，不转发</dd>
       <dd>防止IP数据报在网络中无限制的兜圈子</dd>
       <figure>
         <img src="../imgs/network/ip3.jpg" alt="">
         <figcaption>TTL的重要性</figcaption>
       </figure>
       <dt>协议 PRO</dt>
+      <dd>Protocol</dd>
+      <dd>8bit</dd>
       <dd>数据部分是何种协议，如ICMP、TCP、UDP、OSPF等</dd>
       <table>
         <caption>常用协议字段</caption>
         <tr>
-          <td>协议名称</td>
+          <td>Name</td>
           <td>ICMP</td>
           <td>IGMP</td>
           <td>TCP</td>
@@ -89,7 +102,7 @@
           <td>OSPF</td>
         </tr>
         <tr>
-          <td>值</td>
+          <td>Value</td>
           <td>1</td>
           <td>2</td>
           <td>6</td>
@@ -98,20 +111,40 @@
           <td>89</td>
         </tr>
       </table>
-      <dt>首部校验和</dt>
-      <dd>用来校验数据传输过程中，是否出现差错</dd>
-      <dd>每经过一个路由器，都要重新计算；为加快转发速度，IPv6中不再计算</dd>
-      <dt>源地址 SRC、目标地址 DST</dt>
+      <dt>首部校验和 CHKSUM</dt>
+      <dd>16bit</dd>
+      <dd>用来校验数据传输过程中，首部是否出现差错</dd>
+      <dd>每经过一个路由器，都要重新计算</dd>
+      <dd>为加快转发速度，IPv6中不再计算</dd>
+      <dd>计算过程
+        <p>初始化：将首部校验和字段设置为0!!!</p>
+        <p>头部分割：将IP首部每16bit分为一组；20个字节的首部最终被分成10组；每组2个字节/16bit</p>
+        <p>累计求和：所有分组累计求和，即每次用前面的累积和去加后面的分组；如果求和结果产生进位，则将进位加到最低位，如 0x10001 → 0x0002</p>
+        <p>结果取反：对最终结果求反码，即得到校验和</p>
+        <p>字段回填：将计算结果填入首部校验和字段</p>
+      </dd>
+
+      <dd>接收端验证过程
+        <p>将收到的IP数据报首部同样按16位分组</p>
+        <p>对所有分组（包括校验和字段）进行二进制反码求和</p>
+        <p>如果结果全为1（即0xFFFF），则校验通过，数据未出错</p>
+        <p>如果结果不全为1，则数据在传输过程中出现错误；被丢弃</p>
+      </dd>
+      <dt>源地址 SRC</dt>
+      <dd>32bit</dd>
+      <dt>目标地址 DST</dt>
       <dd>32bit</dd>
       <dt>数据部分 DATA</dt>
       <dd>长度可变，最大40个字节</dd>
-      <div>[<span class="iconfont icon-mouse1"></span>] 已经某IP报首部字段THL为0101，总长度字段TL为0000 0011 1111 1100，求数据部分字段DATA的长度
+      <div>[<span class="iconfont icon-keyboard"></span>] 已经某IP报首部字段THL为0101，总长度字段TL为0000 0011 1111 1100，求数据部分字段DATA的长度
       </div>
       <dd>首部长度为(0101)<sub>2</sub>*4 = 5*4 = 20 字节</dd>
       <dd>总长度为(0000 0011 1111 1100)<sub>2</sub> = 1020 字节</dd>
       <dd>故：数据部分长度为：总长度-首部长度 = 1020-20 = 1000 字节</dd>
-      <div>[<span class="iconfont icon-mouse1"></span>] 已知采用固定长度首部的数据报，数据部分位3800字节，如何分片？（分片不超过1420字节）</div>
-      <dd>数据报长度=固定部分+可变部分=首部+数据=20+3800=3820字节；分片后不能超过1420字节，所以每片的数据部分为最大为1400字节；假设标识ID为12345</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 已知采用固定长度首部的数据报，数据部分位3800字节，如何分片？（分片不超过1420字节）</div>
+      <dd>数据报长度=固定部分+可变部分=首部+数据=20+3800=3820字节</dd>
+      <dd>分片后不能超过1420字节，所以每片的数据部分为最大为1400字节</dd>
+      <dd>假设标识ID为12345</dd>
       <table>
         <caption>IP数据报的分片</caption>
         <tr>
@@ -155,12 +188,16 @@
           <td>2800/8</td>
         </tr>
       </table>
-      <div>[<span class="iconfont icon-mouse1"></span>] 采用固定首部的某IP数据报长度为1500B，目标网络的MTU是800B，求分片数量和偏移</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 采用固定首部的某IP数据报长度为1500B，目标网络的MTU是800B，求分片数量和偏移</div>
       <table>
-        <caption>数据报</caption>
+        <caption>原始数据报</caption>
         <tr>
-          <td>首部20B</td>
-          <td>数据部分1480B，编号为0-1479</td>
+          <th>Header</th>
+          <th>Data</th>
+        </tr>
+        <tr>
+          <td>20B</td>
+          <td>1480B，编号为0-1479</td>
         </tr>
       </table>
       <table>
@@ -179,11 +216,10 @@
           <td>700B：780-1479</td>
           <td>780/8=<span class="warn">97.5</span></td>
         </tr>
-        <tr>
-          <td colspan="6">偏移量不是整数；分片方案失败；</td>
-        </tr>
       </table>
-      <dd>改进方案：调整分片长度为8给整倍数，即：[780/8]*8=776B</dd>
+      <dd>偏移量不是整数；分片方案失败</dd>
+      <dd>调整分片长度，不超过800即可</dd>
+      <dd>取8的整倍数，即：[780/8]*8=776B</dd>
       <table>
         <caption>最终方案</caption>
         <tr>
@@ -201,6 +237,29 @@
           <td>776/8=97</td>
         </tr>
       </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 某IP首部数据以16进制表示为 4500 003C 0000 4000 4011 0000 C0A8 0001 C0A8
+        00C7，求其首部校验和</div>
+      <ul>
+        <li>给出的首部数据已经是16进制了</li>
+        <li>首部校验和已经初始为 0000：第6个分组</li>
+        <li>累计求和
+          <p>4500 + 003C = 453C</p>
+          <p>453C + 0000 = 453C</p>
+          <p>453C + 4000 = 853C</p>
+          <p>853C + 4011 = C54D</p>
+          <P>C54D + 0000 = C54D</P>
+          <p>C54D + C0A8 = <strong>1</strong>85F5 → 85F<strong>6</strong></p>
+          <p>85F6 + 0001 = 85F7</p>
+          <P>85F7 + C0A8 = <strong>1</strong>469F → 46A<strong>0</strong></P>
+          <p>46A0 + 00C7 = 4767</p>
+        </li>
+        <li>结果取反
+          <p>~4767 = B898</p>
+        </li>
+        <li>字段回填
+          <p>4500 003C 0000 4000 4011 B898 C0A8 0001 C0A8 00C7</p>
+        </li>
+      </ul>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
