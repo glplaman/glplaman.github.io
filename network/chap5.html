@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运输层 Transport Layer</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      place-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>运输层 Transport Layer</h1>
+    </header>
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd>OSI七层模型中的第4层</dd>
+      <dd>为应用进程提供端到端的逻辑通信服务</dd>
+      <dd>采用 <strong>端口</strong> 来标识不同的应用进程，实现进程间的准确通信</dd>
+      <div class="tips">
+        <p>运输层以下各层的任务：解决主机到主机的通信</p>
+        <p>计算机通信实际上应用进程之间的通信</p>
+      </div>
+      <figure>
+        <img src="../imgs/network/port/幻灯片1.JPG" alt="">
+        <figcaption>运输层架构</figcaption>
+      </figure>
+      <dt>服务类型Service</dt>
+      <dd>面向连接的 TCP
+        <p>Transmission Control Protocol</p>
+        <p>传输控制协议</p>
+      </dd>
+      <dd>无连接的 UDP
+        <p>User Datagram Protocol</p>
+        <p>用户数据报协议</p>
+      </dd>
+      <dt>职责 Responsibility</dt>
+      <dd>运输层作为网络体系结构中的关键层，为上层应用屏蔽了底层网络的复杂性，提供了灵活可靠的数据传输服务</dd>
+      <dd>复用与分用
+        <p>复用：多个应用层进程可同时使用运输层服务</p>
+        <p>分用：运输层能正确将数据交付给对应的应用进程</p>
+      </dd>
+      <dd>差错检测
+        <p>通过校验和检测传输错误</p>
+        <p>TCP还提供差错纠正机制</p>
+      </dd>
+      <dd>流量控制
+        <p>控制发送方发送速率，防止接收方缓冲区溢出</p>
+      </dd>
+      <dd>拥塞控制
+        <p>防止网络拥塞，提高网络利用率</p>
+      </dd>
+      <dt>端口 Port</dt>
+      <dd>含义：端口是一种软件地址，用于标识同一台主机上的不同应用程序进程</dd>
+      <dd>作用域：只具有本地意义，即只在本机上区分不同的应用程序</dd>
+      <dd>长度：16bit：0-65535</dd>
+      <table>
+        <caption>端口分类</caption>
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Well-known Ports</td>
+            <td>熟知端口
+              <br>分配给常用重要服务
+              <br>0-1023
+            </td>
+          </tr>
+          <tr>
+            <td>Registered Ports</td>
+            <td>登记端口
+              <br>为没有熟知端口的应用程序使用，需在IANA登记
+              <br>1024-49151
+            </td>
+          </tr>
+          <tr>
+            <td>Ephemeral Ports</td>
+            <td>客户端使用端口
+              <br>临时端口，客户端程序随机选择使用
+              <br>49152-65535
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>熟知端口</caption>
+        <thead>
+          <tr>
+            <th>protocol</th>
+            <th>port</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>FTP</td>
+          <td>20 / 21</td>
+        </tr>
+        <tr>
+          <td>SSH</td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <td>Telnet</td>
+          <td>23</td>
+        </tr>
+        <tr>
+          <td>SMTP</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>DNS</td>
+          <td>53</td>
+        </tr>
+        <tr>
+          <td>HTTP</td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <td>HTTPS</td>
+          <td>443</td>
+        </tr>
+        <tr>
+          <td>POP3</td>
+          <td>110</td>
+        </tr>
+        <tr>
+          <td>RIP</td>
+          <td>520</td>
+        </tr>
+        <tr>
+          <td>DHCP</td>
+          <td>67 / 68</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>3306</td>
+        </tr>
+        <tr>
+          <td>Redis</td>
+          <td>6379</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>27017</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>5432</td>
+        </tr>
+      </table>
+      <dd><span class="iconfont icon-help"></span> 为什么 OSPF 没有分配端口？</dd>
+      <!-- <dd>OSPF 直接运行在 IP 协议之上</dd> -->
+      <!-- <dd>使用 IP 协议号 89</dd> -->
+      <!-- <dd>OSPF 是网络层协议，直接封装在 IP 数据包中</dd> -->
+      <!-- <dd>它有自己的协议头结构，不需要传输层的端口概念来区分应用</dd> -->
+      <dt>源端口号和目标端口号</dt>
+      <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
+      <dd>目标端口号用来标识接收方主机上的 <strong>特定</strong> 服务</dd>
+      <dd>源端口号用于标识发送方的应用程序，以便接收方能正确回应</dd>
+      <dd>数据总是从源端口流向目标端口</dd>
+      <dt>端口状态</dt>
+      <dd>LISTENING：等待连接请求</dd>
+      <dd>ESTABLISHED：连接已建立</dd>
+      <dd>CLOSED：端口未开放或连接已关闭</dd>
+      <dt>端口安全注意事项</dt>
+      <dd>不要随意开启不必要的端口</dd>
+      <dd>定期检查开放的端口和服务</dd>
+      <dd>使用防火墙限制端口访问权限</dd>
+      <dd>注意端口扫描攻击防护</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 访问网页 HTTP</div>
+      <dd>当用户在浏览器中访问/请求一个网站时
+        <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 50123</p>
+        <p>目标端口: Web服务器的标准HTTP端口 80</p>
+        <p>数据流向: 用户电脑(端口50123) → Web服务器(端口80)</p>
+      </dd>
+      <dd>当Web服务器返回响应时
+        <p>源端口: Web服务器的HTTP端口 80</p>
+        <p>目标端口: 用户电脑之前使用的临时端口 50123</p>
+        <p>数据流向: Web服务器(端口80) → 用户电脑(端口50123)</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 发送邮件 SMTP</div>
+      <dd>源端口: 邮件客户端使用的临时端口，如 51001</dd>
+      <dd>目标端口: 邮件服务器的SMTP端口 25</dd>
+      <dd>数据流向: 用户电脑(端口51001) → 邮件服务器(端口25)</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 文件传输 FTP</div>
+      <dd>命令通道:
+        <p>源端口: 客户端命令端口，如 52001</p>
+        <p>目标端口: FTP服务器命令端口 21</p>
+      </dd>
+      <dd>数据通道:
+        <p>源端口: FTP服务器数据端口 20</p>
+        <p>目标端口: 客户端数据端口，如 52002</p>
+      </dd>
+      <dd><span class="iconfont icon-help"></span> 为什么 FTP 区分命令和数据通道？</dd>
+      <dt>工作机制总结</dt>
+      <dd>客户端发起连接
+        <p>客户端选择一个临时端口(49152-65535范围内)作为源端口</p>
+        <p>客户端指定服务器的熟知端口(0-1023)作为目标端口</p>
+      </dd>
+      <dd>服务器响应
+        <p>服务器使用其熟知端口作为源端口</p>
+        <p>服务器使用客户端的临时端口作为目标端口</p>
+      </dd>
+    </dl>
+    <h2>Drill</h2>
+    <dl>
+      <figure>
+        <img src="../imgs/network/port/port0.jpg" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <dd>配置WEB服务器：配置IP地址192.168.0.3</dd>
+      <dd>配置DNS服务器：配置IP地址192.168.0.2；添加WEB服务器对应的域名信息</dd>
+      <figure>
+        <img src="../imgs/network/port/port1.jpg" alt="">
+        <figcaption>配置网络设备</figcaption>
+      </figure>
+      <dd>配置IP地址192.168.0.1；添加DNS服务器地址</dd>
+      <figure>
+        <img src="../imgs/network/port/port2.jpg" alt="">
+        <figcaption>配置主机</figcaption>
+      </figure>
+      <dt>测试网络连通性</dt>
+      <dd>主机到WEB服务器的PING；[请补充测试结果]</dd>
+      <dd>主机到DNS服务器的PING；[请补充测试结果]</dd>
+      <dt>实时测试</dt>
+      <dd>打开主机的WEB浏览器；输入www.cnplaman.com，可以看到返回的WEB页面</dd>
+      <figure>
+        <img src="../imgs/network/port/port3.jpg" alt="">
+      </figure>
+      <dt>模拟测试</dt>
+      <dd>筛选协议</dd>
+      <figure>
+        <img src="../imgs/network/port/port4.jpg" alt="">
+      </figure>
+      <dd>打开主机的WEB浏览器；输入www.cnplaman.com，单步测试数据报的发送过程；主要查看端口</dd>
+    </dl>
+    <h2>作业 Homework</h2>
+    <dl>
+      <dd>熟知端口分别有哪些？</dd>
+      <dd>根据实操部分的内容，完成端口的测试</dd>
+      <dd>以纸质的形式提交实验报告</dd>
+      <dd>论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a>。</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

@@ -22,15 +22,45 @@
       <dd>没有流量控制、没有拥塞控制</dd>
       <dd>首部开销小，最少8个字节，仅包括首部</dd>
       <dd>支持组播、多播；用用于实时通信</dd>
-      <dd>更多信息，请参考<a class="warn" href="https://www.rfc-editor.org/rfc/rfc768" target="_blank">RFC 768</a></dd>
+      <dd>更多信息，请参考 <a href="https://www.rfc-editor.org/rfc/rfc768" target="_blank">RFC 768</a></dd>
       <dt>报文 Packet</dt>
       <figure>
-        <img src="../imgs/network/udp/幻灯片11.JPG" alt="">
+        <img src="./imgs/t0.png" alt="">
+        <figcaption>UDP 报文</figcaption>
       </figure>
+      <dd>Source Port is an optional field, when meaningful, it indicates the port
+        of the sending process, and may be assumed to be the port to which a
+        reply should be addressed in the absence of any other information. If
+        not used, a value of zero is inserted.
+      </dd>
+      <dd>Destination Port has a meaning within the context of a particular
+        internet destination address.
+      </dd>
+      <dd>Length is the length in octets of this user datagram including this
+        header and the data. (This means the minimum value of the length is
+        eight.)
+      </dd>
+      <dd>Checksum is the 16-bit one's complement of the one's complement sum of a
+        pseudo header of information from the IP header, the UDP header, and the
+        data, padded with zero octets at the end (if necessary) to make a
+        multiple of two octets.
+      </dd>
       <dt>校验和 Check Sum</dt>
       <figure>
         <img src="../imgs/network/udp/幻灯片12.JPG" alt="">
       </figure>
+      <dd>发送方
+        <p>填上伪首部</p>
+        <p>全0填充校验和字段；全0填充数据部分</p>
+        <p>伪首部+首部+数据三部分采用二进制反码求和</p>
+        <p>求和结果填入校验和字段并发送UDP报文</p>
+        <p>注意：最高进位必须加进去</p>
+      </dd>
+      <dd>接收方
+        <p>填上伪首部</p>
+        <p>伪首部+首部+数据三部分采用二进制反码求和</p>
+        <p>结果全为1则无差错；否则丢弃</p>
+      </dd>
       <dt>UDP vs TCP</dt>
       <dd>UDP只管发；TCP会控制整个通信过程</dd>
       <dd>UDP不会拆分报文；一个报文就是一个完整的消息；TCP会拆分成诺干字节，形成字节流</dd>
