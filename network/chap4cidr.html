@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无分类域间路由 CIDR</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>无分类域间路由 CIDR</h1>
+    </header>
+    <dl>
+      <dd>CIDR - Classless Inter-Domain Routing</dd>
+      <dd>为每个IP地址分配一个数字 n 作为前缀 prefix</dd>
+      <dd>表示IP地址的前 n 位用于标识网络，而剩余的 32-n 用于标识主机</dd>
+      <dd>相应地，对应的掩码就是前 n 位是1，其他为0</dd>
+      <dd>消除了地址分类和子网划分的概念，IP地址重新归于2级结构</span></dd>
+      <table>
+        <caption>无分类域间路由</caption>
+        <tbody>
+          <tr>
+            <th>network prefix</th>
+            <th>host ID</th>
+          </tr>
+          <tr>
+            <td>n bit</td>
+            <td>(32-n)bit</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 128.14.35.7/20</div>
+      <dd>红色部分是网络部分，20 位；其它 32 - 20 = 12 位是主机部分</dd>
+      <dd>将IP地址中，将主机部分全置0，就是网络地址</dd>
+      <dd>将IP地址中，将主机部分全置1，就是广播地址</dd>
+      <table>
+        <caption>128.14.35.7/20</caption>
+        <tbody>
+          <tr>
+            <td>128</td>
+            <td>14</td>
+            <td>35</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td class="warn">1000 0000</td>
+            <td class="warn">0000 1110</td>
+            <td><span class="warn">0010</span> 0011</td>
+            <td>0000 0111</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>128.14.35.7/20</caption>
+        <tbody>
+          <tr>
+            <td>IP地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td>35</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>二进制</td>
+            <td>1000 0000</td>
+            <td>0000 1110</td>
+            <td>0010 0011</td>
+            <td>0000 0111</td>
+          </tr>
+          <tr>
+            <td>地址掩码</td>
+            <td class="warn">1111 1111</td>
+            <td class="warn">1111 1111</td>
+            <td><span class="warn">1111</span> 0000</td>
+            <td>0000 0000</td>
+          </tr>
+          <tr>
+            <td>网络地址</td>
+            <td>1000 0000</td>
+            <td>0000 1110</td>
+            <td>0010 0000</td>
+            <td>0000 0000</td>
+          </tr>
+          <tr>
+            <td>广播地址</td>
+            <td>1000 0000</td>
+            <td>0000 1110</td>
+            <td>0010 1111</td>
+            <td>1111 1111</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>A类、B类、C类默认地址掩码</caption>
+        <tbody>
+          <tr>
+            <th>分类</th>
+            <th>地址掩码</th>
+            <th>CIDR形式的地址掩码</th>
+          </tr>
+          <tr>
+            <td>A类</td>
+            <td>255.0.0.0</td>
+            <td>255.0.0.0/8</td>
+          </tr>
+          <tr>
+            <td>B类</td>
+            <td>255.255.0.0</td>
+            <td>255.255.0.0/16</td>
+          </tr>
+          <tr>
+            <td>C类</td>
+            <td>255.255.255.0</td>
+            <td>255.255.255.0/24</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>常用进制转换</caption>
+        <tbody>
+          <tr>
+            <td>2 <sup>7</sup></td>
+            <td>2 <sup>6</sup></td>
+            <td>2 <sup>5</sup></td>
+            <td>2 <sup>4</sup></td>
+            <td>2 <sup>3</sup></td>
+            <td>2 <sup>2</sup></td>
+            <td>2 <sup>1</sup></td>
+            <td>2 <sup>0</sup></td>
+          </tr>
+          <tr>
+            <td>128</td>
+            <td>64</td>
+            <td>32</td>
+            <td>16</td>
+            <td>8</td>
+            <td>4</td>
+            <td>2</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>CIDR地址块</dt>
+      <dd>网络前缀都相等的连续地址，称为一个CIDR地址块</dd>
+      <dd>知道其中任意一个地址，就可以知道地址块的所有细节：地址掩码、最小地址、最大地址、广播地址以及可能聚合的A类、B类或C类的数量</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>]
+        已知IP地址128.14.35.7/20是CIDR地址块中的某个地址，求：
+        <p>- 地址掩码</p>
+        <p>- 地址块数量</p>
+        <p>- 网络地址</p>
+        <p>- 最小主机地址</p>
+        <p>- 最大主机地址</p>
+        <p>- 广播地址</p>
+        <p>- 聚合C类网络的数量</p>
+      </div>
+      <dd>先根据网络前缀长度求出地址掩码</dd>
+      <table>
+        <caption>128.14.35.7/20 CIDR地址块划分细节</caption>
+        <tbody>
+          <tr>
+            <td>地址掩码</td>
+            <td><span class="warn">1111 1111</span></td>
+            <td><span class="warn">1111 1111</span></td>
+            <td><span class="warn">1111</span> 0000</td>
+            <td>0000 0000</td>
+            <td>255.255.240.0</td>
+          </tr>
+          <tr>
+            <td>IP地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td><span class="warn">0010</span> 0011</td>
+            <td>0000 0111</td>
+            <td>128.14.35.7</td>
+          </tr>
+          <tr>
+            <td>网络地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td><span class="warn">0010</span> <span style="color: #008000;">0000</span></td>
+            <td style="color: #008000;">0000 0000</td>
+            <td>128.14.32.0</td>
+          </tr>
+          <tr>
+            <td>最小主机地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td><span class="warn">0010</span> 0000</td>
+            <td>0000 0001</td>
+            <td>128.14.32.1</td>
+          </tr>
+          <tr>
+            <td>最大主机地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td><span class="warn">0010</span> 1111</td>
+            <td>1111 1110</td>
+            <td>128.14.47.254</td>
+          </tr>
+          <tr>
+            <td>广播地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td><span class="warn">0010</span> <span style="color: #008000;">1111</span></td>
+            <td style="color: #008000;">1111 1111</td>
+            <td>128.14.47.255</td>
+          </tr>
+          <tr>
+            <td>聚合C类地址数量</td>
+            <td colspan="5">2<sup>32-20</sup> / 2<sup>8</sup> = 2<sup>4</sup>个</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>特殊的CIDR地址块</dt>
+      <dd>网络前缀位数n=32，全部是前缀，没有主机，称为主机路由</dd>
+      <dd>网络前缀位数n=31，主机号只有1位，所以只有2个IP地址，没有终端主机；用于点对点链路(无编号网络)</dd>
+      <dd>网络前缀位数n=30，主机号只有2位，所以只有4个IP地址</dd>
+      <dd>网络前缀位数n=0，IP地址也为0，即：0.0.0.0/0，称默认路由</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 子网192.168.4.0/30中，能接收目的地址为192.168.4.3的IP分组的最大主机数是（）</div>
+      <div class="alpha">
+        <div>0</div>
+        <div>1</div>
+        <div>2</div>
+        <div>4</div>
+      </div>
+      <dd>/30共有4个地址；主机可用地址2个</dd>
+      <dd>192.168.4.3是广播地址；2个主机地址都可以接受</dd>
+      <!-- <dd>所以答案为 2</dd> -->
+      <table>
+        <caption>192.168.4.0/30的主机个数</caption>
+        <tbody>
+          <tr>
+            <td>地址掩码</td>
+            <td><span class="warn">1111 1111</span></td>
+            <td><span class="warn">1111 1111</span></td>
+            <td><span class="warn">1111 1111</span></td>
+            <td><span class="warn">1111 11</span>00</td>
+            <td>255.255.252.0</td>
+          </tr>
+          <tr>
+            <td>IP地址</td>
+            <td>192</td>
+            <td>168</td>
+            <td>4</td>
+            <td>0000 0000</td>
+            <td>192.168.4.0</td>
+          </tr>
+          <tr>
+            <td>网络地址</td>
+            <td>192</td>
+            <td>168</td>
+            <td>4</td>
+            <td><span class="warn">0000 00</span>00</td>
+            <td>192.168.4.0</td>
+          </tr>
+          <tr>
+            <td>最小主机地址</td>
+            <td>192</td>
+            <td>168</td>
+            <td>4</td>
+            <td><span class="warn">0000 00</span>01</td>
+            <td>192.168.4.1</td>
+          </tr>
+          <tr>
+            <td>最大主机地址</td>
+            <td>192</td>
+            <td>168</td>
+            <td>4</td>
+            <td><span class="warn">0000 00</span>10</td>
+            <td>192.168.4.2</td>
+          </tr>
+          <tr>
+            <td>广播地址</td>
+            <td>192</td>
+            <td>168</td>
+            <td>4</td>
+            <td><span class="warn">0000 00</span>11</td>
+            <td>192.168.4.3</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 已知分配到的地址块为218.75.230.0/24，按下图需求给出各网络分配的地址块</div>
+      <figure>
+        <img src="../imgs/network/ip2.jpg" alt="">
+        <figcaption>网络拓扑图</figcaption>
+      </figure>
+      <dt>[阶段1]</dt>
+      <dd>地址块的容量的多大？是否满足需要？</dd>
+      <table>
+        <caption>地址块容量</caption>
+        <tbody>
+          <tr>
+            <td>网络前缀</td>
+            <td>24 bit</td>
+          </tr>
+          <tr>
+            <td>主机位</td>
+            <td>32-24=8 bit</td>
+          </tr>
+          <tr>
+            <td>主机数量</td>
+            <td>2<sup>8</sup>=256 个</td>
+          </tr>
+          <tr>
+            <td>用户数量</td>
+            <td>6+25+12+10=53 个</td>
+          </tr>
+          <tr>
+            <td>结论</td>
+            <td>256 > 53；地址块够用</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>[阶段2]</dt>
+      <dd>需要几个网？</dd>
+      <dd>每个网各需要多个IP地址？</dd>
+      <table>
+        <caption>网络数量和各子网需求</caption>
+        <tbody>
+          <tr>
+            <td>网络数量</td>
+            <td colspan="3">4+1</td>
+          </tr>
+          <tr>
+            <td colspan="3">各子网需求</td>
+          </tr>
+          <tr>
+            <td>子网号</td>
+            <td>主机个数</td>
+            <td>路由端口个数</td>
+            <td>IP地址个数</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>6</td>
+            <td>1</td>
+            <td>6+1+2</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>25</td>
+            <td>1</td>
+            <td>25+1+2</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>12</td>
+            <td>1</td>
+            <td>12+1+2</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>10</td>
+            <td>1</td>
+            <td>10+1+2</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>0</td>
+            <td>2</td>
+            <td>0+2+2</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>[阶段3]</dt>
+      <dd>每个子网各需要多个位主机号？</dd>
+      <dd>对应的网络前缀是多少位？</dd>
+      <table>
+        <caption>各子网网络前缀</caption>
+        <tbody>
+          <tr>
+            <td>子网号</td>
+            <td>IP地址个数</td>
+            <td>主机位</td>
+            <td>网络前缀</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>9</td>
+            <td>4 bit</td>
+            <td>28 bit</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>28</td>
+            <td>5 bit</td>
+            <td>27 bit</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>15</td>
+            <td>4 bit</td>
+            <td>28 bit</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>13</td>
+            <td>4 bit</td>
+            <td>28 bit</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>4</td>
+            <td>2 bit</td>
+            <td>30 bit</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>[阶段4：分配IP地址]</dt>
+      <dd>优先分配地址多的网络</dd>
+      <dd>每个块的起点位置应是块大小的整数倍</dd>
+      <dd>分配方案并不唯一</dd>
+      <table>
+        <caption>各子网划分详情</caption>
+        <tr>
+          <td colspan="6">218.75.230.0/24</td>
+        </tr>
+        <tr>
+          <td rowspan="5">子网2</td>
+          <td>网络号</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>最小主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>最大主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>30</td>
+        </tr>
+        <tr>
+          <td>广播地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>31</td>
+        </tr>
+        <tr>
+          <td>CIDR地址块</td>
+          <td colspan="4">218.75.230.0/27</td>
+        </tr>
+        <tr>
+          <td rowspan="5">子网1</td>
+          <td>网络号</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>32</td>
+        </tr>
+        <tr>
+          <td>最小主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>33</td>
+        </tr>
+        <tr>
+          <td>最大主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>46</td>
+        </tr>
+        <tr>
+          <td>广播地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>47</td>
+        </tr>
+        <tr>
+          <td>CIDR地址块</td>
+          <td colspan="4">218.75.230.32/28</td>
+        </tr>
+        <tr>
+          <td rowspan="5">子网3</td>
+          <td>网络号</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>48</td>
+        </tr>
+        <tr>
+          <td>最小主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>49</td>
+        </tr>
+        <tr>
+          <td>最大主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>62</td>
+        </tr>
+        <tr>
+          <td>广播地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>63</td>
+        </tr>
+        <tr>
+          <td>CIDR地址块</td>
+          <td colspan="4">218.75.230.48/28</td>
+        </tr>
+        <tr>
+          <td rowspan="5">子网4</td>
+          <td>网络号</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>64</td>
+        </tr>
+        <tr>
+          <td>最小主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>65</td>
+        </tr>
+        <tr>
+          <td>最大主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>78</td>
+        </tr>
+        <tr>
+          <td>广播地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>79</td>
+        </tr>
+        <tr>
+          <td>CIDR地址块</td>
+          <td colspan="4">218.75.230.64/28</td>
+        </tr>
+        <tr>
+          <td rowspan="5">子网5</td>
+          <td>网络号</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <td>最小主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>81</td>
+        </tr>
+        <tr>
+          <td>最大主机地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>82</td>
+        </tr>
+        <tr>
+          <td>广播地址</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>83</td>
+        </tr>
+        <tr>
+          <td>CIDR地址块</td>
+          <td colspan="4">218.75.230.80/30</td>
+        </tr>
+        <tr>
+          <td rowspan="3">剩余地址</td>
+          <td>...</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>84</td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td>218</td>
+          <td>75</td>
+          <td>230</td>
+          <td>255</td>
+        </tr>
+      </table>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <dd>已知IP地址206.0.64.8/18是CIDR地址块中的某个地址，求：地址掩码、地址块数量、网络地址、最小主机地址、最大主机地址、广播地址、聚合C类网络的数量</d>
+        <li>
+      <dt>拓展阅读</dt>
+      <ol>
+        <li><a href="https://networkencyclopedia.com/classless-interdomain-routing-cidr/">Classless Interdomain Routing
+            (CIDR) <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/subnet-mask/">Subnet Mask <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/ipv4/">IPv4 <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.rfc-editor.org/">RFC 4632、RFC 1517-1519、RFC 1520 <span
+              class="iconfont icon-share"></span></a></li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

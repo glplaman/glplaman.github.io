@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>虚拟局域网 VLAN</title>
   <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
 </head>
 
 <body>
@@ -15,31 +16,231 @@
       <h1>虚拟局域网 VLAN</h1>
     </header>
     <dl>
-      <img src="./imgs/linkLayer3vlan/幻灯片1.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片2.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片3.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片4.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片5.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片6.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片7.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片8.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片9.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片10.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片11.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片12.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片13.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片14.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片15.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片16.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片17.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片18.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片19.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片20.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片21.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片22.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片23.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片24.JPG" alt="">
-      <img src="./imgs/linkLayer3vlan/幻灯片25.JPG" alt="">
+      <dt>内容</dt>
+      <dd>传统以太网的局限性</dd>
+      <dd>广播风暴</dd>
+      <dd>虚拟局域网的特点</dd>
+      <dd>IEEE 802.1Q</dd>
+      <dd>常用的配置命令</dd>
+      <dd>实操
+        <p>广播风暴</p>
+        <p>单交换配置VLAN</p>
+        <p>跨交换配置VLAN</p>
+      </dd>
+      <dt>传统以太网的局限性</dt>
+      <dd>资源的竞争</dd>
+      <dd>通信的私密性</dd>
+      <figure>
+        <img src="./imgs/vlan17.png" alt="">
+        <figcaption>焦点</figcaption>
+      </figure>
+      <dt>广播风暴 Broadcast Storm</dt>
+      <dd>Broadcast Storm is a network condition in which so many broadcasts are occurring (for example, for address
+        verification purposes) that normal communication is disrupted.</dd>
+      <dd>continually sending out broadcast messages</dd>
+      <dd>the wire is continually busy</dd>
+      <dd>no other station is able to transmit information</dd>
+      <figure>
+        <img src="https://networkencyclopedia.com/wp-content/uploads/2019/09/broadcast-storm.jpeg" alt="">
+        <figcaption>Broadcast Storm</figcaption>
+      </figure>
+    </dl>
+    <h2>虚拟局域网 Virtual LAN</h2>
+    <dl>
+      <dt>原理</dt>
+      <dd>虚拟局域网VLAN - virtual LAN</dd>
+      <dd>不是一种新的局域网，而是一个服务/应用</dd>
+      <dd>通过配置，将一个物理的局域网在逻辑上划分为若干个虚拟的LAN</dd>
+      <dd>VLAN内的主机间可以直接通信，而VLAN 间不能直接互通</dd>
+      <dt>特点 Feature</dt>
+      <dd>限制/隔离广播域: 广播域被限制在一个VLAN内，节省带宽，提高网络的处理能力</dd>
+      <dd>增强局域网的安全性：不同VLAN内的报文在传输时是相互隔离的不同的VLAN用户不能和其它VLAN用户直接通信</dd>
+      <dd>提高网络的健壮性：故障被限制在一个VLAN内，本VLAN内的故障不会影响其他VLAN的正常工作</dd>
+      <dd>灵活构建虚拟工作组：划分不同的用户到不同的工作组，网络构建和维护更方便灵活、更容易</dd>
+      <dt>使用 Usage</dt>
+      <dd>VLAN由id和name来标识；默认情况下，所有端口都属于VLAN 1</dd>
+      <dd>一个交换机可以划分多个VLAN</dd>
+      <dd>每个VLAN不受网络物理位置的限制</dd>
+      <dd>通常利用交换机的端口划分VLAN；一个端口只能属于一个VLAN；所以一般称 port VLAN</dd>
+      <dd>一个VLAN可以包含多个端口</dd>
+      <figure>
+        <img src="./imgs/vlan0.png" alt="">
+        <figcaption>VLAN划分</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan2.png" alt="">
+        <figcaption>改进的VLAN</figcaption>
+      </figure>
+      <dt>端口模式</dt>
+      <dd>access模式：默认模式。一般用于链接用户计算机；access端口只能属于一个VLAN</dd>
+      <dd>trunk模式：用于交换机之间或交换机和路由器之间的链接；trunk端口可以属于多个VLAN</dd>
+      <dd>hybrid混合模式【华为专有模式】</dd>
+      <div class="tips">
+        <p>二层交换机无法实现不同VLAN之间的通信</p>
+        <p>跨VLAN通信，需要三层设备</p>
+      </div>
+      <figure>
+        <img src="./imgs/vlan1.png" alt="">
+        <figcaption>端口模式</figcaption>
+      </figure>
+      <dt>基本命令 Instruction</dt>
+      <dd>查看所有VLAN</dd>
+      <pre>switch#show vlan</pre>
+      <figure>
+        <img src="./imgs/vlan3.png" alt="">
+        <figcaption>查看所有VLAN</figcaption>
+      </figure>
+      <dd>查看指定id的VLAN</dd>
+      <pre>switch#show vlan id 1</pre>
+      <figure>
+        <img src="./imgs/vlan4.png" alt="">
+        <figcaption>查看指定id的VLAN</figcaption>
+      </figure>
+      <dd>查看指定name的VLAN</dd>
+      <pre>switch#show vlan name xit</pre>
+      <figure>
+        <img src="./imgs/vlan5.png" alt="">
+        <figcaption>查看指定name的VLAN</figcaption>
+      </figure>
+      <dd>创建VLAN</dd>
+      <pre>switch(config)#vlan 10</pre>
+      <pre>switch(config-vlan)#name gl</pre>
+      <figure>
+        <img src="./imgs/vlan6.png" alt="">
+        <figcaption>创建VLAN</figcaption>
+      </figure>
+      <dd>添加端口</dd>
+      <pre>switch(config)#inte fa0/1</pre>
+      <pre>switch(config-if)#swi acc vlan 10</pre>
+      <figure>
+        <img src="./imgs/vlan7.png" alt="">
+        <figcaption>添加端口</figcaption>
+      </figure>
+    </dl>
+    <h2>IEEE 802.1Q</h2>
+    <dl>
+      <dd>简称dot one Q，加入4个字节的VLAN标记对以太网帧格式扩展，比普通以太网帧多4个字节</dd>
+      <dd>2个字节的标签协议标识TPID：固定为0x8100</dd>
+      <dd>2个字节的标签控制信息TCI，又包括：VLAN优先级、格式、ID号</dd>
+      <dd>IEEE 802.1Q帧只在交换机内部识别并处理，用户主机并不能识别</dd>
+      <figure>
+        <img src="./imgs/vlan21.png" alt="">
+        <img src="./imgs/vlan22.png" alt="">
+        <figcaption>VLAN标记</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan18.png" alt="">
+        <figcaption>内部可见</figcaption>
+      </figure>
+      <dt>处理过程</dt>
+      <dd>接收：每收到一个以太网帧，就打上标签：插入4个字节的VLAN标记，变成IEEE 802.1Q帧</dd>
+      <dd>转发：根据VLAN号转发到相应的端口，去掉标签后转发出去</dd>
+      <figure>
+        <img src="./imgs/vlan19.png" alt="">
+        <img src="./imgs/vlan20.png" alt="">
+        <figcaption>处理过程</figcaption>
+      </figure>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <dt>广播风暴</dt>
+      <dd>搭建拓扑并分配IP地址</dd>
+      <dd>各主机互相通信情况（发送简单PDU或者ping）</dd>
+      <dd>发送广播报情况</dd>
+      <figure>
+        <img src="./imgs/vlan23.png" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <dt>单个交换机的VLAN的划分</dt>
+      <dd>创建拓扑并分配IP</dd>
+      <dd>创建vlan10、vlan20、vlan30</dd>
+      <dd>为vlan添加相应的端口</dd>
+      <dd>测试通信情况：VLAN内部、VLAN之间</dd>
+      <figure>
+        <img src="./imgs/vlan8.png" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan9.png" alt="">
+        <figcaption>命令参考</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan10.png" alt="">
+        <figcaption>查看VLAN配置结果</figcaption>
+      </figure>
+      <dd>验证1：不同VLAN的用户不能通信</dd>
+      <pre>192.168.1.1 → 192.168.1.3</pre>
+      <pre>192.168.1.1 → 192.168.1.5</pre>
+      <figure>
+        <img src="./imgs/vlan11.png" alt="">
+        <img src="./imgs/vlan12.png" alt="">
+        <figcaption>不同VLAN的用户不能通信</figcaption>
+      </figure>
+      <dd>验证2：VLAN可以隔离广播域
+        <p>模拟通信模式下，某个PC发送广播，查看各PC的通信情况</p>
+      </dd>
+      <figure>
+        <img src="./imgs/vlan13.png" alt="">
+        <img src="./imgs/vlan14.png" alt="">
+        <figcaption>隔离广播域</figcaption>
+      </figure>
+      <dt>跨交换机的VLAN的划分</dt>
+      <dd>搭建拓扑</dd>
+      <dd>配置各主机IP</dd>
+      <dd>创建vlan10，20，30</dd>
+      <dd>划分端口到相应的VLAN</dd>
+      <dd>设置交换机互联端口为trunk模式</dd>
+      <dd>测试各VLAN的通信情况</dd>
+      <dd>查看交换机VLAN的配置情况</dd>
+      <dd>查看交换机trunk端口的详细信息</dd>
+      <figure>
+        <img src="./imgs/vlan15.png" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <pre>
+// 指定端口模式为trunk
+xit(config-if)#swit mode trunk
+// 查看指定端口的模式
+xit#show inter fa0/1 swit
+// 允许通过的vlan
+xit#swi tru allowed vlan all
+xit#swi tru allo vlan 10,20
+xit#swi tru allo vlan 10-20
+xit#swi tru pruning vlan 10,20
+xit#swi tru pruning vlan 10-20</pre>
+      <figure>
+        <img src="./imgs/vlan16.png" alt="">
+        <figcaption>参考命令</figcaption>
+      </figure>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>VLAN的特点</li>
+        <li>VLAN的配置
+          <p>单交换机</p>
+          <p>跨交换机</p>
+        </li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>完善学校组织结构图的VLAN划分
+          <p>自己指定VLAN号和对应的端口</p>
+          <p>测试不同VLAN之间的通信</p>
+          <p>测试广播域的通信</p>
+        </li>
+        <li>归纳总结交换机VLAN划分使用到的命令</li>
+      </ol>
+      <dt>拓展阅读</dt>
+      <ol>
+        <li><a href="https://networkencyclopedia.com/broadcast-storm/">Broadcast Storm <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/virtual-lan-vlan/">Virtual LAN (VLAN) <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://grouper.ieee.org/groups/802/1/pages/802.1Q.html">IEEE Standard 802.1Q – Virtual
+            LANs <span class="iconfont icon-share"></span></a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

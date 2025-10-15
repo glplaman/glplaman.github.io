@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>链路层寻址 MAC</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>链路层寻址 MAC</h1>
+    </header>
+    <dl>
+      <img src="./imgs/linkLayer1/幻灯片30.JPG" alt="">
+      <dt>概述 Overview</dt>
+      <dd>MAC - Medium Access Control</dd>
+      <dd>又叫物理地址、硬件地址，固化在适配器的ROM中</dd>
+      <dd>IEEE802.3规定MAC地址为长度6个字节，共48位</dd>
+      <dd>高24位(前3个字节)是OUI - Organization Unique Identifier，由注册机构RA分配</dd>
+      <dd>低24位(后3个字节)是EUI - Extended Unique Identifier，由公司指定</dd>
+      <dd>每4个比特写成一个16进制，共12个16进制数，每2个16进制数之间用冒号隔开</dd>
+      <dd>48位=24位OUI+24位EUI</dd>
+      <dd>更多信息，请访问 <a href="https://mac.bmcx.com/">MAC地址查询</a></dd>
+      <figure>
+        <img src="./imgs/l11.png" alt="">
+        <figcaption>查看MAC地址</figcaption>
+      </figure>
+      <dt>分类 Type</dt>
+      <!-- <dd>除了传统的广播通信，还可以借助MAC实现点到点的通信，所以：</dd> -->
+      <dd>单播 帧unicast：一对一</dd>
+      <dd>广播 帧broadcast：一对全体</dd>
+      <dd>多播 帧multicast：一对多</dd>
+      <dt>帧结构 Frame</dt>
+      <dd>标准
+        <p>以太网V2标准，使用最广泛</p>
+        <p>IEEE 802.3标准</p>
+      </dd>
+      <dd>长度：最小64字节 <span class="iconfont icon-help"></span></dd>
+      <!-- <dd>51.2us</dd> -->
+      <figure>
+        <img src="./imgs/l12.png" alt="">
+        <figcaption>帧结构 Frame</figcaption>
+      </figure>
+      <div class="tips">
+        <p>实际的帧要比MAC帧多8个字节</p>
+        <p>因为帧之间有传输间隙，所以不需要帧结束的界定</p>
+      </div>
+
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

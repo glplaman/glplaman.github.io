@@ -9,6 +9,7 @@
   <!-- <link rel="stylesheet" href="../css/normalize.css"> -->
   <!-- <link rel="stylesheet" href="../css/linux.css"> -->
   <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
   <style>
     html {
       --h: 120px;
@@ -133,7 +134,6 @@
       <dd>全双工通信</dd>
       <dd>可靠交付</dd>
       <dd>面向字节流</dd>
-      <dd>更多信息，请参考 <a class="warn" href="https://www.rfc-editor.org/rfc/rfc793" target="_blank">RFC 793</a></dd>
       <dt>报文 Packet</dt>
       <dd>序号：32bit；TCP报文数据部分第一个字节的序号；增加到最大值后，重新回到0</dd>
       <dd>确认号：32bit；对待发TCP报文数据部分的第一个字节序号的确认；增加到最大值后，重新回到0；控制字段ACK为1时才有效；如果确认号为n，则表示序号n-1之前的数据已经收到，现在希望接收序号为n的数据
@@ -220,6 +220,13 @@
       <dt>关键点</dt>
       <dd>发送方没有数据要发送，发送释放连接FIN请求；接收方确认后，可以继续发送自己还未发送完的数据；当前连接是半连接状态：发送方到接收方的连接是关闭的</dd>
       <dd>接收方发完数据了，也向发送方发送释放连接FIN请求；等链路上所有的数据报都达到目标主机后，连接被彻底释放</dd>
+    </dl>
+    <dl>
+      <dt>Reading</dt>
+      <ol>
+        <li><a class="warn" href="https://www.rfc-editor.org/rfc/rfc793">RFC 793 <span
+              class="iconfont icon-share"></span></a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
   </div>

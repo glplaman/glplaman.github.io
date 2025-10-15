@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>以太网设备 Device</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>以太网设备 Device</h1>
+    </header>
+    <h2>集线器 Hub</h2>
+    <dl>
+      <dt>概述</dt>
+      <dd>多端口中继器，主要用于信号的放大和广播</dd>
+      <dd>可以将多台计算机连接在一起，构建局域网LAN</dd>
+      <dd>根据端口数量，集线器通常分为4、8、16、24、32等端口类型</dd>
+      <dd>通过广播方式进行通信。当一台计算机发送信息时，集线器会将信息广播到所有端口，所有连接的计算机都会接收到该信息。接收方会检查信息是否是发给自己的，如果是则接收，否则忽略</dd>
+      <dd>工作在物理层，不需要TCP/IP协议的控制。它仅负责信号的传输和放大，不进行数据的封包或拆包操作</dd>
+      <dd>主要缺点是广播方式会占用所有连接设备的带宽，导致效率低下。相比之下，交换机可以根据目标地址将数据直接发送给特定设备，因此交换机已逐渐取代集线器，成为局域网的主流设备</dd>
+      <dd>仅存在于一些特殊场景或低成本需求的网络环境中</dd>
+      <dt>特点</dt>
+      <dd>全端口转发</dd>
+      <dd>互联主机属于同一个冲突域</dd>
+      <dd>互联主机适配器速率必须一致</dd>
+      <dd>拓展网络也会相应的扩展冲突域</dd>
+      <dd>不具备过滤或路由数据的能力：不识别连接在其上的设备的MAC地址或IP地址</dd>
+      <figure>
+        <img src="./imgs/hub.jpg" alt="">
+        <figcaption>集线器 Hub</figcaption>
+      </figure>
+    </dl>
+    <h2>交换机 Switch</h2>
+    <dl>
+      <figure>
+        <img src="./imgs/network-switch-1024x289.jpg" alt="">
+        <figcaption>交换机</figcaption>
+      </figure>
+      <dd>Layer 2 Switch is a form of Ethernet switch that switches packets by looking at their <strong>physical
+          addresses (MAC
+          addresses).</strong></dd>
+      <dd>These switches operate at <strong>the data-link layer</strong> (or layer 2) of the Open Systems
+        Interconnection (OSI) reference model.</dd>
+      <dd>They essentially perform a bridging function <strong>between LAN segments</strong> because they forward frames
+        based on their destination address without any concern for the network protocol being used.</dd>
+      <dd>Thus, Layer 2 switches are essentially <strong>multiport</strong> bridges that operate near wire speed and
+        have extremely low latency.</dd>
+      <dt>How it works</dt>
+      <dd>Layer 2 switches can be installed transparently into networks.</dd>
+      <dd>They do not interfere with communication between hosts and routers.</dd>
+      <dd>Once installed, a Layer 2 switch learns about its connected hosts and networks by examining
+        the source addresses of frames it receives. </dd>
+      <dd>It builds a cache (database) of these MAC addresses and the ports on the switch to which they are mapped.</dd>
+    </dl>
+    <h2>适配器 Adapter</h2>
+    <dl>
+      <dd>NIC stands for Network Interface Card is an adapter card that plugs into the system bus of a computer and
+        allows the computer to send and <strong>receive signals</strong> on a network. </dd>
+      <dd>A network interface card (NIC) is also known as a network adapter card or simply a network card.</dd>
+      <dt>How It Works</dt>
+      <dd>NICs can be legacy components that require manual configuration of interrupt request (IRQ) and base I/O port
+        settings, or they can be plug and play components.</dd>
+      <dd>NICs are available for any system bus type: Industry Standard Architecture (ISA), Extended Industry Standard
+        Architecture (EISA), Micro Channel Architecture, and Peripheral Component Interconnect (PCI).</dd>
+      <dd>PCI cards are 32-bit and give the best performance.</dd>
+      <dd>They are available <strong>in various speeds</strong>, such as 10 Mbps for Ethernet and 10/100 Mbps for Fast
+        Ethernet. </dd>
+      <dd>Other cards are available for networking technologies such as Token Ring and Fiber Distributed Data Interface
+        (FDDI).</dd>
+      <dt>概述</dt>
+      <dd>网卡 NIC - Network Interface Card</dd>
+      <dd>早期：独立</dd>
+      <dd>现在：集成化</dd>
+      <dd>适配器有自己的存储器和缓存器，工作时不占用计算机的CPU</dd>
+      <dd>功能：
+        <p>串并转换：适配器和局域网之间是串行通信，而适配器和计算机之间是并行通信</p>
+        <p>数据缓存：网络的速率和计算机的速率不匹配，须要缓存</p>
+        <p>过滤：是发给自己的就接收；否则丢弃(安全)</p>
+      </dd>
+      <figure>
+        <img src="./imgs/l10.jpg" alt="">
+        <figcaption>适配器 Adapter</figcaption>
+      </figure>
+    </dl>
+    <h2>路由器 Router</h2>
+    <dl>
+      <dd>A ROUTER is a networking device that is used to <strong>extend or segment networks</strong> by
+        <strong>forwarding</strong> packets from one logical network to another.
+      </dd>
+      <dd>Routers are most often used in large internetworks that use <strong>the TCP/IP protocol</strong>
+        suite and for <strong>connecting</strong> TCP/IP hosts and local area networks (LANs) to the Internet using
+        dedicated leased lines.</dd>
+      <dt>How Does It work?</dt>
+      <dd>Routers work at <strong>the network layer</strong> (layer 3) of the Open Systems Interconnection (OSI)
+        reference model for networking to move packets between networks using their logical addresses (which, in the
+        case of TCP/IP, are <strong>the IP addresses</strong> of destination hosts on the network).</dd>
+      <dd>Because routers operate at a higher OSI level than bridges do, they have <strong>better packet-routing and
+          filtering capabilities and greater processing power</strong>, which results in routers costing more than
+        bridges.</dd>
+      <figure>
+        <img src="./imgs/R-C.png" alt="">
+        <figcaption>家用路由器</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/router.jpg" alt="">
+        <figcaption>小型商用路由器</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/router1.jpg" alt="">
+        <figcaption>商用路由器</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>
