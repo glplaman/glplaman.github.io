@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <section class="w">
+  <div class="w">
     <header>
       <h1>无分类域间路由 CIDR</h1>
     </header>
@@ -19,7 +19,7 @@
       <dd>CIDR - Classless Inter-Domain Routing</dd>
       <dd>为每个IP地址分配一个数字 n 作为前缀 prefix</dd>
       <dd>表示IP地址的前 n 位用于标识网络，而剩余的 32-n 用于标识主机</dd>
-      <dd>相应地，对应的掩码就是前 n 位是1，其他为0</dd>
+      <dd>相应地，对应的地址掩码就是前 n 位是1，其他为0</dd>
       <dd>消除了地址分类和子网划分的概念，IP地址重新归于2级结构</span></dd>
       <table>
         <caption>无分类域间路由</caption>
@@ -34,67 +34,10 @@
           </tr>
         </tbody>
       </table>
-      <div>[<span class="iconfont icon-keyboard"></span>] 128.14.35.7/20</div>
-      <dd>红色部分是网络部分，20 位；其它 32 - 20 = 12 位是主机部分</dd>
-      <dd>将IP地址中，将主机部分全置0，就是网络地址</dd>
-      <dd>将IP地址中，将主机部分全置1，就是广播地址</dd>
-      <table>
-        <caption>128.14.35.7/20</caption>
-        <tbody>
-          <tr>
-            <td>128</td>
-            <td>14</td>
-            <td>35</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td class="warn">1000 0000</td>
-            <td class="warn">0000 1110</td>
-            <td><span class="warn">0010</span> 0011</td>
-            <td>0000 0111</td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <caption>128.14.35.7/20</caption>
-        <tbody>
-          <tr>
-            <td>IP地址</td>
-            <td>128</td>
-            <td>14</td>
-            <td>35</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td>二进制</td>
-            <td>1000 0000</td>
-            <td>0000 1110</td>
-            <td>0010 0011</td>
-            <td>0000 0111</td>
-          </tr>
-          <tr>
-            <td>地址掩码</td>
-            <td class="warn">1111 1111</td>
-            <td class="warn">1111 1111</td>
-            <td><span class="warn">1111</span> 0000</td>
-            <td>0000 0000</td>
-          </tr>
-          <tr>
-            <td>网络地址</td>
-            <td>1000 0000</td>
-            <td>0000 1110</td>
-            <td>0010 0000</td>
-            <td>0000 0000</td>
-          </tr>
-          <tr>
-            <td>广播地址</td>
-            <td>1000 0000</td>
-            <td>0000 1110</td>
-            <td>0010 1111</td>
-            <td>1111 1111</td>
-          </tr>
-        </tbody>
-      </table>
+      <dt>记法</dt>
+      <dd>使用斜线记法 slash notation</dd>
+      <dd>斜线前面是IP地址</dd>
+      <dd>斜线后面是网络前缀所占位数 n；也是地址掩码中1的位数</dd>
       <table>
         <caption>A类、B类、C类默认地址掩码</caption>
         <tbody>
@@ -120,33 +63,56 @@
           </tr>
         </tbody>
       </table>
+      <dt>特点</dt>
+      <dd>更加有效、灵活的IP地址分配，提高了IP地址的利用率</dd>
+      <dd>便于路由聚合，降低网络开销</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 128.14.35.7/20</div>
+      <dd>IP地址中，红色部分是网络前缀，20 位；其它 32 - 20 = 12 位是主机部分</dd>
+      <dd>地址掩码1的位数是20，其他为0</dd>
+      <dd>将IP地址中，将主机部分全置0，就是网络地址</dd>
+      <dd>将IP地址中，将主机部分全置1，就是广播地址</dd>
       <table>
-        <caption>常用进制转换</caption>
+        <caption>128.14.35.7/20</caption>
         <tbody>
           <tr>
-            <td>2 <sup>7</sup></td>
-            <td>2 <sup>6</sup></td>
-            <td>2 <sup>5</sup></td>
-            <td>2 <sup>4</sup></td>
-            <td>2 <sup>3</sup></td>
-            <td>2 <sup>2</sup></td>
-            <td>2 <sup>1</sup></td>
-            <td>2 <sup>0</sup></td>
+            <td>IP地址</td>
+            <td>128</td>
+            <td>14</td>
+            <td>35</td>
+            <td>7</td>
           </tr>
           <tr>
-            <td>128</td>
-            <td>64</td>
-            <td>32</td>
-            <td>16</td>
-            <td>8</td>
-            <td>4</td>
-            <td>2</td>
-            <td>1</td>
+            <td>二进制</td>
+            <td class="warn">1000 0000</td>
+            <td class="warn">0000 1110</td>
+            <td><span class="warn">0010</span> 0011</td>
+            <td>0000 0111</td>
+          </tr>
+          <tr>
+            <td>地址掩码</td>
+            <td class="warn">1111 1111</td>
+            <td class="warn">1111 1111</td>
+            <td><span class="warn">1111</span> 0000</td>
+            <td>0000 0000</td>
+          </tr>
+          <tr>
+            <td>网络地址</td>
+            <td>1000 0000</td>
+            <td>0000 1110</td>
+            <td>0010 <span style="color: #008000;">0000</span></td>
+            <td style="color: #008000;">0000 0000</td>
+          </tr>
+          <tr>
+            <td>广播地址</td>
+            <td>1000 0000</td>
+            <td>0000 1110</td>
+            <td>0010 <span style="color: #008000;">1111</span></td>
+            <td style="color: #008000;">1111 1111</td>
           </tr>
         </tbody>
       </table>
       <dt>CIDR地址块</dt>
-      <dd>网络前缀都相等的连续地址，称为一个CIDR地址块</dd>
+      <dd>网络前缀相等的连续地址，称为一个CIDR地址块</dd>
       <dd>知道其中任意一个地址，就可以知道地址块的所有细节：地址掩码、最小地址、最大地址、广播地址以及可能聚合的A类、B类或C类的数量</dd>
       <div>[<span class="iconfont icon-keyboard"></span>]
         已知IP地址128.14.35.7/20是CIDR地址块中的某个地址，求：
@@ -219,7 +185,6 @@
       <dt>特殊的CIDR地址块</dt>
       <dd>网络前缀位数n=32，全部是前缀，没有主机，称为主机路由</dd>
       <dd>网络前缀位数n=31，主机号只有1位，所以只有2个IP地址，没有终端主机；用于点对点链路(无编号网络)</dd>
-      <dd>网络前缀位数n=30，主机号只有2位，所以只有4个IP地址</dd>
       <dd>网络前缀位数n=0，IP地址也为0，即：0.0.0.0/0，称默认路由</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 子网192.168.4.0/30中，能接收目的地址为192.168.4.3的IP分组的最大主机数是（）</div>
       <div class="alpha">
@@ -609,24 +574,30 @@
         </tr>
       </table>
     </dl>
-    <h2>Homework</h2>
+    <h2>Summary & Homework</h2>
     <dl>
-      <dd>已知IP地址206.0.64.8/18是CIDR地址块中的某个地址，求：地址掩码、地址块数量、网络地址、最小主机地址、最大主机地址、广播地址、聚合C类网络的数量</d>
-        <li>
+      <dt>Summary</dt>
+      <ol>
+        <li>CIDR的特点</li>
+        <li>CIDR的使用</li>
+      </ol>
+      <dt>Homework</dt>
+      <div>[<span class="iconfont icon-keyboard"></span>] 网络前缀越短的地址块，包含的地址数越多（）。</div>
+      <div>[<span class="iconfont icon-keyboard"></span>]
+        已知IP地址206.0.64.8/18是CIDR地址块中的某个地址，求：地址掩码、地址块数量、网络地址、最小主机地址、最大主机地址、广播地址、聚合C类网络的数量。</div>
       <dt>拓展阅读</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/classless-interdomain-routing-cidr/">Classless Interdomain Routing
             (CIDR) <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/subnet-mask/">Subnet Mask <span
-              class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/ipv4/">IPv4 <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://www.rfc-editor.org/">RFC 4632、RFC 1517-1519、RFC 1520 <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/subnet-mask/">Subnet Mask <span
               class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </section>
+  </div>
 </body>
 
 </html>
