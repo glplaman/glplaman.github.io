@@ -70,9 +70,21 @@
       setup() {
         const navs = ref([{
           ind: 0,
-          title: "2025春季",
+          title: "2025",
           cont: [
             {
+              subind: 2,
+              desc: '2024计科2班',
+              url: '2024jk02.json',
+            }, {
+              subind: 4,
+              desc: '2024计科4班',
+              url: '2024jk04.json',
+            }, {
+              subind: 5,
+              desc: '2024计科6班',
+              url: '2024jk06.json',
+            }, {
               subind: 0,
               desc: '2023软工4班',
               url: '20240204.json',
@@ -171,6 +183,7 @@
         const isSubShow = ref(false)
         const getData = (url, $event) => {
           isLoading.value = true;
+          console.log(url, $event)
 
           fetch(`/utils/data/rank/${url}`)
             .then(res => res.json())

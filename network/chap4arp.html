@@ -7,6 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>地址解析协议 ARP</title>
   <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+  <style>
+    header {
+      background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/08/arp-protocol.webp);
+    }
+  </style>
 </head>
 
 <body>
@@ -16,16 +22,41 @@
     </header>
     <dl>
       <img src="../imgs/network/network layer 1/幻灯片2.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片3.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片4.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片5.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片6.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片7.JPG" alt="">
+      <dd>地址解析协议 ARP – Address Resolution Protocol</dd>
+      <dd>将 IP 地址解析为以太网 MAC 地址</dd>
+      <dd>协议栈需求
+        <p>路由：根据IP地址找到目标主机所在网络</p>
+        <p>封帧：根据MAC地址找到目标主机<pp>
+      </dd>
+      <figure>
+        <img src="./imgs/arp0.png" alt="">
+        <figcaption>ARP协议栈</figcaption>
+      </figure>
+      <!-- <img src="../imgs/network/network layer 1/幻灯片7.JPG" alt=""> -->
+      <dt>过程 Procedure</dt>
+      <figure>
+        <img src="./imgs/arp1.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <dd>PC0知道PC1的IP地址，但不知道PC1的MAC地址；自身的ARP表找不到PC1的MAC地址，因此不能封帧</dd>
+      <dd>PC0先缓存消息，然后以广播的形式发起ARP请求：我的IP地址是192.168.0.1，MAC地址是00D0.5857.5331，我找IP地址是192.168.0.3的主机的MAC地址。收到请回答！</dd>
+      <dd>除PC0外，PC1和其它主机都会收到这个广播帧</dd>
+      <dd>PC2和PC3分析后发现，广播要找的目标不是自己，丢弃该帧</dd>
+      <dd>PC1分析后，发现是询问自己的：以单播的形式给PC0回一个ARP响应：我是你找的192.168.0.3，我的MAC地址为0030.A313.6DA4；同时将PC0的IP地址和MAC地址保存到自己的ARP表中</dd>
+      <dd>除PC1外，其它主机都会收到这个单播帧</dd>
+      <dd>只有PC0发现是发给自己的，于是更新自己的ARP表；其它主机丢弃该单播帧</dd>
+      <dd>最后封帧之前缓存的消息并发送</dd>
+
+      <dt>特点 Features</dt>
+      <dd>IP地址与MAC地址并没有一一对应的关系，且不是永久不变的</dd>
+      <dd>动态更新：设备重启，网卡更换等</dd>
+      <dd>有生存周期：超过生存周期的条目将被删除</dd>
+      <dd>每次ARP协议使用某个条目，该条目的生存周期都要重新计时</dd>
+      <dd>ARP协议不出网</dd>
     </dl>
     <h2>基本命令</h2>
     <dl>
-      <dt>概述</dt>
-      <dd>地址解析协议，其基本功能为透过目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行</dd>
+      <dd>地址解析协议，根据目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行</dd>
       <dd>它是IPv4中网络层必不可少的协议，不过在IPv6中已不再适用，并被邻居发现协议NDP所替代</dd>
       <dd>ARP的命令一般有三个用法：查询显示、添加记录、与删除记录</dd>
       <dt>arp -a</dt>
@@ -35,12 +66,81 @@
       <dd>如果想彻底清空ARP列表，需要禁止所有网络连接，否则网络数据交互过程中仍然会产生新的ARP列表</dd>
       <dt>arp -s</dt>
       <dd>手动添加或绑定一条ARP记录，也叫绑定MAC地址命令</dd>
+      <dd>手动添加的记录，称为静态记录；通过ARP添加的记录是动态记录</dd>
       <dd>在网络中，通常在办公网络或监控项目中，为了防止用户乱改IP地址或IP地址冲突，需要给IP地址绑定设备的MAC地址 </dd>
-      <dd>格式为"ARP + 空格+ -a + IP地址 + MAC地址"</dd>
       <dd>绑定后记得查看，确保成功</dd>
+      <pre>arp -s IP地址 MAC地址</pre>
+      <div class="tips">大多数ARP静态绑定操作都需要网络管理员权限</div>
     </dl>
     <h2>实操</h2>
     <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 实操1</div>
+      <figure>
+        <img src="./imgs/arp2.png" alt="">
+        <figcaption>实操1拓扑</figcaption>
+      </figure>
+      <dd>搭建拓扑；分配IP地址</dd>
+      <dd>利用监视工具打开各设备ARP表</dd>
+      <dd>PC0发PDU给PC1，查看ARP表的更新情况</dd>
+      <dd>清除ARP表重新测试，命令为：
+        <p>arp -d</p>
+        <p>Switch：clear mac-add</p>
+      </dd>
+      <dd>清除ARP表后使用ping <strong>重新</strong> 测试，并分析情况</dd>
+      <dd>测试前，各主机ARP表内容</dd>
+      <table>
+        <caption>PC0</caption>
+        <tr>
+          <td>IP Address</td>
+          <td>Hardware Address</td>
+          <td>Interface</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <table>
+        <caption>PC1</caption>
+        <tr>
+          <td>IP Address</td>
+          <td>Hardware Address</td>
+          <td>Interface</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <dd>测试后，各主机ARP表内容</dd>
+      <table>
+        <caption>PC0</caption>
+        <tr>
+          <td>IP Address</td>
+          <td>Hardware Address</td>
+          <td>Interface</td>
+        </tr>
+        <tr>
+          <td>192.168.1.2</td>
+          <td>0001.C753.8C96</td>
+          <td>FastEthernet0</td>
+        </tr>
+      </table>
+      <table>
+        <caption>PC1</caption>
+        <tr>
+          <td>IP Address</td>
+          <td>Hardware Address</td>
+          <td>Interface</td>
+        </tr>
+        <tr>
+          <td>192.168.1.1</td>
+          <td>0060.470B.C9AD</td>
+          <td>FastEthernet0</td>
+        </tr>
+      </table>
       <img src="../imgs/network/network layer 1/幻灯片8.JPG" alt="">
       <img src="../imgs/network/network layer 1/幻灯片9.JPG" alt="">
       <img src="../imgs/network/network layer 1/幻灯片10.JPG" alt="">
@@ -48,11 +148,37 @@
       <img src="../imgs/network/network layer 1/幻灯片12.JPG" alt="">
       <img src="../imgs/network/network layer 1/幻灯片13.JPG" alt="">
       <img src="../imgs/network/network layer 1/幻灯片14.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片15.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片16.JPG" alt="">
-      <dd><a target="_blank"
-          href="https://www.bilibili.com/video/BV1oW411o7ZJ/?spm_id_from=888.80997.embed_other.whitelist&t=4.871547&bvid=BV1oW411o7ZJ">ARP视频解读</a>
-      </dd>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>ARP的作用</li>
+        <li>ARP的解析过程</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>独立完成实操1、实操2网络拓扑的搭建和配置</li>
+        <li>根据各主机ARP表，认真分析通信过程中每一个阶段的PDU内容</li>
+        <li>进一步熟悉PT的使用</li>
+        <li>进一步完善整理PT常用命令</li>
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.rfc-editor.org/rfc/rfc826.html">RFC 826 <span class="iconfont icon-share"></span></a>
+        </li>
+        <li><a href="https://networkencyclopedia.com/address-resolution-protocol-arp/">ARP Protocol: The Backbone of
+            Network Communication <span class="iconfont icon-share"></span>
+          </a></li>
+        <li><a href="https://networkencyclopedia.com/arp-command/#google_vignette">Arp Command <span
+              class="iconfont icon-share"></span>
+          </a></li>
+        <li>
+          <a
+            href="https://www.bilibili.com/video/BV1oW411o7ZJ/?spm_id_from=888.80997.embed_other.whitelist&t=4.871547&bvid=BV1oW411o7ZJ">ARP<span
+              class="iconfont icon-videocam"></span></a>
+        </li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
