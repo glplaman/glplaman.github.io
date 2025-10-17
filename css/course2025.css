@@ -1,0 +1,92 @@
+@import url(/css/reset.css);
+
+:root {
+  --header-h: 300px;
+  --chap-h: 90px;
+}
+
+.w {
+  padding: 0;
+}
+
+header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--p-m-g);
+  height: var(--header-h);
+  color: #fff;
+  background-color: var(--bg-color);
+  background: linear-gradient(135deg, #0575E6, #00F260);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 200%;
+  height: 4px;
+  background-image: linear-gradient(to right, #2ed573 0%, #f1c40f 50%, #4bc2ce 100%);
+  animation: roll 5s linear infinite alternate;
+}
+
+@keyframes roll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.wrap,
+dl {
+  padding: 0;
+}
+
+dt {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: var(--chap-h);
+  padding: 4px var(--p-m-g);
+  color: #fff;
+  background-color: var(--second-color);
+  text-transform: capitalize;
+  font-size: 1.8rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+dd a {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--p-m-g);
+  cursor: pointer;
+}
+
+dd a::after {
+  content: attr(data-title);
+  order: 2;
+}
+
+dd a::before {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  background-repeat: repeat-x;
+  order: 1;
+}
+
+dd a:hover {
+  color: var(--second-color);
+}

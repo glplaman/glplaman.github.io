@@ -18,7 +18,8 @@
 <body>
   <section class="w">
     <header>
-      <h1>地址解析协议 ARP</h1>
+      <h1>地址解析协议</h1>
+      <span>&commat;ARP</span>
     </header>
     <dl>
       <img src="../imgs/network/network layer 1/幻灯片2.JPG" alt="">
@@ -54,24 +55,6 @@
       <dd>每次ARP协议使用某个条目，该条目的生存周期都要重新计时</dd>
       <dd>ARP协议不出网</dd>
     </dl>
-    <h2>基本命令</h2>
-    <dl>
-      <dd>地址解析协议，根据目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行</dd>
-      <dd>它是IPv4中网络层必不可少的协议，不过在IPv6中已不再适用，并被邻居发现协议NDP所替代</dd>
-      <dd>ARP的命令一般有三个用法：查询显示、添加记录、与删除记录</dd>
-      <dt>arp -a</dt>
-      <dd>显示当期IP地址对应的MAC地址</dd>
-      <dt>arp -d</dt>
-      <dd>删除所有ARP记录</dd>
-      <dd>如果想彻底清空ARP列表，需要禁止所有网络连接，否则网络数据交互过程中仍然会产生新的ARP列表</dd>
-      <dt>arp -s</dt>
-      <dd>手动添加或绑定一条ARP记录，也叫绑定MAC地址命令</dd>
-      <dd>手动添加的记录，称为静态记录；通过ARP添加的记录是动态记录</dd>
-      <dd>在网络中，通常在办公网络或监控项目中，为了防止用户乱改IP地址或IP地址冲突，需要给IP地址绑定设备的MAC地址 </dd>
-      <dd>绑定后记得查看，确保成功</dd>
-      <pre>arp -s IP地址 MAC地址</pre>
-      <div class="tips">大多数ARP静态绑定操作都需要网络管理员权限</div>
-    </dl>
     <h2>实操</h2>
     <dl>
       <div>[<span class="iconfont icon-keyboard"></span>] 实操1</div>
@@ -82,12 +65,14 @@
       <dd>搭建拓扑；分配IP地址</dd>
       <dd>利用监视工具打开各设备ARP表</dd>
       <dd>PC0发PDU给PC1，查看ARP表的更新情况</dd>
-      <dd>清除ARP表重新测试，命令为：
-        <p>arp -d</p>
-        <p>Switch：clear mac-add</p>
-      </dd>
+      <dd>清除ARP表重新测试</dd>
       <dd>清除ARP表后使用ping <strong>重新</strong> 测试，并分析情况</dd>
       <dd>测试前，各主机ARP表内容</dd>
+      <div class="tips">
+        <p>arp -a</p>
+        <p>arp -d</p>
+        <p>arp -s</p>
+      </div>
       <table>
         <caption>PC0</caption>
         <tr>
