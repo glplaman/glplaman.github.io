@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交换机 Switch</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>交换机 Switch</h1>
+    </header>
+    <dl>
+      <dt>操作模式</dt>
+      <table>
+        <caption>操作模式</caption>
+        <tbody>
+          <tr>
+            <td>Switch></td>
+            <td>用户模式，en进入特权模式</td>
+          </tr>
+          <tr>
+            <td>Switch#</td>
+            <td>特权模式，conf ter进入全局配置模式</td>
+          </tr>
+          <tr>
+            <td>Switch#conf</td>
+            <td>全局配置</td>
+          </tr>
+          <tr>
+            <td>Switch(config-if)</td>
+            <td>接口配置</td>
+          </tr>
+          <tr>
+            <td>Switch(config-vlan)</td>
+            <td>VLAN配置</td>
+          </tr>
+          <tr>
+            <td>Switch(config-line)</td>
+            <td>console配置</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>Show</dt>
+      <dd>查看命令</dd>
+      <dd>switch>show ver 查看版本信息</dd>
+      <dd>switch#show running-config 查看运行配置</dd>
+      <dd>switch#show flash 查看已用/可用空间</dd>
+      <dd>switch#show arp 查看ARP缓存</dd>
+      <dd>switch#show mac-addr 查看MAC转发表</dd>
+      <dd>switch#show interface 查看所有端口</dd>
+      <dd>switch#show interface fa0/1 查看指定端口fa0/1</dd>
+      <dd>switch#show interface fa0/1 switchport 查看指定端口模式</dd>
+      <dd>switch#show ip interface 查看IP端口信息</dd>
+      <dd>switch#show history 查看历史命令</dd>
+      <dt>clear</dt>
+      <dd>clear mac-address-table</dd>
+      <dt>Exit</dt>
+      <dd>返回上一级</dd>
+      <dt>End</dt>
+      <dd>直接回到特权模式#</dd>
+      <dt>write</dt>
+      <dd>保存配置参数</dd>
+      <dt>基本配置</dt>
+      <dd>交换机的日常执勤中，很少直接操作交换机</dd>
+      <dd>初始化配置：通常使用PC的串口RS232连接交换机，在PC上操作交换机，配置其基本参数，如主机名、登陆权限等</dd>
+      <dd>日常运维:使用串口；使用telnet远程登陆</dd>
+      <dd>修改交换机的系统网络名</dd>
+      <pre>switch(config)#hostname huali</pre>
+      <dd>配置交换机特权模式密码</dd>
+      <pre>huali(config)#ena pass xxx // 明文密码</pre>
+      <pre>huali(config)#ena secret xxx // 密文密码</pre>
+      <dd>配置交换机串口密码</dd>
+      <pre>huali(config)#line console 0 // 选择console口</pre>
+      <pre>huali(config-line)#password xxx // 配置密码</pre>
+      <pre>huali(config-line)#login // 登陆时检测密码</pre>
+      <dd>配置远程登陆密码</dd>
+      <pre>huali(config)#line vty 0 4</pre>
+      <pre>huali(config-line)#password huali</pre>
+      <pre>huali(config-line)#login</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

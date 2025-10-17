@@ -5,23 +5,95 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAC vs IP</title>
+  <title>IP vs MAC</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
   <section class="w">
     <header>
-      <h1>MAC vs IP</h1>
+      <h1>IP vs MAC</h1>
     </header>
     <dl>
-      <img src="../imgs/network/network layer 0/幻灯片3.JPG" alt="">
-      <img src="../imgs/network/network layer 0/幻灯片4.JPG" alt="">
-      <img src="../imgs/network/network layer 0/幻灯片5.JPG" alt="">
-      <img src="../imgs/network/network layer 0/幻灯片6.JPG" alt="">
-      <img src="../imgs/network/network layer 0/幻灯片7.JPG" alt="">
-      <img src="../imgs/network/network layer 0/幻灯片8.JPG" alt="">
-      <img src="../imgs/network/network layer 0/幻灯片9.JPG" alt="">
+      <dd>IP地址
+        <p>逻辑地址</p>
+        <p>用于网络层及上层</p>
+        <p>IP地址存放在IP数据报的首部；包括源地址和目的地址</p>
+      </dd>
+      <dd>MAC地址
+        <p>物理地址</p>
+        <p>用于数据链路层</p>
+        <p>MAC地址存放在MAC帧的首部；包括源地址和目的地址</p>
+      </dd>
+      <figure>
+        <img src="./imgs/n2.png" alt="">
+        <figcaption>IP vs MAC</figcaption>
+      </figure>
+      <dt>地址的变化</dt>
+      <dd>主机H1和主机H2经过两级路由器R1、R2通信</dd>
+      <dd>网络层，IP数据报的源地址和目标地址始终是IP1、IP2</dd>
+      <dd>数据链路层，MAC帧的源地址和目标地址相应的发生变化</dd>
+      <figure>
+        <img src="./imgs/n3.png" alt="">
+        <figcaption>IP vs MAC</figcaption>
+      </figure>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <!-- <img src="../imgs/network/network layer 0/幻灯片3.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 0/幻灯片4.JPG" alt=""> -->
+      <dt>目的</dt>
+      <dd>分析数据报的转发过程</dd>
+      <dd>理解IP地址和MAC地址的作用</dd>
+      <dd>初步理解路由表的作用</dd>
+      <dt>过程</dt>
+      <dd>搭建拓扑</dd>
+      <dd>按照分配IP地址配置PC</dd>
+      <dd>分别使用CLI和GUI配置路由器端口</dd>
+      <dd>第一次发简单数据报检查两侧通信情况</dd>
+      <dd>第二次发简单数据报检查两侧通信情况</dd>
+      <figure>
+        <img src="./imgs/n4.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <dt>PC0</dt>
+      <dd>目的IP地址不在当前子网内，也不是广播地址，但设置了网关 → 发给网关</dd>
+      <dd>根据ARP协议，找出网关IP地址对应的MAC地址和端口，封帧发送</dd>
+      <dt>Switch0</dt>
+      <dd>登记：进入的帧是否已登记</dd>
+      <dd>查找：自己的MAC地址和帧的目标MAC地址不匹配 → 不是给自己的 → 检查MAC地址表来确定转发</dd>
+      <dd>转发：如果有，根据目标MAC地址对应的记录，从指定端口转发；如果没有，则广播</dd>
+      <figure>
+        <img src="./imgs/n5.png" alt="">
+        <figcaption>PC0 → Switch0</figcaption>
+      </figure>
+      <dt>Router1</dt>
+      <dd>自己的MAC和接收帧的MAC地址匹配 → 是发给自己的 → 拆帧，发给上层/网络层</dd>
+      <dd>在自己的CEF（路由表）找目的IP对应的记录；发现有，且下一跳是邻接网（直连）→ 封帧后转发</dd>
+      <dt>Switch1</dt>
+      <dd>登记：</dd>
+      <dd>查找：自己的MAC地址和帧的目标MAC地址不匹配 → 不是给自己的 → 检查MAC地址表来确定转发</dd>
+      <dd>转发：找出目标MAC地址对应的记录，根据端口转发</dd>
+      <dt>PC3</dt>
+      <dd>略</dd>
+      <figure>
+        <img src="./imgs/n6.png" alt="">
+        <figcaption>Router1 → Switch1 → PC3</figcaption>
+      </figure>
+
+      <dt>思考</dt>
+      <dd>IP地址为什么不能随便指定？</dd>
+      <dd>如何判断对方的IP和自己的IP是否在一个子网呢？</dd>
+      <dd>如何根据IP地址获取对应的MAC地址？</dd>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>独立完成网络拓扑的搭建和配置，认真分析每一个阶段的PDU内容</li>
+        <li>在交换机命令的基础上，归纳路由器的常用命令</li>
+        <li>预习ARP地址解析协议</li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
