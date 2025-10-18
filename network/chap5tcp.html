@@ -17,7 +17,7 @@
     }
 
     header {
-      background-image: url(../imgs/network/network0.jpg);
+      background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/08/TCP-Three-Way-Handshake-process-1024x576.webp);
       background-size: cover;
       justify-content: space-between;
     }
@@ -122,18 +122,26 @@
         <a id="tocont1" class="nav-link"><span>可靠传输</span><span class="top-sub-menu">Reliable</span></a>
         <a id="tocont2" class="nav-link"><span>流量控制</span><span class="top-sub-menu">Follow</span></a>
         <a id="tocont3" class="nav-link"><span>拥塞控制</span><span class="top-sub-menu">Congestion</span></a>
-        <a id="tocont4" class="nav-link"><span>三次握手</span><span class="top-sub-menu">Handshake</span></a>
-        <a id="tocont5" class="nav-link"><span>四次挥手</span><span class="top-sub-menu">Farewell</span></a>
+        <a id="tocont4" class="nav-link"><span>传输控制</span><span class="top-sub-menu">Handshake</span></a>
       </div>
     </nav>
     <dl class="target-cont">
+      <dt>Joke Time</dt>
+      <dd>A TCP packet walks into a bar and says to the bartender, “I’d like a beer.” The bartender says, “You’d like a
+        beer?” The TCP packet says, “Yes, a beer.”</dd>
       <dt>概述 Overview</dt>
       <dd>TCP - Transmission Control Protocol</dd>
-      <dd>面向连接</dd>
+      <dd>基于连接</dd>
       <dd>点对点</dd>
       <dd>全双工通信</dd>
       <dd>可靠交付</dd>
       <dd>面向字节流</dd>
+      <dt>应用 Application</dt>
+      <dd>Web Browsing</dd>
+      <dd>文件传输 File Transfers</dd>
+      <dd>邮件交互 Email Exchange</dd>
+      <dd>VPN 网络 VPN Connections</dd>
+      <dd>云服务 Cloud Services</dd>
       <dt>报文 Packet</dt>
       <dd>序号：32bit；TCP报文数据部分第一个字节的序号；增加到最大值后，重新回到0</dd>
       <dd>确认号：32bit；对待发TCP报文数据部分的第一个字节序号的确认；增加到最大值后，重新回到0；控制字段ACK为1时才有效；如果确认号为n，则表示序号n-1之前的数据已经收到，现在希望接收序号为n的数据
@@ -197,29 +205,36 @@
           <span class="iconfont icon-videocam"></span></a>
       </dd>
     </dl>
-    <h2>三次握手</h2>
+    <h2>传输控制 Transmission Control</h2>
     <dl class="target-cont">
       <dd>连接建立-三次握手</dd>
       <dd>数据通信</dd>
       <dd>连接释放-四次挥手</dd>
-      <dt>三次握手</dt>
-      <dd>第一次握手：C发送请求，同步位置1，该同步请求报文消耗一个序号x，但是不允许携带数据[why]</dd>
-      <dd>第二次握手：S如果同意建立连接，则确认并回复同步响应报文，消耗一个序号y，同样不允许携带数据</dd>
-      <dd>第三次握手：B对S的响应报文进行确认；可以携带报文</dd>
+      <dt>三次握手 Three-Way Handshake</dt>
+      <div class="tips">SYN → SYN-ACK → ACK</div>
+      <figure>
+        <img src="./imgs/tcp1.png" alt="">
+        <figcaption>Three-Way Handshake</figcaption>
+      </figure>
+      <dd>第一次握手：C发送请求，同步位置1；消耗一个序号x</dd>
+      <dd>第二次握手：S如果同意建立连接，则确认并回复同步响应报文；消耗一个序号y</dd>
+      <dd>第三次握手：B对S的响应报文进行确认；消耗一个序号x+1</dd>
       <figure>
         <img src="../imgs/network/tcp/s9.JPG" alt="">
         <figcaption>三次握手</figcaption>
       </figure>
-    </dl>
-    <h2>四次挥手</h2>
-    <dl class="target-cont">
+      <figure>
+        <img src="./imgs/tcp0.png" alt="">
+        <figcaption>TCP简化版</figcaption>
+      </figure>
+      <dd>[ <span class="iconfont icon-help"></span> ] 三次握手过程中是否可以携带数据？为什么？</dd>
+      <dt>四次挥手 Four-Way Handshake</dt>
+      <dd>发送方没有数据要发送，发送释放连接FIN请求；接收方确认后，可以继续发送自己还未发送完的数据；当前连接是半连接状态：发送方到接收方的连接是关闭的</dd>
+      <dd>接收方发完数据了，也向发送方发送释放连接FIN请求；等链路上所有的数据报都达到目标主机后，连接被彻底释放</dd>
       <figure>
         <img src="../imgs/network/tcp/s10.JPG" alt="">
         <figcaption>四次挥手</figcaption>
       </figure>
-      <dt>关键点</dt>
-      <dd>发送方没有数据要发送，发送释放连接FIN请求；接收方确认后，可以继续发送自己还未发送完的数据；当前连接是半连接状态：发送方到接收方的连接是关闭的</dd>
-      <dd>接收方发完数据了，也向发送方发送释放连接FIN请求；等链路上所有的数据报都达到目标主机后，连接被彻底释放</dd>
     </dl>
     <dl>
       <dt>Reading</dt>
@@ -227,6 +242,8 @@
         <li> <a href="https://networkencyclopedia.com/tcp-three-way-handshake/">TCP Three-Way Handshake: A Comprehensive
             Guide <span class="iconfont icon-share"></span></a>
         </li>
+        <li><a class="warn" href="https://networkencyclopedia.com/ack/">ACK in Networking <span
+              class="iconfont icon-share"></span></a></li>
         <li><a class="warn" href="https://www.rfc-editor.org/rfc/rfc793">RFC 793 <span
               class="iconfont icon-share"></span></a></li>
       </ol>

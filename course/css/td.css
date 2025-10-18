@@ -3,6 +3,11 @@
 
 :root {
   --main-color: #FF0099;
+  --p-m-g: 10px;
+}
+
+html {
+  font-size: 62.5%;
 }
 
 .iconfont {
@@ -11,15 +16,15 @@
 }
 
 .mt-1 {
-  margin-top: 10px;
+  margin-top: var(--p-m-g);
 }
 
 .mt-2 {
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
 .txt-x {
-  font-size: 18px;
+  font-size: 1.8rem;
 }
 
 .txt-bold {
@@ -32,17 +37,17 @@ header {
 }
 
 .bg {
-  width: 200px;
-  height: 200px;
+  width: 20rem;
+  height: 20rem;
   /* background-image: url(https://networkencyclopedia.com/wp-content/uploads/2024/04/High-Performance-Routing-HPR-1024x576.webp); */
   background-image: linear-gradient(45deg, var(--pre-color) 0%, var(--main-color) 100%);
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   background-size: cover;
-  filter: drop-shadow(2px 2px 10px rgb(0, 0, 0, 0.6));
+  filter: drop-shadow(2px 2px var(--p-m-g) rgb(0, 0, 0, 0.6));
   transition: border-radius 1s, background-position 3s;
   cursor: pointer;
   place-self: center;
-  margin: 40px;
+  margin: 4rem auto;
 }
 
 .bg:hover {
@@ -54,27 +59,32 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: var(--p-m-g);
 }
 
 h2 {
   display: flex;
   align-items: flex-end;
-  height: 120px;
-  font-size: 24px;
+  height: 12rem;
+  font-size: 2.2rem;
   background-color: #1b9fab;
   color: #fff;
-  padding: 10px;
+  padding: var(--p-m-g);
+  gap: var(--p-m-g);
+}
+
+h2 span:last-child {
+  font-size: 1.6rem;
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 600;
   letter-spacing: 4px;
 }
 
 h4 {
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 600;
 }
 
@@ -83,13 +93,13 @@ h4 {
 }
 
 .seg {
-  padding: 20px;
+  padding: 2rem;
 }
 
 .flex {
   display: flex;
-  gap: 40px;
-  margin-bottom: 40px;
+  gap: 4rem;
+  margin-bottom: 4rem;
 }
 
 .seg .flex:nth-child(odd) {
@@ -97,7 +107,7 @@ h4 {
 }
 
 .info {
-  flex: 1;
+  padding: 4rem 0 10rem;
   line-height: 2;
 }
 
@@ -133,8 +143,8 @@ h4 {
 }
 
 .timeline-scale .bg {
-  width: 128px;
-  height: 128px;
+  width: 12rem;
+  height: 12rem;
   background-image: var(--src);
   animation: roll 3s ease-in-out;
   animation-timeline: view(60% 0%);
@@ -150,37 +160,57 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: var(--p-m-g);
   border: 1px solid var(--main-color);
-  border-radius: 20px;
+  border-radius: 2rem;
   width: 90%;
-  max-width: 600px;
-  margin: 10px auto;
+  max-width: 60rem;
+  margin: var(--p-m-g) auto;
   padding: 1px;
 }
 
 .item::before {
   content: attr(data-num);
-  font-size: 14px;
+  font-size: 1.4rem;
   line-height: 1;
 }
 
 .item::after {
   content: attr(data-txt);
-  font-size: 14px;
+  font-size: 1.4rem;
   line-height: 1;
 }
 
 .bar {
   width: var(--p);
   background-image: linear-gradient(45deg, var(--pre-color) 0%, var(--main-color) 100%);
-  height: 20px;
-  border-radius: 10px;
+  height: 2rem;
+  border-radius: var(--p-m-g);
 }
 
 @media screen and (max-width:768px) {
+  html {
+    font-size: 55%;
+  }
+
   .seg .flex {
     flex-direction: column !important;
   }
 
+  h2 {
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0px;
+  }
+
+  .title {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0px;
+  }
+
+  .dot,
+  .sub {
+    flex: 1 1 100%
+  }
 }
