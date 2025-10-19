@@ -8,13 +8,18 @@
   <title>用户数据报 UDP</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    header {
+      background-image: url(https://networkencyclopedia.com/wp-content/uploads/2024/02/http-2-multiplexing.webp);
+    }
+  </style>
 </head>
 
 <body>
   <section class="w">
     <header>
       <h1>用户数据报</h1>
-      <span>UDP</span>
+      <span>&commat;UDP</span>
     </header>
     <dl>
       <dt>Joke Time</dt>
@@ -24,16 +29,24 @@
       </div>
       <dt>概述 Overview</dt>
       <dd>UDP - User Datagram Protocol，用户数据报</dd>
-      <dd>面向报文；但是不分段 segmenting、不重组 reassembling，也不实现序列号 sequence numbers，因此一次只能传输少量数据 - 流媒体通信/实时通信</dd>
-      <dd>最大努力交付 Best effort delivery</dd>
+      <dd>不可靠 unreliable</dd>
       <dd>不保证交付 Does not guarantee delivery</dd>
       <dd>无需确认</dd>
-      <dd>没有流量控制、没有拥塞控制</dd>
-      <dd>首部开销小，最少8个字节，仅包括首部</dd>
-      <dd>支持组播、多播</dd>
       <dt>特点 Features</dt>
       <dd>无连接 connectionless</dd>
-      <dd>不可靠 unreliable</dd>
+      <dd>面向报文 - 但是不分段 segmenting、不重组 reassembling，也不实现序列号 sequence numbers，因此一次只能传输少量数据 - 流媒体通信/实时通信</dd>
+      <dd>没有拥塞控制 - 存在丢包</dd>
+      <dd>首部开销小 - 最少8个字节，仅包括首部</dd>
+      <dd>最大努力交付 Best effort delivery</dd>
+      <dd>支持单播、组播、多播</dd>
+      <figure>
+        <img src="./imgs/udp1.png" alt="">
+        <figcaption>UDP通信和端口</figcaption>
+      </figure>
+      <div class="tips">
+        <p>复用 Multiplexing：发送端将多个低速信号合并到一个高速信道上进行传输</p>
+        <p>分用 Demultiplexing：接收端将通过复用技术合并在一起的信号，重新分离成原来的各个独立信号</p>
+      </div>
       <dt>报文 Packet</dt>
       <figure>
         <img src="./imgs/t0.png" alt="">
@@ -91,6 +104,8 @@
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/user-datagram-protocol-udp/">User Datagram Protocol (UDP) <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/multiplexing/">Multiplexing <span
               class="iconfont icon-share"></span></a></li>
         <li><a href="https://www.rfc-editor.org/rfc/rfc768">RFC 768 <span class="iconfont icon-share"></span></a></li>
       </ol>
