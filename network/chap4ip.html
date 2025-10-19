@@ -22,12 +22,19 @@
         <p>使用CMD命令行工具：Win + r，输入cmd回车，打开控制台|小黑屋，输入ipconfig并回车</p>
       </dd>
       <dt>概述 Overview</dt>
-      <dd>每个互联网节点/每个接口port分配一个全世界范围内唯一的标识符</dd>
+      <dd>每个互联网节点/每个接口port分配一个全世界范围内唯一的标识符 - unique</dd>
       <dd>长度32bit，由1、0组成</dd>
-      <dd>为方便使用，通常使用<span class="warn">点分十进制</span>记法</dd>
-      <dd>每个8个bit一组；共4组 - represented as four-octet dotted-decimal numbers,</dd>
+      <dd>为方便使用，通常使用<span class="warn">点分十进制</span>记法 - in dotted-decimal notation</dd>
+      <dd>每8个bit一组；共4组</dd>
       <dd>采用两级结构：<span class="warn">网络号、主机号</span></dd>
-      <dd>两个唯一：网络号在整个互联网中唯一；主机号在所连接的网络中唯一</dd>
+      <dd>两个唯一
+        <p>网络号在整个互联网中唯一</p>
+        <p>主机号在所连接的网络中唯一</p>
+      </dd>
+      <figure>
+        <img src="https://networkencyclopedia.com/wp-content/uploads/2019/09/Ip-address-ipv4.png" alt="">
+        <figcaption>IP in dotted-decimal notation</figcaption>
+      </figure>
       <table>
         <caption>IP地址结构</caption>
         <tbody>
@@ -70,25 +77,47 @@
           </tr>
         </tbody>
       </table>
-      <dt>基本概念 Concept</dt>
-      <dd>网络地址
-        <p>主机号全为0的地址</p>
-        <p>不能分配给用户主机使用</p>
-      </dd>
-      <dd>广播地址
-        <p>主机号全为1的地址</p>
-        <p>不能分配给用户主机使用</p>
-      </dd>
-      <dt>分类的IP地址</dt>
-      <dd>根据固定的网络号前缀区分为
-        <p>A类</p>
-        <p>B类</p>
-        <p>C类</p>
-        <p>D类</p>
-        <p>E类</p>
-      </dd>
+      <dt>分类的IP地址 Classes</dt>
+      <dd>根据固定的网络号前缀区分为</dd>
       <table>
-        <caption>分类的IP地址</caption>
+        <caption>IP Address Classes</caption>
+        <thead>
+          <tr>
+            <th><strong>IP Address Class</strong></th>
+            <th><strong>Possible First Octet</strong></th>
+            <th><strong>Used For</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Class A</td>
+            <td>1–126</td>
+            <td>Very large networks</td>
+          </tr>
+          <tr>
+            <td>Class B</td>
+            <td>128–191</td>
+            <td>Medium to large networks</td>
+          </tr>
+          <tr>
+            <td>Class C</td>
+            <td>192–223</td>
+            <td>Small networks</td>
+          </tr>
+          <tr>
+            <td>Class D</td>
+            <td>224–239</td>
+            <td>Multicasting</td>
+          </tr>
+          <tr>
+            <td>Class E</td>
+            <td>240–255</td>
+            <td>Reserved (experimental)</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>分类IP地址细节</caption>
         <tr>
           <th>分类</th>
           <th>网路地址x + 主机地址y</th>
@@ -97,35 +126,36 @@
           <th>示例</th>
         </tr>
         <tr>
-          <td>A类</td>
+          <td>A</td>
           <td><span class="warn">0</span>xxxxxx yyyyyyyy yyyyyyyy yyyyyyyy</td>
           <td>2 <sup>8-1</sup>-2</td>
           <td>2 <sup>32-8</sup>-2</td>
           <td>126.1.0.4</td>
         </tr>
         <tr>
-          <td>B类</td>
+          <td>B</td>
           <td><span class="warn">10</span>xxxxx xxxxxxxx yyyyyyyy yyyyyyyy</td>
           <td>2 <sup>16-2</sup></td>
           <td>2 <sup>32-16</sup>-2</td>
           <td>128.1.1.2</td>
         </tr>
         <tr>
-          <td>C类</td>
+          <td>C</td>
           <td><span class="warn">110</span>xxxx xxxxxxxx xxxxxxxx yyyyyyyy</td>
           <td>2 <sup>24-3</sup></td>
           <td>2 <sup>32-24</sup>-2</td>
           <td>192.3.1.1</td>
         </tr>
         <tr>
-          <td>D类</td>
+          <td>D</td>
           <td colspan="4">多播地址</td>
         </tr>
         <tr>
-          <td>E类</td>
+          <td>E</td>
           <td colspan="4">保留</td>
         </tr>
       </table>
+      <div class="tips">环回地址 loopback：127.0.0.1；多用于本地调试</div>
       <dd>[<span class="iconfont icon-help"></span>] 为什么A类的网络数量要-2？</dd>
       <table>
         <caption>第一个A类网</caption>
@@ -168,7 +198,33 @@
           <td class="warn">1111 1111</td>
         </tr>
       </table>
-      <div class="tips">环回地址 loopback：127.0.0.1；多用于本地调试</div>
+      <dt>有效IP地址 Valid </dt>
+      <ul data-ezoic-video-excluded="1">
+        <li>网络号不能是127 - The network ID cannot be 127.</li>
+        <li>网络号和主机号不能都是255 - The network ID and host ID cannot both be 255.</li>
+        <li>网络号和主机号不能都是0 - The network ID and host ID cannot both be 0.</li>
+        <li>对给定网络，网络号必须唯一 - The host ID must be unique for a given network ID.</li>
+      </ul>
+      <dt>基本概念 Concept</dt>
+      <dd>网络地址 Network Address
+        <p>主机号全为0的地址</p>
+        <p>不能分配给用户主机使用</p>
+      </dd>
+      <dd>广播地址 Broadcast Address
+        <p>主机号全为1的地址</p>
+        <p>不能分配给用户主机使用</p>
+      </dd>
+      <dd>公网IP地址 Public Address
+        <p>在互联网上标识和定位一个设置</p>
+      </dd>
+      <dd>私网IP地址 Private Address
+        <p>在私有网络上标识和定位一个设置，如局域网</p>
+      </dd>
+      <dd>保留IP地址块 Reserved Address
+        <p>10.0.0.0 to 10.255.255.255 (10/8 prefix)</p>
+        <p>172.16.0.0 to 172.31.255.255 (172.16/12 prefix)</p>
+        <p>192.168.0.0 to 192.168.255.255 (192.168/16 prefix)</p>
+      </dd>
       <dt>局限 Limitations</dt>
       <dd>浪费严重 - 不够用</dd>
       <dd>利用率低 - 空闲</dd>
@@ -189,6 +245,14 @@
         <li><a href="https://networkencyclopedia.com/internet-protocol-ip/">Internet Protocol (IP)
             <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/ipv4/">IPv4 <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/history-of-ipv6/">History of IPv6 and Its Key Features <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/ip-address/#google_vignette">IP Address <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a
+            href="https://networkencyclopedia.com/difference-between-a-public-ip-address-and-a-private-ip-address/">Difference
+            Between a Public IP Address and a Private IP Address
+            <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
