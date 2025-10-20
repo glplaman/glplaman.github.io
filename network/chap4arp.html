@@ -28,10 +28,14 @@
       </div>
       <dd>地址解析协议 ARP – Address Resolution Protocol</dd>
       <dd>将 IP 地址解析为以太网 MAC 地址</dd>
-      <dd>协议栈需求
-        <p>路由：根据IP地址找到目标主机所在网络</p>
-        <p>封帧：根据MAC地址找到目标主机<pp>
-      </dd>
+      <dd>设备通过 ARP 解析到目的 MAC 地址后，将会在自己的 ARP 表中增加 IP 地址到 MAC 地址的映射条目 Entry，用于后续到目的地报文的转发</dd>
+      <dd>ARP条目分为动态ARP和静态ARP</dd>
+      <dd>动态ARP：由ARP协议通过ARP报文自动生成和维护；可以被老化；可以被新的ARP报文更新；可以被静态ARP覆盖。当到达老化时间、接口down时将被删除</dd>
+      <dd>静态ARP：可以限制和指定IP地址的设备通信时只使用指定的MAC地址，此时攻击报文无法修改此条目的IP地址和MAC地址的映射关系，从而保护了本设备和指定设备间的正常通信</dd>
+      <dd>一般情况下，ARP 动态执行并自动寻求 IP 地址到以太网 MAC 地址的解析，无需管理员介入</dd>
+      <dt>协议栈需求 Stack</dt>
+      <dd>路由：根据Idd地址找到目标主机所在网络</dd>
+      <dd>封帧：根据MAC地址找到目标主机</dd>
       <figure>
         <img src="./imgs/arp0.png" alt="">
         <figcaption>ARP协议栈</figcaption>
@@ -57,12 +61,48 @@
       <dd>每次ARP协议使用某个条目，该条目的生存周期都要重新计时</dd>
       <dd>ARP协议不出网</dd>
     </dl>
+    <h2>安全 Security</h2>
+    <dl>
+      <dt>设计缺陷 Flaws</dt>
+      <dd>不校验包</dd>
+      <dd>即使没有发送ARP请求，也会处理收到的ARP响应</dd>
+      <figure style="max-width: 800px;">
+        <img src="./imgs/arp-spoofing.gif" alt="">
+        <figcaption>ARP欺骗</figcaption>
+      </figure>
+      <dt>导致 Result in</dt>
+      <dd>中间人攻击 Main-in-the-Middle</dd>
+      <dd>会话劫持 Session Hijacking</dd>
+      <dd>拒绝服务 Denial of Service (DoS)</dd>
+      <figure style="max-width: 800px;">
+        <img src="./imgs/arp-man-in-the-middle.gif" alt="">
+        <figcaption>ARP威胁</figcaption>
+      </figure>
+      <dt>措施 Solution</dt>
+      <dd>Cryptographic Network Protocols 加密网络协议</dd>
+      <dd>Packet Filtering 包过滤</dd>
+      <dd>Virtual Private Network 虚拟私有网络</dd>
+      <dd>ARP Spoofing Detection Software ARP欺骗监测软件</dd>
+      <dd>...</dd>
+    </dl>
+    <h2>命令 Command</h2>
+    <dl>
+      <dt>查看 View</dt>
+      <dd>查看arp缓存条目</dd>
+      <pre>arp -a</pre>
+      <dt>删除 Delete</dt>
+      <dd>删除arp缓存条目</dd>
+      <pre>arp -d [IP]</pre>
+      <dt>添加 Static</dt>
+      <dd>为指定主机添加一条静态条目</dd>
+      <pre>arp -s IP MAC</pre>
+    </dl>
     <h2>实操</h2>
     <dl>
-      <div>[<span class="iconfont icon-keyboard"></span>] 实操1</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 实操1 网内ARP</div>
       <figure>
         <img src="./imgs/arp2.png" alt="">
-        <figcaption>实操1拓扑</figcaption>
+        <figcaption>网内ARP拓扑</figcaption>
       </figure>
       <dd>搭建拓扑；分配IP地址</dd>
       <dd>利用监视工具打开各设备ARP表</dd>
@@ -70,11 +110,6 @@
       <dd>清除ARP表重新测试</dd>
       <dd>清除ARP表后使用ping <strong>重新</strong> 测试，并分析情况</dd>
       <dd>测试前，各主机ARP表内容</dd>
-      <div class="tips">
-        <p>arp -a</p>
-        <p>arp -d</p>
-        <p>arp -s</p>
-      </div>
       <table>
         <caption>PC0</caption>
         <tr>
@@ -128,13 +163,34 @@
           <td>FastEthernet0</td>
         </tr>
       </table>
-      <img src="../imgs/network/network layer 1/幻灯片8.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片9.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片10.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片11.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片12.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片13.JPG" alt="">
-      <img src="../imgs/network/network layer 1/幻灯片14.JPG" alt="">
+      <div>[<span class="iconfont icon-keyboard"></span>] 实操2 跨网ARP</div>
+      <figure>
+        <img src="./imgs/l14.png" alt="">
+        <figcaption>跨网ARP 拓扑</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/l16.png" alt="">
+        <figcaption>路由器端口配置参考</figcaption>
+      </figure>
+      <dd>主机 → 交换机 → 路由器 → 交换机 → 主机</dd>
+      <dd>如果目标主机和源主机不在同一网段，目标主机就向网关发ARP请求，然后封装报文、发给网关</dd>
+      <dd>如果网关没有目标主机的ARP条目，网关发起ARP请求</dd>
+      <dd>如果网关有目标主机的ARP条目，网关直接把报文发给目标主机</dd>
+      <!-- <img src="../imgs/network/network layer 1/幻灯片10.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 1/幻灯片11.JPG" alt=""> -->
+      <figure>
+        <img src="./imgs/l15.png" alt="">
+        <figcaption>逐段转发</figcaption>
+      </figure>
+      <div class="tips">逐段转发</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 实操2 多网段ARP</div>
+      <figure>
+        <img src="./imgs/l17.png" alt="">
+        <figcaption>逐段转发</figcaption>
+      </figure>
+      <!-- <img src="../imgs/network/network layer 1/幻灯片12.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 1/幻灯片13.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 1/幻灯片14.JPG" alt=""> -->
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
@@ -142,6 +198,7 @@
       <ol>
         <li>ARP的作用</li>
         <li>ARP的解析过程</li>
+        <li>ARP的特点</li>
       </ol>
       <dt>Homework</dt>
       <ol>
