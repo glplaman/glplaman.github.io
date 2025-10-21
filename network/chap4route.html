@@ -15,18 +15,195 @@
       <h1>路由 Route</h1>
     </header>
     <dl>
+      <dt>内容 Contents</dt>
+      <dd>静态路由 Static Route</dd>
+      <dd>默认路由 Default Route</dd>
+    </dl>
+    <img src="../imgs/network/network layer 3/幻灯片10.JPG" alt="">
+    <dl>
       <!-- <img src="./imgs/route.png" alt=""> -->
-      <img src="../imgs/network/network layer 3/幻灯片10.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片11.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片12.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片13.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片14.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片15.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片16.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片17.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片18.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片19.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片20.JPG" alt="">
+      <dd>静态路由就是“人工指路”，告诉路由器：“去某个地方，就走这条路”</dd>
+      <dd>通常由网络管理员手动配置和维护的路由条目，用于告诉路由器如何转发数据包到特定目标网络</dd>
+      <dd>静态路由是预先设定、不会自动改变的路径规则。只要网络拓扑不变化，这条路由就一直有效；一旦网络结构改变，必须手动修改</dd>
+      <dd>资源消耗小，不需要像动态路由那样交换协议报文，节省CPU和带宽</dd>
+      <dd>安全性高，不对外广播路由信息，更隐蔽</dd>
+      <dt>应用 Application</dt>
+      <dd>小型或简单网络
+        <p>网络结构简单、设备少，路由路径固定</p>
+        <p>手动配置几条路由即可实现全网互通，无需复杂的动态路由协议</p>
+      </dd>
+      <dd>默认路由</dd>
+      <dd>控制特定流量路径
+        <p>需要精确控制某些数据走特定线路（如安全策略、负载分离）</p>
+      </dd>
+      <dd>资源受限设备
+        <p>路由器性能较弱，无法运行复杂的动态路由协议（如RIP、OSPF），静态路由更节省CPU和内存</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 静态路由配置</div>
+      <dt>网络分析 Analyze</dt>
+      <dd>1号网和3号网直连；2号网和3号网直连；可以自动生成通往彼此的直连路由</dd>
+      <dd>1号网和2号网没有直连，所以不能自动生成通往彼此的直连路由；要实现数据通信，必须指明到达目标网络的路由</dd>
+      <dd>对1号网→2号网，Router0的决策：目标网络是2号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.2</dd>
+      <dd>对2号网→1号网，Router1的决策：目标网络是1号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.1</dd>
+      <dd>需配置静态路由：
+        <p>Router0 上配置去往 2号网 的静态路由（下一跳 192.168.3.2）</p>
+        <p>Router1 上配置去往 1号网 的静态路由（下一跳 192.168.3.1）</p>
+      </dd>
+      <figure>
+        <img src="./imgs/r0.png" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <dt>路由器IP参考配置 IP Configuration</dt>
+      <dd>Router0</dd>
+      <pre>
+Router(config)# inter g0/0/0
+Router(config-if)# ip address 192.168.1.254 255.255.255.0
+Router(config-if)# no shutdown
+Router(config)# inter g0/0/1
+Router(config-if)# ip address 192.168.3.1 255.255.255.252
+Router(config-if)# no shutdown</pre>
+      <dd>Router1</dd>
+      <pre>
+Router(config)# inter g0/0/0
+Router(config-if)# ip address 192.168.2.254 255.255.255.0
+Router(config-if)# no shutdown
+Router(config)# inter g0/0/1
+Router(config-if)# ip address 192.168.3.2 255.255.255.252
+Router(config-if)# no shutdown</pre>
+      <figure>
+        <img src="./imgs/r1.png" alt="">
+        <figcaption>Router0 路由配置前</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/r2.png" alt="">
+        <figcaption>Router1 路由配置前</figcaption>
+      </figure>
+      <dt>路由器静态路由配置 Route Configuration</dt>
+      <dd>配置出口的路由</dd>
+      <dd>路由配置命令
+        <p>prefix：目的网络的网络地址</p>
+        <p>mask：目的网络的地址掩码</p>
+        <p>ip：下一跳的IP地址</p>
+      </dd>
+      <pre>ip route prefix mask ip</pre>
+      <dd>Router0</dd>
+      <pre>
+Router>en
+Router#conf ter
+Router(config)#inter g0/0/1
+Router(config)# ip route 192.168.2.0 255.255.255.0 192.168.3.2</pre>
+      <dd>Router1</dd>
+      <pre>
+Router>en
+Router#conf ter
+Router(config)#inter g0/0/1
+Router(config)# ip route 192.168.1.0 255.255.255.0 192.168.3.1</pre>
+      <figure>
+        <img src="./imgs/r3.png" alt="">
+        <figcaption>Router0 路由配置后</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/r4.png" alt="">
+        <figcaption>Router1 路由配置后</figcaption>
+      </figure>
+      <dt>说明 Tips</dt>
+      <dd>
+        转发端口没有体现：虽然静态路由配置命令中没有直接写出转发端口，但路由器会根据下一跳IP地址，结合自身的直连路由表，自动推导出应该从哪个接口转发。因此，端口信息是隐含的、由系统自动计算得出的，不需要手动指定。这就是为什么配置中看不到端口，但数据仍能正确转发的原因。
+      </dd>
+      <dd>路由机制的一部分</dd>
+      <dd>前2次通信失败，是因为网络初期还没有获取到各主机的MAC地址，所以要先发ARP</dd>
+      <dd>2次失败是因为有2级路由器存在，所以要发2次ARP</dd>
+      <figure>
+        <img src="./imgs/r5.png" alt="">
+        <figcaption>通信准备过程</figcaption>
+      </figure>
+      <dd>也可以在路由器的配置选项卡完成静态路由的创建；下方会显示相应的命令
+        <p>选择 static 标签页设置静态路由 - 可视化</p>
+      </dd>
+      <figure>
+        <img src="./imgs/r6.png" alt="">
+        <figcaption>通信准备过程</figcaption>
+      </figure>
+    </dl>
+    <img src="../imgs/network/network layer 3/幻灯片16.JPG" alt="">
+    <dl>
+      <dd>一种特殊的路由， <strong>匹配所有</strong> 目标地址</dd>
+      <dd>即当数据包的目的IP地址无法匹配路由表中的任何其他路由条目时，路由器就会使用默认路由来转发该数据包</dd>
+      <dd>如果没有指定，则丢弃报文</dd>
+      <pre>0.0.0.0/0</pre>
+      <dt>解决方案 Solution</dt>
+      <dd>针对每个网络单独指定一条静态路由</dd>
+      <figure>
+        <img src="./imgs/r7.png" alt="">
+        <figcaption>默认路由</figcaption>
+      </figure>
+      <div class="tips">默认路由是一种特殊的静态路由，表示“当没有其他路可走时，就走这条路”，通常用于接入互联网或简化路由配置</div>
+      <dt>适用 Apply</dt>
+      <dd>某个IP分组的目的IP地址和路由表中的所有路由项都不匹配 - 没有匹配</dd>
+      <dd>路由器通往的多个网络有相同的下一跳，但无法聚合路由 - 大杂烩</dd>
+      <dt>特点 Feature</dt>
+      <dd>优先级最低</dd>
+      <dd>网络前缀为0，即默认匹配所有IP分组</dd>
+      <dd>可能导致分组无限循环直到TTL耗尽</dd>
+      <dd>应认真仔细检查、配置路由</dd>
+      <table>
+        <caption>静态路由 vs 默认路由</caption>
+        <tbody>
+          <tr>
+            <td>范围</td>
+            <td>匹配特定网络；如 192.168.2.0/24</td>
+            <td>匹配所有网络；如 0.0.0.0/0</td>
+          </tr>
+          <tr>
+            <td>配置方式</td>
+            <td>手动添加</td>
+            <td>手动添加；属于静态路由</td>
+          </tr>
+          <tr>
+            <td>类型标识</td>
+            <td>路由表中显示为 S(Static)</td>
+            <td>同样显示为 S* 或 S 0.0.0.0/0</td>
+          </tr>
+          <tr>
+            <td>优先级</td>
+            <td>比动态路由高，但低于直连路由</td>
+            <td>是最后的“兜底”选项，优先级最低</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 默认路由配置</div>
+      <dd>搭建拓扑、根据分配地址完成配置</dd>
+      <figure>
+        <img src="./imgs/r10.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <dd>配置静态路由</dd>
+      <pre>Router1：ip route 0.0.0.0 0.0.0.0 192.1.3.2</pre>
+      <pre>Router2：ip route 0.0.0.0 0.0.0.0 192.1.3.1</pre>
+      <dd>配置完成后的路由表</dd>
+      <figure>
+        <img src="./imgs/r8.png" alt="">
+        <figcaption>Router1 路由表</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/r9.png" alt="">
+        <figcaption>Router2 路由表</figcaption>
+      </figure>
+      <dt>验证 Verify</dt>
+      <dd>分别使用以下方法验证网络连通性</dd>
+      <dd>使用 PING 验证</dd>
+      <dd>发送简单数据包或 </dd>
+      <dd>定制数据分组
+        <p>在模拟通信模式下，由PC0发送一个不匹配任何路由的PDU</p>
+        <p>Router1匹配不到具体的路由项，则由默认路由转发给Router2，每次转发TTL都减1</p>
+        <p>Router2匹配不到具体的路由项，则由默认路由转发给Router1，每次转发TTL都减1</p>
+        <p>当TTL时间为0时，数据包被丢弃</p>
+        <p>查看数据分组在两个路由器之间的转发过程</p>
+      </dd>
+      <figure>
+        <img src="./imgs/r11.png" alt="">
+        <figcaption>定制数据分组</figcaption>
+      </figure>
     </dl>
     <h2>Homework</h2>
     <dl>
