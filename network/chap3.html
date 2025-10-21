@@ -24,28 +24,34 @@
     <img src="./imgs/l9.png" alt="">
     <dl>
       <dt>一句话概括 In a word</dt>
-      <dd>数据经过差错控制后，封装成帧，借助广播信道或者点对点信道，从一个主机传送到当前局域网内的目标主机；传送过程中，依据主机的MAC地址判断是否是目标主机</dd>
+      <dd>数据经过差错控制后，封装成帧，借助广播信道或者点对点信道，从一个主机传送到当前局域网内匹配物理地址MAC的目标主机</dd>
       <dt>关键字 Keywords</dt>
-      <dd>封帧 framing</dd>
+      <dd>封帧
+        <p>framing</p>
+      </dd>
       <dd>传输
         <p>flow control</p>
         <p>error correction</p>
         <p>retransmission of frames</p>
       </dd>
-      <dd>寻址 MAC</dd>
+      <dd>寻址
+        <p>MAC</p>
+      </dd>
     </dl>
     <h2>封帧 Frame Packaging</h2>
     <dl>
+      <dd>帧 Frame 是数据链路层传输的基本单位</dd>
+      <dd>为了正确识别一帧数据的开始和结束，需要使用特殊的界定符来标记边界</dd>
       <dd>要发送的数据分别加上首部和尾部再发出去</dd>
       <dd>封帧后的数据长度不应超过 MTU - Maximum Transfer Unit；最大传输单元</dd>
-      <dt>帧界定符</dt>
+      <dt>帧界定符 Frame Delimiters</dt>
       <dd>SOH - Start Of Header；编码：01</dd>
       <dd>EOH - End Of Header；编码：04</dd>
       <table style="width: 210px;">
         <tbody>
           <tr>
             <td>EOH</td>
-            <td>data</td>
+            <td>Data</td>
             <td>SOH</td>
           </tr>
         </tbody>
@@ -72,7 +78,7 @@
           </tr>
         </tbody>
       </table>
-      <dt>字符填充</dt>
+      <dt>字符填充 Padding</dt>
       <dd>数据中包含帧界定符</dd>
       <dd>使用转义符填充，防止数据被误认为是帧边界</dd>
       <dd>不同协议对转义字符的定义是不同的</dd>
@@ -94,23 +100,24 @@
     </dl>
     <h2>差错控制 Error Control</h2>
     <dl>
-      <dt>客观原因</dt>
+      <div class="tips">凡是接收到的帧，都被认为是正确的帧 - 因为错误的帧已经被丢弃了</div>
       <dd>数据传输没有百分百的准确，总是有误差存在</dd>
-      <dd>常见错误：比特差错；你发送的是1，我收到的是0</dd>
-      <dd>其它错误：帧丢失、帧重复、帧失序</dd>
-      <dt>衡量</dt>
+      <dd>常见错误是比特差错；你发送的是1，我收到的是0</dd>
+      <dt>衡量 Measurement</dt>
       <dd>误码率 BER - Bit Error Rate</dd>
       <dd>某段时间内，传输错误的比特占传输比特总数的比率</dd>
-      <dt>措施</dt>
+      <dt>措施 Solution</dt>
       <dd>在数据M的后面附加上供检测用的n位冗余码再发送出去</dd>
       <dd>冗余码，又称帧校验序列 FCS – Frame Check Sequence</dd>
-      <dt>实现</dt>
+      <dt>实现 Implementation</dt>
       <dd>循环冗余检测 CRC - Cyclic Redundance Check</dd>
       <dd>在M的数据后面加上n个0</dd>
       <dd>用生成多项式P按照模2运算去除M+n</dd>
-      <dd>得到的余数R就是冗余码</dd>
+      <dd>得到的余数R就是冗余码 - 如果位数不够n位，前面要补0</dd>
+      <dd>通常情况下，生成多项式P的二进制位数比它生成的冗余码（校验码）的位数多1位</dd>
+      <dd>冗余码（校验码）的位数 r 是由生成多项式 P(x) 的最高次数决定的</dd>
       <table>
-        <caption>模2</caption>
+        <caption>模2/异或</caption>
         <thead>
           <tr>
             <th>a</th>
@@ -141,16 +148,23 @@
           </tr>
         </tbody>
       </table>
-      <div>[<span class="iconfont icon-keyboard"></span>] 若消息 M=101001，生成多项式 P=1101，使用3位冗余码，取n=3；
-        <br>
-        则除数为P，被除数为M+000=101001000，模2运算后，余数R为001
-        <br>
-        故发送M+R=101001001
-      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 若消息 M=101001，P=1101，使用3位冗余码，取n=3；求冗余码和最后的报文</div>
+      <dd>p对应的生成多项式 p(x) = x<sup>3</sup> + x<sup>2</sup> + 1</dd>
+      <dd>则除数为P，被除数为M+000=101001000</dd>
+      <dd>模2运算后，余数R为1 → 001</dd>
+      <dd>故发送M+R=101001001</dd>
       <figure>
         <img src="./imgs/l0.png" alt="">
         <figcaption>CRC</figcaption>
       </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 若消息 M=11010，P(x)=x<sup>3</sup> + x<sup>2</sup> + 1，求冗余码和最后的报文
+      </div>
+      <dd>生成多项式的最高次幂是3 → r=3</dd>
+      <dd>生成多项式对应的二进制 P = 1101</dd>
+      <dd>被除数 M+r = 11010000</dd>
+      <dd>除数 P = 1101</dd>
+      <dd>结果 r = 0 → 000</dd>
+      <dd>实际发送报文为 11010000</dd>
       <dt>思考 <span class="iconfont icon-help"></span></dt>
       <dd>bit差错是不是传输差错?</dd>
       <dd>有了CRC，是不是就可靠传输?</dd>
@@ -159,6 +173,18 @@
         <p>二维奇偶校验</p>
         <p>校验和</p>
       </div>
+    </dl>
+    <h2>其它错误 Other</h2>
+    <dl>
+      <dt>帧丢失 Frame Loss</dt>
+      <dd>指一个或多个数据帧在传输过程中未能到达接收方</dd>
+      <dd>解决 - 超时重传</dd>
+      <dt>帧重复 Frame Duplication</dt>
+      <dd>同一个数据帧被多次接收，即接收方收到了两个或更多相同的帧</dd>
+      <dd>解决 - 序号</dd>
+      <dt>帧失序 Frame Out-of-Order</dt>
+      <dd>数据帧没有按照发送顺序到达接收方</dd>
+      <dd>解决 - 序号</dd>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
@@ -170,6 +196,7 @@
       </ol>
       <dt>Homework</dt>
       <ol>
+        <li>CRC只能检测比特错误（）。</li>
         <li>要发送的数据是1101 0110 11，采用CRC校验，生成多项式是10011，取n=4，那么发送的数据是？</li>
         <!-- <li>1101 0110 1111 10</li> -->
         <!-- <figure>
