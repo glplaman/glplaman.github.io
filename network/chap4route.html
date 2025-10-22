@@ -39,8 +39,9 @@
       <dd>资源受限设备
         <p>路由器性能较弱，无法运行复杂的动态路由协议（如RIP、OSPF），静态路由更节省CPU和内存</p>
       </dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 静态路由配置</div>
-      <dt>网络分析 Analyze</dt>
+      <div>[<span class="iconfont icon-keyboard"></span>] 静态路由配置 <a href="./pt/static-route.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a></div>
+      <div>第一部分 网络分析 Analyze</div>
       <dd>1号网和3号网直连；2号网和3号网直连；可以自动生成通往彼此的直连路由</dd>
       <dd>1号网和2号网没有直连，所以不能自动生成通往彼此的直连路由；要实现数据通信，必须指明到达目标网络的路由</dd>
       <dd>对1号网→2号网，Router0的决策：目标网络是2号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.2</dd>
@@ -53,7 +54,7 @@
         <img src="./imgs/r0.png" alt="">
         <figcaption>网络拓扑</figcaption>
       </figure>
-      <dt>路由器IP参考配置 IP Configuration</dt>
+      <div>第二部分 路由器IP参考配置 IP Configuration</div>
       <dd>Router0</dd>
       <pre>
 Router(config)# inter g0/0/0
@@ -78,7 +79,7 @@ Router(config-if)# no shutdown</pre>
         <img src="./imgs/r2.png" alt="">
         <figcaption>Router1 路由配置前</figcaption>
       </figure>
-      <dt>路由器静态路由配置 Route Configuration</dt>
+      <div>第三部分 路由器静态路由配置 Route Configuration</div>
       <dd>配置出口的路由</dd>
       <dd>路由配置命令
         <p>prefix：目的网络的网络地址</p>
@@ -106,7 +107,7 @@ Router(config)# ip route 192.168.1.0 255.255.255.0 192.168.3.1</pre>
         <img src="./imgs/r4.png" alt="">
         <figcaption>Router1 路由配置后</figcaption>
       </figure>
-      <dt>说明 Tips</dt>
+      <div>说明 Tips</div>
       <dd>
         转发端口没有体现：虽然静态路由配置命令中没有直接写出转发端口，但路由器会根据下一跳IP地址，结合自身的直连路由表，自动推导出应该从哪个接口转发。因此，端口信息是隐含的、由系统自动计算得出的，不需要手动指定。这就是为什么配置中看不到端口，但数据仍能正确转发的原因。
       </dd>

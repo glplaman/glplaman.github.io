@@ -12,6 +12,10 @@
     header {
       background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/09/interprocess-communication-IPC.webp);
     }
+
+    .border {
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 
@@ -24,6 +28,7 @@
     <dl>
       <dd>分组的转发是基于分组首部中的目的地址 - <strong>基于终点</strong> 的转发</dd>
       <dd>IP数据报的转发需要借助网络层设备路由器 Router 实现</dd>
+      <dd>重点关注3张表</dd>
       <figure>
         <img src="./imgs/l17.png" alt="">
         <figcaption>逐段转发</figcaption>
@@ -182,6 +187,7 @@
         <p>PC0到Router1的Fa0/0端口：IP分组的封帧信息为：源MAC地址为PC0，目标MAC地址为Router1的Fa0/0</p>
         <p>Router1的Fa0/1端口到PC3：IP分组的封帧信息为：源MAC地址为Router1的Fa0/1，目标MAC地址为PC3</p>
       </dd>
+      <dd>标签说明信息中，上方是IP地址，下方是网关地址</dd>
       <figure>
         <img src="./imgs/r14.png" alt="">
         <figcaption>拓扑</figcaption>
@@ -190,6 +196,10 @@
       <pre>
 Router(config)#interface fa0/0
 Router(config-if)#ip address 192.1.1.254 255.255.255.0
+Router(config-if)#no shutdown</pre>
+      <pre>
+Router(config)#interface fa0/1
+Router(config-if)#ip address 192.1.2.254 255.255.255.0
 Router(config-if)#no shutdown</pre>
       <dd>查看 - 使用监视工具
         <p>Type中C表示直连路由</p>
@@ -205,30 +215,35 @@ Router(config-if)#no shutdown</pre>
         <figcaption>路由表</figcaption>
       </figure>
       <div class="tips">也可使用路由器的 CLI：show ip route 查看路由表</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 多网络路由转发</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 多网络路由转发；<a href="./pt/forwarding.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a>
+      </div>
       <figure>
         <img src="./imgs/r13.png" alt="">
         <figcaption>拓扑</figcaption>
       </figure>
+      <dt>转发过程</dt>
+      <dd>H1 → Router0 g0/2</dd>
+      <dd>Router0 g0/1 → H2</dd>
       <dd>三张表</dd>
       <figure>
-        <img src="./imgs/f0.png" alt="">
+        <img class="border" src="./imgs/f0.png" alt="">
         <figcaption>主机H1 ARP表</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/f1.png" alt="">
+        <img class="border" src="./imgs/f1.png" alt="">
         <figcaption>主机H2 ARP表</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/f2.png" alt="">
+        <img class="border" src="./imgs/f2.png" alt="">
         <figcaption>交换机Switch2 MAC表</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/f3.png" alt="">
+        <img class="border" src="./imgs/f3.png" alt="">
         <figcaption>交换机Switch1 MAC表</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/f4.png" alt="">
+        <img class="border" src="./imgs/f4.png" alt="">
         <figcaption>路由器Router0 Router表</figcaption>
       </figure>
     </dl>
