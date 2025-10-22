@@ -12,36 +12,32 @@
 <body>
   <section class="w">
     <header>
-      <h1>交换机自学习 Self-learning</h1>
+      <h1>交换机自学习</h1>
+      <span>&commat;Self-learning</span>
     </header>
     <dl>
       <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
       <dd>交换机通过维护一个MAC地址表/转发表来实现链路层数据帧的通信</dd>
-      <dd>收到帧后，在MAC地址表中查找帧的目的MAC地址对应的端口，然后通过该端口转发出去</dd>
-      <dt>内容</dt>
-      <dd>接收数据帧的源地址和进入的端口号，所在vlan及有效时间</dd>
-      <dt>容量</dt>
-      <dd>MAC表的大小</dd>
-      <dd>1K、2k、4k</dd>
+      <dt>MAC table</dt>
+      <dd>内容：
+        <p>接收数据帧的源地址和进入的端口号，所在Vlan及有效时间</p>
+        <p>哪个端口 port 连着谁 MAC</p>
+      </dd>
+      <dd>容量
+        <p>MAC表条目的大小</p>
+        <p>1K、2k、4k</p>
+      </dd>
       <figure>
         <img src="./imgs/l2.png" alt="">
-        <figcaption>查看交换机的MAC表</figcaption>
+        <figcaption>CLI 查看交换机的MAC表</figcaption>
       </figure>
       <figure>
         <img src="./imgs/l3.png" alt="">
-        <figcaption>查看交换机的MAC表</figcaption>
+        <figcaption>监视工具查看交换机的MAC表</figcaption>
       </figure>
-      <dt>维护过程</dt>
-      <dd>转发 forwarding (A → D)</dd>
-      <dd>泛洪 flooding (A → B)</dd>
-      <dd>过滤 filtering (E → A)</dd>
-      <figure>
-        <img src="./imgs/l13.png" alt="">
-        <figcaption>维护过程</figcaption>
-      </figure>
-      <dt>详细过程</dt>
+      <dt>Procedure</dt>
       <dd>登记
-        <p>查找表中是否有与接收帧的源MAC地址匹配的项目</p>
+        <p>查找表中是否有与接收帧的源MAC地址匹配的项目：</p>
         <p>如果有，则更新</p>
         <p>如果没有，则增加</p>
       </dd>
@@ -54,6 +50,40 @@
         <p>2.1 如果不同，则按照登记的端口转发 forwarding</p>
         <p>2.2 如果相同，表明是同一侧的主机，不需要转发，丢弃 disregarding /过滤 filtering 该帧</p>
       </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] MAC的通信情况</div>
+      <ol>
+        <li>A → D
+          <p>转发 forwarding</p>
+          <p>单播</p>
+          <p>这是最期望的高效转发</p>
+          <p>同时登记 A → 1</p>
+        </li>
+        <li>A → B
+          <p>泛洪 flooding</p>
+          <p>广播；为了确保帧能到达目标</p>
+          <p>如果收到回复，则学习了对方的位置；登记 B → 2</p>
+        </li>
+        <li>E → A
+          <p>过滤 filtering</p>
+          <p>最不希望的转发</p>
+        </li>
+      </ol>
+      <figure>
+        <img src="./imgs/l13.png" alt="">
+        <figcaption>维护过程</figcaption>
+      </figure>
+    </dl>
+    <h2>Security</h2>
+    <dl>
+      <dt>MAC Flapping</dt>
+      <dd>如果同一个MAC地址频繁在不同端口间“出现”，MAC表会不断更新，可能表明存在环路或攻击</dd>
+      <dd>交换机通常会告警或启用STP（生成树协议）来防止环路</dd>
+      <dt>MAC Flooding</dt>
+      <dd>攻击者发送大量伪造源MAC地址的帧，填满交换机的MAC表，导致交换机退化为“集线器”模式，对所有流量进行泛洪，从而进行嗅探攻击</dd>
+      <dd>频繁泛洪会导致网络拥塞</dd>
+    </dl>
+    <h2>Drill</h2>
+    <dl>
       <div class="tips">
         <p>show mac-address-table：查看交换机的MAC表</p>
         <p>clear mac-address-table：清除交换机的MAC表</p>

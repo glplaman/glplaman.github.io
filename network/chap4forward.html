@@ -22,51 +22,61 @@
       <span>&commat;Forwarding</span>
     </header>
     <dl>
-      <dd>分组的转发是基于分组首部中的目的地址 - 基于终点的转发</dd>
+      <dd>分组的转发是基于分组首部中的目的地址 - <strong>基于终点</strong> 的转发</dd>
       <dd>IP数据报的转发需要借助网络层设备路由器 Router 实现</dd>
+      <figure>
+        <img src="./imgs/l17.png" alt="">
+        <figcaption>逐段转发</figcaption>
+      </figure>
     </dl>
-    <h2>过程 Procedure</h2>
+    <h2>路由器 Router</h2>
     <dl>
-      <dt>主机发送</dt>
-      <ol>
-        <li>将目的IP地址和当前网络的地址掩码相与
-          <p>如果相等，应直接交付给主机</p>
-          <p>否则，应间接交付给默认网关路由器</p>
-        </li>
-        <li>直接交付：主机在ARP高速缓存表中查找目的IP地址对应的MAC地址
-          <p>如果有，封装IP数据报成帧，并发送给目的主机</p>
-          <p>否则，发起对目的IP地址的ARP请求，然后再封帧、转发</p>
-        </li>
-        <li>间接交付：主机在ARP高速缓存表中查找默认网关对应的MAC地址
-          <p>如果有，则封帧交付给默认网关路由器</p>
-          <p>如果没有，则发起对默认网关路由器的ARP请求</p>
-        </li>
-      </ol>
+      <img src="./imgs/router2.png" alt="">
+      <dd>三层设备；实现不同类型网络之间的互联；对应的PDU是IP数据报/分组IP packet</dd>
+      <dd>转发的依据是路由表（直连路由、静态路由和动态路由）</dd>
+      <dd>多输入/多输出端口：从某个输入端口收到分组后，根据路由协议，按照分组目标IP，从某个输出端口转发给下一个路由器；重复直至分组到达目的网络</dd>
+      <dd>使用路由器，真正实现了网际互连</dd>
+      <figure>
+        <img src="./imgs/n0.png" alt="">
+        <figcaption>网际互连</figcaption>
+      </figure>
       <div class="tips">
-        <p>数据链路层的范畴</p>
-        <p>都是基于IP；所以设备要提前配置好IP地址</p>
+        <p>物理层：Repeater / Hub</p>
+        <p>链路层：Switch / Bridge</p>
+        <p>运输层+：Gateway</p>
       </div>
-      <dt>路由器转发</dt>
+      <dt>逻辑结构 Logical</dt>
+      <dd>路由选择部分
+        <p>根据路由协议，通过定期和相邻路由器交换路由信息来维护路由表</p>
+        <p>由软件实现</p>
+        <p>侧重点：如何设计最优？<span class="iconfont icon-help"></span></p>
+      </dd>
+      <dd>分组转发部分
+        <p>根据路由表进行转发</p>
+        <p>通常使用硬件实现</p>
+        <p>由于线速 line speed 和处理速率的不匹配，导致的数据溢出、分组丢失、通信时延</p>
+        <p>侧重点：如何搜索最优？<span class="iconfont icon-help"></span></p>
+      </dd>
+      <figure>
+        <img src="./imgs/n1.png" alt="">
+        <figcaption>路由器逻辑结构</figcaption>
+      </figure>
+      <dt>路由表 Router Table</dt>
+      <dd>路由表中的每一个条目 Entry 代表一条路由信息，指导路由器如何转发数据包。其包含三个主要部分：</dd>
       <ol>
-        <li>收到分组</li>
-        <li>判断目的IP地址是否在本网：当前网络的地址掩码 & 目的IP地址
-          <p>如果和本网的网络地址/网络前缀相等，则直接交付</p>
-          <p>如果不等，则交付给本网默认网关路由器，由其完成后续任务</p>
+        <li>网络地址 Network：
+          <p>这是一个IP地址和一个子网掩码的组合，通常用CIDR记法；如 128.1.2.192/26</p>
         </li>
-        <li>直接交付：主机在ARP高速缓存表中查找目的IP地址对应的MAC地址
-          <p>如果有，封装IP数据报成帧，并发送给目的主机</p>
-          <p>否则，发起对目的IP地址的ARP请求</p>
+        <li>转发端口 Port：
+          <p>指明数据包应该从路由器的哪个物理或逻辑接口发送出去；如0、1、3</p>
         </li>
-        <li>间接交付：主机在ARP高速缓存表中查找默认网关路由器对应的MAC地址
-          <p>如果有，则封帧交付给默认网关路由器</p>
-          <p>如果没有，则发起对默认网关路由器的ARP请求</p>
-        </li>
-        <li>网关路由器逐行检索路由表的记录，使用目的IP地址和路由表项的网络地址对应的地址掩码AND：
-          <p>如果网络地址相同，则根据指定的端口，转发给下一跳</p>
-          <p>如果不同，继续检索下一跳记录；如果都没有匹配的记录，则丢弃该分组，并报告分组出错</p>
+        <li>下一跳IP地址 Next Hop IP：
+          <p>如果目标网络不是直接连接在本路由器的端口上，那么数据包需要先发送到另一个路由器（即“下一跳”）</p>
+          <p>这个字段就是那个“下一跳”路由器的IP地址</p>
+          <p>如果目标网络是直连的（如前两行所示），则此字段为“–”，表示数据包可以直接交付，无需经过其他路由器</p>
         </li>
       </ol>
-      <table>
+      <table style="max-width: 450px;">
         <caption>路由表</caption>
         <thead>
           <tr>
@@ -89,51 +99,138 @@
           <tr>
             <td>128.1.3.64/26</td>
             <td>3</td>
-            <td></td>
+            <td>192.168.3.2</td>
           </tr>
         </tbody>
       </table>
-    </dl>
-    <h2>路由器 Router</h2>
-    <dl>
-      <img src="./imgs/router2.png" alt="">
-      <dd>三层设备；实现不同类型网络之间的互联；对应的PDU是IP数据报/分组IP packet</dd>
-      <dd>转发的依据是路由表（直连路由、静态路由和动态路由）</dd>
-      <dd>多输入/多输出端口：从某个输入端口收到分组后，根据路由协议，按照分组目标IP，从某个输出端口转发给下一个路由器；重复直至分组到达目的网络</dd>
-      <dd>使用路由器，真正实现了网际互连</dd>
-      <figure>
-        <img src="./imgs/n0.png" alt="">
-        <figcaption>网际互连</figcaption>
-      </figure>
+      <dt>转发过程 Procedure</dt>
+      <dd>当路由器收到一个 <strong>待转发</strong> 的数据包时，会按照以下步骤进行处理：</dd>
+      <ol>
+        <li>判断是否为本地交付：
+          <p>路由器首先将数据包的目的IP地址与自己所连接网络的地址掩码进行“与”（AND）运算</p>
+          <p>如果计算出的网络地址与自己的某个直连网络地址相同，说明目标主机就在同一个网络内，路由器可以直接将数据包交付给目标主机（直接交付）</p>
+          <p>如果不同，则说明目标主机在远程网络，需要将数据包转发给网关路由器</p>
+        </li>
+        <li>查找路由表（最长前缀匹配）：
+          <p>网关路由器会 <strong>逐行遍历</strong> 检查路由表中的每一条记录</p>
+          <p>对于每一条记录，它会将数据包的目的IP地址与该记录中“网络地址”所对应的子网掩码进行“与”（AND）运算</p>
+          <p>如果运算结果与该记录的“网络地址”相同，则认为该记录是匹配的</p>
+        </li>
+        <li>选择最佳匹配并转发：
+          <p>路由器会选择所有匹配记录中最长前缀（即子网掩码位数最多，如/26比/24更长）的那一条作为最佳匹配 - <strong>路由聚合</strong></p>
+          <p>根据这条最佳匹配记录中的“转发端口”和“下一跳IP地址”信息，将数据包转发出去</p>
+          <p>如果“下一跳IP地址”为空（“–”），则从指定端口直接发送</p>
+          <p>如果“下一跳IP地址”有值，则通过指定端口将数据包发送给该IP地址的路由器</p>
+        </li>
+        <li>处理无匹配情况：
+          <p>如果逐行遍历完整个路由表都没有找到任何匹配的记录，又可以分为2种情况：</p>
+          <p>设置了默认路由 0.0.0.0/0，则选择默认路由转发</p>
+          <p>没有设置默认路由：丢弃该数据包，并通常会向源主机发送一个“目的网络不可达”的ICMP错误报告</p>
+        </li>
+      </ol>
+      <dt>解读</dt>
+      <dd>128.1.2.192/26 通过端口1直接连接，可以直接交付</dd>
+      <dd>128.1.2.128/26 通过端口2直接连接，可以直接交付</dd>
+      <dd>128.1.3.64/26 需要通过端口3转发，并且必须发送到IP地址为 192.168.3.2 的下一个路由器</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 完整过程 Workflow</div>
+      <dd>主机发送（通信发起方主机）</dd>
+      <ol>
+        <li>将目的IP地址和当前网络的地址掩码相与
+          <p>如果相等，应直接交付给主机</p>
+          <p>否则，应间接交付给默认网关路由器</p>
+        </li>
+        <li>直接交付：主机在ARP高速缓存表中查找目的IP地址对应的MAC地址
+          <p>如果有，封装IP数据报成帧，并发送给目的主机</p>
+          <p>否则，发起对目的IP地址的ARP请求，然后再封帧、转发</p>
+        </li>
+        <li>间接交付：主机在ARP高速缓存表中查找默认网关对应的MAC地址
+          <p>如果有，则封帧交付给默认网关路由器</p>
+          <p>如果没有，则发起对默认网关路由器的ARP请求</p>
+        </li>
+      </ol>
       <div class="tips">
-        <p>物理层：Repeater / Hub</p>
-        <p>链路层：Switch / Bridge</p>
-        <p>运输层+：Gateway</p>
+        <p>数据链路层的范畴</p>
+        <p>都是基于IP；所以设备要提前配置好IP地址</p>
       </div>
-      <dt>逻辑结构</dt>
-      <dd>路由选择部分
-        <p>根据路由协议，通过定期和相邻路由器交换路由信息来维护路由表</p>
-        <p>由软件实现</p>
-        <p>侧重点：如何设计最优？</p>
-      </dd>
-      <dd>分组转发部分
-        <p>根据路由表进行转发</p>
-        <p>通常使用硬件实现</p>
-        <p>由于线速 line speed 和处理速率的不匹配，导致的数据溢出、分组丢失、通信时延</p>
-        <p>侧重点：如何搜索最优？</p>
-      </dd>
-      <figure>
-        <img src="./imgs/n1.png" alt="">
-        <figcaption>路由器逻辑结构</figcaption>
-      </figure>
+      <dd>路由器转发</dd>
+      <ol>
+        <li>收到分组</li>
+        <li>判断目的IP地址是否在本网：当前网络的地址掩码 & 目的IP地址
+          <p>如果和本网的网络地址/网络前缀相等，则直接交付</p>
+          <p>如果不等，则交付给本网默认网关路由器，由其完成后续任务</p>
+        </li>
+        <li>直接交付：主机在ARP高速缓存表中查找目的IP地址对应的MAC地址
+          <p>如果有，封装IP数据报成帧，并发送给目的主机</p>
+          <p>否则，发起对目的IP地址的ARP请求</p>
+        </li>
+        <li>间接交付：主机在ARP高速缓存表中查找默认网关路由器对应的MAC地址
+          <p>如果有，则封帧交付给默认网关路由器</p>
+          <p>如果没有，则发起对默认网关路由器的ARP请求</p>
+        </li>
+        <li>网关路由器逐行检索路由表的记录，使用目的IP地址和路由表项的网络地址对应的地址掩码AND：
+          <p>如果网络地址相同，则根据指定的端口，转发给下一跳</p>
+          <p>如果不同，继续检索下一跳记录</p>
+          <p>如果都没有匹配的记录，则丢弃该分组，并报告分组出错</p>
+        </li>
+      </ol>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
-      <img src="../imgs/network/network layer 3/幻灯片5.JPG" alt="">
-      <!-- <img src="../imgs/network/network layer 3/幻灯片6.JPG" alt=""> -->
-      <img src="../imgs/network/network layer 3/幻灯片7.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片8.JPG" alt="">
-      <img src="../imgs/network/network layer 3/幻灯片9.JPG" alt="">
+      <div>[<span class="iconfont icon-keyboard"></span>] 直连路由转发</div>
+      <dd>通过配置Router1的Fa0/0端口和Fa0/1端口，使其分别连接不同的网络；</dd>
+      <dd>PC0和PC3的通信由两端交换路径组成：
+        <p>PC0到Router1的Fa0/0端口：IP分组的封帧信息为：源MAC地址为PC0，目标MAC地址为Router1的Fa0/0</p>
+        <p>Router1的Fa0/1端口到PC3：IP分组的封帧信息为：源MAC地址为Router1的Fa0/1，目标MAC地址为PC3</p>
+      </dd>
+      <figure>
+        <img src="./imgs/r14.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <dd>路由配置参考</dd>
+      <pre>
+Router(config)#interface fa0/0
+Router(config-if)#ip address 192.1.1.254 255.255.255.0
+Router(config-if)#no shutdown</pre>
+      <dd>查看 - 使用监视工具
+        <p>Type中C表示直连路由</p>
+        <p>Network为目的网络地址和地址掩码</p>
+        <p>Port为连接下一跳的端口</p>
+        <p>Next hop IP：下一跳的IP地址；对直连路由，目的网络和路由器直接连接，所以为空</p>
+        <p>Metric：
+          前一个数值表示管理距离值；每个路由协议都有一个默认的管理距离值；越小，优先级越高；0表示直连路由的优先级最高，即：如果目的网络存在多个类型的路由项，首先使用直连路由
+          后一个数值表示距离，直连路由为0</p>
+      </dd>
+      <figure>
+        <img src="./imgs/r15.png" alt="">
+        <figcaption>路由表</figcaption>
+      </figure>
+      <div class="tips">也可使用路由器的 CLI：show ip route 查看路由表</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 多网络路由转发</div>
+      <figure>
+        <img src="./imgs/r13.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <dd>三张表</dd>
+      <figure>
+        <img src="./imgs/f0.png" alt="">
+        <figcaption>主机H1 ARP表</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/f1.png" alt="">
+        <figcaption>主机H2 ARP表</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/f2.png" alt="">
+        <figcaption>交换机Switch2 MAC表</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/f3.png" alt="">
+        <figcaption>交换机Switch1 MAC表</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/f4.png" alt="">
+        <figcaption>路由器Router0 Router表</figcaption>
+      </figure>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
@@ -143,6 +240,7 @@
         <li>路由器 Router</li>
       </ol>
       <dt>Homework</dt>
+      <div>[<span class="iconfont icon-keyboard"></span>] 路由器是基于终点的转发，即基于目标IP地址查询路由表并转发（）。</div>
       <div>[<span class="iconfont icon-keyboard"></span>] 为了加快转发速度，现在的路由器通常都采用（）进行转发。</div>
       <div class="alpha">
         <div>硬件</div>
