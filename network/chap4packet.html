@@ -98,26 +98,40 @@
       <dt>协议 Protocol</dt>
       <dd>8bit</dd>
       <dd>数据部分是何种协议，如ICMP、TCP、UDP、OSPF等</dd>
-      <table>
+      <table style="max-width: 450px;">
         <caption>常用协议字段</caption>
-        <tr>
-          <td>Name</td>
-          <td>ICMP</td>
-          <td>IGMP</td>
-          <td>TCP</td>
-          <td>UDP</td>
-          <td>IPv6</td>
-          <td>OSPF</td>
-        </tr>
-        <tr>
-          <td>Value</td>
-          <td>1</td>
-          <td>2</td>
-          <td>6</td>
-          <td>17</td>
-          <td>41</td>
-          <td>89</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ICMP</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>IGMP</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>TCP</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>UDP</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>IPv6</td>
+            <td>41</td>
+          </tr>
+          <tr>
+            <td>OSPF</td>
+            <td>89</td>
+          </tr>
+        </tbody>
       </table>
       <dt>首部校验和 Header Checksum</dt>
       <dd>16bit</dd>
@@ -266,21 +280,21 @@
         <li>给出的首部数据已经是16进制了</li>
         <li>首部校验和已经初始为 0000：第6个分组</li>
         <li>累计求和
-          <p>4500 + 003C = 453C</p>
-          <p>453C + 0000 = 453C</p>
-          <p>453C + 4000 = 853C</p>
-          <p>853C + 4011 = C54D</p>
-          <P>C54D + 0000 = C54D</P>
-          <p>C54D + C0A8 = <strong>1</strong>85F5 → 85F<strong>6</strong></p>
-          <p>85F6 + 0001 = 85F7</p>
-          <P>85F7 + C0A8 = <strong>1</strong>469F → 46A<strong>0</strong></P>
-          <p>46A0 + 00C7 = 4767</p>
+          <div>4500 + 003C = 453C</div>
+          <div>453C + 0000 = 453C</div>
+          <div>453C + 4000 = 853C</div>
+          <div>853C + 4011 = C54D</div>
+          <div>C54D + 0000 = C54D</div>
+          <div>C54D + C0A8 = <strong>1</strong>85F5 → 85F<strong>6</strong></div>
+          <div>85F6 + 0001 = 85F7</div>
+          <div>85F7 + C0A8 = <strong>1</strong>469F → 46A<strong>0</strong></div>
+          <div>46A0 + 00C7 = 4767</div>
         </li>
         <li>结果取反
-          <p>~4767 = B898</p>
+          <div>~4767 = B898</div>
         </li>
         <li>字段回填
-          <p>4500 003C 0000 4000 4011 B898 C0A8 0001 C0A8 00C7</p>
+          <div>4500 003C 0000 4000 4011 B898 C0A8 0001 C0A8 00C7</div>
         </li>
       </ul>
     </dl>
