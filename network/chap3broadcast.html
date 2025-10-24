@@ -43,11 +43,44 @@
         <p>生存性高 survivability</p>
       </dd>
       <dt>拓扑结构</dt>
-      <dd>星型</dd>
-      <dd>环型</dd>
-      <dd>总线型
+      <dd>星型 Star</dd>
+      <dd>环型 Ring</dd>
+      <dd>总线型 Bus
         <p>传统以太网 <a href="./chap3ethernet.html">Ethernet <span class="iconfont icon-share"></span></a></p>
       </dd>
+      <figure>
+        <img src="./imgs/l4.png" alt="">
+        <figcaption>星型</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/l5.png" alt="">
+        <figcaption>环型</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/l6.png" alt="">
+        <figcaption>总线型</figcaption>
+      </figure>
+    </dl>
+    <img src="./imgs/linkLayer2/幻灯片12.JPG" alt="">
+    <dl>
+      <dt>以太网标准</dt>
+      <dd>DIX Ethernet标准：由施乐Xerox公司创建，并联合Inter，DEC共同发布基带总线局域网标准</dd>
+      <dd>以历史上发现电磁波的以太Ether命名</dd>
+      <dd>1982年发布的第2个版本DIX Ethernet</dd>
+      <dd>V2是世界上第一个互联网产品的规约。数据传输率达到10Mbps</dd>
+      <dd>IEEE 802.3标准：802委员会1983年发布的第一个以太网标准，数据速率达到10Mbps</dd>
+      <dd>通常说的以太网指的是符合DIX Ethernet V2标准的局域网</dd>
+      <dt>常见以太网</dt>
+      <dd>10BASE-T以太网-传统以太网</dd>
+      <dd>100BASE-T以太网-快速以太网</dd>
+      <dd>吉比特以太网-主流以太网</dd>
+      <dd>10吉比特以太网</dd>
+      <dt>以太网特点</dt>
+      <dd>可扩展</dd>
+      <dd>灵活性大</dd>
+      <dd>易于安装</dd>
+      <dd>稳健性高</dd>
+      <div class="tips">以太网已经成了局域网的同义词</div>
       <dt>共享信道</dt>
       <dd>计算机通过一根总线链接在一起 - 共享信道</dd>
       <dd>每个主机发送数据时，会引起线电压发送变化，每个主机都可以检测到这个数据 - 广播</dd>
@@ -59,17 +92,53 @@
         <img src="./imgs/csma0.png" alt="">
         <figcaption>共享信道带来的冲突</figcaption>
       </figure>
-      <div class="tips">以太网已经成了局域网的同义词</div>
     </dl>
     <img src="./imgs/linkLayer1/幻灯片25.JPG" alt="">
     <dl>
-      <dd>CSMA/CD
-        <p>Carrier Sense Multiple Access/Collision Detect</p>
-        <p>载波监听多点接入/冲突检测</p>
+      <dt>CSMA/CD</dt>
+      <dd>Carrier Sense Multiple Access/Collision Detect</dd>
+      <dd>载波监听多点接入/冲突检测</dd>
+      <dd>多点接入
+        <p>多个用户可以接入</p>
+        <p>随机接入</p>
       </dd>
-      <dd>多点接入：多个用户可以接入；且随机接入</dd>
-      <dd>载波监听：发前和发中，<strong>始终</strong>监听载波电压变化；避免发送冲突</dd>
-      <dd>冲突检测：也称碰撞检测</dd>
+      <dd>载波监听：
+        <p>发前和发中，<strong>始终</strong>监听载波电压变化</p>
+        <p>避免发生冲突</p>
+      </dd>
+      <dd>冲突检测：
+        <p>也称碰撞检测</p>
+        <p>停发</p>
+        <p>随机再发</p>
+      </dd>
+      <table>
+        <caption>时延 Delay</caption>
+        <tbody>
+          <tr>
+            <td>发送时延</td>
+            <td>数据发送需要的时间</td>
+          </tr>
+          <tr>
+            <td>传播时延</td>
+            <td>数据传输到对端需要的时间</td>
+          </tr>
+          <tr>
+            <td>排队时延</td>
+            <td>数据缓冲等待处理的时间</td>
+          </tr>
+          <tr>
+            <td>处理时延</td>
+            <td>处理数据需要的时间</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>数据传播到对端的时间 – 端到端时延 τ</p>
+        <p>往返时间 2τ</p>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 电磁波在1Km的电缆中的传播时延是5μs(微秒)</div>
+      <dd>A、B相距1Km</dd>
+      <dd>使用同轴电缆链接</dd>
       <dt>过程 Procedure</dt>
       <dd>先听再发、边听边发
         <p>主机发送数据时，为了避免冲突，必须要监听总线上的电压变化</p>
@@ -77,19 +146,10 @@
       </dd>
       <dd>冲突停止、延迟再发
         <p>如果达到一定阈值的时，就可以判断有站在发生数据，应向总线上发一串阻塞信号，用以通知总线上通信的对方站点（强化阻塞），同时停止发送数据，等待信道空闲时再次发送</p>
-        <p>最多经过2倍端到端时延2τ就可以确定是否有碰撞发生，即：如果发送完数据后，经过2τ 的时间还没有检测到碰撞，就可以认为数据发送成功</p>
+        <p>最多经过2倍端到端时延2τ就可以确定是否有碰撞发生，即：如果发送完数据后，经过 2τ 还没有检测到碰撞，就可以认为数据发送成功</p>
         <p>2τ 也叫争用期、冲突窗口、碰撞窗口</p>
       </dd>
       <dd>使用于半双工通信网络</dd>
-      <dt>时延 Delay</dt>
-      <dd>发生时延</dd>
-      <dd>传播时延</dd>
-      <dd>排队时延</dd>
-      <dd>处理时延</dd>
-      <dd>数据传播到对端的时间 – 端到端时延τD</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 电磁波在1Km的电缆中的传播时延是5μs(微秒)</div>
-      <dd>A、B相距1Km</dd>
-      <dd>使用同轴电缆链接</dd>
       <dt>碰撞分析 Analyze</dt>
       <dd>假设端到端的时延为 τ</dd>
       <dd>A发送数据后，经过 τ 才能传到对端的B</dd>
@@ -115,6 +175,11 @@
       <ol>
         <li><a href=""><span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/carrier-signal/">Carrier Signal
+            <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/local-area-network-lan/">Local Area Network (LAN)<span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/wide-area-network-wan/">Wide Area Network (WAN): Bridging Distances
+            in the Digital World
             <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
