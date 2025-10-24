@@ -8,12 +8,18 @@
   <title>虚拟局域网 VLAN</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    .bg {
+      background-color: var(--paper);
+    }
+  </style>
 </head>
 
 <body>
   <section class="w">
     <header>
-      <h1>虚拟局域网 VLAN</h1>
+      <h1>虚拟局域网</h1>
+      <span>&commat;VLAN</span>
     </header>
     <dl>
       <dt>内容</dt>
@@ -47,11 +53,11 @@
     </dl>
     <h2>虚拟局域网 Virtual LAN</h2>
     <dl>
-      <dt>原理</dt>
       <dd>虚拟局域网VLAN - virtual LAN</dd>
-      <dd>不是一种新的局域网，而是一个服务/应用</dd>
+      <dd>不是一种新的局域网，而是一个<strong>服务/应用</strong></dd>
       <dd>通过配置，将一个物理的局域网在逻辑上划分为若干个虚拟的LAN</dd>
       <dd>VLAN内的主机间可以直接通信，而VLAN 间不能直接互通</dd>
+      <dd>每个VLAN帧都一个明确的标识 VLAN tag，表明帧属于哪个VLAN</dd>
       <dt>特点 Feature</dt>
       <dd>限制/隔离广播域: 广播域被限制在一个VLAN内，节省带宽，提高网络的处理能力</dd>
       <dd>增强局域网的安全性：不同VLAN内的报文在传输时是相互隔离的不同的VLAN用户不能和其它VLAN用户直接通信</dd>
@@ -61,7 +67,9 @@
       <dd>VLAN由id和name来标识；默认情况下，所有端口都属于VLAN 1</dd>
       <dd>一个交换机可以划分多个VLAN</dd>
       <dd>每个VLAN不受网络物理位置的限制</dd>
-      <dd>通常利用交换机的端口划分VLAN；一个端口只能属于一个VLAN；所以一般称 port VLAN</dd>
+      <dd>通常利用交换机的端口划分VLAN
+        <p>一个端口只能属于一个VLAN；所以一般称 <strong>port VLAN</strong></p>
+      </dd>
       <dd>一个VLAN可以包含多个端口</dd>
       <figure>
         <img src="./imgs/vlan0.png" alt="">
@@ -71,63 +79,84 @@
         <img src="./imgs/vlan2.png" alt="">
         <figcaption>改进的VLAN</figcaption>
       </figure>
-      <dt>端口模式</dt>
-      <dd>access模式：默认模式。一般用于链接用户计算机；access端口只能属于一个VLAN</dd>
-      <dd>trunk模式：用于交换机之间或交换机和路由器之间的链接；trunk端口可以属于多个VLAN</dd>
-      <dd>hybrid混合模式【华为专有模式】</dd>
-      <div class="tips">
-        <p>二层交换机无法实现不同VLAN之间的通信</p>
-        <p>跨VLAN通信，需要三层设备</p>
-      </div>
+      <dt>端口模式 Mode</dt>
+      <dd>access：默认模式。一般用于链接用户计算机；access端口只能属于一个VLAN</dd>
+      <dd>trunk：用于交换机之间或交换机和路由器之间的链接；trunk端口可以属于多个VLAN</dd>
+      <dd>hybrid：混合模式；华为专有模式</dd>
+      <figure>
+        <img src="./imgs/vlan24.png" alt="">
+        <figcaption>跨交换机划分VLAN</figcaption>
+      </figure>
       <figure>
         <img src="./imgs/vlan1.png" alt="">
         <figcaption>端口模式</figcaption>
       </figure>
-      <dt>基本命令 Instruction</dt>
-      <dd>查看所有VLAN</dd>
-      <pre>switch#show vlan</pre>
-      <figure>
-        <img src="./imgs/vlan3.png" alt="">
-        <figcaption>查看所有VLAN</figcaption>
-      </figure>
-      <dd>查看指定id的VLAN</dd>
-      <pre>switch#show vlan id 1</pre>
-      <figure>
-        <img src="./imgs/vlan4.png" alt="">
-        <figcaption>查看指定id的VLAN</figcaption>
-      </figure>
-      <dd>查看指定name的VLAN</dd>
-      <pre>switch#show vlan name xit</pre>
-      <figure>
-        <img src="./imgs/vlan5.png" alt="">
-        <figcaption>查看指定name的VLAN</figcaption>
-      </figure>
-      <dd>创建VLAN</dd>
-      <pre>switch(config)#vlan 10</pre>
-      <pre>switch(config-vlan)#name gl</pre>
-      <figure>
-        <img src="./imgs/vlan6.png" alt="">
-        <figcaption>创建VLAN</figcaption>
-      </figure>
-      <dd>添加端口</dd>
-      <pre>switch(config)#inte fa0/1</pre>
-      <pre>switch(config-if)#swi acc vlan 10</pre>
-      <figure>
-        <img src="./imgs/vlan7.png" alt="">
-        <figcaption>添加端口</figcaption>
-      </figure>
+      <div class="tips">
+        <p>二层交换机无法实现不同VLAN之间的通信</p>
+        <p>跨VLAN通信，需要三层设备</p>
+      </div>
     </dl>
     <h2>IEEE 802.1Q</h2>
     <dl>
       <dd>简称dot one Q，加入4个字节的VLAN标记对以太网帧格式扩展，比普通以太网帧多4个字节</dd>
-      <dd>2个字节的标签协议标识TPID：固定为0x8100</dd>
-      <dd>2个字节的标签控制信息TCI，又包括：VLAN优先级、格式、ID号</dd>
+      <dd>携带VLAN标记的帧长由1518 → 1522</dd>
+      <table style="max-width: 600px;">
+        <caption>普通帧</ca>
+        <tbody>
+          <tr>
+            <td>Preamble</td>
+            <td>SFD</td>
+            <td>Destination MAC</td>
+            <td>Source MAC</td>
+            <td>Type</td>
+            <td>Data</td>
+            <td>FCS</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>1</td>
+            <td>6</td>
+            <td>6</td>
+            <td>2</td>
+            <td>46-1500</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <table style="max-width: 600px;">
+        <caption>IEEE 802.1Q帧</ca>
+        <tbody>
+          <tr>
+            <td>Preamble</td>
+            <td>SFD</td>
+            <td>Destination MAC</td>
+            <td>Source MAC</td>
+            <td class="bg">VLAN</td>
+            <td>Type</td>
+            <td>Data</td>
+            <td>FCS</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>1</td>
+            <td>6</td>
+            <td>6</td>
+            <td class="bg">4</td>
+            <td>2</td>
+            <td>46-1500</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>2个字节的标签协议标识TPID - Tag Protocol Identifier：
+        <p>固定为0x8100</p>
+      </dd>
+      <dd>2个字节的标签控制信息TCI - Tag Control Information，又包括：
+        <p>Priority：VLAN优先级；3bit</p>
+        <p>CFI：格式；1bit</p>
+        <p>VLAN ID：VLAN号；12bit</p>
+      </dd>
       <dd>IEEE 802.1Q帧只在交换机内部识别并处理，用户主机并不能识别</dd>
-      <figure>
-        <img src="./imgs/vlan21.png" alt="">
-        <img src="./imgs/vlan22.png" alt="">
-        <figcaption>VLAN标记</figcaption>
-      </figure>
       <figure>
         <img src="./imgs/vlan18.png" alt="">
         <figcaption>内部可见</figcaption>
@@ -136,8 +165,8 @@
       <dd>接收：每收到一个以太网帧，就打上标签：插入4个字节的VLAN标记，变成IEEE 802.1Q帧</dd>
       <dd>转发：根据VLAN号转发到相应的端口，去掉标签后转发出去</dd>
       <figure>
-        <img src="./imgs/vlan19.png" alt="">
         <img src="./imgs/vlan20.png" alt="">
+        <img src="./imgs/vlan19.png" alt="">
         <figcaption>处理过程</figcaption>
       </figure>
     </dl>
@@ -225,6 +254,8 @@ xit#swi tru pruning vlan 10-20</pre>
       </ol>
       <dt>Homework</dt>
       <ol>
+        <li>VLAN 是为了分割冲突域而设计的一种新的网络（）。</li>
+        <li>可以跨交换机划分VLAN（）。</li>
         <li>完善学校组织结构图的VLAN划分
           <p>自己指定VLAN号和对应的端口</p>
           <p>测试不同VLAN之间的通信</p>
@@ -240,6 +271,8 @@ xit#swi tru pruning vlan 10-20</pre>
               class="iconfont icon-share"></span></a></li>
         <li><a href="https://grouper.ieee.org/groups/802/1/pages/802.1Q.html">IEEE Standard 802.1Q – Virtual
             LANs <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://developer.aliyun.com/article/1493997">深入浅出 802.1Q：理解虚拟局域网的关键技术 <span
+              class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>

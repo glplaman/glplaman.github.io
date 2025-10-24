@@ -22,15 +22,19 @@
       <h1>广播信道</h1>
       <span>&commat;Broadcast</span>
     </header>
+    <img src="./imgs/linkLayer1/幻灯片21.JPG" alt="">
     <dl>
-      <img src="./imgs/linkLayer1/幻灯片21.JPG" alt="">
-      <dt>典型应用</dt>
-      <dd>局域网
-        <P>LAN - Local Area Network</P>
-        <P>地理范围和站点数目有限</P>
-        <p>为一个单位所有</p>
-      </dd>
-      <dt>局域网链路层优点</dt>
+      <dt>局域网 LAN</dt>
+      <dd>Local Area Network</dd>
+      <dd>地理范围和站点数目有限</dd>
+      <dd>为一个单位所有</dd>
+      <dd>广播信道的典型应用</dd>
+      <div class="tips">
+        <P>PAN - Personal Area Network</P>
+        <p>MAN - Metropolitan Area Network</p>
+        <p>WAN - Wide Area Network</p>
+      </div>
+      <dt>优点 Merits</dt>
       <dd>具有广播功能 broadcast</dd>
       <dd>共享 sharing
         <p>资源共享</p>
@@ -42,7 +46,7 @@
         <p>可用性高 availability</p>
         <p>生存性高 survivability</p>
       </dd>
-      <dt>拓扑结构</dt>
+      <dt>拓扑结构 Topology</dt>
       <dd>星型 Star</dd>
       <dd>环型 Ring</dd>
       <dd>总线型 Bus
@@ -60,28 +64,29 @@
         <img src="./imgs/l6.png" alt="">
         <figcaption>总线型</figcaption>
       </figure>
+      <div class="tips">去中心化 Decentralization</div>
     </dl>
     <img src="./imgs/linkLayer2/幻灯片12.JPG" alt="">
     <dl>
-      <dt>以太网标准</dt>
+      <dt>以太网标准 Standard</dt>
       <dd>DIX Ethernet标准：由施乐Xerox公司创建，并联合Inter，DEC共同发布基带总线局域网标准</dd>
       <dd>以历史上发现电磁波的以太Ether命名</dd>
       <dd>1982年发布的第2个版本DIX Ethernet</dd>
       <dd>V2是世界上第一个互联网产品的规约。数据传输率达到10Mbps</dd>
-      <dd>IEEE 802.3标准：802委员会1983年发布的第一个以太网标准，数据速率达到10Mbps</dd>
+      <dd><strong>IEEE 802.3标准</strong>：802委员会1983年发布的第一个以太网标准，数据速率达到10Mbps</dd>
       <dd>通常说的以太网指的是符合DIX Ethernet V2标准的局域网</dd>
-      <dt>常见以太网</dt>
+      <dt>常见以太网 Type</dt>
       <dd>10BASE-T以太网-传统以太网</dd>
       <dd>100BASE-T以太网-快速以太网</dd>
       <dd>吉比特以太网-主流以太网</dd>
       <dd>10吉比特以太网</dd>
-      <dt>以太网特点</dt>
+      <dt>以太网特点 Feature</dt>
       <dd>可扩展</dd>
       <dd>灵活性大</dd>
       <dd>易于安装</dd>
       <dd>稳健性高</dd>
       <div class="tips">以太网已经成了局域网的同义词</div>
-      <dt>共享信道</dt>
+      <dt>共享信道 Sharing</dt>
       <dd>计算机通过一根总线链接在一起 - 共享信道</dd>
       <dd>每个主机发送数据时，会引起线电压发送变化，每个主机都可以检测到这个数据 - 广播</dd>
       <dd>除了广播，还希望实现点对点通信；使用唯一的地址标识 - MAC地址</dd>
@@ -142,6 +147,7 @@
       <dt>过程 Procedure</dt>
       <dd>先听再发、边听边发
         <p>主机发送数据时，为了避免冲突，必须要监听总线上的电压变化</p>
+        <p>发完了，就不听了</p>
         <p><span class="iconfont icon-help"></span>如果没有检测到电压变化，是不是就以为着没有用户使用信道，不会发生碰撞？</p>
       </dd>
       <dd>冲突停止、延迟再发
@@ -197,7 +203,7 @@
         </tbody>
       </table>
       <dt>争用期 Contention Period</dt>
-      <dd>对应10Mb/s的以太网，发送 512 bit需要 51.2μs
+      <dd>对于 <strong>10Mb/s</strong> 的以太网，发送 512 bit需要 51.2μs
         <p>512bit / 10Mbit/s = 51.2μs</p>
       </dd>
       <dd>对应于信号在网络中最远两个节点之间往返一次的最大时间，即往返时延上限</dd>
@@ -229,36 +235,92 @@
       <div class="tips">
         高速以太网（如千兆及以上）通常采用全双工交换式连接，不再使用 CSMA/CD，因此该机制主要用于早期共享介质网络
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbit/s。信号在网络上的传播速率为 200000
+      <div>[<span class="iconfont icon-keyboard"></span>] p113-3-20 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbit/s。信号在网络上的传播速率为
+        200000
         km/s。求能够使用此协议的最短帧长</div>
       <div class="txt-indent">
         <p>τ = 1Km / 200000 Km/s = 5*10<sup>-6</sup>s = 5μs</p>
         <p>2τ = 10μs</p>
-        <p>最短帧长 = 2τ* 1Gbit/s = 10*10<sup>-6</sup>s*1*10<sup>9</sup>bit/s=10*10<sup>3</sup>bit = 10000bit</p>
-        <p>= 10000bit/8</p>
+        <p>最短帧长 = 2τ* 1Gbit/s = 10*10<sup>-6</sup>s*1*10<sup>9</sup>bit/s=10*10<sup>3</sup>bit</p>
+        <p>= 10000 bit</p>
+        <p>= 10000/8 byte</p>
         <p>= 1250 byte</p>
       </div>
-      <dt>帧的最小间隔时间</dt>
-      <dd>9.6μs</dd>
-      <dd>使得接收方处理数据以便做好接受下一帧的准备</dd>
-      <dt>比特时间</dt>
+    </dl>
+    <h2>重传时机 Wait</h2>
+    <dl>
+      <dd>发送检测到碰撞会立即停止发送</dd>
+      <dd>随机等待一定时间后再择机发送</dd>
+      <dt>措施 Solution</dt>
+      <dd>采用截断二进制指数退避实现
+        <p>Truncated Binary Exponential Backoff</p>
+      </dd>
+      <dd>每个发生冲突的用户分配一个退避时间</dd>
+      <dd>获得最小退避时间的站优先发送</dd>
+      <dt>约定 Convention</dt>
+      <dd>基本退避时间 2τ</dd>
+      <dd>使用bit作为争用期的单位
+        <p>争用期是512bit；表示争用期为发送512bit的时间 - 比特时间</p>
+      </dd>
+      <dd><strong>退后重传时间 = r * 争用期</strong>
+        <p>r 从整数集合 [0, 1, 2, ..., 2<sup>k</sup>-1] 中随机获取</p>
+        <p>k 由重传次数获取 k = min[重传次数， 10]</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>]退避时间计算示例</div>
+      <div class="txt-indent">
+        <div>第<strong>1</strong>次重传：
+          <p>k = min[1， 10] = 1</p>
+          <p>r = [0， 2<sup>1</sup>-1] = [0, 1]</p>
+        </div>
+        <div>第<strong>2</strong>次重传：
+          <p>k = min[2， 10] = 2</p>
+          <p>r = [0， 2<sup>2</sup>-1] = [0, 1, 2, 3]</p>
+        </div>
+        <div>第<strong>3</strong>次重传：
+          <p>k = min[3， 10] = 3</p>
+          <p>r = [0， 2<sup>3</sup>-1] = [0, 1, 2, 3, 4, 5, 6, 7]</p>
+        </div>
+        <div>超过<strong>10</strong>后，k = 10</div>
+      </div>
+      <dt>比特时间 Bit Time</dt>
       <dd>发送一个比特所需的时间</dd>
       <dd>与数据传输速率密切相关</dd>
       <dd>是衡量信号变化速度的基本时间单位</dd>
       <dd>常用于网络和通信中描述帧的持续时间、冲突检测窗口等</dd>
       <dd>数据速率为 1 Mbps，则每个比特时间为 1 μs</dd>
       <dd>数据速率是 1 Gbps，则每个比特时间为 1 ns</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] p113-3-22 假定在使用 CSMA/CD 协议的 10 Mbit/s
+        以太网中，某个站在发送数据时检测到碰撞，执行退避算法时选择随机数
+        r=100。试问这个站需要等待多长时间后才能再次发送数据？如果是 100 比特时间，以太网能运行吗？</div>
+      <div class="txt-indent">
+        <p>对应10Mbps的以太网，争用期 2τ = 512bit/10Mbps = 51.2μs</p>
+        <p>退避时间为 r*2τ = 100 * 51.2μs = 5.12ms</p>
+        <p>如果是100比特时间，则实际退避时间为：100bit/10Mbps = 10μs &lt; 51.2μs → 以太网无法运行</p>
+      </div>
+      <dt>帧的最小间隔时间</dt>
+      <dd>96比特时间</dd>
+      <dd>使得接收方处理数据以便做好接受下一帧的准备</dd>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <dd>局域网</dd>
+      <dd>载波侦听多点接入/冲突检测</dd>
+      <dd>端到端时延 τ</dd>
+      <dd>争用期 2τ</dd>
+      <dd>比特时间</dd>
+      <dd>退后重传时间 r*2τ</dd>
+      <dd>最短帧长</dd>
+      <dd>帧的最小间隔时间</dd>
       <dt>Homework</dt>
       <ol>
         <li>发前监听信道为空闲，则发送数据不会产生冲突（）。</li>
         <li>帧长小于64字节的帧都是无效帧（）。</li>
+        <li>发送数据时，如果检测到碰撞，应立即停止发送；直到信道空闲时才可以再次发送数据</li>
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href=""><span class="iconfont icon-share"></span></a></li>
+        <!-- <li><a href=""><span class="iconfont icon-share"></span></a></li> -->
         <li><a href="https://networkencyclopedia.com/carrier-signal/">Carrier Signal
             <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/local-area-network-lan/">Local Area Network (LAN)<span

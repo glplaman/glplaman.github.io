@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>交换机 Switch</title>
+  <title>以太网交换机 Switch</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
 </head>
@@ -13,15 +13,23 @@
 <body>
   <div class="w">
     <header>
-      <h1>交换机 Switch</h1>
+      <h1>以太网交换机</h1>
+      <span>&commat;Switch</span>
     </header>
     <dl>
-      <dd>交换机是工作在OSI模型第二层的设备，能够根据MAC地址进行数据帧的转发决策</dd>
+      <div class="tips">
+        <p>共享式交换机已淘汰</p>
+        <p>如无特别说明，交换机都是指交换式集线器 - <strong>以太网交换机</strong></p>
+      </div>
       <dt>概述</dt>
-      <dd>隔离冲突域</dd>
-      <dd>不能隔离广播域</dd>
-      <dd>提高信道利用率</dd>
+      <dd>交换机是工作在OSI模型第二层 - 数据链路层；也叫 L2 Switch</dd>
+      <dd>能够根据MAC地址进行数据帧的转发决策</dd>
+      <dd>多端口</dd>
+      <dd>多速率</dd>
+      <dd>每个端口都与一个主机或另外一个交换机直接相连</dd>
       <dd>全双工通信</dd>
+      <dd>具备缓存功能</dd>
+      <dd>提高信道利用率</dd>
       <dt>工作原理</dt>
       <dd>交换机内部维护着一张MAC地址表，通过学习网络上各个设备的MAC地址及其对应的端口来转发数据帧</dd>
       <dd>当交换机收到一个数据帧时，它会检查帧中的目的MAC地址，并将数据帧转发至正确的端口</dd>
@@ -85,17 +93,6 @@
       <dt>包转发率</dt>
       <dd>单位时间内发送64字节数据包的个数 1000Mbps/8/(64+8+12)=1.488Mbps</dd>
     </dl>
-    <h2>实操 Drill</h2>
-    <dl>
-      <div>[<span class="iconfont icon-keyboard"></span>] 串口初始化配置交换机</div>
-      <img src="./imgs/linkLayer2/幻灯片20.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片21.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片22.JPG" alt="">
-      <div>[<span class="iconfont icon-keyboard"></span>]Telnet远程登陆交换机</div>
-      <img src="./imgs/linkLayer2/幻灯片23.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片24.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片25.JPG" alt="">
-    </dl>
     <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
     <dl>
       <dd>交换机通过维护一个MAC地址表/转发表来实现链路层数据帧的通信</dd>
@@ -108,6 +105,26 @@
         <p>MAC表条目的大小</p>
         <p>1K、2k、4k</p>
       </dd>
+      <table style="max-width: 450px;">
+        <caption>交换机的MAC地址表</caption>
+        <tbody>
+          <tr>
+            <td>MAC</td>
+            <td>Port</td>
+            <td>Timer</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </tbody>
+      </table>
       <figure>
         <img src="./imgs/l2.png" alt="">
         <figcaption>CLI 查看交换机的MAC表</figcaption>
@@ -153,13 +170,71 @@
         <img src="./imgs/l13.png" alt="">
         <figcaption>维护过程</figcaption>
       </figure>
-      <div class="tips">
-        <p>show mac-address-table：查看交换机的MAC表</p>
-        <p>clear mac-address-table：清除交换机的MAC表</p>
+      <div>[<span class="iconfont icon-keyboard"></span>] p114-3-30
+        某学院的以太网交换机有三个端口分别和学院三个系的以太网相连，另外三个端口分别和电子邮件服务器、万维网服务器以及一个连接互联网的路由器相连。图中的 A、B 和 C 都是 100-Mbit/s
+        以太网交换机。假定所有的链路的速率都是 100 Mbit/s，并且图中的 9 台主机中的任何一台都可以向任何一台服务器或主机通信。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
+      <div class="txt-indent">
+        <p>总吞吐量 = 9台主机的吞吐量 + 2台服务器的吞吐量</p>
+        <p>= 900 Mbit/s + 200 Mbit/s</p>
+        <p>= 1100 Mbit/s</p>
       </div>
-      <img src="./imgs/linkLayer2/幻灯片7.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片8.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片9.JPG" alt="">
+      <div>[<span class="iconfont icon-keyboard"></span>] p114-3-31假定图 上例中的所有链路的速率仍然为 100 Mbit/s，但三个系的以太网交换机都换成 100
+        Mbit/s
+        的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
+      <div class="txt-indent">
+        <p>如果把三台交换机换成集线器，由于集线器是总线型，同一集线器下同一时刻只能一台设备发送数据</p>
+        <p>所以图中9台主机其实只有三台在发送，吞吐量是300M，两个服务器吞吐量是200M，所以吞吐总量是500M</p>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] p114-3-33</div>
+      <table style="max-width: 450px;">
+        <thead>
+          <tr>
+            <th>通信方向</th>
+            <th>MAC地址表</th>
+            <th>转发端口</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A → D</td>
+            <td>A 1</td>
+            <td>2 3 4 5 6</td>
+          </tr>
+          <tr>
+            <td>D → A</td>
+            <td>A 1
+              <br>D 4
+            </td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>E → A</td>
+            <td>A 1
+              <br>D 4
+              <br>E 5
+            </td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>A → E</td>
+            <td>A 1
+              <br>D 4
+              <br>E 5
+            </td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <h2>常用命令 Command</h2>
+    <dl>
+      <dd>查看交换机的MAC表</dd>
+      <pre>show mac-address-table</pre>
+      <dd>清除交换机的MAC表</dd>
+      <pre>clear mac-address-table</pre>
+      <!-- <img src="./imgs/linkLayer2/幻灯片7.JPG" alt=""> -->
+      <!-- <img src="./imgs/linkLayer2/幻灯片8.JPG" alt=""> -->
+      <!-- <img src="./imgs/linkLayer2/幻灯片9.JPG" alt=""> -->
     </dl>
     <h2>Security</h2>
     <dl>
@@ -174,19 +249,20 @@
     <dl>
       <dt>Homework</dt>
       <ol>
-        <li>部门之间如何互不影响的通信？</li>
-        <li>学校规模达到一定阶段后，如何更好的组织网络？</li>
-        <li>以太网交换机转发决策时使用的PDU地址是（ ）
-          <p>A目的物理地址</p>
-          <p> B目的IP地址</p>
-          <p> C源物理地址</p>
-          <p> D源IP地址</p>
+        <li class="alpha">以太网交换机转发决策时使用的PDU地址是（ ）
+          <div>目的物理地址</div>
+          <div>目的IP地址</div>
+          <div>源物理地址</div>
+          <div>源IP地址</div>
+        </li>
+        <li>选择学校组织结构中某一个或几个分系统，利用交换机和PC模拟搭建局域网
+          <p>部门之间如何互不影响的通信？</p>
+          <p>学校规模达到一定阶段后，如何更好的组织网络？</p>
         </li>
         <li>使用脑图或其它工具，画出交换机自学习的流程图</li>
         <li>用熟悉的算法设计一个数据结构，实现MAC表的维护过程
           <p>get( MacList, f.srcMac ) ? update( MacList, f.srcMac ) : add( MacList, f.srcMac )</p>
-        </li>
-        <pre>
+          <pre>
 // 参考数据结构
 Typedef struct{
     int desMac;
@@ -194,9 +270,8 @@ Typedef struct{
     int inPort;
     int outport;
 } Frame</pre>
+        </li>
       </ol>
-      <div>[<span class="iconfont icon-keyboard"></span>] 搭建局域网</div>
-      <dd>选择学校组织结构中某一个或几个分系统，利用交换机和PC模拟搭建局域网</dd>
       <dt>Reading</dt>
       <ol>
         <li> <a href="https://networkencyclopedia.com/ethernet-switch/">Ethernet Switch <span
