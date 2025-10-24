@@ -111,7 +111,7 @@
         <p>停发</p>
         <p>随机再发</p>
       </dd>
-      <table>
+      <table style="max-width: 450px;">
         <caption>时延 Delay</caption>
         <tbody>
           <tr>
@@ -149,7 +149,7 @@
         <p>最多经过2倍端到端时延2τ就可以确定是否有碰撞发生，即：如果发送完数据后，经过 2τ 还没有检测到碰撞，就可以认为数据发送成功</p>
         <p>2τ 也叫争用期、冲突窗口、碰撞窗口</p>
       </dd>
-      <dd>使用于半双工通信网络</dd>
+      <dd>使用于半双工通信网络 - 不能同时发送数据</dd>
       <dt>碰撞分析 Analyze</dt>
       <dd>假设端到端的时延为 τ</dd>
       <dd>A发送数据后，经过 τ 才能传到对端的B</dd>
@@ -164,12 +164,78 @@
       <dd>B发送的数据到达A。A检测到碰撞；停止发送数据</dd>
       <img class="center" src="./imgs/csma5.png" alt="">
       <dd>用户发送数据后，<strong>最多</strong> 经过 <strong>2倍的端到端时延 2τ</strong> 就知道是否发送了碰撞</dd>
+      <dd class="warn">发送方必须在发送过程中持续监听至少 2τ，才可能检测到最晚发生的碰撞</dd>
+      <dd class="warn">用户必须能够在发送完整个帧之前，就应该检测到是否发生了冲突</dd>
+      <dd class="warn">帧的发送时间 ≥ 2τ 是 CSMA/CD 正常工作的前提条件</dd>
+      <dt>最短帧长 Minimum length</dt>
+      <dd>帧长不足应通过填充实现</dd>
+      <dd>避免数据帧太短导致发送时间不足引起误判</dd>
+      <dd>64 byte，即 512 bit</dd>
+      <table style="max-width: 450px;">
+        <caption>最短帧</caption>
+        <tbody>
+          <tr>
+            <td>Destination MAC</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>Source MAC</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Data</td>
+            <td>>=46</td>
+          </tr>
+          <tr>
+            <td>FCS</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>争用期 Contention Period</dt>
+      <dd>对应10Mb/s的以太网，发送 512 bit需要 51.2μs
+        <p>512bit / 10Mbit/s = 51.2μs</p>
+      </dd>
+      <dd>对应于信号在网络中最远两个节点之间往返一次的最大时间，即往返时延上限</dd>
+      <dd>端到端时延必须小于争用期的一半：51.2μs/2 = 25.6μs</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 短帧引起的误判 - 发完只需1.5τ</div>
+      <table>
+        <caption>短帧引起的误判</caption>
+        <tr>
+          <td>t=0</td>
+          <td>A开始发送数据</td>
+        </tr>
+        <tr>
+          <td>t=t'</td>
+          <td>B检测为空；发送数据；发送碰撞</td>
+        </tr>
+        <tr>
+          <td>t=τ</td>
+          <td>碰撞信号向A传播</td>
+        </tr>
+        <tr>
+          <td>t=1.5τ</td>
+          <td>A发完数据；停止监听</td>
+        </tr>
+        <tr>
+          <td>t=2τ</td>
+          <td>碰撞信号到底A；但A无法知道</td>
+        </tr>
+      </table>
+      <div class="tips">
+        高速以太网（如千兆及以上）通常采用全双工交换式连接，不再使用 CSMA/CD，因此该机制主要用于早期共享介质网络
+      </div>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
       <dt>Homework</dt>
       <ol>
         <li>发前监听信道为空闲，则发送数据不会产生冲突（）。</li>
+        <li>帧长小于64字节的帧都是无效帧（）。</li>
       </ol>
       <dt>Reading</dt>
       <ol>
