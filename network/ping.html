@@ -17,17 +17,20 @@
     </header>
     <dl>
       <dt>概述</dt>
-      <dd>使用域名或IP地址测试|检查网络的 <span class="em">连通性</span>和分析<span class="em">网络速度</span></dd>
-      <dd>ICMP的体现</dd>
-      <dt>作用</dt>
-      <dd>根据域名得到服务器IP地址</dd>
-      <dd>根据ping返回的TTL值来判断对方所使用的操作系统及数据包经过路由器数量</dd>
-      <dt>参数解读</dt>
+      <dd>是<strong>应用层</strong>直接使用<strong>网络层</strong>的ICMP；没有经过运输层</dd>
+      <dd>使用ICMP的回送请求和回送响应，根据域名或IP地址测试|检查网络的 <strong>连通性</strong>和分析<strong>网络速度</strong></dd>
+      <dd>默认发4个数据包；可以使用参数-n指定数据包的数量</dd>
+      <dd>Ctrl+C强制退出测试状态</dd>
+      <dd>使用ping /?查看完整命令</dd>
+      <dd>需要结合其它情况综合分析</dd>
+      <pre>ping host/IP -n num</pre>
+      <dt>回送响应参数</dt>
       <dd>bytes：数据包大小，单位字节；默认发4个数据包；可以使用参数-n指定数据包的数量</dd>
       <dd>time：响应时间，单位ms；时间越小，说明连接这个地址速度越快</dd>
       <dd>Time To
         Live：生存时间；表示DNS记录在DNS服务器上存在的时间，是IP协议包的一个值，告诉路由器该数据包何时需要被丢弃</dd>
-      <dd>ping 172.18.84.190</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 基本使用</div>
+      <dd>ping IP地址</dd>
       <pre>
 C:\Users\cnplaman>ping 172.18.84.190
 
@@ -41,13 +44,27 @@ C:\Users\cnplaman>ping 172.18.84.190
     数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
 往返行程的估计时间(以毫秒为单位):
     最短 = 0ms，最长 = 0ms，平均 = 0ms</pre>
+      <dd>ping 域名 - 不需要指定网络协议</dd>
+      <pre>
+C:\Users\huawei>ping glplaman.github.io
+
+正在 Ping glplaman.github.io [185.199.111.153] 具有 32 字节的数据:
+来自 185.199.111.153 的回复: 字节=32 时间=186ms TTL=52
+来自 185.199.111.153 的回复: 字节=32 时间=198ms TTL=52
+来自 185.199.111.153 的回复: 字节=32 时间=205ms TTL=52
+来自 185.199.111.153 的回复: 字节=32 时间=135ms TTL=52
+
+185.199.111.153 的 Ping 统计信息:
+    数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
+往返行程的估计时间(以毫秒为单位):
+    最短 = 135ms，最长 = 205ms，平均 = 181ms</pre>
       <div class="tips">
         <div>可以通过Ping返回的TTL值大小，粗略地判断目标系统类型是Windows系列还是UNIX/Linux系列</div>
         <div>. 100~130ms之间，Windows系统 </div>
         <div>. 240~255ms之间，UNIX/Linux系统</div>
       </div>
     </dl>
-    <h2>常见应用</h2>
+    <h2>其它运用 Other</h2>
     <dl>
       <dt>ping -t </dt>
       <dd>不间断地Ping指定计算机，直到管理员Ctrl+c终止中断</dd>

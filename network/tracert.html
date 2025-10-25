@@ -18,8 +18,9 @@
     <dl>
       <dt>概述</dt>
       <dd>路由追踪，用于测试本端主机到某个目标主机所经过的路由，即：确定 IP 数据包访问目标所采取的路径</dd>
-      <dd>多用于内部检测网络故障节点情况；处于安全，外网部分网络主机不允许被追踪，可能出现请求超时的情况</dd>
-      <dd>ICMP的体现</dd>
+      <dd>使用UDP协议发送数据</dd>
+      <dd>多用于内部检测网络故障节点情况</dd>
+      <dd>安全考虑，外网部分网络主机不允许被追踪，可能出现请求超时的情况</dd>
       <dd>Ctrl+C强制退出测试状态</dd>
       <dd>使用tracert /?查看完整命令</dd>
       <pre>
@@ -42,105 +43,130 @@ C:\Users\cnplaman>tracert /?
       <dd>-h：指定最大跃点数追踪路由；查跟设备最近的几个连接点的问题，通常在网络问题中，先要排除前端跟设备直接连接的最近的几个设备是否有故障，如果这几个近点跟踪可以正常互通，那么问题可能就出现在后端</dd>
       <dd>-w：当网络很慢，或者很卡时，要检测是哪个设备的反应速度比较慢，设个标准值|阈值，超过阈值的设备不显示</dd>
       <dt>工作原理</dt>
-      <dd>Tracert通过向目标发送不同IP生存时间TTL值的ICMP，确定到目标所采取的路由；并要求路径上的每个路由器在转发数据包之前至少将数据包上的TTL减1。数据包上的TTL减为0时，路由器应该将“ICMP
-        已超时”的消息发回源系统</dd>
-      <dd>Tracert先发送TTL为1的回应数据包，并在随后的每次发送过程将TTL递增1，直到目标响应或TTL达到最大值，从而确定路由。通过检查中间路由器发回的“ICMP已超时”的消息确定路由</dd>
+      <dd>源主机向目标主机发送一连串IP数据报来确定到目标所采取的路由</dd>
+      <dd>每个IP数据报的生存时间TTL依次加1</dd>
+      <dd>路径上每个路由器在转发数据包之前将TTL减1</dd>
+      <dd>TTL减为0时，路由器应该将"ICMP已超时"消息发回源主机</dd>
+      <dd>最后一个IP数据可以达到目标主机；因为采用的是无法交付的UDP，所有目标主机要向源主机发送"目标不可达"消息</dd>
+      <dd>通过检查中间路由器发回的“ICMP已超时”的消息确定路由</dd>
       <dt>结果分析</dt>
-      <dd>发给路由器3个ICMP包，通过往返时间检测网络情况</dd>
-      <dd>如果返回的大多是*或请求超时，说明这个IP在各个路由节点都有问题</dd>
+      <dd>tracert 默认对每一跳发送<strong>3</strong>个探测数据包（ICMP 或 UDP 包，取决于系统），目的是：
+        <p>测试连接的延迟稳定性</p>
+        <p>检测是否出现丢包</p>
+        <p>提高结果的可靠性</p>
+      </dd>
       <table>
         <caption>结果分析</caption>
         <tr>
           <td>参数1</td>
-          <td>参数2</td>
-          <td>参数3</td>
-          <td>参数4</td>
-          <td>参数5</td>
+          <td>Hop Number
+            <p>跃点编号</p>
+            <p>表示这是路径中的第几个路由器或网络节点</p>
+            <p>从你的电脑出发，每经过一次转发，跳数 +1</p>
+          </td>
         </tr>
         <tr>
-          <td>跃点数</td>
-          <td>第1个ICMP往返时间</td>
-          <td>第2个ICMP往返时间</td>
-          <td>第3个ICMP往返时间</td>
-          <td>途经路由器的IP地址；如果有主机名，还会解析</td>
+          <td>参数2</td>
+          <td>Round-trip Time, RTT
+            <p>探测包到该节点并收到响应所用的时间</p>
+            <p>单位ms</p>
+            <p>第1个ICMP的往返时间</p>
+          </td>
+        </tr>
+        <tr>
+          <td>参数3</td>
+          <td>第2个ICMP的往返时间</td>
+        </tr>
+        <tr>
+          <td>参数4</td>
+          <td>第3个ICMP的往返时间</td>
+        </tr>
+        <tr>
+          <td>参数5</td>
+          <td>响应这一跳的设备的IP地址
+            <p>如果有主机名，还会解析</p>
+          </td>
         </tr>
       </table>
-      <div>[<span class="iconfont icon-mouse1"></span>] 本机到默认网关的路由情况</div>
-      <dd>首先获取本机IP地址和网关，再测试到默认网关的路由情况：显然，只有一跳即可到达默认网关</dd>
-      <dd>本机到默认网关的路由</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 本机到默认网关的路由情况</div>
+      <dd>首先获取本机IP地址和网关，再测试到默认网关的路由情况</dd>
+      <dd>显然，只有一跳即可到达默认网关</dd>
       <pre>
-C:\Users\cnplaman>tracert 172.18.84.254
+C:\Users\huawei>tracert 10.23.255.254
 
-通过最多 30 个跃点跟踪到 172.18.84.254 的路由
+通过最多 30 个跃点跟踪到 10.23.255.254 的路由
 
-  1     4 ms     2 ms     2 ms  172.18.84.254
+  1     5 ms     3 ms     3 ms  10.23.255.254
 
 跟踪完成。</pre>
-      <div>[<span class="iconfont icon-mouse1"></span>] 本机到大叔小站的路由</div>
-      <dd>第一跳显然应该先到本机的默认网关；</dd>
-      <dd>本机到baidu的路由</dd>
-      <pre>
-C:\Users\cnplaman>tracert glpla.github.io
-
-通过最多 30 个跃点跟踪
-到 glpla.github.io [185.199.109.153] 的路由:
-
-  1     *        *        *     请求超时。
-  2    14 ms     5 ms     5 ms  4.4.4.209
-  3     7 ms     7 ms     3 ms  172.16.10.1
-  4     5 ms     3 ms     4 ms  121.13.237.33
-  5    25 ms    18 ms    18 ms  202.104.167.181
-  6     5 ms     3 ms     4 ms  117.176.37.59.broad.dg.gd.dynamic.163data.com.cn [59.37.176.117]
-  7     6 ms     5 ms     *     219.132.200.13
-  8     8 ms     *        9 ms  202.97.94.142
-  9     9 ms     *        *     202.97.12.45
- 10    63 ms    49 ms    49 ms  202.97.35.134
- 11   277 ms   304 ms   305 ms  183.91.56.122
- 12     *      267 ms     *     ae-11.r22.sngpsi07.sg.bb.gin.ntt.net [129.250.2.75]
- 13   301 ms   305 ms   306 ms  ae-6.r21.sydnau06.au.bb.gin.ntt.net [129.250.6.148]
- 14   317 ms   306 ms   305 ms  ae-0.a00.sydnau06.au.bb.gin.ntt.net [129.250.3.159]
- 15   313 ms   306 ms   305 ms  202.68.73.83
- 16   345 ms   306 ms   304 ms  cdn-185-199-109-153.github.com [185.199.109.153]
-
-跟踪完成。</pre>
-      <div>[<span class="iconfont icon-mouse1"></span>] 本机到baidu的路由情况</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 本机到大树小站的路由</div>
       <dd>第一跳显然应该先到本机的默认网关</dd>
-      <dd>本机到baidu的路由</dd>
       <pre>
-C:\Users\cnplaman>tracert -d www.baidu.com
+C:\Users\huawei>tracert glplaman.github.io
 
 通过最多 30 个跃点跟踪
-到 www.a.shifen.com [14.119.104.254] 的路由:
+到 glplaman.github.io [185.199.108.153] 的路由:
 
-  1     *        *        *     请求超时。
-  2    13 ms     6 ms     5 ms  4.4.4.209
-  3     4 ms     4 ms     3 ms  172.16.10.1
+  1     3 ms     4 ms     3 ms  10.23.255.254
+  2     6 ms     4 ms     3 ms  10.70.1.25
+  3     5 ms     9 ms     *     172.17.0.1
   4     *        *        *     请求超时。
-  5     5 ms     3 ms     3 ms  202.104.167.193
+  5     *        *        *     请求超时。
   6     *        *        *     请求超时。
   7     *        *        *     请求超时。
   8     *        *        *     请求超时。
-  9    15 ms    15 ms    16 ms  113.96.11.78
+  9     *        *        *     请求超时。
  10     *        *        *     请求超时。
- 11    13 ms    11 ms    12 ms  10.111.10.1
- 12     *        *        *     请求超时。
- 13    12 ms     9 ms    19 ms  14.119.104.254
+ 11     *        *        *     请求超时。
+ 12   129 ms     *        *     cdn-185-199-108-153.github.com [185.199.108.153]
+ 13   123 ms   146 ms     *     cdn-185-199-108-153.github.com [185.199.108.153]
+ 14   135 ms   136 ms   136 ms  cdn-185-199-108-153.github.com [185.199.108.153]
 
 跟踪完成。</pre>
-      <div>[<span class="iconfont icon-mouse1"></span>] 指定最大跃点数追踪路由</div>
-      <dd>指定最大跃点数追踪百度路由</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 本机到baidu的路由情况 - 限定跳数</div>
+      <dd>第一跳显然应该先到本机的默认网关</dd>
+      <dd>前3都是私有地址，表示还没有进入公网</dd>
+      <dd>第4条开始，没有收到回应
+        <p>数据包到达了该跳设备，但该设备 不返回 ICMP “Time Exceeded” 消息</p>
+        <p>大多数公网上的核心路由器（尤其是运营商骨干网设备）为了安全和性能，默认关闭 ICMP 回显和 TTL 超时响应</p>
+        <p>你只允许追踪最多 5 跳，而实际路径可能更长。所以在第 5 跳中断，无法继续</p>
+      </dd>
       <pre>
-C:\Users\cnplaman>tracert -h 3 www.baidu.com
+C:\Users\huawei>tracert -h 5 www.baidu.com
 
-通过最多 3 个跃点跟踪
-到 www.a.shifen.com [14.119.104.254] 的路由:
+通过最多 5 个跃点跟踪
+到 www.a.shifen.com [183.2.172.177] 的路由:
 
-  1     *        *        *     请求超时。
-  2    17 ms     6 ms     4 ms  4.4.4.209
-  3     6 ms     3 ms     4 ms  172.16.10.1
+  1     3 ms     4 ms     6 ms  10.23.255.254
+  2     5 ms     2 ms     2 ms  10.70.1.25
+  3    11 ms     7 ms     6 ms  172.17.0.1
+  4     *        *        *     请求超时。
+  5     *        *        *     请求超时。
 
 跟踪完成。</pre>
-      <div>[<span class="iconfont icon-mouse1"></span>] 追踪响应时间小于5ms的路由情况</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 本机到baidu的路由情况 - 不限跳数</div>
+      <dd>百度真是良心企业啊</dd>
+      <pre>
+C:\Users\huawei>tracert www.baidu.com
+
+通过最多 30 个跃点跟踪
+到 www.a.shifen.com [183.2.172.17] 的路由:
+
+  1     3 ms     3 ms     2 ms  10.23.255.254
+  2     5 ms     2 ms     2 ms  10.70.1.25
+  3     8 ms     3 ms     4 ms  172.17.0.1
+  4     *        *        *     请求超时。
+  5     *        *        *     请求超时。
+  6     *        *        *     请求超时。
+  7     *        *        *     请求超时。
+  8     *        *        *     请求超时。
+  9     *        *        *     请求超时。
+ 10     *        *        *     请求超时。
+ 11     *        *        *     请求超时。
+ 12     6 ms     6 ms     6 ms  183.2.172.17
+
+跟踪完成。</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 追踪响应时间小于5ms的路由情况</div>
       <dd>追踪响应时间小于5ms的路由情况</dd>
       <pre>
 C:\Users\cnplaman>tracert -w 5 www.baidu.com

@@ -137,103 +137,106 @@
     </dl>
     <h2>Homework</h2>
     <dl>
-      <div>[<span class="iconfont icon-keyboard"></span>]
-        已知5个CIDR地址块分别如下：206.0.68.0/23、206.0.70.0/24、206.0.71.0/25、206.0.71.128/25，求聚合网络。</div>
-      <dd>根据地址掩码判断可能相同的长度</dd>
-      <table>
-        <tr>
-          <td>IP1</td>
-          <td>206</td>
-          <td>0</td>
-          <td><span class="warn">0100 010</span> 0</td>
-          <td>0000 0000</td>
-        </tr>
-        <tr>
-          <td>IP2</td>
-          <td>206</td>
-          <td>0</td>
-          <td><span class="warn">0100 0110</span></td>
-          <td>0000 0000</td>
-        </tr>
-        <tr>
-          <td>IP3</td>
-          <td>206</td>
-          <td>0</td>
-          <td><span class="warn">0100 0111</span></td>
-          <td><span class="warn">0</span>000 0000</td>
-        </tr>
-        <tr>
-          <td>IP4</td>
-          <td>206</td>
-          <td>0</td>
-          <td><span class="warn">0100 0111</span></td>
-          <td><span class="warn">1</span>000 0000</td>
-        </tr>
-        <tr>
-          <td>相同前缀</td>
-          <td>206</td>
-          <td>0</td>
-          <td>0100 01xx</td>
-          <td>xxxx xxxx</td>
-        </tr>
-        <tr>
-          <td>聚合路由</td>
-          <td>206</td>
-          <td>0</td>
-          <td>68</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>CIDR</td>
-          <td colspan="4">206.0.68.0/22</td>
-        </tr>
-      </table>
-      <div>[<span class="iconfont icon-keyboard"></span>] 已知路由器中的2条路由分别如下。请问是否可以聚合成为一条路由？如果可以，请写出聚合后的路由；如果不可以，请说明原因。
-      </div>
-      <dd>192.168.16.0/25 192.168.16.193</dd>
-      <dd>192.168.16.128/26 192.168.16.193</dd>
-      <table>
-        <tr>
-          <td>192.168.16.0/25</td>
-          <td>192</td>
-          <td>168</td>
-          <td>16</td>
-          <td>0000 0000</td>
-        </tr>
-        <tr>
-          <td>192.168.16.128/26</td>
-          <td>192</td>
-          <td>168</td>
-          <td>16</td>
-          <td>1000 0000</td>
-        </tr>
-        <tr>
-          <td>相同前缀</td>
-          <td>192</td>
-          <td>168</td>
-          <td>16</td>
-          <td>xxxx xxxx</td>
-        </tr>
-        <tr>
-          <td>聚合路由</td>
-          <td>192</td>
-          <td>168</td>
-          <td>16</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>CIDR</td>
-          <td colspan="4">192.168.16.0/24 192.168.16.193</td>
-        </tr>
-      </table>
-      <div>[<span class="iconfont icon-keyboard"></span>]
-        某路由表中有，其目的网络地址分别为：35.230.32.0/21、35.230.40.0/21、35.230.48.0/21和35.230.56.0/21，将这4条路由聚合后的目的网络地址是（）。</div>
-      <div class="alpha">
-        <div>35.230.0.0/19</div>
-        <div>35.230.0.0/20</div>
-        <div>35.230.32.0/19</div>
-        <div>35.230.32.0/20</div>
-      </div>
+      <ol>
+        <li>已知5个CIDR地址块分别如下：206.0.68.0/23、206.0.70.0/24、206.0.71.0/25、206.0.71.128/25，求聚合网络。</li>
+        <p>根据地址掩码判断可能相同的长度</p>
+        <table>
+          <tr>
+            <td>IP1</td>
+            <td>206</td>
+            <td>0</td>
+            <td><span class="warn">0100 010</span> 0</td>
+            <td>0000 0000</td>
+          </tr>
+          <tr>
+            <td>IP2</td>
+            <td>206</td>
+            <td>0</td>
+            <td><span class="warn">0100 0110</span></td>
+            <td>0000 0000</td>
+          </tr>
+          <tr>
+            <td>IP3</td>
+            <td>206</td>
+            <td>0</td>
+            <td><span class="warn">0100 0111</span></td>
+            <td><span class="warn">0</span>000 0000</td>
+          </tr>
+          <tr>
+            <td>IP4</td>
+            <td>206</td>
+            <td>0</td>
+            <td><span class="warn">0100 0111</span></td>
+            <td><span class="warn">1</span>000 0000</td>
+          </tr>
+          <tr>
+            <td>相同前缀</td>
+            <td>206</td>
+            <td>0</td>
+            <td>0100 01xx</td>
+            <td>xxxx xxxx</td>
+          </tr>
+          <tr>
+            <td>聚合路由</td>
+            <td>206</td>
+            <td>0</td>
+            <td>68</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>CIDR</td>
+            <td colspan="4">206.0.68.0/22</td>
+          </tr>
+        </table>
+        <li>已知路由器中的2条路由分别如下。请问是否可以聚合成为一条路由？如果可以，请写出聚合后的路由；如果不可以，请说明原因。
+        </li>
+        <p>192.168.16.0/25 192.168.16.193</p>
+        <p>192.168.16.128/26 192.168.16.193</p>
+        <table>
+          <tr>
+            <td>192.168.16.0/25</td>
+            <td>192</td>
+            <td>168</td>
+            <td>16</td>
+            <td>0000 0000</td>
+          </tr>
+          <tr>
+            <td>192.168.16.128/26</td>
+            <td>192</td>
+            <td>168</td>
+            <td>16</td>
+            <td>1000 0000</td>
+          </tr>
+          <tr>
+            <td>相同前缀</td>
+            <td>192</td>
+            <td>168</td>
+            <td>16</td>
+            <td>xxxx xxxx</td>
+          </tr>
+          <tr>
+            <td>聚合路由</td>
+            <td>192</td>
+            <td>168</td>
+            <td>16</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>CIDR</td>
+            <td colspan="4">192.168.16.0/24 192.168.16.193</td>
+          </tr>
+        </table>
+        <li>某路由表中有，其目的网络地址分别为：35.230.32.0/21、35.230.40.0/21、35.230.48.0/21和35.230.56.0/21，将这4条路由聚合后的目的网络是（）。</li>
+        <div class="alpha">
+          <div>35.230.0.0/19</div>
+          <div>35.230.0.0/20</div>
+          <div>35.230.32.0/19</div>
+          <div>35.230.32.0/20</div>
+        </div>
+        <li>某路由表中有，其目的网络地址分别为：128.1.25.0/24、128.1.26.0/24、128.1.27.0/24，将这3条路由聚合后的目的网络是（）。</li>
+        <p class="quote">p142 fig4-25</p>
+        <!-- <div>128.1.24.0/22</div> -->
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

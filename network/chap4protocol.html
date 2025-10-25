@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>路由协议 Protocols</title>
+  <title>路由选择协议 Protocols</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
 </head>
@@ -13,42 +13,35 @@
 <body>
   <div class="w">
     <header>
-      <h1>路由协议</h1>
+      <h1>路由选择协议</h1>
       <span>&commat;Protocols</span>
     </header>
     <dl>
       <img src="./imgs/protocol.png" alt="">
-      <dt>特点 Feature</dt>
-      <dd>动态的</dd>
-      <dd>分布式的</dd>
-      <dd>分层次的</dd>
+      <dd>关注：路由表是怎么来的？</dd>
+      <dd>理想的路由算法</dd>
       <figure>
         <img src="./imgs/as3.png" alt="">
         <figcaption>理想路由算法</figcaption>
       </figure>
-      <dt>自治系统</dt>
-      <dd>AS-Autonomous System</dd>
-      <dd>由单一技术管理网络</dd>
+      <dd>考虑到互联网的规模和用户的私密，采用<strong>分层次</strong>的路由选择协议</dd>
+      <dd>将互联网划分为若干自治系统 AS - Autonomous System</dd>
+      <dd>每个AS采用单一技术管理网络</dd>
       <figure>
         <img src="./imgs/as.png" alt="">
-        <figcaption>自治系统</figcaption>
+        <figcaption>自治系统 AS</figcaption>
       </figure>
-      <dt>区域自治系统</dt>
-      <dd>利用分层的原理，将AS进一步划分为若干区域area，以减少网络上的通信量</dd>
-      <figure>
-        <img src="./imgs/area.png" alt="">
-        <figcaption>区域自治系统</figcaption>
-      </figure>
-      <dt>内部网关协议</dt>
-      <dd>Interior Gateway Protocol</dd>
+    </dl>
+    <h2>路由选择协议分类 Classification</h2>
+    <dl>
+      <dt>内部网关协议 Interior Gateway Protocol</dt>
       <dd>在一个自治系统AS内部使用的路由选择协议，与互联网中其它自治系统使用什么路由选择协议无关</dd>
       <dd>相应的路由选择称为域内路由-intradomain routing</dd>
       <dd>内部网关协议主要有：
         <p>路由信息协议 RIP - Routing Information Protocol</p>
         <p>开放最短路径优先 OSPF - Open Shortcut Path First</p>
       </dd>
-      <dt>外部网关协议</dt>
-      <dd>External Gateway Protocol</dd>
+      <dt>外部网关协议 External Gateway Protocol</dt>
       <dd>若源主机和目的主机在不同的自治系统AS，不同AS之间的路由选择就必须使用外部网关协议</dd>
       <dd>相应的路由选择称为域间路由-interdomain routing</dd>
       <dd>不同的AS允许使用相同的内部网关协议</dd>

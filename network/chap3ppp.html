@@ -94,7 +94,7 @@
       <dd>使用转义符号 0x7D（0111 1101）进行字节填充，以保障透明传输</dd>
       <dd>适用于 <strong>异步</strong> 传输</dd>
       <dd>情况1：出现帧定界符 0x7E，将其转变为2个字节：0x7D 和 0x5E</dd>
-      <table style="max-width: 450px;">
+      <table>
         <tr>
           <td>0x7E</td>
           <td>→</td>
@@ -103,7 +103,7 @@
         </tr>
       </table>
       <dd>情况2：出现转义字符 0x7D，将其转变为2个字节：0x7D 和 0x5D</dd>
-      <table style="max-width: 450px;">
+      <table>
         <tr>
           <td>0x7D</td>
           <td>→</td>
@@ -112,7 +112,7 @@
         </tr>
       </table>
       <dd>情况3：其它 ASCII控制字符（&lt;0x20），在其前面加上 0x7D，同时调整该字符的编码</dd>
-      <table style="max-width: 450px;">
+      <table>
         <tr>
           <td>0x03</td>
           <td>→</td>
@@ -125,10 +125,39 @@
       <dd>适用于 <strong>同步</strong> 传输</dd>
       <dd>发端：每发现连续5个1，就填充1个0</dd>
       <dd>收端：每发现连续5个1，就删除其后面的0</dd>
-      <figure>
-        <img src="./imgs/ppp1.png" alt="">
-        <figcaption>0bit填充</figcaption>
-      </figure>
+      <table>
+        <caption>0bit填充</caption>
+        <tr>
+          <td></td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Padding</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td class="warn">0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+      </table>
       <div>[<span class="iconfont icon-keyboard"></span>] p112-3-09 一个PPP帧的数据部分是 7D 5E FE 27 7D 5D 7D 5D 65 7D
         5E。真正的数据是什么？</div>
       <dd>还原填充字节</dd>
@@ -137,10 +166,10 @@
       <dd>7D 5D → 7D</dd>
       <dd>7D 5E → 7E</dd>
       <dd>最后数据：7E FE 27 7D 7D 7E</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] PPP协议使用同步传输传送比特
+      <div>[<span class="iconfont icon-keyboard"></span>] p112-3-10 PPP协议使用同步传输传送比特
         0110111111111100，经过0比特填充后，变成什么比特串？如收到的PPP帧的数据部分是 0001110111110111110110，删除发送端插入的0比特变成什么比特串？</div>
       <dd>发送端：每个5个1，插入1个0</dd>
-      <table style="max-width: 450px;">
+      <table>
         <tr>
           <td></td>
           <td>0</td>
@@ -185,7 +214,7 @@
         </tr>
       </table>
       <dd>接收端：删除每5个1后的0</dd>
-      <table style="max-width: 450px;">
+      <table>
         <tr>
           <td>Padding</td>
           <td>0</td>

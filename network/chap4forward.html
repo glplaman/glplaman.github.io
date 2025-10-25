@@ -16,6 +16,17 @@
     .border {
       border: 1px solid #ccc;
     }
+
+    .grid2 {
+      width: max-content;
+      display: grid;
+      grid-template-columns: auto repeat(4, 1fr);
+      gap: var(--p-m-g);
+      background: #fff;
+      margin: 2rem auto;
+      text-indent: initial;
+      padding: var(--p-m-g);
+    }
   </style>
 </head>
 
@@ -129,7 +140,7 @@
           <p>如果运算结果与该记录的“网络地址”相同，则认为该记录是匹配的</p>
         </li>
         <li>选择最佳匹配并转发：
-          <p>路由器会选择所有匹配记录中最长前缀（即子网掩码位数最多，如/26比/24更长）的那一条作为最佳匹配 - <strong>路由聚合</strong></p>
+          <p>路由器会选择所有匹配记录中 <strong>最长前缀</strong>（即子网掩码位数最多，如/26比/24更长）的那一条作为最佳匹配 - <strong>路由聚合</strong></p>
           <p>根据这条最佳匹配记录中的“转发端口”和“下一跳IP地址”信息，将数据包转发出去</p>
           <p>如果“下一跳IP地址”为空（“–”），则从指定端口直接发送</p>
           <p>如果“下一跳IP地址”有值，则通过指定端口将数据包发送给该IP地址的路由器</p>
@@ -181,6 +192,43 @@
           <p>如果都没有匹配的记录，则丢弃该分组，并报告分组出错</p>
         </li>
       </ol>
+      <div>[<span class="iconfont icon-keyboard"></span>] p142 fig4-25</div>
+      <div class="txt-indent">
+        <div>原则：最长前缀匹配</div>
+        <div>目标IP：128.1.24.1</div>
+        <div>路由器的路由表
+          <p>条目1：128.1.24.0/22 → 0</p>
+          <p>条目2：128.1.24.0/24 → 1</p>
+        </div>
+        <div>条目1 → 匹配
+          <div class="grid2">
+            <span></span>
+            <span>128</span><span>1</span><span>00011000</span><span>1</span>
+            <span>AND</span>
+            <span>11111111</span><span>11111111</span><span>11111100</span><span>00000000</span>
+            <span>=</span>
+            <span>128</span><span>1</span><span>24</span><span>0</span>
+          </div>
+        </div>
+        <div>条目2 → 匹配
+          <div class="grid2">
+            <span></span>
+            <span>128</span><span>1</span><span>00011000</span><span>1</span>
+            <span>AND</span>
+            <span>11111111</span><span>11111111</span><span>11111111</span><span>00000000</span>
+            <span>=</span>
+            <span>128</span><span>1</span><span>24</span><span>0</span>
+          </div>
+        </div>
+        <div>结论：根据最大前缀匹配原则，分组应该从1口转发</div>
+        <div>验证：</div>
+        <div>公司B有3个子网：128.1.25.0/24、128.1.26.0/24、128.1.27.0/24</div>
+        <div>路由聚合为：128.1.24.0/22 → 发往公司B的分组走这个端口转发，没有问题</div>
+        <div>但是：目标IP 128.1.24.1 不在其中任何一个网络</div>
+        <div>子网1的最小IP地址：128.1.25.1</div>
+        <div>子网2的最小IP地址：128.1.26.1</div>
+        <div>子网3的最小IP地址：128.1.27.1</div>
+      </div>
     </dl>
     <h2>实操 Drill</h2>
     <dl>

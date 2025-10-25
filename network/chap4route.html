@@ -18,8 +18,9 @@
       <dt>内容 Contents</dt>
       <dd>静态路由 Static Route</dd>
       <dd>默认路由 Default Route</dd>
+      <dd>主机路由 Host Route</dd>
     </dl>
-    <img src="../imgs/network/network layer 3/幻灯片10.JPG" alt="">
+    <img src="./imgs/static.png" alt="">
     <dl>
       <!-- <img src="./imgs/route.png" alt=""> -->
       <dd>静态路由就是“人工指路”，告诉路由器：“去某个地方，就走这条路”</dd>
@@ -126,11 +127,12 @@ Router(config)# ip route 192.168.1.0 255.255.255.0 192.168.3.1</pre>
         <figcaption>通信准备过程</figcaption>
       </figure>
     </dl>
-    <img src="../imgs/network/network layer 3/幻灯片16.JPG" alt="">
+    <img src="./imgs/default.png" alt="">
     <dl>
       <dd>一种特殊的路由， <strong>匹配所有</strong> 目标地址</dd>
       <dd>即当数据包的目的IP地址无法匹配路由表中的任何其他路由条目时，路由器就会使用默认路由来转发该数据包</dd>
       <dd>如果没有指定，则丢弃报文</dd>
+      <dd>是路由表的最后一个条目</dd>
       <pre>0.0.0.0/0</pre>
       <dt>解决方案 Solution</dt>
       <dd>针对每个网络单独指定一条静态路由</dd>
@@ -205,6 +207,21 @@ Router(config)# ip route 192.168.1.0 255.255.255.0 192.168.3.1</pre>
         <img src="./imgs/r11.png" alt="">
         <figcaption>定制数据分组</figcaption>
       </figure>
+    </dl>
+    <img src="./imgs/host.png" alt="">
+    <dl>
+      <dd>指向特定主机的路由；精确路由</dd>
+      <dd>子网掩码为 /32</dd>
+      <dd>优先级较高</dd>
+      <dd>在网络设计、故障排除和精细化流量控制中扮演着重要角色</dd>
+      <dd>下图中的L路由就是主机路由，是发给路由器的数据，不需要转发</dd>
+      <figure>
+        <img src="./imgs/r8.png" alt="">
+        <figcaption>主机路由</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 隔离问题主机</div>
+      <dd>为问题主机配置主机路由，将其下一条指向空</dd>
+      <pre>Router(config)# ip route 192.168.1.100 255.255.255.255 null</pre>
     </dl>
     <h2>Homework</h2>
     <dl>
