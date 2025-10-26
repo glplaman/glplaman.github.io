@@ -45,16 +45,44 @@
         <p>最大距离15</p>
         <p>16表示不可达</p>
       </dd>
-      <dd>使用UDP协议，按照 <span class="warn">固定时间</span> 间隔，以 <span class="warn">广播</span> RIP报文的方式，和 <span
-          class="warn">相邻</span> 路由器交换 <span class="warn">全部</span> 路由信息 - 分布式路由选择协议
+      <dd>使用 <strong>UDP</strong> 协议，按照 <span class="warn">固定时间</span> 间隔，以 <span class="warn">广播</span> RIP报文的方式，和
+        <span class="warn">相邻</span> 路由器交换 <span class="warn">全部</span> 路由信息 - 分布式路由选择协议
         <p>相邻 - Who</p>
         <p>全部 - What</p>
         <p>固定时间间隔 - When</p>
       </dd>
       <figure>
-        <img src="../imgs/network/rip/slider14.jpg" alt="">
-        <figcaption>RIP的跳数count</figcaption>
+        <img src="./imgs/rip1.png" alt="">
+        <figcaption>路由器1的RIP跳数count</figcaption>
       </figure>
+      <table>
+        <caption>R1的路由表</caption>
+        <tr>
+          <td>目标网络</td>
+          <td>距离</td>
+          <td>下一跳</td>
+        </tr>
+        <tr>
+          <td>Net1</td>
+          <td>1</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Net2</td>
+          <td>1</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Net3</td>
+          <td>2</td>
+          <td>R2</td>
+        </tr>
+        <tr>
+          <td>Net4</td>
+          <td>3</td>
+          <td>R2</td>
+        </tr>
+      </table>
       <dt>特点 Features</dt>
       <dd>RIP简单的认为：距离越短，路由质量越高</dd>
       <dd>RIP最大支持15跳，适合小型网络</dd>
@@ -62,22 +90,22 @@
       <dd>RIP通过3个定时器动态维护路由</dd>
       <div class="grid">
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon0.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon0.png" alt=""></div>
           <div class="item-title">简单</div>
           <div class="item-sub-title">Simple</div>
         </div>
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon1.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon1.png" alt=""></div>
           <div class="item-title">小型</div>
           <div class="item-sub-title">Mini</div>
         </div>
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon2.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon2.png" alt=""></div>
           <div class="item-title">均衡</div>
           <div class="item-sub-title">Balance</div>
         </div>
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon3.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon3.png" alt=""></div>
           <div class="item-title">动态</div>
           <div class="item-sub-title">Dynamic</div>
         </div>
@@ -99,35 +127,35 @@
       </dd>
       <div class="grid">
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon4.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon4.png" alt=""></div>
           <div class="item-title">更新</div>
           <div class="item-sub-title">Time1</div>
         </div>
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon5.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon5.png" alt=""></div>
           <div class="item-title">失效</div>
           <div class="item-sub-title">Time2</div>
         </div>
         <div class="item-wrap">
-          <div class="item-pic"><img src="../imgs/network/rip/icon6.png" alt=""></div>
+          <div class="item-pic"><img src="./imgs/icon6.png" alt=""></div>
           <div class="item-title">清除</div>
           <div class="item-sub-title">Time3</div>
         </div>
       </div>
       <dt>更新规则 Rules</dt>
       <dd class="warn">先改造交换/收到的路由信息再维护自己的路由信息</dd>
-      <dd>改造收到的路由信息
-        <p>目标都为相邻路由</p>
-        <p>跳数都+1</p>
-      </dd>
-      <dd>如果收到的路由条目对应的目标网络不在当前路由表中，则添加路由 - 发现新网络</dd>
-      <dd>如果路由表已有达到相同目标网络的路由条目，则：
-        <p>若来自相同的下一跳路由器，则更新路由 - 最新的路由信息</p>
-        <p>若来自不同的下一跳路由器，则比较距离：</p>
-      </dd>
-      <dd>情况1：新条目小于当前条目，则更新路由 - 新条目更具优势</dd>
-      <dd>情况2：新条目等于当前条目，则添加新条目 - 负载均衡</dd>
-      <dd>情况3：新条目大于当前条目，不做更新处理 - 新条目劣势</dd>
+      <div>1. 改造收到的路由信息</div>
+      <dd>目标都为相邻路由</dd>
+      <dd>跳数都+1</dd>
+      <div>2. 更新自己的路由信息</div>
+      <dd><strong>比较目标网络</strong>是否存在：</dd>
+      <dd>不存在，则添加路由 - 发现新网络</dd>
+      <dd>存在，则<strong>比较下一跳路由器</strong>：</dd>
+      <dd>相同：则更新路由 - 最新的路由信息</dd>
+      <dd>不同：则 <strong>比较距离</strong>：</dd>
+      <dd>新条目小于当前条目，则更新路由 - 新条目更具优势</dd>
+      <dd>新条目等于当前条目，则添加新条目 - 负载均衡</dd>
+      <dd>新条目大于当前条目，不做处理 - 新条目劣势</dd>
       <figure>
         <img src="../imgs/network/rip/slider13.jpg" alt="">
         <figcaption>RIP路由更新规则</figcaption>
@@ -649,6 +677,11 @@ Known via "rip", distance 120, metric 1
       </ol>
       <dt>Homework</dt>
       <ol>
+        <li>路由器到直连网络的距离是1；其它非直连网络，每经过一个网络，距离加1（）。</li>
+        <li>采用RIP协议的路由器只和临近的路由器交换路由信息（）。</li>
+        <li>RIP使用UDP协议发送路由信息，其它路由器监听端口520来接收RIP更新（）。</li>
+        <li>RIP路由条目的有效期是（）秒，失效期是（）秒，超过（）秒，则被删除。</li>
+        <li>如何理解RIP的"坏消息传播的慢"？</li>
         <li>已知路由器B的路由表；收到的路由器C交换来的路由信息。求路由器B更新后的路由表</li>
         <table>
           <caption>路由器B</caption>

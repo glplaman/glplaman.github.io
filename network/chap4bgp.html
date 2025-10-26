@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>边界网关协议 BGP</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>边界网关协议</h1>
+      <span>&commat;BGP</span>
+    </header>
+    <dl>
+      <dd>BGP - Border Gateway Protocol</dd>
+      <dd>边界网关协议</dd>
+      <dd>负责在不同的自治系统 AS - Autonomous System 之间交换路由信息</dd>
+      <dd>是构成互联网骨干网络的核心协议</dd>
+      <dd>在AS边界部署边界路由器，AS之间才可以交换可达路由信息</dd>
+      <dd>使用传输控制协议 TCP（端口179） - 可靠、面向连接</dd>
+      <dt>分类 Type</dt>
+      <dd>eBGP - external BGP
+        <p>在不同自治系统之间的BGP对等体（Peers）之间运行</p>
+        <p>eBGP邻居通常直连（物理上或逻辑上通过单跳），并且必须位于不同的AS中</p>
+        <p>eBGP会话默认将路由的下一跳（NEXT_HOP）属性修改为发送方的接口地址</p>
+        <p>边界路由器之间使用 eBGP 交换信息</p>
+      </dd>
+      <dd>iBGP - internal BGP
+        <p>在同一自治系统内部的BGP对等体之间运行</p>
+        <p>iBGP用于在AS内部传播从eBGP学到的外部路由</p>
+        <p>边界路由器使用 iBGP 向其所在AS内的所有路由器转发路由信息</p>
+        <p>要求AS内的所有路由器<strong>全连通</strong></p>
+      </dd>
+      <figure>
+        <img src="./imgs/bgp.jpg" alt="">
+        <figcaption>BGP</figcaption>
+      </figure>
+      <dt>BGP路由</dt>
+      <dd>表示：经过NEXT-HOP，可达AS-PATH的 Prefix 网络</dd>
+      <dd>Prefix：目标网络/网络前缀</dd>
+      <dd>AS-PATH：经过的AS列表</dd>
+      <dd>NEXT-HOP：下一条路由器</dd>
+      <table>
+        <caption>BGP基本路由</caption>
+        <tr>
+          <td>prefix</td>
+          <td>AS-PATH</td>
+          <td>NEXT-HOP</td>
+        </tr>
+      </table>
+      <div class="tips">AS-PATH和NEXT-HOP都是BGP属性</div>
+      <dt>路径属性 Path Attributes</dt>
+      <dd>BGP决策的关键</dd>
+      <dd>每个路由都附带一组属性，用于影响路由选择</dd>
+      <dd>AS_PATH：经过的AS列表，用于防环和选路（越短越好）</dd>
+      <dd>NEXT_HOP：下一跳IP地址</dd>
+      <dd>LOCAL_PREF：本地优先级，用于决定离开本AS的最佳出口，默认值100，越大越优（仅在iBGP内传递）</dd>
+      <dd>MED (Multi-Exit Discriminator)：用于影响进入本AS的流量选择哪个入口，默认值0，越小越优（在eBGP间传递）</dd>
+      <dd>ORIGIN：路由来源（IGP > EGP > Incomplete）</dd>
+      <dd>WEIGHT：Cisco私有属性，仅本地有效，值越大越优</dd>
+      <dt>路由选择</dt>
+      <dd>本地偏好 (local preference) 值<strong>最高</strong>的路由 （默认值=100）
+        <p>由管理员本地设置</p>
+        <p>无法实现负载均衡</p>
+        <p>AS1 → AS2 → AS4；链路负荷过重</p>
+        <p>AS1 → AS3 → AS4</p>
+      </dd>
+      <figure>
+        <img src="./imgs/bgp0.png" alt="">
+      </figure>
+      <dd>AS 跳数<strong>最小</strong>的路由
+        <p>未必是最佳路由</p>
+        <p>AS1 → AS5：AS1 → AS2 → AS3 → AS5</p>
+        <p>AS1 → AS5：AS1 → AS4 → AS5；内部转发可能更多</p>
+      </dd>
+      <figure>
+        <img src="./imgs/bgp1.png" alt="">
+      </figure>
+      <dd>使用<strong>热土豆</strong>路由选择算法
+        <p>尽快转发出去 - 分组在 AS 内的转发次数最少</p>
+        <p>R2 → R3</p>
+        <p>R1 → R4</p>
+      </dd>
+      <figure>
+        <img src="./imgs/bgp2.png" alt="">
+      </figure>
+      <dd>路由器 BGP ID 数值最小的路由。具有多个接口的路由器有多个 IP 地址，BGP ID 就使用该路由器的 IP 地址中数值最大的一个</dd>
+      <dt>特点 Feature</dt>
+      <dd>高度可扩展：适用于大规模网络，如互联网骨干</dd>
+      <dd>策略控制能力强：通过丰富的属性和过滤机制，网络管理员可以精细控制路由的发布和接收</dd>
+      <dd>收敛速度慢：相比IGP，BGP的收敛较慢，但更注重稳定性</dd>
+      <dd>基于TCP：保证了可靠传输，不需要像RIP那样周期性广播</dd>
+      <dd>增量更新：只在网络变化时发送增量更新，节省带宽</dd>
+      <dt>应用 Application</dt>
+      <dd>ISP之间互联：不同运营商通过eBGP交换客户路由</dd>
+      <dd>企业与ISP互联：大型企业通过BGP向ISP宣告自己的公网IP地址块</dd>
+      <dd>多宿主网络 Multi-homing ：一个AS连接到多个ISP，通过BGP实现冗余和负载均衡</dd>
+      <dd>CDN和云服务提供商：用于在全球范围分发内容和服务</dd>
+    </dl>
+    <dl>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.rfc-editor.org/rfc/rfc4271">RFC 4271 <span class="iconfont icon-share"></span></a></li>
+        <li><a
+            href="https://www.cisco.com/site/us/en/products/networking/software/ios-nx-os/border-gateway-protocol-bgp/index.html">Border
+            Gateway Protocol (BGP) <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/border-gateway-protocol-bgp/">Border Gateway Protocol (BGP) <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a
+            href="https://www.cisco.com/c/en/us/support/docs/ip/border-gateway-protocol-bgp/212881-border-gateway-protocol-bgp-optimal-ro.html">Border
+            Gateway Protocol (BGP) Optimal Route Reflection <span class="iconfont icon-share"></span></a></li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>
