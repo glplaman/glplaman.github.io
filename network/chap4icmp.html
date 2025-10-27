@@ -25,7 +25,32 @@
       <dd>网络通信中不可或缺的信使</dd>
       <dd>虽然它不传输用户数据，但为网络的正常运行、故障排查和性能优化提供了关键支持</dd>
       <dd>是很多网络诊断工具的基础</dd>
-      <dt>分类 Type</dt>
+      <dt>格式 Format</dt>
+      <table>
+        <caption>ICMP格式</caption>
+        <thead>
+          <tr>
+            <th>8bit</th>
+            <th>8bit</th>
+            <th>16bit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Type</td>
+            <td>Code</td>
+            <td>CHECKSUM</td>
+          </tr>
+          <tr>
+            <td colspan="2">ID</td>
+            <td>SEQ NUMBER</td>
+          </tr>
+          <tr>
+            <td colspan="3">Data</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>类型 Type</dt>
       <dd>差错报告报文
         <p>3：终点不可达 → 通知源点</p>
         <p>11：路由超时 Time Exceeded → 丢弃并通知源点</p>
@@ -33,10 +58,29 @@
         <p>5：重定向 Redirect → 通知源点</p>
       </dd>
       <dd>询问报文
-        <p>0：回显应答 Echo Reply</p>
         <p>8：回显请求 Echo Request</p>
+        <p>0：回显应答 Echo Reply</p>
       </dd>
-      <div class="tips">每个主机配置IP地址时，都会指定一个网关 Gateway，即默认路由器</div>
+      <dt>代码 Code</dt>
+      <dd>进一步细化类型
+        <p>0：网络不可达</p>
+        <p>1：主机不可达</p>
+        <p>2：协议不可达</p>
+        <p>3：端口不可达</p>
+        <p>4：需要分片，但是设置为禁止分片 DF=1</p>
+      </dd>
+      <figure>
+        <img src="./imgs/icmp0.png" alt="">
+        <figcaption>请求</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/icmp1.png" alt="">
+        <figcaption>目标不可达 - 主机</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/icmp2.png" alt="">
+        <figcaption>超时</figcaption>
+      </figure>
       <dt>典型应用 Application</dt>
       <dd><a href="./ping.html">ping <span class="iconfont icon-share"></span></a></dd>
       <dd><a href="./tracert.html">trancert <span class="iconfont icon-share"></span></a></dd>

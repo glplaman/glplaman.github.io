@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>默认路由 Default Route</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>默认路由</h1>
+      <span>&commat;Default Route</span>
+    </header>
+    <img src="./imgs/default.png" alt="">
+    <dl>
+      <div class="tips">
+        <p>默认路由是构建网络互联的基础</p>
+        <p>没有它，每个路由器都需要知道互联网上每一个网络的精确路径，这在现实中是不可行的</p>
+        <p>它极大地简化了路由表的管理，使得网络能够高效地将“未知”流量导向正确的方向</p>
+      </div>
+      <dd>一种特殊的静态路由
+        <p>当没有其他路由可用/匹配时，就选择这条路由</p>
+        <p>最后选择；兜底方案</p>
+      </dd>
+      <dd><strong>匹配所有</strong>未知目标 </dd>
+      <pre>0.0.0.0/0</pre>
+      <dd>即当数据包的目的IP地址无法匹配路由表中的任何其他路由条目时，路由器就会使用默认路由来转发该数据包</dd>
+      <dd>如果没有指定，则丢弃报文</dd>
+      <dd>匹配优先级最低 <span class="iconfont icon-help"></span></dd>
+      <dd>针对每个网络单独指定一条静态路由</dd>
+      <pre>Router(config)# ip route 0.0.0.0 0.0.0.0 192.1.3.2</pre>
+      <dd>默认路由监视工具查看是第一条，CLI查看是最后一条 <span class="iconfont icon-help"></span></dd>
+      <figure>
+        <img src="./imgs/default0.png" alt="">
+        <figcaption>默认路由 R0 - CLI</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/default1.png" alt="">
+        <figcaption>默认路由 R0 - 监视工具</figcaption>
+      </figure>
+      <dt>应用 Application</dt>
+      <dd>接入互联网
+        <p>最常见的用途。在企业或家庭网络中，路由器通过配置一条指向ISP网关的默认路由，将所有去往互联网的流量发送出去</p>
+      </dd>
+      <dd>简化路由配置
+        <p>某个IP分组的目的IP地址和路由表中的所有路由项都不匹配 - 没有匹配</p>
+        <p>路由器通往的多个网络有相同的下一跳，但无法聚合路由 - 大杂烩</p>
+      </dd>
+      <dd>作为动态路由协议的补充
+        <p>即使运行了OSPF、BGP等动态路由协议，也常常需要配置默认路由来指向外部网络</p>
+      </dd>
+      <dt>特点 Feature</dt>
+      <dd>优先级最低</dd>
+      <dd>配置不当可能导致分组无限循环直到TTL耗尽</dd>
+      <dd>应认真仔细检查、配置路由</dd>
+      <table>
+        <caption>静态路由 vs 默认路由</caption>
+        <tbody>
+          <tr>
+            <td>范围</td>
+            <td>匹配特定网络</td>
+            <td>匹配所有网络</td>
+          </tr>
+          <tr>
+            <td>配置方式</td>
+            <td>手动添加</td>
+            <td>手动添加</td>
+          </tr>
+          <tr>
+            <td>类型标识</td>
+            <td>路由表中显示为 S(Static)</td>
+            <td>同样显示为 S* 或 S 0.0.0.0/0</td>
+          </tr>
+          <tr>
+            <td>优先级</td>
+            <td>比动态路由高，但低于直连路由</td>
+            <td>是最后的“兜底”选项，优先级最低</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 默认路由配置 <a href="./pt/default-route.pkt" download>点击下载PT文件
+          <span class="iconfont icon-filedownload"></span></a></div>
+      <dd>搭建拓扑、根据分配地址完成配置</dd>
+      <figure>
+        <img src="./imgs/default4.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <dd>配置静态路由
+        <p>R0</p>
+        <pre>Router(config)# ip route 0.0.0.0 0.0.0.0 192.1.3.2</pre>
+        <p>R1</p>
+        <pre>Router(config)# ip route 0.0.0.0 0.0.0.0 192.1.3.1</pre>
+      </dd>
+      <dd>配置完成后的路由表；R0的路由表见前图</dd>
+      <!-- <dd>实际使用顺序是由路由查找算法决定的，而不是显示顺序</dd> -->
+      <!-- <dd>路由器查找路由时，不看条目在列表中的“物理位置”（第几行），而是遵循严格的“最长前缀匹配”（Longest Prefix Match）原则</dd> -->
+      <figure>
+        <img src="./imgs/default3.png" alt="">
+        <figcaption>R1路由表 - 监视工具</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/default2.png" alt="">
+        <figcaption>R1路由表 - CLI</figcaption>
+      </figure>
+      <dt>验证 Verify</dt>
+      <dd>分别使用以下方法验证网络连通性</dd>
+      <dd>使用 PING 验证</dd>
+      <dd>发送简单数据包或定制数据分组
+        <p>在模拟通信模式下，由PC0发送一个不匹配任何路由的PDU</p>
+        <p>TLL不要指定太大，使用5-10即可查看默认路由转发完整过程</p>
+        <p>R0匹配不到具体的路由项，则由默认路由转发给R1，每次转发TTL都减1</p>
+        <p>R1匹配不到具体的路由项，则由默认路由转发给R0，每次转发TTL都减1</p>
+        <p>当TTL时间为0时，数据包被丢弃</p>
+        <p>查看数据分组在两个路由器之间的转发过程</p>
+      </dd>
+      <figure>
+        <img src="./imgs/r11.png" alt="">
+        <figcaption>定制数据分组</figcaption>
+      </figure>
+      <dt>思考</dt>
+      <dd>如何优化网络设计，合理使用默认路由？</dd>
+      <!-- <dd>避免对等默认路由</dd> -->
+      <!-- <dd>使用动态路由辅助</dd> -->
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>
