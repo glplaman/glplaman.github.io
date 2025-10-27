@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>主机路由 Host Route</title>
   <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
 </head>
 
 <body>
@@ -19,16 +20,48 @@
     <dl>
       <dd>指向特定主机的路由；精确路由</dd>
       <dd>子网掩码为 /32</dd>
+      <pre>Router(config)# ip route 192.168.10.5 255.255.255.255 10.0.0.2</pre>
       <dd>优先级较高</dd>
       <dd>在网络设计、故障排除和精细化流量控制中扮演着重要角色</dd>
-      <dd>下图中的L路由就是主机路由，是发给路由器的数据，不需要转发</dd>
+      <dd>下图中的L路由就是主机路由，是发给路由器的数据，不需要转发
+        <p>这是现代操作系统和路由器自动生成一些隐式的主机路由</p>
+      </dd>
       <figure>
-        <img src="./imgs/r8.png" alt="">
+        <img src="./imgs/default1.png" alt="">
         <figcaption>主机路由</figcaption>
       </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] 隔离问题主机</div>
+      <dt>应用 Application</dt>
+      <dd>策略路由 / 特定路径控制：强制某个主机的流量走特定链路（如备份线路、高安全性路径）</dd>
+      <dd>故障排除与测试：临时添加一条主机路由，测试某台服务器的连通性</dd>
+      <dd>安全策略：将可疑主机的流量引导到防火墙、IDS/IPS 或黑洞（null0）接口</dd>
+      <dd>负载均衡或冗余：某些集群环境中，为主机单独配置最优路径</dd>
+      <dd>避免路由环路或冲突：当存在多条可能匹配的路由时，用主机路由覆盖默认行为</dd>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 隔离问题主机 <a href="./pt/host_route.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a></div>
       <dd>为问题主机配置主机路由，将其下一条指向空</dd>
-      <pre>Router(config)# ip route 192.168.1.100 255.255.255.255 null</pre>
+      <dd>使用 null0 虚拟"黑洞"接口，所有发往这里的包都会被丢弃</dd>
+      <dt>步骤 Steps</dt>
+      <ol>
+        <li>搭建拓扑</li>
+        <figure>
+          <img src="./imgs/host0.png" alt="">
+          <figcaption>拓扑</figcaption>
+        </figure>
+        <li>配置IP</li>
+        <li>测试直接路由的连通性：PC0 ping PC1</li>
+        <pre>ping 192.168.2.100</pre>
+        <li>配置主机路由</li>
+        <pre>Router(config)# ip route 192.168.2.100 255.255.255.255 null0</pre>
+        <li>再次测试连通性</li>
+        <pre>ping 192.168.2.100</pre>
+        <li>删除主机路由</li>
+        <pre>Router(config)# no ip route 192.168.2.100 255.255.255.255 null0</pre>
+        <li>再次测试连通性</li>
+        <pre>ping 192.168.2.100</pre>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
