@@ -76,9 +76,9 @@
       <dd><strong>IEEE 802.3标准</strong>：802委员会1983年发布的第一个以太网标准，数据速率达到10Mbps</dd>
       <dd>通常说的以太网指的是符合DIX Ethernet V2标准的局域网</dd>
       <dt>常见以太网 Type</dt>
-      <dd>10BASE-T以太网-传统以太网</dd>
-      <dd>100BASE-T以太网-快速以太网</dd>
-      <dd>吉比特以太网-主流以太网</dd>
+      <dd>10BASE - T以太网 - 传统以太网</dd>
+      <dd>100BASE - T以太网 - 快速以太网</dd>
+      <dd>吉比特以太网 - 主流以太网</dd>
       <dd>10吉比特以太网</dd>
       <dt>以太网特点 Feature</dt>
       <dd>可扩展</dd>
@@ -87,10 +87,10 @@
       <dd>稳健性高</dd>
       <div class="tips">以太网已经成了局域网的同义词</div>
       <dt>共享信道 Sharing</dt>
-      <dd>计算机通过一根总线链接在一起 - 共享信道</dd>
-      <dd>每个主机发送数据时，会引起线电压发送变化，每个主机都可以检测到这个数据 - 广播</dd>
-      <dd>除了广播，还希望实现点对点通信；使用唯一的地址标识 - MAC地址</dd>
-      <dd>某个用户通信的时，随机接入信道，不需要事先建立链接</dd>
+      <dd>计算机通过一根总线链接在一起 - <strong>共享信道</strong></dd>
+      <dd>每个主机发送数据时，会引起线电压发送变化，每个主机都可以检测到这个数据 - <strong>广播</strong></dd>
+      <dd>除了广播，还希望实现点对点通信；使用唯一的地址标识 - <strong>MAC地址</strong></dd>
+      <dd>某个用户通信的时，随机接入信道，<strong>不需要事先建立链接</strong></dd>
       <dd>通过判断目标MAC地址是否匹配实现通信</dd>
       <dd>但是同时只能有一个主机通信，否则就会产生冲突</dd>
       <figure>
@@ -151,9 +151,10 @@
         <p><span class="iconfont icon-help"></span>如果没有检测到电压变化，是不是就以为着没有用户使用信道，不会发生碰撞？</p>
       </dd>
       <dd>冲突停止、延迟再发
-        <p>如果达到一定阈值的时，就可以判断有站在发生数据，应向总线上发一串阻塞信号，用以通知总线上通信的对方站点（强化阻塞），同时停止发送数据，等待信道空闲时再次发送</p>
+        <p>如果达到一定阈值的时，就可以判断有站在发生数据，应向总线上发一串阻塞信号，用以通知总线上通信的对方站点（强化阻塞）</p>
+        <p>同时停止发送数据，等待信道空闲时再次发送</p>
         <p>最多经过2倍端到端时延2τ就可以确定是否有碰撞发生，即：如果发送完数据后，经过 2τ 还没有检测到碰撞，就可以认为数据发送成功</p>
-        <p>2τ 也叫争用期、冲突窗口、碰撞窗口</p>
+        <p>2τ 也叫<strong>争用期</strong>、<strong>冲突窗口</strong>、<strong>碰撞窗口</strong></p>
       </dd>
       <dd>使用于半双工通信网络 - 不能同时发送数据</dd>
       <dt>碰撞分析 Analyze</dt>
@@ -161,22 +162,34 @@
       <dd>A发送数据后，经过 τ 才能传到对端的B</dd>
       <dd>A发前侦听信道空闲，开始发送数据</dd>
       <img class="center" src="./imgs/csma1.png" alt="">
-      <dd>在A发送的数据到底B前，B侦听信道也为空闲，B开始发送数据</dd>
+      <dd>在A发送的数据到底B前，B侦听信道也为空闲，B也开始发送数据</dd>
       <img class="center" src="./imgs/csma2.png" alt="">
-      <dd>必然会在某个时刻发生碰撞；但是AB都不知道发生了碰撞</dd>
+      <dd>必然会在某个时刻发生碰撞</dd>
+      <dd>在碰撞信号传输到对端之前，AB都不知道发生了碰撞</dd>
       <img class="center" src="./imgs/csma3.png" alt="">
-      <dd>A发送的数据到达B。B检测到碰撞；停止发送数据</dd>
+      <dd>碰撞信号到达B。B检测到碰撞；停止发送数据</dd>
       <img class="center" src="./imgs/csma4.png" alt="">
-      <dd>B发送的数据到达A。A检测到碰撞；停止发送数据</dd>
+      <dd>碰撞信号到达A。A检测到碰撞；停止发送数据</dd>
       <img class="center" src="./imgs/csma5.png" alt="">
-      <dd>用户发送数据后，<strong>最多</strong> 经过 <strong>2倍的端到端时延 2τ</strong> 就知道是否发送了碰撞</dd>
-      <dd class="warn">发送方必须在发送过程中持续监听至少 2τ，才可能检测到最晚发生的碰撞</dd>
-      <dd class="warn">用户必须能够在发送完整个帧之前，就应该检测到是否发生了冲突</dd>
-      <dd class="warn">帧的发送时间 ≥ 2τ 是 CSMA/CD 正常工作的前提条件</dd>
+      <dd>用户发送数据后，<strong>最多</strong>经过<strong>2倍的端到端时延 2τ</strong> 就知道是否发送了碰撞</dd>
+      <dd>发送方必须在发送过程中<strong>持续监听/发送</strong>至少 2τ，才可能检测到最晚发生的碰撞</dd>
+      <dd>用户必须能够在发送完整个帧之前，就应该检测到是否发生了冲突</dd>
+      <dd>帧的发送时间 ≥ 2τ 是 CSMA/CD 正常工作的前提条件</dd>
       <dt>最短帧长 Minimum length</dt>
+      <dd>最大网络跨度：早期以太网标准（10BASE5）规定，网络两端最远距离为 2500m</dd>
+      <dd>最多中继器数：允许使用4个中继器来扩展网络 - 物理层拓展网络</dd>
+      <dd>信号传播速度：在铜缆中大约为 2×10<sup>8</sup> m/s</dd>
+      <dd>往返时延 RTT - Round-Trip Time：经过详细计算，考虑电缆长度、中继器延迟等，信号从一端传到另一端再返回的最长时间被确定为 51.2μs</dd>
+      <dd>端到端时延必须小于争用期的一半：51.2μs/2 = 25.6μs</dd>
+      <dd>最小帧长 = 数据速率 × 争用期
+        <br>= 数据速率 × 发送时间
+        <br>= 10 × 10<sup>6</sup> bps × 51.2 × 10<sup>-6</sup> s
+        <br>= 512 bit
+        <br>= 64 byte
+      </dd>
       <dd>帧长不足应通过填充实现</dd>
       <dd>避免数据帧太短导致发送时间不足引起误判</dd>
-      <dd>64 byte，即 512 bit</dd>
+      <dd>抛去帧的地址、校验和类型这些开销，数据部分至少46 byte</dd>
       <table>
         <caption>最短帧</caption>
         <tbody>
@@ -202,13 +215,8 @@
           </tr>
         </tbody>
       </table>
-      <dt>争用期 Contention Period</dt>
-      <dd>对于 <strong>10Mb/s</strong> 的以太网，发送 512 bit需要 51.2μs
-        <p>512bit / 10Mbit/s = 51.2μs</p>
-      </dd>
-      <dd>对应于信号在网络中最远两个节点之间往返一次的最大时间，即往返时延上限</dd>
-      <dd>端到端时延必须小于争用期的一半：51.2μs/2 = 25.6μs</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 短帧引起的误判 - 发完只需1.5τ</div>
+      <dd>核心：在碰撞信号返回到A时，A已经发完了，不再监听信道，所以不知道发生了碰撞</dd>
       <table>
         <caption>短帧引起的误判</caption>
         <tr>
@@ -229,19 +237,19 @@
         </tr>
         <tr>
           <td>t=2τ</td>
-          <td>碰撞信号到底A；但A无法知道</td>
+          <td>碰撞信号到达A；但A无法知道</td>
         </tr>
       </table>
       <div class="tips">
         高速以太网（如千兆及以上）通常采用全双工交换式连接，不再使用 CSMA/CD，因此该机制主要用于早期共享介质网络
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] p113-3-20 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbit/s。信号在网络上的传播速率为
+      <div>[<span class="iconfont icon-keyboard"></span>] p113-3-20 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbps。信号在网络上的传播速率为
         200000
         km/s。求能够使用此协议的最短帧长</div>
       <div class="txt-indent">
         <p>τ = 1Km / 200000 Km/s = 5*10<sup>-6</sup>s = 5μs</p>
         <p>2τ = 10μs</p>
-        <p>最短帧长 = 2τ* 1Gbit/s = 10*10<sup>-6</sup>s*1*10<sup>9</sup>bit/s=10*10<sup>3</sup>bit</p>
+        <p>最短帧长 = 2τ* 1Gbps = 10*10<sup>-6</sup>s*1*10<sup>9</sup>bps=10*10<sup>3</sup>bit</p>
         <p>= 10000 bit</p>
         <p>= 10000/8 byte</p>
         <p>= 1250 byte</p>
@@ -255,7 +263,7 @@
       <dd>采用截断二进制指数退避实现
         <p>Truncated Binary Exponential Backoff</p>
       </dd>
-      <dd>每个发生冲突的用户分配一个退避时间</dd>
+      <dd>每个发生冲突的用户随机分配一个退避时间</dd>
       <dd>获得最小退避时间的站优先发送</dd>
       <dt>约定 Convention</dt>
       <dd>基本退避时间 2τ</dd>
@@ -289,7 +297,7 @@
       <dd>常用于网络和通信中描述帧的持续时间、冲突检测窗口等</dd>
       <dd>数据速率为 1 Mbps，则每个比特时间为 1 μs</dd>
       <dd>数据速率是 1 Gbps，则每个比特时间为 1 ns</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] p113-3-22 假定在使用 CSMA/CD 协议的 10 Mbit/s
+      <div>[<span class="iconfont icon-keyboard"></span>] p113-3-22 假定在使用 CSMA/CD 协议的 10 Mbps
         以太网中，某个站在发送数据时检测到碰撞，执行退避算法时选择随机数
         r=100。试问这个站需要等待多长时间后才能再次发送数据？如果是 100 比特时间，以太网能运行吗？</div>
       <div class="txt-indent">
@@ -316,7 +324,7 @@
       <ol>
         <li>发前监听信道为空闲，则发送数据不会产生冲突（）。</li>
         <li>帧长小于64字节的帧都是无效帧（）。</li>
-        <li>发送数据时，如果检测到碰撞，应立即停止发送；直到信道空闲时才可以再次发送数据</li>
+        <li>发送数据时，如果检测到碰撞，应立即停止发送；直到信道空闲时才可以再次发送数据（）。</li>
       </ol>
       <dt>Reading</dt>
       <ol>

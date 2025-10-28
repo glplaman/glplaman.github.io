@@ -30,40 +30,55 @@
     </header>
     <dl>
       <img src="./imgs/linkLayer1/幻灯片12.JPG" alt="">
+      <dd>数据链路层的通信协议</dd>
+      <dd>可用于同步或异步链路</dd>
+      <dt>应用 Application</dt>
+      <dd>用户接入互联网ISP - PPP/PPPoE</dd>
+      <dd>广域网WAN之间的专有链路</dd>
+      <dd>VPN之间的通信链路</dd>
       <dt>协议特点 Feature</dt>
-      <dd class="bg">简单</d>
-      <dd>发的帧经过CRC校验正确，则接受；反之丢弃</dd>
-      <dd>不需要纠错：由传输层实现</dd>
-      <dd>不需要流量控制：由传输层实现</dd>
-      <dd>不需要帧序号</dd>
-      <dd>仅支持点对点链路，不支持点到多点链路</dd>
-      <dd>仅支持全双工链路，不支持单工和半双工链路</dd>
-      <dd class="bg">封装成帧</dd>
-      <dd>便于从比特流中找到帧的开发和结束</dd>
-      <dd class="bg">透明</dd>
-      <dd>发什么传什么</dd>
-      <dd>即使发帧界定符，也可以正常接收</dd>
-      <dd class="bg">差错检测</dd>
-      <dd>尽早消除错误；避免后续继续传播，占用网络资源</dd>
-      <dd>检错==纠错？</dd>
-      <dd class="bg">其它</dd>
-      <dd>多种网络协议</dd>
-      <dd>多种类型链路</dd>
-      <dd>检测连接状态</dd>
-      <dd>最大传输单元 MTU - 数据部分</dd>
-      <dd>网络地址协商</dd>
-      <dd>数据压缩协商</dd>
-      <dd>多应用于广域网 WAN</dd>
+      <dd>简单
+        <p>发的帧经过CRC校验正确，则接受；反之丢弃</p>
+        <p>不需要纠错：由传输层实现</p>
+        <p>不需要流量控制：由传输层实现</p>
+        <p>不需要帧序号</p>
+        <p>仅支持点对点链路，不支持点到多点链路</p>
+        <p>仅支持全双工链路，不支持单工和半双工链路</p>
+      </dd>
+      <dd>封装成帧
+        <p>便于从比特流中找到帧的开发和结束</p>
+      </dd>
+      <dd>透明
+        <p>发什么传什么</p>
+        <p>即使发帧界定符，也可以正常接收</p>
+      </dd>
+      <dd>差错检测
+        <p>尽早消除错误；避免后续继续传播，占用网络资源</p>
+        <p>检错==纠错？</p>
+      </dd>
+      <dd>其它
+        <p>多种网络协议</p>
+        <p>多种类型链路</p>
+        <p>检测连接状态</p>
+        <p>最大传输单元 MTU - 数据部分</p>
+        <p>网络地址协商</p>
+        <p>数据压缩协商</p>
+        <p>多应用于广域网 WAN</p>
+      </dd>
       <dt>协议组成 Components </dt>
       <dd>封帧</dd>
-      <dd>链路控制协议LCP
+      <dd>链路控制协议 LCP
         <p>LCP-link control protocol</p>
         <p>链路的建立配置和测试</p>
       </dd>
-      <dd>网络控制协议NCP
+      <dd>网络控制协议 NCP
         <p>network control protocol</p>
       </dd>
       <dt>帧格式 Format</dt>
+      <figure>
+        <img src="./imgs/ppp0.png" alt="">
+        <figcaption>帧格式</fi>
+      </figure>
       <dd>F字段：
         <p>7E；0111 1110</p>
         <p>标记一个PPP帧的开始和结束</p>
@@ -77,7 +92,7 @@
         <p>03；0000 0011</p>
         <p>没有指定；不携带信息</p>
       </dd>
-      <dd>协议字段：
+      <dd>协议字段：数据部分向上交付给哪个协议处理
         <p>0x0021 IP数据报</p>
         <p>0xC021 链路控制协议</p>
         <p>0x8021 网络层控制数据</p>
@@ -85,14 +100,18 @@
       <dd>FCS：
         <p>Frame Check Sequence</p>
         <p>帧校验序列</p>
+        <p>包括：地址字段、控制字段、协议字段以及信息/数据字段</p>
       </dd>
-      <figure>
-        <img src="./imgs/ppp0.png" alt="">
-        <figcaption>帧格式</fi>
-      </figure>
       <dt>字节填充 Padding</dt>
       <dd>使用转义符号 0x7D（0111 1101）进行字节填充，以保障透明传输</dd>
-      <dd>适用于 <strong>异步</strong> 传输</dd>
+      <dd>适用于面向字节 <strong>异步</strong> 传输链路</dd>
+      <dd>通过开始和结束比特保证传输</dd>
+      <dd>半双工通信模式</dd>
+      <div class="tips">有的资料将字节解释为字符，称异步的传输单位是字符</div>
+      <figure>
+        <img src="./imgs/da.png" alt="">
+        <figcaption>Asynchronous transmission</figcaption>
+      </figure>
       <dd>情况1：出现帧定界符 0x7E，将其转变为2个字节：0x7D 和 0x5E</dd>
       <table>
         <tr>
@@ -122,7 +141,15 @@
       </table>
       <dt>0bit填充 Padding</dt>
       <dd>使用0比特进行填充，以保障透明传输</dd>
-      <dd>适用于 <strong>同步</strong> 传输</dd>
+      <dd>适用于面向比特的 <strong>同步</strong> 传输链路</dd>
+      <dd>需要时钟信号保持同步</dd>
+      <dd>传输不间断</dd>
+      <dd>全双工通信模式</dd>
+      <div class="tips">比特被分组为块，所以也有的资料称同步传输的单位是帧</div>
+      <figure>
+        <img src="./imgs/ds.png" alt="">
+        <figcaption>Synchronous transmission</figcaption>
+      </figure>
       <dd>发端：每发现连续5个1，就填充1个0</dd>
       <dd>收端：每发现连续5个1，就删除其后面的0</dd>
       <table>
@@ -389,6 +416,13 @@
         </li>
         <li><a href="https://networkencyclopedia.com/serial-transmission/">Serial Transmission <span
               class="iconfont icon-share"></span></a>
+        </li>
+        <li><a href="https://animalia-life.club/qa/pictures/point-to-point-network">Point To Point Network
+            <span class="iconfont icon-share"></span></a>
+        </li>
+        <li><a
+            href="https://www.bilibili.com/video/BV1HD4y1B7UH/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">深入浅出计算机网络
+            - 3.3 点对点协议PPP <span class="iconfont icon-videocam"></span></a>
         </li>
       </ol>
     </dl>
