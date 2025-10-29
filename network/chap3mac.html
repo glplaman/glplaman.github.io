@@ -20,16 +20,71 @@
       <dt>概述 Overview</dt>
       <dd>MAC - Medium Access Control</dd>
       <dd>又叫物理地址、硬件地址，固化在适配器的ROM中</dd>
-      <dd>IEEE802.3规定MAC地址为长度6个字节，共48位</dd>
-      <dd>高24位(前3个字节)是公司标识符 OUI - Organization Unique Identifier，由注册管理机构RA - Registration Authority 分配</dd>
-      <dd>低24位(后3个字节)是扩展标识符 EUI - Extended Unique Identifier，由公司指定</dd>
+      <dd>IEEE802.3规定MAC地址为长度6 byte，共48 bit</dd>
+      <dd>高24位(前3 byte)是公司标识符 OUI - Organization Unique Identifier，由注册管理机构RA - Registration Authority 分配</dd>
+      <dd>低24位(后3 byte)是扩展标识符 EUI - Extended Unique Identifier，由公司指定</dd>
       <dd>每4个比特写成一个16进制，共12个16进制数，每2个16进制数之间用冒号隔开</dd>
       <dd>48位 = 24位OUI + 24位EUI</dd>
       <dd>更多信息，请访问 <a href="https://mac.bmcx.com/">MAC地址查询</a></dd>
-      <figure>
-        <img src="./imgs/l11.png" alt="">
-        <figcaption>查看MAC地址</figcaption>
-      </figure>
+      <pre>
+C:\Users\huawei>ipconfig /all
+
+Windows IP 配置
+
+   主机名  . . . . . . . . . . . . . : LAPTOP-E61J88MK
+   主 DNS 后缀 . . . . . . . . . . . :
+   节点类型  . . . . . . . . . . . . : 混合
+   IP 路由已启用 . . . . . . . . . . : 否
+   WINS 代理已启用 . . . . . . . . . : 否
+
+无线局域网适配器 本地连接* 1:
+
+   媒体状态  . . . . . . . . . . . . : 媒体已断开连接
+   连接特定的 DNS 后缀 . . . . . . . :
+   描述. . . . . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter
+   物理地址. . . . . . . . . . . . . : 84-C5-A6-A5-37-0B
+   DHCP 已启用 . . . . . . . . . . . : 是
+   自动配置已启用. . . . . . . . . . : 是
+
+无线局域网适配器 本地连接* 2:
+
+   媒体状态  . . . . . . . . . . . . : 媒体已断开连接
+   连接特定的 DNS 后缀 . . . . . . . :
+   描述. . . . . . . . . . . . . . . : Microsoft Wi-Fi Direct Virtual Adapter #2
+   物理地址. . . . . . . . . . . . . : 86-C5-A6-A5-37-0A
+   DHCP 已启用 . . . . . . . . . . . : 否
+   自动配置已启用. . . . . . . . . . : 是
+
+无线局域网适配器 WLAN:
+
+   连接特定的 DNS 后缀 . . . . . . . :
+   描述. . . . . . . . . . . . . . . : Intel(R) Wireless-AC 9560 160MHz
+   物理地址. . . . . . . . . . . . . : 84-C5-A6-A5-37-0A
+   DHCP 已启用 . . . . . . . . . . . : 是
+   自动配置已启用. . . . . . . . . . : 是
+   本地链接 IPv6 地址. . . . . . . . : fe80::e7a0:718a:6876:e4ce%7(首选)
+   IPv4 地址 . . . . . . . . . . . . : 10.23.233.111(首选)
+   子网掩码  . . . . . . . . . . . . : 255.255.128.0
+   获得租约的时间  . . . . . . . . . : 2025年10月28日 10:19:08
+   租约过期的时间  . . . . . . . . . : 2025年10月29日 21:15:13
+   默认网关. . . . . . . . . . . . . : 10.23.255.254
+   DHCP 服务器 . . . . . . . . . . . : 10.23.255.254
+   DHCPv6 IAID . . . . . . . . . . . : 92587430
+   DHCPv6 客户端 DUID  . . . . . . . : 00-01-00-01-30-4F-13-E5-84-C5-A6-A5-37-0A
+   DNS 服务器  . . . . . . . . . . . : 202.96.128.86
+                                       202.96.128.166
+   TCPIP 上的 NetBIOS  . . . . . . . : 已启用
+
+以太网适配器 蓝牙网络连接:
+
+   媒体状态  . . . . . . . . . . . . : 媒体已断开连接
+   连接特定的 DNS 后缀 . . . . . . . :
+   描述. . . . . . . . . . . . . . . : Bluetooth Device (Personal Area Network)
+   物理地址. . . . . . . . . . . . . : 84-C5-A6-A5-37-0E
+   DHCP 已启用 . . . . . . . . . . . : 是
+   自动配置已启用. . . . . . . . . . : 是
+
+C:\Users\huawei></pre>
       <dt>分类 Type</dt>
       <!-- <dd>除了传统的广播通信，还可以借助MAC实现点到点的通信，所以：</dd> -->
       <dd>单播 帧unicast：一对一</dd>
@@ -41,7 +96,7 @@
       <dt>标准</dt>
       <dd>以太网V2标准，使用最广泛</dd>
       <dd>IEEE 802.3标准</dd>
-      <dd>长度：最小64字节 <span class="iconfont icon-help"></span></dd>
+      <dd>长度：最小64 byte <span class="iconfont icon-help"></span></dd>
       <!-- <dd>51.2us</dd> -->
       <table>
         <caption>帧结构 Frame</ca>
@@ -68,56 +123,73 @@
       </table>
       <dt>Preamble</dt>
       <dd>前导码</dd>
-      <dd>7 字节</dd>
+      <dd>7 byte</dd>
       <dd>0xAA AA AA AA AA AA AA</dd>
       <dd>用于物理层接收端的时钟同步。接收机通过检测这个规律的信号，调整自己的采样时钟，使其与发送方同步</dd>
       <dd>是帧接收的第一步，不包含在实际数据长度内</dd>
       <dt>SFD - Start Frame Delimiter</dt>
       <dd>帧起始定界符</dd>
-      <dd>1 字节</dd>
+      <dd>1 byte</dd>
       <dd>0xAB；10101011</dd>
       <dd>标志着有效帧的开始。打破了Preamble的交替模式（最后两位为11），告诉接收端：现在开始接收真正的帧头了</dd>
       <dd>SFD 是帧的正式起点，但不是MAC地址的一部分</dd>
       <dt>Destination MAC</dt>
       <dd>目的MAC地址</dd>
-      <dd>6 字节</dd>
+      <dd>6 byte</dd>
       <dd>标识该帧要发送到的目标设备的物理地址 - MAC地址</dd>
       <dd>全球唯一（如由厂商分配），用于局域网内的寻址</dd>
       <dt>Source MAC</dt>
       <dd>源MAC地址</dd>
-      <dd>6 字节</dd>
+      <dd>6 byte</dd>
       <dd>标识发送该帧的设备的物理地址</dd>
       <dd>用于响应（如ARP回复）、网络故障排查等</dd>
       <dt>Type</dt>
       <dd>类型和长度</dd>
-      <dd>2 字节</dd>
-      <dd>上层使用的协议；如IPv4: 0x0800, ARP: 0x0806</dd>
-      <dd>决定了Data部分如何被解析</dd>
+      <dd>2 byte</dd>
+      <dd>上层使用的协议
+        <p>IPv4: 0x0800</p>
+        <p>ARP: 0x0806</p>
+      </dd>
+      <dd>决定了 Data 部分如何被解析</dd>
       <dt>Data</dt>
       <dd>数据载荷</dd>
-      <dd>46 到 1500 字节</dd>
-      <dd>最小长度：46字节；不足，会用填充字节补足</dd>
-      <dd>最大长度：1500 字节；标准的MTU - Maximum Transmission Unit</dd>
+      <dd>46 到 1500 byte</dd>
+      <dd>最小长度：46 byte；不足，会用填充字节补足</dd>
+      <dd>最大长度：1500 byte；标准的MTU - Maximum Transmission Unit</dd>
       <dd>封装的上层协议数据，如IP包、ARP请求等</dd>
-      <dd>总帧长限制：整个以太网帧（不含Preamble和SFD）最大为 1518 字节 = 1500 + 14 + 4</dd>
+      <dd>总帧长限制：整个以太网帧（不含Preamble和SFD）最大为 1518 byte = 1500 + 14 + 4</dd>
       <dt>FCS</dt>
       <dd>Frame Check Sequence</dd>
-      <dd>4 字节</dd>
+      <dd>4 byte</dd>
       <dd>帧校验序列；用于检错</dd>
       <dd>使用 CRC-32 算法计算出的校验码</dd>
       <dd>接收端收到帧后，重新计算CRC并与FCS比较，若不一致则认为帧损坏，丢弃该帧</dd>
       <dd>位于帧的末尾，覆盖从目的MAC到Data的所有字段</dd>
       <figure>
-        <img src="./imgs/vlan20.png" alt="">
         <img src="./imgs/vlan19.png" alt="">
-        <figcaption>2种帧的结构</figcaption>
+        <figcaption>普通LAN的帧结构</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan20.png" alt="">
+        <figcaption>VLAN的帧结构</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan21.png" alt="">
+        <figcaption>ARP的帧结构</figcaption>
       </figure>
       <div class="tips">
-        <p>实际的帧要比MAC帧多8个字节</p>
+        <p>实际的帧要比MAC帧多8 byte</p>
         <p>因为帧之间有传输间隙，所以不需要帧结束的界定 - 帧的最小时间间隔 96ns</p>
       </div>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>一个操作：查看本机物理地址/MAC</li>
+        <li>一个结构：帧结构</li>
+        <li>一个数字：帧的数据部分 &ge;46 byte</li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/mac-address/">MAC Address <span

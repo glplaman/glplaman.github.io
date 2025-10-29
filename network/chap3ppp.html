@@ -9,15 +9,18 @@
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
   <style>
-    .bg {
-      max-width: 120px;
-      background-color: var(--third-color);
-      color: #fff;
-      padding: 0 10px;
+    .txt-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
-    .bg::before {
-      content: unset;
+    .bg {
+      background-color: #ff4c00;
+      color: #fff;
+      padding: 0 var(--p-m-g);
+      border-radius: 6px;
     }
   </style>
 </head>
@@ -297,6 +300,7 @@
     <h2>状态 State</h2>
     <dl>
       <dt>基本过程 Procedure</dt>
+      <dd>以用户拨号上网为例</dd>
       <ol>
         <li>用户拨号
           <p>建立物理链接</p>
@@ -325,12 +329,32 @@
         <li>释放物理层</li>
       </ol>
       <dt>状态 State</dt>
-      <dd>链路静止 Link Dead</dd>
-      <dd>链路建立 Link Establish</dd>
-      <dd>鉴权 Authenticate</dd>
-      <dd>网络层协议 NCP</dd>
-      <dd>链路打开 Link Open</dd>
-      <dd>链路终止 Link Terminate</dd>
+      <dd>中间的任何一个状态失败都返回静止状态</dd>
+      <div class="txt-center">
+        <p class="bg">链路静止 Link Dead</p>
+        <p>↓</p>
+        <p>用户拨号</p>
+        <p>↓</p>
+        <p class="bg">链路建立 Link Establish</p>
+        <p>↓</p>
+        <p>LCP协商成功</p>
+        <p>↓</p>
+        <p class="bg">鉴权 Authenticate</p>
+        <p>↓</p>
+        <p>认证成功</p>
+        <p>↓</p>
+        <p class="bg">网络层协议 NCP</p>
+        <p>↓</p>
+        <p>NCP协商成功</p>
+        <p>↓</p>
+        <p class="bg">链路打开 Link Open</p>
+        <p>↓</p>
+        <p>数据传输</p>
+        <p>↓</p>
+        <p class="bg">链路终止 Link Terminate</p>
+        <p>↓</p>
+        <p class="bg">链路静止 Link Dead</p>
+      </div>
     </dl>
     <h2>Protocol Reading</h2>
     <dl>
