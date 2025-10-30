@@ -77,29 +77,62 @@
     </dl>
     <h2>规格 Specification</h2>
     <dl>
-      <dt>端口类型</dt>
-      <dd>电口 RJ45</dd>
-      <dd>光口 SC/GBIC/SFP（千兆口）/SFP+（万兆口）/SFP28）</dd>
-      <dt>传输模式</dt>
-      <dd>半双工</dd>
-      <dd>全双工</dd>
-      <dt>交换容量</dt>
-      <dd>端口数*端口速率*2</dd>
-      <dd>如：48个千兆电+4个千兆光的交换机容量是：( 48*1G+4*1G )*2=104Gbps</dd>
+      <dt>端口类型 Port Type</dt>
+      <dd>电口 Electrical Ports
+        <p>RJ45</p>
+        <p>10/100 Mbps (Fast Ethernet)</p>
+        <p>1 Gbps (Gigabit Ethernet)</p>
+        <p>10 Gbps (10GBASE-T)</p>
+      </dd>
+      <dd>光口 Optical Ports
+        <p>SFP (Small Form-factor Pluggable): 千兆光模块，可热插拔，支持多种传输距离和介质</p>
+        <p>SFP+ 万兆口</p>
+        <p>SFP28: 支持 25 Gbps 速率</p>
+      </dd>
+      <dt>传输模式 Transmission Mode</dt>
+      <dd>半双工
+        <p>较少应用</p>
+      </dd>
+      <dd>全双工
+        <p>更常见</p>
+      </dd>
+      <dt>交换容量 Switching Capacity</dt>
+      <dd>交换机背板总线所能提供的最大数据吞吐能力，单位通常是 Gbps 或 Tbps</dd>
+      <dd>端口数*端口速率*2 - 全双工通信，每个端口可以同时收发</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 交换机容量</div>
+      <div class="txt-indent">
+        <div>48个千兆电+4个千兆光的交换机容量
+          <p>= ( 48*1G+4*1G )*2</p>
+          <p>= 104Gbps</p>
+        </div>
+      </div>
       <dt>MAC地址数</dt>
       <dd>交换机MAC地址表中可以存储最大的MAC地址的数量</dd>
       <dt>Vlan表项</dt>
-      <dd>交换机最大支持的vlan的数量，一般都是4094个，俗称4K</dd>
-      <dt>包转发率</dt>
-      <dd>单位时间内发送64字节数据包的个数 1000Mbps/8/(64+8+12)=1.488Mbps</dd>
+      <dd>交换机最大支持的 Vlan的数量</dd>
+      <dd>根据 IEEE 802.1Q 标准，VLAN ID 是 12 位，因此理论上最多支持 2^12 = 4096 个 VLAN - 4K</dd>
+      <dd>其中 VLAN 0 和 VLAN 4095 被保留；VLAN 1 为默认 VLAN，所以实际可用的 VLAN ID 范围是 1-4094</dd>
+      <dt>包转发率 Packet Forwarding Rate</dt>
+      <dd>交换机每秒能够成功转发的数据包数量，单位是 pps (packets per second)</dd>
+      <dd>通常以最小帧长 64byte 来计算理论最大值</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 对于一个 1 Gbps 端口，交换机包转发率</div>
+      <div class="txt-indent">
+        <p>包转发率 = 端口速率 / (前导码 + 帧长 + 帧间隙)</p>
+        <p>= 1000 Mbps / (64 + 7 + 1 + 12) byte</p>
+        <p>= 1000 Mbps / 84 byte</p>
+        <p>= 1000 Mbps / (84 × 8) bit</p>
+        <p>≈ 1488095 pps ≈ 1.488 Mpps</p>
+      </div>
     </dl>
     <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
     <dl>
       <dd>交换机通过维护一个MAC地址表/转发表来实现链路层数据帧的通信</dd>
+      <dd>交换机通过学习数据帧的源MAC地址来建立MAC地址表</dd>
       <dt>MAC table</dt>
       <dd>内容：
-        <p>接收数据帧的源地址和进入的端口号，所在Vlan及有效时间</p>
+        <p>进入交换机的数据帧的源地址和进入的端口号，所在Vlan及有效时间</p>
         <p>哪个端口 port 连着谁 MAC</p>
+        <p>谁 MAC 从哪个端口进来</p>
       </dd>
       <dd>容量
         <p>MAC表条目的大小</p>
@@ -134,42 +167,88 @@
         <figcaption>监视工具查看交换机的MAC表</figcaption>
       </figure>
       <dt>Procedure</dt>
-      <dd>登记
-        <p>查找表中是否有与接收帧的源MAC地址匹配的项目：</p>
+      <div>1. 登记 Registration</div>
+      <dd>查找表中是否有与接收帧的源MAC地址匹配的项目：
         <p>如果有，则更新</p>
         <p>如果没有，则增加</p>
       </dd>
-      <dd>转发
-        <p>是否是广播帧：</p>
+      <div>2. 转发 Forwarding</div>
+      <dd>是否是广播帧：
         <p>如果是，全端口转发</p>
         <p>如果不是，则查找表中是否有与接收帧的目的MAC地址匹配的项目：</p>
-        <p>1 如果没有，则泛洪flooding到其他所有端口上</p>
-        <p>2 如果有，则比较进入的端口与登记的端口：</p>
-        <p>2.1 如果不同，则按照登记的端口转发 forwarding</p>
-        <p>2.2 如果相同，表明是同一侧的主机，不需要转发，丢弃 disregarding /过滤 filtering 该帧</p>
+        <p>- 如果没有，则泛洪flooding到其他所有端口上</p>
+        <p>- 如果有，则比较进入的端口与登记的端口：</p>
+        <p>- - 如果不同，则按照登记的端口转发 forwarding</p>
+        <p>- - 如果相同，表明是同一侧的主机，不需要转发，丢弃 disregarding /过滤 filtering 该帧</p>
       </dd>
       <div>[<span class="iconfont icon-keyboard"></span>] MAC的通信情况</div>
+      <figure>
+        <img src="./imgs/l13.png" alt="">
+        <figcaption>维护过程</figcaption>
+      </figure>
       <ol>
         <li>A → D
-          <p>转发 forwarding</p>
+          <P>查找交换表，存在</P>
+          <p>按登记端口转发 forwarding；这是最期望的高效转发</p>
           <p>单播</p>
-          <p>这是最期望的高效转发</p>
           <p>同时登记 A → 1</p>
         </li>
+        <table>
+          <caption>交换机的MAC地址表</caption>
+          <tbody>
+            <tr>
+              <td>MAC</td>
+              <td>Port</td>
+              <td>Timer</td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td>4</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
         <li>A → B
-          <p>泛洪 flooding</p>
-          <p>广播；为了确保帧能到达目标</p>
+          <P>查找交换表，没有</P>
+          <p>全端口泛洪 flooding 转发；为了确保帧能到达目标</p>
+          <p>广播</p>
           <p>如果收到回复，则学习了对方的位置；登记 B → 2</p>
         </li>
+        <table>
+          <caption>交换机的MAC地址表</caption>
+          <tbody>
+            <tr>
+              <td>MAC</td>
+              <td>Port</td>
+              <td>Timer</td>
+            </tr>
+            <tr>
+              <td>D</td>
+              <td>4</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>2</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
         <li>E → A
           <p>过滤 filtering</p>
           <p>最不希望的转发</p>
         </li>
       </ol>
-      <figure>
-        <img src="./imgs/l13.png" alt="">
-        <figcaption>维护过程</figcaption>
-      </figure>
       <div>[<span class="iconfont icon-keyboard"></span>] p114-3-30
         某学院的以太网交换机有三个端口分别和学院三个系的以太网相连，另外三个端口分别和电子邮件服务器、万维网服务器以及一个连接互联网的路由器相连。图中的 A、B 和 C 都是 100-Mbit/s
         以太网交换机。假定所有的链路的速率都是 100 Mbit/s，并且图中的 9 台主机中的任何一台都可以向任何一台服务器或主机通信。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
@@ -185,8 +264,13 @@
         <p>如果把三台交换机换成集线器，由于集线器是总线型，同一集线器下同一时刻只能一台设备发送数据</p>
         <p>所以图中9台主机其实只有三台在发送，吞吐量是300M，两个服务器吞吐量是200M，所以吞吐总量是500M</p>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] p114-3-33</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] p114-3-33 初始交换表为空</div>
+      <figure>
+        <img src="./imgs/lan0.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
       <table>
+        <caption>交换表</caption>
         <thead>
           <tr>
             <th>通信方向</th>
@@ -230,8 +314,8 @@
     <dl>
       <dd>查看交换机的MAC表</dd>
       <pre>show mac-address-table</pre>
-      <dd>清除交换机的MAC表</dd>
-      <pre>clear mac-address-table</pre>
+      <dd>清除交换机的MAC表 - 特权模式</dd>
+      <pre>Switch#clear mac-address-table</pre>
       <!-- <img src="./imgs/linkLayer2/幻灯片7.JPG" alt=""> -->
       <!-- <img src="./imgs/linkLayer2/幻灯片8.JPG" alt=""> -->
       <!-- <img src="./imgs/linkLayer2/幻灯片9.JPG" alt=""> -->
@@ -240,10 +324,37 @@
     <dl>
       <dt>MAC Flapping</dt>
       <dd>如果同一个MAC地址频繁在不同端口间“出现”，MAC表会不断更新，可能表明存在环路或攻击</dd>
-      <dd>交换机通常会告警或启用STP（生成树协议）来防止环路</dd>
+      <dd>交换机通常会告警或启用STP（生成树协议）来防止环路
+        <p>选举根桥</p>
+        <p>确定根端口</p>
+        <p>选举指定端口</p>
+        <p>阻塞冗余端口这</p>
+      </dd>
+      <figure>
+        <img src="./imgs/span.png" alt="">
+        <figcaption>生成树协议</figcaption>
+      </figure>
       <dt>MAC Flooding</dt>
       <dd>攻击者发送大量伪造源MAC地址的帧，填满交换机的MAC表，导致交换机退化为“集线器”模式，对所有流量进行泛洪，从而进行嗅探攻击</dd>
       <dd>频繁泛洪会导致网络拥塞</dd>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <dt>创建局域网 <a href="./pt/lan.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a></dt>
+      <dd>使用交换机在链路层拓展网络</dd>
+      <ol>
+        <li>搭建拓扑</li>
+        <li>配置各主机IP</li>
+        <li>利用 ping 测试各主机之间链路是否连通</li>
+        <li>分阶段多次查看各交换机的MAC表
+          <p>交换机之间会自动学习 - 链路由红色转为绿色</p>
+          <p>主机之间只有通信的情况下，交换机才会学习</p>
+        </li>
+      </ol>
+      <figure>
+        <img src="./imgs/lan1.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
     </dl>
     <h2>Homework</h2>
     <dl>
