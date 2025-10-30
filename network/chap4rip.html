@@ -45,8 +45,8 @@
         <p>最大距离15</p>
         <p>16表示不可达</p>
       </dd>
-      <dd>使用 <strong>UDP</strong> 协议，按照 <span class="warn">固定时间</span> 间隔，以 <span class="warn">广播</span> RIP报文的方式，和
-        <span class="warn">相邻</span> 路由器交换 <span class="warn">全部</span> 路由信息 - 分布式路由选择协议
+      <dd>使用<strong>UDP</strong>协议，按照<span class="warn">固定时间</span>间隔，以<span class="warn">广播</span>RIP报文的方式，和
+        <span class="warn">相邻</span>路由器交换<span class="warn">全部</span>路由信息 - 分布式路由选择协议
         <p>相邻 - Who</p>
         <p>全部 - What</p>
         <p>固定时间间隔 - When</p>
@@ -56,7 +56,7 @@
         <figcaption>路由器1的RIP跳数count</figcaption>
       </figure>
       <table>
-        <caption>R1的路由表</caption>
+        <caption>R1的RIP路由</caption>
         <tr>
           <td>目标网络</td>
           <td>距离</td>
@@ -83,7 +83,7 @@
           <td>R2</td>
         </tr>
       </table>
-      <dt>特点 Features</dt>
+      <dt>特点一 Features</dt>
       <dd>RIP简单的认为：距离越短，路由质量越高</dd>
       <dd>RIP最大支持15跳，适合小型网络</dd>
       <dd>RIP具备负载均衡：当路由等价时，轮流使用路由</dd>
@@ -112,18 +112,18 @@
       </div>
       <dt>定时器 Timer</dt>
       <dd>更新定时器
-        <p>每30s更新一次</p>
+        <p>每 <strong>30s</strong> 更新一次</p>
         <p>通常会有一个[-5，+5]的随机偏移量</p>
       </dd>
       <dd>失效定时器
-        <p>最大时间180s</p>
+        <p>最大时间 <strong>180s</strong></p>
         <p>每个条目被添加或被更新时，都会重新开始计时</p>
         <p>超时，该条目被标记为无效路由，但不会删除，只是不会被RIP广播出去</p>
       </dd>
       <dd>删除定时器
-        <p>最大时间240s</p>
+        <p>最大时间 <strong>240s</strong></p>
         <p>超过180s会被标记为无效条目</p>
-        <p>再经过60s，就会被彻底删除</p>
+        <p>再经过60s，就会被彻底删除 <span class="iconfont icon-delete"></span></p>
       </dd>
       <div class="grid">
         <div class="item-wrap">
@@ -148,14 +148,19 @@
       <dd>目标都为相邻路由</dd>
       <dd>跳数都+1</dd>
       <div>2. 更新自己的路由信息</div>
-      <dd><strong>比较目标网络</strong>是否存在：</dd>
-      <dd>不存在，则添加路由 - 发现新网络</dd>
-      <dd>存在，则<strong>比较下一跳路由器</strong>：</dd>
-      <dd>相同：则更新路由 - 最新的路由信息</dd>
-      <dd>不同：则 <strong>比较距离</strong>：</dd>
-      <dd>新条目小于当前条目，则更新路由 - 新条目更具优势</dd>
-      <dd>新条目等于当前条目，则添加新条目 - 负载均衡</dd>
-      <dd>新条目大于当前条目，不做处理 - 新条目劣势</dd>
+      <dd>比较<strong>目标网络</strong>：
+        <p>不存在，则添加路由 - 发现新网络</p>
+        <p>存在，比较下一跳路由器</p>
+      </dd>
+      <dd>比较<strong>下一跳路由器</strong>：
+        <p>相同：则更新路由 - 最新的路由信息</p>
+        <p>不同：则比较距离</p>
+      </dd>
+      <dd>比较<strong>距离</strong>：
+        <p>新条目小于当前条目，则更新路由 - 新条目更具优势</p>
+        <p>新条目等于当前条目，则添加新条目 - 负载均衡</p>
+        <p>新条目大于当前条目，不做处理 - 新条目劣势</p>
+      </dd>
       <figure>
         <img src="../imgs/network/rip/slider13.jpg" alt="">
         <figcaption>RIP路由更新规则</figcaption>
@@ -163,7 +168,7 @@
       <div class="tips">原路由信息包括各计时器均保留</div>
       <div>[ <span class="iconfont icon-keyboard"></span> ] 已知路由器 R<sub>6</sub> 。现在收到相邻路由器 R<sub>4</sub>
         发来的路由更新信息，请更新路由器 R<sub>6</sub> 的路由表。</div>
-      <div>
+      <div class="txt-indent">
         <table>
           <caption>路由器R<sub>6</sub></caption>
           <thead>
@@ -244,7 +249,7 @@
             </tr>
           </tbody>
         </table>
-        <dd>Net1没有，添加</dd>
+        <dd>第一个条目 Net1：没有，添加</dd>
         <table>
           <tr>
             <td>Net1</td>
@@ -252,7 +257,7 @@
             <td>R<sub>4</sub></td>
           </tr>
         </table>
-        <dd>Net2：都经过R<sub>4</sub>转发，之前需要3跳，现在需要5跳，说明网络发生了变化，应更新</dd>
+        <dd>第二个条目 Net2：都经过R<sub>4</sub>转发，之前需要3跳，现在需要5跳，说明网络发生了变化，应更新</dd>
         <table>
           <tr>
             <td>Net2</td>
@@ -260,7 +265,7 @@
             <td>R<sub>4</sub></td>
           </tr>
         </table>
-        <dd>Net3：之前需要4跳；现在只需要2跳；应更新</dd>
+        <dd>第三个条目 Net3：之前需要4跳；现在只需要2跳；应更新</dd>
         <table>
           <tr>
             <td>Net3</td>
@@ -302,7 +307,7 @@
         </table>
       </div>
       <div>[ <span class="iconfont icon-keyboard"></span> ] 已知路由器D的路由表；路由器C的路由表；分析：经过C的路由交换后，D的路由表信息</div>
-      <div>
+      <div class="txt-indent">
         <table>
           <caption>路由器D</caption>
           <tr>
@@ -613,6 +618,15 @@
           </tr>
         </table>
       </div>
+      <dt>特点二 Feature</dt>
+      <dd>好消息传的快
+        <p>指网络拓扑变得更好，比如新链路建立、新网络可达、或到达某个网络的路径变短了</p>
+        <p>总是选择距离最短的路径</p>
+      </dd>
+      <dd>坏消息传的慢 - 慢收敛
+        <p>指网络拓扑变差，比如链路断开、网络不可达、或到达某个网络的路径变长了</p>
+        <p><strong>可能</strong> 基于邻居的过时信息产生错误路由，导致错误信息在邻居间循环，距离不断增加直到达到16跳的上限</p>
+      </dd>
     </dl>
     <h2>命令 Command</h2>
     <dl>
@@ -629,10 +643,10 @@ Router>show ip route rip
   128.1.0.0/26 is subnetted, 2 subnets
 R       128.1.2.128 [120/1] via 128.2.1.1, 00:00:06, GigabitEthernet0/0
 R       128.1.2.192 [120/1] via 128.2.1.1, 00:00:06, GigabitEthernet0/0</pre>
-      <figure>
+      <!-- <figure>
         <img src="./imgs/ripad.png" alt="">
         <figcaption>管理距离</figcaption>
-      </figure>
+      </figure> -->
       <dt>查看协议</dt>
       <dd>特权模式下</dd>
       <pre>
