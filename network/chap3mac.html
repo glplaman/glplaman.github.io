@@ -22,11 +22,15 @@
       <dd>MAC - Medium Access Control</dd>
       <dd>又叫物理地址、硬件地址，固化在适配器的ROM中</dd>
       <dd>IEEE802.3规定MAC地址为长度6 byte，共48 bit</dd>
-      <dd>高24位(前3 byte)是公司标识符 OUI - Organization Unique Identifier，由注册管理机构RA - Registration Authority 分配</dd>
-      <dd>低24位(后3 byte)是扩展标识符 EUI - Extended Unique Identifier，由公司指定</dd>
-      <dd>每4个比特写成一个16进制，共12个16进制数，每2个16进制数之间用冒号隔开</dd>
+      <dd>高24位(前3 byte)是公司标识符 OUI - Organization Unique Identifier
+        <p>由注册管理机构RA - Registration Authority 分配</p>
+      </dd>
+      <dd>低24位(后3 byte)是扩展标识符 EUI - Extended Unique Identifier
+        <p>由公司指定</p>
+      </dd>
       <dd>48位 = 24位OUI + 24位EUI</dd>
-      <dd>更多信息，请访问 <a href="https://mac.bmcx.com/">MAC地址查询 <span class="iconfont icon-share"></span></a></dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="https://mac.bmcx.com/">MAC地址查询 <span
+            class="iconfont icon-share"></span></a></div>
       <pre>
 C:\Users\huawei>ipconfig /all
 
@@ -88,9 +92,32 @@ Windows IP 配置
 C:\Users\huawei></pre>
       <dt>分类 Type</dt>
       <!-- <dd>除了传统的广播通信，还可以借助MAC实现点到点的通信，所以：</dd> -->
-      <dd>单播 帧unicast：一对一</dd>
-      <dd>广播 帧broadcast：一对全体</dd>
-      <dd>多播 帧multicast：一对多</dd>
+      <dd>单播帧 unicast：
+        <p>一对一</p>
+        <p>目的MAC地址是一个单播地址。单播地址的第一个字节的最低有效位I/G（Individual/Group）为0</p>
+        <p>00:1A:2B:3C:4D:5E</p>
+      </dd>
+      <dd>广播帧 broadcast：
+        <p>一对全体</p>
+        <p>固定为 FF:FF:FF:FF:FF:FF。<strong>第一个字节</strong>的最低有效位I/G为1，并且所有48位都为1</p>
+      </dd>
+      <dd>多播帧 multicast：
+        <p>一对多</p>
+        <p>第一个字节的最低有效位I/G为1，但不是全1</p>
+        <p>01:00:5E:00:00:01</p>
+      </dd>
+      <dd>判断是单播还是多播/广播，最核心的依据是目的MAC地址第一个字节的最低位（I/G位）：
+        <p>I/G位 = 0: 单播地址 (Individual/Unicast)</p>
+        <p>I/G位 = 1: 组地址 (Group Address)，包括多播和广播</p>
+      </dd>
+      <dd>在组地址中，再通过地址值区分多播和广播：
+        <p>FF:FF:FF:FF:FF:FF 是广播</p>
+        <p>其他I/G位为1的地址是多播</p>
+      </dd>
+      <div class="tips">
+        <p>LSB - Least Significant Bit；最低有效位 </p>
+        <p>MSB - Most Significant Bit；最高有效位 </p>
+      </div>
     </dl>
     <h2>MAC帧结构 Frame</h2>
     <dl>
