@@ -99,10 +99,6 @@
         <img src="./imgs/vlan24.png" alt="">
         <figcaption>跨交换机划分VLAN</figcaption>
       </figure>
-      <figure>
-        <img src="./imgs/vlan1.png" alt="">
-        <figcaption>端口模式</figcaption>
-      </figure>
       <div class="tips">
         <p>二层交换机无法实现不同VLAN之间的通信</p>
         <p>跨VLAN通信，需要三层设备</p>
@@ -191,10 +187,22 @@
       <dt>处理过程</dt>
       <dd>接收：每收到一个以太网帧，就打上标签：插入4个字节的VLAN标记，变成IEEE 802.1Q帧</dd>
       <dd>转发：根据VLAN号转发到相应的端口，去掉标签后转发出去</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] Vlan帧的封帧和拆包</div>
+      <dd>单个交换机无法直接查看到802.1q的封帧情况</dd>
+      <dd>Vlan帧的TCI字段的值 0x14表示什么 <span class="iconfont icon-help"></span></dd>
       <figure>
-        <img src="./imgs/vlan20.png" alt="">
+        <img src="./imgs/vlan15.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <figure>
         <img src="./imgs/vlan19.png" alt="">
-        <figcaption>处理过程</figcaption>
+        <img src="./imgs/vlan20.png" alt="">
+        <figcaption>交换机1收到普通帧封帧Vlan帧并转发</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/vlan25.png" alt="">
+        <img src="./imgs/vlan26.png" alt="">
+        <figcaption>交换机2收到Vlan帧拆包并转发</figcaption>
       </figure>
     </dl>
     <h2>实操 Drill</h2>
@@ -310,6 +318,10 @@ C:\></pre>
       <dt>跨交换机的VLAN的划分 <a href="./pt/vlan-m.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a>
       </dt>
       <dd>搭建拓扑</dd>
+      <figure>
+        <img src="./imgs/vlan15.png" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
       <dd>配置各主机IP</dd>
       <dd>创建vlan10，20，30</dd>
       <dd>划分端口到相应的VLAN</dd>
@@ -340,10 +352,6 @@ Switch#</pre>
       <dd>测试各VLAN的通信情况</dd>
       <dd>查看交换机VLAN的配置情况</dd>
       <dd>查看交换机trunk端口的详细信息</dd>
-      <figure>
-        <img src="./imgs/vlan15.png" alt="">
-        <figcaption>网络拓扑</figcaption>
-      </figure>
       <dd>交换机某一侧已经设置为trunk模式的前提下，对端交换机可以不设置trunk - 系统会自动调整</dd>
       <dd>且会让所有的vlan都通过</dd>
       <pre>
