@@ -23,14 +23,16 @@
       </div>
       <dt>概述</dt>
       <dd>交换机是工作在OSI模型第二层 - 数据链路层；也叫 L2 Switch</dd>
-      <dd>能够根据MAC地址进行数据帧的转发决策</dd>
-      <dd>多端口</dd>
+      <dd>多端口
+        <p>每个端口都与一个主机或另外一个交换机直接相连</p>
+        <p>每个端口都是一个独立的冲突域 - 隔离冲突</p>
+      </dd>
       <dd>多速率</dd>
-      <dd>每个端口都与一个主机或另外一个交换机直接相连</dd>
       <dd>全双工通信</dd>
       <dd>具备缓存功能</dd>
-      <dd>提高信道利用率</dd>
+      <dd>信道利用率提高</dd>      
       <dt>工作原理</dt>
+      <dd>能够根据MAC地址进行数据帧的转发决策</dd>
       <dd>交换机内部维护着一张MAC地址表，通过学习网络上各个设备的MAC地址及其对应的端口来转发数据帧</dd>
       <dd>当交换机收到一个数据帧时，它会检查帧中的目的MAC地址，并将数据帧转发至正确的端口</dd>
       <dd>交换机提供独立的冲突域，每个端口都是一个单独的冲突域，减少了数据包冲突的可能性</dd>
@@ -381,6 +383,14 @@ Typedef struct{
     int inPort;
     int outport;
 } Frame</pre>
+        </li>
+        <li>翻译
+          <p>LAN switches completely resolve the problem with collisions. They operate at layer 2 of the OSI model,
+            meaning that they look at the ethernet header and trailer. Their main advantage is that all their ports can
+            operate in full-duplex, meaning they can simultaneously transmit and receive frames on any given port at any
+            given time. Because of this, the media access algorithm for collision detection (CSMA/CD) is no longer
+            required and is disabled by default. Another big advantage of switches is that they forward frames based on
+            MAC addresses, so any given frame doesn't need to be sent to all ports as hubs do. </p>
         </li>
       </ol>
       <dt>Reading</dt>
