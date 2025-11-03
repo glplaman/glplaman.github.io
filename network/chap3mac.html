@@ -8,10 +8,16 @@
   <title>Medium Access Control</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    .bg {
+      background-color: var(--main-color);
+      color: #fff;
+    }
+  </style>
 </head>
 
 <body>
-  <section class="w">
+  <div class="w">
     <header>
       <h1>Medium Access Control</h1>
       <span>&commat;MAC</span>
@@ -129,11 +135,26 @@ C:\Users\huawei></pre>
       <dd>长度：最小64 byte <span class="iconfont icon-help"></span></dd>
       <!-- <dd>51.2us</dd> -->
       <table>
-        <caption>帧结构 Frame</ca>
+        <caption>完整以太网帧结构</ca>
         <tbody>
           <tr>
             <td>Preamble</td>
             <td>SFD</td>
+            <td class="bg">Frame</td>
+            <td>IFG</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>1</td>
+            <td></td>
+            <td>12</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>帧结构</ca>
+        <tbody>
+          <tr>
             <td>Destination MAC</td>
             <td>Source MAC</td>
             <td>Type</td>
@@ -141,8 +162,6 @@ C:\Users\huawei></pre>
             <td>FCS</td>
           </tr>
           <tr>
-            <td>7</td>
-            <td>1</td>
             <td>6</td>
             <td>6</td>
             <td>2</td>
@@ -162,7 +181,7 @@ C:\Users\huawei></pre>
       <dd>1 byte</dd>
       <dd>0xAB；10101011</dd>
       <dd>标志着有效帧的开始。打破了Preamble的交替模式（最后两位为11），告诉接收端：现在开始接收真正的帧头了</dd>
-      <dd>SFD 是帧的正式起点，但不是MAC地址的一部分</dd>
+      <dd>SFD 是帧的正式起点，但不是MAC帧的一部分</dd>
       <dt>Destination MAC</dt>
       <dd>目的MAC地址</dd>
       <dd>6 byte</dd>
@@ -213,6 +232,12 @@ C:\Users\huawei></pre>
         <p>因为帧之间有传输间隙，所以不需要帧结束的界定</p>
         <p>帧的最小时间间隔 96比特时间 - Inter-Frame Gap, IFG</p>
       </div>
+      <dt>以太网带宽 Bandwidth</dt>
+      <dd>含义：每秒处理的bit - bps</dd>
+      <dd>完整的帧长度包含8字节的前导码和12byte的空闲帧</dd>
+      <dd>前导码用于同步同步发送方/接收方的bit流，提示有效帧内容的开始</dd>
+      <dd>计算带宽时，使用的帧长是完整帧长，否则计算出来的仅仅是以太网的有效带宽</dd>
+
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
@@ -226,11 +251,14 @@ C:\Users\huawei></pre>
       <ol>
         <li><a href="https://networkencyclopedia.com/mac-address/">MAC Address <span
               class="iconfont icon-share"></span></a></li>
+        <li><a href="https://mac.bmcx.com/">MAC地址查询 <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://standards-oui.ieee.org/oui/oui.txt">OUI <span class="iconfont icon-share"></span></a>
+        </li>
       </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </section>
+  </div>
 </body>
 
 </html>
