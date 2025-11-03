@@ -23,201 +23,47 @@
     </header>
     <dl>
       <dt>局域网 LAN</dt>
-      <dd>以太网 = 局域网</dd>
       <dd>共享式以太网
         <p>总线型以太网 Bus Topology</p>
         <p>星型以太网 Star Topology</p>
         <p>工作方式：半双工</p>
+        <p>CSMA/CD</p>
       </dd>
       <dd>交换式以太网 Switched Ethernet
         <p>物理拓扑 Physical Topology：依然是星型 Star，或者更复杂的扩展星型 Extended Star</p>
         <p>逻辑拓扑 Logical Topology：交换方式</p>
         <p>工作方式：全双工</p>
       </dd>
-    </dl>
-    <h2>High Speed Ethernet</h2>
-    <dl>
-      <dd>10Base-T</d>
-      <dd>传统以太网 Traditional Ethernet</dd>
-      <dd>是现代以太网的起点</dd>
-      <dd>虽然速度慢、已被取代，但它确立了 RJ-45 + 双绞线 + 星型拓扑的标准架构，影响深远</dd>
-      <table>
-        <caption>10Base-T</caption>
-        <tr>
-          <td>传输速率</td>
-          <td>10 Mbps</td>
-        </tr>
-        <tr>
-          <td>传输介质</td>
-          <td>Cat 3、Cat 4或 Cat 5 UTP</td>
-        </tr>
-        <tr>
-          <td>最大传输距离</td>
-          <td>100 米（从主机到交换机/集线器）</td>
-        </tr>
-        <tr>
-          <td>拓扑结构</td>
-          <td>星型拓扑 Star Topology</td>
-        </tr>
-        <tr>
-          <td>连接器类型</td>
-          <td>RJ-45 水晶头</td>
-        </tr>
-        <tr>
-          <td>使用线对</td>
-          <td>2 对线（4 根线）：发送1,2、接收3,6</td>
-        </tr>
-        <tr>
-          <td>编码方式</td>
-          <td>Manchester 编码</td>
-        </tr>
-        <tr>
-          <td>工作模式</td>
-          <td>半双工或全双工（需支持全双工的设备）</td>
-        </tr>
-        <tr>
-          <td>网络设备</td>
-          <td>集线器（Hub）或早期交换机（Switch）</td>
-        </tr>
-      </table>
-      <dt>快速以太网 Fast Ethernet</dt>
-      <dd>也叫百兆网</dd>
-      <dd>速率 100 Mbit/s</dd>
-      <dd>1995年被正式批准为 IEEE 802.3u /100BASE-T</dd>
-      <dd>高速传输：在双绞线等介质上提供 100 Mbit/s 的数据传输速率，是传统10M以太网的10倍</dd>
-      <dd>物理拓扑：
-        <p>采用星形拓扑结构</p>
-        <p>中心设备通常是集线器 Hub 或交换机 Switch</p>
+      <div class="tips">以太网 = 局域网</div>
+      <dt>二层任务 Mission</dt>
+      <dd>封帧</dd>
+      <dd>透明传输
+        <p>字节填充</p>
+        <p>0bit填充</p>
       </dd>
-      <dd>MAC帧兼容：保持与传统以太网相同的 MAC 帧格式和最短帧长，确保了向后兼容性</dd>
-      <dd>工作模式灵活：
-        <p>半双工模式：当连接到集线器时使用。此时网络存在共享介质，必须使用 CSMA/CD 协议来检测和处理冲突</p>
-        <p>全双工模式：当连接到交换机且双方都支持时使用。此时发送和接收通道独立，不会发生冲突，因此不使用 CSMA/CD 协议，性能更高</p>
+      <dd>循环冗余校验 CRC
+        <P>消息 Message</P>
+        <p>生成多项式 Polynomial</p>
+        <p>帧校验序列 FCS</p>
       </dd>
-      <dd>物理参数调整：为了适应更高的速率，将单个网段的最大电缆长度缩短至100米，并将帧间时间间隔从9.6μs减小到0.96μs，以提高信道利用率</dd>
-      <table>
-        <caption>100Mbps</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>Cable</th>
-            <th>Max-segment</th>
-            <th>Advantage</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>100Base-TX</td>
-            <td>Twisted pair</td>
-            <td>100m</td>
-            <td>2对 UTP Cat5；最常见</td>
-          </tr>
-          <tr>
-            <td>100Base-T4</td>
-            <td>Twisted pair</td>
-            <td>100m</td>
-            <td>4对 UTP Cat3；已淘汰</td>
-          </tr>
-          <tr>
-            <td>100Base-FX</td>
-            <td>Fiber</td>
-            <td>2000m</td>
-            <td>收发各一根；远距离通信</td>
-          </tr>
-        </tbody>
-      </table>
-      <dt>吉比特以太网 Gigabit Ethernet</dt>
-      <dd>也叫千兆网</dd>
-      <dd>超高速传输：1000 Mbit/s = 1 Gbit/s</dd>
-      <dd>1998年被批准为 IEEE 802.3z 光纤/1000BASE-X和 IEEE 802.3ab 双绞线/1000BASE-T</dd>
-      <dd>物理介质多样：
-        <p>1000BASE-SX：使用多模光纤，适用于短距离（如机房内、楼宇间）</p>
-        <p>1000BASE-LX：使用单模或多模光纤，适用于长距离传输</p>
-        <p>1000BASE-T：使用4对5类或更高级别的双绞线 (Cat 5e/6)，最大距离100米。这是最常见于桌面和服务器连接的类型</p>
+      <dt>载波监听多点接入/冲突检 CSMA/CD</dt>
+      <dd>端到端时延 τ</dd>
+      <dd>2τ 也叫争用期、冲突窗口、碰撞窗口</dd>
+      <dd>重传时机 r * 争用期
+        <p>r 从整数集合 [0, 1, 2, ..., 2k-1] 中随机获取</p>
+        <p>k 由重传次数获取 k = min[重传次数， 10]</p>
       </dd>
-      <dd>物理拓扑：
-        <p>继续采用星形拓扑</p>
-        <p>所有设备通过网线连接到以太网交换机</p>
-      </dd>
-      <dd>工作模式与 CSMA/CD：
-        <p>半双工模式：由于性能低下且无实际应用，半双工吉比特以太网从未被产品化，已被彻底废弃 - <strong>最大电缆长度减小10m</strong>
-        </p>
-        <p>全双工模式是主流：在全双工模式下，不存在共享介质，不需要使用 CSMA/CD 协议。这是吉比特以太网高性能的基础</p>
-      </dd>
-      <dd>MAC帧与兼容性：
-        <p>保持与10M/100M以太网相同的 MAC 帧格式和最短帧长（64字节），保证了无缝兼容</p>
-        <p>为了在全双工下实现高效率，帧间时间间隔 IFG 进一步缩短</p>
-      </dd>
-      <table>
-        <caption>1Gbps</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>Cable</th>
-            <th>Max-segment</th>
-            <th>Advantage</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>100Base-TX</td>
-            <td>Twisted pair</td>
-            <td>100m</td>
-            <td>2对 UTP Cat5；最常见</td>
-          </tr>
-          <tr>
-            <td>100Base-T4</td>
-            <td>Twisted pair</td>
-            <td>100m</td>
-            <td>4对 UTP Cat3；已淘汰</td>
-          </tr>
-          <tr>
-            <td>100Base-FX</td>
-            <td>Fiber</td>
-            <td>2000m</td>
-            <td>收发各一根；远距离通信</td>
-          </tr>
-        </tbody>
-      </table>
-      <dt>10Gbps+</dt>
-      <dd>全双工运行（无半双工），不再使用 CSMA/CD 冲突检测机制</dd>
-      <dd>帧格式相同；保留最小帧长和最大帧长</dd>
-    </dl>
-    <h2>帧 Frame</h2>
-    <dl>
-      <dd>MTU, Maximum Transmission Unit - 1500 字节
+      <dd>最小帧长 64byte</dd>
+      <dt>物理地址 MAC</dt>
+      <dd>硬件地址</dd>
+      <dd>长度 48bit</dd>
+      <dd>24bit OUI + 24bit EUI</dd>
+      <dt>帧 Frame</dt>
+      <dd>帧结构</dd>
+      <dd>MTU, Maximum Transmission Unit - 1500byte
         <p>1500 字节不是算出来的，而是“试”出来的</p>
         <p>是早期网络工程师在无数实验中找到的效率与公平之间的最佳平衡点，一经确立便成为全球通用的标准，沿用至今</p>
       </dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 帧长的影响</div>
-      <div>1. 假设 MTU = 200 字节，使用 TCP/IP 协议栈：</div>
-      <div class="txt-indent">
-        <p>IP 头部：20 字节</p>
-        <p>TCP 头部：20 字节</p>
-        <p>以太网头部 + 尾部：18 字节（6+6+2+4）</p>
-        <p>有效数据载荷 = 200 - 18 - 20 - 20 = 142 字节</p>
-        <p>传输效率 = 142 / 200 ≈ 71%</p>
-        <p>这意味着超过 29% 的带宽被协议开销占用，效率低下</p>
-      </div>
-      <div>2. 如果帧适中（1500 字节，标准情况）</div>
-      <div class="txt-indent">
-        <p>有效数据载荷（MTU）= 1500 字节</p>
-        <p>以太网头部 + FCS = 18 字节</p>
-        <p>传输效率 = 1500 / 1518 ≈ 98.8%</p>
-        <p>此时协议开销仅占约 1.2%，效率显著提升</p>
-      </div>
-      <div>3. 如果帧太大（如 65535 字节）</div>
-      <div class="txt-indent">
-        <p>理论上 IP 包最大可达 65535 字节，但如果直接映射到以太网帧</p>
-        <p>占用共享链路时间过长</p>
-        <p>在 10 Mbps 网络中，发送一个 65KB 的帧需要： </p>
-        <p>65535 × 8/ 10 × 10<sup>6</sup></p>
-        <p>≈ 0.052s</p>
-        <p>= 52ms</p>
-        <p>这意味着其他所有设备最多要等待 52ms 才能发送数据，延迟极高</p>
-        <p>错误重传代价巨大：哪怕一个比特出错，整个 65KB 数据都要重传</p>
-        <p>接收端需大缓存：早期内存昂贵，每块网卡配几 KB 缓冲即可，若支持超大帧则成本飙升</p>
-      </div>
       <table>
         <caption>最小帧长和最大帧长</caption>
         <tr>
@@ -233,16 +79,59 @@
           <td>1522 字节 <br>支持 IEEE 802.1Q VLAN 标签</td>
         </tr>
       </table>
-    </dl>
-    <dl>
-      <dt>Reading</dt>
-      <dd><a href="">Fast Ethernet <span class="iconfont icon-share"></span></a></dd>
-      <dd><a href="https://networkencyclopedia.com/10baset/">10BaseT <span class="iconfont icon-share"></span></a></dd>
-      <dd><a href="https://networkencyclopedia.com/10basef/">10BaseF <span class="iconfont icon-share"></span></a></dd>
-      <dd><a href="https://networkencyclopedia.com/fast-ethernet/">Fast Ethernet <span
-            class="iconfont icon-share"></span></a></dd>
-      <dd><a href="https://networkencyclopedia.com/gigabit-ethernet/">Gigabit Ethernet <span
-            class="iconfont icon-share"></span></a></dd>
+      <dt>交换机 Switch</dt>
+      <dd>端口交换
+        <p>登记</p>
+        <p>转发</p>
+        <p>过滤</p>
+      </dd>
+      <dd>MAC表</dd>
+      <dd>LAN</dd>
+      <dd>VLAN
+        <p>802.1Q</p>
+        <p>4byte VLAN帧</p>
+      </dd>
+      <dt>以太网设备 Device</dt>
+      <dd>中继器</dd>
+      <dd>集线器</dd>
+      <dd>网桥</dd>
+      <dd>交换机</dd>
+      <dd>适配器</dd>
+      <dd>路由器 - todo</dd>
+      <dt>以太网</dt>
+      <dd>传统以太网 10Mbps - IEEE 802.3i</dd>
+      <dd>快速以太网 100Mbps - IEEE 802.3u</dd>
+      <dd>千兆统以太网 1Gbps - IEEE 802.3ab</dd>
+      <dd>10千兆以太网 10Gbps - IEEE 802.3an</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 帧长的影响</div>
+      <div>1. 假设 MTU = 200byte，使用 TCP/IP 协议栈：</div>
+      <div class="txt-indent">
+        <p>IP 头部：20byte</p>
+        <p>TCP 头部：20byte</p>
+        <p>以太网头部 + 尾部：18byte（6+6+2+4）</p>
+        <p>有效数据载荷 = 200 - 18 - 20 - 20 = 142byte</p>
+        <p>传输效率 = 142 / 200 ≈ 71%</p>
+        <p>这意味着超过 29% 的带宽被协议开销占用，效率低下</p>
+      </div>
+      <div>2. 如果帧适中（1500byte，标准情况）</div>
+      <div class="txt-indent">
+        <p>有效数据载荷（MTU）= 1500byte</p>
+        <p>以太网头部 + FCS = 18byte</p>
+        <p>传输效率 = 1500 / 1518 ≈ 98.8%</p>
+        <p>此时协议开销仅占约 1.2%，效率显著提升</p>
+      </div>
+      <div>3. 如果帧太大（如 65535byte）</div>
+      <div class="txt-indent">
+        <p>理论上 IP 包最大可达 65535byte，但如果直接映射到以太网帧</p>
+        <p>占用共享链路时间过长</p>
+        <p>在 10 Mbps 网络中，发送一个 65KB 的帧需要： </p>
+        <p>65535 × 8/ 10 × 10<sup>6</sup></p>
+        <p>≈ 0.052s</p>
+        <p>= 52ms</p>
+        <p>这意味着其他所有设备最多要等待 52ms 才能发送数据，延迟极高</p>
+        <p>错误重传代价巨大：哪怕一个比特出错，整个 65KB 数据都要重传</p>
+        <p>接收端需大缓存：早期内存昂贵，每块网卡配几 KB 缓冲即可，若支持超大帧则成本飙升</p>
+      </div>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

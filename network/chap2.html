@@ -11,6 +11,18 @@
     header {
       background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/09/Time-Division-Multiplexing-TDM.webp);
     }
+
+    .txt-bg-grad {
+      width: max-content;
+      color: transparent;
+      font-weight: 600;
+      background-image: linear-gradient(90deg, var(--main-color), #ff0, var(--main-color));
+      font-size: 4rem;
+      line-height: 1;
+      margin: 2rem auto;
+      background-clip: text;
+      filter: drop-shadow(1px 1px rgb(0, 0, 0, 0.4));
+    }
   </style>
 </head>
 
@@ -58,13 +70,10 @@
         <p>在带宽W(hz)的低通信道中，不考虑噪声影响，码元传输的最高速率是2W(码元/秒)</p>
       </dd>
       <dd>信噪比 signal-to-noise ratio</dd>
-      <figure>
-        <img src="./imgs/p15.png" alt="">
-      </figure>
+      <div class="txt-bg-grad">SNR = 10 * log<sub>10</sub>(S/N) (dB)</div>
       <dd>香农公式 Shannon Theory</dd>
-      <figure>
-        <img src="./imgs/p14.png" alt="">
-      </figure>
+      <div class="txt-bg-grad">R<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
+      <div class="tips">log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</div>
     </dl>
     <h2>物理层设备 Device</h2>
     <dl>
@@ -82,7 +91,28 @@
         <div>现在网络中很少使用中继器和集线器</div>
       </div>
     </dl>
+    <h2>Homework</h2>
     <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>P70/2-07 假定某信道受奈氏准则限制的最高码元速率为 20000 码元/秒。如果采用振幅调制，把码元的振幅划分为 16 个不同等级来传送，那么可以获得多高的数据率 (bit/s)？</li>
+        <div class="txt-indent">
+          <p>16个等级的振幅可以使用4bit来表示：2<sup>4</sup> = 16</p>
+          <p>每个码元为4bit</p>
+          <p>最高速率为 20000 码元/秒 = 80000 bit/s</p>
+        </div>
+        <li>P70/2-08 假定要用 3 kHz 带宽的电话信道传送 64 kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？</li>
+        <div class="txt-indent">
+          <p>根据香农公式，有：64 Kbps = 3 Khz * log<sub>2</sub>(1+S/N)</p>
+          <p>等式变换后。有：S/N = 2<sup>64/3</sup> - 1</p>
+          <P>= 2<sup>(63 + 1)/3</sup> - 1</P>
+          <P>= 2<sup>(21 + 1/3)</sup> - 1</P>
+          <P>= 2<sup>21</sup>*2<sup>1/3</sup> - 1</P>
+          <p>≈ 2,642,244.94</p>
+          <p>相应的分贝 = 10 * log<sub>10</sub>(2,642,244.94)</p>
+          <p>= 64.22 dB</p>
+        </div>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/physical-layer/">Physical Layer <span
