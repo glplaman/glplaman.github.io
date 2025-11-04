@@ -46,7 +46,7 @@
         <p>最大距离15</p>
         <p>16表示不可达</p>
       </dd>
-      <dd>使用<strong>UDP</strong>协议，按照<span class="warn">固定时间</span>间隔，以<span class="warn">广播</span>RIP报文的方式，和
+      <dd>使用<strong>UDP</strong>协议，端口520，按照<span class="warn">固定时间</span>间隔，以<span class="warn">广播</span>RIP报文的方式，和
         <span class="warn">相邻</span>路由器交换<span class="warn">全部</span>路由信息 - 分布式路由选择协议
         <p>相邻 - Who</p>
         <p>全部 - What</p>
@@ -682,6 +682,90 @@ Known via "rip", distance 120, metric 1
   Routing Descriptor Blocks:
   * 128.2.1.1, from 128.2.1.1, 00:00:09 ago, via GigabitEthernet0/0
       Route metric is 1, traffic share count is 1</pre>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] RIP基本应用 <a href="./pt/rip.pkt" download>点击下载PT文件
+          <span class="iconfont icon-filedownload"></span></a></div>
+      <ol>
+        <li>网络规划；拓扑如下
+          <p>R1、R2、R3在一个AS内</p>
+          <p>R1和R2分别连接到R3</p>
+        </li>
+        <figure>
+          <img src="./imgs/rip2.png" alt="">
+          <figcaption>RIP拓扑 - 部分</figcaption>
+        </figure>
+        <li>配置IP - 默认掩码
+          <p>R1：</p>
+          <pre>
+Router(config-if)#ip address 10.0.0.1 255.0.0.0
+Router(config-if)#no shutdown</pre>
+          <p>R2</p>
+          <pre>
+Router(config-if)#ip address 20.0.0.1 255.0.0.0
+Router(config-if)#no shutdown</pre>
+          <p>R3</p>
+          <pre>
+Router(config)#interface GigabitEthernet0/0
+Router(config-if)#ip address 20.0.0.2 255.0.0.0
+Router(config-if)#no shutdown
+Router(config)#interface GigabitEthernet0/1
+Router(config-if)#ip address 20.0.0.2 255.0.0.0
+Router(config-if)#no shutdown</pre>
+        </li>
+        <li>配置RIP
+          <p>R3</p>
+          <pre>
+Router(config)#router rip
+Router(config-router)#version 2
+Router(config-router)#network 10.0.0.0
+Router(config-router)#network 20.0.0.0</pre>
+          <p>R1</p>
+          <pre>
+Router(config)#router rip
+Router(config-router)#version 2
+Router(config-router)#network 10.0.0.0</pre>
+          <p>R2</p>
+          <pre>
+Router(config)#router rip
+Router(config-router)#version 2
+Router(config-router)#network 20.0.0.0</pre>
+        </li>
+        <li>查看RIP路由
+          <P>R1</P>
+          <pre>
+Router#show ip route rip
+R    20.0.0.0/8 [120/1] via 10.0.0.2, 00:00:21, GigabitEthernet0/0</pre>
+          <P>R2</P>
+          <pre>
+Router#show ip route rip
+R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
+          <p>R3 <span class="iconfont icon-help"></span></p>
+        </li>
+        <li>使用 Ping 测试网络连通性
+          <p>R1 ping R2</p>
+          <p>R2 ping R1</p>
+        </li>
+        <li>使用简单报文测试网络连通性及RIP的周期更新
+          <p>使用模拟测试</p>
+          <p>R1向R2发送简单报文</p>
+          <p>通信成功后，继续单步测试，R3会周期性的发送更新报文来更新路由 - builds a periodic RIP update packet</p>
+          <p>查看RIP报文的封装：Ethernet → IP → UDP → RIP → RIP Route Packet</p>
+          <figure>
+            <img src="./imgs/rip3.png" alt="">
+            <figcaption>UDP</figcaption>
+          </figure>
+          <figure>
+            <img src="./imgs/rip6.png" alt="">
+            <figcaption>RIP</figcaption>
+          </figure>
+          <figure>
+            <img src="./imgs/rip5.png" alt="">
+            <figcaption>RIP Route Packet</figcaption>
+          </figure>
+        </li>
+      </ol>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>

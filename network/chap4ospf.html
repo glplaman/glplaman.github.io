@@ -22,11 +22,15 @@
       padding: 0 var(--p-m-g);
       border-radius: 6px;
     }
+
+    .txt-left td {
+      text-align: left;
+    }
   </style>
 </head>
 
 <body>
-  <section class="w">
+  <dd class="w">
     <header>
       <h1>开放最短路径优先</h1>
       <span>&commat;OSPF</span>
@@ -36,61 +40,40 @@
       <dt>概述 Overview</dt>
       <dd>OSPF Open Shortest Path First，开放最短路径优先</dd>
       <dd>内部网关协议 IGP，用于在单一自治系统 AS 内路由选择</dd>
-      <dd>基于 <strong>链路状态协议 LCP</strong>，路由器会收集并维护整个网络的拓扑信息
-        <p>LCP - Link State Protocol</p>
-      </dd>
+      <dd>基于 <strong>链路状态协议 LCP - Link State Protocol</strong>，路由器会收集并维护整个网络的拓扑信息</dd>
       <dd>交换的是链路信息；不是路由信息
-        <p>描述自己连接的网络，以及它与邻居之间的链路状态。如开销、状态</p>
+        <p>描述自己连接的网络，以及它与邻居之间的链路状态及开销 cost，具体由网络管理人员制定</p>
         <p>是自己看到的局部拓扑</p>
       </dd>
-      <dd>不使用TCP或UDP，而是直接封装在IP报文内，使用IP协议号89。</dd>
-      <dd>适用大型网络</dd>
-      <dt>特点 Features</dt>
-      <dd><strong>泛洪 Flooding</strong> 发送
-        <p>向所有邻接路由器发送</p>
-        <p>邻接路由器又向它的邻接路由器发送</p>
-        <p>前面已经发送过的路由器，不会接收</p>
-        <p>构建链路状态数据库 LSD - Link State Database</p>
-        <P>每个路由器据此创建并维护自己的路由表</P>
-        <p>每个路由器都知道全网的网络特性</p>
-      </dd>
-      <dd>邻接路由信息</dd>
-      <dd>链路状态变化或根据定时触发</dd>
-      <dd>划分区域 Area
-        <p>OSPF将网络划分为不同区域，以减少路由更新流量</p>
-        <p>每个区域只知道本区域的网络拓扑</p>
-        <P>每个区域分配一个 Area ID</P>
-      </dd>
+      <dd>不使用TCP或UDP，而是直接封装在IP报文内，使用IP协议号89</dd>
       <dd>支持VLSM：支持可变长子网划分和无分类编址CIDR</dd>
       <dd>支持认证：提供简单密码认证和MD5认证</dd>
       <dd>支持多路径负载均衡：最多支持等价多路径负载均衡</dd>
-      <!-- <dd>快速收敛：能够快速适应网络拓扑变化</dd>
-      <dd>无环路：保证无环路</dd>
-      <dd>层次化设计：通过划分区域实现网络扩展性</dd>
-      <dd>触发更新：只有在网络状态改变时才发送更新</dd>
-      <dt>基本概念 Concept</dt>
-      <dd>Router ID：路由器的唯一标识符</dd>
-      <dd>邻居关系：路由器之间建立邻居关系来交换路由信息</dd>
-      <dd>邻接关系 Adjacency：形成完全邻接关系的路由器之间交换完整的链路状态数据库</dd>
-      <dd>链路状态通告 LSA：用于在OSPF域内传播路由信息</dd>
-      <dd>链路状态数据库 LSDB：存储区域内所有路由器的链路状态信息</dd>
-      <dd>指定路由器 DR：在多路访问网络中负责收集和分发链路状态信息</dd>
-      <dd>备份指定路由器 BDR：DR的备份，在DR失效时代替DR工作</dd> -->
+      <dd>适用大型网络</dd>
+      <dt>分区管理 Area</dt>
+      <dd>OSPF将网络划分为不同区域，以减少路由更新流量</dd>
+      <dd>每个区域只知道本区域的网络拓扑</dd>
+      <dd>每个区域分配一个 Area ID
+        <p>ID是32位二进制，可以表示为一个十进制数，也可以表示为点分十进制形式</p>
+        <p>区域0等价于区域0.0.0.0； 区域1等价于区域0.0.0.1</p>
+      </dd>
+      <dt>区域类型 Area Type</dt>
+      <dd>骨干区域 Backbone Area (Area 0)：
+        <p>连接所有其他区域的核心区域</p>
+        <p>所有非骨干区域间通信都要通过骨干区域0转发</p>
+      </dd>
+      <dd>标准区域 Standard Area：常规的OSPF区域</dd>
+      <dd>末节区域 Stub Area：不接收外部路由信息的区域</dd>
+      <dd>完全末节区域 Totally Stubby Area：Cisco专有特性，只保留默认路由</dd>
+      <dd>次末节区域 NSSA：允许引入外部路由但不传播到其他区域</dd>
       <figure>
         <img
           src="https://www.firewall.cx/images/stories/ospf-operation-basic-advanced-concepts-ospf-areas-roles-theory-overview1.png"
           alt="">
         <figcaption>区域自治系统</figcaption>
       </figure>
-      <!-- <dt>OSPF区域类型</dt>
-      <dd>骨干区域 Backbone Area (Area 0)：连接所有其他区域的核心区域</dd>
-      <dd>标准区域 Standard Area：常规的OSPF区域</dd>
-      <dd>末节区域 Stub Area：不接收外部路由信息的区域</dd>
-      <dd>完全末节区域 Totally Stubby Area：Cisco专有特性，只保留默认路由</dd>
-      <dd>次末节区域 NSSA：允许引入外部路由但不传播到其他区域</dd> -->
-
       <dt>路由器类型 Classification</dt>
-      <div class="tips">路由器可以具备多种身份</div>
+      <dd>路由器可以具备多种身份</dd>
       <dd>自治系统边界路由器 ASBR
         <p>Autonomous System Border Router</p>
         <p>连接OSPF域和其他自治系统的路由器</p>
@@ -110,25 +93,33 @@
         <img src="./imgs/area.png" alt="">
         <figcaption>路由器类型</figcaption>
       </figure>
-      <dt>分组类型 Type</dt>
-      <dd>问候分组 Hello
-        <p>发现和维持邻站</p>
-        <p>每10秒交换一次</p>
-        <p>超过40秒没有收到邻站的问候分组，则认为该路由不可达；修改链路状态数据库并重新计算路由</p>
+      <dt>特点 Features</dt>
+      <dd>
+
+        <p>邻接路由器又向它的邻接路由器发送</p>
+        <p>前面已经发送过的路由器，不会接收</p>
+        <p>构建链路状态数据库 LSD - Link State Database</p>
+        <P>每个路由器据此创建并维护自己的路由表</P>
+        <p>最后每个路由器都知道全网的网络特性</p>
       </dd>
-      <dd>数据库描述分组 Database Description
-        <p>向邻站给出自己所有的链路状态<strong>摘要</strong>信息</p>
-      </dd>
-      <dd>链路状态请求分组 Link State Request
-        <p>根据摘要信息，请求信息的链路状态信息</p>
-      </dd>
-      <dd>链路状态更新分组 Link State Update
-        <p>一旦路由状态发送变化，则使用泛洪全网更新链路状态</p>
-        <p>OSPF的核心</p>
-      </dd>
-      <dd>链路状态确认分组 Link State Acknowledgement
-        <p>对链路状态更新分组的确认</p>
-      </dd>
+      <dd>邻接路由信息</dd>
+      <dd>链路状态变化或根据定时触发</dd>
+
+      <!-- <dd>快速收敛：能够快速适应网络拓扑变化</dd>
+      <dd>无环路：保证无环路</dd>
+      <dd>层次化设计：通过划分区域实现网络扩展性</dd>
+      <dd>触发更新：只有在网络状态改变时才发送更新</dd>
+      <dt>基本概念 Concept</dt>
+      <dd>Router ID：路由器的唯一标识符</dd>
+      <dd>邻居关系：路由器之间建立邻居关系来交换路由信息</dd>
+      <dd>邻接关系 Adjacency：形成完全邻接关系的路由器之间交换完整的链路状态数据库</dd>
+      <dd>链路状态通告 LSA：用于在OSPF域内传播路由信息</dd>
+      <dd>链路状态数据库 LSDB：存储区域内所有路由器的链路状态信息</dd>
+      <dd>指定路由器 DR：在多路访问网络中负责收集和分发链路状态信息</dd>
+      <dd>备份指定路由器 BDR：DR的备份，在DR失效时代替DR工作</dd> -->
+
+
+
       <!-- <dt>LSA类型详解</dt>
       <table>
         <thead>
@@ -207,7 +198,99 @@
       <dd>调整接口Cost：ip ospf cost [cost-value]</dd>
       <dd>设置Router ID：router-id [ip-address]</dd>
       <dd>配置认证：ip ospf authentication [选项]</dd> -->
-      <dt>基本过程 Procedure</dt>
+    </dl>
+    <h2>基本过程 Procedure</h2>
+    <dl>
+      <dt>发现邻居</dt>
+      <dd>通过 <strong>问候分组 Hello</strong> - 组播</dd>
+      <dd>所有邻居都可能跟自己交换链路状态信息</dd>
+      <dd>发现和维持邻站</dd>
+      <dd>每10秒交换一次</dd>
+      <dd>超过40秒没有收到邻站的问候分组，则认为该路由不可达；修改链路状态数据库并重新计算路由</dd>
+      <table>
+        <caption>IP数据报</caption>
+        <tr>
+          <td>源IP</td>
+          <td>目的IP：224.0.0.5</td>
+          <td>协议号：89</td>
+          <td>OSPF首部</td>
+          <td>OSPF分组载荷</td>
+        </tr>
+      </table>
+      <dt>建立邻接关系</dt>
+      <dd>在网络中选举DR - Designated Router和BDR - Backup Designated Router，网络内所有路由器只与DR和BDR建立邻接关系
+        <p>不筛选 N*(N-1)/2</p>
+        <p>筛选 (N-2)*2+1</p>
+      </dd>
+      <dd>筛选邻居
+        <p>只有建立邻接关系的邻居路由器才会交换链路状态信息</p>
+        <p>不是跟所有邻居都建立邻接关系</p>
+      </dd>
+      <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd>
+      <dd>邻接关系确定后，向邻站发送 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息</dd>
+      <dt>传递链路状态信息</dt>
+      <dd>每台设备都有一个链路状态数据库 LSD - Link State Database</dd>
+      <dd>LSD 中每一条记录就是链路状态公告 LSA - Link State Advertisement
+        <p>直连网络的链路状态信息</p>
+        <p>邻接路由器的链路状态信息</p>
+        <p>每个 LSA 条目每隔30min刷新，以防止老化过期</p>
+      </dd>
+      <dd>LSA 被封装在 <strong>链路状态更新分组 Link State Update</strong>，采用泛洪 Flooding 向所有邻接路由器发送
+        <p>采用触发更新 Triggered Update 和增量更新 Incremental Update </p>
+        <p>触发更新：一旦检测到网络变化，立即向受影响的邻居发送更新，不需要等待任何固定周期 - 最高效</p>
+        <p>增量更新机制，只发邻居需要的LSA</p>
+      </dd>
+      <dd>收敛以后，区域内所有路由器具有相同的LSD - 查漏补缺</dd>
+      <dd>体现全网的链路状态</dd>
+      <dd>网络中有哪些路由器，各自编号是什么，每台路由器直连的网段是什么，开销是多少</dd>
+      <div class="tips">点餐 - 先给客人看菜单/链路摘要；再根据客人需要上菜/详细链路状态</div>
+      <dt>计算路由</dt>
+      <dd>路由器根据自己维护的LSD创建一个带权有向图</dd>
+      <dd>以自己为根，计算出最短路径树</dd>
+      <dd>最终得出自己的路由表</dd>
+      <table>
+        <caption>分组类型 Type</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody class="txt-left">
+          <tr>
+            <td>Hello</td>
+            <td>
+              <p>问候分组</p>
+            </td>
+          </tr>
+          <tr>
+            <td>Database Description</td>
+            <td>数据库描述分组</td>
+          </tr>
+          <tr>
+            <td>Link State Request</td>
+            <td>
+              <p>链路状态请求分组 </p>
+              <p>根据摘要信息，请求信息的链路状态信息</p>
+            </td>
+          </tr>
+          <tr>
+            <td>Link State Update</td>
+            <td>
+              <p>链路状态更新分组 </p>
+              <p>一旦路由状态发送变化，则使用泛洪全网更新链路状态</p>
+              <p>OSPF的核心</p>
+            </td>
+          </tr>
+          <tr>
+            <td>Link State Acknowledgement</td>
+            <td>
+              <p>链路状态确认分组 </p>
+              <p>对链路状态更新分组的确认</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div class="txt-center">
         <p class="bg">启动OSPF</p>
         <p>↓</p>
@@ -318,11 +401,17 @@
             <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networklessons.com/ospf/ospf-lsa-types-explained">OSPF LSA Types Explained <span
               class="iconfont icon-share"></span></a></li>
+        <li><a
+            href="https://www.bilibili.com/video/BV1YV41127U5/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">十分钟理解OSPF路由协议
+            <span class="iconfont icon-videocam"></span></a></li>
+        <li><a
+            href="https://www.bilibili.com/video/BV1Xk4y1n7q4/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">路由器OSPF动态路由配置
+            <span class="iconfont icon-videocam"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </section>
+    </div>
 </body>
 
 </html>
