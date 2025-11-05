@@ -12,11 +12,15 @@
     header {
       background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/08/10Base5-ethernet-thicknet.webp);
     }
+
+    tbody tr td:nth-child(2) {
+      text-align: left;
+    }
   </style>
 </head>
 
 <body>
-  <section class="w">
+  <div class="w">
     <header>
       <h1>总结</h1>
       <span>&commat;Summary</span>
@@ -47,18 +51,20 @@
         <p>帧校验序列 FCS</p>
       </dd>
       <dt>载波监听多点接入/冲突检 CSMA/CD</dt>
-      <dd>端到端时延 τ</dd>
-      <dd>2τ 也叫争用期、冲突窗口、碰撞窗口</dd>
+      <dd>端到端时延 τ - 25.6μs</dd>
+      <dd>往返时延 2τ 也叫争用期、冲突窗口、碰撞窗口 - 51.2μs</dd>
       <dd>重传时机 r * 争用期
         <p>r 从整数集合 [0, 1, 2, ..., 2k-1] 中随机获取</p>
         <p>k 由重传次数获取 k = min[重传次数， 10]</p>
       </dd>
       <dd>最小帧长 64byte</dd>
       <dt>物理地址 MAC</dt>
-      <dd>硬件地址</dd>
+      <dd>硬件地址
+        <p>固化在适配器/网卡</p>
+      </dd>
       <dd>长度 48bit</dd>
       <dd>24bit OUI + 24bit EUI</dd>
-      <dt>帧 Frame</dt>
+      <dt>以太网帧 Frame</dt>
       <dd>帧结构</dd>
       <dd>MTU, Maximum Transmission Unit - 1500byte
         <p>1500 字节不是算出来的，而是“试”出来的</p>
@@ -80,25 +86,29 @@
         </tr>
       </table>
       <dt>交换机 Switch</dt>
+      <dd>MAC表（三表之一）
+        <p>哪个端口连着谁</p>
+      </dd>
       <dd>端口交换
         <p>登记</p>
         <p>转发</p>
         <p>过滤</p>
       </dd>
-      <dd>MAC表</dd>
-      <dd>LAN</dd>
-      <dd>VLAN
+      <dd>交换机的自学习</dd>
+      <dd>虚拟局域网 VLAN
         <p>802.1Q</p>
         <p>4byte VLAN帧</p>
       </dd>
+      <dd>规划设计局域网 LAN & VLAN</dd>
       <dt>以太网设备 Device</dt>
-      <dd>中继器</dd>
-      <dd>集线器</dd>
-      <dd>网桥</dd>
-      <dd>交换机</dd>
-      <dd>适配器</dd>
-      <dd>路由器 - todo</dd>
+      <dd>中继器 Repeater</dd>
+      <dd>集线器 Hub</dd>
+      <dd>网桥 Bridge</dd>
+      <dd>交换机 Switch</dd>
+      <dd>适配器 Adapter</dd>
+      <dd>路由器 Router</dd>
       <dt>以太网</dt>
+      <dd>IEEE 802.3</dd>
       <dd>传统以太网 10Mbps - IEEE 802.3i</dd>
       <dd>快速以太网 100Mbps - IEEE 802.3u</dd>
       <dd>千兆统以太网 1Gbps - IEEE 802.3ab</dd>
@@ -135,7 +145,7 @@
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </section>
+  </div>
 </body>
 
 </html>
