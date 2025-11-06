@@ -69,13 +69,13 @@
         </tr>
       </table>
       <div>[<span class="iconfont icon-keyboard"></span>] BGP路由处理过程</div>
-      <dd>R<sub>1</sub> → R<sub>2</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ] - eBGP</dd>
+      <dd>边界路由器 R<sub>1</sub> → 边界路由器 R<sub>2</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ] - eBGP</dd>
       <figure>
         <img src="./imgs/bgp5.png" alt="">
         <figcaption>eBGP发送路由</figcaption>
       </figure>
       <dd>R<sub>2</sub> → R<sub>3</sub>R<sub>4</sub>R<sub>5</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ]
-        -iBGP</dd>
+        - iBGP</dd>
       <figure>
         <img src="./imgs/bgp6.png" alt="">
         <figcaption>iBGP发送BGP路由</figcaption>
@@ -128,6 +128,15 @@
       <dd>方案3：路由器 BGP ID 数值最小的路由
         <p>具有多个接口的路由器有多个 IP 地址，BGP ID 就使用该路由器的 IP 地址中数值最大的一个</p>
       </dd>
+      <dt>BGP 报文 Packet</dt>
+      <dd>使用面向连接的 TCP（端口 179）</dd>
+      <dd>按照约定/协商的时间周期性交换BGP路由</dd>
+      <dd>报文种类
+        <p>OPEN 打开</p>
+        <p>UPDATE 更新；核心</p>
+        <p>KEEPALIVE 保持</p>
+        <p>NOTIFICATION 通知</p>
+      </dd>
       <figure>
         <img src="./imgs/bgp3.png" alt="">
         <figcaption>BGP报文及封装</figcaption>
@@ -143,14 +152,6 @@
       <dd>企业与ISP互联：大型企业通过BGP向ISP宣告自己的公网IP地址块</dd>
       <dd>多宿主网络 Multi-homing ：一个AS连接到多个ISP，通过BGP实现冗余和负载均衡</dd>
       <dd>CDN和云服务提供商：用于在全球范围分发内容和服务</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 下图所示的网络拓扑中，假设自治系统AS3和AS2内部运行OSPF,
-        AS1和AS4内部运行RIP。各自治系统间用BGP作为路由协议，并假设AS2和AS4之间没有物理链路。则路由器3c基于（25）协议学习到网络x的可达性信息。1d通过（26）学习到x的可达性信息。</div>
-      <div>（25）A. OSPF B. RIP C. eBGP D. iBGP
-        <br>（26）A. 3a B. 1a C. 1b D. 1c
-      </div>
-      <figure>
-        <img src="./imgs/bgp4.png" alt="">
-      </figure>
     </dl>
     <h2>Homework</h2>
     <dl>
@@ -163,6 +164,14 @@
           <div>UDP、IP、TCP</div>
           <!-- <p>D</p> -->
         </li>
+        <li>下图所示的网络拓扑中，假设自治系统AS3和AS2内部运行OSPF,
+          AS1和AS4内部运行RIP。各自治系统间用BGP作为路由协议，并假设AS2和AS4之间没有物理链路。则路由器3c基于（25）协议学习到网络x的可达性信息。1d通过（26）学习到x的可达性信息。</li>
+        <div>（25）A. OSPF B. RIP C. eBGP D. iBGP
+          <br>（26）A. 3a B. 1a C. 1b D. 1c
+        </div>
+        <figure>
+          <img src="./imgs/bgp4.png" alt="">
+        </figure>
       </ol>
       <dt>Reading</dt>
       <ol>
