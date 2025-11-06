@@ -25,7 +25,7 @@
       <img src="./imgs/packet.png" alt="">
       <dt>基本组成</dt>
       <dd>IP数据报由首部和数据2部分组成</dd>
-      <dd>首部：包括：20字节的固定部分和可选部分；最大不超过60字节</dd>
+      <dd>首部：包括：20byte的固定部分和可选部分；最大不超过60byte</dd>
       <dd>数据部分：可选；长度可变；超过最大传输单元MTU需要分片</dd>
       <table>
         <caption>IP数据报格式</caption>
@@ -76,14 +76,14 @@
       <dd>4bit</dd>
       <dd>0100，表示IP v4</dd>
       <dt>首部长度 Internet Header Length</dt>
-      <dd>4bit；以 <strong>4字节</strong> 为单位</dd>
-      <dd>最小值为0101，则最短首部长度：5*4 = 20字节</dd>
-      <dd>最大值为1111，则最大首部长度：(2<sup>4</sup>-1)*4 = 60字节</dd>
+      <dd>4bit；以 <strong>4byte</strong> 为单位</dd>
+      <dd>最小值为0101，则最短首部长度：5*4 = 20byte</dd>
+      <dd>最大值为1111，则最大首部长度：(2<sup>4</sup>-1)*4 = 60byte</dd>
       <dt>总长度 Total Length</dt>
-      <dd>16bit；以 <strong>字节</strong> 为单位</dd>
+      <dd>16bit；以 <strong>byte</strong> 为单位</dd>
       <dd>首部和数据部分总和</dd>
-      <dd>最大数值为1111 1111 1111 1111，最大长度为2<sup>16</sup>-1=65535字节</dd>
-      <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500字节；长度超过MTU就必须分片，单独封帧再传输</dd>
+      <dd>最大数值为1111 1111 1111 1111，最大长度为2<sup>16</sup>-1=65535byte</dd>
+      <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500byte；长度超过MTU就必须分片，单独封帧再传输</dd>
       <dt>标识 Identification、标记 Flags、片偏移部分 Fragment Offset</dt>
       <dd>这3个字段用于IP数据报分片</dd>
       <dd>Identification：16bit；同一个数据报的不同分片应具有相同的标识；每产生一个数据报[不是数据分片]就加1，充当计算器的功能</dd>
@@ -91,7 +91,7 @@
         <p>MF：More Fragment；1：还有分片；0：没有分片</p>
         <p>DF：Don’t Fragment；1：不允许分片；0：允许分片</p>
       </dd>
-      <dd>Fragment Offset：13bit，以 <strong>8字节</strong> 为单位，指出分片数据报的数据部分在 <strong>原</strong> 数据报中的偏移部分；必须为整数</dd>
+      <dd>Fragment Offset：13bit，以 <strong>8byte</strong> 为单位，指出分片数据报的数据部分在 <strong>原</strong> 数据报中的偏移部分；必须为整数</dd>
       <dt>生存时间 Time to Live</dt>
       <dd>8bit，以秒s为单位</dd>
       <dd>最大生存时间是255s</dd>
@@ -150,7 +150,7 @@
       <dd>为加快转发速度，IPv6中不再计算</dd>
       <dd>计算过程
         <p>初始化：将首部校验和字段设置为0!!!</p>
-        <p>头部分割：将IP首部每16bit分为一组；20个字节的首部最终被分成10组；每组2个字节/16bit</p>
+        <p>头部分割：将IP首部每16bit分为一组；20个byte的首部最终被分成10组；每组2个byte/16bit</p>
         <p>累计求和：所有分组累计求和，即每次用前面的累积和去加后面的分组；如果求和结果产生进位，则将进位加到最低位，如 0x10001 → 0x0002</p>
         <p>结果取反：对最终结果求反码，即得到校验和</p>
         <p>字段回填：将计算结果填入首部校验和字段</p>
@@ -170,12 +170,12 @@
     <dl>
       <div>[<span class="iconfont icon-keyboard"></span>] 已经某IP报首部字段THL为0101，总长度字段TL为0000 0011 1111 1100，求数据部分字段DATA的长度
       </div>
-      <dd>首部长度为(0101)<sub>2</sub>*4 = 5*4 = 20 字节</dd>
-      <dd>总长度为(0000 0011 1111 1100)<sub>2</sub> = 1020 字节</dd>
-      <dd>故：数据部分长度为：总长度-首部长度 = 1020 - 20 = 1000 字节</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 已知采用固定长度首部的数据报，数据部分位3800字节，如何分片？（分片不超过1420字节）。</div>
-      <dd>数据报长度 = 首部 + 数据 = 20 + 3800 = 3820字节</dd>
-      <dd>分片后不能超过1420字节，所以每片的数据部分为最大为1400字节</dd>
+      <dd>首部长度为(0101)<sub>2</sub>*4 = 5*4 = 20 byte</dd>
+      <dd>总长度为(0000 0011 1111 1100)<sub>2</sub> = 1020 byte</dd>
+      <dd>故：数据部分长度为：总长度-首部长度 = 1020 - 20 = 1000 byte</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 已知采用固定长度首部的数据报，数据部分位3800byte，如何分片？（分片不超过1420byte）。</div>
+      <dd>数据报长度 = 首部 + 数据 = 20 + 3800 = 3820byte</dd>
+      <dd>分片后不能超过1420byte，所以每片的数据部分为最大为1400byte</dd>
       <dd>假设标识ID为12345</dd>
       <table>
         <caption>IP数据报的分片</caption>
@@ -283,7 +283,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="tips">根据分片的数据长度去找8的整倍数字节</div>
+      <div class="tips">根据分片的数据长度去找8的整倍数byte</div>
       <div>[<span class="iconfont icon-keyboard"></span>] 某IP首部数据以16进制表示为 4500 003C 0000 4000 4011 0000 C0A8 0001 C0A8
         00C7，求其首部校验和。</div>
       <ul>
@@ -311,24 +311,26 @@
     <h2>Homework</h2>
     <dl>
       <dt>Homework</dt>
-      <div>[<span class="iconfont icon-keyboard"></span>] IP数据报由首部和数据2部分组成（）。</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] IP数据报中，首部长度是 20 个字节（）。</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] IP数据报中，首部的固定部分长度是 20 个字节（）。</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 某IP数据报中，TTL为1，说明该数据报还可以经路由器转发1次（）。</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 某IP数据报首部字段为0111，则首部长度是 （）个字节。</div>
-      <div class="alpha">
-        <div>7个字节</div>
-        <div>20个字节</div>
-        <div>28个字节</div>
-        <div>60个字节</div>
-      </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 图1中，IP数据报使用的通信协议是 （）。</div>
-      <div class="alpha">
-        <div>ICMP</div>
-        <div>IGMP</div>
-        <div>TCP</div>
-        <div>UDP</div>
-      </div>
+      <ol>
+        <li>IP数据报由首部和数据2部分组成（）。</li>
+        <li>IP数据报中，首部长度是 20 byte（）。</li>
+        <li>IP数据报中，首部的固定部分长度是 20 byte（）。</li>
+        <li>某IP数据报中，TTL为1，说明该数据报还可以经路由器转发1次（）。</li>
+        <li>某IP数据报首部字段为0111，则首部长度是（）byte。</li>
+        <div class="alpha">
+          <div>7 byte</div>
+          <div>20 byte</div>
+          <div>28 byte</div>
+          <div>60 byte</div>
+        </div>
+        <li>图1中，IP数据报使用的通信协议是（）。</li>
+        <div class="alpha">
+          <div>ICMP</div>
+          <div>IGMP</div>
+          <div>TCP</div>
+          <div>UDP</div>
+        </div>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/time-to-live-ttl/">Time to Live (TTL) <span

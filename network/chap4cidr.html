@@ -39,8 +39,8 @@
             <th>host ID</th>
           </tr>
           <tr>
-            <td>n bit</td>
-            <td>(32-n)bit</td>
+            <td>n</td>
+            <td>32-n</td>
           </tr>
         </tbody>
       </table>
@@ -49,7 +49,7 @@
       <dd>斜线前面是IP地址；通常是该地址块的第一个地址/网络地址</dd>
       <dd>斜线后面是网络前缀所占位数 n；也是地址掩码中1的位数</dd>
       <table>
-        <caption>A类、B类、C类默认地址掩码</caption>
+        <caption>A类、B类、C类地址默认掩码</caption>
         <tbody>
           <tr>
             <th>分类</th>
@@ -138,70 +138,71 @@
         <p>- 广播地址</p>
         <p>- 聚合C类网络的数量</p>
       </div>
-      <dd>先根据网络前缀长度求出地址掩码</dd>
-      <table>
-        <caption>128.14.35.7/20 CIDR地址块划分细节</caption>
-        <tbody>
-          <tr>
-            <td>地址掩码</td>
-            <td><span class="warn">1111 1111</span></td>
-            <td><span class="warn">1111 1111</span></td>
-            <td><span class="warn">1111</span> 0000</td>
-            <td>0000 0000</td>
-            <td>255.255.240.0</td>
-          </tr>
-          <tr>
-            <td>IP地址</td>
-            <td>128</td>
-            <td>14</td>
-            <td><span class="warn">0010</span> 0011</td>
-            <td>0000 0111</td>
-            <td>128.14.35.7</td>
-          </tr>
-          <tr>
-            <td>网络地址</td>
-            <td>128</td>
-            <td>14</td>
-            <td><span class="warn">0010</span> <span style="color: #008000;">0000</span></td>
-            <td style="color: #008000;">0000 0000</td>
-            <td>128.14.32.0</td>
-          </tr>
-          <tr>
-            <td>最小主机地址</td>
-            <td>128</td>
-            <td>14</td>
-            <td><span class="warn">0010</span> 0000</td>
-            <td>0000 0001</td>
-            <td>128.14.32.1</td>
-          </tr>
-          <tr>
-            <td>最大主机地址</td>
-            <td>128</td>
-            <td>14</td>
-            <td><span class="warn">0010</span> 1111</td>
-            <td>1111 1110</td>
-            <td>128.14.47.254</td>
-          </tr>
-          <tr>
-            <td>广播地址</td>
-            <td>128</td>
-            <td>14</td>
-            <td><span class="warn">0010</span> <span style="color: #008000;">1111</span></td>
-            <td style="color: #008000;">1111 1111</td>
-            <td>128.14.47.255</td>
-          </tr>
-          <tr>
-            <td>聚合C类地址数量</td>
-            <td colspan="5">2<sup>32-20</sup> / 2<sup>8</sup> = 2<sup>4</sup>个</td>
-          </tr>
-        </tbody>
-      </table>
-      <dd>使用工具 <a href="https://cidr.xyz/">CIDR Calculator <span class="iconfont icon-share"></span></a> 验证划分结果</dd>
+      <dd>并使用工具 <a href="https://cidr.xyz/">CIDR Calculator <span class="iconfont icon-share"></span></a> 验证划分结果</dd>
+      <div>[参考]先根据网络前缀长度求出地址掩码
+        <table>
+          <caption>128.14.35.7/20 CIDR地址块划分细节</caption>
+          <tbody>
+            <tr>
+              <td>地址掩码</td>
+              <td><span class="warn">1111 1111</span></td>
+              <td><span class="warn">1111 1111</span></td>
+              <td><span class="warn">1111</span> 0000</td>
+              <td>0000 0000</td>
+              <td>255.255.240.0</td>
+            </tr>
+            <tr>
+              <td>IP地址</td>
+              <td>128</td>
+              <td>14</td>
+              <td><span class="warn">0010</span> 0011</td>
+              <td>0000 0111</td>
+              <td>128.14.35.7</td>
+            </tr>
+            <tr>
+              <td>网络地址</td>
+              <td>128</td>
+              <td>14</td>
+              <td><span class="warn">0010</span> <span style="color: #008000;">0000</span></td>
+              <td style="color: #008000;">0000 0000</td>
+              <td>128.14.32.0</td>
+            </tr>
+            <tr>
+              <td>最小主机地址</td>
+              <td>128</td>
+              <td>14</td>
+              <td><span class="warn">0010</span> 0000</td>
+              <td>0000 0001</td>
+              <td>128.14.32.1</td>
+            </tr>
+            <tr>
+              <td>最大主机地址</td>
+              <td>128</td>
+              <td>14</td>
+              <td><span class="warn">0010</span> 1111</td>
+              <td>1111 1110</td>
+              <td>128.14.47.254</td>
+            </tr>
+            <tr>
+              <td>广播地址</td>
+              <td>128</td>
+              <td>14</td>
+              <td><span class="warn">0010</span> <span style="color: #008000;">1111</span></td>
+              <td style="color: #008000;">1111 1111</td>
+              <td>128.14.47.255</td>
+            </tr>
+            <tr>
+              <td>聚合C类地址数量</td>
+              <td colspan="5">2<sup>32-20</sup> / 2<sup>8</sup> = 2<sup>4</sup>个</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <dt>特殊的CIDR地址块</dt>
-      <dd>网络前缀位数n=32，全部是前缀，没有主机，称为主机路由 - 发给路由器的数据</dd>
-      <dd>网络前缀位数n=31，主机号只有1位，所以只有2个IP地址，没有终端主机；用于点对点链路(无编号网络)</dd>
-      <dd>网络前缀位数n=0，IP地址也为0，即：0.0.0.0/0，称默认路由</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 子网192.168.4.0/30中，能接收目的地址为192.168.4.3的IP分组的最大主机数是（）</div>
+      <dd>网络前缀位数 n=32，全部是前缀，没有主机，称为主机路由 - 发给特定主机如路由器的数据</dd>
+      <dd>网络前缀位数 n=31，主机号只有1位，所以只有2个IP地址，没有终端主机；用于点对点链路(无编号网络)</dd>
+      <dd>网络前缀位数 n=0，IP地址也为0，即：0.0.0.0/0，称默认路由</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 子网192.168.4.0/30中，能接收目的地址为192.168.4.3的IP分组的最大主机数是（）。</div>
       <div class="alpha">
         <div>0</div>
         <div>1</div>
@@ -589,7 +590,7 @@
         </tr>
       </table>
     </dl>
-    <h2 class="notebook">Summary & Homework</h2>
+    <h2>Summary & Homework</h2>
     <dl>
       <dt>Summary</dt>
       <ol>
