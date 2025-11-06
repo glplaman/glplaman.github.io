@@ -18,12 +18,16 @@
     </header>
     <dl>
       <dd>边界网关协议 BGP - Border Gateway Protocol</dd>
-      <dd>负责在不同AS之间交换路由信息</dd>
-      <dd>力求选择出一条能够到达目的网络且比较好的路由，而并非要计算出一条最佳路由</dd>
-      <dd>基于<strong>路径向量 Path Vector</strong> 的路由选择协议</dd>
       <dd>是构成互联网骨干网络的核心协议</dd>
+      <dd>负责在不同AS之间交换路由信息</dd>
+      <dd>基于<strong>路径向量 Path Vector</strong> 的路由选择协议
+        <P>力求选择出一条能够到达目的网络且比较好的路由，而并非要计算出一条最佳路由</P>
+      </dd>
       <dd>在AS边界部署边界路由器/边界网关，AS之间才可以交换可达路由信息</dd>
-      <dd>使用传输控制协议 TCP（端口179） - 可靠、面向连接</dd>
+      <dd>使用传输控制协议 TCP（端口 179）
+        <p>可靠、面向连接</p>
+        <p>非广播</p>
+      </dd>
       <dd>新版本是BGP 第 4 个版本的 BGP-4
         <p>简写为 BGP</p>
         <p>2006 年 1 月发布</p>
@@ -48,6 +52,7 @@
         <p>要求AS内的所有路由器<strong>全连通</strong></p>
       </dd>
       <dt>BGP路由</dt>
+      <dd>使用BGP路由属性描述路由信息</dd>
       <dd>表示：经过NEXT-HOP，可达AS-PATH的 Prefix 网络
         <p>经过哪些AS到达目标网络</p>
         <p>但没有指出经过哪些路由器</p>
@@ -63,7 +68,23 @@
           <td>NEXT-HOP</td>
         </tr>
       </table>
-      <div class="tips">AS-PATH和NEXT-HOP都是BGP的重要属性之一</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] BGP路由处理过程</div>
+      <dd>R<sub>1</sub> → R<sub>2</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ] - eBGP</dd>
+      <figure>
+        <img src="./imgs/bgp5.png" alt="">
+        <figcaption>eBGP发送路由</figcaption>
+      </figure>
+      <dd>R<sub>2</sub> → R<sub>3</sub>R<sub>4</sub>R<sub>5</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ]
+        -iBGP</dd>
+      <figure>
+        <img src="./imgs/bgp6.png" alt="">
+        <figcaption>iBGP发送BGP路由</figcaption>
+      </figure>
+      <dd>内部路由器使用内部路由协议IGP如RIP或OSPF处理并创建自己的路由表
+        <p>R<sub>3</sub>：[X, R<sub>2</sub> ]</p>
+        <p>R<sub>4</sub>：[X, R<sub>3</sub> ]</p>
+        <p>R<sub>5</sub>：[X, R<sub>4</sub> ]</p>
+      </dd>
       <!-- <dt>路径属性 Path Attributes</dt>
       <dd>BGP决策的关键</dd>
       <dd>每个路由都附带一组属性，用于影响路由选择</dd>
