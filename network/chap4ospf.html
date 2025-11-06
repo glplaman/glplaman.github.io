@@ -40,7 +40,9 @@
       <dt>概述 Overview</dt>
       <dd>OSPF Open Shortest Path First，开放最短路径优先</dd>
       <dd>内部网关协议 IGP，用于在单一自治系统 AS 内路由选择</dd>
-      <dd>基于 <strong>链路状态协议 LCP - Link State Protocol</strong>，路由器会收集并维护整个网络的拓扑信息</dd>
+      <dd>基于 <strong>链路状态协议 LCP - Link State Protocol</strong>，路由器会收集并维护整个网络的拓扑信息
+        <p>Dijkstra 算法</p>
+      </dd>
       <dd>交换的是链路信息；不是路由信息
         <p>描述自己连接的网络，以及它与邻居之间的链路状态及开销 cost，具体由网络管理人员制定</p>
         <p>是自己看到的局部拓扑</p>
@@ -53,7 +55,7 @@
       <dt>分区管理 Area</dt>
       <dd>OSPF将网络划分为不同区域，以减少路由更新流量</dd>
       <dd>每个区域只知道本区域的网络拓扑</dd>
-      <dd>每个区域分配一个 Area ID
+      <dd>每个区域分配一个区域标识符 Area ID
         <p>ID是32位二进制，可以表示为一个十进制数，也可以表示为点分十进制形式</p>
         <p>区域0等价于区域0.0.0.0； 区域1等价于区域0.0.0.1</p>
       </dd>
@@ -94,14 +96,11 @@
         <figcaption>路由器类型</figcaption>
       </figure>
       <dt>特点 Features</dt>
-      <dd>
-
-        <p>邻接路由器又向它的邻接路由器发送</p>
-        <p>前面已经发送过的路由器，不会接收</p>
-        <p>构建链路状态数据库 LSD - Link State Database</p>
-        <P>每个路由器据此创建并维护自己的路由表</P>
-        <p>最后每个路由器都知道全网的网络特性</p>
-      </dd>
+      <dd>邻接路由器又向它的邻接路由器发送</dd>
+      <dd>前面已经发送过的路由器，不会接收</dd>
+      <dd>构建链路状态数据库 LSD - Link State Database</dd>
+      <dd>每个路由器据此创建并维护自己的路由表</dd>
+      <dd>最后每个路由器都知道全网的网络特性</dd>
       <dd>邻接路由信息</dd>
       <dd>链路状态变化或根据定时触发</dd>
 
@@ -231,7 +230,7 @@
         <p>不是跟所有邻居都建立邻接关系</p>
       </dd>
       <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd>
-      <dd>邻接关系确定后，向邻站发送 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息</dd>
+      <dd>邻接关系确定后，泛洪向邻站发送 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息</dd>
       <dt>传递链路状态信息</dt>
       <dd>每台设备都有一个链路状态数据库 LSD - Link State Database</dd>
       <dd>LSD 中每一条记录就是链路状态公告 LSA - Link State Advertisement
@@ -248,6 +247,22 @@
       <dd>体现全网的链路状态</dd>
       <dd>网络中有哪些路由器，各自编号是什么，每台路由器直连的网段是什么，开销是多少</dd>
       <div class="tips">点餐 - 先给客人看菜单/链路摘要；再根据客人需要上菜/详细链路状态</div>
+      <figure>
+        <img src="./imgs/ospf1.png" alt="">
+        <figcaption>OSPF 泛洪</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ospf2.png" alt="">
+        <figcaption>OSPF 泛洪</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ospf3.png" alt="">
+        <figcaption>OSPF 泛洪</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ospf4.png" alt="">
+        <figcaption>OSPF 确认</figcaption>
+      </figure>
       <dt>计算路由</dt>
       <dd>路由器根据自己维护的LSD创建一个带权有向图</dd>
       <dd>以自己为根，计算出最短路径树</dd>
@@ -393,7 +408,25 @@
         </tbody>
       </table>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>基于 链路状态协议 LCP - Link State Protocol</li>
+        <li>直接使用IP数据报泛洪广播</li>
+        <li>交换链路摘要信息</li>
+        <li>报文种类
+          <p>Hello</p>
+          <p>Database Description</p>
+          <p>Link State Request</p>
+          <p>Link State Update</p>
+          <p>Link State Acknowledgement</p>
+        </li>
+        <li>时间
+          <p>10s</p>
+          <p>30min</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://www.rfc-editor.org/rfc/rfc2328">RFC 2328 <span class="iconfont icon-share"></span></a></li>
