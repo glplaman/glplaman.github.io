@@ -200,7 +200,7 @@
     </dl>
     <h2>基本过程 Procedure</h2>
     <dl>
-      <dt>发现邻居</dt>
+      <dt>第 1 步：发送 Hello 报文（建立邻居关系）</dt>
       <dd>通过 <strong>问候分组 Hello</strong> - 组播</dd>
       <dd>所有邻居都可能跟自己交换链路状态信息</dd>
       <dd>发现和维持邻站</dd>
@@ -220,7 +220,7 @@
         <img src="./imgs/ospf0.png" alt="">
         <figcaption>OSPF报文格式</figcaption>
       </figure>
-      <dt>建立邻接关系</dt>
+      <dd>建立邻接关系</d>
       <dd>在网络中选举DR - Designated Router和BDR - Backup Designated Router，网络内所有路由器只与DR和BDR建立邻接关系
         <p>不筛选 N*(N-1)/2</p>
         <p>筛选 (N-2)*2+1</p>
@@ -230,19 +230,28 @@
         <p>不是跟所有邻居都建立邻接关系</p>
       </dd>
       <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd>
-      <dd>邻接关系确定后，泛洪向邻站发送 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息</dd>
-      <dt>传递链路状态信息</dt>
+      <dt>第 2 步：交换 DBD（Database Description）报文</dt>
+      <dd>邻接关系确定后，泛洪向邻站发送 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息
+        <p>描述本路由器的链路状态数据库（LSDB）的摘要信息（即 LSA 头部）</p>
+        <p>用于比较两个路由器的 LSDB 是否一致</p>
+      </dd>
+      <dt>第 3 步：发送 LSR（Link State Request）报文</dt>
+      <dd>在交换完 DBD 后，如果某一方发现自己的 LSDB 缺少某些 LSA 或对方有更新的版本，就会发送 <strong>链路状态请求分组 Link State Request</strong></dd>
       <dd>每台设备都有一个链路状态数据库 LSD - Link State Database</dd>
       <dd>LSD 中每一条记录就是链路状态公告 LSA - Link State Advertisement
         <p>直连网络的链路状态信息</p>
         <p>邻接路由器的链路状态信息</p>
         <p>每个 LSA 条目每隔30min刷新，以防止老化过期</p>
       </dd>
-      <dd>LSA 被封装在 <strong>链路状态更新分组 Link State Update</strong>，采用泛洪 Flooding 向所有邻接路由器发送
-        <p>采用触发更新 Triggered Update 和增量更新 Incremental Update </p>
-        <p>触发更新：一旦检测到网络变化，立即向受影响的邻居发送更新，不需要等待任何固定周期 - 最高效</p>
-        <p>增量更新机制，只发邻居需要的LSA</p>
-      </dd>
+      <dt>第 4 步：发送 LSU（Link State Update）报文</dt>
+      <dd>LSA 被封装在 <strong>链路状态更新分组 Link State Update</strong>，采用泛洪 Flooding 向所有邻接路由器发送</dd>
+      <dd>采用触发更新 Triggered Update 和增量更新 Incremental Update </dd>
+      <dd>触发更新：一旦检测到网络变化，立即向受影响的邻居发送更新，不需要等待任何固定周期 - 最高效</dd>
+      <dd>增量更新机制，只发邻居需要的LSA</dd>
+      <dt>第 5 步：发送 LSAck（Link State Acknowledgement）报文</dt>
+      <dd>收到 LSU 后，立即发送 LSAck 报文进行确认</dd>
+      <dd>LSAck 包含所确认的 LSA 头部（不含内容）</dd>
+      <dd>可单独发送，也可隐式嵌入在其他报文（如下一个 Hello 或 DBD）中</dd>
       <dd>收敛以后，区域内所有路由器具有相同的LSD - 查漏补缺</dd>
       <dd>体现全网的链路状态</dd>
       <dd>网络中有哪些路由器，各自编号是什么，每台路由器直连的网段是什么，开销是多少</dd>
