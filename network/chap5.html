@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>运输层 Transport Layer</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/css/diagram.css">
   <base target="_blank">
   <style>
     header {
@@ -17,6 +18,10 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       place-items: center;
+    }
+
+    .left tr td:nth-child(2) {
+      text-align: left;
     }
   </style>
 </head>
@@ -34,25 +39,82 @@
       </figure>
       <dt>概述 Overview</dt>
       <dd>OSI七层模型中的第4层</dd>
-      <dd>为应用进程提供端到端的逻辑通信服务</dd>
+      <dd>为应用进程提供端到端的逻辑通信服务
+        <p>运输层向高层用户屏蔽了下面网络核心的细节</p>
+      </dd>
       <dd>采用 <strong>端口</strong> 来标识不同的应用进程，实现进程间的准确通信</dd>
-      <div class="tips">
-        <p>运输层以下各层的任务：解决主机到主机的通信</p>
-        <p>计算机通信实际上应用进程之间的通信</p>
-      </div>
+      <figure>
+        <div class="diagram-wrap">
+          <div class="diagram" style="--ind:4">
+            <div class="f">Application layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+          <div class="diagram" style="--ind:3;--bg:#f40;--color:#fff;">
+            <div class="f">Transport layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+          <div class="diagram" style="--ind:2; ">
+            <div class="f">Network layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+          <div class="diagram" style="--ind:1">
+            <div class="f">Data-link layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+          <div class="diagram" style="--ind:0">
+            <div class="f">Physical layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+        </div>
+        <figcaption>第四层</figcaption>
+      </figure>
       <figure>
         <img src="./imgs/tl0.png" alt="">
         <figcaption>运输层架构</figcaption>
       </figure>
+      <div class="tips">
+        <p>运输层以下各层的任务：解决主机到主机的通信</p>
+        <p>计算机通信实际上应用进程之间的通信</p>
+        <p>复用 Multiplexing：发送端将多个低速信号合并到一个高速信道上进行传输</p>
+        <p>分用 Demultiplexing：接收端将通过复用技术合并在一起的信号，重新分离成原来的各个独立信号</p>
+      </div>
       <dt>服务类型Service</dt>
       <dd>面向连接的 TCP
         <p>Transmission Control Protocol</p>
         <p>传输控制协议</p>
+        <p>可靠信道</p>
       </dd>
       <dd>无连接的 UDP
         <p>User Datagram Protocol</p>
         <p>用户数据报协议</p>
+        <p>不可靠信道</p>
       </dd>
+      <table>
+        <caption>两个主要协议</caption>
+        <tbody>
+          <tr>
+            <td colspan="2">Application layer</td>
+          </tr>
+          <tr>
+            <td>UDP</td>
+            <td>TCP</td>
+          </tr>
+          <tr>
+            <td colspan="2">IP</td>
+          </tr>
+          <tr>
+            <td colspan="2">Data-link layer</td>
+          </tr>
+          <tr>
+            <td colspan="2">Physical layer</td>
+          </tr>
+        </tbody>
+      </table>
       <dt>职责 Responsibility</dt>
       <dd>运输层作为网络体系结构中的关键层，为上层应用屏蔽了底层网络的复杂性，提供了灵活可靠的数据传输服务</dd>
       <dd>复用与分用
@@ -69,42 +131,19 @@
       <dd>拥塞控制
         <p>防止网络拥塞，提高网络利用率</p>
       </dd>
-      <dt>端口 Port</dt>
-      <dd>含义：端口是一种软件地址，用于标识同一台主机上的不同应用程序进程</dd>
-      <dd>作用域：只具有本地意义，即只在本机上区分不同的应用程序</dd>
+    </dl>
+    <h2>协议端口号 Protocol Port Number</h2>
+    <dl>
+      <dd>含义：简称端口；是一种软件地址，用于标识同一台主机上的不同 <strong>应用程序进程</strong>
+        <p>两个计算机中的进程要互相通信，不仅需要知道对方的IP地址，还要知道对方的端口号</p>
+      </dd>
+      <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序</dd>
       <dd>长度：16bit：0-65535</dd>
-      <table>
-        <caption>端口分类</caption>
-        <thead>
-          <tr>
-            <th>type</th>
-            <th>range</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Well-known Ports</td>
-            <td>熟知端口
-              <br>分配给常用重要服务
-              <br>0-1023
-            </td>
-          </tr>
-          <tr>
-            <td>Registered Ports</td>
-            <td>登记端口
-              <br>为没有熟知端口的应用程序使用，需在IANA登记
-              <br>1024-49151
-            </td>
-          </tr>
-          <tr>
-            <td>Ephemeral Ports</td>
-            <td>客户端使用端口
-              <br>临时端口，客户端程序随机选择使用
-              <br>49152-65535
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 开发环境常见端口 - Development</div>
+      <pre>http://localhost:8080</pre>
+      <pre>http://127.0.0.1:5173</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 生产环境常见端口 - Production</div>
+      <pre>https://glplaman.github.io:5173</pre>
       <table>
         <caption>熟知端口</caption>
         <thead>
@@ -170,26 +209,67 @@
           <td>5432</td>
         </tr>
       </table>
+      <table class="left">
+        <caption>端口分类</caption>
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Well-known Ports</td>
+            <td>熟知端口
+              <br>分配给常用重要服务
+              <br>0-1023
+            </td>
+          </tr>
+          <tr>
+            <td>Registered Ports</td>
+            <td>登记端口
+              <br>为没有熟知端口的应用程序使用，需在IANA登记
+              <br>1024-49151
+            </td>
+          </tr>
+          <tr>
+            <td>Ephemeral Ports</td>
+            <td>客户端使用端口
+              <br>临时端口，客户端程序随机选择使用
+              <br>49152-65535
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <dd><span class="iconfont icon-help"></span> 为什么 OSPF 没有分配端口？</dd>
       <!-- <dd>OSPF 直接运行在 IP 协议之上</dd> -->
       <!-- <dd>使用 IP 协议号 89</dd> -->
       <!-- <dd>OSPF 是网络层协议，直接封装在 IP 数据包中</dd> -->
       <!-- <dd>它有自己的协议头结构，不需要传输层的端口概念来区分应用</dd> -->
-      <dt>源端口号和目标端口号</dt>
+      <dt>源端口号和目标端口号 Source & Destination</dt>
       <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
       <dd>目标端口号用来标识接收方主机上的 <strong>特定</strong> 服务</dd>
       <dd>源端口号用于标识发送方的应用程序，以便接收方能正确回应</dd>
       <dd>数据总是从源端口流向目标端口</dd>
-      <dt>端口状态</dt>
+      <dt>端口状态 State</dt>
       <dd>LISTENING：等待连接请求</dd>
       <dd>ESTABLISHED：连接已建立</dd>
       <dd>CLOSED：端口未开放或连接已关闭</dd>
-      <dt>端口安全注意事项</dt>
+      <dt>注意事项 Caution</dt>
       <dd>不要随意开启不必要的端口</dd>
       <dd>定期检查开放的端口和服务</dd>
       <dd>使用防火墙限制端口访问权限</dd>
       <dd>注意端口扫描攻击防护</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 访问网页 HTTP</div>
+      <dt>端口工作机制</dt>
+      <dd>客户端 Client/C 发起连接
+        <p>客户端选择一个临时端口(49152-65535范围内)作为源端口</p>
+        <p>客户端指定服务器的熟知端口(0-1023)作为目标端口</p>
+      </dd>
+      <dd>服务器 Server/S 响应
+        <p>服务器使用其熟知端口作为源端口</p>
+        <p>服务器使用客户端的临时端口作为目标端口</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
       <dd>当用户在浏览器中访问/请求一个网站时
         <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 50123</p>
         <p>目标端口: Web服务器的标准HTTP端口 80</p>
@@ -214,17 +294,9 @@
         <p>目标端口: 客户端数据端口，如 52002</p>
       </dd>
       <dd><span class="iconfont icon-help"></span> 为什么 FTP 区分命令和数据通道？</dd>
-      <dt>工作机制总结</dt>
-      <dd>客户端发起连接
-        <p>客户端选择一个临时端口(49152-65535范围内)作为源端口</p>
-        <p>客户端指定服务器的熟知端口(0-1023)作为目标端口</p>
-      </dd>
-      <dd>服务器响应
-        <p>服务器使用其熟知端口作为源端口</p>
-        <p>服务器使用客户端的临时端口作为目标端口</p>
-      </dd>
+
     </dl>
-    <h2>Drill</h2>
+    <h2>实操 Drill</h2>
     <dl>
       <figure>
         <img src="../imgs/network/port/port0.jpg" alt="">
@@ -262,17 +334,14 @@
       <ol>
         <li>熟知端口分别有哪些？</li>
         <li>根据实操部分的内容，完成端口的测试</li>
-        <li>以纸质的形式提交实验报告</li>
-        <li>论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a>。</li>
       </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/difference-between-port-80-and-port-443/">Difference between port
-            80 and port 443 <span class="iconfont iconf-share"></span></a></li>
+            80 and port 443 <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/well-known-port-numbers/">Well-Known Port Numbers
-            <span class="iconfont iconf-share"></span></a></li>
-        <li><a href=""><span class="iconfont iconf-share"></span></a></li>
-        <li><a href=""><span class="iconfont iconf-share"></span></a></li>
+            <span class="iconfont icon-share"></span></a></li>
+        <!-- <li><a href=""><span class="iconfont icon-share"></span></a></li> -->
       </ol>
     </dl>
     <div id="footer"></div>

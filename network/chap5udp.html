@@ -28,29 +28,90 @@
         <img src="./imgs/udp0.png" alt="">
       </div>
       <dt>概述 Overview</dt>
-      <dd>UDP - User Datagram Protocol，用户数据报</dd>
-      <dd>不可靠 unreliable</dd>
-      <dd>不保证交付 Does not guarantee delivery</dd>
-      <dd>无需确认</dd>
-      <dt>特点 Features</dt>
-      <dd>无连接 connectionless</dd>
-      <dd>面向报文 - 但是不分段 segmenting、不重组 reassembling，也不实现序列号 sequence numbers，因此一次只能传输少量数据 - 流媒体通信/实时通信</dd>
-      <dd>没有拥塞控制 - 存在丢包</dd>
-      <dd>首部开销小 - 最少8个字节，仅包括首部</dd>
+      <dd>用户数据报 UDP - User Datagram Protocol</dd>
+      <dd>不可靠 unreliable
+        <p>不保证交付 Does not guarantee delivery</p>
+        <p>无需确认</p>
+        <p>无连接 connectionless</p>
+        <p>没有拥塞控制</p>
+        <p>存在丢包</p>
+      </dd>
+      <dd>首部开销小
+        <p>最少8个字节，仅包括首部</p>
+      </dd>
       <dd>最大努力交付 Best effort delivery</dd>
       <dd>支持单播、组播、多播</dd>
-      <figure>
-        <img src="./imgs/udp1.png" alt="">
-        <figcaption>UDP通信和端口</figcaption>
-      </figure>
       <div class="tips">
-        <p>复用 Multiplexing：发送端将多个低速信号合并到一个高速信道上进行传输</p>
-        <p>分用 Demultiplexing：接收端将通过复用技术合并在一起的信号，重新分离成原来的各个独立信号</p>
+        <p>简单方便；不可靠</p>
       </div>
       <dt>报文 Packet</dt>
+      <dd>面向报文
+        <p>一次传送和交付一个完整的报文</p>
+        <p>不分段 segmenting</p>
+        <p>不重组 reassembling</p>
+        <p>不实现序列号 sequence numbers</p>
+        <p>一次只能传输少量数据</p>
+        <p>流媒体通信/实时通信</p>
+      </dd>
+      <dd>选择合适大小的报文
+        <p>若报文太长，IP 层在传送时可能要进行分片，降低 IP 层的效率</p>
+        <p>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</p>
+      </dd>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 一对多通信</div>
+      <dd>一个源端口 → 多个目的端</dd>
+      <dd>典型应用
+        <p>Web 浏览器访问多个服务</p>
+        <p>视频直播推流</p>
+        <p>广播通知系统</p>
+        <figure>
+          <img src="./imgs/udp3.png" alt="">
+          <figcaption>一对多通信</figcaption>
+        </figure>
+      </dd>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 多对一通信</div>
+      <dd>多个源端口 → 一个目的端口</dd>
+      <dd>典型应用
+        <p>多人聊天室/即时通讯</p>
+        <p>文件上传服务</p>
+        <p>在线游戏服务器</p>
+        <p>物联网设备上报数据</p>
+        <figure>
+          <img src="./imgs/udp1.png" alt="">
+          <figcaption>一对多通信</figcaption>
+        </figure>
+      </dd>
+      <dt>报文格式 Format</dt>
+      <dd>包括首部和数据</dd>
+      <dd>首部 8byte - 开销小
+        <p>源端口：源端口号。在需要对方回信时选用。不需要时可用全 0</p>
+        <p>目的端口：目的端口号。终点交付报文时必须使用</p>
+        <p>长度：UDP 用户数据报的长度，其最小值是 8（仅有首部）</p>
+        <p>检验和：检测 UDP 用户数据报在传输中是否有错。有错就丢弃</p>
+      </dd>
+      <table>
+        <caption>UDP报文</caption>
+        <tr>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td>2</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>源端口</td>
+          <td>目标端口</td>
+          <td>长度</td>
+          <td>校验和</td>
+          <td>数据</td>
+        </tr>
+        <tr>
+          <td colspan="4">Header</td>
+          <td>Data</td>
+        </tr>
+      </table>
       <figure>
-        <img src="./imgs/t0.png" alt="">
-        <figcaption>UDP 报文</figcaption>
+        <img src="./imgs/udp2.png" alt="">
+        <figcaption>报文 Packet</figcaption>
       </figure>
       <dd>Source Port
         <p>an optional field, when meaningful, it indicates the port
