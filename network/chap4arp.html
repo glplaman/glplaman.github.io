@@ -44,17 +44,27 @@
       <!-- <img src="../imgs/network/network layer 1/幻灯片7.JPG" alt=""> -->
       <dt>过程 Procedure</dt>
       <figure>
-        <img src="./imgs/arp1.png" alt="">
-        <figcaption>拓扑</figcaption>
+        <img src="./imgs/arp.gif" alt="">
+        <figcaption>ARP 过程</figcaption>
       </figure>
-      <dd>PC0知道PC1的IP地址，但不知道PC1的MAC地址；自身的ARP表找不到PC1的MAC地址，因此不能封帧</dd>
-      <dd>PC0先缓存消息，然后以广播的形式发起ARP请求：我的IP地址是192.168.0.1，MAC地址是00D0.5857.5331，我找IP地址是192.168.0.3的主机的MAC地址。收到请回答！</dd>
-      <dd>除PC0外，PC1和其它主机都会收到这个广播帧</dd>
-      <dd>PC2和PC3分析后发现，广播要找的目标不是自己，丢弃该帧</dd>
-      <dd>PC1分析后，发现是询问自己的：以单播的形式给PC0回一个ARP响应：我是你找的192.168.0.3，我的MAC地址为0030.A313.6DA4；同时将PC0的IP地址和MAC地址保存到自己的ARP表中</dd>
-      <dd>除PC1外，其它主机都会收到这个单播帧</dd>
-      <dd>只有PC0发现是发给自己的，于是更新自己的ARP表；其它主机丢弃该单播帧</dd>
-      <dd>最后封帧之前缓存的消息并发送</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] PC1 发起对 PC3 的 ARP 请求</div>
+      <figure>
+        <img src="./imgs/arp1.png" alt="">
+        <figcaption>PC1 发起对 PC3 的 ARP 请求</figcaption>
+      </figure>
+      <dd>PC1知道PC3的IP地址，但不知道PC3的MAC地址；自身的ARP表找不到PC3的MAC地址，因此不能封帧交付</dd>
+      <dd>PC1先缓存消息，然后以 <strong>广播</strong>
+        的形式发起ARP请求：我的IP地址是192.168.0.1，MAC地址是00D0.5857.5331，我找IP地址是192.168.0.3的主机的MAC地址。收到请回答！</dd>
+      <dd>除PC1外，其它主机都会收到这个广播帧</dd>
+      <dd>PC2和PC4分析后发现，广播要找的目标不是自己，丢弃该帧</dd>
+      <dd>PC3分析后，发现是询问自己的：
+        <p>以 <strong>单播</strong> 的形式给PC1回一个ARP响应：我是你找的192.168.0.3，我的MAC地址为0030.A313.6DA4</p>
+        <p>同时将PC1的IP地址和MAC地址保存到自己的ARP表中</p>
+      </dd>
+      <dd>PC1收到ARP响应
+        <p>更新自己的ARP表</p>
+        <p>封帧之前缓存的消息并发送</p>
+      </dd>
       <dt>特点 Features</dt>
       <dd>IP地址与MAC地址并没有一一对应的关系，且不是永久不变的</dd>
       <dd>动态更新：设备重启，网卡更换等</dd>
