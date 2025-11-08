@@ -27,7 +27,7 @@
 </head>
 
 <body>
-  <section class="w">
+  <div class="w">
     <header>
       <h1>运输层</h1>
       <span>&commat;Transport Layer</span>
@@ -134,16 +134,17 @@
     </dl>
     <h2>协议端口号 Protocol Port Number</h2>
     <dl>
-      <dd>含义：简称端口；是一种软件地址，用于标识同一台主机上的不同 <strong>应用程序进程</strong>
-        <p>两个计算机中的进程要互相通信，不仅需要知道对方的IP地址，还要知道对方的端口号</p>
-      </dd>
-      <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序</dd>
-      <dd>长度：16bit：0-65535</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 开发环境常见端口 - Development</div>
       <pre>http://localhost:8080</pre>
       <pre>http://127.0.0.1:5173</pre>
       <div>[<span class="iconfont icon-keyboard"></span>] 生产环境常见端口 - Production</div>
       <pre>https://glplaman.github.io:5173</pre>
+      <dd>含义：简称端口；是一种软件地址，用于标识同一台主机上的不同 <strong>应用程序进程</strong>
+        <p>两个计算机中的进程要互相通信，不仅需要知道对方的IP地址，还要知道对方的端口号</p>
+      </dd>
+      <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序</dd>
+      <dd>长度：16bit：0-65535</dd>
+      <dt>常见端口分配</dt>
       <table>
         <caption>熟知端口</caption>
         <thead>
@@ -241,11 +242,43 @@
           </tr>
         </tbody>
       </table>
-      <dd><span class="iconfont icon-help"></span> 为什么 OSPF 没有分配端口？</dd>
-      <!-- <dd>OSPF 直接运行在 IP 协议之上</dd> -->
-      <!-- <dd>使用 IP 协议号 89</dd> -->
-      <!-- <dd>OSPF 是网络层协议，直接封装在 IP 数据包中</dd> -->
-      <!-- <dd>它有自己的协议头结构，不需要传输层的端口概念来区分应用</dd> -->
+      <div>[<span class="iconfont icon-keyboard"></span>] RIP</div>
+      <dd>RIP（Routing Information Protocol） 是应用层协议，依赖于 UDP - User Datagram Protocol 传输数据</dd>
+      <dd>需要指定一个 UDP 端口号 - 520，用于标识 RIP 报文</dd>
+      <dd>RIP 报文封装在 UDP 数据报中，再由 IP 层传输 - 对应协议号 17</dd>
+      <dd>下图表示：IP封装的数据报要交给上层的UDP处理；UDP的数据要交给上层的RIP处理</dd>
+      <figure>
+        <img src="./imgs/rip4.png" alt="">
+        <figcaption>Protocol 17</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rip3.png" alt="">
+        <figcaption>RIP 520</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] OSPF</div>
+      <dd>OSPF 没有分配端口？</dd>
+      <dd>可靠性由自身实现
+        <p>OSPF 自己实现了可靠传输机制（如 LSA 确认、重传、序列号等），不需要依赖 TCP</p>
+      </dd>
+      <dd>效率更高
+        <p>跳过 TCP/UDP 层可以减少开销，尤其在大型网络中频繁交换链路状态信息时更高效</p>
+        <p>不需要额外的首部开销 - TCP/20byte、UDP/8byte</p>
+        <p>不希望被拥塞控制限制 - 网络一旦变化，应尽快通告出去</p>
+        <p>不需要建立连接 - Hello报</p>
+        <p>应可靠送达 - UDP 虽轻量，但不可靠</p>
+      </dd>
+      <dd>组播支持更好
+        <p>OSPF 大量使用组播（如 224.0.0.5 和 224.0.0.6），而 UDP 虽然也支持组播，但 OSPF 直接基于 IP 可以更灵活地控制报文格式和行为</p>
+      </dd>
+      <dd>协议定位不同
+        <p>RIP 是简单的距离矢量协议，适合用 UDP</p>
+        <p>OSPF 是复杂的链路状态协议，需要更精细的控制，因此直接构建在 IP 之上</p>
+      </dd>
+      <figure>
+        <img src="./imgs/tl1.png" alt="">
+        <figcaption>OSPF</figcaption>
+      </figure>
+      <div class="tips">OSPF定制服务</div>
       <dt>源端口号和目标端口号 Source & Destination</dt>
       <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
       <dd>目标端口号用来标识接收方主机上的 <strong>特定</strong> 服务</dd>
@@ -294,7 +327,87 @@
         <p>目标端口: 客户端数据端口，如 52002</p>
       </dd>
       <dd><span class="iconfont icon-help"></span> 为什么 FTP 区分命令和数据通道？</dd>
-
+    </dl>
+    <h2>复用 Multiplexing 和分用 Demultiplexing</h2>
+    <dl>
+      <dd>复用和分用在每个层都有不同的体现</dd>
+      <dt>应用层</dt>
+      <dd>唯一面向应用进程</dd>
+      <dd>它使得多个应用程序可以同时、独立地使用网络，而互不干扰</dd>
+      <dd>这是现代多任务操作系统和互联网服务（Web、视频、聊天等并发）的基础</dd>
+      <dt>网络层</dt>
+      <dd>让多种上层协议（TCP/UDP/OSPF/ICMP）能共享 IP 服务，靠 Protocol 字段区分</dd>
+      <dd>它只能区分协议类型，不能区分具体应用</dd>
+      <div>1. 复用过程 - 发送端</div>
+      <dd>假设一台主机同时运行：
+        <p>Web 服务 - 使用 TCP</p>
+        <p>DNS 查询 - 使用 UDP</p>
+        <p>OSPF 路由进程 - 直接使用IP</p>
+        <p>执行 ping - 产生 ICMP</p>
+      </dd>
+      <dd>这些上层协议都会调用 IP 模块发送数据：</dd>
+      <pre>
+[TCP 段] → IP(Protocol=6)
+[UDP 报文] → IP(Protocol=17)
+[OSPF 报文] → IP(Protocol=89)
+[ICMP 报文] → IP(Protocol=1)</pre>
+      <dd>所有数据都被封装成 IP 数据包，通过同一个网络接口发出</dd>
+      <dd>网络层的复用：<strong>多个上层协议共享 IP 服务</strong></dd>
+      <div>2. 分用过程（接收端）</div>
+      <dd>当主机收到一个 IP 数据包时：
+        <p>解析 IP 头部；</p>
+        <p>读取 Protocol 字段；</p>
+        <p>根据值将 payload 交给对应模块：</p>
+      </dd>
+      <pre>
+IP(Protocol=6)  → 交给 TCP 模块
+IP(Protocol=17) → 交给 UDP 模块
+IP(Protocol=89) → 交给 OSPF 引擎
+IP(Protocol=1)  → 交给 ICMP 处理器</pre>
+      <dd>网络层的分用：准确投递给正确的上层协议</dd>
+      <dt>数据链路层</dt>
+      <dd>让多种网络层协议（IPv4/IPv6/ARP）能在同一物理链路上共存，靠 Type 字段区分</dd>
+      <dd>在标准以太网帧中，有一个 2 byte的 Type 字段，用于标识上层协议类型
+        <p>0x0800 IPv4</p>
+        <p>0x0806 ARP</p>
+        <p>0x86DD IPv6</p>
+        <p>0x8100 VLAN Tag（IEEE 802.1Q）</p>
+        <p>0x8847 / 0x8848 MPLS</p>
+      </dd>
+      <dd>发送时：不同网络层协议的数据都能通过链路层发送</dd>
+      <dd>接收时：链路层能判断这个帧该交给 IP 模块还是 ARP 模块等</dd>
+      <div>1. 复用过程 - 发送端</div>
+      <dd>假设主机要发送：
+        <p>一个 IPv4 数据包</p>
+        <p>一个 ARP 请求（查询 MAC 地址）</p>
+        <p>一个 IPv6 数据包</p>
+      </dd>
+      <dd>链路层会为它们分别构造以太网帧，并设置不同的 EtherType：</dd>
+      <pre>
+[IPv4 包] → Ethernet Frame (EtherType=0x0800)
+[ARP 请求] → Ethernet Frame (EtherType=0x0806)
+[IPv6 包] → Ethernet Frame (EtherType=0x86DD)</pre>
+      <dd>所有帧都通过同一个物理接口（如 eth0）发送出去</dd>
+      <dd>链路层的复用：多种网络层协议共享同一链路</dd>
+      <div>2.分用过程 - 接收端</div>
+      <dd>当网卡收到一个以太网帧：
+        <p>解析帧头部</p>
+        <p>读取 EtherType 字段</p>
+        <p>根据值将 payload 交给对应网络层模块</p>
+      </dd>
+      <pre>
+EtherType=0x0800 → 交给 IPv4 模块
+EtherType=0x86DD → 交给 IPv6 模块
+EtherType=0x0806 → 交给 ARP 模块</pre>
+      <dd>链路层的分用：确保 ARP 不被当成 IP 处理，IPv6 不被误认为 IPv4</dd>
+      <dt>其他链路技术的类似机制</dt>
+      <dd>PPP（点对点协议）：使用 Protocol Field（如 0x0021 = IPv4, 0x0057 = IPv6）</dd>
+      <dd>Wi-Fi（802.11）：在 LLC/SNAP 头部中携带 EtherType</dd>
+      <dd>MPLS：使用标签（Label）隐式指示上层协议，或通过显式空标</dd>
+      <dt>重要意义</dt>
+      <dd>协议共存：没有它们，一台设备只能运行一种网络协议（比如只能用 IPv4，不能同时用 IPv6 或 ARP）</dd>
+      <dd>模块解耦：各层只需关心自己的标识字段，无需了解上层细节</dd>
+      <dd>扩展性：新增协议（如未来的新网络层协议）只需分配新 EtherType 或 Protocol 号即可接入现有系统</dd>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -346,7 +459,7 @@
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </section>
+  </div>
 </body>
 
 </html>
