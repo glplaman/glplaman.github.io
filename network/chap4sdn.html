@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>软件定义网络 SDN</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>软件定义网络</h1>
+      <span>&commat;SDN</span>
+    </header>
+    <dl>
+      <dd>软件定义网络 SDN
+        <p>Software Defined Network</p>
+        <p>由斯坦福大学N. McKeown 于 2009 年首先提出</p>
+        <p>谷歌于 2010 ~ 2012 年的数据中心网络 B4 进行了运行验证</p>
+        <p>解决如何智能控制</p>
+      </dd>
+      <div class="tips">考研新增知识点</div>
+      <dd>传统网络
+        <p>交换机/路由器同时处理控制逻辑（如路由协议）和数据转发，设备独立运行，配置复杂</p>
+        <p>路由器彼此要交换信息才能获取或确定路由，进而转发</p>
+        <p>路由的确定 - 控制层面</p>
+        <p>数据的转发 - 包括最大前缀的匹配和最终的数据转发；数据层面</p>
+      </dd>
+      <dd>软件定义网络
+        <p>是一个体系结构，是一种设计、构建和管理网络的新方法或新概念</p>
+        <p>把控制层面和数据层面分离，让控制层面利用软件控制数据层面中的许多设备</p>
+        <p>路由器不再交换信息，由控制层面集中管理</p>
+        <p>路由器只做数据的转发</p>
+      </dd>
+      <figure>
+        <img src="./imgs/sdn.png" alt="">
+        <figcaption>Software Defined Network</figcaption>
+      </figure>
+      <dt>OpenFlow</dt>
+      <dd>SDN实现关键技术之一；非唯一</dd>
+      <dd>是控制层面和数据层面的通信接口</dd>
+      <dd>使得控制层面的控制器能够控制数据层面的设备</dd>
+      <dd>不再局限于网络层，还可以扩展到数据链路层、运输层</dd>
+      <dd>同时，还可以实现负载均衡等</dd>
+      <dd>路由器 → OpenFlow交换机/分组交换机/交换机</dd>
+      <dd>路由表 → 流表</dd>
+      <dt>Folw Table</dt>
+      <dd>首部字段值
+        <p>一组字段（12 个），用来使入分组的对应首部与之相匹配。匹配不上的分组被丢弃，或发送到远程控制器做更多的处理</p>
+        <p>入端口</p>
+        <p>源MAC地址、目的MAC地址</p>
+        <p>VLAN ID</p>
+        <p>IP源地址、IP目的地址</p>
+        <p>TCP源端口、TCP目的端口</p>
+      </dd>
+      <dd>计数器
+        <p>一组计数器</p>
+        <p>可包括已经与该表项匹配的分组数量，以及从该表项上次更新到现在经历的时间</p>
+      </dd>
+      <dd>动作
+        <p>一组动作</p>
+        <p>当分组匹配某个流表项时，把分组转发到指明的端口</p>
+        <p>或丢弃该分组</p>
+        <p>或把分组进行复制后再从多个端口转发出去</p>
+        <p>或重写分组的首部字段（第二、三和四层的首部字段）等</p>
+      </dd>
+      <table>
+        <caption>流表</caption>
+        <tr>
+          <td>首部字段值/匹配</td>
+          <td>计数器</td>
+          <td>动作</td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+      </table>
+      <div class="tips">流表项只写出需要精确匹配的字段，其余字段默认不关心 - wildcarded</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] SDN简单转发</div>
+      <dd>源：H5 或 H6</dd>
+      <dd>目的：H3 或 H4</dd>
+      <dd>路径：S3 → S1 → S2</dd>
+      <figure>
+        <img src="./imgs/sdn1.png" alt="">
+        <figcaption>SDN简单转发</figcaption>
+      </figure>
+      <table>
+        <caption>S3流表</caption>
+        <thead>
+          <tr>
+            <th>匹配</th>
+            <th>动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IP源地址 = 10.3.*.*；IP目的地址 = 10.2.*.*</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>S1流表</caption>
+        <thead>
+          <tr>
+            <th>匹配</th>
+            <th>动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>入端口 = 1；IP源地址 = 10.3.*.*；IP目的地址 = 10.2.*.*</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>S2流表</caption>
+        <thead>
+          <tr>
+            <th>匹配</th>
+            <th>动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IP源地址 = 10.3.*.*；IP目的地址 = 10.2.0.3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>IP源地址 = 10.3.*.*；IP目的地址 = 10.2.0.4</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] SDN负载均衡</div>
+      <dd>从 H3 发往主机 10.1.*.* 的分组，其转发路径为 S2 → S1 </dd>
+      <dd>从 H4 发往主机 10.1.*.* 的分组，其转发路径为 S2 → S3 → S1 </dd>
+      <figure>
+        <img src="./imgs/sdn2.png" alt="">
+        <figcaption>SDN负载均衡</figcaption>
+      </figure>
+      <table>
+        <caption>S2流表</caption>
+        <thead>
+          <tr>
+            <th>匹配</th>
+            <th>动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>入端口 = 3; IP目的地址 = 10.1.*.*</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>入端口 = 4; IP目的地址 = 10.1.*.*</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] SDN防火墙</div>
+      <dd>S2 中设置了防火墙</dd>
+      <dd>仅仅接收来自与 S3 相连的主机所发送的分组</dd>
+      <figure>
+        <img src="./imgs/sdn3.png" alt="">
+        <figcaption>SDN防火墙</figcaption>
+      </figure>
+      <table>
+        <caption>S2流表</caption>
+        <thead>
+          <tr>
+            <th>匹配</th>
+            <th>动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IP源地址 = 10.3.*.*; IP目的地址 = 10.2.0.4</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>IP源地址 = 10.3.*.*; IP目的地址 = 10.2.0.3</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>Feature</dt>
+      <dd>基于流的转发。流表规定转发规则</dd>
+      <dd>数据层面与控制层面分离。二者不在同一个设备中</dd>
+      <dd>网络控制功能位于数据层面交换机之外，用软件实现</dd>
+      <dd>可编程的网络</dd>
+      <dt>Merit</dt>
+      <dd>提高网络带宽利用率</dd>
+      <dd>网络运行更加稳定</dd>
+      <dd>管理更加高效简化</dd>
+      <dd>运行费用明显降低</dd>
+      <dt>Application</dt>
+      <dd>数据中心网络：VM迁移时动态更新流量路径（如Google B4 SDN骨干网）</dd>
+      <dd>广域网（SD-WAN）：智能选择最优链路（如MPLS与Internet混合使用）</dd>
+      <dd>5G/边缘计算：网络切片（Network Slicing）为不同服务提供定制化虚拟网络</dd>
+      <dd>网络安全：集中式流量分析+快速响应（如自动隔离攻击流量）</dd>
+    </dl>
+    <dl>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.geeksforgeeks.org/computer-networks/software-defined-networking/">What is Software
+            Defined Networking (SDN)? <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.baeldung.com/cs/software-defined-networking">What Is Software-Defined Networking? <span
+              class="iconfont icon-share"></span></a></li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </section>
+</body>
+
+</html>

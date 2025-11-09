@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多协议标签交换 MPLS</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <section class="w">
+    <header>
+      <h1>多协议标签交换</h1>
+      <span>&commat;MPLS</span>
+    </header>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 哈希Hash查找</div>
+      <div>
+        <p>空间换时间的优化策略，也是哈希查找（Hash Lookup）的核心思想</p>
+        <p>权衡 trade-off：牺牲存储资源，换取执行效率</p>
+        <pre>arrar = [{id:0,title:''},{id:1,title:''},{id:2,title:''}, ... ,{id:1000,title:''}]</pre>
+        <p>空间：仅原始数据</p>
+        <p>每次查找都会遍历，效率较低；O(n)</p>
+        <p>可以先用 Map 或 Object 建立索引 - <strong>给数据项打标签</strong></p>
+        <p>空间：多了一个哈希表，占用额外内存；约多 100 万个指针/引用</p>
+        <p>属于 集合类（Collection）数据结构，用于存储键值对 key-value pairs</p>
+        <pre>map = {label0：{id:0,title:''}，label1：{id:1,title:''}, ... , label1000：{id:1000,title:''}}</pre>
+        <p>查找时直接根据key获取数据；不需要比较，直接“跳”到目标位置；效率较高；O(1)</p>
+      </div>
+      <dd>更多案例
+        <p>快递驿站取件码</p>
+        <p>电影院座位号</p>
+        <p>图书索引ISBN</p>
+        <p>电话通讯录（按拼音首字母索引）</p>
+        <p>超市储物柜</p>
+      </dd>
+      <div class="tips">
+        <p>通过简短标识快速定位复杂对象</p>
+        <p>JavaScript - Map()、Object()</p>
+        <p>Java - Map()</p>
+        <p>Python - dict()</p>
+      </div>
+      <dt>Why</dt>
+      <dd>当网络很大时，<strong>查找路由表</strong> 要花费很多时间</dd>
+      <dd>在出现突发通信时，缓存会溢出，引起分组丢失、传输时延增大和服务质量下降</dd>
+      <dt>Solution</dt>
+      <dd>MPLS - MultiProtocol Label Switching</dd>
+      <dd>利用面向连接技术，使每个分组携带一个叫做标签 (label) 的小整数。标签交换路由器用标签值检索转发表，实现分组的快速转发</dd>
+      <dt>Frame</dt>
+      <dd>在以太网帧首部和 IP 数据报首部之间插入一个 4byte的首部</dd>
+      <figure>
+        <img src="./imgs/mpls1.png" alt="">
+        <figcaption>MPLS结构</figcaption>
+      </figure>
+      <dt>Procedure</dt>
+      <dd>在 MPLS 域的入口处，给每一个 IP 数据报打上固定长度标签
+        <p>控制逻辑在网络层；实际封装在链路层 - 2.5层协议</p>
+      </dd>
+      <dd>对打上标签的 IP 数据报在第二层（链路层）用硬件进行转发</dd>
+      <dd>采用硬件技术对打上标签的 IP 数据报进行转发就称为标签交换</dd>
+      <dd>可以使用多种数据链路层协议，如 PPP、以太网、ATM 以及帧中继等</dd>
+      <figure>
+        <img src="./imgs/mpls.png" alt="">
+        <figcaption>MPLS过程</figcaption>
+      </figure>
+      <table>
+        <caption>根据标签转发</caption>
+        <thead>
+          <tr>
+            <th>label</th>
+            <th>port</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>label0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>label1</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>label2</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">在网络入口打标签，中间节点靠标签交换，出口剥标签还原 IP，全程走预建的标签路径（LSP），实现高效、灵活、可控的转发</div>
+      <dt>Concept</dt>
+      <dd>MPLS域 - MPLS domain</dd>
+      <dd>标记交换路由器 LSR
+        <p>Label Switching Router</p>
+        <p>只根据标签进行交换 Swap，不关心 IP 内容；无需解析 IP 头，显著提升转发效率</p>
+      </dd>
+      <dd>标签分配协议 LDP - Label Distribution Protocol</dd>
+      <dd>标签交换路径 LSP
+        <p>Label Switched Path</p>
+        <p>一条从源到目的的单向标签路径</p>
+      </dd>
+      <dd>入口节点 - ingress node</dd>
+      <dd>出口节点 - egress node</dd>
+      <dt>Feature</dt>
+      <dd>MPLS 并没有取代 IP，而是作为一种 IP 增强技术</dd>
+      <dd>支持面向连接的服务质量</dd>
+      <dd>支持流量工程，平衡网络负载</dd>
+      <dd>有效地支持虚拟专用网 VPN</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+    <script>
+      let array = [{ id: 0, title: '' }, { id: 1, title: '' }, { id: 2, title: '' }, { id: 3, title: '' }, { id: 4, title: '' }]
+      let map = new Map(array.map(item => [item.id, item]))
+      console.log(map);
+    </script>
+  </section>
+</body>
+
+</html>
