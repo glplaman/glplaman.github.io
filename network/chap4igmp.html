@@ -17,7 +17,152 @@
       <span>&commat;IGMP</span>
     </header>
     <dl>
+      <dt>多播 Multicast</dt>
+      <dd>1988 年，Steve Deering 首次提出 IP 多播的概念</dd>
+      <dd>多播 (multicast)：以前曾译为组播</dd>
+      <dd>目的：更好地支持一对多通信；减轻网络中各种资源的消耗</dd>
+      <dd>一对多通信：一个源点发送到许多个终点</dd>
+      <figure>
+        <img src="./imgs/b0.png" alt="">
+        <figcaption>单播</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/b1.png" alt="">
+        <figcaption>多播</figcaption>
+      </figure>
+      <table class="txt-left">
+        <caption>广播 vs 多播</caption>
+        <tr>
+          <td>广播 Broadcast</td>
+          <td class="txt-left">发送方将数据包发送到同一网络内所有主机，无论这些主机是否需要该数据
+            <br>全1地址
+          </td>
+        </tr>
+        <tr>
+          <td>多播 Multicast</td>
+          <td class="txt-left">发送方将数据包发送给一组特定的接收者，只有加入该组的主机才会接收数据
+            <br>特定地址
+          </td>
+        </tr>
+      </table>
+      <dt>IP 多播 IP Multicast</dt>
+      <dd>在互联网上进行多播就叫做 IP 多播</dd>
+      <dd>互联网范围的多播要靠路由器来实现</dd>
+      <dd>能够运行多播协议的路由器称为多播路由器 multicast router</dd>
+      <dd>多播路由器也可以转发普通的单播 IP 数据报</dd>
+      <dd>从 1992 年起，在互联网上开始试验虚拟的多播主干网 MBONE (Multicast Backbone On the InterNEt)</dd>
+      <dd>相关标准
+        <p>IGMPv1：1989 年公布；RFC 1112；组播路由器 ←→ 主机</p>
+        <p>IGMPv2：1997 年公布；RFC 2236；对 IGMPv1 进行了更新</p>
+        <p>IGMPv3：2002 年 10 月公布；RFC 3376</p>
+      </dd>
+      <dt>多播地址 IP Address</dt>
+      <dd>使用 D 类地址 - 标识位 1110xxxx xxxxxxxx xxxxxxxx xxxxxxxx</dd>
+      <dd>每一个 D 类地址标志一个多播组</dd>
+      <dd>地址范围：<strong>224.0.0.0 ~ 239.255.255.255</strong></dd>
+      <dd>多播地址只能用于目的地址，不能用于源地址</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 多播业务 - RIP</div>
+      <figure>
+        <img src="./imgs/rip4.png" alt="">
+        <img src="./imgs/rip3.png" alt="">
+        <figcaption>多播业务</figcaption>
+      </figure>
+      <dt>组播管理 IGMP</dt>
       <dd>IGMP - Internet Group Management Protocol</dd>
+      <dd>多播路由器知道：
+        <p>组是否存在：有无成员；不关心：成员数量多少、分布在哪些网络上</p>
+        <p>是否有成员加入或退出组</p>
+      </dd>
+      <dd>主机：
+        <p>加入哪个组</p>
+      </dd>
+      <figure>
+        <img src="./imgs/b2.png" alt="">
+        <figcaption>多播管理</figcaption>
+      </figure>
+      <dd>路由选择协议复杂
+        <p>洪泛 flooding与剪除</p>
+        <p>隧道技术 tunneling</p>
+        <p>基于核心的发现技术</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 多播路由</div>
+      <dd>多播组 M2：(D, E, F)</dd>
+      <dd>多播组 M1：(A, B, C)</dd>
+      <dd>路由器 R 不应当向网络 N3 转发多播组 M1 的分组</dd>
+      <figure>
+        <img src="./imgs/b3.png" alt="">
+        <figcaption>多播管理</figcaption>
+      </figure>
+      <dd>动态适应：必须动态地适应多播组成员的变化（这时网络拓扑并未发生变化），因为每一台主机可以随时加入或离开一个多播组</dd>
+      <dd>入组邀请：多播数据报可以由没有加入多播组的主机发出，也可以通过没有组成员的接入网络</dd>
+      <dd>多播路由器在转发多播数据报时，不能仅仅根据多播数据报中的目的地址，还要考虑这个多播数据报从什么地方来和要到什么地方去</dd>
+      <dt>IP 和 IGMP</dt>
+      <dd>IP 负责多播数据的传输</dd>
+      <dd>IGMP 负责管理谁想接收这些多播数据
+        <p>IGMP 报文加上 IP 首部构成 IP 数据报 - 整个网际协议 IP 的一个组成部分</p>
+      </dd>
+      <figure>
+        <img src="./imgs/arp0.png" alt="">
+        <figcaption>IP 和 IGMP</figcaption>
+      </figure>
+      <dt>工作阶段 Phase</dt>
+      <dd>加入多播组
+        <p>当某个主机申请加入多播组时，该主机向多播组的多播地址发送 IGMP <strong>成员报告报文</strong>，声明自己要成为该组的成员</p>
+        <p>本地的多播路由器收到 IGMP 报文后，将组成员关系转发给互联网上的其他多播路由器</p>
+      </dd>
+      <dd>探询组成员变化情况
+        <p>本地多播路由器周期性（125s）地向所有组发送 IGMP <strong>成员查询报文</strong>，探询本地局域网上的主机，以便知道这些主机是否还继续是组的成员</p>
+        <p>查询报文中携带一个随机数N来表示发送时延，范围 0 - 10</p>
+        <p>获得最小时延的主机优先响应；同一个组的其它成员就无需再响应 - 响应抑制</p>
+        <p>只要对某个组有一个主机响应，那么多播路由器就认为这个组是活跃的</p>
+        <p>但一个组在经过几次的探询后仍然没有一个主机响应，则不再将该组的成员关系转发给其他的多播路由器</p>
+      </dd>
+      <dd>离开多播组
+        <p>成员主动发送 IGMP <strong>离开组报文</strong></p>
+        <p>也可以默默离开 - 不回复查询报文离开组</p>
+      </dd>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>IGMP用于在主机和直接相连的组播路由器之间维护组播组成员关系（）。</li>
+        <li>IP组播地址属于D类地址，其范围是224.0.0.0 到 239.255.255.255（）。</li>
+        <li>组播报文在网络中传输时，其目的MAC地址与单播报文相同。</li>
+        <li>组播报文使用特殊的组播MAC地址，由IP组播地址映射而来，格式为01-00-5E-xx-xx-xx（）。</li>
+        <li>224.0.0.1 是一个永久组地址，代表本地子网中的所有主机（）。</li>
+        <li>组播通信只能在局域网内进行，无法跨越路由器传输（）。</li>
+        <li>多播路由器定时向所有组发送成员查询报文，每个组内只需要一个成员响应即可。（）</li>
+        <li>以下哪个IP地址属于组播地址？()</li>
+        <p>A. 192.168.1.1 </p>
+        <p>B. 223.255.255.255 </p>
+        <p>C. 224.0.1.10 </p>
+        <p>D. 240.0.0.1</p>
+        <!-- c -->
+        <li>IGMPv2 报文中，用于主机离开组播组的报文类型是？()</li>
+        <p>A. 成员查询（Membership Query） </p>
+        <p>B. 成员报告（Membership Report） </p>
+        <p>C. 离开组（Leave Group） </p>
+        <p>D. 确认应答（ACK）</p>
+        <!-- c -->
+        <li>下列协议中，主要用于组播路由的是？（）</li>
+        <p>A. OSPF </p>
+        <p>B. RIP </p>
+        <p>C. PIM </p>
+        <p>D. ICMP</p>
+        <li>以下关于组播的说法，错误的是？()</li>
+        <p>A. 组播可以有效节省网络带宽</p>
+        <p>B. 组播源只发送一份数据，网络中间节点负责复制转发</p>
+        <p>C. 所有加入同一组播组的主机必须位于同一个物理网络</p>
+        <p>D. 组播适用于视频会议、在线直播等一对多应用</p>
+        <!-- c -->
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a
+            href="https://www.bilibili.com/video/BV1H4411M7ai/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">组播IGMP协议
+            <span class="iconfont icon-videocam"></span></a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
