@@ -144,36 +144,42 @@
       <dd>VPN 网络 VPN Connections</dd>
       <dd>云服务 Cloud Services</dd>
       <dt>报文 Packet</dt>
-      <dd>源端口</dd>
-      <dd>目标端口</dd>
-      <dd>序号：32bit；TCP报文数据部分第一个字节的序号；增加到最大值后，重新回到0；第一个随机产生</dd>
-      <dd>确认号：32bit；对待发TCP报文数据部分的第一个字节序号的确认；增加到最大值后，重新回到0；控制字段ACK为1时才有效；如果确认号为n，则表示序号n-1之前的数据已经收到，现在希望接收序号为n的数据
+      <dd>源端口 Source Port</dd>
+      <dd>目标端口 Destination Port</dd>
+      <dd>序号 Sequence Number：
+        <p>32bit</p>
+        <p>TCP报文数据部分第一个字节的序号</p>
+        <p>增加到最大值后，重新回到0</p>
+        <p>第1个随机产生</p>
       </dd>
-      <dd>数据偏移：4bit，以4B为单位；指的是TCP报文首部的长度；首部固定长度是20字节，所以该字段最小值为0101；相应的，最大值为1111，对应首部最大的长度为60字节</dd>
-      <dd>窗口：16bit，指定数据发送方的发送能力，同时也表示了自己的接收能力；这种根据接收方的接收能力来控制发送方的发送能力，称为流量控制</dd>
+      <dd>确认号 Acknowledgment Number：
+        <p>32bit</p>
+        <p>表示接收方期望收到的 下一个字节的序号</p>
+        <p>控制字段ACK为1时才有效</p>
+        <p>增加到最大值后，重新回到0</p>
+        <p>表示序号n-1之前的数据已经收到，现在希望接收序号为n的数据</p>
+      </dd>
+      <dd>数据偏移 Data Offset：
+        <p>4bit，以4B为单位</p>
+        <!-- <p>TCP报文首部的长度</p> -->
+        <!-- <p>首部固定长度是20字节，所以该字段最小值为0101；相应的，最大值为1111，对应首部最大的长度为60字节</p> -->
+      </dd>
+      <dd>窗口 Window：
+        <p>16bit</p>
+        <p>指定数据发送方的发送能力，同时也表示了自己的接收能力</p>
+        <p>这种根据接收方的接收能力来控制发送方的发送能力 - 流量控制</p>
+      </dd>
       <figure>
         <img src="../imgs/network/tcp/s4.JPG" alt="">
         <figcaption>TCP报文格式</figcaption>
       </figure>
-      <dt>端口应用</dt>
+      <div>[<span class="iconfont icon-keyboard"></span>] 端口应用</div>
       <dd>客户端在端口49155向目标主机80端口的应用[WEB]发起HTTP请求</dd>
       <dd>服务端在80端口处理请求后，回发一个响应给客户端</dd>
       <figure>
         <img src="../imgs/network/tcp/s5.JPG" alt="">
         <figcaption>端口应用</figcaption>
       </figure>
-      <dt>序号和确认号应用</dt>
-      <dd>A发送序号为201开始的报文，长度是100；同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</dd>
-      <dd>B发送序号为800开始的报文，长度是200；同时对A发送的序号300之前的报文进行确认，并希望收到A序号301开始的报文</dd>
-      <figure>
-        <img src="../imgs/network/tcp/s6.JPG" alt="">
-        <figcaption>序号和确认号应用</figcaption>
-      </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中，序号为[701]
-      </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 已知发送窗口大小为500，某主机收到的确认号为201。如果已经发送了300B的数据，则还可以发送[400B]的数据
-      </div>
-      <dd>[分析]发送了300B，对方确认了200B，确认过的数据报被移出缓存，窗口仅仅保留没有确认的数据报，即：还有100B没有确认；窗口大小是500，所以还可以发送400B</dd>
     </dl>
     <h2>可靠传输 Reliable</h2>
     <dl class="target-cont">
@@ -183,6 +189,30 @@
         <img src="../imgs/network/tcp/s7.JPG" alt="">
         <figcaption>可靠传输</figcaption>
       </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 序号和确认号应用</div>
+      <dd>A发送序号为201开始的报文，长度是100
+        <p>下一次发送时，A 的序号将变为 301</p>
+        <p>同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</p>
+      </dd>
+      <dd>B发送序号为800开始的报文，长度是200
+        <p>同时对A发送的序号300之前的报文进行确认，并希望收到A序号301开始的报文</p>
+      </dd>
+      <figure>
+        <img src="../imgs/network/tcp/s6.JPG" alt="">
+        <figcaption>序号和确认号应用</figcaption>
+      </figure>
+      <dd>
+        这是一个典型的 全双工通信 场景：
+        <p>A 向 B 发送 100 字节数据（序号 201~300），同时确认 B 的数据（确认号 800）</p>
+        <p>B 向 A 发送 200 字节数据（序号 800~999），同时确认 A 的数据（确认号 301）</p>
+      </dd>
+      <dd> 如果 A 没有收到 B 的响应，启动 超时重传机制，重新发送序号为 201 的报文。 直到收到 ACK=301 的确认为止</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中，序号为[701]
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 已知发送窗口大小为500，某主机收到的确认号为201。如果已经发送了300B的数据，则还可以发送[400B]的数据
+      </div>
+      <dd>[分析]发送了300B，对方确认了200B，确认过的数据报被移出缓存，窗口仅仅保留没有确认的数据报，即：还有100B没有确认；窗口大小是500，所以还可以发送400B</dd>
+
     </dl>
     <h2>流量控制 Traffic Control</h2>
     <dl class="target-cont">

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>协议端口号 Protocol Port Number</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/css/diagram.css">
+  <base target="_blank">
+  <style>
+    header {
+      background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/08/L2F-Protocol.webp);
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      place-items: center;
+    }
+
+    .left tr td:nth-child(2) {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>协议端口号</h1>
+      <span>&commat;Port</span>
+    </header>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 开发环境常见端口 - Development</div>
+      <pre>http://localhost:8080</pre>
+      <pre>http://127.0.0.1:5173</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 生产环境常见端口 - Production</div>
+      <pre>https://glplaman.github.io:5173</pre>
+      <dd>含义：简称端口；是一种软件地址，用于标识同一台主机上的不同 <strong>应用程序进程</strong>
+        <p>两个计算机中的进程要互相通信，不仅需要知道对方的IP地址，还要知道对方的端口号</p>
+      </dd>
+      <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序</dd>
+      <dd>长度：16bit：0-65535</dd>
+      <dt>常见端口分配</dt>
+      <table>
+        <caption>熟知端口</caption>
+        <thead>
+          <tr>
+            <th>protocol</th>
+            <th>port</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>FTP</td>
+          <td>20 / 21</td>
+        </tr>
+        <tr>
+          <td>SSH</td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <td>Telnet</td>
+          <td>23</td>
+        </tr>
+        <tr>
+          <td>SMTP</td>
+          <td>25</td>
+        </tr>
+        <tr>
+          <td>DNS</td>
+          <td>53</td>
+        </tr>
+        <tr>
+          <td>HTTP</td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <td>HTTPS</td>
+          <td>443</td>
+        </tr>
+        <tr>
+          <td>POP3</td>
+          <td>110</td>
+        </tr>
+        <tr>
+          <td>RIP</td>
+          <td>520</td>
+        </tr>
+        <tr>
+          <td>DHCP</td>
+          <td>67 / 68</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>3306</td>
+        </tr>
+        <tr>
+          <td>Redis</td>
+          <td>6379</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>27017</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>5432</td>
+        </tr>
+      </table>
+      <table class="left">
+        <caption>端口分类</caption>
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Well-known Ports</td>
+            <td>熟知端口
+              <br>分配给常用重要服务
+              <br>0-1023
+            </td>
+          </tr>
+          <tr>
+            <td>Registered Ports</td>
+            <td>登记端口
+              <br>为没有熟知端口的应用程序使用，需在IANA登记
+              <br>1024-49151
+            </td>
+          </tr>
+          <tr>
+            <td>Ephemeral Ports</td>
+            <td>客户端使用端口
+              <br>临时端口，客户端程序随机选择使用
+              <br>49152-65535
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] RIP</div>
+      <dd>RIP（Routing Information Protocol） 是应用层协议，依赖于 UDP - User Datagram Protocol 传输数据</dd>
+      <dd>需要指定一个 UDP 端口号 - 520，用于标识 RIP 报文</dd>
+      <dd>RIP 报文封装在 UDP 数据报中，再由 IP 层传输 - 对应协议号 17</dd>
+      <dd>下图表示：IP封装的数据报要交给上层的UDP处理；UDP的数据要交给上层的RIP处理</dd>
+      <figure>
+        <img src="./imgs/rip4.png" alt="">
+        <figcaption>Protocol 17</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rip3.png" alt="">
+        <figcaption>RIP 520</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] OSPF</div>
+      <dd>OSPF 没有分配端口？</dd>
+      <dd>可靠性由自身实现
+        <p>OSPF 自己实现了可靠传输机制（如 LSA 确认、重传、序列号等），不需要依赖 TCP</p>
+      </dd>
+      <dd>效率更高
+        <p>跳过 TCP/UDP 层可以减少开销，尤其在大型网络中频繁交换链路状态信息时更高效</p>
+        <p>不需要额外的首部开销 - TCP/20byte、UDP/8byte</p>
+        <p>不希望被拥塞控制限制 - 网络一旦变化，应尽快通告出去</p>
+        <p>不需要建立连接 - Hello报</p>
+        <p>应可靠送达 - UDP 虽轻量，但不可靠</p>
+      </dd>
+      <dd>组播支持更好
+        <p>OSPF 大量使用组播（如 224.0.0.5 和 224.0.0.6），而 UDP 虽然也支持组播，但 OSPF 直接基于 IP 可以更灵活地控制报文格式和行为</p>
+      </dd>
+      <dd>协议定位不同
+        <p>RIP 是简单的距离矢量协议，适合用 UDP</p>
+        <p>OSPF 是复杂的链路状态协议，需要更精细的控制，因此直接构建在 IP 之上</p>
+      </dd>
+      <figure>
+        <img src="./imgs/tl1.png" alt="">
+        <figcaption>OSPF</figcaption>
+      </figure>
+      <div class="tips">OSPF定制服务</div>
+      <dt>源端口号和目标端口号 Source & Destination</dt>
+      <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
+      <dd>目标端口号用来标识接收方主机上的 <strong>特定</strong> 服务</dd>
+      <dd>源端口号用于标识发送方的应用程序，以便接收方能正确回应</dd>
+      <dd>数据总是从源端口流向目标端口</dd>
+      <dt>端口状态 State</dt>
+      <dd>LISTENING：等待连接请求</dd>
+      <dd>ESTABLISHED：连接已建立</dd>
+      <dd>CLOSED：端口未开放或连接已关闭</dd>
+      <dt>注意事项 Caution</dt>
+      <dd>不要随意开启不必要的端口</dd>
+      <dd>定期检查开放的端口和服务</dd>
+      <dd>使用防火墙限制端口访问权限</dd>
+      <dd>注意端口扫描攻击防护</dd>
+      <dt>端口工作机制</dt>
+      <dd>客户端 Client/C 发起连接
+        <p>客户端选择一个临时端口(49152-65535范围内)作为源端口</p>
+        <p>客户端指定服务器的熟知端口(0-1023)作为目标端口</p>
+      </dd>
+      <dd>服务器 Server/S 响应
+        <p>服务器使用其熟知端口作为源端口</p>
+        <p>服务器使用客户端的临时端口作为目标端口</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
+      <dd>当用户在浏览器中访问/请求一个网站时
+        <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 50123</p>
+        <p>目标端口: Web服务器的标准HTTP端口 80</p>
+        <p>数据流向: 用户电脑(端口50123) → Web服务器(端口80)</p>
+      </dd>
+      <dd>当Web服务器返回响应时
+        <p>源端口: Web服务器的HTTP端口 80</p>
+        <p>目标端口: 用户电脑之前使用的临时端口 50123</p>
+        <p>数据流向: Web服务器(端口80) → 用户电脑(端口50123)</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 发送邮件 SMTP</div>
+      <dd>源端口: 邮件客户端使用的临时端口，如 51001</dd>
+      <dd>目标端口: 邮件服务器的SMTP端口 25</dd>
+      <dd>数据流向: 用户电脑(端口51001) → 邮件服务器(端口25)</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 文件传输 FTP</div>
+      <dd>命令通道:
+        <p>源端口: 客户端命令端口，如 52001</p>
+        <p>目标端口: FTP服务器命令端口 21</p>
+      </dd>
+      <dd>数据通道:
+        <p>源端口: FTP服务器数据端口 20</p>
+        <p>目标端口: 客户端数据端口，如 52002</p>
+      </dd>
+      <dd><span class="iconfont icon-help"></span> 为什么 FTP 区分命令和数据通道？</dd>
+    </dl>
+    <h2>复用 Multiplexing 和分用 Demultiplexing</h2>
+    <dl>
+      <dd>复用和分用在每个层都有不同的体现</dd>
+      <dt>应用层</dt>
+      <dd>唯一面向应用进程</dd>
+      <dd>它使得多个应用程序可以同时、独立地使用网络，而互不干扰</dd>
+      <dd>这是现代多任务操作系统和互联网服务（Web、视频、聊天等并发）的基础</dd>
+      <dt>网络层</dt>
+      <dd>让多种上层协议（TCP/UDP/OSPF/ICMP）能共享 IP 服务，靠 Protocol 字段区分</dd>
+      <dd>它只能区分协议类型，不能区分具体应用</dd>
+      <div>1. 复用过程 - 发送端</div>
+      <dd>假设一台主机同时运行：
+        <p>Web 服务 - 使用 TCP</p>
+        <p>DNS 查询 - 使用 UDP</p>
+        <p>OSPF 路由进程 - 直接使用IP</p>
+        <p>执行 ping - 产生 ICMP</p>
+      </dd>
+      <dd>这些上层协议都会调用 IP 模块发送数据：</dd>
+      <pre>
+[TCP 段] → IP(Protocol=6)
+[UDP 报文] → IP(Protocol=17)
+[OSPF 报文] → IP(Protocol=89)
+[ICMP 报文] → IP(Protocol=1)</pre>
+      <dd>所有数据都被封装成 IP 数据包，通过同一个网络接口发出</dd>
+      <dd>网络层的复用：<strong>多个上层协议共享 IP 服务</strong></dd>
+      <div>2. 分用过程（接收端）</div>
+      <dd>当主机收到一个 IP 数据包时：
+        <p>解析 IP 头部；</p>
+        <p>读取 Protocol 字段；</p>
+        <p>根据值将 payload 交给对应模块：</p>
+      </dd>
+      <pre>
+IP(Protocol=6)  → 交给 TCP 模块
+IP(Protocol=17) → 交给 UDP 模块
+IP(Protocol=89) → 交给 OSPF 引擎
+IP(Protocol=1)  → 交给 ICMP 处理器</pre>
+      <dd>网络层的分用：准确投递给正确的上层协议</dd>
+      <dt>数据链路层</dt>
+      <dd>让多种网络层协议（IPv4/IPv6/ARP）能在同一物理链路上共存，靠 Type 字段区分</dd>
+      <dd>在标准以太网帧中，有一个 2 byte的 Type 字段，用于标识上层协议类型
+        <p>0x0800 IPv4</p>
+        <p>0x0806 ARP</p>
+        <p>0x86DD IPv6</p>
+        <p>0x8100 VLAN Tag（IEEE 802.1Q）</p>
+        <p>0x8847 / 0x8848 MPLS</p>
+      </dd>
+      <dd>发送时：不同网络层协议的数据都能通过链路层发送</dd>
+      <dd>接收时：链路层能判断这个帧该交给 IP 模块还是 ARP 模块等</dd>
+      <div>1. 复用过程 - 发送端</div>
+      <dd>假设主机要发送：
+        <p>一个 IPv4 数据包</p>
+        <p>一个 ARP 请求（查询 MAC 地址）</p>
+        <p>一个 IPv6 数据包</p>
+      </dd>
+      <dd>链路层会为它们分别构造以太网帧，并设置不同的 EtherType：</dd>
+      <pre>
+[IPv4 包] → Ethernet Frame (EtherType=0x0800)
+[ARP 请求] → Ethernet Frame (EtherType=0x0806)
+[IPv6 包] → Ethernet Frame (EtherType=0x86DD)</pre>
+      <dd>所有帧都通过同一个物理接口（如 eth0）发送出去</dd>
+      <dd>链路层的复用：多种网络层协议共享同一链路</dd>
+      <div>2.分用过程 - 接收端</div>
+      <dd>当网卡收到一个以太网帧：
+        <p>解析帧头部</p>
+        <p>读取 EtherType 字段</p>
+        <p>根据值将 payload 交给对应网络层模块</p>
+      </dd>
+      <pre>
+EtherType=0x0800 → 交给 IPv4 模块
+EtherType=0x86DD → 交给 IPv6 模块
+EtherType=0x0806 → 交给 ARP 模块</pre>
+      <dd>链路层的分用：确保 ARP 不被当成 IP 处理，IPv6 不被误认为 IPv4</dd>
+      <dt>其他链路技术的类似机制</dt>
+      <dd>PPP（点对点协议）：使用 Protocol Field（如 0x0021 = IPv4, 0x0057 = IPv6）</dd>
+      <dd>Wi-Fi（802.11）：在 LLC/SNAP 头部中携带 EtherType</dd>
+      <dd>MPLS：使用标签（Label）隐式指示上层协议，或通过显式空标</dd>
+      <dt>重要意义</dt>
+      <dd>协议共存：没有它们，一台设备只能运行一种网络协议（比如只能用 IPv4，不能同时用 IPv6 或 ARP）</dd>
+      <dd>模块解耦：各层只需关心自己的标识字段，无需了解上层细节</dd>
+      <dd>扩展性：新增协议（如未来的新网络层协议）只需分配新 EtherType 或 Protocol 号即可接入现有系统</dd>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <figure>
+        <img src="../imgs/network/port/port0.jpg" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <dd>配置WEB服务器：配置IP地址192.168.0.3</dd>
+      <dd>配置DNS服务器：配置IP地址192.168.0.2；添加WEB服务器对应的域名信息</dd>
+      <figure>
+        <img src="../imgs/network/port/port1.jpg" alt="">
+        <figcaption>配置网络设备</figcaption>
+      </figure>
+      <dd>配置IP地址192.168.0.1；添加DNS服务器地址</dd>
+      <figure>
+        <img src="../imgs/network/port/port2.jpg" alt="">
+        <figcaption>配置主机</figcaption>
+      </figure>
+      <dt>测试网络连通性</dt>
+      <dd>主机到WEB服务器的PING；[请补充测试结果]</dd>
+      <dd>主机到DNS服务器的PING；[请补充测试结果]</dd>
+      <dt>实时测试</dt>
+      <dd>打开主机的WEB浏览器；输入www.cnplaman.com，可以看到返回的WEB页面</dd>
+      <figure>
+        <img src="../imgs/network/port/port3.jpg" alt="">
+      </figure>
+      <dt>模拟测试</dt>
+      <dd>筛选协议</dd>
+      <figure>
+        <img src="../imgs/network/port/port4.jpg" alt="">
+      </figure>
+      <dd>打开主机的WEB浏览器；输入www.cnplaman.com，单步测试数据报的发送过程；主要查看端口</dd>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>熟知端口分别有哪些？</li>
+        <li>根据实操部分的内容，完成端口的测试</li>
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://networkencyclopedia.com/difference-between-port-80-and-port-443/">Difference between port
+            80 and port 443 <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://networkencyclopedia.com/well-known-port-numbers/">Well-Known Port Numbers
+            <span class="iconfont icon-share"></span></a></li>
+        <!-- <li><a href=""><span class="iconfont icon-share"></span></a></li> -->
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
