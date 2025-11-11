@@ -23,14 +23,14 @@
     </header>
     <dl>
       <img src="./imgs/packet.png" alt="">
-      <dt>基本组成</dt>
-      <dd>IP数据报由首部和数据2部分组成</dd>
+      <dt>基本组成 Contents</dt>
+      <dd>IP数据报由首部 header 和数据 data 两部分组成</dd>
       <dd>首部：包括：20byte的固定部分和可选部分；最大不超过60byte</dd>
       <dd>数据部分：可选；长度可变；超过最大传输单元MTU需要分片</dd>
       <table>
         <caption>IP数据报格式</caption>
         <thead>
-          <tr style="background-color: #dcdcaa;">
+          <tr>
             <th>4bit</th>
             <th>4bit</th>
             <th>8bit</th>
@@ -86,7 +86,14 @@
       <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500byte；长度超过MTU就必须分片，单独封帧再传输</dd>
       <dt>标识 Identification、标记 Flags、片偏移部分 Fragment Offset</dt>
       <dd>这3个字段用于IP数据报分片</dd>
-      <dd>Identification：16bit；同一个数据报的不同分片应具有相同的标识；每产生一个数据报[不是数据分片]就加1，充当计算器的功能</dd>
+      <dd>Identification：
+        <p>16bit - 65536</p>
+        <p>需要分片的时候，由发送方设置的一个标识</p>
+        <p>接收方根据这个值组装分片，还原IP数据报</p>
+        <p>同一个数据报的不同分片应具有相同的标识</p>
+        <p>每产生一个数据报这个值就模加1，充当计算器的功能</p>
+        <pre>(ID + 1) % 65536</pre>
+      </dd>
       <dd>Flags：3bit，包括：MF + DF + 保留位0
         <p>MF：More Fragment；1：还有分片；0：没有分片</p>
         <p>DF：Don’t Fragment；1：不允许分片；0：允许分片</p>
@@ -101,7 +108,7 @@
       <dt>协议 Protocol</dt>
       <dd>8bit</dd>
       <dd>它指明 IP 层之上的协议类型；如ICMP、TCP、UDP、OSPF等</dd>
-      <dd>当一台主机或路由器收到一个 IP 数据包时，需要知道：它的数据部分 payload 交给谁处理</dd>
+      <dd>当一台主机或路由器收到一个 IP 数据包时，需要知道：它的数据部分/有效载荷/payload 交给上层的谁处理</dd>
       <dd>接收端的 IP 模块根据该字段的值，将数据交给对应的上层协议模块处理</dd>
       <figure>
         <img src="./imgs/n10.png" alt="">
@@ -161,9 +168,9 @@
         <p>如果结果不全为1，则数据在传输过程中出现错误；被丢弃</p>
       </dd>
       <dt>源地址 Source Address</dt>
-      <dd>32bit</dd>
+      <dd>发送方/源主机IP地址；32bit</dd>
       <dt>目标地址 Destination Address</dt>
-      <dd>32bit</dd>
+      <dd>接收方/目标主机IP地址；32bit</dd>
     </dl>
     <h2>案例 Cases</h2>
     <dl>
@@ -226,14 +233,18 @@
       <div>[<span class="iconfont icon-keyboard"></span>] 采用固定首部的某IP数据报长度为1500B，目标网络的MTU是800B，求分片数量和偏移。</div>
       <table>
         <caption>原始数据报</caption>
-        <tr>
-          <th>Header</th>
-          <th>Data</th>
-        </tr>
-        <tr>
-          <td>20B</td>
-          <td>1480B，编号为0-1479</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Header</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20B</td>
+            <td>1480B，编号为0-1479</td>
+          </tr>
+        </tbody>
       </table>
       <dd>偏移量不是整数；分片方案失败</dd>
       <table>
@@ -289,26 +300,32 @@
         <li>给出的首部数据已经是16进制了</li>
         <li>首部校验和已经初始为 0000：第6个分组</li>
         <li>累计求和
-          <div>4500 + 003C = 453C</div>
-          <div>453C + 0000 = 453C</div>
-          <div>453C + 4000 = 853C</div>
-          <div>853C + 4011 = C54D</div>
-          <div>C54D + 0000 = C54D</div>
-          <div>C54D + C0A8 = <strong>1</strong>85F5 → 85F<strong>6</strong></div>
-          <div>85F6 + 0001 = 85F7</div>
-          <div>85F7 + C0A8 = <strong>1</strong>469F → 46A<strong>0</strong></div>
-          <div>46A0 + 00C7 = 4767</div>
+          <div class="txt-indent">
+            <div>4500 + 003C = 453C</div>
+            <div>453C + 0000 = 453C</div>
+            <div>453C + 4000 = 853C</div>
+            <div>853C + 4011 = C54D</div>
+            <div>C54D + 0000 = C54D</div>
+            <div>C54D + C0A8 = <strong>1</strong>85F5 → 85F<strong>6</strong></div>
+            <div>85F6 + 0001 = 85F7</div>
+            <div>85F7 + C0A8 = <strong>1</strong>469F → 46A<strong>0</strong></div>
+            <div>46A0 + 00C7 = 4767</div>
+          </div>
         </li>
         <li>结果取反
-          <div>~4767 = B898</div>
+          <div class="txt-indent">~4767 = B898</div>
         </li>
         <li>字段回填
-          <div>4500 003C 0000 4000 4011 B898 C0A8 0001 C0A8 00C7</div>
+          <div class="txt-indent">4500 003C 0000 4000 4011 B898 C0A8 0001 C0A8 00C7</div>
         </li>
       </ul>
     </dl>
-    <h2>Homework</h2>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>IP数据报的格式和常见字段含义</li>
+      </ol>
       <dt>Homework</dt>
       <ol>
         <li>IP数据报由首部和数据2部分组成（）。</li>
