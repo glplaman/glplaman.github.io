@@ -37,21 +37,21 @@
       <dt>概述 Overview</dt>
       <dd>RIP-Routing Information Protocol</dd>
       <dd>路由信息协议，属于内部网关路由协议IGP</dd>
-      <dd>当前版本为RIP2</dd>
-      <dd>每个路由器维护一组从它自己到其它每一个目的网络的距离向量记录</dd>
-      <dd>基于距离矢量 DV - Distance Vector路由选择协议
+      <dd>每个路由器维护一组从它自己到其它每一个目的网络的距离向量记录
+        <p><strong>基于距离矢量</strong> DV - Distance Vector</p>
         <p>使用跳数Hop count作为度量Metric到目标网络的距离，即：路由器到目标网络所经过的路由器个数</p>
-        <p>路由器到直连网络的距离为1</p>
-        <p>每经过一个网络，跳数+1</p>
-        <p>最大距离15</p>
-        <p>16表示不可达</p>
       </dd>
+      <dd>路由器到直连网络的距离为1</dd>
+      <dd>每经过一个网络，跳数+1</dd>
+      <dd>最大距离15</dd>
+      <dd>16表示不可达</dd>
       <dd>使用<strong>UDP</strong>协议，端口520，按照<span class="warn">固定时间</span>间隔，以<span class="warn">广播</span>RIP报文的方式，和
         <span class="warn">相邻</span>路由器交换<span class="warn">全部</span>路由信息 - 分布式路由选择协议
         <p>相邻 - Who</p>
         <p>全部 - What</p>
         <p>固定时间间隔 - When</p>
       </dd>
+      <dd>当前版本为RIP2</dd>
       <figure>
         <img src="./imgs/rip1.png" alt="">
         <figcaption>路由器1的RIP跳数count</figcaption>
@@ -628,6 +628,31 @@
         <p>指网络拓扑变差，比如链路断开、网络不可达、或到达某个网络的路径变长了</p>
         <p><strong>可能</strong> 基于邻居的过时信息产生错误路由，导致错误信息在邻居间循环，距离不断增加直到达到16跳的上限</p>
       </dd>
+      <figure>
+        <img src="./imgs/rip7.png" alt="">
+        <figcaption>路由正常</figcaption>
+      </figure>
+      <dd>网络N1路由故障后，R1立即设置距离为16，表示网络不可达</dd>
+      <figure>
+        <img src="./imgs/rip8.png" alt="">
+        <figcaption>路由故障</figcaption>
+      </figure>
+      <dd>R2在收到R1的更新报文之前，还发送原来的报文 - 因为这时 R2 并不知道 R1 出了故障</dd>
+      <dd>R1收到R2的更新报文后，误认为可经过R2到达网N1，于是更新自己的路由表，说：“我到网络N1的距离是3，下一跳经过R2”。然后将此更新信息发送给 R2</dd>
+      <figure>
+        <img src="./imgs/rip9.png" alt="">
+        <figcaption>R1误判路由</figcaption>
+      </figure>
+      <dd>R2收到R1的路由信息，更新自己的路由信息</dd>
+      <figure>
+        <img src="./imgs/rip10.png" alt="">
+        <figcaption>R2误判路由</figcaption>
+      </figure>
+      <dd>如此反复，直到距离增加为16，才知道网络N1是不可达</dd>
+      <figure>
+        <img src="./imgs/rip11.png" alt="">
+        <figcaption>慢收敛</figcaption>
+      </figure>
     </dl>
     <h2>命令 Command</h2>
     <dl>

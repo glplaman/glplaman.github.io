@@ -28,7 +28,7 @@
       <dd>ICMP 报文加上 IP 首部构成 IP 数据报 - 整个网际协议 IP 的一个组成部分</dd>
       <dd>协议号 Protocol 为 1</dd>
       <figure>
-        <img src="./imgs/arp0.png" alt="">
+        <img src="./imgs/icmp3.png" alt="">
         <figcaption>ICMP</figcaption>
       </figure>
       <dt>报文格式 Format</dt>
@@ -87,7 +87,7 @@
       </dd>
       <dd>SEQ NUMBER（16bit）
         <p>序列号，用于跟踪连续的Echo请求</p>
-        <p>每次发送新的Echo Request时，序列号递增</p>
+        <p>每次发送新的Echo Request时，序列号递增 - 模加1</p>
         <p>接收方返回相同的序号，便于确认是否收到所有包</p>
         <p>帮助检测丢包或乱序</p>
         <p>Ping的4个探测，ID相同；SEQ递增</p>
@@ -147,7 +147,30 @@
         </li>
       </ol>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>ICMP在协议栈中的位置和作用</li>
+        <li>ICMP的报文格式</li>
+        <li>ICMP的基本应用</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>结合 ping，简述ICMP报文中，ID和SEQ的作用和变化</li>
+        <li>分别使用静态路由和默认路由，实现两侧主机的通信；网络拓扑参考如下
+          <p>创建拓扑</p>
+          <p>配置IP地址</p>
+          <p>配置静态路由</p>
+          <p>利用 ping 测试网络的连通性，并分析可能出现的问题</p>
+          <p>删除配置的静态路由；重新配置默认路由</p>
+          <p>利用 ping 测试网络的连通性，并分析可能出现的问题</p>
+        </li>
+        <figure>
+          <img src="./imgs/default4.png" alt="">
+          <figcaption>拓扑</figcaption>
+        </figure>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/internet-control-message-protocol-icmp/">Internet Control Message

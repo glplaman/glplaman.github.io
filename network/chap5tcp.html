@@ -122,6 +122,7 @@
         <a id="tocont0" class="nav-link"><span>概述</span><span class="top-sub-menu">Overview</span></a>
         <a id="tocont1" class="nav-link"><span>报文</span><span class="top-sub-menu">Packet</span></a>
         <a id="tocont1" class="nav-link"><span>可靠传输</span><span class="top-sub-menu">Reliable</span></a>
+        <a id="tocont1" class="nav-link"><span>滑动窗口</span><span class="top-sub-menu">Window</span></a>
         <a id="tocont2" class="nav-link"><span>流量控制</span><span class="top-sub-menu">Traffic</span></a>
         <a id="tocont3" class="nav-link"><span>拥塞控制</span><span class="top-sub-menu">Congestion</span></a>
         <a id="tocont4" class="nav-link"><span>传输控制</span><span class="top-sub-menu">Transmission</span></a>
@@ -402,12 +403,19 @@
       <dt>连续ARQ协议</dt>
       <dd>流水线传输：在收到确认之前，发送方连续发出多个分组</dd>
       <dd>由于信道上一直有数据不间断地传送，流水线传输可获得很高的信道利用率</dd>
-      <dt>滑动窗口 Window</dt>
-      <dd>发送窗口：发送方维持一个发送窗口，位于发送窗口内的分组都可被连续发送出去，而不需要等待对方逐个确认</dd>
+
+    </dl>
+    <h2>滑动窗口 Window</h2>
+    <dl class="target-cont">
+      <dd>TCP支持全双工通信</dd>
+      <dd>通信的双方各自维护一个发送窗口和接收窗口，共4个窗口</dd>
+      <dd>简单起见，我们只考虑一个方向的通信</dd>
+      <dt>发送窗口</dt>
+      <dd>发送方维持一个发送窗口，位于发送窗口内的分组都可被连续发送出去，而不需要等待对方逐个确认</dd>
       <dd>发送窗口滑动：发送方每收到一个确认，就把发送窗口向前滑动一个分组的位置；已确认的数据应移出窗口</dd>
       <dd>累积确认 Cumulative Acknowledgment：接收方对按序到达的最后一个分组发送确认，表示：到这个分组为止的所有分组都已正确收到了</dd>
       <dd>窗口大小以字节为单位</dd>
-      <dd>窗口由接收方决定：通过 TCP 报文中的 Window 字段告知发送方自己还能接收多少数据</dd>
+      <dd>窗口大小由接收方B决定：通过 TCP 报文中的 Window 字段告知发送方A自己还能接收多少数据</dd>
       <figure>
         <img src="./imgs/arq5.png" alt="">
         <figcaption>发送窗口</figcaption>
@@ -428,6 +436,19 @@
       <dd>窗口大小是500，所以还可以发送 500 - 100 = 400B</dd>
       <figure>
         <img src="./imgs/arq4.png" alt="">
+        <figcaption>发送窗口</figcaption>
+      </figure>
+      <dt>接收窗口</dt>
+      <dd>接收方维持一个接收窗口，告诉发送方自己还能接收多少数据，用于 <strong>流量控制</strong></dd>
+      <dd>根据接收窗口的大小动态通知发送方</dd>
+      <dd>窗口左侧是已经已经按序到达且确认过的</dd>
+      <dd>窗口内部
+        <p>已接收但尚未按序（乱序到达）的数据，被 TCP 缓存在接收缓冲区中，但不能被确认 - 累积确认，只能确认到连续的最高序号</p>
+        <p>尚未收到但预期会收到的数据 - 空闲</p>
+      </dd>
+      <dd>窗口右侧：不应接收；若收到通常丢弃</dd>
+      <figure>
+        <img src="./imgs/tcp3.png" alt="">
         <figcaption>发送窗口</figcaption>
       </figure>
     </dl>
