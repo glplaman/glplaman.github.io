@@ -121,7 +121,7 @@
       <div id="menu" class="menu">
         <a id="tocont0" class="nav-link"><span>概述</span><span class="top-sub-menu">Overview</span></a>
         <a id="tocont1" class="nav-link"><span>报文</span><span class="top-sub-menu">Packet</span></a>
-        <a id="tocont1" class="nav-link"><span>停止等待</span><span class="top-sub-menu">ARQ</span></a>
+        <a id="tocont1" class="nav-link"><span>可靠传输</span><span class="top-sub-menu">Reliable</span></a>
         <a id="tocont2" class="nav-link"><span>流量控制</span><span class="top-sub-menu">Traffic</span></a>
         <a id="tocont3" class="nav-link"><span>拥塞控制</span><span class="top-sub-menu">Congestion</span></a>
         <a id="tocont4" class="nav-link"><span>传输控制</span><span class="top-sub-menu">Transmission</span></a>
@@ -342,7 +342,7 @@
       <dt>填充 Padding</dt>
       <dd>使整个 TCP 首部长度是 4byte的整数倍</dd>
     </dl>
-    <h2>停止等待协议 ARQ</h2>
+    <h2>可靠传输 Reliable</h2>
     <dl class="target-cont">
       <dd>IP 网络本身提供的是不可靠的传输</dd>
       <dt>可靠需求 Requirement</dt>
@@ -402,6 +402,7 @@
       <dt>连续ARQ协议</dt>
       <dd>流水线传输：在收到确认之前，发送方连续发出多个分组</dd>
       <dd>由于信道上一直有数据不间断地传送，流水线传输可获得很高的信道利用率</dd>
+      <dt>滑动窗口 Window</dt>
       <dd>发送窗口：发送方维持一个发送窗口，位于发送窗口内的分组都可被连续发送出去，而不需要等待对方逐个确认</dd>
       <dd>发送窗口滑动：发送方每收到一个确认，就把发送窗口向前滑动一个分组的位置；已确认的数据应移出窗口</dd>
       <dd>累积确认 Cumulative Acknowledgment：接收方对按序到达的最后一个分组发送确认，表示：到这个分组为止的所有分组都已正确收到了</dd>
@@ -433,11 +434,10 @@
     <h2>流量控制 Traffic Control</h2>
     <dl class="target-cont">
       <dd>Follow control</dd>
-      <dd>接收方控制发送方的发送窗口大小，让发送方不要发太快，以便接收方能来得及接收</dd>
-      <dd>利用滑动窗口机制实现</dd>
+      <dd>接收方控制发送方的发送窗口大小，让发送方不要发太快，以便接收方能来得及处理</dd>
       <dd>发送方可以多次发送；直到把发送窗口已满</dd>
       <dd>接收方可以累计确认</dd>
-      <dd>为避免0窗口导致双方无限等待下去，TCP为每个连接都创建了一个持续计时器。只要某一方收到0窗口，就启动计时器。计时到，就主动发送一个窗口探测报文，以便恢复正常数据通信
+      <dd>为避免0窗口导致双方无限等待下去，TCP 为每个连接都创建了一个持续计时器。只要某一方收到0窗口，就启动计时器。计时到，就主动发送一个窗口探测报文，以便恢复正常数据通信
       </dd>
       <figure>
         <img src="../imgs/network/tcp/s8.JPG" alt="">

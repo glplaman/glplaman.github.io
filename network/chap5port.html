@@ -23,6 +23,19 @@
     .left tr td:nth-child(2) {
       text-align: left;
     }
+
+    .stream {
+      border: none;
+    }
+
+    .stream td {
+      width: 80px;
+      border: none;
+    }
+
+    .stream td:not(:nth-child(2)) {
+      border: 1px solid #000000;
+    }
   </style>
 </head>
 
@@ -43,7 +56,7 @@
       </dd>
       <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序</dd>
       <dd>长度：16bit：0-65535</dd>
-      <dt>常见端口分配</dt>
+      <dt>常见端口分配 Port</dt>
       <table>
         <caption>熟知端口</caption>
         <thead>
@@ -192,7 +205,7 @@
       <dd>定期检查开放的端口和服务</dd>
       <dd>使用防火墙限制端口访问权限</dd>
       <dd>注意端口扫描攻击防护</dd>
-      <dt>端口工作机制</dt>
+      <dt>端口工作机制 Mechanism</dt>
       <dd>客户端 Client/C 发起连接
         <p>客户端选择一个临时端口(49152-65535范围内)作为源端口</p>
         <p>客户端指定服务器的熟知端口(0-1023)作为目标端口</p>
@@ -207,24 +220,72 @@
         <p>目标端口: Web服务器的标准HTTP端口 80</p>
         <p>数据流向: 用户电脑(端口50123) → Web服务器(端口80)</p>
       </dd>
+      <table class="stream">
+        <caption>HTTP请求</caption>
+        <tr>
+          <td>50123</td>
+          <td>→</td>
+          <td>80</td>
+        </tr>
+      </table>
       <dd>当Web服务器返回响应时
         <p>源端口: Web服务器的HTTP端口 80</p>
         <p>目标端口: 用户电脑之前使用的临时端口 50123</p>
         <p>数据流向: Web服务器(端口80) → 用户电脑(端口50123)</p>
       </dd>
+      <table class="stream">
+        <caption>HTTP响应</caption>
+        <tr>
+          <td>80</td>
+          <td>→</td>
+          <td>50123</td>
+        </tr>
+      </table>
       <div>[<span class="iconfont icon-keyboard"></span>] 发送邮件 SMTP</div>
       <dd>源端口: 邮件客户端使用的临时端口，如 51001</dd>
       <dd>目标端口: 邮件服务器的SMTP端口 25</dd>
       <dd>数据流向: 用户电脑(端口51001) → 邮件服务器(端口25)</dd>
+      <table class="stream">
+        <caption>发送邮件 SMTP</caption>
+        <tr>
+          <td>51001</td>
+          <td>→</td>
+          <td>25</td>
+        </tr>
+      </table>
+      <table class="stream">
+        <caption>收邮件 SMTP</caption>
+        <tr>
+          <td>25</td>
+          <td>→</td>
+          <td>51001</td>
+        </tr>
+      </table>
       <div>[<span class="iconfont icon-keyboard"></span>] 文件传输 FTP</div>
-      <dd>命令通道:
+      <dd>命令通道/控制链接:
         <p>源端口: 客户端命令端口，如 52001</p>
         <p>目标端口: FTP服务器命令端口 21</p>
       </dd>
-      <dd>数据通道:
+      <table class="stream">
+        <caption>控制链接 FTP</caption>
+        <tr>
+          <td>52001</td>
+          <td>→</td>
+          <td>21</td>
+        </tr>
+      </table>
+      <dd>数据通道/数据链接:
         <p>源端口: FTP服务器数据端口 20</p>
-        <p>目标端口: 客户端数据端口，如 52002</p>
+        <p>目标端口: 客户端数据端口，如 52002 - 协商</p>
       </dd>
+      <table class="stream">
+        <caption>数据链接 FTP</caption>
+        <tr>
+          <td>20</td>
+          <td>→</td>
+          <td>52002</td>
+        </tr>
+      </table>
       <dd><span class="iconfont icon-help"></span> 为什么 FTP 区分命令和数据通道？</dd>
     </dl>
     <h2>复用 Multiplexing 和分用 Demultiplexing</h2>
