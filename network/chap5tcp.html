@@ -152,9 +152,15 @@
       <dd>一个 TCP 报文段分为 <strong>首部</strong> 和 <strong>数据</strong> 两部分，而 TCP 的全部功能都体现在它首部中各字段的作用</dd>
       <dd>TCP 报文段首部的前 20 个字节是固定的，后面有 4n 字节是根据需要而增加的选项 (n 是整数)</dd>
       <dd>TCP 首部的最小长度是 20 字节</dd>
+      <dd>TCP 报文段长度 = TCP 首部长度 + 数据字段长度</dd>
+      <dd>最大报文段长度 MSS - Maximum Segment Size：每个 TCP 报文段中的数据字段的最大长度</dd>
       <figure>
-        <img src="../imgs/network/tcp/s4.JPG" alt="">
-        <figcaption>TCP报文格式</figcaption>
+        <img src="./imgs/tcp4.png" alt="">
+        <figcaption>TCP 报文格式</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/tcp5.png" alt="">
+        <figcaption>TCP 报文格式</figcaption>
       </figure>
       <dt>源端口 Source Port</dt>
       <dd>2byte</dd>
@@ -165,13 +171,14 @@
       <dd>服务端在80端口处理请求后，回发一个响应经过49155端口给客户端</dd>
       <dt>序号 Sequence Number</dt>
       <dd>4byte；32bit</dd>
-      <dd>TCP 是面向字节流的协议，序号是对整个字节流的编号，而不是对“消息”或“包”的编号</dd>
-      <dd>接收方根据序号知道这 1000 字节应如何按顺序重组</dd>
-      <dd>TCP 连接中传送的数据流中的 <strong>每一个字节</strong> 都有一个序号</dd>
+      <dd>当前报文段中 <strong>第一个数据字节</strong> 的序列号</dd>
+      <dd>TCP 是面向字节流的协议，<strong>每一个字节</strong> 都有一个序号
+        <p>包括链路建立成功的报文和后续0窗口的探测报文都会消耗序号</p>
+      </dd>
       <dd>增加到最大值后，重新回到0 - 模加</dd>
       <dd>第1个随机产生</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 序号应用</div>
-      <dd>TCP 报文长度1000byte；现有5000byte数据；加上初始序号为1001</dd>
+      <dd>TCP 报文长度 MSS 为1000byte；现有5000byte数据；加上初始序号为1001</dd>
       <dd>则：
         <p>第一个 TCP 报文：1001 - 2000</p>
         <p>第二个 TCP 报文：2001 - 3000</p>
@@ -207,11 +214,16 @@
       <dd>只有当 ACK = 1 时，确认号字段才有效。当 ACK = 0 时，确认号无效</dd>
       <dd>除了最初的 SYN 报文（建立连接的第一个包），所有后续 TCP 报文都必须将 ACK 置为 1</dd>
       <dd>是实现 <strong>可靠传输</strong> 的核心机制之一</dd>
+      <div class="tips">
+        <p>日常使用中，确认号和控制位ACK的常见表示方法有2种</p>
+        <p>1. 使用ACK表示确认号，除非特别说明是控制位；如ACK = 101，表示希望收到101序号的字节数据；序号100之前的数据已经收讫；默认控制位为1</p>
+        <p>2. 使用大小写区分；ACK表示控制位；ack表示确认号，如下例</p>
+      </div>
       <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
-      <div>A: ACK = 0；确认号 = 701</div>
-      <div>B: ACK = 1；确认号 = 701</div>
-      <div>C: ACK = 0；确认号 = 700</div>
-      <div>D: ACK = 1；确认号 = 700</div>
+      <div>A: ACK = 0；ack = 701</div>
+      <div>B: ACK = 1；ack = 701</div>
+      <div>C: ACK = 0；ack = 700</div>
+      <div>D: ACK = 1；ack = 700</div>
       <!-- B -->
       <div>[<span class="iconfont icon-keyboard"></span>] 序号和确认号应用</div>
       <dd>A发送序号为201开始的报文，长度是100</dd>
@@ -335,13 +347,41 @@
         <p>这种根据接收方的接收能力来控制发送方的发送能力 - <strong>流量控制</strong></p>
       </dd>
       <dd>窗口值经常在动态变化</dd>
+      <div class="tips">注意区分发送窗口和接收窗口的相对性</div>
       <dt>紧急指针 Urgent Pointer</dt>
-      <dd>占 2 字节</dd>
+      <dd>占 2byte</dd>
       <dd>在 URG = 1时，指出本报文段中的紧急数据的字节数（紧急数据结束后就是普通数据），指出了紧急数据的末尾在报文段中的位置</dd>
       <dt>选项 Options</dt>
       <dd>长度可变，最长可达 40byte</dd>
       <dt>填充 Padding</dt>
       <dd>使整个 TCP 首部长度是 4byte的整数倍</dd>
+      <table>
+        <caption>关键字</ca>
+        <tbody>
+          <tr>
+            <td>可靠性机制</td>
+            <td>Sequence Number + Acknowledgment Number
+              <br>Checksum
+            </td>
+          </tr>
+          <tr>
+            <td>流量控制</td>
+            <td>Window</td>
+          </tr>
+          <tr>
+            <td>连接管理</td>
+            <td>SYN、ACK、FIN</td>
+          </tr>
+          <tr>
+            <td>异常中断连接</td>
+            <td>RST</td>
+          </tr>
+          <tr>
+            <td>紧急数据处理</td>
+            <td>URG + Urgent Pointer</td>
+          </tr>
+        </tbody>
+      </table>
     </dl>
     <h2>可靠传输 Reliable</h2>
     <dl class="target-cont">
@@ -351,6 +391,7 @@
       <dd>不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据</dd>
       <dt>解决方案 Solution</dt>
       <dd>可靠的本质是 <strong>确认</strong> 和 <strong>超时重传</strong></dd>
+      <dd>序号 + 确认号：实现数据有序传输和重传机制的重要支撑</dd>
       <dt>停止等待协议 ARQ</dt>
       <dd>Automatic Repeat Request</dd>
       <dd>每发送完一个分组就停止发送，等待对方的确认。在收到确认后再发送下一个分组</dd>
@@ -455,13 +496,31 @@
     <h2>流量控制 Traffic Control</h2>
     <dl class="target-cont">
       <dd>Follow control</dd>
-      <dd>接收方控制发送方的发送窗口大小，让发送方不要发太快，以便接收方能来得及处理</dd>
+      <dd>接收方在每个 ACK 报文中，通过 Window 告知发送方自己的接收窗口 rwnd 大小 - 控制发送方不要发太快，以便接收方能来得及处理</dd>
+      <dd>发送方根据该值动态调整自己的发送窗口大小，确保不会发送超过接收方处理能力的数据</dd>
       <dd>发送方可以多次发送；直到把发送窗口已满</dd>
-      <dd>接收方可以累计确认</dd>
-      <dd>为避免0窗口导致双方无限等待下去，TCP 为每个连接都创建了一个持续计时器。只要某一方收到0窗口，就启动计时器。计时到，就主动发送一个窗口探测报文，以便恢复正常数据通信
+      <dd>接收方采用累计确认</dd>
+      <dt>0窗口 Zero Window</dt>
+      <dd>当接收方缓冲区满时，会通告窗口大小为 0
+        <p>ACK = 1; rwnd = 0</p>
       </dd>
+      <dd>发送方停止发送数据</dd>
+      <dd>但若之后接收方有空间了，却因 ACK 丢失等原因未能及时通知发送方，双方可能陷入死锁 - 双方无限等待</dd>
+      <dd>TCP 为每个连接都创建了一个持续计时器 persistence timer</dd>
+      <dd>只要发送方收到0窗口，就启动计时器。计时到，就主动发送一个窗口探测报文 Window Probe，以便恢复正常数据通信</dd>
+      <dd>接收方收到后必须回复 ACK，并携带当前真实窗口大小
+        <p>ACK = 1; rwnd = 200</p>
+      </dd>
+      <dd>发送方收到后，恢复传输</dd>
+      <dd>若收到窗口仍为 0，则重启计时器，继续等待
+        <p>ACK = 1; rwnd = 0</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 流量控制</div>
+      <dd>A 向 B 发送数据，MSS = 100 字节</dd>
+      <dd>在连接建立时，B 告诉 A：我的接收窗口 rwnd = 400字节</dd>
+      <dd>右侧为A的发送方窗口</dd>
       <figure>
-        <img src="../imgs/network/tcp/s8.JPG" alt="">
+        <img src="./imgs/tcp6.png" alt="">
         <figcaption>流量控制</figcaption>
       </figure>
     </dl>

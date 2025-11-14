@@ -38,7 +38,18 @@
       <dd>支持单播、组播、多播</dd>
       <div class="tips">
         <p>简单方便；不可靠</p>
+        <p>U·D·P = Ultra Delightful Prankster - 超可爱捣蛋鬼</p>
       </div>
+      <dt>常见应用</dt>
+      <dd>DNS - Domain Name System，域名系统</dd>
+      <dd>DHCP - Dynamic Host Configuration Protocol，动态主机配置协议</dd>
+      <dd>SNMP - Simple Network Management Protocol，简单网络管理协议</dd>
+      <dd>TFTP - Trivial File Transfer Protocol，简单文件传输协议</dd>
+      <dd>NFS - Network File System，网络文件系统；早期版本</dd>
+      <dd>VoIP - Voice over IP及实时音视频通信</dd>
+      <dd>流媒体 - Streaming Media</dd>
+      <dd>多播/组播应用 - Multicast</dd>
+      <dd>游戏通信 - Online Gaming</dd>
       <dt>报文 Packet</dt>
       <dd>面向报文
         <p>一次传送和交付一个完整的报文</p>
@@ -52,14 +63,15 @@
         <p>若报文太长，IP 层在传送时可能要进行分片，降低 IP 层的效率</p>
         <p>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</p>
       </dd>
-      <dt>报文格式 Format</dt>
+      <figure>
+        <img src="./imgs/udp2.png" alt="">
+        <figcaption>UDP报文</figcaption>
+      </figure>
+    </dl>
+    <h2>报文格式 Format</h2>
+    <dl>
       <dd>包括首部和数据</dd>
-      <dd>首部 8byte - 开销小
-        <p>源端口：源端口号。在需要对方回信时选用。不需要时可用全 0</p>
-        <p>目的端口：目的端口号。终点交付报文时必须使用</p>
-        <p>长度：UDP 用户数据报的长度，其最小值是 8（仅有首部）</p>
-        <p>检验和：检测 UDP 用户数据报在传输中是否有错。有错就丢弃</p>
-      </dd>
+      <dd>首部 8byte - 开销小</dd>
       <table>
         <caption>UDP报文</caption>
         <tr>
@@ -82,51 +94,17 @@
         </tr>
       </table>
       <figure>
-        <img src="./imgs/udp2.png" alt="">
-        <figcaption>报文 Packet</figcaption>
+        <img src="./imgs/rip3.png" alt="">
+        <figcaption>UDP报文</figcaption>
       </figure>
-      <div>[ <span class="iconfont icon-keyboard"></span> ] 一对多通信</div>
-      <dd>一个源端口 → 多个目的端</dd>
-      <dd>典型应用
-        <p>Web 浏览器访问多个服务</p>
-        <p>视频直播推流</p>
-        <p>广播通知系统</p>
-        <figure>
-          <img src="./imgs/udp3.png" alt="">
-          <figcaption>一对多通信</figcaption>
-        </figure>
-      </dd>
-      <div>[ <span class="iconfont icon-keyboard"></span> ] 多对一通信</div>
-      <dd>多个源端口 → 一个目的端口</dd>
-      <dd>典型应用
-        <p>多人聊天室/即时通讯</p>
-        <p>文件上传服务</p>
-        <p>在线游戏服务器</p>
-        <p>物联网设备上报数据</p>
-        <figure>
-          <img src="./imgs/udp1.png" alt="">
-          <figcaption>一对多通信</figcaption>
-        </figure>
-      </dd>
-      <dd>Source Port
-        <p>an optional field, when meaningful, it indicates the port
-          of the sending process, and may be assumed to be the port to which a
-          reply should be addressed in the absence of any other information.</p>
-        <p>If not used, a value of zero is inserted.</p>
-      </dd>
-      <dd>Destination Port
-        <p>has a meaning within the context of a particular internet destination address.</p>
-      </dd>
-      <dd>Length is the length
-        <p>in octets of this user datagram including this header and the data.</p>
-        <p>This means the minimum value of the length is eight.</p>
-      </dd>
-      <dd>Checksum
-        <p>the 16-bit one's complement of the one's complement sum of a
-          pseudo header of information from the IP header, the UDP header, and the
-          data, padded with zero octets at the end (if necessary) to make a
-          multiple of two octets.</p>
-      </dd>
+      <dt>源端口</dt>
+      <dd>源端口号。在需要对方回信时选用。不需要时可用全 0</dd>
+      <dt>目的端口</dt>
+      <dd>目的端口号。终点交付报文时必须使用</dd>
+      <dt>长度</dt>
+      <dd>UDP 用户数据报的长度，其最小值是 8（仅有首部）</dd>
+      <dt>检验和</dt>
+      <dd>检测 UDP 用户数据报在传输中是否有错。有错就丢弃</dd>
       <figure>
         <img src="../imgs/network/udp/幻灯片12.JPG" alt="">
         <figcaption>校验和 Check Sum</figcaption>
@@ -143,6 +121,32 @@
         <p>伪首部+首部+数据三部分采用二进制反码求和</p>
         <p>结果全为1则无差错；否则丢弃</p>
       </dd>
+    </dl>
+    <h2>工作模式 Mode</h2>
+    <dl>
+      <dt>一对多通信</dt>
+      <dd>一个源端口 → 多个目的端</dd>
+      <dd>典型应用
+        <p>Web 浏览器访问多个服务</p>
+        <p>视频直播推流</p>
+        <p>广播通知系统</p>
+        <figure>
+          <img src="./imgs/udp3.png" alt="">
+          <figcaption>一对多通信</figcaption>
+        </figure>
+      </dd>
+      <dt>多对一通信</dt>
+      <dd>多个源端口 → 一个目的端口</dd>
+      <dd>典型应用
+        <p>多人聊天室/即时通讯</p>
+        <p>文件上传服务</p>
+        <p>在线游戏服务器</p>
+        <p>物联网设备上报数据</p>
+        <figure>
+          <img src="./imgs/udp1.png" alt="">
+          <figcaption>多对一通信</figcaption>
+        </figure>
+      </dd>
       <dt>UDP vs TCP</dt>
       <dd>UDP只管发；TCP会控制整个通信过程</dd>
       <dd>UDP不会拆分报文；一个报文就是一个完整的消息；TCP会拆分成诺干字节，形成字节流</dd>
@@ -156,7 +160,30 @@
         <figcaption>对比2</figcaption>
       </figure>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>UDP特点</li>
+        <li>UDP报文格式</li>
+        <li>UDP应用</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译
+          <p>Source Port：an optional field, when meaningful, it indicates the port
+            of the sending process, and may be assumed to be the port to which a
+            reply should be addressed in the absence of any other information.</p>
+          <p>If not used, a value of zero is inserted.</p>
+          <p>Destination Port：has a meaning within the context of a particular internet destination address.</p>
+          <p>Length is the length：in octets of this user datagram including this header and the data. This means the
+            minimum value of the length is eight.</p>
+          <p>Checksum：the 16-bit one's complement of the one's complement sum of a
+            pseudo header of information from the IP header, the UDP header, and the
+            data, padded with zero octets at the end (if necessary) to make a
+            multiple of two octets.</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/user-datagram-protocol-udp/">User Datagram Protocol (UDP) <span
