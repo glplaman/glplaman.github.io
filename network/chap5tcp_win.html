@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滑动窗口 Window</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>滑动窗口</h1>
+      <span>&commat;Window</span>
+    </header>
+    <dl>
+      <dd>TCP支持全双工通信</dd>
+      <dd>通信的双方各自维护一个发送窗口和接收窗口，共4个窗口</dd>
+      <dd>简单起见，我们只考虑一个方向的通信</dd>
+      <dt>发送窗口 swnd</dt>
+      <dd>发送方维持一个发送窗口，位于发送窗口内的分组都可被连续发送出去，而不需要等待对方逐个确认</dd>
+      <dd>发送窗口滑动：发送方每收到一个确认，就把发送窗口向前滑动一个分组的位置；已确认的数据应移出窗口</dd>
+      <dd>累积确认 Cumulative Acknowledgment：接收方对按序到达的最后一个分组发送确认，表示：到这个分组为止的所有分组都已正确收到了</dd>
+      <dd>窗口大小以字节为单位</dd>
+      <dd>窗口大小由接收方B决定：通过 TCP 报文中的 Window 字段告知发送方A自己还能接收多少数据</dd>
+      <figure>
+        <img src="./imgs/arq5.png" alt="">
+        <figcaption>发送窗口</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 窗口应用</div>
+      <dd>假设发送窗口大小 = 4，当前可发送分组 [1, 2, 3, 4]</dd>
+      <dd>发送 1 - 4</dd>
+      <dd>收到 ACK=3，表示 1、2 已收到，等待接收 3</dd>
+      <dd>1、2移出窗口，后面的分组补进来并发出去，等待确认</dd>
+      <dd>其它没有收到确认的 3、4，保留，以备超时重传</dd>
+      <dd>窗口滑动到 [3, 4, 5, 6]</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 已知发送窗口大小为500，某主机收到的确认号为201。如果已经发送了300B的数据，则还可以发送多少数据？
+      </div>
+      <dd>发送了300B，对方确认了200B</dd>
+      <dd>还有100B没有确认</dd>
+      <dd>确认过的数据报被移出缓存，窗口仅仅保留没有确认的数据报</dd>
+      <dd>窗口还有100B等待确认</dd>
+      <dd>窗口大小是500，所以还可以发送 500 - 100 = 400B</dd>
+      <figure>
+        <img src="./imgs/arq4.png" alt="">
+        <figcaption>发送窗口</figcaption>
+      </figure>
+      <dt>接收窗口 rwnd</dt>
+      <dd>接收方维持一个接收窗口，告诉发送方自己还能接收多少数据，用于 <strong>流量控制</strong></dd>
+      <dd>根据接收窗口的大小动态通知发送方</dd>
+      <dd>窗口左侧是已经已经按序到达且确认过的</dd>
+      <dd>窗口内部
+        <p>已接收但尚未按序（乱序到达）的数据，被 TCP 缓存在接收缓冲区中，但不能被确认 - 累积确认，只能确认到连续的最高序号</p>
+        <p>尚未收到但预期会收到的数据 - 空闲</p>
+      </dd>
+      <dd>窗口右侧：不应接收；若收到通常丢弃</dd>
+      <figure>
+        <img src="./imgs/tcp3.png" alt="">
+        <figcaption>接收窗口</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

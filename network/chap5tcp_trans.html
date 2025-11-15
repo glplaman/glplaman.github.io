@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>传输控制 Transmission Control</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>传输控制</h1>
+      <span>&commat;Transmission Control</span>
+    </header>
+    <dl>
+      <dt>通信过程 Procedure</dt>
+      <dd>连接建立-三次握手</dd>
+      <dd>数据通信</dd>
+      <dd>连接释放-四次挥手</dd>
+      <dt>三次握手 Three-Way Handshake</dt>
+      <dt>Joke Time</dt>
+      <dd>A TCP packet walks into a bar and says to the bartender, “I'd like a beer.” </dd>
+      <dd>The bartender says, “You'd like a beer?” </dd>
+      <dd>The TCP packet says, “Yes, a beer.”</dd>
+      <div class="tips">SYN → SYN-ACK → ACK</div>
+      <figure>
+        <img src="./imgs/tcp1.png" alt="">
+        <figcaption>Three-Way Handshake</figcaption>
+      </figure>
+      <dd>第一次握手：C发送请求，同步位置1；消耗一个序号x</dd>
+      <dd>第二次握手：S如果同意建立连接，则确认并回复同步响应报文；消耗一个序号y</dd>
+      <dd>第三次握手：B对S的响应报文进行确认；消耗一个序号x+1</dd>
+      <figure>
+        <img src="../imgs/network/tcp/s9.JPG" alt="">
+        <figcaption>三次握手</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/tcp0.png" alt="">
+        <figcaption>TCP简化版</figcaption>
+      </figure>
+      <dd>[ <span class="iconfont icon-help"></span> ] 三次握手过程中是否可以携带数据？为什么？</dd>
+      <dt>四次挥手 Four-Way Handshake</dt>
+      <dd>发送方没有数据要发送，发送释放连接FIN请求；接收方确认后，可以继续发送自己还未发送完的数据；当前连接是半连接状态：发送方到接收方的连接是关闭的</dd>
+      <dd>接收方发完数据了，也向发送方发送释放连接FIN请求；等链路上所有的数据报都达到目标主机后，连接被彻底释放</dd>
+      <figure>
+        <img src="../imgs/network/tcp/s10.JPG" alt="">
+        <figcaption>四次挥手</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
