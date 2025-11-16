@@ -7,6 +7,13 @@
   <title>拥塞控制 Congestion</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    .bg {
+      background-color: var(--main-color);
+      color: #fff;
+      width: max-content;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,14 +23,266 @@
       <span>&commat;Congestion</span>
     </header>
     <dl>
-      <dd>慢开始 slow start </dd>
-      <dd>拥塞避免 congestion avoidance </dd>
-      <dd>快重传 fast retransmit </dd>
-      <dd>快恢复 fast recovery</dd>
-      <dd>更多信息，请参考 <a target="_blank"
-          href="https://www.bilibili.com/video/BV1GY41157Ze/?spm_id_from=888.80997.embed_other.whitelist&t=20&vd_source=fe13480e1099e18e9d5f4e25467df4df">拥塞控制
-          <span class="iconfont icon-videocam"></span></a>
+      <dd>网络中的负载超过其处理能力，导致性能显著下降</dd>
+      <dd>在某段时间，若对网络中某资源的需求超过了该资源所能提供的可用部分，网络的性能就要明显变坏，整个网络的吞吐量将随输入负荷的增大而下降
       </dd>
+      <dt>现象 Phenomenon</dt>
+      <dd>丢包率增加</dd>
+      <dd>排队时延变长</dd>
+      <dd>超时重传变多</dd>
+      <dd>吞吐量下降</dd>
+      <dd>系统崩溃</dd>
+      <dt>原因 Reason</dt>
+      <dd>节点缓存容量太小</dd>
+      <dd>链路容量不足</dd>
+      <dd>处理机处理速率太慢</dd>
+      <dd>拥塞本身会进一步加剧拥塞</dd>
+      <table class="txt-left">
+        <caption>原因汇总</caption>
+        <tr>
+          <td>资源层面</td>
+          <td>带宽不足、缓冲区有限、处理能力瓶颈</td>
+        </tr>
+        <tr>
+          <td>流量层面</td>
+          <td>流量突发、非适应性流（如UDP flood）、多流汇聚</td>
+        </tr>
+        <tr>
+          <td>协议/机制层面</td>
+          <td>缺乏拥塞控制、ACK机制缺陷、路由策略不当</td>
+        </tr>
+        <tr>
+          <td>行为层面</td>
+          <td>用户贪婪行为、恶意攻击、应用设计缺陷</td>
+        </tr>
+      </table>
+      <table class="txt-left">
+        <caption>拥塞控制 vs 流量控制</caption>
+        <tr>
+          <td>拥塞控制</td>
+          <td>防止过多的数据注入到网络中，避免网络中的路由器或链路过载
+            <br>涉及所有主机、路由器以及与降低网络传输性能有关的所有因素
+            <br>全局性：面向公共资源、面向过程
+            <br>示例：高速公路限流、单双号通行、工作人员限流放人进厕所
+          </td>
+        </tr>
+        <tr>
+          <td>流量控制</td>
+          <td>抑制发送端发送数据的速率，以使接收端来得及接收
+            <br>点对点通信量的控制，是个端到端的问题
+            <br>局部性：面向个体、面向终端
+            <br>示例：停车场满、厕所门显示占用
+          </td>
+        </tr>
+      </table>
+      <div class="tips">
+        <p>供需不平衡：供 &lt; 需</p>
+      </div>
+      <dd><span class="iconfont icon-help"></span>
+        <p>增加资源</p>
+        <p>重传资源</p>
+      </dd>
+      <dt>核心 Core</dt>
+      <dd>吞吐量要适中
+        <p>网络上的流量要少</p>
+        <p>让发送方/源站根据网络状态动态调整发送速率</p>
+      </dd>
+      <dd>拥塞控制 <strong>很难</strong> 精准设计；只能一定程度的 <strong>缓解</strong>拥塞 - 动态变化</dd>
+      <dd><span class="iconfont icon-help"></span>目前了解到的知识，哪些方法或措施可以减少网络上的流量</dd>
+      <!-- <dd>TTL</dd> -->
+      <!-- <dd>WLAN</dd> -->
+      <!-- <dd>组播</dd> -->
+    </dl>
+    <h2>常见方案 Solution</h2>
+    <dl>
+      <dt>开环控制 Open-loop Control</dt>
+      <dd>在设计网络时，事先考虑周全，力求工作时不发生拥塞</dd>
+      <p>依靠 <strong>预先设定</strong> 的规则进行流量管理</p>
+      <dd>但一旦整个系统运行起来，就不再中途进行改正了</dd>
+      <dd>思路：力争避免发生拥塞；实际很难实现</dd>
+      <dd>实例
+        <p>流水线生产</p>
+        <p>单双号通行</p>
+      </dd>
+      <div class="tips">
+        <p>人不能两次踏进同一条河流 - 古希腊哲学家赫拉克利特 Heraclitus</p>
+        <p>世上没有两片完全相同的叶子 - 德国哲学家莱布尼茨 Gottfried Wilhelm Leibniz</p>
+      </div>
+      <dt>闭环控制 Closed-loop Control</dt>
+      <dd>基于 <strong>反馈</strong> 环路的概念</dd>
+      <dd>根据网络当前运行状态采取相应控制措施</dd>
+      <dd>思路：在发生拥塞后，采取措施进行控制，消除拥塞</dd>
+      <dd>过程
+        <p>检测：监测网络系统，检测拥塞在何时、何处发生</p>
+        <p>传送/反馈：将拥塞发生的信息传送到可采取行动的地方/源站 - <strong>控制的核心</strong></p>
+        <p>调整：调整网络系统的运行以解决出现的问题</p>
+      </dd>
+      <dd>实例
+        <p>洗澡</p>
+        <p>开车</p>
+      </dd>
+      <div class="tips">回调函数 Callback</div>
+      <dt>闭环控制措施 Method</dt>
+      <div>
+        <div class="bg">方案1. 在IP/分组头部设置拥塞指示位</div>
+        <!-- <p>例子：显式拥塞通知 ECN, Explicit Congestion Notification</p> -->
+        <p>在IP头部和TCP头部保留特定比特（如ECT、CE位）</p>
+        <p>当路由器检测到拥塞（如队列过长），不丢包，而是将转发的分组中的CE（Congestion Experienced）位设为1</p>
+        <p>接收方收到该分组后，在 <strong>ACK</strong> 中告知发送方“网络曾拥塞”</p>
+        <p>发送方据此降低发送速率</p>
+        <p>优点：避免丢包作为拥塞信号，提高效率；适用于支持ECN的端系统和网络设备</p>
+        <div class="bg">方案2. 通过丢包隐式传递拥塞信号</div>
+        <p>传统TCP机制 如Reno、Cubic</p>
+        <p>路由器在缓冲区满时直接丢弃分组</p>
+        <p>发送方通过 <strong>超时重传或重复ACK</strong> 推断网络拥塞</p>
+        <p>于是执行拥塞避免算法，如慢启动、拥塞窗口减半</p>
+        <p>缺点：反应滞后，且丢包本身浪费带宽</p>
+        <div>[<span class="iconfont icon-keyboard"></span>] 重复ACK</div>
+        <ol>
+          <li>发送方发送
+            <p>seq = 1000</p>
+            <p>seq = 2000</p>
+            <p>seq = 3000</p>
+            <p>seq = 4000</p>
+          </li>
+          <li>接收方收到
+            <p>seq = 2000</p>
+            <p>seq = 3000</p>
+            <p>seq = 4000</p>
+          </li>
+          <li>接收方根据累计确认，没有收到1000，所以给发送方发送对1000的确认，希望发送方重新发送1000的报文
+            <p>ACK = 1, seq = 1000</p>
+          </li>
+          <li>发送方重传1000的报文</li>
+          <li>如果仍然多次(3次)收到对1000的确认，就可以判断网络出现了拥塞</li>
+          <li>立即进行重传 - 快重传 fast retransmit</li>
+        </ol>
+        <div class="bg">方案3. 周期性发送探测分组（主动探测）</div>
+        <p>某些协议或应用层机制会定期发送小量探测包，如ping、RTT测量包</p>
+        <p>通过分析往返时延（RTT）增长、丢包率上升等指标，判断是否发生拥塞</p>
+        <p>例如：QUIC协议、某些拥塞控制算法（如BBR）会利用带宽和RTT估计网络状态</p>
+        <p>这种方式更“主动”，但可能增加额外开销</p>
+      </div>
+    </dl>
+    <h2>TCP的拥塞控制</h2>
+    <dl>
+      <dd>TCP 采用基于 <strong>滑动窗口</strong> 进行拥塞控制，属于闭环控制方法</dd>
+      <dd>TCP 发送方维持一个拥塞窗口 cwnd - Congestion Window</dd>
+      <dd>拥塞窗口的大小取决于网络的拥塞程度，且动态变化</dd>
+      <dd>发送端利用拥塞窗口根据网络的拥塞情况调整发送的数据量</dd>
+      <dd><span class="warn">发送窗口大小不仅取决于接收方窗口，还取决于网络的拥塞状况</span></dd>
+      <div class="txt-center txt-xl">swnd = min[rwnd, cwnd]</div>
+      <dt>rwnd &lt; cwnd</dt>
+      <dd>接收方的接收能力限制发送窗口的最大值</dd>
+      <dd>接收方的接收缓冲区已接近满，即使网络通畅（cwnd 很大），也不能继续发送更多数据，否则会导致接收方丢包</dd>
+      <dd>示例：餐厅厨房（发送方）可以快速做菜（网络通畅），但顾客（接收方）胃容量有限（缓冲区小），所以不能一直上菜</dd>
+      <dt>cwnd &lt; rwnd</dt>
+      <dd>网络拥塞限制发送窗口的最大值</dd>
+      <dd>接收方还有充足缓冲区（rwnd 很大），但网络出现拥塞（如丢包、延迟增加），发送方主动减小 cwnd 以避免加剧拥塞</dd>
+      <dd>示例：顾客胃口很大（接收缓冲区充足），但外卖骑手堵在路上（网络拥塞），餐厅只能少量多次送餐，避免订单堆积</dd>
+      <dt>方法 Method</dt>
+      <dd>超时重传计时器超时
+        <p>网络已经出现了拥塞</p>
+      </dd>
+      <dd>重复确认
+        <p>预示网络可能会出现拥塞</p>
+      </dd>
+      <dt>核心阶段 Phase</dt>
+      <div class="bg">阶段1. 慢开始 Slow Start</div>
+      <dd>在连接初期或超时后，快速探测网络可用带宽</dd>
+      <dd>拥塞窗口 cwnd 从 1 MSS 开始</dd>
+      <dd>每收到一个 ACK，cwnd 增加 1 MSS → 每轮次 RTT 翻倍，指数增长</dd>
+      <dd>当 cwnd 达到慢启动阈值 ssthresh 时，转入→ 拥塞避免
+        <p>当 cwnd &le; ssthresh 时，使用慢开始算法</p>
+        <p>当 cwnd > ssthresh 时，停止使用慢开始算法，改用拥塞避免算法</p>
+        <p>当 cwnd = ssthresh 时，既可使用慢开始算法，也可使用拥塞避免算法</p>
+      </dd>
+      <figure>
+        <img src="./imgs/tcp7.png" alt="">
+        <figcaption>慢开始</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 解读</div>
+      <dd>初始 cwnd = 1MSS - 只能发一个报文</dd>
+      <dd>发送方发送一个报文 M1</dd>
+      <dd>接收方收到 M1 后，发送1个 ACK 确认</dd>
+      <dd>发送方调整 cwnd + 1 =2MSS；允许发2个报文</dd>
+      <dd>发送方发送 M2 M3</dd>
+      <dd>接收方收到 M2 M3 后，发送2个 ACK 确认</dd>
+      <dd>发送方调整 cwnd + 2 = 4MSS；允许发4个报文</dd>
+      <dd>发送方发送 M4 M5 M6 M7</dd>
+      <dd>接收方收到 M4 M5 M6 M7 后，发送4个 ACK 确认</dd>
+      <dd>发送方调整 cwnd + 4 = 8MSS；允许发4个报文</dd>
+      <dd>结论：每个轮次RTT后，cwnd 翻倍</dd>
+      <figure>
+        <img src="./imgs/tcp8.png" alt="">
+        <figcaption>慢开始 - 每轮翻倍</figcaption>
+      </figure>
+      <div class="bg">阶段2. 拥塞避免 Congestion Avoidance</div>
+      <dd>在接近网络容量时，谨慎增加发送速率，避免引发拥塞</dd>
+      <dd>让拥塞窗口 cwnd 缓慢地增大，避免出现拥塞</dd>
+      <dd>cwnd 每经过一个往返时间 RTT，期间不管收到多少 ACK，都只增加 1 MSS（线性增长）</dd>
+      <dd>加法增大 AI - Additive Increase</dd>
+      <figure>
+        <img src="./imgs/tcp9.png" alt="">
+        <figcaption>拥塞避免 - 每轮+1</figcaption>
+      </figure>
+      <dd>无论在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（重传定时器超时）：
+        <p>ssthresh = max (cwnd/2，2)</p>
+        <p>cwnd = 1</p>
+        <p>执行慢开始算法</p>
+      </dd>
+      <dd>目的：迅速减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够时间把队列中积压的分组处理完毕</dd>
+      <div class="bg">阶段3. 快重传 Fast Retransmit</div>
+      <dd>让发送方尽早知道发生了个别报文段的丢失</dd>
+      <dd>连续收到三个重复的确认，就立即启动重传，无需等待超时</dd>
+      <dd>整个网络的吞吐量提高约 20%</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 解读</div>
+      <dd>M3丢失</dd>
+      <dd>接收方收到M1、M2、M4、M5、M6、M7</dd>
+      <dd>重复发起对M3的确认，希望接收M3</dd>
+      <dd>发送方立即重传M3</dd>
+      <figure>
+        <img src="./imgs/tcp10.png" alt="">
+        <figcaption>快重传</figcaption>
+      </figure>
+      <div class="bg">阶段4. 快恢复 Fast Recovery</div>
+      <dd>在快重传后，避免退回到慢启动（过于保守），维持较高吞吐</dd>
+      <dd>进入拥塞避免阶段，使拥塞窗口缓慢地线性增大（加法增大 AI）</dd>
+      <dd>当发送端收到连续三个重复的确认时，不执行慢开始算法，而是执行快恢复算法 FR (Fast Recovery) 算法：
+        <p>慢开始门限 ssthresh = 当前拥塞窗口 cwnd / 2 </p>
+        <p>新拥塞窗口 cwnd = 慢开始门限 ssthresh </p>
+      </dd>
+      <dd>前提：认为网络只是轻微拥塞（个别丢包），而非严重崩溃</dd>
+      <figure>
+        <img src="./imgs/tcp11.png" alt="">
+        <figcaption>拥塞控制流程图</figcaption>
+      </figure>
+      <dt>说明 Notation</dt>
+      <dd>为什么实现中用 MSS 作为单位？
+        <p>避免频繁做乘除运算</p>
+        <p>发送时按“段”处理，天然以 MSS 为粒度</p>
+        <p>拥塞控制算法（如慢启动：每 RTT 翻倍 cwnd）在“段数”层面更直观</p>
+      </dd>
+      <dd>但对外表现和最终决策必须基于字节，因为
+        <p>接收窗口是字节</p>
+        <p>应用层数据是字节流</p>
+        <p>流量控制和拥塞控制的交集必须单位统一</p>
+      </dd>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>拥塞窗口（cwnd, congestion window）反映当前网络路径的拥塞状况，由发送方根据网络反馈动态调整（）。</li>
+        <li>假设接收方通告的 rwnd = 4 KB；当前网络良好，cwnd = 16 KB；则 swnd =（）。</li>
+        <li>接收方通告 rwnd = 32 KB；但最近发生丢包，TCP 进入拥塞避免或慢启动阶段，cwnd 被设为 8 KB；则 swnd =（）。</li>
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a
+            href="https://www.bilibili.com/video/BV1GY41157Ze/?spm_id_from=888.80997.embed_other.whitelist&t=20&vd_source=fe13480e1099e18e9d5f4e25467df4df">拥塞控制
+            <span class="iconfont icon-videocam"></span></a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
   </div>
