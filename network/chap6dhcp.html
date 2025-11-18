@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>动态主机配置协议 DHCP</title>
   <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
 </head>
 
 <body>
@@ -16,15 +17,100 @@
       <span>&commat;DHCP</span>
     </header>
     <dl>
-      <dd>动态主机配置协议</dd>
-      <dd>协议端口：67/68</dd>
+      <dd>动态主机配置协议 DHCP - Dynamic Host Configuration Protocol</dd>
+      <dd>由DHCP服务器控制一段IP地址范围，然后客户机登录服务器时就可以自动获得服务器分配的IP地址和子网掩码，从而顺利连通网络</dd>
+      <dd>使用客户/服务器 C/S 方式，采用请求/应答方式工作</dd>
+      <dd>基于 UDP 工作
+        <p>服务器运行在 67 号端口</p>
+        <p>客户运行在 68 号端口</p>
+      </dd>
+      <figure>
+        <img src="./imgs/dhcp0.png" alt="">
+        <figcaption>DHCP</figcaption>
+      </figure>
+      <dt>系统组成 Components</dt>
+      <dd>DHCP Server：服务器</dd>
+      <dd>DHCP Client：客户</dd>
+      <dd>DHCP Relay Agent：代理</dd>
+      <dt>优点 Merits</dt>
+      <dd>客户机不需要手动配置TCP/IP</dd>
+      <dd>减少配置网络上计算机的时间</dd>
+      <dd>提供安全可信的配置</dd>
+      <dd>有效利用IP地址</dd>
       <dt>基本过程 Procedure</dt>
-      <dd>DHCP客户广播DHCP Discover报文：目的IP地址255.255.255.255，源地址0.0.0.0</dd>
-      <dd>所有DHCP服务器都会响应整个报文</dd>
-      <dd> DHCP服务器根据报文的源MAC地址查找该计算机的配置信息。如果有，则返回找到的信息；如果没有，则从IP地址池（address pool）中取一个地址分配给该计算机</dd>
-      <dd>DHCP服务器广播发送DHCP Offer报文（包含DHCP Server自己的IP地址）</dd>
-      <dd>DHCP客户处理最先收到的DHCP Offer报文，并广播DHCP Request报文； DHCP服务器处理DHCP Request报文。如果IP和自己的相同，则广播DHCP
-        ACK报文。其它DHCP服务器释放预分配资源</dd>
+      <figure>
+        <img src="./imgs/dhcp1.png" alt="">
+        <figcaption>D-O-R-A</figcaption>
+      </figure>
+      <ol class="first-letter">
+        <li><strong>D</strong>iscover（发现）
+          <p>DHCP 客户端启动后，广播发送 DHCP Discover 报文</p>
+          <p>目的地址：255.255.255.255（本地广播）</p>
+          <p>源地址：0.0.0.0（尚未拥有有效 IP 地址）</p>
+          <p>内容：包含客户端 MAC 地址（CHADDR 字段），用于标识自身</p>
+          <p>此时报文被同一广播域内所有 DHCP 服务器接收</p>
+        </li>
+
+        <li><strong>O</strong>ffer（提供）
+          <p>每个收到 Discover 报文的 DHCP 服务器根据客户端的 MAC 地址查找是否有为其保留的配置</p>
+          <p>若无，则从其 IP 地址池（Address Pool） 中选择一个可用 IP 地址，向客户端 广播 发送 DHCP Offer 报文</p>
+          <p>若有，再检测是静态绑定还是历史租约</p>
+          <p>-静态绑定，取出并发送</p>
+          <p>-历史租约，判断是否到期以及是否冲突，再根据情况处理</p>
+          <p>Offer 内容：包含提供的 IP 地址、子网掩码、租期、网关、DNS 等配置，以及 该 DHCP 服务器自身的 IP 地址</p>
+        </li>
+        <div class="tips">多个 DHCP 服务器可能同时响应，客户端通常只处理最先收到的 Offer</div>
+
+        <li><strong>R</strong>equest（请求）
+          <p>客户端选择一个 Offer（通常是第一个），然后 <strong>广播</strong> 发送 DHCP Request 报文</p>
+          <p>告知所选的 DHCP 服务器：我接受你提供的 IP</p>
+          <p>通知其他 DHCP 服务器：我不使用你们的 Offer，请释放预分配的 IP</p>
+          <p>即使客户端已知道目标服务器 IP，仍使用广播；因客户端尚未完成配置，无法单播</p>
+        </li>
+
+        <li><strong>A</strong>cknowledge（确认）
+          <p>被选中的 DHCP 服务器收到 Request 后，若其中请求的 IP 与自己 Offer 的一致，则 广播 发送 DHCP ACK 报文</p>
+          <p>其他 DHCP 服务器收到 Request 后，发现不是自己的 Offer，便释放之前为该客户端预留的 IP 地址</p>
+          <p>ACK 内容：确认 IP 分配，并再次包含完整的网络配置参数</p>
+          <p>客户端收到 ACK 后，正式使用该 IP 地址及配置，完成初始化</p>
+        </li>
+      </ol>
+      <dt>中继代理 Relay Agent</dt>
+      <dd>每一个网络至少有一个 DHCP 中继代理，它配置了 DHCP 服务器的 IP 地址信息</dd>
+      <dd>DHCP 中继代理以单播方式<strong>转发</strong>发现报文</dd>
+      <dd>DHCP 中继代理收到主机广播发送的发现报文后，就以单播方式向 DHCP 服务器 <strong>转发</strong> 此报文，并等待其回答</dd>
+      <dd>收到 DHCP 服务器回答的提供报文后，DHCP 中继代理再将其发回给主机</dd>
+    </dl>
+    <h2>租用期 Lease Period</h2>
+    <dl>
+      <dd>DHCP 服务器分配给 DHCP 客户的 IP 地址是 <strong>临时</strong> 的</dd>
+      <dd>DHCP 客户只能在一段有限的时间内使用这个分配到的 IP 地址 - 租用期</dd>
+      <dd>租用期的数值应由 DHCP 服务器自己决定</dd>
+      <dd>目的
+        <p>防止 Ip 地址长期闲置</p>
+        <p>支持网络中设备动态加入/离开</p>
+        <p>实现地址池的自动回收与再分配</p>
+      </dd>
+      <dd>DHCP 定义了两个自动续租时间点T1/T2</dd>
+      <dd>DHCP 客户也可在自己发送的报文中（例如，发现报文）提出对租用期的要求</dd>
+      <dt>T1</dt>
+      <dd>租期的 50%
+        <p>租期为 8 小时（28800 秒），则 T1 = 4 小时（14400 秒）</p>
+      </dd>
+      <dd>行为：客户端向<strong>原</strong>分配 IP 的 DHCP 服务器发送 DHCP Request 报文，请求续租</dd>
+      <dd>通信方式：单播；因为此时客户端已有有效 IP 和网关信息</dd>
+      <dd>目的：正常、安静地延长租期，无需重新经历完整 DHCP 流程</dd>
+      <dt>T2</dt>
+      <dd>租期的 87.5%
+        <p>租期为 8 小时，则 T2 ≈ 7 小时（25200 秒）</p>
+      </dd>
+      <dd>触发条件：若在 T1 未能成功续租（如原服务器宕机）</dd>
+      <dd>行为：客户端广播 DHCP Request 报文，向任意可用的 DHCP 服务器请求续租</dd>
+      <dd>通信方式：广播；因无法确定原服务器是否可达</dd>
+      <dd>目的：作为备用机制，尽力保留当前 IP 地址</dd>
+      <dt>说明 Notation</dt>
+      <dd>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须 停止使用该 IP 地址</dd>
+      <dd>随后重新发起完整的 DHCP Discover 流程获取新地址</dd>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -59,25 +145,24 @@ Router(config-if)#no shutdown</pre>
           <img src="../imgs/network/dhcp/幻灯片12.JPG" alt="">
         </figure>
       </ol>
-      <dt>拓展操作</dt>
+      <dt>Extending</dt>
       <dd>增加一台PC；将操作模式调整为模拟通信；更改PC的地址分配方式为DHCP，单步调试查看DHCP数据报的发送过程</dd>
-      <dt>实验报告</dt>
-      <ol>
-        <li>根据实操部分的内容，完成项目</li>
-        <li>以纸质的形式提交实验报告</li>
-        <li>论文格式请参照范文<a class="warn" href="../imgs/ds/format.docx">[点击下载]</a></li>
-      </ol>
     </dl>
     <dl>
       <dt>Reading</dt>
       <ol>
+        <li><a href="https://networkencyclopedia.com/dynamic-host-configuration-protocol-dhcp/">DHCP
+            <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://petri.com/almost-everything-you-need-to-know-about-dhcp-as-a-systems-administrator/">DHCP
+            <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.abackup.com/easybackup-tutorials/how-to-set-dhcp-666.html">DHCP
+            <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/dhcp-options/">DHCP Options
             <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/dhcp-scope/">DHCP Scope
             <span class="iconfont icon-share"></span></a></li>
         <li><a href="https://networkencyclopedia.com/dhcp-relay-agent/">DHCP Relay Agent <span
               class="iconfont icon-share"></span></a></li>
-        <li><a href=""><span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>

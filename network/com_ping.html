@@ -63,6 +63,37 @@ C:\Users\huawei>ping glplaman.github.io
         <div>. 100~130ms之间，Windows系统 </div>
         <div>. 240~255ms之间，UNIX/Linux系统</div>
       </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] ping localhost</div>
+      <dd>Windows 从 Vista 开始就支持并优先启用 IPv6</dd>
+      <dd>当你 ping localhost 时，系统会先尝试通过 IPv6 解析，成功后就直接使用 ::1</dd>
+      <pre>
+C:\Users\huawei>ping localhost
+
+正在 Ping LAPTOP-E61J88MK [::1] 具有 32 字节的数据:
+来自 ::1 的回复: 时间&lt;1ms
+来自 ::1 的回复: 时间&lt;1ms
+来自 ::1 的回复: 时间&lt;1ms
+来自 ::1 的回复: 时间&lt;1ms
+
+::1 的 Ping 统计信息:
+    数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
+往返行程的估计时间(以毫秒为单位):
+    最短 = 0ms，最长 = 0ms，平均 = 0ms</pre>
+      <dd>或者指定命令行参数 -4，强制使用IPv4协议</dd>
+      <pre>
+C:\Users\huawei>ping -4 localhost
+
+正在 Ping LAPTOP-E61J88MK [127.0.0.1] 具有 32 字节的数据:
+来自 127.0.0.1 的回复: 字节=32 时间&lt;1ms TTL=128
+来自 127.0.0.1 的回复: 字节=32 时间&lt;1ms TTL=128
+来自 127.0.0.1 的回复: 字节=32 时间&lt;1ms TTL=128
+来自 127.0.0.1 的回复: 字节=32 时间&lt;1ms TTL=128
+
+127.0.0.1 的 Ping 统计信息:
+    数据包: 已发送 = 4，已接收 = 4，丢失 = 0 (0% 丢失)，
+往返行程的估计时间(以毫秒为单位):
+    最短 = 0ms，最长 = 0ms，平均 = 0ms</pre>
+      <dd>或者直接ping 127.0.0.1</dd>
     </dl>
     <h2>其它运用 Other</h2>
     <dl>
