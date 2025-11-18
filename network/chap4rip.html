@@ -11,17 +11,21 @@
   <style>
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--p-m-g);
+      max-width: 550px;
+      margin: 0 auto;
     }
 
     .item-wrap {
-      text-align: center;
-      margin: 2rem auto;
+      display: flex;
+      align-items: center;
+      gap: var(--p-m-g);
     }
 
     .item-pic {
-      width: 92px;
-      margin: 0 auto;
+      flex-shrink: 0;
+      width: 60px;
     }
   </style>
 </head>
@@ -43,16 +47,26 @@
       </dd>
       <dd>当前版本为RIP2</dd>
       <dt>基本过程 Procedure</dt>
-      <dd>使用<strong>UDP</strong>协议，端口520，按照<span class="warn">固定时间</span>间隔，以<span class="warn">广播</span>RIP报文的方式，和
-        <span class="warn">相邻</span>路由器交换<span class="warn">全部</span>路由信息 - 分布式路由选择协议
+      <dd>路由器启动后，首先将所有直连网络添加到自己的路由表中 - 非协议动作</dd>
+      <dd>然后使用<strong>UDP</strong>协议，端口520，每隔<span class="warn">30s</span>，以<span
+          class="warn">广播/组播</span>RIP报文的方式，与<span class="warn">相邻</span>路由器交换<span class="warn">全部</span>路由信息 -
+        分布式路由选择协议
         <p>相邻 - Who</p>
         <p>全部 - What</p>
         <p>固定时间间隔 - When</p>
       </dd>
+      <figure>
+        <img src="./imgs/rip13.png" alt="">
+        <figcaption>RIP UDP</figcaption>
+      </figure>
+      <div class="tips">RIP2使用组播地址：224.0.0.9</div>
       <dd>路由器到直连网络的距离为1</dd>
       <dd>每经过一个网络，跳数+1</dd>
       <dd>最大距离15</dd>
       <dd>16表示不可达</dd>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] 基于距离的RIP路由表</div>
+      <dd>路由器R1的RIP路由表如下表所示</dd>
+      <dd>请分别给出路由器R2、路由器R3的RIP路由表</dd>
       <figure>
         <img src="./imgs/rip1.png" alt="">
         <figcaption>路由器1的RIP跳数count</figcaption>
@@ -85,63 +99,107 @@
           <td>R2</td>
         </tr>
       </table>
-      <dt>特点一 Features</dt>
-      <dd>RIP简单的认为：距离越短，路由质量越高</dd>
-      <dd>RIP最大支持15跳，适合小型网络</dd>
-      <dd>RIP具备负载均衡：当路由等价时，轮流使用路由</dd>
-      <dd>RIP通过3个定时器动态维护路由</dd>
+      <table>
+        <caption>R2的RIP路由</caption>
+        <tr>
+          <td>目标网络</td>
+          <td>距离</td>
+          <td>下一跳</td>
+        </tr>
+        <tr>
+          <td>Net1</td>
+          <td contenteditable>
+          </td>
+          <td contenteditable></td>
+        </tr>
+        <tr>
+          <td>Net2</td>
+          <td contenteditable></td>
+          <td contenteditable></td>
+        </tr>
+        <tr>
+          <td>Net3</td>
+          <td contenteditable></td>
+          <td contenteditable></td>
+        </tr>
+        <tr>
+          <td>Net4</td>
+          <td contenteditable></td>
+          <td contenteditable></td>
+        </tr>
+      </table>
+      <table>
+        <caption>R3的RIP路由</caption>
+        <tr>
+          <td>目标网络</td>
+          <td>距离</td>
+          <td>下一跳</td>
+        </tr>
+        <tr>
+          <td>Net1</td>
+          <td contenteditable>
+          </td>
+          <td contenteditable></td>
+        </tr>
+        <tr>
+          <td>Net2</td>
+          <td contenteditable></td>
+          <td contenteditable></td>
+        </tr>
+        <tr>
+          <td>Net3</td>
+          <td contenteditable></td>
+          <td contenteditable></td>
+        </tr>
+        <tr>
+          <td>Net4</td>
+          <td contenteditable></td>
+          <td contenteditable></td>
+        </tr>
+      </table>
+      <dt>定时器 Timer</dt>
+      <dd>更新定时器 Update timer
+        <p>路由器每隔<strong>30s</strong> 向邻居周期性广播/组播自己的完整路由表</p>
+        <p>保证路由信息在网络中持续传播，维持路由表同步</p>
+      </dd>
+      <dd>失效定时器 Invalid timer
+        <p>如果某条路由在 <strong>180s</strong> 秒内未收到更新，则将其标记为无效（不可达），metric 设为 16</p>
+        <p>路由被标记为无效后，继续保留在路由表中一段时间，并持续向邻居通告</p>
+        <p>确保全网所有路由器都收到“该路由已失效”的通知，防止路由黑洞或环路</p>
+      </dd>
+      <dd>删除定时器 Garbage-collection timer
+        <p>被标记为不可达的路由保留 <strong>120s</strong>，之后被彻底删除</p>
+        <p>Cisco 默认实现为总 240 秒，即无效后保留 60 秒</p>
+      </dd>
+      <figure>
+        <img src="./imgs/rip12.png" alt="">
+        <figcaption>定时器</figcaption>
+      </figure>
+      <dt>特点 Feature</dt>
       <div class="grid">
         <div class="item-wrap">
           <div class="item-pic"><img src="./imgs/icon0.png" alt=""></div>
-          <div class="item-title">简单</div>
-          <div class="item-sub-title">Simple</div>
+          <div class="item-title">简单 Simple
+            <br>易于理解和部署；距离越短，路由质量越高
+          </div>
         </div>
         <div class="item-wrap">
           <div class="item-pic"><img src="./imgs/icon1.png" alt=""></div>
-          <div class="item-title">小型</div>
-          <div class="item-sub-title">Mini</div>
+          <div class="item-title">小型 Mini
+            <br>最大距离支持15跳，适合小型网络
+          </div>
         </div>
         <div class="item-wrap">
           <div class="item-pic"><img src="./imgs/icon2.png" alt=""></div>
-          <div class="item-title">均衡</div>
-          <div class="item-sub-title">Balance</div>
+          <div class="item-title">均衡 Balance
+            <br>具备负载均衡；当路由等价时，轮流使用路由
+          </div>
         </div>
         <div class="item-wrap">
           <div class="item-pic"><img src="./imgs/icon3.png" alt=""></div>
-          <div class="item-title">动态</div>
-          <div class="item-sub-title">Dynamic</div>
-        </div>
-      </div>
-      <dt>定时器 Timer</dt>
-      <dd>更新定时器
-        <p>每 <strong>30s</strong> 更新一次</p>
-        <p>通常会有一个[-5，+5]的随机偏移量</p>
-      </dd>
-      <dd>失效定时器
-        <p>最大时间 <strong>180s</strong></p>
-        <p>每个条目被添加或被更新时，都会重新开始计时</p>
-        <p>超时，该条目被标记为无效路由，但不会删除，只是不会被RIP广播出去</p>
-      </dd>
-      <dd>删除定时器
-        <p>最大时间 <strong>240s</strong></p>
-        <p>超过180s会被标记为无效条目</p>
-        <p>再经过60s，就会被彻底删除 <span class="iconfont icon-delete"></span></p>
-      </dd>
-      <div class="grid">
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon4.png" alt=""></div>
-          <div class="item-title">更新</div>
-          <div class="item-sub-title">Time1</div>
-        </div>
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon5.png" alt=""></div>
-          <div class="item-title">失效</div>
-          <div class="item-sub-title">Time2</div>
-        </div>
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon6.png" alt=""></div>
-          <div class="item-title">清除</div>
-          <div class="item-sub-title">Time3</div>
+          <div class="item-title">动态 Dynamic
+            <br>通过3个定时器动态维护路由
+          </div>
         </div>
       </div>
       <dt>更新规则 Rules</dt>
@@ -862,27 +920,27 @@ R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
             <tr>
               <td>N2</td>
               <td>4</td>
-              <td>？</td>
+              <td contenteditable>？</td>
             </tr>
             <tr>
               <td>N3</td>
               <td>8</td>
-              <td>？</td>
+              <td contenteditable>？</td>
             </tr>
             <tr>
               <td>N6</td>
               <td>4</td>
-              <td>？</td>
+              <td contenteditable>？</td>
             </tr>
             <tr>
               <td>N8</td>
               <td>3</td>
-              <td>？</td>
+              <td contenteditable>？</td>
             </tr>
             <tr>
               <td>N9</td>
               <td>5</td>
-              <td>？</td>
+              <td contenteditable>？</td>
             </tr>
           </tbody>
         </table>
