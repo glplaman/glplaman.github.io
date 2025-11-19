@@ -47,6 +47,7 @@
       <dd>TFTP - Trivial File Transfer Protocol，简单文件传输协议</dd>
       <dd>NFS - Network File System，网络文件系统；早期版本</dd>
       <dd>VoIP - Voice over IP及实时音视频通信</dd>
+      <dd>物联网 - ioT</dd>
       <dd>流媒体 - Streaming Media</dd>
       <dd>多播/组播应用 - Multicast</dd>
       <dd>游戏通信 - Online Gaming</dd>
@@ -125,8 +126,15 @@
     <h2>工作模式 Mode</h2>
     <dl>
       <dt>一对多通信</dt>
-      <dd>一个源端口 → 多个目的端</dd>
+      <dd>一个源端口 → 多个目的端
+        <p>单播 Unicast- 循环发送</p>
+        <p>广播 Broadcast - 向所有主机发送</p>
+        <p>组播 Multicast - 推荐；高效</p>
+      </dd>
+      <dd>所有数据包都从同一个源 IP + 源端口发出</dd>
+      <dd>接收方看到的源地址一致，便于回信</dd>
       <dd>典型应用
+        <p>RIP组播</p>
         <p>Web 浏览器访问多个服务</p>
         <p>视频直播推流</p>
         <p>广播通知系统</p>
@@ -137,6 +145,7 @@
       </dd>
       <dt>多对一通信</dt>
       <dd>多个源端口 → 一个目的端口</dd>
+      <dd>多个客户端各自创建 UDP socket（可能使用不同源端口），向同一个服务器 IP:Port 发送数据</dd>
       <dd>典型应用
         <p>多人聊天室/即时通讯</p>
         <p>文件上传服务</p>
@@ -147,18 +156,6 @@
           <figcaption>多对一通信</figcaption>
         </figure>
       </dd>
-      <dt>UDP vs TCP</dt>
-      <dd>UDP只管发；TCP会控制整个通信过程</dd>
-      <dd>UDP不会拆分报文；一个报文就是一个完整的消息；TCP会拆分成诺干字节，形成字节流</dd>
-      <dd>UDP发送时无需缓存；TCP必须缓存才能发送，发多少取决于对方的接收窗口；只有被对方接收且确认过的报文才能移除缓存</dd>
-      <figure class="img-sn">
-        <img src="../imgs/network/udp/幻灯片13.JPG" alt="">
-        <figcaption>对比1</figcaption>
-      </figure>
-      <figure class="img-sn">
-        <img src="../imgs/network/udp/幻灯片14.JPG" alt="">
-        <figcaption>对比2</figcaption>
-      </figure>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>

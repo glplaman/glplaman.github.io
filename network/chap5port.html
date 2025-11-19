@@ -216,31 +216,23 @@
       </dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
       <dd>当用户在浏览器中访问/请求一个网站时
-        <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 50123</p>
+        <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 1025</p>
         <p>目标端口: Web服务器的标准HTTP端口 80</p>
-        <p>数据流向: 用户电脑(端口50123) → Web服务器(端口80)</p>
+        <p>数据流向: 用户电脑(端口1025) → Web服务器(端口80)</p>
       </dd>
-      <table class="stream">
-        <caption>HTTP请求</caption>
-        <tr>
-          <td>50123</td>
-          <td>→</td>
-          <td>80</td>
-        </tr>
-      </table>
+      <figure>
+        <img src="./imgs/port0.png" alt="">
+        <figcaption>HTTP请求</figcaption>
+      </figure>
       <dd>当Web服务器返回响应时
         <p>源端口: Web服务器的HTTP端口 80</p>
-        <p>目标端口: 用户电脑之前使用的临时端口 50123</p>
-        <p>数据流向: Web服务器(端口80) → 用户电脑(端口50123)</p>
+        <p>目标端口: 用户电脑之前使用的临时端口 1025</p>
+        <p>数据流向: Web服务器(端口80) → 用户电脑(端口1025)</p>
       </dd>
-      <table class="stream">
-        <caption>HTTP响应</caption>
-        <tr>
-          <td>80</td>
-          <td>→</td>
-          <td>50123</td>
-        </tr>
-      </table>
+      <figure>
+        <img src="./imgs/port1.png" alt="">
+        <figcaption>服务器响应</figcaption>
+      </figure>
       <div>[<span class="iconfont icon-keyboard"></span>] 发送邮件 SMTP</div>
       <dd>源端口: 邮件客户端使用的临时端口，如 51001</dd>
       <dd>目标端口: 邮件服务器的SMTP端口 25</dd>

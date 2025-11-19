@@ -117,100 +117,6 @@
       <dd>最后每个路由器都知道全网的网络特性</dd>
       <dd>邻接路由信息</dd>
       <dd>链路状态变化或根据定时触发</dd>
-
-      <!-- <dd>快速收敛：能够快速适应网络拓扑变化</dd>
-      <dd>无环路：保证无环路</dd>
-      <dd>层次化设计：通过划分区域实现网络扩展性</dd>
-      <dd>触发更新：只有在网络状态改变时才发送更新</dd>
-      <dt>基本概念 Concept</dt>
-      <dd>Router ID：路由器的唯一标识符</dd>
-      <dd>邻居关系：路由器之间建立邻居关系来交换路由信息</dd>
-      <dd>邻接关系 Adjacency：形成完全邻接关系的路由器之间交换完整的链路状态数据库</dd>
-      <dd>链路状态通告 LSA：用于在OSPF域内传播路由信息</dd>
-      <dd>链路状态数据库 LSDB：存储区域内所有路由器的链路状态信息</dd>
-      <dd>指定路由器 DR：在多路访问网络中负责收集和分发链路状态信息</dd>
-      <dd>备份指定路由器 BDR：DR的备份，在DR失效时代替DR工作</dd> -->
-
-
-
-      <!-- <dt>LSA类型详解</dt>
-      <table>
-        <thead>
-          <tr>
-            <th>type</th>
-            <th>name</th>
-            <th>desc</th>
-            <th>creator</th>
-            <th>range</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Type 1</td>
-            <td>Router LSA</td>
-            <td>描述路由器接口状态和成本</td>
-            <td>所有路由器</td>
-            <td>本区域内</td>
-          </tr>
-          <tr>
-            <td>Type 2</td>
-            <td>Network LSA</td>
-            <td>描述多路访问网络的链路状态</td>
-            <td>DR</td>
-            <td>本区域内</td>
-          </tr>
-          <tr>
-            <td>Type 3</td>
-            <td>Summary LSA</td>
-            <td>描述区域间路由</td>
-            <td>ABR</td>
-            <td>整个AS内除产生区域外</td>
-          </tr>
-          <tr>
-            <td>Type 4</td>
-            <td>ASBR Summary LSA</td>
-            <td>描述到ASBR的路由</td>
-            <td>ABR</td>
-            <td>整个AS内除产生区域和末节区域外</td>
-          </tr>
-          <tr>
-            <td>Type 5</td>
-            <td>AS External LSA</td>
-            <td>描述到AS外部路由</td>
-            <td>ASBR</td>
-            <td>整个AS内（除末节区域）</td>
-          </tr>
-          <tr>
-            <td>Type 7</td>
-            <td>NSSA External LSA</td>
-            <td>NSSA区域内的外部路由</td>
-            <td>ASBR（NSSA区域内）</td>
-            <td>仅在NSSA区域内</td>
-          </tr>
-        </tbody>
-      </table> -->
-
-      <!-- <dt>OSPF邻居建立过程</dt>
-      <dd>Down状态：初始状态，没有收到邻居的Hello包</dd>
-      <dd>Init状态：收到邻居的Hello包，但对方Hello包中未包含自己的Router ID</dd>
-      <dd>Two-way状态：双方已互相发现，形成双向通信</dd>
-      <dd>Exstart状态：协商主从关系，确定数据库描述包的序列号</dd>
-      <dd>Exchange状态：交换数据库描述包DD，描述各自的LSDB</dd>
-      <dd>Loading状态：请求并发送详细的LSA信息</dd>
-      <dd>Full状态：邻居完全同步，形成邻接关系</dd> -->
-
-      <!-- <dt>OSPF度量值计算</dt>
-      <dd>OSPF使用开销(Cost)作为路由度量值</dd>
-      <dd>默认情况下，Cost = 参考带宽 / 接口带宽</dd>
-      <dd>参考带宽默认为100Mbps，可通过auto-cost reference-bandwidth命令修改</dd>
-      <dd>路径总Cost为经过的所有接口Cost之和</dd> -->
-
-      <!-- <dt>OSPF配置要点</dt>
-      <dd>启用OSPF进程：router ospf [process-id]</dd>
-      <dd>宣告网络：network [network] [wildcard-mask] area [area-id]</dd>
-      <dd>调整接口Cost：ip ospf cost [cost-value]</dd>
-      <dd>设置Router ID：router-id [ip-address]</dd>
-      <dd>配置认证：ip ospf authentication [选项]</dd> -->
     </dl>
     <h2>基本过程 Procedure</h2>
     <dl>
@@ -245,7 +151,7 @@
       </dd>
       <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd>
       <dt>第 2 步：交换 DBD（Database Description）报文</dt>
-      <dd>邻接关系确定后，泛洪向邻站发送 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息
+      <dd>邻接关系确定后，路由器之间以点对点方式交互 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息 - 单播
         <p>描述本路由器的链路状态数据库（LSDB）的摘要信息（即 LSA 头部）</p>
         <p>用于比较两个路由器的 LSDB 是否一致</p>
       </dd>

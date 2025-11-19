@@ -37,11 +37,13 @@
     <h2>报文 Packet</h2>
     <dl>
       <dd>一个 TCP 报文段分为 <strong>首部</strong> 和 <strong>数据</strong> 两部分，而 TCP 的全部功能都体现在它首部中各字段的作用</dd>
-      <dd>TCP 报文段首部的前 20 个字节是固定的，后面有 4n 字节是根据需要而增加的选项 (n 是整数)</dd>
-      <dd>TCP 首部的最小长度是 20 字节</dd>
+      <dd>TCP 报文段首部的前 20 个字节是固定的，后面有 4n 字节是根据需要而增加的选项 (n 是整数)
+        <p>TCP 首部的最小长度是 20 字节</p>
+      </dd>
       <dd>TCP 报文段长度 = TCP 首部长度 + 数据字段长度</dd>
       <dd>最大报文段长度 MSS - Maximum Segment Size
         <p>每个 TCP 报文段中的数据字段的最大长度</p>
+        <p>在 TCP 三次握手时通过选项字段协商 MSS</p>
         <p>只要缓存中存放的数据达到 MSS 字节时，就组装成一个 TCP 报文段发送出去</p>
         <p>利用MSS提高传输效率</p>
       </dd>
@@ -53,10 +55,60 @@
         <img src="./imgs/tcp5.png" alt="">
         <figcaption>TCP 报文格式</figcaption>
       </figure>
+      <div class="txt-center txt-xl">MSS=MTU−(IP header size)−(TCP/UDP header size)</div>
       <dt>源端口 Source Port</dt>
       <dd>2byte</dd>
       <dt>目标端口 Destination Port</dt>
       <dd>2byte</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] TCP MSS 大小</div>
+      <dd>TCP MSS 默认值通常设为 1460 = 1500 - 20 IP头 - 20 TCP头</dd>
+      <table class="txt-left">
+        <caption>TCP数据大小</caption>
+        <tbody>
+          <tr>
+            <td>Application Layer</td>
+            <td>1460</td>
+          </tr>
+          <tr>
+            <td>Transport Layer</td>
+            <td>1480 = 1460 + 20 TCP Header</td>
+          </tr>
+          <tr>
+            <td>Network Layer</td>
+            <td>1500 = 1460 + 20 TCP Header + 20 IP Header</td>
+          </tr>
+          <tr>
+            <td>Data-Link Layer</td>
+            <td>1518 = 1460 + 20 TCP Header + 20 IP Header + 6*2 MAC + 2 Type + 4 FCS</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="txt-left">
+        <caption>UDP数据大小</caption>
+        <tbody>
+          <tr>
+            <td>Application Layer</td>
+            <td>1472</td>
+          </tr>
+          <tr>
+            <td>Transport Layer</td>
+            <td>1480 = 1472 + 8 UDP Header</td>
+          </tr>
+          <tr>
+            <td>Network Layer</td>
+            <td>1500 = 1472 + 8 UDP Header + 20 IP Header</td>
+          </tr>
+          <tr>
+            <td>Data-Link Layer</td>
+            <td>1518 = 1472 + 8 UDP Header + 20 IP Header + 6*2 MAC + 2 Type + 4 FCS</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>UDP 不协商 MSS</p>
+        <p>没有连接建立过程，也不会自动限制载荷大小，完全依赖应用层控制</p>
+        <p>使用 UDP 的应用必须自己确保数据 ≤ 1472（IPv4/以太网）</p>
+      </div>
       <div>[<span class="iconfont icon-keyboard"></span>] 端口应用</div>
       <dd>客户端在端口49155向目标主机80端口的应用[WEB]发起HTTP请求</dd>
       <dd>服务端在80端口处理请求后，回发一个响应经过49155端口给客户端</dd>
@@ -85,14 +137,14 @@
       <dt>确认号 Acknowledgment Number</dt>
       <dd>4byte；32bit</dd>
       <dd>表示接收方期望收到的 <strong>下一个字节</strong> 的序号</dd>
-      <dd>表示序号n-1之前的数据已经收到，现在希望接收序号为n的数据</dd>
+      <dd>表示序号 n-1 之前的数据已经收到，现在希望接收序号为 n 的数据</dd>
       <dd>控制字段ACK为1时才有效</dd>
       <dd>增加到最大值后，重新回到0</dd>
       <dt>数据偏移 Data Offset</dt>
       <dd>4bit，以4byte为单位</dd>
       <dd>TCP 报文 <strong>首部</strong> 的长度，从而确定数据部分从哪里开</dd>
-      <dd>如果采用固定长度，不使用选项和填充，则为5；5*4byte = 20byte</dd>
       <dd>接收方知道从第几个字节开始是应用层数据，前面都是 TCP 头部</dd>
+      <dd>如果采用固定长度，不使用选项和填充，则为 (0101)<sub>2</sub> = 5；5*4byte = 20byte</dd>
       <dt>紧急位 URG</dt>
       <dd>1bit 标志位 Control Bits</dd>
       <dd>表示本报文段中包含紧急 Urgent 数据，接收方应优先处理这部分数据，而不是按正常队列顺序等待</dd>
@@ -110,15 +162,9 @@
         <p>1. 使用ACK表示确认号，除非特别说明是控制位；如ACK = 101，表示希望收到101序号的字节数据；序号100之前的数据已经收讫；默认控制位为1</p>
         <p>2. 使用大小写区分；ACK表示控制位；ack表示确认号，如下例</p>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
-      <div>A: ACK = 0；ack = 701</div>
-      <div>B: ACK = 1；ack = 701</div>
-      <div>C: ACK = 0；ack = 700</div>
-      <div>D: ACK = 1；ack = 700</div>
-      <!-- B -->
       <div>[<span class="iconfont icon-keyboard"></span>] 序号和确认号应用</div>
       <dd>A发送序号为201开始的报文，长度是100</dd>
-      <dd>下一次发送时，A 的序号将变为 301</dd>
+      <dd>下一次发送时，A 的序号将变为 201 + 100 = 301</dd>
       <dd>同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</dd>
       <table>
         <caption>A发送报文</caption>
@@ -140,6 +186,7 @@
         </tr>
       </table>
       <dd>B发送序号为800开始的报文，长度是200</dd>
+      <dd>下一次发送时，B 的序号将变为 800 + 200 = 1000</dd>
       <dd>同时对A发送的序号300之前的报文进行确认，并希望收到A序号301开始的报文</dd>
       <table>
         <caption>B回复报文</caption>
@@ -166,6 +213,12 @@
         <p>B 向 A 发送 200 字节数据（序号 800~999），同时确认 A 的数据（确认号 301）</p>
       </dd>
       <dd> 如果 A 没有收到 B 的响应，启动超时重传机制，重新发送序号为 201 的报文。 直到收到对 301 的确认为止</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
+      <div>A: ACK = 0；ack = 701</div>
+      <div>B: ACK = 1；ack = 701</div>
+      <div>C: ACK = 0；ack = 700</div>
+      <div>D: ACK = 1；ack = 700</div>
+      <!-- B -->
       <dt>立即位 PSH</dt>
       <dd>1bit 标志位 Control Bits</dd>
       <dd>推送 Push 操作</dd>
@@ -244,8 +297,17 @@
       <dd>在 URG = 1时，指出本报文段中的紧急数据的字节数（紧急数据结束后就是普通数据），指出了紧急数据的末尾在报文段中的位置</dd>
       <dt>选项 Options</dt>
       <dd>长度可变，最长可达 40byte</dd>
+      <dd>使用较少</dd>
       <dt>填充 Padding</dt>
       <dd>使整个 TCP 首部长度是 4byte的整数倍</dd>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>TCP的特点</li>
+        <li>TCP的报文格式</li>
+      </ol>
       <table>
         <caption>关键字</ca>
         <tbody>
@@ -273,6 +335,12 @@
           </tr>
         </tbody>
       </table>
+      <dt>Homework</dt>
+      <ol>
+        <li>为什么OSPF不使用TCP或者UDP？</li>
+        <!-- TCP 是纯点对点、面向连接的协议，不支持组播 -->
+        <!-- UDP 是无连接的，不可靠 -->
+      </ol>
     </dl>
     <div id="footer"></div>
   </div>
