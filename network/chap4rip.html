@@ -99,64 +99,65 @@
           <td>R2</td>
         </tr>
       </table>
-      <table>
-        <caption>R2的RIP路由</caption>
-        <tr>
-          <td>目标网络</td>
-          <td>距离</td>
-          <td>下一跳</td>
-        </tr>
-        <tr>
-          <td>Net1</td>
-          <td contenteditable>
-          </td>
-          <td contenteditable></td>
-        </tr>
-        <tr>
-          <td>Net2</td>
-          <td contenteditable></td>
-          <td contenteditable></td>
-        </tr>
-        <tr>
-          <td>Net3</td>
-          <td contenteditable></td>
-          <td contenteditable></td>
-        </tr>
-        <tr>
-          <td>Net4</td>
-          <td contenteditable></td>
-          <td contenteditable></td>
-        </tr>
-      </table>
-      <table>
-        <caption>R3的RIP路由</caption>
-        <tr>
-          <td>目标网络</td>
-          <td>距离</td>
-          <td>下一跳</td>
-        </tr>
-        <tr>
-          <td>Net1</td>
-          <td contenteditable>
-          </td>
-          <td contenteditable></td>
-        </tr>
-        <tr>
-          <td>Net2</td>
-          <td contenteditable></td>
-          <td contenteditable></td>
-        </tr>
-        <tr>
-          <td>Net3</td>
-          <td contenteditable></td>
-          <td contenteditable></td>
-        </tr>
-        <tr>
-          <td>Net4</td>
-          <td contenteditable></td>
-          <td contenteditable></td>
-        </tr>
-      </table>
+      <form id="sub-form">
+        <table>
+          <caption>R2的RIP路由</caption>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>Net1</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+          <tr>
+            <td>Net2</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+          <tr>
+            <td>Net3</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+          <tr>
+            <td>Net4</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+        </table>
+        <table>
+          <caption>R3的RIP路由</caption>
+          <tr>
+            <td>目标网络</td>
+            <td>距离</td>
+            <td>下一跳</td>
+          </tr>
+          <tr>
+            <td>Net1</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+          <tr>
+            <td>Net2</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+          <tr>
+            <td>Net3</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+          <tr>
+            <td>Net4</td>
+            <td contenteditable></td>
+            <td contenteditable></td>
+          </tr>
+        </table>
+      </form>
+      <!-- <div><button id="sub-btn">提交 Submit</button></div> -->
       <dt>定时器 Timer</dt>
       <dd>更新定时器 Update timer
         <p>路由器每隔<strong>30s</strong> 向邻居周期性广播/组播自己的完整路由表</p>
@@ -190,15 +191,15 @@
           </div>
         </div>
         <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon2.png" alt=""></div>
-          <div class="item-title">均衡 Balance
-            <br>具备负载均衡；当路由等价时，轮流使用路由
-          </div>
-        </div>
-        <div class="item-wrap">
           <div class="item-pic"><img src="./imgs/icon3.png" alt=""></div>
           <div class="item-title">动态 Dynamic
             <br>通过3个定时器动态维护路由
+          </div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="./imgs/icon2.png" alt=""></div>
+          <div class="item-title">均衡 Balance
+            <br>具备负载均衡；当路由等价时，轮流使用路由
           </div>
         </div>
       </div>
@@ -963,6 +964,31 @@ R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>
+  <!-- <script src="/utils/lib/email.min.js"></script>
+  <script>
+    emailjs.init('MgQhPPBjNMMss5kbw')
+    const btn = document.getElementById('sub-btn');
+    const from = document.getElementById('sub-form');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      btn.innerHTML = '提交中';
+
+      const serviceID = 'service_bokj9m5';
+      const templateID = 'template_ur5o2es';
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.innerHTML = '提交';
+          alert('留言发送成功!');
+          form.reset();
+        }, (err) => {
+          btn.innerHTML = '提交';
+          alert(JSON.stringify(err));
+        });
+    });
+  </script> -->
 </body>
 
 </html>

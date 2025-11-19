@@ -57,18 +57,25 @@
         <figcaption>IP数据报</figcaption>
       </figure>
       <dt>分区管理 Area</dt>
-      <dd>OSPF将网络划分为不同区域，以减少路由更新流量</dd>
+      <dd>OSPF将网络划分为不同区域
+        <p>减少链路状态数据库（LSDB）大小：每个区域维护自己的拓扑信息，不传播其他区域的详细拓扑</p>
+        <p>限制路由更新范围：链路状态通告（LSA）在区域内泛洪，跨区域需通过 ABR 汇总</p>
+        <p>提升网络可扩展性与稳定性</p>
+      </dd>
       <dd>每个区域只知道本区域的网络拓扑</dd>
       <dd>每个区域分配一个区域标识符 Area ID
-        <p>ID是32位二进制，可以表示为一个十进制数，也可以表示为点分十进制形式</p>
-        <p>区域0等价于区域0.0.0.0； 区域1等价于区域0.0.0.1</p>
+        <p>32 位无符号整数</p>
+        <p>可以表示为一个十进制数，也可以表示为点分十进制形式</p>
+        <p>Area&nbsp; 0 → 0.0.0.0；Area 0 必须存在，是 OSPF 网络的骨干区域</p>
+        <p>Area&nbsp; 1 → 0.0.0.1</p>
+        <p>Area 51 → 0.0.0.51</p>
       </dd>
       <dt>区域类型 Area Type</dt>
       <dd>骨干区域 Backbone Area (Area 0)：
         <p>连接所有其他区域的核心区域</p>
-        <p>所有非骨干区域间通信都要通过骨干区域0转发</p>
+        <p>所有非骨干区域间通信都要通过骨干区域 Area0 经区域边界路由器 ABR 转发</p>
       </dd>
-      <dd>标准区域 Standard Area：常规的OSPF区域</dd>
+      <dd>标准区域 Standard Area：常规的 OSPF 区域</dd>
       <dd>末节区域 Stub Area：不接收外部路由信息的区域</dd>
       <dd>完全末节区域 Totally Stubby Area：Cisco专有特性，只保留默认路由</dd>
       <dd>次末节区域 NSSA：允许引入外部路由但不传播到其他区域</dd>
@@ -82,11 +89,14 @@
       <dd>路由器可以具备多种身份</dd>
       <dd>自治系统边界路由器 ASBR
         <p>Autonomous System Border Router</p>
-        <p>连接OSPF域和其他自治系统的路由器</p>
+        <p>连接OSPF域和其他自治系统的路由器，如RIP</p>
       </dd>
       <dd>区域边界路由器 ABR
         <p>Area Border Router</p>
-        <p>连接多个区域的路由器</p>
+        <p>连接连接不同 OSPF 区域</p>
+        <p>维护多个区域的LSDB</p>
+        <p>在区域间传递路由信息（通过Type 3 LSA）</p>
+        <p>不允许在不同区域之间直接交换Type 1/2 LSA</p>
       </dd>
       <dd>内部路由器 Internal Router
         <p>位于一个区域内部</p>
@@ -323,6 +333,24 @@
           </tr>
         </tbody>
       </table>
+      <div>[ <span class="iconfont icon-keyboard"></span> ] Area 1 内新增一条直连网段（如 192.168.10.0/24）</div>
+      <figure>
+        <img src="./imgs/ospf6.png" alt="">
+        <figcaption>Area 1 内新增路由</figcaption>
+      </figure>
+      <dd>R1 生成 Type 1 LSA，描述其接口和 192.168.10.0/24</dd>
+      <dd>在 Area 1 内泛洪给
+        <p>其他 Area 1 路由器</p>
+        <p>ABR R2</p>
+        <p>Type 1 LSA：路由器自身链路状态，仅在本区域内泛洪。</p>
+      </dd>
+      <dd>ABR R2 收到后：
+        <p>在 Area 1 LSDB 中记录</p>
+        <p>生成 Type 3 LSA（汇总 192.168.10.0/24），泛洪到 Area 0</p>
+        <p>Type 3 LSA：由ABR生成，用于区域间路由汇总，可穿越多个区域。</p>
+      </dd>
+      <dd>R3（Area 0 路由器） 收到 Type 3 LSA，将其加入路由表，知道去往 192.168.10.0/24 需经 R2</dd>
+      <dd>跨区域通信通过 ABR 的 Type 3 LSA 实现。</dd>
       <div class="txt-center">
         <p class="bg">启动OSPF</p>
         <p>↓</p>
