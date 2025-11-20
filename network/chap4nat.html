@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Network Address Translation NAT</title>
+  <title>NAT - Network Address Translation</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
 </head>
@@ -12,7 +12,7 @@
 <body>
   <div class="w">
     <header>
-      <h1>Network Address Translation NAT</h1>
+      <h1>NAT - Network Address Translation</h1>
     </header>
     <dl>
       <dt>目标 Objective</dt>
@@ -27,10 +27,95 @@
       <dt>核心 Core</dt>
       <dd>地址转换：将私有IP（如192.168.x.x）替换为公网IP</dd>
       <dd>端口跟踪（对PAT而言）：记录内网主机使用的源端口，用于回包匹配</dd>
-      <dt>优点</dt>
+      <dt>优点 Merits</dt>
       <dd>一定程度上缓解IPv4地址短缺</dd>
       <dd>隐藏内网结构，提升安全性</dd>
       <dd>简化网络迁移 - 内网IP可随意变更</dd>
+      <dt>部署 Implementation</dt>
+      <dd>需要在专用网连接到互联网的路由器上安装 NAT 软件</dd>
+      <dd>装有 NAT 软件的路由器叫做 NAT路由器，它至少有一个有效的外部全球 IP 地址</dd>
+      <dd>所有使用本地地址的主机在和外界通信时，都要在 NAT 路由器上将其本地地址转换成全球 IP 地址，才能和互联网连接</dd>
+      <dt>转换过程 Translation</dt>
+      <dd>NAT 路由器维护一个IP地址转换表</dd>
+      <dd>当 NAT 路由器具有 n 个全球 IP 地址时，专用网内最多可以同时有 n 台主机接入到互联网</dd>
+      <table>
+        <caption>NAT路由转换表</caption>
+        <thead>
+          <tr>
+            <th>专网IP地址</th>
+            <th>公网IP地址</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>192.168.0.3</td>
+            <td>172.38.1.5</td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>离开专用网时：替换源地址，将内部地址替换为公网/全球地址</dd>
+      <dd>进入专用网时：替换目的地址，将公网/全球地址替换为内部地址</dd>
+      <dd>可以使专用网内较多数量的主机轮流使用 NAT 路由器有限数量的全球 IP 地址</dd>
+      <dd>通过 NAT 路由器的通信必须由专用网内的主机发起，因此，专用网内部的主机不能充当服务器用</dd>
+      <dd>多个主机共用的情况下，通过不同的端口号进行区分/可以被正确路由回来
+        <p>端口号转换 NAPT (Network Address and Port Translation)</p>
+      </dd>
+      <dd>NAT 路由器不会永久保存转换记录。为了节省内存和提高安全性，它会为每种协议设置一个 老化时间（Timeout）
+        <p>ICMP：30-60s</p>
+        <p>TCP：1h</p>
+        <p>UDP：30s</p>
+        <p>DNS：5-10s</p>
+      </dd>
+      <figure>
+        <img src="./imgs/nat.png" alt="">
+        <figcaption>NAT转换过程</figcaption>
+      </figure>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <ol>
+        <li>搭建拓扑 <a href="./pt/nat.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a>
+          <p>端设备 End Device - PC</p>
+          <p>网络设备 Network Devices - router 2911</p>
+          <p>端设备 End Devices - server</p>
+        </li>
+        <figure>
+          <img src="./imgs/nat1.png" alt="">
+          <figcaption>拓扑</figcaption>
+        </figure>
+        <li>配置IP地址 - 略
+          <p>主机</p>
+          <p>服务器</p>
+          <p>路由器</p>
+        </li>
+        <li>配置NAT</li>
+        <pre>
+Router(config)#access-list 1 permit 192.168.1.0 0.0.0.255
+Router(config)#
+Router(config)#ip nat inside source list 1 interface  g0/1 overload 
+Router(config)#
+Router(config)#interface g0/0
+Router(config-if)#ip nat inside 
+Router(config-if)#
+Router(config-if)#inter g0/1
+Router(config-if)#ip nat outside</pre>
+        <li>PC0 上 ping Server0</li>
+        <li>使用监视器查看路由器的NAT转换表 - 动作要快</li>
+        <figure>
+          <img src="./imgs/nat0.png" alt="">
+          <figcaption>NAT转换表</figcaption>
+        </figure>
+        <li>或者在ping的过程使用CLI查看NAT转换表 - 动作要快</li>
+        <figure>
+          <img src="./imgs/nat2.png" alt="">
+          <figcaption>NAT转换表</figcaption>
+        </figure>
+      </ol>
+      <div class="tips">因为外部服务器Server没有做NAT。所以它的外部和内部地址都是200.1.1.10</div>
     </dl>
     <dl>
       <dt>Reading</dt>
