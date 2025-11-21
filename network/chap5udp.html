@@ -24,23 +24,25 @@
       </div>
       <dt>概述 Overview</dt>
       <dd>用户数据报 UDP - User Datagram Protocol</dd>
+      <dd>无连接 connectionless</d>
       <dd>不可靠 unreliable
-        <p>不保证交付 Does not guarantee delivery</p>
-        <p>无需确认</p>
-        <p>无连接 connectionless</p>
+        <p>不重传</p>
+        <p>不确认</p>
+        <p>不排序</p>
+        <p>没有流量控制</p>
         <p>没有拥塞控制</p>
+        <p>不保证交付 Does not guarantee delivery</p>
         <p>存在丢包</p>
+        <p>最大努力交付 Best effort delivery</p>
       </dd>
-      <dd>首部开销小
-        <p>最少8个字节，仅包括首部</p>
-      </dd>
-      <dd>最大努力交付 Best effort delivery</dd>
+      <dd>首部开销小：最少8个字节，仅包括首部</dd>
       <dd>支持单播、组播、多播</dd>
       <div class="tips">
         <p>简单方便；不可靠</p>
         <p>U·D·P = Ultra Delightful Prankster - 超可爱捣蛋鬼</p>
+        <p>不可靠 &ne; 不能用</p>
       </div>
-      <dt>常见应用</dt>
+      <dt>常见应用 Application</dt>
       <dd>DNS - Domain Name System，域名系统</dd>
       <dd>DHCP - Dynamic Host Configuration Protocol，动态主机配置协议</dd>
       <dd>SNMP - Simple Network Management Protocol，简单网络管理协议</dd>
@@ -58,7 +60,6 @@
         <p>不重组 reassembling</p>
         <p>不实现序列号 sequence numbers</p>
         <p>一次只能传输少量数据</p>
-        <p>流媒体通信/实时通信</p>
       </dd>
       <dd>选择合适大小的报文
         <p>若报文太长，IP 层在传送时可能要进行分片，降低 IP 层的效率</p>
@@ -98,20 +99,23 @@
         <img src="./imgs/rip3.png" alt="">
         <figcaption>UDP报文</figcaption>
       </figure>
-      <dt>源端口</dt>
-      <dd>源端口号。在需要对方回信时选用。不需要时可用全 0</dd>
-      <dt>目的端口</dt>
-      <dd>目的端口号。终点交付报文时必须使用</dd>
-      <dt>长度</dt>
+      <dt>源端口 Source Port</dt>
+      <dd>源端口号</dd>
+      <dd>在需要对方回信时选用。不需要时可用全 0</dd>
+      <dt>目的端口 Destination Port</dt>
+      <dd>目的端口号</dd>
+      <dd>终点交付报文时必须使用</dd>
+      <dt>长度 Length</dt>
       <dd>UDP 用户数据报的长度，其最小值是 8（仅有首部）</dd>
-      <dt>检验和</dt>
+      <dt>检验和 CheckSum</dt>
       <dd>检测 UDP 用户数据报在传输中是否有错。有错就丢弃</dd>
+      <dd>伪首部：源IP地址、目标IP地址、协议号17、UDP长度、和填充</dd>
       <figure>
-        <img src="../imgs/network/udp/幻灯片12.JPG" alt="">
+        <img src="./imgs/udp4.png" alt="">
         <figcaption>校验和 Check Sum</figcaption>
       </figure>
       <dd>发送方
-        <p>填上伪首部</p>
+        <p>填上伪首部：不是真正发送的数据，仅用于 UDP 检验和的计算</p>
         <p>全0填充校验和字段；全0填充数据部分</p>
         <p>伪首部+首部+数据三部分采用二进制反码求和</p>
         <p>求和结果填入校验和字段并发送UDP报文</p>
@@ -122,6 +126,48 @@
         <p>伪首部+首部+数据三部分采用二进制反码求和</p>
         <p>结果全为1则无差错；否则丢弃</p>
       </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 主机153.19.8.104在端口1087向主机171.3.14.11所在端口13的进程通信，求校验和的计算</div>
+      <dd>数据准备</dd>
+      <table>
+        <tbody>
+          <tr>
+            <td colspan="4">153.19.8.104</td>
+          </tr>
+          <tr>
+            <td colspan="4">171.3.14.11</td>
+          </tr>
+          <tr>
+            <td>00000000</td>
+            <td>17</td>
+            <td colspan="2">15 = 8+7</td>
+          </tr>
+          <tr>
+            <td colspan="2">1087</td>
+            <td colspan="2">13</td>
+          </tr>
+          <tr>
+            <td colspan="2">15 = 8+7</td>
+            <td colspan="2">00000000</td>
+          </tr>
+          <tr>
+            <td>data</td>
+            <td>data</td>
+            <td>data</td>
+            <td>data</td>
+          </tr>
+          <tr>
+            <td>data</td>
+            <td>data</td>
+            <td>data</td>
+            <td>00000000</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>数据计算</dd>
+      <figure>
+        <img src="./imgs/udp5.png" alt="">
+        <figcaption>校验和 Check Sum</figcaption>
+      </figure>
     </dl>
     <h2>工作模式 Mode</h2>
     <dl>

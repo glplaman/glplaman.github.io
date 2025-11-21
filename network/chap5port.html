@@ -46,17 +46,60 @@
       <span>&commat;Port</span>
     </header>
     <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 生产环境常见端口 - Production</div>
+      <pre>https://glplaman.github.io:443</pre>
       <div>[<span class="iconfont icon-keyboard"></span>] 开发环境常见端口 - Development</div>
       <pre>http://localhost:8080</pre>
       <pre>http://127.0.0.1:5173</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 生产环境常见端口 - Production</div>
-      <pre>https://glplaman.github.io:5173</pre>
       <dd>含义：简称端口；是一种软件地址，用于标识同一台主机上的不同 <strong>应用程序进程</strong>
         <p>两个计算机中的进程要互相通信，不仅需要知道对方的IP地址，还要知道对方的端口号</p>
       </dd>
-      <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序</dd>
-      <dd>长度：16bit：0-65535</dd>
+      <dd>作用域：只具有 <strong>本地</strong> 意义，即只在本机上区分不同的应用程序进程</dd>
+      <dd>长度：16bit</dd>
+      <dd>范围：0-65535</dd>
       <dt>常见端口分配 Port</dt>
+      <dd>熟知端口</dd>
+      <dd>登记端口</dd>
+      <dd>临时端口</dd>
+      <table class="left">
+        <caption>端口分类</caption>
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Well-known Ports</td>
+            <td>熟知端口
+              <br>分配给标准服务、常用服务、重要服务
+              <br>0-1023
+            </td>
+          </tr>
+          <tr>
+            <td>Registered Ports</td>
+            <td>登记端口
+              <br>为没有成为熟知端口的应用程序使用
+              <br>适用于尚未成为标准但需固定端口的服务
+              <br>1024-49151
+              <br>需在IANA登记
+            </td>
+          </tr>
+          <tr>
+            <td>Ephemeral Ports</td>
+            <td>客户端使用端口
+              <br>临时端口，客户端程序随机选择使用
+              <br>49152-65535
+              <br>无需登记
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>Internet Assigned Numbers Authority - IANA：互联网号码分配机构</p>
+        <p>IANA 的端口登记是自愿性的，但强烈推荐用于公共协议或跨组织部署的服务，以避免端口冲突</p>
+      </div>
       <table>
         <caption>熟知端口</caption>
         <thead>
@@ -122,38 +165,6 @@
           <td>5432</td>
         </tr>
       </table>
-      <table class="left">
-        <caption>端口分类</caption>
-        <thead>
-          <tr>
-            <th>type</th>
-            <th>range</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Well-known Ports</td>
-            <td>熟知端口
-              <br>分配给常用重要服务
-              <br>0-1023
-            </td>
-          </tr>
-          <tr>
-            <td>Registered Ports</td>
-            <td>登记端口
-              <br>为没有熟知端口的应用程序使用，需在IANA登记
-              <br>1024-49151
-            </td>
-          </tr>
-          <tr>
-            <td>Ephemeral Ports</td>
-            <td>客户端使用端口
-              <br>临时端口，客户端程序随机选择使用
-              <br>49152-65535
-            </td>
-          </tr>
-        </tbody>
-      </table>
       <div>[<span class="iconfont icon-keyboard"></span>] RIP</div>
       <dd>RIP（Routing Information Protocol） 是应用层协议，依赖于 UDP - User Datagram Protocol 传输数据</dd>
       <dd>需要指定一个 UDP 端口号 - 520，用于标识 RIP 报文</dd>
@@ -166,6 +177,10 @@
       <figure>
         <img src="./imgs/rip3.png" alt="">
         <figcaption>RIP 520</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/tl1.png" alt="">
+        <figcaption>RIP vs OSPF</figcaption>
       </figure>
       <div>[<span class="iconfont icon-keyboard"></span>] OSPF</div>
       <dd>OSPF 没有分配端口？</dd>
@@ -186,10 +201,6 @@
         <p>RIP 是简单的距离矢量协议，适合用 UDP</p>
         <p>OSPF 是复杂的链路状态协议，需要更精细的控制，因此直接构建在 IP 之上</p>
       </dd>
-      <figure>
-        <img src="./imgs/tl1.png" alt="">
-        <figcaption>OSPF</figcaption>
-      </figure>
       <div class="tips">OSPF定制服务</div>
       <dt>源端口号和目标端口号 Source & Destination</dt>
       <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
@@ -220,6 +231,19 @@
         <p>目标端口: Web服务器的标准HTTP端口 80</p>
         <p>数据流向: 用户电脑(端口1025) → Web服务器(端口80)</p>
       </dd>
+      <table class="stream">
+        <caption>HTTP请求</caption>
+        <tr>
+          <td>Client</td>
+          <td></td>
+          <td>Server</td>
+        </tr>
+        <tr>
+          <td>1025</td>
+          <td>→</td>
+          <td>80</td>
+        </tr>
+      </table>
       <figure>
         <img src="./imgs/port0.png" alt="">
         <figcaption>HTTP请求</figcaption>
@@ -229,6 +253,19 @@
         <p>目标端口: 用户电脑之前使用的临时端口 1025</p>
         <p>数据流向: Web服务器(端口80) → 用户电脑(端口1025)</p>
       </dd>
+      <table class="stream">
+        <caption>服务器响应</caption>
+        <tr>
+          <td>Server</td>
+          <td></td>
+          <td>Client</td>
+        </tr>
+        <tr>
+          <td>80</td>
+          <td>→</td>
+          <td>1025</td>
+        </tr>
+      </table>
       <figure>
         <img src="./imgs/port1.png" alt="">
         <figcaption>服务器响应</figcaption>

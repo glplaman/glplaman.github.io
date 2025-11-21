@@ -38,15 +38,26 @@
         <figcaption>xmind</figcaption>
       </figure>
       <dt>概述 Overview</dt>
-      <dd>OSI七层模型中的第4层</dd>
-      <dd>为应用进程提供端到端的逻辑通信服务
-        <p>运输层向高层用户屏蔽了下面网络核心的细节</p>
-      </dd>
+      <dd>OSI七层模型中的第4层：网络层之上、应用层之下</dd>
+      <dd>为应用进程提供端到端的逻辑通信服务</dd>
+      <dd>端：应用进程，逻辑层面</dd>
+      <dd>向上层屏蔽底层网络细节（如拓扑、路由、链路类型）</dd>
+      <dd>将主机间通信提升为进程间通信</dd>
       <dd>采用 <strong>端口</strong> 来标识不同的应用进程，实现进程间的准确通信</dd>
       <figure>
         <div class="diagram-wrap">
-          <div class="diagram" style="--ind:4">
+          <div class="diagram" style="--ind:6">
             <div class="f">Application layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+          <div class="diagram" style="--ind:5">
+            <div class="f">Presentation layer</div>
+            <div class="r"></div>
+            <div class="t"></div>
+          </div>
+          <div class="diagram" style="--ind:4">
+            <div class="f">Session layer</div>
             <div class="r"></div>
             <div class="t"></div>
           </div>
@@ -71,47 +82,56 @@
             <div class="t"></div>
           </div>
         </div>
-        <figcaption>第四层</figcaption>
+        <figcaption>OSI七层模型</figcaption>
       </figure>
+      <dd>运输层以下各层的任务：解决主机到主机的通信</dd>
+      <dd>计算机通信实际上应用进程之间的通信</dd>
+      <dd>复用 Multiplexing：发送端多个应用进程的数据通过运输层封装，共享同一网络连接</dd>
+      <dd>分用 Demultiplexing：接收端根据目的端口号将数据准确交付给对应应用进程</dd>
       <figure>
         <img src="./imgs/tl0.png" alt="">
         <figcaption>运输层架构</figcaption>
       </figure>
-      <div class="tips">
-        <p>运输层以下各层的任务：解决主机到主机的通信</p>
-        <p>计算机通信实际上应用进程之间的通信</p>
-        <p>复用 Multiplexing：发送端将多个低速信号合并到一个高速信道上进行传输</p>
-        <p>分用 Demultiplexing：接收端将通过复用技术合并在一起的信号，重新分离成原来的各个独立信号</p>
-      </div>
       <dt>服务类型 Service</dt>
-      <dd>面向连接的 TCP
-        <p>Transmission Control Protocol</p>
-        <p>传输控制协议</p>
-        <p>可靠信道</p>
-      </dd>
       <dd>无连接的 UDP
         <p>User Datagram Protocol</p>
         <p>用户数据报协议</p>
         <p>不可靠信道</p>
       </dd>
+      <dd>面向连接的 TCP
+        <p>Transmission Control Protocol</p>
+        <p>传输控制协议</p>
+        <p>可靠信道</p>
+      </dd>
       <table>
-        <caption>两个主要协议</caption>
+        <caption>服务类型 Service</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th>UDP</th>
+            <th>TCP</th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
-            <td colspan="2">Application layer</td>
+            <td>连接方式</td>
+            <td>无连接（无需握手）</td>
+            <td>面向连接（三次握手建立连接）</td>
           </tr>
           <tr>
-            <td>UDP</td>
-            <td>TCP</td>
+            <td>可靠性</td>
+            <td>不可靠（无确认、无重传）</td>
+            <td>可靠（确认、重传、序号、超时）</td>
           </tr>
           <tr>
-            <td colspan="2">IP</td>
+            <td>开销</td>
+            <td>小（首部仅8字节） </td>
+            <td>大（首部20+字节，含控制字段）</td>
           </tr>
           <tr>
-            <td colspan="2">Data-link layer</td>
-          </tr>
-          <tr>
-            <td colspan="2">Physical layer</td>
+            <td>适用场景</td>
+            <td>实时音视频、DNS、广播</td>
+            <td>文件传输、网页浏览、邮件等</td>
           </tr>
         </tbody>
       </table>
@@ -131,6 +151,11 @@
       <dd>拥塞控制
         <p>防止网络拥塞，提高网络利用率</p>
       </dd>
+      <div class="tips">
+        <p>运输层是应用进程通信的桥梁</p>
+        <p>通过端口实现精准寻址，利用 TCP/UDP 提供灵活的服务选项</p>
+        <p>它不仅完成端到端的数据传输，还承担可靠性保障、资源协调与网络保护等关键任务，是网络体系结构中承上启下的核心层次</p>
+      </div>
     </dl>
     <!-- <h2>实操 Drill</h2>
     <dl>
