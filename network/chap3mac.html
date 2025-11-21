@@ -213,7 +213,15 @@ C:\Users\huawei></pre>
       <dd>帧校验序列；用于检错</dd>
       <dd>使用 CRC-32 算法计算出的校验码</dd>
       <dd>接收端收到帧后，重新计算CRC并与FCS比较，若不一致则认为帧损坏，丢弃该帧</dd>
-      <dd>位于帧的末尾，覆盖从目的MAC到Data的所有字段</dd>
+      <dd>位于帧的末尾</dd>
+      <dd>校验范围：目的 MAC + 源 MAC 地址 + 数据 Data + 类型和长度 + FCS；不包括前导码和帧起始定界符</dd>
+      <dd>接收方（网卡/NIC）收到帧后，会：
+        <p>使用相同的 CRC-32 算法 对帧内容（目的 MAC 到数据）重新计算 CRC</p>
+        <p>将计算结果与帧中的 FCS 字段比对</p>
+        <p>若不匹配 → 帧被判定为损坏 → 立即丢弃，不通知上层</p>
+        <p>上层看不见错误帧</p>
+      </dd>
+      <div class="tips">收到的帧都是正确的帧 - 没有比特级的错误</div>
       <figure>
         <img src="./imgs/vlan19.png" alt="">
         <figcaption>普通LAN的帧结构</figcaption>
@@ -234,10 +242,9 @@ C:\Users\huawei></pre>
       </div>
       <dt>以太网带宽 Bandwidth</dt>
       <dd>含义：每秒处理的bit - bps</dd>
-      <dd>完整的帧长度包含8字节的前导码和12byte的空闲帧</dd>
+      <dd>完整的帧长度包含8byte的前导码和12byte的空闲帧</dd>
       <dd>前导码用于同步同步发送方/接收方的bit流，提示有效帧内容的开始</dd>
       <dd>计算带宽时，使用的帧长是完整帧长，否则计算出来的仅仅是以太网的有效带宽</dd>
-
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
