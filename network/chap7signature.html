@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数字签名 Signature</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>数字签名</h1>
+      <span>&commat;Signature</span>
+    </header>
+    <dl>
+      <dt>场景需求</dt>
+      <dd>用户A向用户B发信息</dd>
+      <dd>用户B需要确认：
+        <p>主体鉴别：信息是A发出的</p>
+        <p>消息鉴别：消息没有被篡改</p>
+        <p>不可否认：防抵赖；第三方举证</p>
+      </dd>
+      <dt>技术支撑</dt>
+      <dd>非对称加密</dd>
+      <dd>消息摘要</dd>
+      <dt>签名过程</dt>
+      <ol>
+        <li>用户A采用摘要算法对原始消息计算得到摘要</li>
+        <li>使用自己的私钥对摘要进行签名，生成数字签名</li>
+        <li>将原始消息、数字签名和自己的公钥一起发给用户B
+          <p>公钥通常预先分发或通过证书获取，不需要每次发送</p>
+          <p>若 B 已知 A 的公钥（如通过 CA 证书），则无需重复发送</p>
+        </li>
+        <li>用户B使用 A 的公钥验证签名，
+          <p>若验证成功，得到一个哈希值 - 摘要1</p>
+          <p>否则不是A发送的消息</p>
+        </li>
+        <li>用户B再用同样的摘要算法对明文计算，得到摘要2，比较摘要1和摘要2
+          <p>如果相等，则能确定消息未被篡改</p>
+          <p>否则消息被篡改</p>
+        </li>
+        <li>事后如果A反悔，不承认是自己发送的消息；B可向颁发公钥的机构 PKI 申请认证</li>
+        <li>PKI 或第三方仲裁机构可用 CA 的公钥验证签名，并确认 A 的身份</li>
+      </ol>
+      <figure class="img-sn">
+        <img src="./imgs/signature0.png" alt="">
+        <figcaption>签名过程</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] Alice向Bob发送消息并签名</div>
+      <dd>加密与签名
+        <p>Alice 使用 Bob 的公钥对消息进行加密 → 确保只有 Bob 能解密</p>
+        <p>Alice 使用自己的私钥对消息进行签名 → 确保消息来自 Alice，且未被篡改</p>
+      </dd>
+      <dd>解密与验证
+        <p>Bob 使用自己的私钥解密消息</p>
+        <p>Bob 使用 Alice 的公钥验证签名，确认消息来源和完整性</p>
+      </dd>
+      <figure class="img-sn">
+        <img src="./imgs/key0.jpg" alt="">
+        <figcaption>加密和签名</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

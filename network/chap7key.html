@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Key</title>
+  <title>密钥 Key</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
 </head>
@@ -12,8 +12,105 @@
 <body>
   <div class="w">
     <header>
-      <h1>Key</h1>
+      <h1>密钥</h1>
+      <span>&commat;Key</span>
     </header>
+    <dl>
+      <dd>加密和解密用的密钥 K 是一串秘密的字符串（即比特串）</dd>
+      <dd>解密算法是加密算法的逆运算</dd>
+      <dd>明文通过加密算法 E 和加密密钥 K 变成密文Y</dd>
+      <div class="txt-center">Y = E<sub>K</sub>(X)</div>
+      <dd>接收端利用解密算法 D 运算和解密密钥 K 解出明文 X</dd>
+      <div class="txt-center">X = D<sub>K</sub>(Y)</div>
+      <dd>加密密钥和解密密钥可以一样，也可以不一样</dd>
+      <dd>密钥通常由密钥中心提供</dd>
+      <dd>当密钥的地传送必须使用安全通道</dd>
+      <div class="tips">
+        <p>明文 P - Plain</p>
+        <P>密文 C - Cipher</P>
+      </div>
+    </dl>
+    <h2>对称加密</h2>
+    <dl>
+      <dt>特点</dt>
+      <dd>加密密钥与解密密钥都使用相同密钥的密码体制</dd>
+      <dd>速度快</dd>
+      <dd>密钥短</dd>
+      <dd>适合加密 <strong>大量</strong> 数据</dd>
+      <dt>焦点</dt>
+      <dd>密钥分发（Key Distribution）- 双方必须安全地共享同一个密钥，否则会被窃听</dd>
+      <dd>多采用物理介质</dd>
+      <dt>DES - 已淘汰</dt>
+      <dd>DES 属于对称密钥密码体制，是一种分组密码</dd>
+      <dd>在加密前，先对整个明文进行分组；每一个组长为 64 位</dd>
+      <dd>然后对每一个 64 位二进制数据进行加密处理，产生一组 64 位密文数据</dd>
+      <dd>最后将各组密文串接起来，即得出整个的密文</dd>
+      <dd>使用的密钥为 64 位(实际密钥长度为 56 位，有 8 位用于奇偶校验)</dd>
+      <dd>仅取决于对密钥的保密，其算法是公开的</dd>
+      <dd>严重问题：DES 密钥长度较短</dd>
+      <dd>现在已经设计出搜索 DES 密钥的专用芯片</dd>
+      <dd>56 位 DES 已不再认为是安全的了</dd>
+      <dt>3DES - 已淘汰</dt>
+      <dd>使用两个 56 位的密钥</dd>
+      <dd>把一个 64 位明文用一个密钥加密</dd>
+      <dd>再用另一个密钥解密</dd>
+      <dd>然后再使用第一个密钥加密</dd>
+      <dt>AES</dt>
+      <dd>高级加密标准 AES - Advanced Encryption Standard</dd>
+      <dd>是一种分组密码</dd>
+      <dd>分组长度为 128 位</dd>
+      <dd>有三种加密标准，其密钥分别为 128 位、192 位和 256 位</dd>
+      <dd>加密步骤复杂，运算速度比 3DES 快得多，安全性也大大加强</dd>
+      <dd>2002 年成为美国政府加密标准</dd>
+      <dd>现在是 ISO/IEC 18033-3 标准</dd>
+    </dl>
+    <h2>非对称加密</h2>
+    <dl>
+      <dd>又称公开密钥密码体制</dd>
+      <dd>加密和解密使用不同的密钥</dd>
+      <dd>私钥 Private Key：带有个人特征，可用于解密、验证签名</dd>
+      <dd>公钥 Public Key：用于加密、签名</dd>
+      <dd>不存在密钥配送问题，容易导致中间人攻击</dd>
+      <dd>通常由接收方生成公开密钥和私有密钥密钥对，并发送公钥给发送方</dd>
+      <dd>完整的通信过程，实际上需要2对密钥-4个密钥</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] Bob向Alice发送加密消息</div>
+      <dd>不希望让第三方知道消息</dd>
+      <dd>Bob使用Alice的公钥加密信息，发送给Alice</dd>
+      <figure class="img-sn">
+        <img src="./imgs/key1.png" alt="">
+        <figcaption>加密过程</figcaption>
+      </figure>
+      <dd>Alice用自己的私钥解密，获得信息
+        <p>私有只有Alice自己有</p>
+      </dd>
+      <dd>但是Alice无法确认消息来自Bob</dd>
+      <dd>也无法确认消息的完整性，如是否被人篡改过</dd>
+      <figure class="img-sn">
+        <img src="./imgs/key2.png" alt="">
+        <figcaption>解密过程</figcaption>
+      </figure>
+      <dt>主要算法</dt>
+      <dd>RSA：如X.509数字证书</dd>
+      <dd>名字由三位开发者：Ron Rivest、Adi Shamir和Leonard Adleman的姓氏的首字母组成</dd>
+      <dd>ECC椭圆曲线：如国密SM2</dd>
+    </dl>
+    <dl>
+      <dt>中间人攻击</dt>
+      <dd>Man in the Middle Attack</dd>
+      <dd>中间人攻击指的是在通信双方的通道上，混入攻击者：
+        <p>对接收方伪装成发送者</p>
+        <p>对放送放伪装成接收者</p>
+      </dd>
+      <dd>他监听到双方发送公钥时，偷偷将消息篡改，发送自己的公钥给双方。然后自己则保存下来双方的公钥</dd>
+      <dd>双方通信时，加密使用的都是攻击者的公钥；攻击者都可以拦截后解密，并且篡改信息内容再用对方公钥加密并发送</dd>
+      <dd>接收方拿到的是篡改后的信息</dd>
+      <dd>发送方和接收方都是在和中间人通信</dd>
+      <dd>应对措施：要防范中间人，我们需要使用公钥证书</dd>
+      <figure class="img-sn">
+        <img src="./imgs/signature2.png" alt="">
+        <figcaption>中间人攻击</figcaption>
+      </figure>
+    </dl>
     <dl>
       <dt>Reading</dt>
       <ol>

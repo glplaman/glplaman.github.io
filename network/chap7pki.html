@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公钥基础设施 PKI</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>公钥基础设施 </h1>
+      <span>&commat;PKI</span>
+    </header>
+    <dl>
+      <dd>Public Key Infrastructure</dd>
+      <dd>用于创建、管理、分发、使用、存储和撤销数字证书及公钥的综合体系</dd>
+      <dd>其核心目标是建立一个 <strong>可信</strong> 的身份认证与安全通信环境</dd>
+      <dt>主要功能 Function</dt>
+      <dd>身份认证：通过数字证书将用户的公钥与其真实身份（如姓名、域名、组织）绑定</dd>
+      <dd>信任传递：利用证书链（根 CA → 中间 CA → 用户证书）实现跨域信任</dd>
+      <dd>数据完整性与不可否认性：支持数字签名，确保消息来源真实、未被篡改</dd>
+      <dd>密钥管理：安全地生成、存储、更新和吊销密钥对</dd>
+      <dd>访问控制与审计：为系统提供基于证书的身份识别机制</dd>
+      <dt>核心组件 Component</dt>
+      <dd>CA（Certificate Authority）：权威机构，负责签发和吊销数字证书</dd>
+      <dd>RA（Registration Authority）：负责审核用户身份信息，提交给 CA</dd>
+      <dd>数字证书：X.509 格式文件，包含用户公钥、身份信息、有效期和 CA 签名</dd>
+      <dd>证书库（Repository）：存放已签发证书和 CRL（证书吊销列表）</dd>
+      <dd>CRL / OCSP：用于实时查询证书是否有效</dd>
+      <dd>终端实体：使用证书的用户、服务器或设备（如网站、移动应用）</dd>
+      <dt>工作流程简述 Workflow</dt>
+      <ol>
+        <li>用户生成密钥对（私钥保密，公钥提交）</li>
+        <li>向 CA 提交 CSR（证书签名请求）</li>
+        <li>CA 验证身份后，用其私钥签发证书</li>
+        <li>用户部署证书，用于加密通信或数字签名</li>
+        <li>接收方使用 CA 的公钥验证证书有效性，进而信任该公钥</li>
+      </ol>
+      <dt>应用场景 Application</dt>
+      <dd>HTTPS/SSL/TLS：网站身份认证与安全传输</dd>
+      <dd>电子合同与电子签名：具备法律效力的数字签署</dd>
+      <dd>电子政务与身份认证：公民在线办事、数字身份证</dd>
+      <dd>金融交易：银行系统、支付平台的安全接入</dd>
+      <dd>代码签名：软件发布时证明来源可信</dd>
+      <dd>物联网设备认证：设备入网前身份验证</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
