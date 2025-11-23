@@ -48,25 +48,48 @@
       <dd>同时，还可以实现负载均衡等</dd>
       <dd>路由器 → OpenFlow交换机/分组交换机/交换机</dd>
       <dd>路由表 → 流表</dd>
-      <dt>Folw Table</dt>
-      <dd>首部字段值
-        <p>一组字段（12 个），用来使入分组的对应首部与之相匹配。匹配不上的分组被丢弃，或发送到远程控制器做更多的处理</p>
+    </dl>
+    <h2>流表 Folw Table</h2>
+    <dl>
+      <figure>
+        <img src="./imgs/sdn5.png" alt="">
+        <figcaption>Flow Table</figcaption>
+      </figure>
+      <dt>首部字段值/匹配 Match Fields</dt>
+      <figure>
+        <img src="./imgs/sdn4.png" alt="">
+        <figcaption>Match Fields</figcaption>
+      </figure>
+      <dd>一组字段</dd>
+      <dd>进入分组的对应首部与之相匹配；包括但不限于
         <p>入端口</p>
-        <p>源MAC地址、目的MAC地址</p>
-        <p>VLAN ID</p>
-        <p>IP源地址、IP目的地址</p>
-        <p>TCP源端口、TCP目的端口</p>
+        <p>二层字段（L2）：源MAC地址、目的MAC地址、VLAN ID</p>
+        <p>三层字段（L3）：IP源地址、IP目的地址</p>
+        <p>四层字段（L4）：TCP源端口、TCP目的端口</p>
       </dd>
-      <dd>计数器
-        <p>一组计数器</p>
-        <p>可包括已经与该表项匹配的分组数量，以及从该表项上次更新到现在经历的时间</p>
+      <dd>匹配不上的分组被丢弃，或发送到远程控制器做更多的处理</dd>
+      <dt>动作 Actions</dt>
+      <dd>一组动作</dd>
+      <dd>当分组匹配某个流表项时，按顺序执行该表项指定的一组动作；包括但不限于
+        <p>转发（Output）：将数据包从指定端口发出（可为物理端口、逻辑端口如 CONTROLLER、FLOOD、ALL 等）</p>
+        <p>丢弃（Drop）：不执行任何输出动作，等效于静默丢弃数据包</p>
+        <p>复制与多播（Group Table 引用）：通过引用 Group Table 实现一对多转发（如广播、负载均衡）</p>
+        <p>首部重写（Set-Field）：修改数据包的 L2/L3/L4 字段，例如：
+          修改源/目的 MAC 地址
+          修改 VLAN ID
+          修改 IP 地址或端口号（用于 NAT、负载均衡等）</p>
+        <p>发送至控制器（Send to Controller）：将数据包封装为 packet-in 消息上送，常用于首次流处理或异常流量分析</p>
+        <p>其他高级动作：如设置队列（QoS）、推送/弹出 MPLS 标签、更新 TTL 等</p>
       </dd>
-      <dd>动作
-        <p>一组动作</p>
-        <p>当分组匹配某个流表项时，把分组转发到指明的端口</p>
-        <p>或丢弃该分组</p>
-        <p>或把分组进行复制后再从多个端口转发出去</p>
-        <p>或重写分组的首部字段（第二、三和四层的首部字段）等</p>
+      <dt>计数器 Counters</dt>
+      <dd>一组计数器</dd>
+      <dd>每条流表项可关联一组统计计数器，用于监控和网络分析</dd>
+      <dd>可包括已经与该表项匹配的分组数量，以及从该表项上次更新到现在经历的时间</dd>
+      <dd>这些计数器可通过南向接口（如 OpenFlow 的 OFPT_STATS_REQUEST）被控制器读取，用于：
+        <p>流量工程</p>
+        <p>异常检测（如 DDoS）</p>
+        <p>资源使用评估</p>
+        <p>自动化策略调整</p>
       </dd>
       <table>
         <caption>流表</caption>
@@ -86,6 +109,18 @@
           <td>...</td>
         </tr>
       </table>
+      <dt>流表处理流程 Procedure</dt>
+      <dd>数据包到达交换机</dd>
+      <dd>获取入端口及首部字段</dd>
+      <dd>在流表中按优先级从高到低查找第一个匹配项</dd>
+      <dd>若找到：
+        <p>更新对应计数器</p>
+        <p>执行动作列表</p>
+      </dd>
+      <dd>若未找到：
+        <p>查看是否配置了 table-miss 规则（通常指向控制器）</p>
+        <p>否则默认丢弃</p>
+      </dd>
       <div class="tips">流表项只写出需要精确匹配的字段，其余字段默认不关心 - wildcarded</div>
       <div>[<span class="iconfont icon-keyboard"></span>] SDN简单转发</div>
       <dd>源：H5 或 H6</dd>
