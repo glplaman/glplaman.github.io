@@ -18,6 +18,10 @@
     </header>
     <dl>
       <dt>Joke Time</dt>
+      <dd>来一碗牛肉面</dd>
+      <dd>不要跟它讲秘密</dd>
+      <dd>不要跟它吵架</dd>
+      <dd>尽力而为（Best Effort），其余随缘</dd>
       <dd>I know this great UDP joke but you might not get it.</dd>
       <div class="txt-center">
         <img src="./imgs/udp0.png" alt="">
@@ -35,6 +39,9 @@
         <p>存在丢包</p>
         <p>最大努力交付 Best effort delivery</p>
       </dd>
+      <dd>不分段 segmenting</dd>
+      <dd>不重组 reassembling</dd>
+      <dd>不实现序列号 sequence numbers</dd>
       <dd>首部开销小：最少8个字节，仅包括首部</dd>
       <dd>支持单播、组播、多播</dd>
       <div class="tips">
@@ -53,25 +60,19 @@
       <dd>流媒体 - Streaming Media</dd>
       <dd>多播/组播应用 - Multicast</dd>
       <dd>游戏通信 - Online Gaming</dd>
-      <dt>报文 Packet</dt>
-      <dd>面向报文
-        <p>一次传送和交付一个完整的报文</p>
-        <p>不分段 segmenting</p>
-        <p>不重组 reassembling</p>
-        <p>不实现序列号 sequence numbers</p>
-        <p>一次只能传输少量数据</p>
-      </dd>
+    </dl>
+    <h2>UDP 数据报 Datagram</h2>
+    <dl>
+      <dd>UDP 是面向报文 Message 的协议，一次发送一个完整的报文</dd>
+      <dd>UDP 将应用层的报文 Message 加上 UDP 首部后形成 UDP datagram</dd>
       <dd>选择合适大小的报文
-        <p>若报文太长，IP 层在传送时可能要进行分片，降低 IP 层的效率</p>
+        <p>若报文太长，IP 层在传送时可能要进行分片，形成多个 IP 分组 Packets</p>
         <p>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</p>
       </dd>
       <figure>
         <img src="./imgs/udp2.png" alt="">
-        <figcaption>UDP报文</figcaption>
+        <figcaption>UDP 数据报封装</figcaption>
       </figure>
-    </dl>
-    <h2>报文格式 Format</h2>
-    <dl>
       <dd>包括首部和数据</dd>
       <dd>首部 8byte - 开销小</dd>
       <table>
@@ -106,10 +107,15 @@
       <dd>目的端口号</dd>
       <dd>终点交付报文时必须使用</dd>
       <dt>长度 Length</dt>
-      <dd>UDP 用户数据报的长度，其最小值是 8（仅有首部）</dd>
+      <dd>UDP 用户数据报的长度，包括首部和数据</dd>
+      <dd>最小值是 8（仅有首部）</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 图2所示 UDP 数据报中，数据部分是多少字节？</div>
+      <dd>数据报的长度是 0x0020 → (0020)<sub>16</sub> = 32byte</dd>
+      <dd>数据报的首部是 8byte</dd>
+      <dd>所以数据报的数据部分：32 - 8 = 24byte</dd>
       <dt>检验和 CheckSum</dt>
       <dd>检测 UDP 用户数据报在传输中是否有错。有错就丢弃</dd>
-      <dd>伪首部：源IP地址、目标IP地址、协议号17、UDP长度、和填充</dd>
+      <dd>伪首部：源IP地址、目标IP地址、IP协议号17、UDP长度和填充</dd>
       <dd>校验内容：伪首部 + UDP首部 + UDP数据</dd>
       <!-- IP 层的目标：确保“分组路由正确” -->
       <figure>
@@ -130,7 +136,11 @@
       </dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 主机153.19.8.104在端口1087向主机171.3.14.11所在端口13的进程通信，求校验和的计算</div>
       <dd>数据准备</dd>
+      <dd>红色数字部分：伪首部保留字段，必须为 0</dd>
+      <dd>绿色数字部分：校验和预填充，求得结果后再回填</dd>
+      <dd>蓝色数字部分：0bit 填充，保证总长度为偶数字节，以便 16 位求和</dd>
       <table>
+        <caption>校验和数据准备</caption>
         <tbody>
           <tr>
             <td colspan="4">153.19.8.104</td>
@@ -139,7 +149,7 @@
             <td colspan="4">171.3.14.11</td>
           </tr>
           <tr>
-            <td>00000000</td>
+            <td style="color: #f40;">00000000</td>
             <td>17</td>
             <td colspan="2">15 = 8+7</td>
           </tr>
@@ -149,7 +159,7 @@
           </tr>
           <tr>
             <td colspan="2">15 = 8+7</td>
-            <td colspan="2">00000000</td>
+            <td colspan="2" style="color: #008000;">00000000 00000000</td>
           </tr>
           <tr>
             <td>data</td>
@@ -161,7 +171,7 @@
             <td>data</td>
             <td>data</td>
             <td>data</td>
-            <td>00000000</td>
+            <td style="color: #00f;">00000000</td>
           </tr>
         </tbody>
       </table>
