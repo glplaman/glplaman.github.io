@@ -87,7 +87,7 @@
         <p>网络上的流量要少</p>
         <p>让发送方/源站根据网络状态动态调整发送速率</p>
       </dd>
-      <dd>拥塞控制 <strong>很难</strong> 精准设计；只能一定程度的 <strong>缓解</strong>拥塞 - 动态变化</dd>
+      <dd>拥塞控制 <strong>很难</strong> 精准设计；只能一定程度的 <strong>缓解</strong> 拥塞 - 动态变化</dd>
       <dd><span class="iconfont icon-help"></span>目前了解到的知识，哪些方法或措施可以减少网络上的流量</dd>
       <!-- <dd>TTL</dd> -->
       <!-- <dd>WLAN</dd> -->
@@ -126,18 +126,18 @@
       <div>
         <div class="bg">方案1. 在IP/分组头部设置拥塞指示位</div>
         <!-- <p>例子：显式拥塞通知 ECN, Explicit Congestion Notification</p> -->
-        <p>在IP头部和TCP头部保留特定比特（如ECT、CE位）</p>
+        <p>在 IP 头部和 TCP 头部保留特定比特（如ECT、CE位）</p>
         <p>当路由器检测到拥塞（如队列过长），不丢包，而是将转发的分组中的CE（Congestion Experienced）位设为1</p>
-        <p>接收方收到该分组后，在 <strong>ACK</strong> 中告知发送方“网络曾拥塞”</p>
+        <p>接收方收到该分组后，在 <strong>ACK</strong> 中告知发送方网络曾拥塞</p>
         <p>发送方据此降低发送速率</p>
-        <p>优点：避免丢包作为拥塞信号，提高效率；适用于支持ECN的端系统和网络设备</p>
+        <p>优点：避免丢包作为拥塞信号，提高效率；适用于支持 ECN 的端系统和网络设备</p>
         <div class="bg">方案2. 通过丢包隐式传递拥塞信号</div>
-        <p>传统TCP机制 如Reno、Cubic</p>
+        <p>传统 TCP 机制 如 Reno、Cubic</p>
         <p>路由器在缓冲区满时直接丢弃分组</p>
         <p>发送方通过 <strong>超时重传或重复ACK</strong> 推断网络拥塞</p>
         <p>于是执行拥塞避免算法，如慢启动、拥塞窗口减半</p>
         <p>缺点：反应滞后，且丢包本身浪费带宽</p>
-        <div>[<span class="iconfont icon-keyboard"></span>] 重复ACK</div>
+        <div>[<span class="iconfont icon-keyboard"></span>] 重复确认 ACK</div>
         <ol>
           <li>发送方发送
             <p>seq = 1000</p>
@@ -150,18 +150,18 @@
             <p>seq = 3000</p>
             <p>seq = 4000</p>
           </li>
-          <li>接收方根据累计确认，没有收到1000，所以给发送方发送对1000的确认，希望发送方重新发送1000的报文
+          <li>接收方根据累计确认，没有收到 1000，所以给发送方发送对 1000 的确认，希望发送方重新发送 1000 的报文
             <p>ACK = 1, seq = 1000</p>
           </li>
           <li>发送方重传1000的报文</li>
           <li>如果仍然多次(3次)收到对1000的确认，就可以判断网络出现了拥塞</li>
-          <li>立即进行重传 - 快重传 fast retransmit</li>
+          <li>立即进行重传 - 快重传 Fast Retransmit</li>
         </ol>
         <div class="bg">方案3. 周期性发送探测分组（主动探测）</div>
-        <p>某些协议或应用层机制会定期发送小量探测包，如ping、RTT测量包</p>
-        <p>通过分析往返时延（RTT）增长、丢包率上升等指标，判断是否发生拥塞</p>
-        <p>例如：QUIC协议、某些拥塞控制算法（如BBR）会利用带宽和RTT估计网络状态</p>
-        <p>这种方式更“主动”，但可能增加额外开销</p>
+        <p>某些协议或应用层机制会定期发送小量探测包，如 ping、RTT 测量包</p>
+        <p>通过分析 RTT 增长、丢包率上升等指标，判断是否发生拥塞</p>
+        <p>例如：QUIC 协议、某些拥塞控制算法（如 BBR ）会利用带宽和 RTT 估计网络状态</p>
+        <p>这种方式更主动，但可能增加额外开销</p>
       </div>
     </dl>
     <h2>TCP的拥塞控制</h2>
@@ -192,7 +192,7 @@
       <dd>在连接初期或超时后，快速探测网络可用带宽</dd>
       <dd>拥塞窗口 cwnd 从 1 MSS 开始</dd>
       <dd>每收到一个 ACK，cwnd 增加 1 MSS → 每轮次 RTT 翻倍，指数增长</dd>
-      <dd>当 cwnd 达到慢启动阈值 ssthresh 时，转入→ 拥塞避免
+      <dd>当 cwnd 达到慢开始门限 ssthresh<strong>（Slow Start Threshold）</strong>时，退出慢开始阶段 → 转入拥塞避免阶段
         <p>当 cwnd &le; ssthresh 时，使用慢开始算法</p>
         <p>当 cwnd > ssthresh 时，停止使用慢开始算法，改用拥塞避免算法</p>
         <p>当 cwnd = ssthresh 时，既可使用慢开始算法，也可使用拥塞避免算法</p>
@@ -218,24 +218,37 @@
         <figcaption>慢开始 - 每轮翻倍</figcaption>
       </figure>
       <div class="bg">阶段2. 拥塞避免 Congestion Avoidance</div>
-      <dd>在接近网络容量时，谨慎增加发送速率，避免引发拥塞</dd>
-      <dd>让拥塞窗口 cwnd 缓慢地增大，避免出现拥塞</dd>
-      <dd>cwnd 每经过一个往返时间 RTT，期间不管收到多少 ACK，都只增加 1 MSS（线性增长）</dd>
-      <dd>加法增大 AI - Additive Increase</dd>
+      <dd>触发条件：cwnd ≥ ssthresh</dd>
+      <dd>cwnd变化：每经过一个往返时间 RTT，期间不管收到多少 ACK，cwnd 都只增加 1 MSS - 线性增长
+        <p>让拥塞窗口 cwnd 缓慢地增大，避免出现拥塞</p>
+      </dd>
       <figure>
         <img src="./imgs/tcp9.png" alt="">
         <figcaption>拥塞避免 - 每轮+1</figcaption>
       </figure>
-      <dd>无论在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（重传定时器超时）：
-        <p>ssthresh = max (cwnd/2，2)</p>
-        <p>cwnd = 1</p>
-        <p>执行慢开始算法</p>
+      <dd>可能的阶段转移</dd>
+      <div>情况1：发生超时，判定为严重拥塞</div>
+      <dd>触发条件：重传定时器超时，未收到预期 ACK</dd>
+      <dd>原因推测：网络严重拥塞、链路中断或大量分组丢失</dd>
+      <dd>调整：
+        <p>慢开始门限 ssthresh = max (cwnd/2，2)</p>
+        <p>拥塞窗口 cwnd = 1</p>
       </dd>
-      <dd>目的：迅速减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够时间把队列中积压的分组处理完毕</dd>
+      <dd>执行慢开始算法</dd>
+      <dd>重新进入阶段1 慢开始</dd>
+      <div>情况2：收到3个重复 ACK，判定为轻度丢包</div>
+      <dd>触发条件：连续收到3个或以上对同一数据序号的重复确认</dd>
+      <dd>原因推测：单个或少数分组丢失，但后续分组已到达接收方，网络仍有容量</dd>
+      <dd>应对措施：
+        <p>立即触发阶段3 快重传，重传丢失分组</p>
+        <p>紧接着进入阶段4 快速恢复，而非回到慢开始</p>
+      </dd>
+      <dd>优势：避免因单点丢包导致吞吐量骤降，提升高带宽延迟积网络性能</dd>
       <div class="bg">阶段3. 快重传 Fast Retransmit</div>
-      <dd>让发送方尽早知道发生了个别报文段的丢失</dd>
-      <dd>连续收到三个重复的确认，就立即启动重传，无需等待超时</dd>
+      <dd>设计目标：尽早检测并重传丢失的报文段，避免因等待重传定时器超时而造成不必要的传输延迟</dd>
+      <dd>触发机制：重复确认，即连续收到三个重复的确认，就立即启动重传，无需等待超时</dd>
       <dd>整个网络的吞吐量提高约 20%</dd>
+      <dd>重传后，进入阶段4 快速恢复</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 解读</div>
       <dd>M3丢失</dd>
       <dd>接收方收到M1、M2、M4、M5、M6、M7</dd>
@@ -246,17 +259,55 @@
         <figcaption>快重传</figcaption>
       </figure>
       <div class="bg">阶段4. 快恢复 Fast Recovery</div>
-      <dd>在快重传后，避免退回到慢启动（过于保守），维持较高吞吐</dd>
-      <dd>进入拥塞避免阶段，使拥塞窗口缓慢地线性增大（加法增大 AI）</dd>
-      <dd>当发送端收到连续三个重复的确认时，不执行慢开始算法，而是执行快恢复算法 FR (Fast Recovery) 算法：
-        <p>慢开始门限 ssthresh = 当前拥塞窗口 cwnd / 2 </p>
-        <p>新拥塞窗口 cwnd = 慢开始门限 ssthresh </p>
+      <dd>设计目标：快重传后，避免退回到慢启动（过于保守），维持较高吞吐</dd>
+      <dd>触发机制：当发送端收到连续三个重复的确认</dd>
+      <dd>调整
+        <p>慢开始门限 ssthresh = cwnd / 2 </p>
+        <p>新拥塞窗口 cwnd = ssthresh </p>
       </dd>
+      <dd>进入拥塞避免阶段，使拥塞窗口缓慢地线性增大（加法增大 AI）</dd>
       <dd>前提：认为网络只是轻微拥塞（个别丢包），而非严重崩溃</dd>
       <figure>
         <img src="./imgs/tcp11.png" alt="">
         <figcaption>拥塞控制流程图</figcaption>
       </figure>
+      <table class="txt-left">
+        <caption>拥塞控制四阶段</caption>
+        <thead>
+          <tr>
+            <th>阶段</th>
+            <th>触发条件</th>
+            <th>cwnd 增长方式</th>
+            <th>目的</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 慢开始 <br>Slow Start</td>
+            <td>初始或超时后</td>
+            <td>每 RTT 翻倍/指数增长</td>
+            <td>快速探测可用带宽</td>
+          </tr>
+          <tr>
+            <td>2. 拥塞避免 <br>Congestion Avoidance</td>
+            <td>cwnd ≥ ssthresh</td>
+            <td>每 RTT 增加 1/cwnd/线性增长</td>
+            <td>谨慎增加负载</td>
+          </tr>
+          <tr>
+            <td>3. 快重传<br>Fast Retransmit</td>
+            <td>收到 3 个重复 ACK</td>
+            <td>立即重传丢失段</td>
+            <td>避免等待超时</td>
+          </tr>
+          <tr>
+            <td>4. 快速恢复 <br>Fast Recovery</td>
+            <td>快重传之后</td>
+            <td>cwnd = ssthresh<br>每收到一个重复 ACK 加 1，直到新 ACK 到达</td>
+            <td>在不降速到 1 的情况下恢复传输</td>
+          </tr>
+        </tbody>
+      </table>
       <dt>说明 Notation</dt>
       <dd>为什么实现中用 MSS 作为单位？
         <p>避免频繁做乘除运算</p>
@@ -269,13 +320,23 @@
         <p>流量控制和拥塞控制的交集必须单位统一</p>
       </dd>
     </dl>
-    <h2>Homework</h2>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>拥塞控制阶段</li>
+        <li>拥塞窗口大小及调整</li>
+      </ol>
       <dt>Homework</dt>
       <ol>
         <li>拥塞窗口（cwnd, congestion window）反映当前网络路径的拥塞状况，由发送方根据网络反馈动态调整（）。</li>
+        <!-- √ -->
+        <li>快传后，为了维持较高的吞吐率，不应退回到慢开始，而进入快恢复（）。</li>
+        <!-- √ -->
         <li>假设接收方通告的 rwnd = 4 KB；当前网络良好，cwnd = 16 KB；则 swnd =（）。</li>
+        <!-- 4 -->
         <li>接收方通告 rwnd = 32 KB；但最近发生丢包，TCP 进入拥塞避免或慢启动阶段，cwnd 被设为 8 KB；则 swnd =（）。</li>
+        <!-- 8 -->
       </ol>
       <dt>Reading</dt>
       <ol>
