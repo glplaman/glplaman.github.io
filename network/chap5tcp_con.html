@@ -188,10 +188,16 @@
         <p>预示网络可能会出现拥塞</p>
       </dd>
       <dt>核心阶段 Phase</dt>
+      <dd>假设TCP的报文长度 MSS 固定为 1000byte</dd>
+      <dd>每个阶段的报文序号从0开始</dd>
+      <figure>
+        <img src="./imgs/tcp15.png" alt="">
+        <figcaption>拥塞控制流程图</figcaption>
+      </figure>
       <div class="bg">阶段1. 慢开始 Slow Start</div>
       <dd>在连接初期或超时后，快速探测网络可用带宽</dd>
       <dd>拥塞窗口 cwnd 从 1 MSS 开始</dd>
-      <dd>每收到一个 ACK，cwnd 增加 1 MSS → 每轮次 RTT 翻倍，指数增长</dd>
+      <dd>每收到一个对新报文段的确认 ACK，cwnd 增加 1 MSS → 每轮次 RTT 翻倍，指数增长</dd>
       <dd>当 cwnd 达到慢开始门限 ssthresh<strong>（Slow Start Threshold）</strong>时，退出慢开始阶段 → 转入拥塞避免阶段
         <p>当 cwnd &le; ssthresh 时，使用慢开始算法</p>
         <p>当 cwnd > ssthresh 时，停止使用慢开始算法，改用拥塞避免算法</p>
@@ -201,6 +207,10 @@
         <img src="./imgs/tcp7.png" alt="">
         <figcaption>慢开始</figcaption>
       </figure>
+      <div class="tips">
+        <p>TCP 通过每个被确认的段来驱动 cwnd 增长，而不是每个 ACK 报文</p>
+        <p>即使只收到一个累计 ACK，只要它确认了 k 个新段，cwnd 就增加 k 个 MSS</p>
+      </div>
       <div>[<span class="iconfont icon-keyboard"></span>] 解读</div>
       <dd>初始 cwnd = 1MSS - 只能发一个报文</dd>
       <dd>发送方发送一个报文 M1</dd>
@@ -217,6 +227,10 @@
         <img src="./imgs/tcp8.png" alt="">
         <figcaption>慢开始 - 每轮翻倍</figcaption>
       </figure>
+      <figure>
+        <img src="./imgs/tcp16.png" alt="">
+        <figcaption>慢开始 - 每轮翻倍 - 累计确认</figcaption>
+      </figure>
       <div class="bg">阶段2. 拥塞避免 Congestion Avoidance</div>
       <dd>触发条件：cwnd ≥ ssthresh</dd>
       <dd>cwnd变化：每经过一个往返时间 RTT，期间不管收到多少 ACK，cwnd 都只增加 1 MSS - 线性增长
@@ -226,6 +240,7 @@
         <img src="./imgs/tcp9.png" alt="">
         <figcaption>拥塞避免 - 每轮+1</figcaption>
       </figure>
+      <dd>请使用累计确认和序号，重新绘制 [<span class="iconfont icon-keyboard"></span>]</dd>
       <dd>可能的阶段转移</dd>
       <div>情况1：发生超时，判定为严重拥塞</div>
       <dd>触发条件：重传定时器超时，未收到预期 ACK</dd>
@@ -246,7 +261,7 @@
       <dd>优势：避免因单点丢包导致吞吐量骤降，提升高带宽延迟积网络性能</dd>
       <div class="bg">阶段3. 快重传 Fast Retransmit</div>
       <dd>设计目标：尽早检测并重传丢失的报文段，避免因等待重传定时器超时而造成不必要的传输延迟</dd>
-      <dd>触发机制：重复确认，即连续收到三个重复的确认，就立即启动重传，无需等待超时</dd>
+      <dd>触发机制：重复确认，即连续收到三个重复的确认，就立即启动快重传，无需等待超时</dd>
       <dd>整个网络的吞吐量提高约 20%</dd>
       <dd>重传后，进入阶段4 快速恢复</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 解读</div>
@@ -337,6 +352,27 @@
         <!-- 4 -->
         <li>接收方通告 rwnd = 32 KB；但最近发生丢包，TCP 进入拥塞避免或慢启动阶段，cwnd 被设为 8 KB；则 swnd =（）。</li>
         <!-- 8 -->
+        <li>TCP拥塞控制中。为什么超时就从慢开始阶段重新开始，而重复确认就进入快重传阶段？</li>
+        <!-- 接收方收到了后续的数据包，但中间某个包丢失了，不一定是网络拥塞导致的 -->
+        <li>发送方根据（）调整拥塞窗口 cwnd 的大小和 ssthresh 门限值。</li>
+        <div class="txt-indent">
+          <div>A. 收到的ACK确认报文</div>
+          <div>B. 收到的报文段 MSS 的确认</div>
+          <div>C. 发送方的窗口</div>
+          <div>D. 接收方的窗口</div>
+        </div>
+        <!-- B -->
+        <li>
+          一个 TCP 连接总是以1KB的最大段长发送 TCP 段，发送方有足够多的数据要发送。当拥塞窗口为16KB时发生了超时，如果接下来的4个RTT内的 TCP
+          段的传输都是成功的，那么当第4个RTT时间内发送的所有 TCP 段都得到肯定应答时，拥塞窗口大小是（）。
+        </li>
+        <div class="txt-indent">
+          <div>A. 7KB</div>
+          <div>B. 8KB</div>
+          <div>C. 9KB</div>
+          <div>D. 16KB</div>
+        </div>
+        <!-- C -->
       </ol>
       <dt>Reading</dt>
       <ol>
