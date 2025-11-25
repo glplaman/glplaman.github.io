@@ -3,6 +3,7 @@ body {
 }
 
 .diagram-wrap {
+  --diag-h: 46px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,7 +15,7 @@ body {
 .diagram {
   position: relative;
   width: 240px;
-  height: 60px;
+  height: var(--diag-h);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,8 +35,8 @@ body {
 
 .diagram .f {
   width: 240px;
-  height: 60px;
-  transform: translateZ(60px);
+  height: var(--diag-h);
+  transform: translateZ(var(--diag-h));
   background-color: var(--bg, #fff);
   color: var(--color, #000);
 }
@@ -44,12 +45,12 @@ body {
   width: 240px;
   height: 120px;
   background-color: #f1f2f3;
-  transform: rotateX(90deg) translateZ(30px);
+  transform: rotateX(90deg) translateZ(calc(var(--diag-h) / 2));
 }
 
 .diagram .r {
   width: 120px;
-  height: 60px;
+  height: var(--diag-h);
   transform: rotateY(90deg) translateZ(120px);
   background-color: var(--bg, #ccc);
 }

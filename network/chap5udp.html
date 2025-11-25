@@ -28,7 +28,10 @@
       </div>
       <dt>概述 Overview</dt>
       <dd>用户数据报 UDP - User Datagram Protocol</dd>
-      <dd>无连接 connectionless</d>
+      <dd>无连接 connectionless
+        <p>不需要建立连接</p>
+        <p>也不维护连接状态</p>
+      </dd>
       <dd>不可靠 unreliable
         <p>不重传</p>
         <p>不确认</p>
@@ -68,6 +71,7 @@
       <dd>选择合适大小的报文
         <p>若报文太长，IP 层在传送时可能要进行分片，形成多个 IP 分组 Packets</p>
         <p>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</p>
+        <p>受网络层 1500 字节的 MTU 限制，建议应用层报文大小 ≤ 1472bute，避免分片</p>
       </dd>
       <figure>
         <img src="./imgs/udp2.png" alt="">
