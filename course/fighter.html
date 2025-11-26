@@ -19,10 +19,26 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    ::-webkit-scrollbar {
+      width: 8px;
+      background-color: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-image: linear-gradient(#f40, #ff0);
+    }
+
     .w {
       max-width: 1024px;
       margin: 0 auto;
       padding: var(--p-m-g);
+    }
+
+    .w {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      gap: var(--p-m-g);
     }
 
     figure {
@@ -41,17 +57,24 @@
     }
 
     p {
-      position: relative;
       margin-bottom: 1em;
       text-align: justify;
       text-indent: 2em;
       line-height: 30px;
     }
 
-    .pos {
-      position: absolute;
-      right: 0;
-      bottom: 0;
+    main {
+      flex: 1;
+      /* display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--p-m-g); */
+      overflow-y: auto;
+    }
+
+    @media screen and (max-width:768px) {
+      .w {
+        height: unset;
+      }
     }
   </style>
 </head>
@@ -59,34 +82,65 @@
 <body>
   <div class="w">
     <article>
-      <h1>3年来向乘客赠435本南京大屠杀图书，广州一顺风车司机打造“勿忘国耻”图书角</h1>
+      <h1>广州一顺风车司机打造“勿忘国耻”图书角</h1>
 
       <h4>广州日报新花城
         <br>2024-12-13 10:17:22
       </h4>
       <p>
-        “南京大屠杀为什么在世界历史上受到冷遇是一个奇特的谜。不久，我想我找到了部分答案。南京的暴行之所以不像犹太人遭到的大屠杀或广岛原子弹爆炸那么举世皆知，是因为受难者自己在保持着沉默。”这是摘自张纯如1997年出版的著作《南京大屠杀》中的一段话。
-      </p>
-      <p>
         《南京大屠杀》出版二十多年后，这本还原那场发生在中国的浩劫——南京大屠杀的书籍，被广州增城人曾素聪用一种特别的方式，打破沉默、铭记历史。他将《南京大屠杀》和《侵华日军投降中国大受降影像全纪录》《慰安妇血泪》等书籍一起摆放在车内，通过跑顺风车的形式，一边筹集资金助学、购书赠阅，一边提醒大家铭记那段历史、勿忘国耻。2022年至今，已向乘客送出435本《南京大屠杀》图书。
-        <a class="pos" target="_blank"
+      </p>
+      <p style="text-align: right;"><a target="_blank"
           href="https://huacheng.gz-cmc.com/pages/2024/12/13/SF130662133e6ab8b65ce6462b9a2421.html?channel=weixin">查看原文</a>
       </p>
     </article>
     <p>以下为曾素聪免费赠书场景（持续更新中）</p>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military0.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military1.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military2.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military3.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military4.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military5.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military6.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military7.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military8.jpg" alt=""></figure>
-    <figure><img class="ob-img" loading="lazy" data-src="/utils/military/military9.jpg" alt=""></figure>
+    <main>
+    </main>
     <div id="footer"></div>
   </div>
-  <script src="../web/lib/lazyload.js"></script>
+  <script>
+    const loadImg = async () => {
+      const json = await fetch('/utils/data/zeng.json')
+      const res = await json.json()
+      return res;
+    }
+
+    (async () => {
+      const imgs = await loadImg()
+      const quantity = imgs.quantity
+      const path = imgs.path
+      console.log(quantity, path);
+
+      for (let i = 0; i < quantity; i++) {
+        const img = document.createElement('figure')
+        img.innerHTML = `<img class="ob-img" loading="lazy" data-src="${path}${i}.jfif" alt="">`
+        document.querySelector('main').appendChild(img)
+      }
+
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          console.log(`本次触发了 ${entries.length} 个元素`);
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+              imageObserver.unobserve(img);
+            }
+          });
+        }, {
+          threshold: 1
+        });
+
+        document.querySelectorAll('main .ob-img').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
+    })()
+
+  </script>
+  <!-- <script src="../web/lib/lazyload.js"></script> -->
   <script src="/utils/custom/footer.js"></script>
 </body>
 
