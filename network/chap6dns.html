@@ -22,11 +22,8 @@
         <figcaption>xmind</figcaption>
       </figure>
       <dt>统一资源定位 URL</dt>
-      <dd>对互联网上资源的位置和访问方法的一种简洁表示</dd>
-      <dd>给资源的位置提供一种抽象的识别方法，并用这种方法给资源定位</dd>
-      <dd>互联网上的资源的地址</dd>
-      <dd>互联网上的资源，都有一个唯一确定的URL</dd>
       <dd>资源：指在互联网上可以被访问的任何对象，包括文件目录、文件、文档、图像、声音等，以及与互联网相连的任何形式的数据</dd>
+      <dd>互联网上的资源，都有一个唯一确定的 URL</dd>
       <dd>由以冒号（:）隔开的两大部分组成</dd>
       <dd>对字符大写或小写没有要求</dd>
       <figure>
@@ -34,13 +31,19 @@
         <figcaption>URL</figcaption>
       </figure>
       <dt>DNS - Domain Name System</dt>
-      <dd>名称服务器：负责将域名解析为对应的IP地址 - 翻译官</dd>
-      <dd>是互联网的一项服务。将域名和IP地址相互映射的一个分布式数据库，以便更方便地访问互联网</dd>
-      <dd>解决IP地址复杂难以记忆的问题，存储并完成自己所管辖范围内主机的域名到IP地址的映射</dd>
-      <dd>适用UDP协议；协议端口：53</dd>
+      <dd>名称服务器：负责将域名解析为对应的IP地址
+        <P>翻译官</P>
+        <P>通信录</P>
+      </dd>
+      <dd>是互联网的一项服务。将域名和 IP 地址相互映射的一个分布式数据库，以便 <strong>更方便</strong> 地访问互联网
+        <p>好记</p>
+        <p>好维护：域名变动少；IP地址变动大</p>
+      </dd>
+      <dd>解决 IP 地址复杂难以记忆的问题，存储并完成自己所管辖范围内主机的域名到 IP 地址的映射</dd>
+      <dd>适用 UDP 协议；协议端口：53</dd>
       <figure>
         <img src="./imgs/dns5.png" alt="">
-        <figcaption>DNS</figcaption>
+        <figcaption>DNS解析后</figcaption>
       </figure>
       <figure>
         <img src="./imgs/dns9.png" alt="">
@@ -408,7 +411,7 @@
       <dd>如果没有，就返回报错</dd>
       <dd>工作流：Client → Recursive DNS → Root Server → TLD Server → Authoritative Server → Recursive DNS →
         Client</dd>
-      <dd>由于该方法给根域名服务造成的负载过大，所以在实际中几乎不使用</dd>
+      <dd>由于该方法给根域名服务造成的 <strong>负载过大</strong>，所以在实际中几乎不使用</dd>
       <figure>
         <img src="./imgs/dns7.png" alt="">
         <figcaption>递归查询 Recursive DNS Service</figcaption>
@@ -430,69 +433,50 @@
         <figcaption>迭代查询 Iterative DNS Service</figcaption>
       </figure>
       <div class="tips">迭代查询：本地 DNS 向上级服务器查询时，上级服务器只返回“下一步去哪问”的地址，本地 DNS 再向该地址查询</div>
-      <!-- <dt>运用 Implementation</dt>
-      <ol>
-        <li>用户输入域名
-          <p>在浏览器中输入 www.example.com</p>
-        </li>
-        <li>检查本地缓存
-          <p>操作系统先查看本地 DNS 缓存（如 Windows 的 DNS Client 服务、macOS/Linux 的 resolver 缓存）</p>
-          <p>如果之前解析过且未过期（TTL 有效），直接返回 IP，DNS结束</p>
-        </li>
-        <li>检查 hosts 文件
-          <p>若缓存无结果，系统会检查本地 hosts 文件（如 /etc/hosts 或 C:\Windows\System32\drivers\etc\hosts）</p>
-          <p>若有匹配项，直接返回对应 IP，结束</p>
-        </li>
-        <div class="tips">
-          <p>从 Windows Vista / Windows 7 开始，微软将 localhost 的解析交给了系统内部的 DNS 解析器（如 DNS Client 服务），不再依赖 hosts 文件</p>
-          <p>因此，默认模板中这两行被注释掉了，但 localhost 仍然可以正常解析为 127.0.0.1（IPv4）和 ::1（IPv6）</p>
-        </div>
-        <li>向本地 DNS 服务器发起 递归查询（Recursive Query）</li>
-        本地 DNS 服务器通常是：
-        家庭路由器（转发给 ISP 的 DNS）
-        ISP 提供的 DNS（如 114.114.114.114）
-        公共 DNS（如 8.8.8.8、1.1.1.1）
-        本地 DNS 服务器必须返回最终答案或错误。
-        <li>本地 DNS 服务器进行迭代查询（Iterative Query）</li>
-
-        若本地 DNS 服务器缓存中也没有记录，它会依次向以下服务器查询：
-        <p>5.1 根域名服务器 Root Server</p>
-
-        问：“.com 的权威服务器在哪？” → 返回 .com 顶级域 TLD 服务器地址
-        <p>5.2 顶级域服务器 TLD Server，如 .com</p>
-
-        问：“example.com 的权威服务器在哪？” → 返回 example.com 的权威 DNS 服务器地址，如 ns1.example.com
-        <p>5.3 权威域名服务器 Authoritative Name Server</p>
-
-        问：“www.example.com 的 IP 是多少？” → 返回最终的 IP 地址，如 93.184.216.34
-        <li>本地 DNS 服务器缓存结果并返回给客户端</li>
-        <li>客户端使用 IP 地址建立连接</li>
-      </ol> -->
-      <div>[<span class="iconfont icon-keyboard"></span>] 假定某客户机想获知域名为http://y.abc.com主机的IP地址，域名解析的过程</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 假定某客户机想获知域名为 http://www.abc.com 主机的 IP 地址，域名解析的过程</div>
       <figure>
-        <img src="./imgs/dns3.png" alt="">
+        <img src="./imgs/dns10.png" alt="">
         <figcaption>运用 Implementation</figcaption>
       </figure>
       <dd>当用户在地址栏键入并敲下回车键之后，域名解析就开始了</dd>
       <dd>一般过程如下</dd>
       <ol>
-        <li>浏览器缓存</li>
-        <li>找本机的hosts文件</li>
-        <li>路由缓存</li>
-        <li>找DNS服务器（本地域名、顶级域名、根域名）→迭代解析、递归查询</li>
+        <li>检查浏览器缓存</li>
+        <li>检查本地 hosts 文件</li>
+        <li>检查操作系统 DNS 缓存</li>
+        <li>若均无记录，则向本地 DNS 服务器发起 递归查询
+          <p>本地 DNS 服务器通过 迭代查询 依次向根服务器、顶级域服务器、授权服务器查询</p>
+          <p>根服务器返回顶级域权威服务器地址</p>
+          <p>顶级域服务器返回子域授权服务器地址</p>
+          <p>授权服务器返回最终的 IP 地址</p>
+        </li>
+        <li>本地 DNS 将结果返回给客户端，并缓存一段时间</li>
+        <li>浏览器使用 IP 地址建立连接</li>
       </ol>
-      <dd>具体过程如下：共使用8个UDP报文</dd>
+      <dd>具体过程如下</dd>
       <ol>
         <li>客户机向其本地域名服务器发出DNS请求报文 - 递归查询</li>
-        <li>本地域名服务器收到请求后，查询本地缓存，若没有该记录，则以DNS客户的身份向根域名服务器发出解析请求</li>
-        <li>根域名服务器收到请求后，判断该域名属于.com域，将对应的顶级域名服务器http://dns.com的IP地址返回给本地域名服务器</li>
-        <li>本地域名服务器向顶级域名服务器http://dns.com发出解析请求报文</li>
-        <li>顶级域名服务器http://dns.com收到请求后，判断该域名属于http://abc.com域，因此将对应的授权域名服务器http://dns.abc.com的IP地址返回给本地域名服务器
+        <li>本地域名服务器收到请求后，查询本地缓存，若没有该记录，则以 DNS 客户的身份向根域名服务器发出解析请求</li>
+        <li>根域名服务器收到请求后，判断该域名属于.com域，将对应的顶级域名服务器 http://dns.com 的 IP 地址返回给本地域名服务器</li>
+        <li>本地域名服务器向顶级域名服务器 http://dns.com 发出解析请求报文</li>
+        <li>顶级域名服务器 http://dns.com 收到请求后，判断该域名属于 http://abc.com，因此将对应的授权域名服务器 http://dns.abc.com 的 IP 地址返回给本地域名服务器
         </li>
-        <li>本地域名服务器向授权域名服务器http://dns.abc.com发起解析请求报文</li>
-        <li>授权域名服务器http://dns.abc.com收到请求后，将查询结果返回给本地域名服务器</li>
+        <li>本地域名服务器向授权域名服务器 http://dns.abc.com 发起解析请求报文</li>
+        <li>授权域名服务器 http://dns.abc.com 收到请求后，将查询结果返回给本地域名服务器</li>
         <li>本地域名服务器将查询结果保存到本地缓存，同时返回给客户机</li>
       </ol>
+      <dt>说明 Notation</dt>
+      <dd>部分资料提到使用8个UDP报文</dd>
+      <dd>简化版描述</dd>
+      <dd>前提是从根开始一步步查询
+        <p>每一步都只用一个请求 - 响应来回</p>
+        <p>无重试</p>
+        <p>无多服务器轮询</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 如果防范钓鱼网站？</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 如果服务器返回的查询结果被篡改了？</div>
+      <dd>DNS 劫持（DNS Hijacking）</dd>
+      <dd>DNS 污染（DNS Cache Poisoning / DNS Spoofing）</dd>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -510,14 +494,24 @@
         <figcaption>拓扑</figcaption>
       </figure>
     </dl>
-    <h2>Homework</h2>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>统一资源定位 URL</li>
+        <li>域名 Domain</li>
+        <li>解析 Resolve</li>
+      </ol>
       <dt>Homework</dt>
       <ol>
-        <li>DNS 采用客户-服务器工作方式，客户端向 DNS 服务器发送查询请求，服务器返回对应的 IP 地址。</li>
+        <li>DNS 采用客户-服务器工作方式，客户端向 DNS 服务器发送查询请求，服务器返回对应的 IP 地址。()</li>
+        <!-- √ -->
         <li>DNS 缓存机制可以显著减少查询延迟和网络流量，但可能导致域名更新后客户端仍获取旧的 IP 地址。（）</li>
+        <!-- √ -->
         <li>DNS 协议默认使用 UDP 端口 53 进行通信，只有在区域传输等特殊情况下才使用 TCP。（）</li>
+        <!-- √ -->
         <li>DNS 查询过程中，本地域名服务器通常使用递归查询方式向根域名服务器发起请求。（）</li>
+        <!-- x -->
         <li>假设所有域名服务器均采用递归查询方式进行域名解析。当某台主机访问规范域名为www.abc.xyz.com的网站时，由某台域名服务器完成解析，则可能发出DNS查询的最少和最多次数分别是（）。</li>
         <div class="alpha">
           <div>0、3 </div>
@@ -551,6 +545,7 @@
             <div>本地域名服务器</div>
           </div>
         </li>
+        <!-- B -->
         <li>当用户在浏览器中输入 www.example.com 时，首先被查询的 DNS 服务器通常是（）。
           <div class="alpha">
             <div>根域名服务器</div>
@@ -559,6 +554,7 @@
             <div>example.com 的权威域名服务器</div>
           </div>
         </li>
+        <!-- C -->
         <li>DNS 查询中，迭代查询的特点是（）。
           <div class="alpha">
             <div>服务器必须返回最终答案，否则继续代为查询</div>
@@ -567,6 +563,7 @@
             <div>所有查询都通过 TCP 完成</div>
           </div>
         </li>
+        <!-- B -->
       </ol>
       <dt>Reading</dt>
       <ol>
