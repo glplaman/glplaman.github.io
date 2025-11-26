@@ -205,11 +205,6 @@
         <p>OSPF 是复杂的链路状态协议，需要更精细的控制，因此直接构建在 IP 之上</p>
       </dd>
       <div class="tips">OSPF定制服务</div>
-      <dt>源端口号和目标端口号 Source & Destination</dt>
-      <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
-      <dd>目标端口号用来标识接收方主机上的 <strong>特定</strong> 服务</dd>
-      <dd>源端口号用于标识发送方的应用程序，以便接收方能正确回应</dd>
-      <dd>数据总是从源端口流向目标端口</dd>
       <!-- <dt>端口状态 State</dt>
       <dd>LISTENING：等待连接请求</dd>
       <dd>ESTABLISHED：连接已建立</dd>
@@ -223,14 +218,16 @@
     <h2>端口工作机制 Mechanism</h2>
     <dl>
       <dd>以客户端 Client/服务器Server C/S 为例</dd>
-      <dd>客户端 Client/C 发起连接
-        <p>客户端选择一个临时端口(49152-65535范围内)作为源端口</p>
-        <p>客户端指定服务器的熟知端口(0-1023)作为目标端口</p>
-      </dd>
-      <dd>服务器 Server/S 响应
-        <p>服务器使用其熟知端口作为源端口</p>
-        <p>服务器使用客户端的临时端口作为目标端口</p>
-      </dd>
+      <dd>每个TCP/UDP数据段都包含源端口号和目标端口号</dd>
+      <dd>目标端口号用来标识接收方主机上的 <strong>特定</strong> 服务</dd>
+      <dd>源端口号用于标识发送方的应用程序，以便接收方能正确回应</dd>
+      <dd>数据总是从源端口流向目标端口</dd>
+      <dt>客户端 Client/C 发起连接</dt>
+      <dd>客户端选择一个临时端口(49152-65535范围内)作为源端口</dd>
+      <dd>客户端指定服务器的熟知端口(0-1023)作为目标端口</dd>
+      <dt>服务器 Server/S 响应</dt>
+      <dd>服务器使用其熟知端口作为源端口</dd>
+      <dd>服务器使用客户端的临时端口作为目标端口</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
       <dd>当用户在浏览器中访问/请求一个网站时
         <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 1025</p>
@@ -274,8 +271,9 @@
       </table>
       <figure>
         <img src="./imgs/port1.png" alt="">
-        <figcaption>服务器响应</figcaption>
+        <figcaption>Web服务器响应</figcaption>
       </figure>
+      <div class="tips">上述两张图是Web服务器收到的请求 Inbound 和返回的响应 Outbound</div>
       <div>[<span class="iconfont icon-keyboard"></span>] 发送邮件 SMTP</div>
       <dd>源端口: 邮件客户端使用的临时端口，如 51001</dd>
       <dd>目标端口: 邮件服务器的SMTP端口 25</dd>
@@ -380,6 +378,13 @@ EtherType=0x0806 → 交给 ARP 模块</pre>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
+      <ol>
+        <li>配置</li>
+        <li>解析域名</li>
+        <li>访问</li>
+        <li>响应</li>
+      </ol>
       <figure>
         <img src="../imgs/network/port/port0.jpg" alt="">
         <figcaption>网络拓扑</figcaption>
