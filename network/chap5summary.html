@@ -19,14 +19,15 @@
     <dl>
       <dt>应用层</dt>
       <dd>特点</dd>
-      <dt>Port</dt>
+      <dt>端口 Port</dt>
       <dd>熟知端口</dd>
-      <dt>UDP</dt>
+      <dt>套接字 Socket</dt>
+      <dt>用户数据报 UDP</dt>
       <dd>特点</dd>
       <dd>报文格式
         <p>首部大小</p>
       </dd>
-      <dt>TCP</dt>
+      <dt>传输控制协议 TCP</dt>
       <dd>报文格式
         <p>首部大小</p>
       </dd>
@@ -37,11 +38,11 @@
         <p>确认</p>
         <p>重传</p>
       </dd>
-      <dd>流量控制
+      <dd>流量控制 Flow control
         <p>发送窗口 swnd</p>
         <p>接收窗口 rwnd</p>
       </dd>
-      <dd>拥塞控制
+      <dd>拥塞控制 Congestion control
         <p>拥塞窗口 cwnd</p>
       </dd>
       <dd>拥塞控制阶段
@@ -50,7 +51,7 @@
         <p>快重传</p>
         <p>快恢复</p>
       </dd>
-      <dd>TCP 传输控制
+      <dd>TCP 传输控制 Transmission Control
         <p>三次握手</p>
         <p>四次挥手</p>
       </dd>
@@ -58,6 +59,7 @@
       <dd>UDP只管发；TCP会控制整个通信过程</dd>
       <dd>UDP不会拆分报文；一个报文就是一个完整的消息；TCP会拆分成诺干字节，形成字节流</dd>
       <dd>UDP发送时无需缓存；TCP必须缓存才能发送，发多少取决于对方的接收窗口；只有被对方接收且确认过的报文才能移除缓存</dd>
+      <dd>TCP 和 UDP 都依赖两个套接字进行通信，但 TCP 为每个会话独占一对套接字并维护连接状态，而 UDP 使用一个套接字即可与任意多个对端无状态地交换数据</dd>
       <!-- <figure class="img-sn">
         <img src="../imgs/network/udp/幻灯片13.JPG" alt="">
         <figcaption>对比1</figcaption>
