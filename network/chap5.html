@@ -23,6 +23,13 @@
     .left tr td:nth-child(2) {
       text-align: left;
     }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      align-items: flex-end;
+      gap: var(--p-m-g);
+    }
   </style>
 </head>
 
@@ -45,46 +52,103 @@
       <dd>运输层以下各层的任务：解决网络到网络、主机到主机的通信</dd>
       <dd>运输层将主机间通信提升为进程间通信；向上层屏蔽底层网络细节（如拓扑、路由、链路类型）</dd>
       <dd>计算机通信实际上应用进程之间的通信</dd>
-      <figure>
-        <div class="diagram-wrap">
-          <div class="diagram" style="--ind:6">
-            <div class="f">Application layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
+      <div class="grid">
+        <figure>
+          <div class="diagram-wrap">
+            <div class="diagram" style="--ind:6">
+              <div class="f">Application layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:5">
+              <div class="f">Presentation layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:4">
+              <div class="f">Session layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:3;--bg:#f40;--color:#fff;">
+              <div class="f">Transport layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:2; ">
+              <div class="f">Network layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:1">
+              <div class="f">Data-link layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:0">
+              <div class="f">Physical layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
           </div>
-          <div class="diagram" style="--ind:5">
-            <div class="f">Presentation layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
+          <figcaption>OSI七层模型</figcaption>
+        </figure>
+        <figure>
+          <div class="diagram-wrap">
+            <div class="diagram" style="--ind:3;">
+              <div class="f">Application layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:2;--bg:#f40;--color:#fff;">
+              <div class="f">Transport layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:1; ">
+              <div class="f">Network layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:0">
+              <div class="f">Network Interface layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
           </div>
-          <div class="diagram" style="--ind:4">
-            <div class="f">Session layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
+          <figcaption>TCP/IP 四层模型</figcaption>
+        </figure>
+        <figure>
+          <div class="diagram-wrap">
+            <div class="diagram" style="--ind:4">
+              <div class="f">Application layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:3;--bg:#f40;--color:#fff;">
+              <div class="f">Transport layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:2; ">
+              <div class="f">Network layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:1">
+              <div class="f">Data-link layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
+            <div class="diagram" style="--ind:0">
+              <div class="f">Physical layer</div>
+              <div class="r"></div>
+              <div class="t"></div>
+            </div>
           </div>
-          <div class="diagram" style="--ind:3;--bg:#f40;--color:#fff;">
-            <div class="f">Transport layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
-          </div>
-          <div class="diagram" style="--ind:2; ">
-            <div class="f">Network layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
-          </div>
-          <div class="diagram" style="--ind:1">
-            <div class="f">Data-link layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
-          </div>
-          <div class="diagram" style="--ind:0">
-            <div class="f">Physical layer</div>
-            <div class="r"></div>
-            <div class="t"></div>
-          </div>
-        </div>
-        <figcaption>OSI七层模型</figcaption>
-      </figure>
+          <figcaption>五层简化模型</figcaption>
+        </figure>
+      </div>
       <dd>采用 <strong>端口</strong> 来标识不同的应用进程，实现进程间的准确通信</dd>
       <dd>复用 Multiplexing：发送端多个应用进程的数据通过运输层封装，共享同一网络连接</dd>
       <dd>分用 Demultiplexing：接收端根据目的端口号将数据准确交付给对应应用进程</dd>
