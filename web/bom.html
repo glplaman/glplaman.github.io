@@ -104,6 +104,8 @@
         href="https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY">scrollY</a></h3>
     <h3><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/screenX">screenX</a> <a
         href="https://developer.mozilla.org/en-US/docs/Web/API/Window/screenY">screenY</a></h3>
+    <h3><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">localStorage</a></h3>
+
   </section>
   <section class="section" style="--s:--n5" id="meth">
     <h2>方法 Methods</h2>
@@ -124,6 +126,29 @@
   </section>
   <section class="section" style="--s:--n7" id="drill">
     <h2>练习 Drill</h2>
+    <div>[ <span class="iconfont icon-keyboard"></span> ] 随机颜色</div>
+    <ul>
+      <li>完全随机</li>
+      <pre>
+const setBg = () => {
+  // const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const randomColor = ('000000' + Math.floor(Math.random() * 16777215).toString(16)).slice(-6);
+  document.documentElement.style.setProperty('--second-color', "#" + randomColor);
+}</pre>
+      <li>限定范围随机</li>
+      <pre>
+const setBg = () => {
+  // 色调 Hue: 160 ~ 220（青色到蓝色）
+  const hue = 160 + Math.random() * 60;
+  // 饱和度 Saturation: 70% ~ 90%
+  const saturation = 70 + Math.random() * 20;
+  // 亮度 Lightness: 40% ~ 60%（避免太亮或太暗）
+  const lightness = 40 + Math.random() * 20;
+
+  const hslColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  document.documentElement.style.setProperty('--second-color', hslColor);
+};</pre>
+    </ul>
     <div>[ <span class="iconfont icon-keyboard"></span> ] 数字时钟</div>
     <div>[ <span class="iconfont icon-keyboard"></span> ] 滚动控制</div>
     <ul>

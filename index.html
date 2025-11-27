@@ -214,5 +214,22 @@
   </section>
 
 </body>
+<script>
+  const setBg = () => {
+    // 色相：0（红）到 40（橙）
+    const hue = Math.random() * 40; // 0 ~ 40
+
+    // 饱和度：高饱和更鲜艳（70%~100%）
+    const saturation = 80 + Math.random() * 20;
+
+    // 亮度：避免太亮或太暗（40%~70% 比较舒适）
+    const lightness = 50 + Math.random() * 20;
+
+    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    document.documentElement.style.setProperty('--second-color', color);
+  };
+
+  setInterval(setBg, 10000);
+</script>
 
 </html>
