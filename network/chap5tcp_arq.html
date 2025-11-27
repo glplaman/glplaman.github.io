@@ -67,7 +67,7 @@
       </dd>
       <figure>
         <img src="./imgs/arq3.png" alt="">
-        <figcaption>确认丢失</figcaption>
+        <figcaption>确认迟到</figcaption>
       </figure>
       <dt>特点 Feature</dt>
       <dd>暂存：在发送完一个分组后，发送方必须暂存已发送的分组的副本，以备重发</dd>
@@ -76,9 +76,13 @@
       <dd>超时计时器的重传时间应当比数据在分组传输的平均往返时间 RTT 更长一些，防止不必要的重传</dd>
       <dd>简单，但信道利用率太低</dd>
       <dt>连续ARQ协议 Continuous ARQ</dt>
-      <dd>也称回退N步 Go-Back-N ARQ</dd>
       <dd>流水线传输：在收到确认之前，发送方连续发出多个分组</dd>
       <dd>由于信道上一直有数据不间断地传送，流水线传输可获得很高的信道利用率</dd>
+      <dd>接收方通常只确认按序到达的 <strong>最高序号</strong> 分组</dd>
+      <dd>重传策略
+        <p>回退N步 Go-Back-N：若某个分组出错或超时，发送方重传该分组及其之后所有已发送但未确认的分组</p>
+        <p>选择重传 Selective Repeat：只重传出错的分组，其余正确接收的分组被缓存。这需要更大的接收缓冲区和更复杂的管理</p>
+      </dd>
     </dl>
     <div id="footer"></div>
   </div>

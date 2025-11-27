@@ -24,15 +24,16 @@
       <dd>发送方维持一个发送窗口，位于发送窗口内的分组都可被连续发送出去，而不需要等待对方逐个确认</dd>
       <dd>发送窗口滑动：发送方每收到一个分组确认，就把发送窗口向前滑动一个分组的位置；已确认的数据被移出窗口</dd>
       <dd>累积确认 Cumulative Acknowledgment：接收方对按序到达的最后一个分组发送确认，表示：到这个分组为止的所有分组都已正确收到了</dd>
-      <dd>窗口大小以字节为单位</dd>
-      <dd>窗口大小由接收方决定：通过 TCP 报文中的 Window 字段告知发送方自己还能接收多少数据</dd>
+      <dd>发送窗口大小以字节为单位</dd>
+      <dd>发送窗口大小由接收方决定：通过 TCP 报文中的 Window 字段告知发送方自己还能接收多少数据</dd>
       <figure>
         <img src="./imgs/arq5.png" alt="">
         <figcaption>发送窗口 swnd</figcaption>
       </figure>
       <div>[<span class="iconfont icon-keyboard"></span>] 窗口应用</div>
-      <dd>假设发送窗口大小 = 4，当前可发送分组 [1, 2, 3, 4]</dd>
-      <dd>发送 1 - 4</dd>
+      <dd>假设发送窗口大小 = 4，当前可发送分组 [1, 2, 3, 4, 5, 6, ...]</dd>
+      <dd>分组 1 - 4 进入发送窗口并发送</dd>
+      <dd>在未收到任何确认之前，无法再发送数据</dd>
       <figure>
         <img src="./imgs/arq6.png" alt="">
         <figcaption>发送窗口 swnd</figcaption>
