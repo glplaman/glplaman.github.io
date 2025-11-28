@@ -76,6 +76,7 @@
   </dl>
   <div class="chap">常见属性 Attributes</div>
   <dl class="nav-cont">
+    <dd>. 除了直接使用下述标签属性外，可以使用普通 CSS 样式，甚至可以使用 CCS 变量</dd>
     <dt>坐标点 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x">x</a> <a
         href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y">y</a></dt>
     <dd>坐标点</dd>
@@ -552,6 +553,15 @@
     }
 }</pre>
     </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 动态颜色文字</dd>
+    <dd>. 使用 JavaScript 生成随机颜色</dd>
+    <dd>. 使用 CSS变量修改颜色</dd>
+    <dd>
+      <pre>
+&lt;svg&gt;
+  &lt;text x="16" y="16" fill="var(--main-color)"&gt;hi,there&lt;/text&gt;
+&lt;/svg&gt;</pre>
+    </dd>
     <dd>[<span class="iconfont icon-keyboard"></span>] 手机清理空间效果图</dd>
     <dd style="text-align: center;"><img style="width: unset;" src="./imgs/svg.png" alt=""></dd>
     <dt>设计思路</dt>
@@ -662,9 +672,9 @@
   </dl>
   <div class="chap">总结与作业 Summary & Homework</div>
   <dl>
-    <dt>总结</dt>
+    <dt>总结 Summary</dt>
     <dd>. SVG 的各种使用</dd>
-    <dt>作业</dt>
+    <dt>作业 Homework</dt>
     <dd>. 分别完成以上案例</dd>
     <dd>. 利用 SVG 优化个人网站</dd>
   </dl>
@@ -678,6 +688,23 @@
       console.log(dashOffset.value);
       dashTar.style.strokeDashoffset = dashOffset.value
     })
+
+    // svg fill
+    const setBg = () => {
+      // 色相：0（红）到 40（橙）
+      const hue = Math.random() * 60 + 280; // 0 ~ 40
+
+      // 饱和度：高饱和更鲜艳（70%~100%）
+      const saturation = 80 + Math.random() * 20;
+
+      // 亮度：避免太亮或太暗（40%~70% 比较舒适）
+      const lightness = 50 + Math.random() * 20;
+
+      const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+      document.documentElement.style.setProperty('--main-color', color);
+    };
+
+    setInterval(setBg, 2000);
   </script>
 </body>
 
