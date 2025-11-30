@@ -31,98 +31,113 @@
         &lt;img&gt; HTML element embeds an image into the document.
       </div>
       <div>. 展示图片：功能性、修饰性</div>
-      <div>. 行盒 inline，同别的 inline 不同，它可以设置宽度；因为它是一个容器</div>
+      <div>. 行盒 inline，同别的 inline 不同，它可以设置宽度 - 因为它是一个容器</div>
       <div>. 单标签；不同 IDE 的处理方式不尽相同</div>
       <div>. 常用图片格式：jpg、png、gif 和 <span class="warn">Webp</span> 格式</div>
       <div>. 和 &lt;a&gt;一样，转换为块盒 block 更加方便处理 - 抛弃了行内元素的特性</div>
       <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img">MDN -
           &lt;img&gt;</a></div>
-      <pre>&lt;img src="" alt="" title=""&gt;</pre>
-      <div>. 建议配合容器或复合标签一起使用，如 <a href="./imgfigure.html">&lt;figure&gt;</a></div>
-      <pre>
+    </dd>
+    <dt>语法 Syntax</dt>
+    <pre>&lt;img src="" alt="" title=""&gt;</pre>
+    <table>
+      <caption>常用属性</caption>
+      <thead>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>src</td>
+          <td>图片URL
+            <br>本地图片
+            <br>在线图片
+            <br>图片的 base64 编码
+          </td>
+        </tr>
+        <tr>
+          <td>alt</td>
+          <td>图片异常时的提示信息</td>
+        </tr>
+        <tr>
+          <td>title</td>
+          <td>说明信息，当鼠标移入时显示，很多标签都可以使用 title 属性增加用户体验；适用于桌面端</td>
+        </tr>
+        <tr>
+          <td>decoding</td>
+          <td>图片解析方式；auto | sync 同步解析 | async 异步解析</td>
+        </tr>
+        <tr>
+          <td>loading</td>
+          <td>图片加载方式；eager 立即加载 | lazy 延迟加载</td>
+        </tr>
+      </tbody>
+    </table>
+    <dd>[<span class="iconfont icon-keyboard"></span>] 图片的基本使用</dd>
+    <dd>1. 本地图片：相对路径或绝对路径</dd>
+    <pre>&lt;img src="./imgs/2019middle.jpg" alt=""></pre>
+    <dd>2. 在线图片</dd>
+    <pre>&lt;img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.zMFtlEEJqLUrX3QgDoG-qwHaE8?w=238&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt=""></pre>
+    <dd>3. 在线图片</dd>
+    <pre>&lt;img src="https://brookrest.com/wp-content/uploads/2020/05/AdobeStock_315919556-scaled.jpeg" alt=""></pre>
+    <dd>4. <a href="https://c.runoob.com/front-end/59/">Base64</a>；...表示图片的base64编码；减少 HTTPS 请求；更多工具 <a
+        href="https://base64.us/">base64.us</a>、<a href="https://www.base64decode.org/">base64decode.org</a></dd>
+    <pre>&lt;img src="data:image/png;base64,..." alt=""></pre>
+    <div>. 建议配合容器或复合标签一起使用，如 <a href="./imgfigure.html">&lt;figure&gt;</a></div>
+    <pre>
 &lt;div class="wrap"&gt;
   &lt;img src="" alt="" title=""&gt;
 &lt;/div class="wrap"&gt;</pre>
-      <pre>
+    <pre>
 &lt;figure class="wrap"&gt;
   &lt;img src="" alt="" title=""&gt;
 &lt;/figure class="wrap"&gt;</pre>
-      <table>
-        <caption>常用属性</caption>
-        <thead>
-          <tr>
-            <th>类别</th>
-            <th>说明</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>src</td>
-            <td>图片URL；可以使用本地图片；也可以使用在线图片；还可以是图片的 base64 编码</td>
-          </tr>
-          <tr>
-            <td>alt</td>
-            <td>图片异常时的提示信息</td>
-          </tr>
-          <tr>
-            <td>title</td>
-            <td>说明信息，当鼠标移入时显示，很多标签都可以使用 title 属性增加用户体验；适用于桌面端</td>
-          </tr>
-          <tr>
-            <td>decoding</td>
-            <td>图片解析方式；auto | sync 同步解析 | async 异步解析</td>
-          </tr>
-          <tr>
-            <td>loading</td>
-            <td>图片加载方式；eager 立即加载 | lazy 延迟加载</td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <caption>常用样式</caption>
-        <thead>
-          <tr>
-            <th>类别</th>
-            <th>说明</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>width</td>
-            <td>宽度</td>
-          </tr>
-          <tr>
-            <td>height</td>
-            <td>高度</td>
-          </tr>
-          <tr>
-            <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit">object-fit</a></td>
-            <td>图片大小调整方式
-              <br>fill：填充整个容器，图片可能被拉伸；<span class="warn">默认</span>
-              <br>contain：图片会被缩放至被容器完全包含，容器可间会有留白
-              <br>cover：保持比例填满容器；图片可能被裁剪
-              <br>none：保持图片大小不变
-            </td>
-          </tr>
-          <tr>
-            <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-position">object-position</a></td>
-            <td>图片和容器的对齐方式
-              <br>center：图片居中；<span class="warn">默认</span>
-              <br>left
-              <br>right
-              <br>bottom
-              <br>top
-            </td>
-          </tr>
-          <tr>
-            <td>vertical-align</td>
-            <td>行内元素的对齐方式：baseline | top | middle | bottom
-              <br>转化为块元素后可以忽略
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </dd>
+    <table>
+      <caption>常用样式</caption>
+      <thead>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>width</td>
+          <td>宽度</td>
+        </tr>
+        <tr>
+          <td>height</td>
+          <td>高度</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit">object-fit</a></td>
+          <td>图片大小调整方式
+            <br>fill：填充整个容器，图片可能被拉伸；<span class="warn">默认</span>
+            <br>contain：图片会被缩放至被容器完全包含，容器可间会有留白
+            <br>cover：保持比例填满容器；图片可能被裁剪
+            <br>none：保持图片大小不变
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-position">object-position</a></td>
+          <td>图片和容器的对齐方式
+            <br>center：图片居中；<span class="warn">默认</span>
+            <br>left
+            <br>right
+            <br>bottom
+            <br>top
+          </td>
+        </tr>
+        <tr>
+          <td>vertical-align</td>
+          <td>行内元素的对齐方式：baseline | top | middle | bottom
+            <br>转化为块元素后可以忽略
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <dd>[<span class="iconfont icon-keyboard"></span>] 图片的容器特性</dd>
     <dd>
       <div>. 图片大小200*87</div>
@@ -306,21 +321,6 @@ margin-bottom: 100vh;
       <div class="wrap">
         <img class="img3" src="./imgs/alizee.jpg" alt="">
       </div>
-    </dd>
-    <dt>SVG</dt>
-    <dd>. 将图片转换成&lt;svg&gt;使用；从<span class="warn">结构</span> 上优化页面；如字体图标网站 <a
-        href="https://www.iconfont.cn/">iconfont</a>
-      可以将图标文件转换为&lt;svg&gt;</dd>
-    <dd>. 适合少量、小体积、装饰性图片</dd>
-    <dd>. 更多信息，请访问 <a href="./svg.html">SVG</a></dd>
-    <dt>Base64</dt>
-    <dd>
-      <div>. 对图片编码，然后指定给src或背景图片；从<span class="warn">样式</span> 上优化页面</div>
-      <div>. 更多信息，请访问 <a href="https://c.runoob.com/front-end/59/">Base64</a></div>
-      <figure class="code">
-        <pre>
-background-image: url(data:image/jpeg;base64...);</pre>
-      </figure>
     </dd>
   </dl>
   <div class="chap">Summary</div>
