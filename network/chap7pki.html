@@ -47,6 +47,31 @@
       <dd>金融交易：银行系统、支付平台的安全接入</dd>
       <dd>代码签名：软件发布时证明来源可信</dd>
       <dd>物联网设备认证：设备入网前身份验证</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] Github SSH登陆</div>
+      <ol>
+        <li>客户端发起连接
+          <p>SSH 客户端连接到服务器的 22 端口</p>
+          <p>双方协商加密算法、协议版本等</p>
+        </li>
+        <li>服务器要求身份认证
+          <p>服务器看到你想用 user 账号登录</p>
+          <p>它检查 ~user/.ssh/authorized_keys 文件，发现里面有你的 公钥</p>
+        </li>
+        <li>服务器发送“挑战”（Challenge）
+          <p>服务器生成一个随机字符串（比如一串 256 位的随机数），并发送给客户端</p>
+          <p>这个挑战是一次性、不可预测的，防止重放攻击</p>
+        </li>
+        <li>客户端用私钥签名
+          <p>你的 SSH 客户端（如 OpenSSH）自动找到对应的 私钥（如 ~/.ssh/id_ed25519）</p>
+          <p>用该私钥对这个随机挑战进行 数字签名（不是加密！）</p>
+          <p>把签名结果发回服务器</p>
+        </li>
+        <li>服务器用公钥验证
+          <p>服务器用 authorized_keys 中存储的 你的公钥 去验证这个签名</p>
+          <p>如果签名有效 → 证明你确实持有对应的私钥 → 身份合法 → 允许登录</p>
+          <p>如果无效 → 拒绝登录</p>
+        </li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

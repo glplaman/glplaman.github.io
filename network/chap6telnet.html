@@ -18,18 +18,37 @@
     </header>
     <dl>
       <dt>概述 Overview</dt>
-      <dd>Telnet（teletype network）协议是TCP/IP协议族中的一员；需要先通过3次握手建立连接，才能通信</dd>
+      <dd>Telnet（teletype network）协议是 TCP/IP 协议族中的一员
+        <p>又称为终端仿真协议</p>
+        <p>是互联网的正式标准</p>
+      </dd>
+      <dd>核心功能：提供远程终端访问能力，让用户像坐在本地一样操作远程主机
+        <p>远程系统管理</p>
+        <p>网络设备调试</p>
+        <p>协议测试与教学</p>
+        <p>内网/隔离环境使用</p>
+        <p>脚本自动化</p>
+      </dd>
+      <dd>基于客户/服务器 C/S 方式
+        <p>在本地系统运行 TELNET 客户进程</p>
+        <p>远地主机则运行 TELNET 服务器进程</p>
+      </dd>
+      <dd>需要先通过3次握手建立连接，才能通信</dd>
       <dd>协议服务默认端口：23</dd>
-      <dd>为用户提供了在本地计算机上操作远程主机的能力 </dd>
-      <dd>远程控制Web服务器：在终端使用者的电脑上使用Telnet程序连接到服务器。终端使用者可以在Telnet程序中输入命令，这些命令会在服务器上运行，就像直接在服务器的控制台上输入一样</dd>
-      <dd>也可用于端口检测</dd>
-      <dd>安全考虑，需要使用用户名和密码来登录远程主机</dd>
-      <dd>默认情况下，telnet是关闭的</dd>
+      <dt>安全 Security</dt>
+      <dd>所有命令都是明文 clear text 发送，不要在公共网络上使用</dd>
+      <dd>默认情况下，Telnet 是关闭的</dd>
+      <dd>出于安全考虑，需要使用用户名和密码来登录远程主机</dd>
+      <dd>已基本被 SSH（Secure Shell） 取代
+        <p>几乎所有现代系统默认自带</p>
+        <p>凡是能用 SSH 的地方，绝不该用 Telnet</p>
+      </dd>
+      <dd>大多数现代 Linux 发行版默认不安装 Telnet 服务，因其不安全</dd>
       <pre>
 C:\Users\huawei>telnet /?
 'telnet' 不是内部或外部命令，也不是可运行的程序
 或批处理文件</pre>
-      <dt>开启</dt>
+      <dt>开启 Enable</dt>
       <dd>win9：设置 → 应用和功能 → 程序和功能 → 启用或关闭window功能 → Telnet Client</dd>
       <dd>win10：系统 → 可选功能 → 更多 Windows 功能 → Telnet Client</dd>
       <dd>win7之前的版本还需要专门开启服务</dd>
@@ -43,18 +62,96 @@ C:\Users\huawei>telnet /?
         <img src="../imgs/network/app/t1.jpg" alt="">
         <figcaption>命令格式</figcaption>
       </figure>
-      <dt>注意</dt>
-      <dd>所有命令都是明文clear text发送，不要在公共网络上使用</dd>
-      <dd>近距离请使用console口</dd>
-      <dd>使用前通常先ping下对方</dd>
-      <dd>CTRL+X或者quit/exit退出； 尽可能开少的端口</dd>
-      <dd>Telnet服务的23端口也是TTS（Tiny Telnet Server）木马的缺省端口，建议关闭</dd>
-      <dt>趣味应用</dt>
-      <dd class="example-sn">towel.blinkenlights.nl</dd>
-      <dd>欣赏不一样的星球大战Star War</dd>
-      <dd class="example-sn">freechess.org 5000</dd>
+      <dt>虚拟网络终端 NVT</dt>
+      <dd>Network Virtual Terminal</dd>
+      <dd>供一个通用的、最小功能的虚拟终端标准，使得任意客户端和服务器可以通过 Telnet 互操作
+        <p>定义数据和命令如何在互联网上传输</p>
+        <p>所有 Telnet 通信都以 NVT 格式 在网络上传输</p>
+        <p>客户端和服务器各自负责本地终端 ↔ NVT 之间的双向转换</p>
+      </dd>
+      <figure>
+        <img src="./imgs/telnet.png" alt="">
+        <figcaption>NVT Character set</figcaption>
+      </figure>
+      <dt>字符集 Charset</dt>
+      <dd>使用8位一个字节；其中
+        <p>7 位 ASCII 码（即 0–127）作为基本字符集</p>
+        <p>最高位为0：数据字符</p>
+        <p>最高位为1：控制字符</p>
+      </dd>
+      <dd>普通数据字符（如 A=65, \n=10） 直接发送该字节</dd>
+      <dd>在 NVT 中，行结束必须表示为 &lt;CR&gt;&lt;LF&gt; 序列
+        <p>回车（CR） = ASCII 13（\r）</p>
+        <p>换行（LF） = ASCII 10（\n）</p>
+      </dd>
+      <dd>IAC = 255（0xFF）用作转义 escaping，表示接下来的内容是 Telnet 命令</dd>
+      <dd>字节值 = 255（IAC）作为数据 发送 255, 255，即两个 IAC</dd>
+      <dd>Telnet 命令（如 WILL ECHO） 发送 255, 命令码, 选项码</dd>
+      <table>
+        <caption>数据字符</caption>
+        <tr>
+          <td>0</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <table>
+        <caption>控制字符</caption>
+        <tr>
+          <td>1</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+
+      <div class="tips">
+        <p>ASCII码</p>
+        <p>7位共 128个字符：0 - 127</p>
+        <p>95个可打印字符：字母、数字、标点，32 - 126</p>
+        <p>33个控制字符：0 - 31，127</p>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 基本过程</div>
+      <ol>
+        <li>用户输入（本地终端）
+          → 用户在本地终端（如 Windows CMD 或 Linux 终端）敲击键盘</li>
+        <li>客户端转换
+
+          → Telnet 客户端将本地终端的击键和命令转换为 NVT 格式</li>
+        <li>网络传输
+
+          → NVT 格式的数据通过 TCP（端口 23）发送给 Telnet 服务器</li>
+        <li>服务器端转换
+
+          → Telnet 服务器收到 NVT 数据后，将其转换为远端主机所需的本地终端格式</li>
+        <li>服务器响应
+
+          → 远端系统生成输出（如命令结果），服务器再将这些输出从本地格式转回 NVT 格式</li>
+        <li>返回客户端
+
+          → NVT 格式的响应数据传回客户端，客户端再将其转换为本地终端可显示的格式</li>
+      </ol>
+      <dt>注意 Tips</dt>
+      <dd>仅处理文本</dd>
+      <dd>近距离请使用 console 口</dd>
+      <dd>使用前通常先 ping 下对方</dd>
+      <dd>CTRL+X 或者 quit/exit 退出； 尽可能开少的端口</dd>
+      <dd>Telnet 服务的23端口也是 TTS（Tiny Telnet Server）木马的缺省端口，建议关闭</dd>
+      <dt>趣味应用 Application</dt>
+      <div>[<span class="iconfont icon-keyboard"></span>] towel.blinkenlights.nl</div>
+      <dd>欣赏不一样的星球大战 Star War</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] freechess.org 5000</div>
       <dd>下个象棋吧</dd>
-      <dd class="example-sn">rainmaker.wunderground.com</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] rainmaker.wunderground.com</div>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -119,24 +216,52 @@ login
         <li>PC使用CMD远程登陆交换机；第一次输入line登陆密码；第二次输入特权模式密码；密码输入均不显示</li>
         <pre>
 
-    C:\>telnet 192.168.1.2
-    Trying 192.168.1.2 ...Open
+C:\>telnet 192.168.1.2
+Trying 192.168.1.2 ...Open
 
 
-    User Access Verification
+User Access Verification
 
-    Password: 
-    cnplaman>en
-    Password: 
-    cnplaman#</pre>
+Password: 
+cnplaman>en
+Password: 
+cnplaman#</pre>
       </ol>
-      <dt>Extend</dt>
+      <dt>扩展 Extend</dt>
       <dd>增加诺干主机，尝试同时远程登陆交换机。分析并验证结果</dd>
     </dl>
+    <h2>Homework</h2>
     <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译：How does NVT work?
+          <p>The client TELNET converts the characters from the local terminal into NVT format and then sends them to
+            the
+            network.</p>
+          <p>
+            Then the server TELNET converts NVT-formatted data and commands into a format that the Remote Computers can
+            understand.</p>
+        </li>
+        <li>翻译：Network Virtual Terminal (NVT) Character Set
+          <p>The Network Virtual Terminal (NVT) primarily employs two sets of characters: one for data and another for
+            control.</p>
+          <p>The NVT is an 8-bit character set for data, with the 7 lowest-order bits identical to ASCII and the highest
+            bit set to 0.</p>
+          <p>The NVT uses an 8-bit bit character set to communicate control characters between the computers, with the
+            highest-order bit set to 1.</p>
+          <p>For sending data and control characters the TELNET makes use of the same connection by just inserting
+            control characters into the data stream.</p>
+          <p>Each control character is preceded by the Special Control character, which is popularly known as Interpret
+            as Control, for separating the data characters from the control characters (IAC).</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/telnet/">Telnet <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.rfc-editor.org/rfc/rfc854.html">Telnet RFC854<span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.geeksforgeeks.org/computer-networks/what-is-network-virtual-terminal-in-telnet/">What
+            is Network Virtual Terminal in TELNET?<span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>

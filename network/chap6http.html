@@ -8,67 +8,205 @@
   <title>超文本传输协议 Http</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    details>summary {
+      cursor: pointer;
+    }
+
+    summary~* {
+      margin-left: 1em;
+    }
+
+    .code {
+      counter-reset: code-sn;
+    }
+
+    .code span {
+      counter-increment: code-sn;
+    }
+
+    .code span::before {
+      content: counter(code-sn, decimal-leading-zero)'    ';
+    }
+  </style>
 </head>
 
 <body>
   <div class="w">
     <header>
       <h1>超文本传输协议</h1>
-      <span>Http</span>
+      <span>&commat;Http</span>
     </header>
     <dl>
-      <dt>概述 Overview</dt>
-      <dd>超文本传输协议，万维网服务，World Wide Web</dd>
-      <dd>WEB服务器，WEB server</dd>
-      <dd>采用 客户/服务 - C/S 提供网上信息浏览服务</dd>
-      <dd>http 协议端口：80</dd>
-      <dd>https 协议端口：443</dd>
+      <dt>内容 Contents</dt>
+      <details>
+        <summary>因特网 Internet</summary>
+        <details>
+          <summary>万维网 World Wide Web</summary>
+          <div>. 统一资源定位符 Uniform Resource Locator - URL</div>
+          <details>
+            <summary>超文本标记语言 HyperText Mark Language - HTML</summary>
+            <div>. 结构标记 Tag</div>
+            <div>. 层叠样式表 Cascading Style Sheets - CSS</div>
+            <div>. 逻辑 JavaScript</div>
+          </details>
+          <div>. 超文本传输协议 HyperText Transfer Protocol - HTTP</div>
+          <div>. HTTP Secure - HTTPS</div>
+        </details>
+      </details>
+    </dl>
+    <dl>
+      <dt>万维网 World Wide Web</dt>
+      <dd>WWW 是一个基于超文本 hypertext 的信息系统，由蒂姆·伯纳斯-李（Tim Berners-Lee）于1989年提出</dd>
+      <dd>由超文本链接构成的全球信息网络</dd>
+      <dd>使用 URL 来定位资源</dd>
+      <dd>使用 HTML/CSS/JS 构建网页 page 内容</dd>
+      <dd>使用 HTTP/HTTPS 协议传输数据</dd>
+      <dt>统一资源定位 URL</dt>
+      <dd>资源：指在互联网上可以被访问的任何对象，包括文件目录、文件、文档、图像、声音等，以及与互联网相连的任何形式的数据</dd>
+      <dd>互联网上的资源，都有一个唯一确定的 URL</dd>
+      <dd>由以冒号（:）隔开的两大部分组成</dd>
+      <dd>对字符大写或小写没有要求</dd>
+      <figure>
+        <img src="./imgs/url.png" alt="">
+        <figcaption>URL</figcaption>
+      </figure>
+      <dt>网页 Page</dt>
+      <dd>网页文件的后缀名是 .html；早期多使用.htm - 8.3</dd>
+      <dd>一个完整的页面需要 结构(html标签)、样式(CSS)和逻辑(JavaScript)共同呈现</dd>
+      <dd>分为：
+        <p>静态万维网文档。内容不会改变。简单</p>
+        <p>动态万维网文档。文档的内容由应用程序动态创建</p>
+        <p>活动万维网文档。由浏览器端改变文档的内容</p>
+      </dd>
+      <dd>从开发角色分工，可以分：
+        <p>前端 Frontend</p>
+        <p>后端 Backend</p>
+        <p>全栈开发 Full Stack</p>
+      </dd>
+      <dd>现在开发的原则：结构、样式和逻辑三分离 - Separation of Concerns</dd>
+      <dd>常见集成开发环境 IDE
+        <p>Vs code</p>
+        <p>Sublime - 付费</p>
+        <p>WebStorm - 付费</p>
+        <p>Atom - 停更</p>
+        <p>IntelliJ IDEA - Java + 前端混合项目</p>
+        <p>PhpStorm - WordPress、Laravel 等 PHP 项目</p>
+        <p>云上平台/线上环境</p>
+      </dd>
+      <dt>文档 Document</dt>
+      <dd>网页 Page，特指 .html</dd>
+      <dd>样式文件 .css</dd>
+      <dd>逻辑文件 .js</dd>
+      <dd>各种资源</dd>
+      <dt>网站 Site</dt>
+      <dd>网页和各种资源如图像、多媒体、数据库以及脚本的集合</dd>
+      <dd>通过互联网提供给用户访问</dd>
+      <dd>每个网站有自己的主页 homePage，是一个网站的门户 Portal</dd>
+      <dd>默认为 index.html；使用默认文件名可以带来很多便利</dd>
+      <dd>部署
+        <p>早期多使用 FTP</p>
+        <p>SVN / Git + Web Hosting</p>
+        <p>持续集成（CI）+ 持续部署（CD）</p>
+        <p>现在各大 IDE 都可以一键部署</p>
+      </dd>
+      <dt>超文本标记语言 HyperText Markup Language - HTML</dt>
+      <dd>制作万维网页面的标准语言</dd>
+      <dd>它消除了不同计算机之间信息交流的障碍</dd>
+      <dd>是万维网的重要基础 [RFC 2854]</dd>
+      <dd>定义网页的结构和内容</dd>
+      <dd>是网页的骨架</dd>
+      <dd>不负责样式或交互，只关注语义结构</dd>
+      <dd>HTML 定义了许多用于描述元素、排版的命令：标记，也叫标签 Tag，如 &lt;h1&gt;、&lt;p&gt;、&lt;img&gt;</dd>
+      <dd>HTML 把各种标签嵌入到万维网的页面中，构成了所谓的 HTML 文档</dd>
+      <dd>HTML 文档是一种可以用任何文本编辑器创建的 ASCII 码文件</dd>
+      <dd>HTML 文档的后缀：.html 或 .htm</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 网页组成</div>
+      <pre class="code">
+<span>&lt;!DOCTYPE html&gt;</span>
+<span>&lt;HTML&gt;</span>
+<span>  &lt;HEAD&gt;</span>
+<span>    &lt;meta charset="UTF-8"&gt;</span>
+<span>    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</span>
+<span>    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
+<span>    &lt;TITLE&gt;一个 HTML 的例子&lt;/TITLE&gt;</span>
+<span>    &lt;link rel="stylesheet" href="../css/style.css"&gt;</span>
+<span>    &lt;style&gt;</span>
+<span>      p{</span>
+<span>        cursor: pointer;</span>
+<span>      }</span>
+<span>    &lt;/style&gt;</span>
+<span>  &lt;/HEAD&gt;</span>
+<span>  &lt;BODY&gt;</span>
+<span>    &lt;H1&gt;HTML 很容易掌握&lt;/H1&gt;</span>
+<span>    &lt;P id = 'leading'&gt;这是第一个段落。&lt;/P&gt;</span>
+<span>    &lt;P&gt;这是第二个段落。&lt;/P&gt;</span>
+<span>    &lt;script&gt;</span>
+<span>      const age = 18;</span>
+<span>      let dom = document.getElementById('leading');</span>
+<span>      dom.addEventListener('click', ()=>{</span>
+<span>        dom.style.color = '#f40';</span>
+<span>      })</span>
+<span>    &lt;/script&gt;</span>
+<span>  &lt;/BODY&gt;</span>
+<span>&lt;/HTML&gt;</span></pre>
+      <dt>层叠样式表 Cascading Style Sheets - CSS</dt>
+      <dd>控制网页的外观和布局</dd>
+      <dd>决定颜色、字体、大小、间距、动画等视觉效果</dd>
+      <dd>分离内容（HTML）和表现（CSS），便于维护</dd>
+      <dd>可复用样式，统一设计风格</dd>
+      <dt>逻辑 JavaScript</dt>
+      <dd>实现网页的动态行为和交互功能</dd>
+      <dd>如按钮点击、表单验证、轮播图、AJAX 加载等</dd>
+      <dd>运行在浏览器中（客户端脚本）</dd>
+      <dd>可操作 DOM（文档对象模型）、处理事件、发送请求</dd>
+      <dt>客户 Client/服务器 Server - C/S</dt>
+      <dd>客户 Client
+        <p>运行客户程序，如浏览器</p>
+        <p>主动发起请求</p>
+      </dd>
+      <dd>服务器 Server
+        <p>被动接收请求</p>
+        <p>向客户提供服务</p>
+        <p>不间断工作</p>
+        <p>同时处理多个请求；并发请求</p>
+        <p>强大的硬件和高级的操作系统</p>
+      </dd>
       <figure>
         <img src="./imgs/cs.png" alt="">
         <figcaption>C/S</figcaption>
       </figure>
-      <dd>客户 Client/C
-        <p>运行客户程序，如浏览器</p>
-        <p>主动发起请求</p>
-      </dd>
-      <dd>服务器 Server/S
-        <p>被动接收请求</p>
-        <p>向客户提供服务</p>
-        <p>不间断工作</p>
-        <p>同时处理多个请求（并发请求）</p>
-        <p>强大的硬件和高级的操作系统</p>
-      </dd>
-      <dt>服务器技术 Server</dt>
-      <dd>后端 Back-end</dd>
+      <div class="tips">
+        <p>WEB服务器 WEB server</p>
+        <p>http 协议端口：80</p>
+        <p>https 协议端口：443</p>
+      </div>
+      <dt>后端 Backend</dt>
+      <dd>服务器技术 Server</dd>
       <dd>IIS：Internet Information Services，因特网信息服务</dd>
       <dd>Apache</dd>
       <dd>tomcat，GitHub星级6.1k</dd>
       <dd>nginx，GitHub星级16.6k</dd>
       <dd>Node.js，GitHub星级88.2k</dd>
-      <dt>常见产品 Suits</dt>
       <dd>WAMP：Window + Apache + MySql + PHP</dd>
       <dd>LAMP：Linux + Apache + MySql + PHP</dd>
       <dd>AppSrer</dd>
       <dd>Laravel，GitHub星级69.9k</dd>
       <dd>PhpStorm</dd>
-      <dt>前端 Front-end</dt>
+      <dt>前端 Frontend</dt>
       <dd>HTML5 + CSS + JavaScript</dd>
       <dd>Java</dd>
       <dd>Python</dd>
-      <figure class="img-sn">
-        <img src="../imgs/network/app/web.jpg" alt="">
-        <figcaption>前后端框架</figcaption>
-      </figure>
     </dl>
     <h2>超文本传输协议 HTTP</h2>
     <dl>
-      <dd>HTTP 是面向事务的 (transaction-oriented) 应用层协议</dd>
+      <dd>HTTP 是面向事务的 transaction-oriented 应用层协议</dd>
       <dd>使用 TCP 连接进行可靠的传送</dd>
-      <dd>定义了浏览器与万维网服务器通信的格式和规则</dd>
+      <dd>定义了浏览器与万维网服务器通信的 <strong>格式和规则</strong></dd>
       <dd>是万维网上能够可靠地交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础</dd>
       <dd>HTTP 不仅传送完成超文本跳转所必需的信息，而且也传送任何可从互联网上得到的信息，如文本、超文本、声音和图像等</dd>
       <dt>HTTP 的报文结构</dt>
-      <dd>由于 HTTP 是面向正文的 (text-oriented)，因此报文中每一个字段的值都是一些 ASCII 码串，每个字段的长度都是不确定的</dd>
+      <dd>由于 HTTP 是面向正文的 text-oriented，因此报文中每一个字段的值都是一些 ASCII 码串，每个字段的长度都是不确定的</dd>
       <dd>两类报文：
         <p>请求报文：从客户向服务器的请求</p>
         <p>响应报文：从服务器到客户的回答</p>
@@ -78,35 +216,6 @@
         <p>首部行：说明浏览器、服务器或报文主体的一些信息。可以有多行，也可以不使用</p>
         <p>实体主体：请求报文中一般不用，响应报文中也可能没有该字段</p>
       </dd>
-
-    </dl>
-    <h2>万维网的文档 Page</h2>
-    <dl>
-      <dd>在一个客户程序主窗口上显示出的万维网文档称为页面 page</dd>
-      <dd>页面制作的标准语言：HTML</dd>
-      <dd>分为：
-        <p>静态万维网文档。内容不会改变。简单</p>
-        <p>动态万维网文档。文档的内容由应用程序动态创建</p>
-        <p>活动万维网文档。由浏览器端改变文档的内容</p>
-      </dd>
-      <dt>超文本标记语言 HTML</dt>
-      <dd>Hypertext Markup Language</dd>
-      <dd>制作万维网页面的标准语言</dd>
-      <dd>它消除了不同计算机之间信息交流的障碍</dd>
-      <dd>是万维网的重要基础 [RFC 2854]</dd>
-      <dd>HTML 定义了许多用于排版的命令：标记，也叫标签</dd>
-      <dd>HTML 把各种标签嵌入到万维网的页面中，构成了所谓的 HTML 文档</dd>
-      <dd>HTML 文档是一种可以用任何文本编辑器创建的 ASCII 码文件</dd>
-      <dd>HTML 文档的后缀：.html 或 .htm</dd>
-      <dt>CSS</dt>
-      <dd>层叠样式表 CSS (Cascading Style Sheets)</dd>
-      <dd>是一种样式表语言，用于为 HTML 文档定义布局</dd>
-      <dd>CSS 与 HTML 的区别
-        <p>HTML 用于结构化内容</p>
-        <p>CSS 则用于格式化结构化的内容；例如：精确规定在浏览器上显示的字体、颜色、边距、高度、宽度、背景图像等</p>
-      </dd>
-
-
     </dl>
     <h2>其它 Other</h2>
     <dl>
