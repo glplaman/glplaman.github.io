@@ -65,11 +65,21 @@
       <dt>统一资源定位 URL</dt>
       <dd>资源：指在互联网上可以被访问的任何对象，包括文件目录、文件、文档、图像、声音等，以及与互联网相连的任何形式的数据</dd>
       <dd>互联网上的资源，都有一个唯一确定的 URL</dd>
+      <dd>包括：
+        <p>协议 protocol</p>
+        <p>主机 host</p>
+        <p>端口 port</p>
+        <p>路径 path</p>
+      </dd>
       <dd>由以冒号（:）隔开的两大部分组成</dd>
       <dd>对字符大写或小写没有要求</dd>
       <figure>
-        <img src="./imgs/url.png" alt="">
+        <img src="./imgs/url1.png" alt="">
         <figcaption>URL</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/url.png" alt="">
+        <figcaption>使用缺省端口的URL</figcaption>
       </figure>
       <dt>网页 Page</dt>
       <dd>网页文件的后缀名是 .html；早期多使用.htm - 8.3</dd>
@@ -205,6 +215,161 @@
       <dd>定义了浏览器与万维网服务器通信的 <strong>格式和规则</strong></dd>
       <dd>是万维网上能够可靠地交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础</dd>
       <dd>HTTP 不仅传送完成超文本跳转所必需的信息，而且也传送任何可从互联网上得到的信息，如文本、超文本、声音和图像等</dd>
+      <dt>WWW 基本过程</dt>
+      <dd>HTTP 使用了面向连接的 TCP 作为运输层协议，保证了数据的可靠传输</dd>
+      <dd>在 HTTP 客户与 HTTP 服务器之间的每次交互，都由一个 ASCII 码串构成的请求 Request 和一个类似的通用互联网扩充，即“类MIME (MIME-like)”的响应 Response组成
+      </dd>
+      <figure>
+        <img src="./imgs/http1.png" alt="">
+        <figcaption>WWW基本过程</figcaption>
+      </figure>
+      <dt>B/S 架构</dt>
+      <dd>HTTP 是 Web 通信的基础协议</dd>
+      <dd>用户通过浏览器访问网站，所有交互都在 <a href="../web/web.html">浏览器 Browser</a> 中完成
+        <p>在浏览器的地址窗口中键入所要找的页面的 URL</p>
+        <p>在某一个页面中用鼠标点击一个可选部分，这时浏览器会自动在互联网上找到所要链接的页面</p>
+      </dd>
+      <dd>服务器收到请求后，返回的是 HTML 内容（或 JSON 等格式）</dd>
+      <dd>浏览器接收到这些内容后，自动解析并展示给用户</dd>
+      <dd>整个过程不需要安装特定客户端程序，只需要一个浏览器 Browser</dd>
+      <dd>为了区分传统的C/S，这种通信方式也称 Browser/Server - B/S</dd>
+      <dd>特点：
+        <p>不需要安装专用软件，只要有浏览器即可</p>
+        <p>所有业务逻辑和数据处理集中在服务器端</p>
+        <p>响应由服务器生成 HTML 页面，浏览器负责渲染展示</p>
+        <p>更新方便：只要服务器更新，所有用户立即看到新版本</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 请求文档所需的时间</div>
+      <dd>先建立 TCP 连接，再传输数据</dd>
+      <dd>第3次握手可以携带数据 - HTTP 请求</dd>
+      <dd>请求文档所需的时间
+        <br>&nbsp;&nbsp; >= RTT（三报文握手建立 TCP 连接）+ RTT（请求和接收文档）+ 文档的传输时间
+        <br>&nbsp;&nbsp; >= 2 RTT + 文档的传输时间
+      </dd>
+      <figure>
+        <img src="./imgs/http0.png" alt="">
+        <figcaption>请求文档所需的时间</figcaption>
+      </figure>
+      <dt>HTTP 1.0</dt>
+      <dd>无连接的 connectionless
+        <p>每次客户端发起一个请求，服务器处理完就关闭连接</p>
+        <p>客户端和服务器之间不需要维持长期的连接</p>
+        <p>每个请求/响应对都是独立的通信过程</p>
+        <p>每请求一个页面需要2倍的RTT</p>
+        <p>频繁拆连和建连</p>
+      </dd>
+      <dt>HTTP 1.1</dt>
+      <dd>使用持续连接</dd>
+      <dd>一个 TCP 连接可以复用多次请求/响应</dd>
+      <dd>但请求和响应必须按顺序完成，容易造成队头阻塞</dd>
+      <dd>TCP的重传特性也影响了响应速度</dd>
+      <dd>每次请求都要携带完整的头部信息，即使这些信息和上一次几乎一样</dd>
+      <dd>尤其是 Cookie，常常非常大（几十到几百字节），而且每个请求都带</dd>
+      <dt>HTTP 2.0</dt>
+      <dd>满足非文本通信需求</dd>
+      <dd>满足实时性通信需求</dd>
+      <dd>解决头部重复：
+        <p>不再以文本形式发送头部，而是使用 HPACK 压缩算法</p>
+        <p>建立一个“头部字典”，常见字段用编号代替；重复值只传一次</p>
+      </dd>
+      <dd>所有主流浏览器（Chrome、Firefox、Safari、Edge 等）只支持在 TLS（即 HTTPS）之上使用 HTTP/2
+        <p>想让网站用 HTTP/2，必须部署 HTTPS</p>
+        <p>对 Web 前端和普通网站来说，HTTP/2 = HTTPS 是事实标准</p>
+      </dd>
+      <div class="tips">
+        <p>HTTP/1.0 → 解决能不能通信</p>
+        <p>HTTP/1.1 → 解决能不能少建几次连接</p>
+        <p>HTTP/2.0 → 解决能不能在一个连接里高效并行</p>
+        <p>HTTP/3 → 基于 QUIC/UDP，正在快速普及，进一步解决 TCP 队头阻塞问题</p>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] HTTP 1.X vs HTTP 2.X</div>
+      <dd>HTTP 1.X：现在你访问首页 /index.html，页面中还引用了：
+        <p>/style.css</p>
+        <p>/app.js</p>
+        <p>/logo.png</p>
+      </dd>
+      <dd>第一个请求 /index.html</dd>
+      <pre>
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0)
+Accept: text/html
+Cookie: sessionid=abc123; user_lang=zh; theme=dark; cart_items=5
+Connection: keep-alive</pre>
+      <dd>第二个请求 /style.css</dd>
+      <pre>
+GET /style.css HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0)
+Accept: text/css
+Cookie: sessionid=abc123; user_lang=zh; theme=dark; cart_items=5
+Connection: keep-alive</pre>
+      <dd>第三个请求 /app.js</dd>
+      <pre>...</pre>
+      <dd>第四个请求 /logo.png</dd>
+      <pre>...</pre>
+      <dd>HTTP 2.X：发送并创建、更新字典</dd>
+      <dd>第一个请求 /index.html</dd>
+      <pre>
+:method = GET  
+:scheme = https  
+:path = /index.html  
+:host = www.example.com  
+user-agent = Mozilla/5.0 ...  
+cookie = sessionid=abc123; user_lang=zh; theme=dark; cart_items=5</pre>
+      <dd>HPACK 编码后（简化示意）：
+        <p>:method → 静态表索引 2（代表 "GET"）</p>
+        <p>:path → 静态表索引 4 + 字符串 "/index.html"</p>
+        <p>host → 静态表索引 1 + 字符串 "www.example.com"</p>
+        <p>user-agent → 首次出现，全量发送，并存入动态表</p>
+        <p>cookie → 首次出现，全量发送，并存入动态表</p>
+      </dd>
+      <dd>第二个请求 /style.css</dd>
+      <pre>
+:method = GET  
+:path = /style.css  
+:host = www.example.com  
+user-agent = （同上）  
+cookie = （同上）</pre>
+      <dd>HPACK 编码： 传输内容大幅减少！
+        <p>:method → 索引 2（GET）</p>
+        <p>:path → 索引 4 + "/style.css"</p>
+        <p>host → 索引 1 + "www.example.com"</p>
+        <p>user-agent → 直接发索引 63（不用再传字符串！）</p>
+        <p>cookie → 直接发索引 62（不用再传 70 字节！）</p>
+      </dd>
+      <dd>其它请求类似</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 在开发者工具中查看 HTTP 1.X vs HTTP 2.X</div>
+      <dd>开发环境下的 HTTP 1.x</dd>
+      <figure>
+        <img src="./imgs/http4.png" alt="">
+        <figcaption>查看协议 HTTP 1.X</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/http5.png" alt="">
+        <figcaption>查看 HTTP 1.X 请求标头</figcaption>
+      </figure>
+      <dd>生产环境下的 HTTP 2.X - HTTPS</dd>
+      <figure>
+        <img src="./imgs/http2.png" alt="">
+        <figcaption>查看协议 HTTP 2.X</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/http3.png" alt="">
+        <figcaption>查看 HTTP 2.X 请求标头</figcaption>
+      </figure>
+      <div class="tips">
+        <p>: 开头的字段是 HTTP/2 二进制帧中的伪头部（pseudo-header），只有在 HTTP/2 中才出现</p>
+        <p>“显示临时标头。禁用缓存以查看完整的标头。” - 正是 HPACK 压缩的体现</p>
+        <p>为了防止你误以为“没传”，所以显示“临时标头”或“部分标头”</p>
+      </div>
+      <dt>特点 Feature</dt>
+      <dd>对所有的HTTP，无论版本，都是无状态的 stateless
+        <p>服务器不会记住之前的请求信息</p>
+        <p>每次请求都必须包含服务器处理该请求所需的全部信息</p>
+        <p>例如：你登录后再次访问页面，服务器不会“记得”你已经登录过，除非你通过 Cookie、Token 等机制主动传递身份信息</p>
+        <p>引入 Cookie、Session、Token 等机制在应用层模拟状态</p>
+      </dd>
       <dt>HTTP 的报文结构</dt>
       <dd>由于 HTTP 是面向正文的 text-oriented，因此报文中每一个字段的值都是一些 ASCII 码串，每个字段的长度都是不确定的</dd>
       <dd>两类报文：
