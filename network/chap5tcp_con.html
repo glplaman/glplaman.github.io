@@ -193,6 +193,8 @@
         <p>预示网络可能会出现拥塞</p>
       </dd>
       <dt>核心阶段 Phase</dt>
+      <dd> TCP Tahoe 没有快恢复</dd>
+      <dd>为了提高效率，TCP Reno 在 1990 年代引入了 快恢复 Fast Recovery</dd>
       <dd>假设TCP的报文长度 MSS 固定为 1000byte</dd>
       <dd>每个阶段的报文序号从0开始</dd>
       <figure>
@@ -238,7 +240,7 @@
       </figure>
       <div class="bg">阶段2. 拥塞避免 Congestion Avoidance</div>
       <dd>触发条件：cwnd ≥ ssthresh</dd>
-      <dd>cwnd变化：每经过一个往返时间 RTT，期间不管收到多少 ACK，cwnd 都只增加 1 MSS - 线性增长
+      <dd>cwnd 变化：每经过一个往返时间 RTT，期间不管收到多少 ACK，cwnd 都只增加 1 MSS - 线性增长
         <p>让拥塞窗口 cwnd 缓慢地增大，避免出现拥塞</p>
       </dd>
       <figure>
@@ -262,6 +264,7 @@
       <dd>应对措施：
         <p>立即触发阶段3 快重传，重传丢失分组</p>
         <p>紧接着进入阶段4 快速恢复，而非回到慢开始</p>
+        <p>TCP Tahoe 的设计是强制降速，回到慢开始</p>
       </dd>
       <dd>优势：避免因单点丢包导致吞吐量骤降，提升高带宽延迟积网络性能</dd>
       <div class="bg">阶段3. 快重传 Fast Retransmit</div>
@@ -283,7 +286,7 @@
       <dd>触发机制：当发送端收到连续三个重复的确认</dd>
       <dd>调整
         <p>慢开始门限 ssthresh = cwnd / 2 </p>
-        <p>新拥塞窗口 cwnd = ssthresh </p>
+        <p>新拥塞窗口 cwnd = ssthresh <strong>+ 3</strong></p>
       </dd>
       <dd>进入拥塞避免阶段，使拥塞窗口缓慢地线性增大（加法增大 AI）</dd>
       <dd>前提：认为网络只是轻微拥塞（个别丢包），而非严重崩溃</dd>
@@ -378,6 +381,7 @@
           <div>D. 16KB</div>
         </div>
         <!-- C -->
+        <li>为什么使用 MSS 来衡量拥塞窗口 cwnd 的大小而不是使用整个TCP报文？</li>
       </ol>
       <dt>Reading</dt>
       <ol>
