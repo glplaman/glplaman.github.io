@@ -26,7 +26,8 @@
         <p>ACK = 1; rwnd = 0</p>
       </dd>
       <dd>发送方停止发送数据</dd>
-      <dd>之后接收方有空间了，应及时让发送方知道可以继续发送数据；否则双方可能陷入死锁 - 无限等待</dd>
+      <dd>之后接收方有空间了，应及时让发送方知道可以继续发送数据</dd>
+      <dd>为了避免接收方的非0窗口通知丢失，导致发送方等待 - 死锁</dd>
       <dd>TCP 为每个连接都创建了一个持续计时器 persistence timer</dd>
       <dd>只要发送方收到0窗口，就启动计时器</dd>
       <dd>计时到，发送方<strong>主动</strong>发送一个1byte的窗口探测报文 Window Probe，以便确定是否可以恢复正常数据通信</dd>
@@ -45,6 +46,22 @@
         <img src="./imgs/tcp6.png" alt="">
         <figcaption>流量控制</figcaption>
       </figure>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>流量控制 Flow control</li>
+        <li>0窗口 0 Window</li>
+        <li>持续计时器 persistence timer</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>发送方收到0窗口通知后，应该立即停止发送数据。（）</li>
+        <li>接收方缓冲区满后，应发送0窗口通告，发送方不要发送数据。（）</li>
+        <li>0窗口状态下，一旦持续计时器 persistence timer 计时到，就立即恢复通信。（）</li>
+        <li>0窗口状态下，持续计时器 persistence timer 由接收方维护。因为它知道自己什么时候可以接收数据。（）</li>
+      </ol>
     </dl>
     <div id="footer"></div>
   </div>
