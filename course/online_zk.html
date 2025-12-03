@@ -869,6 +869,7 @@ console.log(logger1 === logger2); // true</pre>
     const modal = document.querySelector('#modal');
     const modalClose = document.querySelector('#modal-close');
     const ul = document.querySelector('.nav .ul');
+
     const init = () => {
       document.body.classList.remove('lock');
       ul.classList.remove('nav-active');
@@ -896,11 +897,13 @@ console.log(logger1 === logger2); // true</pre>
       ul.classList.add('nav-active');
       ham.classList.add('active');
     })
+
     ul.addEventListener('click', (e) => {
       if (e.target.tagName == 'UL') {
         init()
       }
     })
+
     window.addEventListener('scroll', () => {
       let top = window.scrollY + 150
       sections.forEach((section, ind) => {
@@ -913,6 +916,7 @@ console.log(logger1 === logger2); // true</pre>
         }
       })
     })
+
     modalClose.addEventListener('click', () => {
       modal.classList.add('active')
       document.body.classList.remove('lock');
