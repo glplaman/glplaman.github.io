@@ -370,17 +370,79 @@ cookie = （同上）</pre>
         <p>例如：你登录后再次访问页面，服务器不会“记得”你已经登录过，除非你通过 Cookie、Token 等机制主动传递身份信息</p>
         <p>引入 Cookie、Session、Token 等机制在应用层模拟状态</p>
       </dd>
-      <dt>HTTP 的报文结构</dt>
+    </dl>
+    <h2>HTTP 报文结构</h2>
+    <dl>
       <dd>由于 HTTP 是面向正文的 text-oriented，因此报文中每一个字段的值都是一些 ASCII 码串，每个字段的长度都是不确定的</dd>
       <dd>两类报文：
-        <p>请求报文：从客户向服务器的请求</p>
-        <p>响应报文：从服务器到客户的回答</p>
+        <p>请求报文 Request：从客户向服务器的请求</p>
+        <p>响应报文 Response：从服务器到客户的回答</p>
       </dd>
-      <dd>三个组成部分：
+      <dd>四个组成部分：
         <p>开始行：用于区分是请求报文还是响应报文</p>
         <p>首部行：说明浏览器、服务器或报文主体的一些信息。可以有多行，也可以不使用</p>
+        <p>空行 CRLF</p>
         <p>实体主体：请求报文中一般不用，响应报文中也可能没有该字段</p>
       </dd>
+      <dt>请求报文 Request</dt>
+      <div>1. 请求行 Request Line</div>
+      <dd>URI
+        <p>请求标识符 Uniform Resource Identifier</p>
+        <p>URL的部分内容</p>
+        <p>通常是 URL 的路径+查询参数部分（如 /users?id=1），配合 Host 头共同构成完整 URL</p>
+      </dd>
+      <pre>&lt;方法> &lt;请求URI> &lt;HTTP版本></pre>
+      <dd>实例</dd>
+      <pre>GET /index.html HTTP/1.1</pre>
+      <table class="txt-left">
+        <caption>常见方法</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GET</td>
+            <td>从服务器获取资源</td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>向服务器提交数据</td>
+          </tr>
+          <tr>
+            <td>PUT</td>
+            <td>向服务器提交数据，并替换掉服务器上的数据</td>
+          </tr>
+          <tr>
+            <td>DELETE</td>
+            <td>向服务器删除数据</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>2. 请求头 Headers</div>
+      <dd>若干键值对，用于传递元信息
+        <p>Host：目标主机和端口（HTTP/1.1 必须）</p>
+        <p>User-Agent：客户端信息</p>
+        <p>Accept：客户端可接受的 MIME 类型</p>
+        <p>Content-Type：请求体的媒体类型（如 POST 数据）</p>
+        <p>Authorization：认证信息</p>
+      </dd>
+      <figure>
+        <img src="./imgs/http6.png" alt="">
+        <figcaption>请求报文 Request的请求头 headers</figcaption>
+      </figure>
+      <div>3. 空行 CRLF</div>
+      <dd>用 \r\n\r\n（即两个 CRLF）表示头部结束，后面是请求体</dd>
+      <div>4. 请求体 Body，可选</div>
+      <dd>可选，通常用于 POST、PUT 等方法，携带提交的数据</dd>
+      <pre>
+{
+  "username": "alice",
+  "password": "123456"
+}</pre>
+      <dt>响应报文 Response</dt>
     </dl>
     <h2>其它 Other</h2>
     <dl>
