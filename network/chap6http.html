@@ -443,6 +443,75 @@ cookie = （同上）</pre>
   "password": "123456"
 }</pre>
       <dt>响应报文 Response</dt>
+      <dd>HTTP 响应也由四部分组成：
+        <p>状态行</p>
+        <p>响应头（Header）</p>
+        <p>空行（CRLF）</p>
+        <p>响应体（Body，可选）</p>
+      </dd>
+      <div>1. 状态行 Status Line</div>
+      <pre>&lt;HTTP版本&gt; &lt;状态码&gt; &lt;原因短语&gt;</pre>
+      <dd>示例</dd>
+      <pre>HTTP/1.1 200 OK</pre>
+      <div>2. 响应头 Headers</div>
+      <dd>常见响应头字段：
+        <p>Content-Type：响应体的 MIME 类型</p>
+        <p>Content-Length：响应体字节数</p>
+        <p>Location：用于重定向（配合 3xx 状态码）</p>
+        <p>Set-Cookie：设置客户端 Cookie</p>
+      </dd>
+      <dd>示例</dd>
+      <pre>
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1234
+Server: Apache/2.4.1
+Set-Cookie: sessionid=abc123; Path=/</pre>
+      <div>3. 空行 CRLF</div>
+      <dd>同样以 \r\n\r\n 分隔头部与响应体</dd>
+      <div>4. 响应体 Body</div>
+      <dd>返回给客户端的实际内容，如 HTML 页面、JSON 数据等</dd>
+      <table class="txt-left">
+        <caption>HTTP 状态码 Status Codes</caption>
+        <thead>
+          <tr>
+            <th>类别</th>
+            <th>含义</th>
+            <th>常见状态码</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1xx</td>
+            <td>信息响应</td>
+            <td>100 Continue</td>
+          </tr>
+          <tr>
+            <td>2xx</td>
+            <td>成功</td>
+            <td>200 OK, 201 Created, 204 No Content</td>
+          </tr>
+          <tr>
+            <td>3xx</td>
+            <td>重定向</td>
+            <td>301 Moved Permanently, 302 Found, 304 Not Modified</td>
+          </tr>
+          <tr>
+            <td>4xx</td>
+            <td>客户端错误</td>
+            <td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td>
+          </tr>
+          <tr>
+            <td>5xx</td>
+            <td>服务器错误</td>
+            <td>500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>请求报文 = 请求行 + 请求头 + 空行 + 请求体</p>
+        <p>响应报文 = 状态行 + 响应头 + 空行 + 响应体</p>
+        <p>状态码 是理解请求结果的关键，按 1xx~5xx 分类</p>
+      </div>
     </dl>
     <h2>其它 Other</h2>
     <dl>
