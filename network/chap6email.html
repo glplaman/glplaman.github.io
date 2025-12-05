@@ -187,6 +187,336 @@
         <p>IMAP：适合需要多设备同步、远程管理、实时更新的现代用户，是当前主流选择</p>
       </div>
     </dl>
+    <h2>MIME</h2>
+    <dl>
+      <dd>Multipurpose Internet Mail Extensions</dd>
+      <dd>用于扩展电子邮件；支持
+        <P>非 ASCII 字符（如中文、阿拉伯文等）</P>
+        <P>附件（如图片、音频、视频、PDF 等二进制文件）</P>
+        <P>多部分消息体（例如：一封邮件同时包含纯文本和 HTML 版本）</P>
+      </dd>
+      <dd>邮件内容的编码方式</dd>
+      <dd>不是传输协议，因此不绑定端口号</dd>
+      <figure>
+        <img src="./imgs/mail6.png" alt="">
+        <figcaption>MIME</figcaption>
+      </figure>
+      <dt> MIME 的三大主要功能</dt>
+      <div>1. 定义了 5 个新的邮件首部字段（Header Fields）</div>
+      <dd>
+        这些字段嵌入在邮件头部，用于描述邮件内容的结构和编码方式：
+        <p>MIME-Version：表明该邮件符合 MIME 标准（通常为 1.0）</p>
+        <p>Content-Type：指定主体（body）的数据类型（如 text/plain、image/jpeg、multipart/mixed）</p>
+        <p>Content-Transfer-Encoding：说明主体如何被编码以通过邮件系统安全传输（如 base64、quoted-printable）</p>
+        <p>Content-ID：为内容部分分配唯一标识符（常用于 HTML 邮件中引用内嵌图片）</p>
+        <p>Content-Description：对内容进行可读性描述（可选）</p>
+      </dd>
+      <dd>Content-Type 说明必须含有两个标识符</dd>
+      <dd>内容类型 (type) 和子类型 (subtype)，中间用“/”分开</dd>
+      <dd>MIME 标准原先定义了 7 个基本内容类型和 15 种子类型</dd>
+      <dd>MIME 允许发件人和收件人自己定义专用的内容类型。但为避免可能出现名字冲突，标准要求为专用内容类型选择的名字要以字符串 X-开始</dd>
+      <table class="txt-left">
+        <caption>Content-Type</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>text</td>
+            <td>文本类；子类型有 /plain /html /css /xml /csv；通常需要指定编码，如 charset=utf-8</td>
+          </tr>
+          <tr>
+            <td>image</td>
+            <td>图像类；子类型有 /jpeg /png /gif /webp /svg+</td>
+          </tr>
+          <tr>
+            <td>application</td>
+            <td>应用类；子类型有 /json /javascript /xml /msword /octet-stream</td>
+          </tr>
+          <tr>
+            <td>multipart</td>
+            <td>混合类；子类型有 /form-data</td>
+          </tr>
+          <tr>
+            <td>audio</td>
+            <td>音频类</td>
+          </tr>
+          <tr>
+            <td>video</td>
+            <td>视频类</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>2. 定义了许多邮件内容的格式，对多媒体电子邮件的表示方法进行了标准化</div>
+      <dd>支持非 ASCII 文本（如中文、日文、阿拉伯语等）</dd>
+      <dd>支持多种媒体类型：文本、图像、音频、视频、应用程序文件等</dd>
+      <dd>引入 多部分（multipart） 结构，使一封邮件可包含多个独立部分（例如：正文 + 附件，或纯文本 + HTML 版本）</dd>
+      <dd>常见类型：
+        <p>multipart/mixed：混合内容（正文+附件）</p>
+        <p>multipart/alternative：同一内容的不同格式（如 text 和 HTML）</p>
+        <p>multipart/related：主文档与关联资源（如 HTML + 内嵌图片）</p>
+      </dd>
+      <div>3. 定义了传送编码（Transfer Encodings），可对任何内容格式进行转换，而不会被邮件系统改变</div>
+      <dd>传统 SMTP 只支持 7-bit ASCII，无法直接传输二进制数据</dd>
+      <dd>MIME 引入两种安全编码方式：
+        <p>Base64：将任意二进制数据转换为 ASCII 字符，适合图片、PDF 等</p>
+        <p>Quoted-Printable：仅对非 ASCII 或特殊字符编码，适合含少量非英文字符的文本</p>
+      <dd>接收方根据 Content-Transfer-Encoding 字段自动解码，还原原始内容</dd>
+      <table class="txt-left">
+        <caption>Transfer Encodings</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>7bit</td>
+            <td>7 位 ASCII 编码，每行不能超过 1000 个字符（包括回车和换行）<br>
+              默认编码方法</td>
+          </tr>
+          <tr>
+            <td>8bit</td>
+            <td>8 位非 ASCII 编码，每行不能超过 1000 个字节（包括回车和换行）</td>
+          </tr>
+          <tr>
+            <td>Binary</td>
+            <td>8 位非 ASCII 编码，任意长度的字节串</td>
+          </tr>
+          <tr>
+            <td>Base64</td>
+            <td>将任意长度的字节串转换为用 7 位 ASCII 编码表示的字符串 <br>
+              可用于二进制和非文本数据的编码</td>
+          </tr>
+          <tr>
+            <td>Quoted-printable</td>
+            <td>将任意长度的字节串转换为 ASCII 编码表示的字符串<br>
+              可用于二进制和非文本数据的编码</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>]邮件分析</div>
+      <dt>ASCII 编码</dt>
+      <dd>American Standard Code for Information Interchange</dd>
+      <dd>美国信息交换标准代码</dd>
+      <dd>处理的是 文本（text），不是数值</dd>
+      <dd>一共有 128 个字符，即 0 到 127</dd>
+      <dd>用 7 位二进制表示</dd>
+      <dd>分为两类：
+        <p>控制字符（0–31，127）</p>
+        <p>可打印字符（32–126）</p>
+      </dd>
+      <table>
+        <caption>ASCII 编码（部分） 实例</caption>
+        <thead>
+          <tr>
+            <th>字符 Character</th>
+            <th>二进制 Binary</th>
+            <th>十进制 Decimal</th>
+            <th>十六进制 Hexadecimal</th>
+            <th>类型 Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>9</td>
+            <td>00111001</td>
+            <td>57</td>
+            <td>0x39</td>
+            <td>可打印</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>Quoted-printable</dt>
+      <dd>适用于所传送的数据中只有少量的非 ASCII 码的情况;如汉字</dd>
+      <dd>规则：
+        <p>所有可打印的ASCII码，除 = 外，都不改变</p>
+        <p>其它：= + 每个字节对应的两个大写的十六进制</p>
+      </dd>
+      <dd>开销增加：
+        原来 1 个字节，现在需要 3 个字节，开销 = 200%</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 157</div>
+      <dd>157非标准 ASCII 字符（0 - 127）</dd>
+      <table>
+        <caption>Quoted-printable 编码实例</caption>
+        <tr>
+          <th>原始字节</th>
+          <td>10011101</td>
+        </tr>
+        <tr>
+          <th>十进制</th>
+          <td>157</td>
+        </tr>
+        <tr>
+          <th>十六进制</th>
+          <td>0x9D</td>
+        </tr>
+        <tr>
+          <th>Quoted-Printable</th>
+          <td>=9D</td>
+        </tr>
+      </table>
+      <dt>Base64 编码</dt>
+      <dd>适合任意长度的二进制数据</dd>
+      <dd>规则
+        <p>把二进制代码划分成一个个的 24bit 的单元</p>
+        <p>每个单元划分成 4 个 6bit 组</p>
+        <p>每个 6bit 可以表示64值</p>
+        <p>用两个连在一起的二个等号“==”和一个等号“=”分别表示最后一组的代码只有 8 位或 16 位</p>
+        <p>回车和换行忽略</p>
+      </dd>
+      <dd>64值
+        <p>26个大小字母：A-Z</p>
+        <p>26个小写字母：a-z</p>
+        <p>数字：0-9</p>
+        <p>+：62</p>
+        <p>/：63</p>
+      </dd>
+      <table>
+        <caption>Base 64</caption>
+        <thead>
+          <tr>
+            <th>索引</th>
+            <th>对应字符</th>
+            <th>索引</th>
+            <th>对应字符</th>
+            <th>索引</th>
+            <th>对应字符</th>
+            <th>索引</th>
+            <th>对应字符</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>A</td>
+            <td>26</td>
+            <td>a</td>
+            <td>52</td>
+            <td>0</td>
+            <td>62</td>
+            <td>+</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>B</td>
+            <td>27</td>
+            <td>b</td>
+            <td>53</td>
+            <td>1</td>
+            <td>63</td>
+            <td>/</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>C</td>
+            <td>28</td>
+            <td>c</td>
+            <td>54</td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>55</td>
+            <td>3</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>56</td>
+            <td>4</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>57</td>
+            <td>5</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>58</td>
+            <td>6</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td>X</td>
+            <td>48</td>
+            <td>x</td>
+            <td>59</td>
+            <td>7</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>25</td>
+            <td>Y</td>
+            <td>49</td>
+            <td>y</td>
+            <td>60</td>
+            <td>8</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>25</td>
+            <td>Z</td>
+            <td>51</td>
+            <td>z</td>
+            <td>61</td>
+            <td>9</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例</div>
+      <dd>原来为 3 个字节</dd>
+      <dd>编码后为 4 个字节</dd>
+      <dd>开销 = 25%</dd>
+      <dd>编码：STF5</dd>
+      <figure>
+        <img src="./imgs/mail7.png" alt="">
+        <figcaption>Base64</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例</div>
+      <dd>原始数据只有1个字节</dd>
+      <dd>需要填充2个字节补足24bit</dd>
+      <dd>编码：TQAA==</dd>
+      <figure>
+        <img src="./imgs/mail8.png" alt="">
+        <figcaption>Base64</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例</div>
+      <dd>原始数据只有2个字节</dd>
+      <dd>需要填充1个字节补足24bit</dd>
+      <dd>编码：QSkA=</dd>
+      <figure>
+        <img src="./imgs/mail9.png" alt="">
+        <figcaption>Base64</figcaption>
+      </figure>
+    </dl>
     <dl>
       <dt>Reading</dt>
       <ol>

@@ -33,53 +33,60 @@
       <dd>DHCP Client：客户</dd>
       <dd>DHCP Relay Agent：代理</dd>
       <dt>优点 Merits</dt>
-      <dd>客户机不需要手动配置TCP/IP</dd>
+      <dd>客户机不需要手动配置 TCP/IP</dd>
       <dd>减少配置网络上计算机的时间</dd>
       <dd>提供安全可信的配置</dd>
-      <dd>有效利用IP地址</dd>
-      <dt>基本过程 Procedure</dt>
+      <dd>有效利用 IP 地址</dd>
+    </dl>
+    <h2>基本过程 Procedure</h2>
+    <dl>
+      <dd>配置过程通过多个广播实现</dd>
       <figure>
-        <img src="./imgs/dhcp1.png" alt="">
+        <img class="sprite1" src="./imgs/dhcp1.png" alt="">
         <figcaption>D-O-R-A</figcaption>
       </figure>
-      <ol class="first-letter">
-        <li><strong>D</strong>iscover（发现）
-          <p>DHCP 客户端启动后，广播发送 DHCP Discover 报文</p>
-          <p>目的地址：255.255.255.255（本地广播）</p>
-          <p>源地址：0.0.0.0（尚未拥有有效 IP 地址）</p>
-          <p>内容：包含客户端 MAC 地址（CHADDR 字段），用于标识自身</p>
-          <p>此时报文被同一广播域内所有 DHCP 服务器接收</p>
-        </li>
-
-        <li><strong>O</strong>ffer（提供）
-          <p>每个收到 Discover 报文的 DHCP 服务器根据客户端的 MAC 地址查找是否有为其保留的配置</p>
-          <p>若无，则从其 IP 地址池（Address Pool） 中选择一个可用 IP 地址，向客户端 广播 发送 DHCP Offer 报文</p>
-          <p>若有，再检测是静态绑定还是历史租约</p>
-          <p>-静态绑定，取出并发送</p>
-          <p>-历史租约，判断是否到期以及是否冲突，再根据情况处理</p>
-          <p>Offer 内容：包含提供的 IP 地址、子网掩码、租期、网关、DNS 等配置，以及 该 DHCP 服务器自身的 IP 地址</p>
-        </li>
-        <div class="tips">多个 DHCP 服务器可能同时响应，客户端通常只处理最先收到的 Offer</div>
-
-        <li><strong>R</strong>equest（请求）
-          <p>客户端选择一个 Offer（通常是第一个），然后 <strong>广播</strong> 发送 DHCP Request 报文</p>
-          <p>告知所选的 DHCP 服务器：我接受你提供的 IP</p>
-          <p>通知其他 DHCP 服务器：我不使用你们的 Offer，请释放预分配的 IP</p>
-          <p>即使客户端已知道目标服务器 IP，仍使用广播；因客户端尚未完成配置，无法单播</p>
-        </li>
-
-        <li><strong>A</strong>cknowledge（确认）
-          <p>被选中的 DHCP 服务器收到 Request 后，若其中请求的 IP 与自己 Offer 的一致，则 广播 发送 DHCP ACK 报文</p>
-          <p>其他 DHCP 服务器收到 Request 后，发现不是自己的 Offer，便释放之前为该客户端预留的 IP 地址</p>
-          <p>ACK 内容：确认 IP 分配，并再次包含完整的网络配置参数</p>
-          <p>客户端收到 ACK 后，正式使用该 IP 地址及配置，完成初始化</p>
-        </li>
-      </ol>
-      <dt>中继代理 Relay Agent</dt>
+      <dt>1. <strong>D</strong>iscover（发现）</dt>
+      <dd>DHCP 客户端启动后，<strong>广播</strong> 发送 DHCP Discover 报文</dd>
+      <dd>目的地址：255.255.255.255（本地广播）</dd>
+      <dd>源地址：0.0.0.0（尚未拥有有效 IP 地址）</dd>
+      <dd>内容：包含客户端 MAC 地址（CHADDR 字段），用于标识自身</dd>
+      <dd>此时报文被同一广播域内所有 DHCP 服务器接收</dd>
+      <dt>2. <strong>O</strong>ffer（提供）</dt>
+      <dd>每个收到 Discover 报文的 DHCP 服务器根据客户端的 MAC 地址查找是否有为其保留的配置</dd>
+      <dd>若无，则从其 IP 地址池（Address Pool） 中选择一个可用 IP 地址，向客户端 <strong>广播</strong> 发送 DHCP Offer 报文</dd>
+      <dd>若有，再检测是静态绑定还是历史租约</dd>
+      <dd>-静态绑定，取出并发送</dd>
+      <dd>-历史租约，判断是否到期以及是否冲突，再根据情况处理</dd>
+      <dd>Offer 内容：包含提供的 IP 地址、子网掩码、租期、网关、DNS 等配置，以及 该 DHCP 服务器自身的 IP 地址</dd>
+      <div class="tips">多个 DHCP 服务器可能同时响应，客户端通常只处理最先收到的 Offer</div>
+      <dt>3. <strong>R</strong>equest（请求）</dt>
+      <dd>客户端选择一个 Offer（通常是第一个），然后 <strong>广播</strong> 发送 DHCP Request 报文</dd>
+      <dd>告知所选的 DHCP 服务器：我接受你提供的 IP</dd>
+      <dd>通知其他 DHCP 服务器：我不使用你们的 Offer，请释放预分配的 IP</dd>
+      <div class="tips">即使客户端已知道目标服务器 IP，仍使用广播；因客户端尚未完成配置，无法单播</div>
+      <dt>4. <strong>A</strong>cknowledge（确认）</dt>
+      <dd>被选中的 DHCP 服务器收到 Request 后，若其中请求的 IP 与自己 Offer 的一致，则 <strong>广播</strong> 发送 DHCP ACK 报文</dd>
+      <dd>其他 DHCP 服务器收到 Request 后，发现不是自己的 Offer，便释放之前为该客户端预留的 IP 地址</dd>
+      <dd>ACK 内容：确认 IP 分配，并再次包含完整的网络配置参数</dd>
+      <dd>客户端收到 ACK 后，正式使用该 IP 地址及配置，完成初始化</dd>
+      <dt>DHCP 中继代理</dt>
+      <dd>DHCP 协议依赖于广播通信，尤其是在初始阶段（如 Discover 和 Request）</dd>
+      <dd>广播包（Broadcast）不能跨越路由器，因为路由器默认不会转发广播帧</dd>
+      <dd>如果客户端和服务器位于不同的子网（即不同广播域），那么客户端发出的广播请求无法到达服务器</dd>
       <dd>每一个网络至少有一个 DHCP 中继代理，它配置了 DHCP 服务器的 IP 地址信息</dd>
-      <dd>DHCP 中继代理以单播方式<strong>转发</strong>发现报文</dd>
+      <dd>DHCP 中继代理以 <strong>单播</strong> 方式转发发现报文</dd>
       <dd>DHCP 中继代理收到主机广播发送的发现报文后，就以单播方式向 DHCP 服务器 <strong>转发</strong> 此报文，并等待其回答</dd>
       <dd>收到 DHCP 服务器回答的提供报文后，DHCP 中继代理再将其发回给主机</dd>
+      <dd>分配阶段代理</dd>
+      <figure>
+        <img src="./imgs/dhcp2.png" alt="">
+        <figcaption>DHCP Relay</figcaption>
+      </figure>
+      <dd>其它阶段代理</dd>
+      <figure>
+        <img src="./imgs/dhcp3.png" alt="">
+        <figcaption>DHCP Relay</figcaption>
+      </figure>
     </dl>
     <h2>租用期 Lease Period</h2>
     <dl>
@@ -108,9 +115,18 @@
       <dd>行为：客户端广播 DHCP Request 报文，向任意可用的 DHCP 服务器请求续租</dd>
       <dd>通信方式：广播；因无法确定原服务器是否可达</dd>
       <dd>目的：作为备用机制，尽力保留当前 IP 地址</dd>
+      <figure>
+        <img src="./imgs/dhcp4.png" alt="">
+        <figcaption>DHCP 续租成功</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/dhcp5.png" alt="">
+        <figcaption>DHCP 续租成功</figcaption>
+      </figure>
       <dt>说明 Notation</dt>
       <dd>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须 停止使用该 IP 地址</dd>
       <dd>随后重新发起完整的 DHCP Discover 流程获取新地址</dd>
+
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -148,7 +164,34 @@ Router(config-if)#no shutdown</pre>
       <dt>Extending</dt>
       <dd>增加一台PC；将操作模式调整为模拟通信；更改PC的地址分配方式为DHCP，单步调试查看DHCP数据报的发送过程</dd>
     </dl>
+    <h2>Homework</h2>
     <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译：
+          <p>DHCPDISCOVER – The client broadcast a DHCPDISCOVER packet in order to locate a DHCP server in the network,
+            in some cases that the DHCP server isn’t in the same subnet of the client, you’ll need to configure in your
+            network devices (usually routers) a DHCP Relay Agent, in order to transfer the DHCPDISCOVER packet to the
+            DHCP server.</p>
+          <p>DHCPOFFER – The DHCP server broadcast a DHCPOFFER packet to the client which includes an offer to use a
+            unique IP address for the client.</p>
+          <p>DHCPREQUEST – The client broadcast a DHCPREQUEST packet to the DHCP server with an answer, and “asks” from
+            the server to “rent” the unique address that the server offer to her.</p>
+          <p>DHCPACK – The DHCP server broadcast a DHCPACK packet to the client, in this packet the server acknowledge
+            the request from the client to use the IP address, and provide to the client the IP address lease and other
+            details such as DNS servers, default gateway, etc. if the server cannot provide the requested IP address or
+            from some reasons the address is not valid the server sends DHCPNACK packet in stand of DHCPACK, more
+            information about DHCPNACK is under the specific subject – DHCPNACK.</p>
+        </li>
+        <li>翻译：
+          <p>DHCP Relay Agent is any kind of host (usually a router or server) that listen to DHCP/BOOTP broadcast from
+            clients on subnets without local DHCP servers.
+          </p>
+          <p>The DHCP Relay Agent forwards the packets from the clients and the DHCP server that sitting on different
+            physical subnets to each other in order to supply ‘connection’ between the DHCP Server to the clients, and
+            opposite (from the clients to the server).</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://networkencyclopedia.com/dynamic-host-configuration-protocol-dhcp/">DHCP
