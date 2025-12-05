@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>电子邮件</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>电子邮件</h1>
+      <span>&commat;Mail</span>
+    </header>
+    <dl>
+      <figure>
+        <img src="./imgs/mail5.png" alt="">
+        <figcaption>xmind</figcaption>
+      </figure>
+      <dd>电子邮件 e-mail：指使用电子设备交换的邮件及其方法</dd>
+      <dt>邮件地址格式 Format</dt>
+      <dd>邮箱所在的主机的域名，在全世界应唯一 ；不能有相同域名</dd>
+      <dd>收件人邮箱名：也叫用户名，在该域名的范围内应唯一；不能有同名用户</dd>
+      <div class="txt-center txt-xl"><strong>收件人邮箱名@邮箱所在主机的域名</strong></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 示例</div>
+      <pre>1942194789@qq.com</pre>
+      <pre>glpla@hotmail.com</pre>
+      <dt>组成 Element</dt>
+      <dd>信封 Envelope</dd>
+      <dd>内容 Content</dd>
+      <dt>优点 Merits</dt>
+      <dd>使用方便，传递迅速，费用低廉</dd>
+      <dd>可以传送多种类型的信息，包括：文字信息，声音和图像等</dd>
+      <dt>重要标准 Standard</dt>
+      <dd>简单邮件发送协议 SMTP</dd>
+      <dd>互联网文本报文格式</dd>
+      <dd>通用互联网邮件扩充 MIME</dd>
+      <dd>邮件读取协议 POP3 和 IMAP</dd>
+    </dl>
+    <h2>邮件系统组成 Contents</h2>
+    <dl>
+      <dt>用户代理 User Agent - UA</dt>
+      <dd>用户与电子邮件系统的接口；又被称为电子邮件客户端软件，如Outlook、Foxmail</dd>
+      <dd>基本功能：
+        <p>撰写</p>
+        <p>显示</p>
+        <p>处理</p>
+        <p>通信</p>
+      </dd>
+      <dt>邮件服务器 Mail Server</dt>
+      <dd>又被称为邮件传输代理</dd>
+      <dd>按照客户服务器方式工作</dd>
+      <dd>功能：
+        <p>发送和接收邮件</p>
+        <p>能够同时充当客户和服务器</p>
+        <p>向发信人报告邮件传送情况</p>
+      </dd>
+      <dt>邮件发送和邮件读取协议</dt>
+      <dd>邮件发送和读取使用不同的协议</dd>
+      <dd>简单邮件发送协议 SMTP：用于在用户代理向邮件服务器或邮件服务器之间发送邮件</dd>
+      <dd>邮局协议 POP3：用于用户代理从邮件服务器读取邮件</dd>
+      <figure>
+        <img src="./imgs/mail0.png" alt="">
+        <figcaption>组成</figcaption>
+      </figure>
+
+    </dl>
+    <h2>简单邮件传送协议 SMTP</h2>
+    <dl>
+      <dd>Simple Mail Transfer Protocol - SMTP</dd>
+      <dd>基于 TCP </dd>
+      <dd>使用 ASCII 码
+        <p>不支持非英文字符，如中文</p>
+      </dd>
+      <dd>采用客户/服务器 C/S 模式</dd>
+      <dt>发送过程 Procedure</dt>
+      <dd>涉及两个 C/S 交互</dd>
+      <dd>发送方邮件代理 → 发送方邮件服务器（SMTP Client → SMTP Server）
+        <p>邮件发送</p>
+        <p>发送方邮件服务器使用端口 25</p>
+      </dd>
+      <dd>发送方邮件服务器 → 接收方邮件服务器（SMTP Client → SMTP Server）
+        <p>邮件中继</p>
+        <p>接收方邮件服务器使用端口 25</p>
+      </dd>
+      <figure>
+        <img src="./imgs/mail1.png" alt="">
+        <figcaption>SMTP</figcaption>
+      </figure>
+      <dt>发送阶段 Phase</dt>
+      <dd>连接建立
+        <p>发送主机的 SMTP 客户和接收主机的 SMTP 服务器之间建立</p>
+        <p>不使用中间的邮件服务器 - 教学简化模型或理想化场景</p>
+        <p>但是仍然需要中间的站点即邮件传输代理 MTA（Mail Transfer Agent）转发</p>
+      </dd>
+      <dd>SMTP 客户首先使用熟知端口 25 与接收方的 SMTP 服务器建立 TCP 连接</dd>
+      <dd>SMTP 服务器发出服务就绪</dd>
+      <dd>SMTP 客户向服务器发送问候 HELO 命令，附上发送方的主机名</dd>
+      <dd>SMTP 服务器若有能力接收邮件，则回答：“250 OK”，表示已准备好接收</dd>
+      <figure>
+        <img src="./imgs/mail2.png" alt="">
+        <figcaption>连接建立</figcaption>
+      </figure>
+      <dd>邮件传送</dd>
+      <dd>邮件的内容
+        <p>RFC 5322 只规定了邮件内容中的首部 header 格式</p>
+        <p>邮件的主体 body 部分则让用户自由撰写</p>
+      </dd>
+      <div>1. 信封阶段（Envelope Phase）</div>
+      <dd>目的：告诉服务器“谁发的”、“给谁发”</dd>
+      <dd>使用命令：
+        <p>MAIL FROM: - 指定发件人</p>
+        <p>RCPT TO: - 指定收件人</p>
+        <p>服务器返回 250 OK 表示接受</p>
+      </dd>
+      <div>2. 内容阶段（Data Phase）</div>
+      <dd>目的：传输邮件内容（包括首部和正文）</dd>
+      <dd>使用命令：
+        <p>DATA - 告诉服务器接下来是邮件内容</p>
+        <p>服务器回复 354 Start mail input... 表示可以开始输入</p>
+        <p>内容以 &lt;CRLF>.&lt;CRLF> 结束（即空行后跟一个点）</p>
+      </dd>
+      <figure>
+        <img src="./imgs/mail3.png" alt="">
+        <figcaption>邮件传送</figcaption>
+      </figure>
+      <dd>连接释放：邮件发送完毕后，SMTP 应释放 TCP 连接</dd>
+      <dd>邮件发送完毕，服务器返回 250 OK</dd>
+      <dd>TCP 连接可释放（但通常保持一段时间用于后续邮件）</dd>
+      <figure>
+        <img src="./imgs/mail4.png" alt="">
+        <figcaption>连接释放</figcaption>
+      </figure>
+    </dl>
+    <h2>邮件接收协议</h2>
+    <dl>
+      <dd>POP3（Post Office Protocol version 3）和 IMAP（Internet Message Access Protocol）是两种用于从邮件服务器下载或访问电子邮件的协议</dd>
+      <dd>都是基于 TCP 使用客户/服务器 C/S 方式</dd>
+      <dd>下图使用POP3协议</dd>
+      <figure>
+        <img src="./imgs/mail0.png" alt="">
+        <figcaption>POP3</figcaption>
+      </figure>
+      <dt>邮局协议 POP3</dt>
+      <dd>Post Office Protocol version 3</dd>
+      <dd>3 表示第3个版本</dd>
+      <dd>端口 110：标准 POP3 端口（明文或 STARTTLS）</dd>
+      <dd>端口 995：POP3S（POP3 over SSL/TLS），加密连接</dd>
+      <dd>用户连接服务器 → 一次性下载所有新邮件 → 默认从服务器删除</dd>
+      <dd>基本流程
+        <p>客户端连接 POP3 服务器（端口 110）</p>
+        <p>认证（用户名/密码）</p>
+        <p>列出邮件列表（LIST 命令）</p>
+        <p>下载邮件（RETR 命令）</p>
+        <p>标记为删除（DELE），退出时真正删除（QUIT）</p>
+      </dd>
+      <dd>特点
+        <p>无法多设备同步：在手机上读了邮件，电脑上看不到“已读”状态</p>
+        <p>容易丢失邮件：如果本地设备损坏且服务器已删邮件，数据无法恢复</p>
+        <p>功能单一：不能远程管理文件夹、搜索服务器内容等</p>
+      </dd>
+      <dt>IMAP </dt>
+      <dd>Internet Message Access Protocol</dd>
+      <dd>IMAP（明文或 STARTTLS）：端口 143</dd>
+      <dd>IMAPS（SSL/TLS 加密）：端口 993</dd>
+      <dd>邮件始终保存在服务器上</dd>
+      <dd>客户端通过 IMAP 同步访问服务器上的邮件，所有操作都在服务器上完成，支持多设备实时同步</dd>
+      <dd>所有操作（读、删、移、标星）实时同步到所有设备</dd>
+      <dd>基本流程
+        <p>客户端连接 IMAP 服务器（端口 143 或 993）</p>
+        <p>身份验证（用户名/密码）</p>
+        <p>获取邮箱列表（如收件箱、发件箱、草稿等）</p>
+        <p>同步邮件状态（未读/已读、星标、移动等）</p>
+        <p>实时操作（读、删、移、搜索、过滤）都会反映在服务器上</p>
+        <p>支持文件夹层级管理和邮件分类</p>
+      </dd>
+      <dd>特点
+        <p>要想查阅邮件，必须先联网</p>
+        <p>占用服务器存储空间</p>
+        <p>对服务器性能要求高</p>
+      </dd>
+      <div class="tips">
+        <p>POP3：适合只想下载邮件并离线阅读的用户，但缺乏同步能力</p>
+        <p>IMAP：适合需要多设备同步、远程管理、实时更新的现代用户，是当前主流选择</p>
+      </div>
+    </dl>
+    <dl>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.emailjs.com/">EmailJS <span class="iconfont icon-share"></span></a></li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
