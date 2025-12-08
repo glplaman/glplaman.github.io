@@ -51,6 +51,7 @@
       <dd>源地址：0.0.0.0（尚未拥有有效 IP 地址）</dd>
       <dd>内容：包含客户端 MAC 地址（CHADDR 字段），用于标识自身</dd>
       <dd>此时报文被同一广播域内所有 DHCP 服务器接收</dd>
+      <div class="tips">CHADDR - Client Hardware Address；在标准以太网 DHCP 场景下，CHADDR 就是客户端的 MAC 地址</div>
       <dt>2. <strong>O</strong>ffer（提供）</dt>
       <dd>每个收到 Discover 报文的 DHCP 服务器根据客户端的 MAC 地址查找是否有为其保留的配置</dd>
       <dd>若无，则从其 IP 地址池（Address Pool） 中选择一个可用 IP 地址，向客户端 <strong>广播</strong> 发送 DHCP Offer 报文</dd>
@@ -73,7 +74,7 @@
       <dd>DHCP 协议依赖于广播通信，尤其是在初始阶段（如 Discover 和 Request）</dd>
       <dd>广播包（Broadcast）不能跨越路由器，因为路由器默认不会转发广播帧</dd>
       <dd>如果客户端和服务器位于不同的子网（即不同广播域），那么客户端发出的广播请求无法到达服务器</dd>
-      <dd>每一个网络至少有一个 DHCP 中继代理，它配置了 DHCP 服务器的 IP 地址信息</dd>
+      <dd>每一个网络 <strong>至少有一个</strong> DHCP 中继代理，它配置了 DHCP 服务器的 IP 地址信息</dd>
       <dd>DHCP 中继代理以 <strong>单播</strong> 方式转发发现报文</dd>
       <dd>DHCP 中继代理收到主机广播发送的发现报文后，就以单播方式向 DHCP 服务器 <strong>转发</strong> 此报文，并等待其回答</dd>
       <dd>收到 DHCP 服务器回答的提供报文后，DHCP 中继代理再将其发回给主机</dd>
@@ -82,7 +83,11 @@
         <img src="./imgs/dhcp2.png" alt="">
         <figcaption>DHCP Relay</figcaption>
       </figure>
-      <dd>其它阶段代理</dd>
+      <dd>其它阶段代理
+        <p>拒绝分配</p>
+        <p>释放地址</p>
+        <p>请求其它资源</p>
+      </dd>
       <figure>
         <img src="./imgs/dhcp3.png" alt="">
         <figcaption>DHCP Relay</figcaption>
@@ -124,9 +129,8 @@
         <figcaption>DHCP 续租成功</figcaption>
       </figure>
       <dt>说明 Notation</dt>
-      <dd>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须 停止使用该 IP 地址</dd>
+      <dd>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须停止使用该 IP 地址</dd>
       <dd>随后重新发起完整的 DHCP Discover 流程获取新地址</dd>
-
     </dl>
     <h2>实操 Drill</h2>
     <dl>

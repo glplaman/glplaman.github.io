@@ -197,6 +197,11 @@
       </dd>
       <dd>邮件内容的编码方式</dd>
       <dd>不是传输协议，因此不绑定端口号</dd>
+      <dd>定义了：
+        <p>如何标识内容类型（Content-Type）</p>
+        <p>如何对非 ASCII 数据进行编码（如 Base64）</p>
+        <p>如何将多个内容组合在一个消息中（multipart）</p>
+      </dd>
       <figure>
         <img src="./imgs/mail6.png" alt="">
         <figcaption>MIME</figcaption>
@@ -207,7 +212,7 @@
         这些字段嵌入在邮件头部，用于描述邮件内容的结构和编码方式：
         <p>MIME-Version：表明该邮件符合 MIME 标准（通常为 1.0）</p>
         <p>Content-Type：指定主体（body）的数据类型（如 text/plain、image/jpeg、multipart/mixed）</p>
-        <p>Content-Transfer-Encoding：说明主体如何被编码以通过邮件系统安全传输（如 base64、quoted-printable）</p>
+        <p>Content-Transfer-Encoding：说明主体如何被编码以通过邮件系统安全传输（如 Base64、quoted-printable）</p>
         <p>Content-ID：为内容部分分配唯一标识符（常用于 HTML 邮件中引用内嵌图片）</p>
         <p>Content-Description：对内容进行可读性描述（可选）</p>
       </dd>
@@ -300,6 +305,82 @@
         </tbody>
       </table>
       <div>[<span class="iconfont icon-keyboard"></span>]邮件分析</div>
+      <dd>普通文本
+        <p>头部</p>
+        <p>段</p>
+        <p>编码</p>
+      </dd>
+      <pre>
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+X-QQ-XMAILINFO: NGbyafB8LluuNqt7R5YQ30r3cDvGGYg5XZqRcmOF9eHtGzFuQben31Nubuc7aw
+	 I2i8LhX6IoQ20fEPFHHQfsBU2U3hGcGcVCDLaMCXmDhclNibbKGNA2ASPYb1XyIL9F52OQ1AlyXUg
+	 sUXbKoq1qwhE0WDlfcJFvmDFbu8wDeMd4PU0N0k2+D09TakrbmjQsTc+SlxMoHhQ/94h3esED2YQF
+	 UdFTj5R5cN4BoBMDuIk9AXlTZFIjQ0JinkkB0MD1e6JnLEwc3dI4D7YDxYYsgJdl0f/TOYKy79KWl
+	 sMZqMb5OipYaPcfu4j9R5OzYp11PIFbuM6Q/zcUqchlk7acVYdOXwlD44uvA0wtw3D7utFIvpOTXn
+	 nzyiFvcP30wefkvbNMi2C7FzJ8z1iqDIcbUor/uGR8v6AHlA4nQYweA5Aa18kK0OBIVR6jaOyrICn
+	 S2J+cnrES7Qdww8GDrpBkiVtEPIlcmhBmm6oUQxYEaxA42KUI3iW/l/F2Fceaac8CyqXDW1oMeni4
+	 Z2+TDTRmbyZPWi+xXTCMjGzMQZmhqwvFWD137uAaw8xnKCrP22WOZJtkAjiSp71enbDY1LWTBLFuf
+	 IyPWKcQJ8SoaxOozktuVXWjN8wC5hTbRr5DH+IuHmgPK0rstjHCj086C+odctwWg897sm4FLAHDLT
+	 RGhKobqQ9nLV+/oidfTV6NuQxU21tUpbXgcYXQcmiZ/ouI9Qn75SWq4Q0S90yd4FDwdzUzM+L6N6R
+	 76WQ/a3sk0xfUywjFPkH/40+btzK267OIzYAcdVnkaE5sdjjix0yHA5HroqV7Qg6jbksbKHxHqYWU
+	 +YsSih5usBADVdPrKXEEJk4xl34p767QUVMgcgtGD6x9ZO4FqHhDRzoRBI9NqCBHmBjIBHPROL4dK
+	 nXCG60FEseN+tpKOR0/O9t18ixTQVSGYXk925oAq05ycgvaK0DqwqQM7vXsf+xigyb/QKpwbFdHRC
+	 RBRbv1PkIRf3QsBauBay/nr3TwMgimFJdp2TKTr4yhQdotbaJBiaHumPgY6PmaigUAg/5ayg==
+From: "=?utf-8?B?5aSn5qCR?=" &lt;1942194789@qq.com&gt;
+To: "=?utf-8?B?Z2xwbGE=?=" &lt;glpla@hotmail.com&gt;
+Subject: plain
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_692BE173_47525DA0_1A5E35FA"
+Content-Transfer-Encoding: 8Bit
+Date: Sun, 30 Nov 2025 14:17:23 +0800
+X-Priority: 3
+Message-ID: &lt;tencent_15DA81D51A3014EB4B54E9442B51DEC32109@qq.com&gt;
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-mid: xmsezc37-0t1764483443tc3x3o1cz
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_692BE173_47525DA0_1A5E35FA
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+
+aGksdGhlcmUu
+
+------=_NextPart_692BE173_47525DA0_1A5E35FA
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IFZlcmRhbmE7IGZvbnQtc2l6ZTogMTRweDsgY29s
+b3I6IHJnYig1NCwgMTE4LCAxNjYpOyBsaW5lLWhlaWdodDogMS40MzsiPmhpLHRoZXJlLjwv
+ZGl2PjxkaXYgY29udGVudGVkaXRhYmxlPSJmYWxzZSI+PGRpdiBzdHlsZT0icGFkZGluZy10
+b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
+
+------=_NextPart_692BE173_47525DA0_1A5E35FA--</pre>
+      <div class="tips">
+        <p>邮件中不同位置的数据，使用不同的编码规则，目的各不相同</p>
+        <p>在复杂环境中追求最大兼容性的工程妥协 - 新旧机制并存</p>
+      </div>
+      <dd>普通文本 + png 图片
+        <p>段的嵌套</p>
+        <p>编码</p>
+      </dd>
+      <figure>
+        <img src="./imgs/mail11.png" alt="">
+        <figcaption>plain + .png</figcaption>
+      </figure>
+    </dl>
+    <h2>编码 Code</h2>
+    <dl>
+      <div class="tips">
+        <p>原始数据 → 字节序列（UTF-8） → Base64 → ASCII</p>
+        <p>一个中文使用 UTF-8 编码为3个字节</p>
+        <p>对与纯英文，ASCII 编码是 UTF-8 的子集，两者编码结果是一样的</p>
+      </div>
       <dt>ASCII 编码</dt>
       <dd>American Standard Code for Information Interchange</dd>
       <dd>美国信息交换标准代码</dd>
@@ -331,8 +412,16 @@
           </tr>
         </tbody>
       </table>
+      <dt>UTF-8</dt>
+      <dd>Unicode 也称万国码，包含：汉字、拉丁字母、阿拉伯文、emoji、古文字等；超过 150 万个字符</dd>
+      <dd>Unicode Transformation Format - 8-bit，是它的编码方式之一 - 如何把字符变成字节</dd>
+      <dd>特点：
+        <p>可变长度：ASCII 字符占 1 字节，中文通常占 3 字节，emoji 占 4 字节</p>
+        <p>完全兼容 ASCII：所有 ASCII 文本也是合法的 UTF-8；ASCII 是 UTF-8 的子集。对于纯英文（如 "Hello"），UTF-8 编码的结果和 ASCII 完全一样</p>
+        <p>互联网事实标准：HTML、邮件、JSON、Linux 系统默认使用 UTF-8</p>
+      </dd>
       <dt>Quoted-printable</dt>
-      <dd>适用于所传送的数据中只有少量的非 ASCII 码的情况;如汉字</dd>
+      <dd>适用于所传送的数据中只有少量的非 ASCII 码的情况；如汉字</dd>
       <dd>规则：
         <p>所有可打印的ASCII码，除 = 外，都不改变</p>
         <p>其它：= + 每个字节对应的两个大写的十六进制</p>
@@ -361,11 +450,18 @@
         </tr>
       </table>
       <dt>Base64 编码</dt>
-      <dd>适合任意长度的二进制数据</dd>
+      <dd>适合任意长度的二进制数据/字节序列</dd>
+      <dd>编码结果是 ASCII</dd>
       <dd>规则
         <p>把二进制代码划分成一个个的 24bit 的单元</p>
+        <p>不足3字节的，要填充/补充至3的倍数</p>
         <p>每个单元划分成 4 个 6bit 组</p>
         <p>每个 6bit 可以表示64值</p>
+        <p>根据编码得到编码结果</p>
+        <p>如果有补充字节，
+          <br> -- 补充 1 字节，则最后一个字符替换为 =
+          <br> -- 补充 2 字节，则最后两个字符替换为 ==
+        </p>
         <p>用两个连在一起的二个等号“==”和一个等号“=”分别表示最后一组的代码只有 8 位或 16 位</p>
         <p>回车和换行忽略</p>
       </dd>
@@ -503,7 +599,8 @@
       <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例</div>
       <dd>原始数据只有1个字节</dd>
       <dd>需要填充2个字节补足24bit</dd>
-      <dd>编码：TQAA==</dd>
+      <dd>编码：TQAA</dd>
+      <dd>替换：TQ==</dd>
       <figure>
         <img src="./imgs/mail8.png" alt="">
         <figcaption>Base64</figcaption>
@@ -511,16 +608,52 @@
       <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例</div>
       <dd>原始数据只有2个字节</dd>
       <dd>需要填充1个字节补足24bit</dd>
-      <dd>编码：QSkA=</dd>
+      <dd>编码：QSkA</dd>
+      <dd>替换：QSK=</dd>
       <figure>
         <img src="./imgs/mail9.png" alt="">
         <figcaption>Base64</figcaption>
       </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例 - Hello</div>
+      <dd>Base64 编码操作的对象是字节（二进制数据），不是字符</dd>
+      <ol>
+        <li>把 "Hello" 转换成其对应的 ASCII 字节值</li>
+        <pre>72	101	108	108	111</pre>
+        <li>转换成二进制</li>
+        <pre>01001000	01100101	01101100	01101100	01101111</pre>
+        <li>分组：6位1组</li>
+        <pre>010010 000110 010101 101100 011011 000110 1111</pre>
+        <li>原数据为5个字节，要补充一个字节，符合3的倍数；补充并调整分组为</li>
+        <pre>010010 000110 010101 101100 011011 000110 1111<strong>00 000000</strong></pre>
+        <li>对应的值为</li>
+        <pre>18 6 21 44 27 6 60 0</pre>
+        <li>查Base64编码表，结果为</li>
+        <pre>SGVsbG8A</pre>
+        <li>最后一个为填充的，替换为=</li>
+        <pre>SGVsbG8=</pre>
+      </ol>
+      <div>[<span class="iconfont icon-keyboard"></span>]Base64 编码实例 - hi,there.</div>
+      <ol>
+        <li>把 "hi,there." 转换成其对应的 ASCII 字节值</li>
+        <pre>104 105 44 116	104	101	114	101	46</pre>
+        <li>转换成二进制</li>
+        <pre>01101000 01101001 00101100 01110100 01101000 01100101 01110010 01100101 00101110</pre>
+        <li>分组：6位1组</li>
+        <pre>011010 000110 100100 101100 011101 000110 100001 100101 011100 100110 010100 101110</pre>
+        <li>Base64值</li>
+        <pre>26 6 36 44 29 6 33 37 28 38 20 46</pre>
+        <li>Base64编码</li>
+        <pre>aGksdGhlcmUu</pre>
+        <!-- aGksdGhlcmUu -->
+      </ol>
     </dl>
     <dl>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://www.emailjs.com/">EmailJS <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.ascii-code.com/">ASCII <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://home.unicode.org/">Unicode <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.base64decode.org/">Base64 decode <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
