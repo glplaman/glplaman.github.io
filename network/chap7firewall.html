@@ -4,22 +4,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firewall</title>
+  <title>防火墙 Firewall</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    header {
+      background-image: url(./imgs/fire3.jpg);
+    }
+  </style>
 </head>
 
 <body>
   <div class="w">
     <header>
-      <h1>Firewall</h1>
+      <h1>防火墙</h1>
+      <span>&commat;Firewall</span>
     </header>
     <dl>
+      <dd>一种访问控制技术</dd>
+      <dd>通过严格控制进出网络边界的分组，禁止任何不必要的通信，从而减少潜在入侵的发生，尽可能降低这类安全威胁所带来的安全风险</dd>
+      <dd>可有效解决
+        <p>用户入侵：利用系统漏洞进行未授权登录；授权用户非法获取更高级别权限等</p>
+        <p>软件入侵：通过网络传播病毒、蠕虫和特洛伊木马；拒绝服务攻击等</p>
+      </dd>
+      <dd>是一种特殊编程的路由器，安装在一个网点和网络的其余部分之间，目的是实施访问控制策略</dd>
+      <dd>访问控制策略由使用防火墙的单位自行制定</dd>
+      <dd>介于可信网络 Trusted network 和不可信网络 Untrusted network 之间</dd>
+      <dd>常见的防火墙技术：分组过滤路由器 Packet Filtering Router 和应用网关 Application Gateway</dd>
+      <figure>
+        <img src="./imgs/fire0.png" alt="">
+        <figcaption>Firewall</figcaption>
+      </figure>
+      <dt>分组过滤路由器 Packet Filtering Router</dt>
+      <dd>工作在网络层和传输层</dd>
+      <dd>基于预定义的规则（如源/目的IP地址、端口号、协议类型等）对每个数据包进行检查，决定是否允许该数据包通过</dd>
+      <dd>无状态的：独立地处理每一个分组</dd>
+      <dd>有状态的：跟踪每个连接或会话的通信状态，根据状态信息决定是否转发分组</dd>
+      <dd>优点：
+        <p>处理速度快，开销小</p>
+        <p>对用户透明，无需修改应用程序</p>
+        <p>实现简单，成本低</p>
+      </dd>
+      <dd>缺点：
+        <p>无法理解应用层协议内容（如HTTP、FTP命令）</p>
+        <p>难以防范应用层攻击（如SQL注入、跨站脚本）</p>
+        <p>规则配置复杂时易出错，存在安全漏洞风险</p>
+        <p>无法有效处理动态端口协议（如FTP主动模式）</p>
+      </dd>
+      <dt>应用网关 Application Gateway</dt>
+      <dd>又称代理防火墙</dd>
+      <dd>工作在应用层</dd>
+      <dd>作为客户端与服务器之间的中介：客户端连接到代理，代理再连接到目标服务器</dd>
+      <dd>对应用层协议（如HTTP、FTP、SMTP）进行深度解析和控制</dd>
+      <dd>优点：
+        <p>提供更细粒度的安全控制（可检查URL、文件类型、用户身份等）</p>
+        <p>能有效防御应用层攻击</p>
+        <p>可记录详细日志，便于审计</p>
+        <p>隐藏内部网络结构（客户端只看到代理）</p>
+      </dd>
+      <dd>缺点：
+        <p>性能开销大，处理速度慢</p>
+        <p>每种应用协议需单独开发代理模块</p>
+        <p>可能不支持某些新协议或自定义协议</p>
+        <p>用户需配置代理设置（除非使用透明代理）</p>
+      </dd>
+      <dd>应用
+        <p>Web 代理：检查 HTTP 请求中的恶意脚本</p>
+        <p>FTP 代理：验证用户登录并限制上传/下载目录</p>
+        <p>邮件网关：扫描垃圾邮件或病毒附件</p>
+      </dd>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>Firewall 作用</li>
+        <li>Firewall 位置</li>
+        <li>分组过滤路由器 Firewall</li>
+        <li>应用网关 Firewall</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译：
+          <p>A firewall is defined as a cybersecurity tool that monitors incoming and outgoing network traffic and
+            permits or blocks data packets based on a set of cybersecurity rules.</p>
+        </li>
+        <li>翻译：
+          <p>Firewall architecture is built upon four primary components — network policy, advanced authentication,
+            packet filtering, and application gateways.</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://zhuanlan.zhihu.com/p/512487274">53 张图详解防火墙的 55 个知识点 <span
+        <li><a
+            href="https://www.spiceworks.com/it-security/network-security/articles/what-is-firewall-definition-key-components-best-practices/">
+            What Is a Firewall? Definition, Key Components, and Best Practices <span
               class="iconfont icon-share"></span></a>
         </li>
+        <li><a href="https://zhuanlan.zhihu.com/p/512487274">53 张图详解防火墙的 55 个知识点 <span
+              class="iconfont icon-share"></span></a> </li>
       </ol>
     </dl>
     <div id="footer"></div>

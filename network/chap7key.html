@@ -18,29 +18,42 @@
     <dl>
       <dd>加密和解密用的密钥 K 是一串秘密的字符串（即比特串）</dd>
       <dd>解密算法是加密算法的逆运算</dd>
-      <dd>明文通过加密算法 E 和加密密钥 K 变成密文Y</dd>
+      <dd>明文通过加密算法 E 和加密密钥 K 变成密文 Y</dd>
       <div class="txt-center">Y = E<sub>K</sub>(X)</div>
+      <div class="txt-center">或</div>
+      <div class="txt-center">C = E<sub>K</sub>(P)</div>
       <dd>接收端利用解密算法 D 运算和解密密钥 K 解出明文 X</dd>
       <div class="txt-center">X = D<sub>K</sub>(Y)</div>
+      <div class="txt-center">或</div>
+      <div class="txt-center">P = D<sub>K</sub>(C)</div>
       <dd>加密密钥和解密密钥可以一样，也可以不一样</dd>
       <dd>密钥通常由密钥中心提供</dd>
-      <dd>当密钥的地传送必须使用安全通道</dd>
-      <div class="tips">
-        <p>明文 P - Plain</p>
-        <P>密文 C - Cipher</P>
-      </div>
+      <dd>密钥的传送必须使用安全通道</dd>
+      <dt>常见术语 Term</dt>
+      <dd>密钥 K - Key</dd>
+      <dd>明文 P - Plain</dd>
+      <dd>密文 C - Cipher</dd>
+      <dd>加密 E - Encode</dd>
+      <dd>解密 D - Decode</dd>
     </dl>
-    <h2>对称加密</h2>
+    <h2>对称加密 Symmetric Encryption</h2>
     <dl>
-      <dt>特点</dt>
       <dd>加密密钥与解密密钥都使用相同密钥的密码体制</dd>
-      <dd>速度快</dd>
+      <dt>特点 Feature</dt>
+      <dd>发送方和接收方必须事先共享同一个密钥</dd>
       <dd>密钥短</dd>
+      <dd>速度快</dd>
       <dd>适合加密 <strong>大量</strong> 数据</dd>
-      <dt>焦点</dt>
-      <dd>密钥分发（Key Distribution）- 双方必须安全地共享同一个密钥，否则会被窃听</dd>
+      <figure>
+        <img src="./imgs/key5.png" alt="">
+        <figcaption>Symmetric Encryption</figcaption>
+      </figure>
+      <dt>焦点 Focus</dt>
+      <dd>密钥分发困难（Key Distribution）：双方必须 <strong>安全</strong> 地共享同一个密钥，否则会被窃听</dd>
+      <dd>密钥管理复杂（Key Management）：每对通信双方都需要一个独立密钥，n 个用户需要约 n(n−1)/2 个密钥</dd>
       <dd>多采用物理介质</dd>
       <dt>DES - 已淘汰</dt>
+      <dd>Data Encryption Standard - 数据加密标准</dd>
       <dd>DES 属于对称密钥密码体制，是一种分组密码</dd>
       <dd>在加密前，先对整个明文进行分组；每一个组长为 64 位</dd>
       <dd>然后对每一个 64 位二进制数据进行加密处理，产生一组 64 位密文数据</dd>
@@ -51,48 +64,77 @@
       <dd>现在已经设计出搜索 DES 密钥的专用芯片</dd>
       <dd>56 位 DES 已不再认为是安全的了</dd>
       <dt>3DES - 已淘汰</dt>
+      <dd>Triple DES - 3重 DES</dd>
       <dd>使用两个 56 位的密钥</dd>
       <dd>把一个 64 位明文用一个密钥加密</dd>
       <dd>再用另一个密钥解密</dd>
       <dd>然后再使用第一个密钥加密</dd>
+      <figure>
+        <img src="./imgs/key3.png" alt="">
+        <figcaption>Encode</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/key4.png" alt="">
+        <figcaption>Decode</figcaption>
+      </figure>
       <dt>AES</dt>
-      <dd>高级加密标准 AES - Advanced Encryption Standard</dd>
+      <dd>Advanced Encryption Standard - 高级加密标准</dd>
       <dd>是一种分组密码</dd>
       <dd>分组长度为 128 位</dd>
       <dd>有三种加密标准，其密钥分别为 128 位、192 位和 256 位</dd>
       <dd>加密步骤复杂，运算速度比 3DES 快得多，安全性也大大加强</dd>
       <dd>2002 年成为美国政府加密标准</dd>
       <dd>现在是 ISO/IEC 18033-3 标准</dd>
+      <div class="tips">分组的运用</div>
     </dl>
-    <h2>非对称加密</h2>
+    <h2>非对称加密 Asymmetric Encryption</h2>
     <dl>
       <dd>又称公开密钥密码体制</dd>
       <dd>加密和解密使用不同的密钥</dd>
-      <dd>私钥 Private Key：带有个人特征，可用于解密、验证签名</dd>
-      <dd>公钥 Public Key：用于加密、签名</dd>
+      <dd>私钥 Private Key：带有个人特征，可用于 <strong>解密、验证签名</strong></dd>
+      <dd>公钥 Public Key：用于 <strong>加密、签名</strong></dd>
       <dd>不存在密钥配送问题，容易导致中间人攻击</dd>
+      <dd>计算开销大，速度慢（比对称加密慢数百到上千倍）</dd>
+      <dd>不适合加密大量数据</dd>
       <dd>通常由接收方生成公开密钥和私有密钥密钥对，并发送公钥给发送方</dd>
       <dd>完整的通信过程，实际上需要2对密钥-4个密钥</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] Bob向Alice发送加密消息</div>
+      <figure class="img-sn">
+        <img src="./imgs/key6.png" alt="">
+        <figcaption>非对称加密</figcaption>
+      </figure>
+      <dt>特点 Feature</dt>
+      <dt>RSA</dt>
+      <dd>由三位开发者：Ron Rivest、Adi Shamir 和 Leonard Adleman 的姓氏的首字母组成</dd>
+      <dd>加密、数字签名</dd>
+      <dd>应用：X.509证书、SSL/TLS、PGP、SSH</dd>
+      <dt>ECC</dt>
+      <dd>Elliptic Curve Cryptography - 椭圆曲线密码学</dd>
+      <dd>加密、数字签名</dd>
+      <dd>应用：Bitcoin、TLS 1.3、移动设备、国密SM2</dd>
+      <dt>DSA</dt>
+      <dd>Digital Signature Algorithm - 数字签名算法</dd>
+      <dd>专门用于数字签名</dd>
+      <dd>应用：SSH</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] Bob 向 Alice 发送加密消息</div>
       <dd>不希望让第三方知道消息</dd>
-      <dd>Bob使用Alice的公钥加密信息，发送给Alice</dd>
+      <dd>Bob 使用 Alice 的公钥加密信息，发送给 Alice</dd>
       <figure class="img-sn">
         <img src="./imgs/key1.png" alt="">
         <figcaption>加密过程</figcaption>
       </figure>
-      <dd>Alice用自己的私钥解密，获得信息
-        <p>私有只有Alice自己有</p>
+      <dd>Alice 用自己的私钥解密，获得信息
+        <p>私有只有 Alice 自己有</p>
       </dd>
-      <dd>但是Alice无法确认消息来自Bob</dd>
+      <dd>但是 Alice 无法确认消息来自 Bob</dd>
       <dd>也无法确认消息的完整性，如是否被人篡改过</dd>
       <figure class="img-sn">
         <img src="./imgs/key2.png" alt="">
         <figcaption>解密过程</figcaption>
       </figure>
-      <dt>主要算法</dt>
-      <dd>RSA：如X.509数字证书</dd>
-      <dd>名字由三位开发者：Ron Rivest、Adi Shamir和Leonard Adleman的姓氏的首字母组成</dd>
-      <dd>ECC椭圆曲线：如国密SM2</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] GitHub 提供的 SSH 功能</div>
+      <dd>基于 SSH（Secure Shell）协议</dd>
+      <dd>但它并不是用来远程登录服务器</dd>
+      <dd>而是利用 SSH 的安全认证和加密能力，来实现 Git 操作的身份验证和安全通信</dd>
     </dl>
     <dl>
       <dt>中间人攻击</dt>
@@ -111,7 +153,102 @@
         <figcaption>中间人攻击</figcaption>
       </figure>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <table class="txt-left">
+        <caption>对称加密 vs 非对称加密</caption>
+        <thead>
+          <tr>
+            <th>特性</th>
+            <th>对称加密</th>
+            <th>非对称加密</th>
+            <!-- <th>说明/备注</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>密钥数量</td>
+            <td>1 个
+              <br>加密和解密使用同一密钥
+            </td>
+            <td>2 个
+              <br>公钥 + 私钥，成对出现
+            </td>
+            <!-- <td>非对称加密基于数学难题（如大数分解、椭圆曲线）</td> -->
+          </tr>
+          <tr>
+            <td>密钥分发</td>
+            <td>困难
+              <br>需安全通道预先共享密钥
+            </td>
+            <td>容易
+              <br>公钥可公开，私钥保密
+            </td>
+            <!-- <td>对称加密的密钥管理是主要瓶颈</td> -->
+          </tr>
+          <tr>
+            <td>加密/解密速度</td>
+            <td>快
+              <br>适合大数据量
+            </td>
+            <td>慢
+              <br>计算复杂，通常只用于小数据
+            </td>
+            <!-- <td>非对称加密比对称慢数百至数千倍</td> -->
+          </tr>
+          <tr>
+            <td>计算资源消耗</td>
+            <td>低</td>
+            <td>高</td>
+            <!-- <td>非对称加密不适合资源受限设备频繁使用</td> -->
+          </tr>
+          <tr>
+            <td>安全性依赖</td>
+            <td>密钥保密性</td>
+            <td>私钥保密性 + 数学问题的难解性</td>
+            <!-- <td>若私钥泄露，非对称系统完全失效</td> -->
+          </tr>
+          <tr>
+            <td>是否支持数字签名</td>
+            <td>否
+              <br>原生不支持
+            </td>
+            <td>是
+              <br>私钥签名，公钥验证
+            </td>
+            <!-- <td>数字签名是非对称加密的重要应用</td> -->
+          </tr>
+          <tr>
+            <td>典型算法</td>
+            <td>DES<br>3DES<br>AES<br>Blowfish<br>ChaCha20</td>
+            <td>RSA<br>ECC<br>DSA<br>ElGamal</td>
+            <!-- <td>AES 和 RSA 是各自领域最广泛使用的代表</td> -->
+          </tr>
+          <tr>
+            <td>常见应用场景</td>
+            <td>文件加密<br>数据库加密<br>通信数据加密（会话层）</td>
+            <td>密钥交换<br>身份认证<br>数字签名<br>SSL/TLS 握手阶段</td>
+            <!-- <td>实际系统常结合两者（混合加密）</td> -->
+          </tr>
+          <tr>
+            <td>密钥管理复杂度</td>
+            <td>高
+              <br>n 用户需 n(n−1)/2 个密钥
+            </td>
+            <td>低
+              <br>n 用户只需 n 对密钥
+            </td>
+            <!-- <td>非对称加密显著简化密钥管理</td> -->
+          </tr>
+          <tr>
+            <td>是否可逆向操作</td>
+            <td>加密/解密互为逆运算</td>
+            <td>公钥加密 → 私钥解密；私钥签名 → 公钥验证</td>
+            <!-- <td>用途不同，操作方向不同</td> -->
+          </tr>
+        </tbody>
+      </table>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://md5jiami.bmcx.com/">MD5 <span class="iconfont icon-share"></span></a> </li>

@@ -4,20 +4,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IDS</title>
+  <title>入侵检测系统 IDS</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    header {
+      background-image: url(./imgs/ids.webp);
+    }
+  </style>
 </head>
 
 <body>
   <div class="w">
     <header>
-      <h1>IDS</h1>
+      <h1>入侵检测系统</h1>
+      <span>&commat;IDS</span>
     </header>
     <dl>
+      <dd>入侵检测系统 IDS (Intrusion Detection System) </dd>
+      <dd>用于监控网络流量或主机系统活动、识别潜在恶意行为或安全策略违规行为的安全技术</dd>
+      <dd>核心目标：能够在入侵已经开始，但还没有造成危害或在造成更大危害前，及时检测到入侵，并向管理员发出警报，以便尽快阻止入侵，把危害降低到最小</dd>
+      <dd>IDS 对进入网络的分组执行深度分组检查。当观察到可疑分组时，向网络管理员发出告警或执行阻断操作（由于 IDS 的“误报”率通常较高，多数情况不执行自动阻断）</dd>
+      <dd>IDS 能用于检测多种网络攻击，包括：网络映射、端口扫描、DoS 攻击、蠕虫和病毒、系统漏洞攻击等</dd>
+      <figure>
+        <img src="./imgs/ids0.png" alt="">
+        <figcaption>IDS</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ids1.png" alt="">
+        <figcaption>IDS</figcaption>
+      </figure>
+      <dd>根据部署位置 / 监控对象：
+        <p>基于网络的 IDS - NIDS</p>
+        <p>基于主机的 IDS - HIDS</p>
+      </dd>
+      <dd>根据检测方法 / 分析逻辑：
+        <p>基于特征的 IDS - Signature-based IDS</p>
+        <p>基于异常的 IDS - Anomaly-based IDS</p>
+      </dd>
+      <dt>基于特征的 IDS - Signature-based IDS</dt>
+      <dd>维护一个所有已知攻击标志性特征的数据库</dd>
+      <dd>特征和规则通常由网络安全专家生成，由机构的网络管理员定制并将其加入到数据库中</dd>
+      <dd>只能检测已知攻击，对于未知攻击则束手无策</dd>
+      <dd>至今为止，大多数部署的 IDS 主要是基于特征的</dd>
+      <dt>基于异常的 IDS - Anomaly-based IDS</dt>
+      <dd>通过观察正常运行的网络流量，学习正常流量的统计特性和规律</dd>
+      <dd>当检测到网络中流量某种统计规律不符合正常情况时，则认为可能发生了入侵行为</dd>
+      <dd>但区分正常流和统计异常流是一个非常困难的</dd>
+      <dt>基于网络的 IDS - NIDS</dt>
+      <dd>Network-based IDS</dd>
+      <dd>部署在网络关键节点（如防火墙后、核心交换机旁）</dd>
+      <dd>监控整个网段的流量，分析数据包内容</dd>
+      <dd>可检测如端口扫描、DDoS、SQL 注入等网络层攻击</dd>
+      <dd>常见工具：Snort、Suricata、Zeek（原 Bro）</dd>
+      <figure>
+        <img src="./imgs/ids3.png" alt="">
+        <figcaption>NIDS</figcaption>
+      </figure>
+      <dt>基于主机的 IDS - HIDS</dt>
+      <dd>Host-based Intrusion Detection System</dd>
+      <dd>安装在单个服务器或终端设备上</dd>
+      <dd>监控系统日志、文件完整性、进程行为、注册表变更等</dd>
+      <dd>能发现内部威胁、恶意软件、权限提升等行为</dd>
+      <dd>常见工具：OSSEC、Tripwire、Wazuh</dd>
+      <figure>
+        <img src="./imgs/ids4.png" alt="">
+        <figcaption>HIDS</figcaption>
+      </figure>
+      <dt>混合 IDS - Hybrid IDS</dt>
+      <figure>
+        <img src="./imgs/ids2.jpg" alt="">
+        <figcaption>NIDS & HIDS</figcaption>
+      </figure>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>IDS 的作用</li>
+        <li>IDS 的部署</li>
+        <li>IDS 的检测方法</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译：
+          <p>Intrusion Detection Systems (IDS) play a key role in modern security architectures, as they provide a
+            proactive line of defense. Unlike more classic preventive measures, such as firewalls and antivirus
+            software, which aim to block known threats, IDSs can dynamically monitor and analyze network traffic,
+            identifying patterns of anomalous or suspicious behavior that can reveal both known and new attacks. </p>
+        </li>
+        <li>翻译：
+          <p>A Host-Based Intrusion Detection System (HIDS) is a cybersecurity solution designed to monitor individual
+            host systems—such as servers, workstations, or network devices—for signs of suspicious activity.
+          </p>
+          <p>Unlike network-based systems that focus on traffic analysis, HIDS is tailored to scrutinize data generated
+            within the host. This includes log files, process activity, application behavior, and other host-specific
+            metrics that could indicate a potential security breach.</p>
+        </li>
+        <li>翻译：
+          <p>A Network Based Intrusion Detection System (NIDS), or Network Based IDS, is security hardware that is
+            placed strategically to monitor critical network traffic. Traditional Network Based IDS analyzes passing
+            network traffic and matches that traffic to a library of known attacks in its system. Newer systems use
+            artificial intelligence (aka heuristics) to analyze traffic for patterns of interest. When an attack is
+            identified, or a pattern of interest is found, an alert is sent typically to a Security Operations Center
+            (aka: SOC) who review the alert and triage it for validity and subsequent escalation.</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href=""> <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://intellipaat.com/blog/intrusion-detection-system/">What is Intrusion Detection System (IDS)?
+            <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://cybersecuritynews.com/host-based-intrusion-detection-system/">What is Host-based Intrusion
+            Detection System? <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.hostragons.com/en/blog/network-based-attack-detection-system/">Network Based Intrusion
+            Detection System (NIDS) Application <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.geeksforgeeks.org/computer-networks/difference-between-hids-and-nids/">Difference
+            between HIDs and NIDs <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
