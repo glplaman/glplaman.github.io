@@ -39,7 +39,7 @@
     </header>
     <dl>
       <figure>
-        <img src="./imgs/http7.png" alt="">
+        <img src="./imgs/http0.png" alt="">
         <figcaption>xmind</figcaption>
       </figure>
       <dt>内容 Contents</dt>
@@ -246,7 +246,7 @@
         <br>&nbsp;&nbsp; >= 2 RTT + 文档的传输时间
       </dd>
       <figure>
-        <img src="./imgs/http0.png" alt="">
+        <img src="./imgs/http2.png" alt="">
         <figcaption>请求文档所需的时间</figcaption>
       </figure>
       <dt>HTTP 1.0</dt>
@@ -341,20 +341,20 @@ cookie = （同上）</pre>
       <div>[<span class="iconfont icon-keyboard"></span>] 在开发者工具中查看 HTTP 1.X vs HTTP 2.X</div>
       <dd>开发环境下的 HTTP 1.x</dd>
       <figure>
-        <img src="./imgs/http4.png" alt="">
+        <img src="./imgs/http3.png" alt="">
         <figcaption>查看协议 HTTP 1.X</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/http5.png" alt="">
+        <img src="./imgs/http4.png" alt="">
         <figcaption>查看 HTTP 1.X 请求标头</figcaption>
       </figure>
       <dd>生产环境下的 HTTP 2.X - HTTPS</dd>
       <figure>
-        <img src="./imgs/http2.png" alt="">
+        <img src="./imgs/http5.png" alt="">
         <figcaption>查看协议 HTTP 2.X</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/http3.png" alt="">
+        <img src="./imgs/http6.png" alt="">
         <figcaption>查看 HTTP 2.X 请求标头</figcaption>
       </figure>
       <div class="tips">
@@ -428,10 +428,6 @@ cookie = （同上）</pre>
         <p>Content-Type：请求体的媒体类型（如 POST 数据）</p>
         <p>Authorization：认证信息</p>
       </dd>
-      <figure>
-        <img src="./imgs/http6.png" alt="">
-        <figcaption>请求报文 Request的请求头 headers</figcaption>
-      </figure>
       <div>3. 空行 CRLF</div>
       <dd>用 \r\n\r\n（即两个 CRLF）表示头部结束，后面是请求体</dd>
       <div>4. 请求体 Body，可选</div>
@@ -506,6 +502,24 @@ Set-Cookie: sessionid=abc123; Path=/</pre>
           </tr>
         </tbody>
       </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 开发环境和生产环境下的报文</div>
+      <dd>借助开发者工具中查看 chap6http.html</dd>
+      <figure>
+        <img src="./imgs/http7.png" alt="">
+        <figcaption>开发环境下的报文</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/http8.png" alt="">
+        <figcaption>生产环境下的报文</figcaption>
+      </figure>
+      <dd>HTTP 状态码 304 Not Modified 表示：“你本地缓存的资源仍然有效，请继续使用它。”</dd>
+      <dd>浏览器在第一次收到 200 响应时，已经记录了完整的响应头，包括 Content-Type: text/html</dd>
+      <dd>当后续收到 304 响应时，浏览器会复用之前缓存的完整响应头 + 缓存的 body</dd>
+      <dd>所以，即使 304 响应里没有 Content-Type，浏览器依然知道它是 text/html</dd>
+      <figure>
+        <img src="./imgs/http9.png" alt="">
+        <figcaption>生产环境下的报文 - 缓存加载</figcaption>
+      </figure>
       <div class="tips">
         <p>请求报文 = 请求行 + 请求头 + 空行 + 请求体</p>
         <p>响应报文 = 状态行 + 响应头 + 空行 + 响应体</p>
@@ -525,8 +539,40 @@ Set-Cookie: sessionid=abc123; Path=/</pre>
       </dd>
       <dt>可扩展超文本标记语言 XHTML</dt>
       <dd>Extensible HTML</dd>
-      <dd>与 HTML 4.01 几乎相同，是更严格的 HTML 版本</dd>
-      <dd>作为一种 XML 应用被重新定义的 HTML，将逐渐取代 HTML</dd>
+      <dd>与 HTML 4.01 几乎相同，是 <strong>更严格</strong> 的 HTML 版本
+        <p>必须自闭合：所有空元素必须以 /> 结尾</p>
+        <p>必须小写：标签名和属性名必须小写</p>
+        <p>属性值必须加引号</p>
+        <p>文档必须以 application/xhtml+xml MIME 类型提供</p>
+      </dd>
+      <dd>作为一种 XML 应用被重新定义的 HTML，将逐渐取代 HTML4.0</dd>
+      <dd>但最终被 HTML5 取代 - XHTML 名存实亡</dd>
+      <dt>HTML5</dt>
+      <dd>2004 启动，2014 标准化</dd>
+      <dd>向后兼容：支持旧 HTML 写法，不破坏现有网站</dd>
+      <dd>容错优先：定义明确的“错误处理规则”，让所有浏览器一致解析</dd>
+      <dd>扩展功能：新增语义标签、表单控件、Canvas、本地存储、音视频等</dd>
+      <dd>支持两种语法：
+        <p>HTML 序列化（text/html）：主流用法，宽松</p>
+        <p>XHTML 序列化（application/xhtml+xml）：保留给需要 XML 严格性的场景</p>
+      </dd>
+      <dd>今日实践建议
+        <p>写 HTML5，使用 .html 扩展名</p>
+        <p>可以采用 XHTML 风格，但不是必须</p>
+        <p>MIME 类型始终用 text/html，除非你明确需要 XML 处理（极少见）</p>
+        <p>不要自称“我在写 XHTML”，除非你真的用 application/xhtml+xml 并通过 XML 验证器</p>
+      </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] &lt;img&gt;在不同标准下的语法实现</div>
+      <dd>HTML4.0</dd>
+      <pre>&lt;img src="x" alt="y"&gt;</pre>
+      <pre>&lt;img src=x alt=y&gt;</pre>
+      <pre>&lt;IMG SRC="x" ALT="y"&gt;</pre>
+      <dd>XHTML</dd>
+      <pre>&lt;img src="x" alt="y" /&gt;</pre>
+      <dd>HTML5</dd>
+      <pre>&lt;img src="x" alt="y"&gt;</pre>
+      <pre>&lt;img src="x" alt="y" /&gt;</pre>
+      <div class="tips">现代IDE都是以 HTML5 为标准设计</div>
     </dl>
     <dl>
       <dt>Reading</dt>
