@@ -97,7 +97,7 @@
         <p>但是仍然需要中间的站点即邮件传输代理 MTA（Mail Transfer Agent）转发</p>
       </dd>
       <dd>SMTP 客户首先使用熟知端口 25 与接收方的 SMTP 服务器建立 TCP 连接</dd>
-      <dd>SMTP 服务器发出服务就绪</dd>
+      <dd>SMTP 服务器发出服务就绪 - 并不是所有协议都由客户端先发</dd>
       <dd>SMTP 客户向服务器发送问候 HELO 命令，附上发送方的主机名</dd>
       <dd>SMTP 服务器若有能力接收邮件，则回答：“250 OK”，表示已准备好接收</dd>
       <figure>
@@ -122,6 +122,8 @@
         <p>DATA - 告诉服务器接下来是邮件内容</p>
         <p>服务器回复 354 Start mail input... 表示可以开始输入</p>
         <p>内容以 &lt;CRLF>.&lt;CRLF> 结束（即空行后跟一个点）</p>
+        <p>- 只有当一个单独的行只包含一个点（.）时，才被视为结束标志</p>
+        <p>- 点前面必须有 &lt;CRLF>；点后面也必须有 &lt;CRLF></p>
       </dd>
       <figure>
         <img src="./imgs/mail3.png" alt="">
@@ -219,7 +221,9 @@
       <dd>Content-Type 说明必须含有两个标识符</dd>
       <dd>内容类型 (type) 和子类型 (subtype)，中间用“/”分开</dd>
       <dd>MIME 标准原先定义了 7 个基本内容类型和 15 种子类型</dd>
-      <dd>MIME 允许发件人和收件人自己定义专用的内容类型。但为避免可能出现名字冲突，标准要求为专用内容类型选择的名字要以字符串 X-开始</dd>
+      <dd>MIME 允许发件人和收件人自己定义专用的内容类型
+        <p>为避免可能出现名字冲突，标准要求为专用内容类型选择的名字要以字符串 <strong>X-</strong> 开始</p>
+      </dd>
       <table class="txt-left">
         <caption>Content-Type</caption>
         <thead>
@@ -647,7 +651,25 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
         <!-- aGksdGhlcmUu -->
       </ol>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>邮件组成</li>
+        <li>邮件传输协议和改进
+          <P>SMTP</P>
+          <p>MIME</p>
+        </li>
+        <li>邮件接收协议
+          <p>POP3</p>
+          <p>IMAP</p>
+        </li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>邮件发送和接收分别使用几号端口？MIME有没有分配端口？为什么？</li>
+        <li>趣味练习：给你的小伙伴发送一句 "i love you." 使用 Base64编码</li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a href="https://www.emailjs.com/">EmailJS <span class="iconfont icon-share"></span></a></li>
