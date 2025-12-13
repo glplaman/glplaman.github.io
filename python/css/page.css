@@ -1,0 +1,116 @@
+body {
+  background-color: unset;
+  color: unset;
+}
+
+.container {
+  display: flex;
+  gap: var(--p-m-g);
+  height: 100vh;
+}
+
+aside {
+  width: max-content;
+}
+
+main {
+  flex: 1;
+  scroll-behavior: smooth;
+  padding: var(--p-m-g);
+  overflow-y: auto;
+}
+
+main::-webkit-scrollbar {
+  width: 8px;
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: var(--second-color);
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  color: #fff;
+}
+
+aside a {
+  display: flex;
+  gap: var(--p-m-g);
+  padding: 10px 30px;
+}
+
+section {
+  min-height: 50vh;
+}
+
+h2 {
+  line-height: 3;
+  font-size: 2rem;
+  text-transform: capitalize;
+}
+
+h2:target {
+  color: var(--second-color);
+}
+
+dl {
+  padding: 0;
+  line-height: unset;
+}
+
+dd {
+  margin-bottom: var(--p-m-g);
+}
+
+dd::before {
+  content: '· ';
+}
+
+.ham {
+  display: none;
+}
+
+@media screen and (max-width:768px) {
+  .container {
+    display: block;
+  }
+
+  body.locked {
+    overflow: hidden;
+  }
+
+  aside {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    padding-top: 100px;
+    text-align: right;
+    transform: translateX(100%);
+    transition: 0.4s;
+  }
+
+  body.locked aside {
+    transform: translateX(0);
+  }
+
+  aside a {
+    flex-direction: row-reverse;
+  }
+
+  .ham {
+    display: block;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    padding: 4px 10px;
+    background-color: #333;
+    z-index: 1;
+  }
+
+  .ham .iconfont {
+    color: #fff;
+  }
+}

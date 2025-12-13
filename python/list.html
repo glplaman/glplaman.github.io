@@ -6,186 +6,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>列表 List</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="./css/style.css">
-  <base target="_blank">
+  <link rel="stylesheet" href="./css/page.css">
+  </link>
 </head>
 
 <body>
-  <div class="w">
-    <header>
-      <div class="custom-shape-divider-bottom-1765450800">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path
-            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
-            opacity=".25" class="shape-fill"></path>
-          <path
-            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
-            opacity=".5" class="shape-fill"></path>
-          <path
-            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
-            class="shape-fill"></path>
-        </svg>
-      </div>
-      <h1>List</h1>
-      <span>列表</span>
-    </header>
+  <div class="container">
+    <div class="ham" id="ham"><span class="iconfont icon-menu"></span></div>
+    <aside id="aside">
+      <a href="#overview"><span>概述</span> <span>Overview</span></a>
+      <a href="#item"><span>术语</span> <span>Item</span></a>
+      <a href="#create"><span>创建</span> <span>Create</span></a>
+      <a href="#oper"><span>操作</span> <span>Operation</span></a>
+      <a href="#sort"><span>排序</span> <span>Sort</span></a>
+      <a href="#other"><span>其它</span> <span>Other</span></a>
+      <a href="#summary"><span>总结</span> <span>Summary</span></a>
+      <a href="#homework"><span>作业</span> <span>Homework</span></a>
+    </aside>
     <main>
-      <ul>
-        <li>可变序列 mutable sequences</li>
-        <li>列表名使用单词的复数形式，如 filenames</li>
-        <li>迭代的时候，使用单数形式，如 filename</li>
-        <li>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#lists">Python - list</a></li>
-      </ul>
-      <h3>元素 Element</h3>
-      <ul>
-        <p>列表的每一项</p>
-      </ul>
-      <h3>值 Value</h3>
-      <ul>
-        <li>元素的内容称为元素的值 Value</li>
-      </ul>
-      <h3>索引值 Index</h3>
-      <ul>
-        <li>每个元素有唯一的编号</li>
-        <li>从前往后，依次是 0 1 2 ...</li>
-        <li>也可以从后往前编号，依次为 -1 -2 ...</li>
-        <li>根据索引值可以方便的访问元素</li>
-        <li>索引值越界/溢出会告警</li>
-        <pre>
+      <h2 id="overview">概述 Overview</h2>
+      <section>
+        <dl>
+          <dd>可变序列 mutable sequences</dd>
+          <dd>列表名使用单词的复数形式，如 filenames</dd>
+          <dd>迭代的时候，使用单数形式，如 filename</dd>
+          <dd>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#lists">Python - list <span
+                class="iconfont icon-share"></span></a></dd>
+        </dl>
+      </section>
+      <h2 id="item">术语 Item</h2>
+      <section>
+        <dl>
+          <dt>元素 Element</dt>
+          <dd>列表的每一项</d>
+          <dt>值 Value</dt>
+          <dd>元素的内容</dd>
+          <dt>索引值 Index</dt>
+          <dd>每个元素有唯一的编号</dd>
+          <dd>从前往后，依次是 0 1 2 ...</dd>
+          <dd>也可以从后往前编号，依次为 -1 -2 ...</dd>
+          <dd>根据索引值可以方便的访问元素</dd>
+          <dd>索引值越界/溢出会告警</dd>
+          <pre>
 nums = [1, 2, 3, 4, 5]
 num[0] #1
 num[-1] #5
 num[4] #5
 num[6] # IndexError: list index out of range</pre>
-      </ul>
-      <h2>创建 Creation</h2>
-      <ol>
-        <li>一个 square brackets []</li>
-        <pre>chars = ["a", "b", "c", "d", "e", "f", "g"]</pre>
-        <pre>nums = [0, 1, 2, 3, 4, 5, 6]</pre>
-        <li>多个 []：以逗号分隔</li>
-        <pre>
+        </dl>
+      </section>
+      <h2 id="create">创建 Creation</h2>
+      <section>
+        <ol>
+          <li>一个 square brackets []</li>
+          <pre>chars = ["a", "b", "c", "d", "e", "f", "g"]</pre>
+          <pre>nums = [0, 1, 2, 3, 4, 5, 6]</pre>
+          <li>多个 []：以逗号分隔</li>
+          <pre>
 # ([0, 1, 2, 3, 4, 5], ['a', 'b', 'c', 'd', 'e', 'f'])
 temp = chars, nums</pre>
-        <pre>
+          <pre>
 # ([1, 2, 3, 4], [5, 6, 7, 8])
 temp = [1, 2, 3, 4], [5, 6, 7, 8]</pre>
-        <li>构造函数 type constructor list()</li>
-        <pre>chars = list() # []</pre>
-        <pre>letters = list("abc") # ['a', 'b', 'c']</pre>
-        <pre>nums = list( range(10) ) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
-        <li>推导式 list comprehension：由一个数据获取新的数据</li>
-        <p> [x for x in iterable condition]：借助 for 循环遍历可迭代数据</p>
-        <p>第一个 x 可以是表达式，对处理每一个迭代数据</p>
-        <p>可以先筛选数据再生成新数据</p>
-        <pre>
+          <li>构造函数 type constructor list()</li>
+          <pre>chars = list() # []</pre>
+          <pre>letters = list("abc") # ['a', 'b', 'c']</pre>
+          <pre>nums = list( range(10) ) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
+          <li>推导式 list comprehension：由一个数据获取新的数据</li>
+          <p> [x for x in iterable condition]：借助 for 循环遍历可迭代数据</p>
+          <p>第一个 x 可以是表达式，对处理每一个迭代数据</p>
+          <p>可以先筛选数据再生成新数据</p>
+          <pre>
 # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 nums = [x for x in range(10)]</pre>
-        <pre>
+          <pre>
 # [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 nums = [2 * x for x in range(10)]
 </pre>
-        <pre>
+          <pre>
 # [False, False, False, False, False, False, True, True, True, True]
 nums = [x > 5 for x in range(10)]</pre>
-        <pre>
+          <pre>
 # [6, 7, 8, 9]
 nums = [x for x in range(10) if x > 5]</pre>
-      </ol>
-      <h2>操作 Operation</h2>
-      <ul>
-        <li>适用通用序列操作和可变序列操作 - Lists implement all of the <a href="./sequence.html">common and mutable
-            sequence operations</a>
-        </li>
-      </ul>
-      <h3>增加 Added</h3>
-      <ul>
-        <li>append(element)：尾部添加/尾插；返回值为 None</li>
-        <pre>
+        </ol>
+      </section>
+      <h2 id="oper">操作 Operation</h2>
+      <section>
+        <dl>
+          <dd>适用通用序列操作和可变序列操作 - Lists implement all of the <a href="./sequence.html">common and mutable
+              sequence operations</a>
+          </dd>
+          <dt>访问 Access</dt>
+          <dd>根据索引访问</dd>
+          <dd>索引溢出时，会告警</dd>
+          <pre>[1,2,3,4,5][0] # 1</pre>
+          <pre>[1,2,3,4,5][-1] # 5</pre>
+          <pre>[1,2,3,4,5][5] # IndexError: list index out of range</pre>
+          <dt>修改 Modified</dt>
+          <dd>利用有效索引值重新赋值</dd>
+          <pre>[1,2,3,4,5][1] = 88</pre>
+          <dt>List.append(element)</dt>
+          <dd>尾部添加/尾插；返回值为 None</dd>
+          <pre>
 nums = [1,2,3,4,5]
 nums.append(88) # [1,2,3,4,5,88]
 print(nums.append(99)) # None；[1,2,3,4,5,88,99]
 print(num) # 列表尾部依次增加了88、99</pre>
-        <li>insert(index, element)：在指定位置插入元素，当前位置原有元素和后续元素依次向后移动</li>
-        <pre>[1,2,3,4,5].insert(0,77) # 0号位置插入/头插 77 [77,1,2,3,4,5]</pre>
-        <pre>[1,2,3,4,5].insert(1,66) # 1号位置插入 66 [1,66,2,3,4,5]</pre>
-        <li>extend</li>
-        <li>+</li>
-        <pre>nums + chars</pre>
-      </ul>
-      <h3>删除 Delete</h3>
-      <ul>
-        <li>pop([index])：删除指定位置的元素
-          <p>如果不指定 index，则删除列表最后一个元素</p>
-          <p>返回被删除的元素，即：可以使用变量接收</p>
-        </li>
-        <pre>[1,2,3,4,5].pop() # [1,2,3,4]</pre>
-        <pre>el = [1,2,3,4,5].pop() # el = 5</pre>
-        <pre>[1,2,3,4,5].pop(2) # [1,2,4,5]</pre>
-        <li>remove(element)：删除指定元素
-          <p>如果元素不存在，会抛出异常</p>
-          <p>如果有多个相同元素，只删除遍历到的第一个元素</p>
-          <p>执行结果为 None，即：无法获取删除的元素</p>
-        </li>
-        <pre>[1,2,3,4,5,99].remove(4) # [1,2,3,5]</pre>
-        <pre>[1,2,3,4,5,99].remove(88) # ValueError: list.remove(x): x not in list</pre>
-        <pre>[1,2,3,4,5,4,3,2,1].remove(3) # [1,2,4,5,4,3,2,1]，删除第1个3</pre>
-        <pre>num = [1,2,3,4,5].remove(3) # num 为 None</pre>
-        <li>del：无法获取删除的元素</li>
-        <pre>del [1,2,3,4,5][0] # [2,3,4,5]</pre>
-        <li>clear()：清空列表；长度为0</li>
-        <pre>[1,2,3,4,5,99].clear() # []</pre>
-      </ul>
-      <h3>修改 Modified</h3>
-      <ul>
-        <li>利用索引值重新赋值</li>
-        <pre>nums[1] = 88</pre>
-      </ul>
-      <h3>访问 Access</h3>
-      <ul>
-        <li>根据索引访问并修改</li>
-        <li>溢出时，会告警 - IndexError: list index out of range</li>
-        <pre>nums[0] # 0</pre>
-        <pre>nums[-1] # 9</pre>
-      </ul>
-      <h2>排序 Sort</h2>
-      <div class="tips">stable vs unstable </div>
-      <h3>sort(*, key = None, reverse = False) 方法</h3>
-      <ol>
-        <p>会改变元素位置</p>
-        <p>稳定排序 stable</p>
-        <p>key：一个函数，用于指定排序的关键字。默认为 None，表示直接比较元素本身，适用简单数据；复合数据通常需要指定key；可以是系统函数，也可以是自定义函数</p>
-        <p>reverse：倒叙排序；默认为假 false</p>
-        <p>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#list.sort">Python - sort</a></p>
-        <li>数值按照大小排序</li>
-        <pre>
-# [1, 2, 3, 7, 7, 9, 12, 32, 76]
-nums = [1, 3, 7, 2, 9, 7, 12, 76, 32]
-nums.sort()
-</pre>
-        <li>字母按照字母表顺序排序</li>
-        <pre>
-# ['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p']
-letters = list("cnplaman")
-letters.sort()</pre>
-        <li>汉字按照 UTF-8 编码排序</li>
-        <p>汉字通常编码为3-4个字节；3 字节模板：1110xxxx 10xxxxxx 10xxxxxx</p>
-        <p>"陆".encode("utf-8") 编码为3个字节：b'\xe9\x99\x86'</p>
-        <pre>
+          <dt>List.insert(index, element)</dt>
+          <dd>在指定位置插入元素，当前位置原有元素和后续元素依次向后移动</dd>
+          <pre>[1,2,3,4,5].insert(0,77) # 0号位置插入/头插 77 [77,1,2,3,4,5]</pre>
+          <pre>[1,2,3,4,5].insert(1,66) # 1号位置插入 66 [1,66,2,3,4,5]</pre>
+          <dd>extend</dd>
+          <dd>+</dd>
+          <pre>nums + chars</pre>
+          <dt>List.pop([index])</dt>
+          <dd>删除指定位置的元素</dd>
+          <dd>如果不指定 index，则删除列表最后一个元素</dd>
+          <dd>返回被删除的元素，即：可以使用变量接收</dd>
+          <pre>[1,2,3,4,5].pop() # [1,2,3,4]</pre>
+          <pre>el = [1,2,3,4,5].pop() # el = 5</pre>
+          <pre>[1,2,3,4,5].pop(2) # [1,2,4,5]</pre>
+          <dt>List.remove(element)</dt>
+          <dd>删除指定元素 </dd>
+          <dd>如果元素不存在，会抛出异常</dd>
+          <dd>如果有多个相同元素，只删除遍历到的第一个元素</dd>
+          <dd>执行结果为 None，即：无法获取删除的元素</dd>
+          <pre>[1,2,3,4,5,99].remove(4) # [1,2,3,5]</pre>
+          <pre>[1,2,3,4,5,99].remove(88) # ValueError: list.remove(x): x not in list</pre>
+          <pre>[1,2,3,4,5,4,3,2,1].remove(3) # [1,2,4,5,4,3,2,1]，删除第1个3</pre>
+          <pre>num = [1,2,3,4,5].remove(3) # num 为 None</pre>
+          <dt>List.clear()</dt>
+          <dd>清空列表</dd>
+          <dd>长度变为0</dd>
+          <pre>[1,2,3,4,5,99].clear() # []</pre>
+          <dt>List.reverse()</dt>
+          <dd>翻转列表</dd>
+          <dd>第一个元素变成最后一个元素</dd>
+          <dd>最后一个元素变成第一个元素</dd>
+          <pre>[1,2,3,4,5,99].reverse() # [5,4,3,2,1]</pre>
+        </dl>
+      </section>
+      <h2 id="sort">排序 Sort</h2>
+      <section>
+        <dl>
+          <div class="tips">stable vs unstable </div>
+          <h3>List.sort(*, key = None, reverse = False)</h3>
+          <dd>会改变原列表</dd>
+          <dd>稳定排序 stable</dd>
+          <dd>key：一个函数，用于指定排序的关键字。默认为 None，表示直接比较元素本身，适用简单数据；复合数据通常需要指定key；可以是系统函数，也可以是自定义函数</dd>
+          <dd>reverse：倒叙排序；默认为假 false</dd>
+          <dd>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#list.sort">Python - sort</a></dd>
+          <dt>数值</dt>
+          <dd>按照大小排序</dd>
+          <pre>[1,2,3,4,5,3,1].sort() # [1, 1, 2, 3, 3, 4, 5]</pre>
+          <pre>[1,2,3,4,5,3,1].sort(reverse=True) # [5, 4, 3, 3, 2, 1, 1]</pre>
+          <dt>字母</dt>
+          <dd>按照字母表顺序排序</dd>
+          <pre>['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p'].sort() # ['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p']</pre>
+          <pre>['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p'].sort(reverse=True) # ['p', 'n', 'n', 'm', 'l', 'c', 'a', 'a']</pre>
+          <dt>汉字</dt>
+          <dd>按照 UTF-8 编码排序</dd>
+          <dd>汉字通常编码为3-4个字节；3 字节模板：1110xxxx 10xxxxxx 10xxxxxx</dd>
+          <dd>"陆".encode("utf-8") 编码为3个字节：b'\xe9\x99\x86'</dd>
+          <pre>
 # ['作', '军', '学', '战', '特', '种', '陆', '院']
 letters = list("陆军特种作战学院")
 letters.sort()</pre>
-        <li>倒序排序</li>
-        <pre>
-# [76, 32, 12, 9, 7, 7, 3, 2, 1]
-nums.sort(reverse=True)</pre>
-        <li>自定义排序 - 按长度排序；系统函数len</li>
-        <pre>
+          <dt>自定义排序</dt>
+          <dd>按长度排序；系统函数 len</dd>
+          <pre>
 # ['张三', '王五', '李明四']
 stus = ["张三", "李明四", "王五"]
 stus.sort(key=len)</pre>
-        <li>复合数据排序</li>
-        <pre>
+          <dt>复合数据排序</dt>
+          <pre>
 stus = [
     {"name": "张三", "age": 20},
     {"name": "李明四", "age": 19},
@@ -199,14 +194,120 @@ stus.sort(key=lambda x: x["age"])
 # 按照名字长度排序；自定义函数
 # [{'name': '张三', 'age': 20}, {'name': '王五', 'age': 22}, {'name': '李明四', 'age': 19}]
 stus.sort(key=lambda x: len(x["name"]))</pre>
-        <p>将排序后的结果作为新的列表返回，不会改变原来列表元素位置</p>
-      </ol>
-      <h3>sorted()</h3>
-      <h2>多维列表</h2>
+          <dd>将排序后的结果作为新的列表返回，不会改变原来列表元素位置</p>
+        </dl>
+      </section>
+      <h2 id="other">其它 Other</h2>
+      <section>
+        <dl>
+          <dt>len(List)</dt>
+          <dd>全局函数</dd>
+          <dd>列表的元素个数 - 长度</dd>
+          <pre>len([1,2,3,4,5]) # 5</pre>
+          <dt>sorted(List)</dt>
+          <dd>全局函数</dd>
+          <dd>排序结果为一个新的列表</dd>
+          <dd>不会改变原来列表</dd>
+          <dt>del</dt>
+          <dd>语句；不是一个函数</dd>
+          <dd>删除元素</dd>
+          <dd>无法获取删除的元素</dd>
+          <pre>del [1,2,3,4,5][0] # [2,3,4,5]</pre>
+        </dl>
+      </section>
+      <h2 id="summary">总结 summary</h2>
+      <section>
+        <table>
+          <caption>List 方法</caption>
+          <thead>
+            <tr>
+              <th>item</th>
+              <th>desc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>List.append()</td>
+              <td>追加元素</td>
+            </tr>
+            <tr>
+              <td>List.insert(index, element)</td>
+              <td>插入元素</td>
+            </tr>
+            <tr>
+              <td>List.remove(element)</td>
+              <td>删除元素</td>
+            </tr>
+            <tr>
+              <td>List.pop([index])</td>
+              <td>删除元素并返回删除元素</td>
+            </tr>
+            <tr>
+              <td>List.clear()</td>
+              <td>清空列表</td>
+            </tr>
+            <tr>
+              <td>List.reverse()</td>
+              <td>列表翻转</td>
+            </tr>
+            <tr>
+              <td>List.sort()</td>
+              <td>排序</td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <caption>其它方法</caption>
+          <thead>
+            <tr>
+              <th>item</th>
+              <th>desc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>len(List)</td>
+              <td>列表长度</td>
+            </tr>
+            <tr>
+              <td>del List(index)</td>
+              <td>删除列表元素</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <h2 id="homework">作业 homework</h2>
+      <section>
+      </section>
+      <footer id="footer"></footer>
     </main>
-    <div id="footer"></div>
   </div>
   <script src="/utils/custom/footer.js"></script>
+  <script>
+    const ham = document.getElementById('ham');
+    const aside = document.getElementById('aside');
+    const links = aside.querySelectorAll('a');
+    const toggleAside = () => {
+      if (document.body.classList.contains('locked')) {
+        document.body.classList.remove('locked');
+      }
+    }
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        toggleAside()
+      })
+    })
+
+    ham.addEventListener('click', (e) => {
+      e.stopPropagation()
+      document.body.classList.toggle('locked');
+    });
+
+    document.addEventListener('click', (e) => {
+      toggleAside()
+    });
+
+  </script>
 </body>
 
 </html>

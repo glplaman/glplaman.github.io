@@ -1,3 +1,3 @@
-num=[1,2,3,4,5,4,3,2,1]
-num.clear()
-print(num)
+num=['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p']
+num.sort()
+print(len([1,2,3,4,5]))
