@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>逻辑运算 Logical Operators</title>
+  <title>运算 Operation</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
@@ -13,8 +13,8 @@
 <body>
   <div class="w">
     <header>
-      <h1>Logical</h1>
-      <span>逻辑运算符</span>
+      <h1>Operation</h1>
+      <span>运算</span>
       <div class="custom-shape-divider-bottom-1765450800">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path
@@ -29,7 +29,11 @@
         </svg>
       </div>
     </header>
+    <h2>布尔运算 Boolean Operations</h2>
     <dl>
+      <dd>返回布尔值</dd>
+      <dd>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not">Boolean
+          Operations</a></dd>
       <dt>非 not</dt>
       <table>
         <caption>not Truth Table</caption>
@@ -117,7 +121,54 @@
         </tbody>
       </table>
       <dt>优先级 Priority</dt>
-      <dd>not &gt; and &gt; or</dd>
+      <dd>非 not &gt; 与 and &gt; 或 or</dd>
+    </dl>
+    <h2>比较运算 Comparison</h2>
+    <dl>
+      <dd>返回布尔值</dd>
+      <dd>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#comparisons">Comparisons</a></dd>
+      <dt>大小比较 &gt;、&ge;、&lt;、&le;</dt>
+      <dd>适用于数字、字符串（按字典序）、列表等可比较类型</dd>
+      <dd>字符串比较是按 ASCII 值逐字符比较</dd>
+      <dt>相等比较 ==、!=</dt>
+      <dd>值是否相同（内容一样），不关心是不是同一个对象</dd>
+      <dt>身份比较 is、is not</dt>
+      <dd>是否是同一个对象（内存地址相同）</dd>
+      <div class="tips">
+        <p>== 是值相等；而 is 是身份相等，即是否是同一个对象；这是关键区别</p>
+      </div>
+      <dt>优先级 Priority</dt>
+      <dd>比较运算 &gt; 布尔运算</dd>
+      <dd>大小比较 &gt; 相等比较 &gt; 身份比较</dd>
+      <dd>优先级相同，先来先算</dd>
+      <dt>使用 Usage</dt>
+      <dd>
+        <div>一般操作</div>
+        <pre>
+a = 5
+if a > 0 and a &lt; 9:
+    print("a is greater than 0 and less than 9")      </pre>
+        <div>链式操作 - 推荐</div>
+        <pre>
+a = 5
+if 9 > a > 0:
+    print("a is greater than 0 and less than 9")
+if 0 &lt; a &lt; 9:
+    print("a is greater than 0 and less than 9")      </pre>
+      </dd>
+    </dl>
+    <h2>位运算 Bit</h2>
+    <dl></dl>
+    <h2>成员测试运算符 membership </h2>
+    <dl>
+      <dd>判断元素是否在容器中</dd>
+      <dd>返回布尔值</dd>
+      <dt>in</dt>
+      <dd>元素在容器中</dd>
+      <pre>'gz' in ['gl','xm','gz','hn'] # True</pre>
+      <dt>not in</dt>
+      <dd>元素不在容器中</dd>
+      <pre>'dg' not in ['gl','xm','gz','hn'] # True</pre>
     </dl>
     <h2>使用 Usage</h2>
     <dl>
@@ -125,7 +176,7 @@
       <dd>短路求值</dd>
       <dd>A and B：如果 A 为 False，则结果为 False，不计算 B</dd>
       <dd>A or B：如果 A 为 True，则结果为 True，不计算 B</dd>
-      <dd>提高效率;安全访问</dd>
+      <dd>提高效率；安全访问</dd>
     </dl>
     <div id="footer"></div>
   </div>

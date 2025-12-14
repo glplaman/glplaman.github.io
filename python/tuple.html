@@ -5,33 +5,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>元组 Tuple</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
 </head>
 
 <body>
-  <header>
-    <h1>元组</h1>
-    <span>Tuple</span>
-  </header>
-  <dl>
-    <dd>
-      <div>不可变序列 immutable sequences</div>
-      <div>数据一旦定义，创建的时候是什么就是什么，不可更改，移动、删除、添加，只能通过索引访问或切片</div>
-      <div>可以把元组当作只读的列表。。。封装数据，不希望数据被篡改，仅仅提供使用 - const</div>
-      <div>任意类型、可重复</div>
-      <div>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#tuples">Python - tuple</a></div>
-    </dd>
-    <dt>创建 Creation</dt>
-    <dd class="sn">
-      <p>请对比列表list的创建</p>
-      <p>必须创建的同时进行赋值；创建数据时，可以想多任性就多任性</p>
-      <div>一对括号 a pair of parentheses 表示空元组</div>
+  <div class="w">
+    <header>
+      <h1>Tuple</h1>
+      <span>元组</span>
+      <div class="custom-shape-divider-bottom-1765450800">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+            opacity=".25" class="shape-fill"></path>
+          <path
+            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+            opacity=".5" class="shape-fill"></path>
+          <path
+            d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+            class="shape-fill"></path>
+        </svg>
+      </div>
+    </header>
+    <dl>
+      <dd>序列的一种</dd>
+      <dd>不可变序列 immutable sequences</dd>
+      <dd>数据一旦定义，创建的时候是什么就是什么，不可更改，移动、删除、添加，只能通过索引访问或切片</dd>
+      <dd>可以把元组当作只读的列表。。。封装数据，不希望数据被篡改，仅仅提供使用 - const</dd>
+      <dd>任意类型、可重复</dd>
+      <dd>更多信息，请访问 <a href="https://docs.python.org/3/library/stdtypes.html#tuples">Python - tuple</a></dd>
+      <dt>创建 Creation</dt>
+      <dd>必须创建的同时进行赋值；创建数据时，可以想多任性就多任性</dd>
+      <div>1. 一对括号 a pair of parentheses 表示空元组</div>
       <pre>t = ()</pre>
-      <div>构造函数 tuple() 或 tuple(iterable)</div>
-      <pre>
-t = tuple() 
-# ()</pre>
+      <div>2. 构造函数 tuple() 或 tuple(iterable)</div>
+      <pre>t = tuple() # ()</pre>
       <pre>
 t = tuple(range(10))
 # (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -40,49 +50,55 @@ t = tuple(range(10))
 t = tuple("hi, there.")
 # ('h', 'i', ',', ' ', 't', 'h', 'e', 'r', 'e', '.')
 </pre>
-      <div>可以不需要括号，直接给出数据，以逗号分隔 - Separating items with commas</div>
+      <div>3. 其它方法</div>
+      <dd>可以不需要括号，直接给出数据，以逗号分隔 - Separating items with commas</dd>
       <pre>t = 1, 2, 3</pre>
-      <div>如果只有1个数据，IDE会自动添加括号；只有一个数据请使用逗号结束 - trailing comma</div>
+      <dd>如果只有1个数据，IDE 会自动添加括号；只有一个数据请使用逗号结束 - trailing comma</dd>
       <pre>t = 2,</pre>
       <table>
-        <colgroup>
-          <col style="width: 50%;">
-        </colgroup>
         <caption>list vs tuple</caption>
-        <tr>
-          <th>list</th>
-          <th>tuple</th>
-        </tr>
-        <tr>
-          <td>l = []</td>
-          <td>t = ()</td>
-        </tr>
-        <tr>
-          <td>l = [1, 2, 3]</td>
-          <td>t = (1, 2, 3)</td>
-        </tr>
-        <tr>
-          <td>l = [[1, 2, 3], [4, 5, 6]]</td>
-          <td>t = ((1, 2, 3), (4, 5, 6))</td>
-        </tr>
-        <tr>
-          <td>l = list(range(10))</td>
-          <td>t = tuple(range(10))</td>
-        </tr>
-        <tr>
-          <td>l = list('hi, there.')</td>
-          <td>t = tuple('hi, there.')</td>
-        </tr>
-        <tr>
-          <td>l = [1]</td>
-          <td>t = (1,)</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>list</th>
+            <th>tuple</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>l = []</td>
+            <td>t = ()</td>
+          </tr>
+          <tr>
+            <td>l = [1, 2, 3]</td>
+            <td>t = (1, 2, 3)</td>
+          </tr>
+          <tr>
+            <td>l = [[1, 2, 3], [4, 5, 6]]</td>
+            <td>t = ((1, 2, 3), (4, 5, 6))</td>
+          </tr>
+          <tr>
+            <td>l = list(range(10))</td>
+            <td>t = tuple(range(10))</td>
+          </tr>
+          <tr>
+            <td>l = list('hi, there.')</td>
+            <td>t = tuple('hi, there.')</td>
+          </tr>
+          <tr>
+            <td>l = [1]</td>
+            <td>t = (1,)</td>
+          </tr>
+          <tr>
+            <td>需要操作元素</td>
+            <td>仅仅访问元素</td>
+          </tr>
+        </tbody>
       </table>
-    </dd>
-    <dt>操作</dt>
-    <dd>适用通用序列操作 - Tuples implement all of the <a href="./sequence.html">common sequence operations</a>.</dd>
-  </dl>
-  <div id="footer"></div>
+      <dt>方法 Methods</dt>
+      <dd>适用通用序列操作 - Tuples implement all of the <a href="./sequence.html">common sequence operations</a>.</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 
