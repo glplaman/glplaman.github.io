@@ -1,3 +1,3 @@
 num=['a', 'a', 'c', 'l', 'm', 'n', 'n', 'p']
-num.sort()
-print(len([1,2,3,4,5]))
+print([x for x in range(21) if x%3==0 and x>0])
+print(list(range(3,21,3)))

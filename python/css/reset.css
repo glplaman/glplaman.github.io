@@ -2,14 +2,14 @@
 @import url(//at.alicdn.com/t/c/font_5035820_b0aqtfm4eq9.css);
 
 :root {
-  --main-color: #c81623;
+  --main-color: #34ace0;
   --second-color: #34ace0;
   --third-color: #ff7b00;
   --tbl-header-color: #eaf6e9;
   --warn-color: #9f103a;
   --pre-color: #dcdcaa;
-  --bg-color: #f4f4f4;
-  --txt-color: #111;
+  --bg-color: #fff;
+  --txt-color: #333;
   --tips-color: #edf8db;
   --tips-bold-color: #2ed573;
   --paper: #F5F5DC;
@@ -34,10 +34,7 @@ h2,
 h3,
 h4,
 div,
-input,
-button,
 aside,
-textarea,
 header,
 section,
 nav,
@@ -61,10 +58,9 @@ body {
   font-size: 1.6rem;
   background-color: var(--bg-color);
   color: var(--txt-color);
-  text-align: justify;
   counter-reset: tbl-sn img-sn;
-  min-height: 100vh;
   line-height: 2;
+  min-height: 100vh;
 }
 
 body::-webkit-scrollbar {
@@ -76,7 +72,7 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(var(--second-color, #333), transparent);
+  background-image: linear-gradient(var(--main-color, #333), transparent);
   border-radius: 4px;
 }
 
@@ -87,7 +83,7 @@ a {
 }
 
 a:hover {
-  color: var(--second-color);
+  color: var(--main-color);
 }
 
 h1,
@@ -132,10 +128,6 @@ ol>li::before {
 
 ol p::before {
   content: '. ';
-}
-
-dl {
-  padding: var(--p-m-g);
 }
 
 dt {
@@ -220,55 +212,6 @@ pre::-webkit-scrollbar-thumb {
   background-color: var(--pre-color);
 }
 
-iframe {
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-}
-
-video {
-  width: 100%;
-  aspect-ratio: 16/9;
-}
-
-input,
-button,
-textarea {
-  outline: none;
-  border: none;
-  border: 1px solid #ccc;
-}
-
-.w {
-  position: relative;
-  width: 100%;
-  max-width: var(--w);
-  margin: 0 auto;
-  background-color: #fff;
-}
-
-.w::before {
-  content: '';
-  width: 1px;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  box-shadow: -1px 0 2rem 1rem rgba(0, 0, 0, .1);
-  z-index: -1;
-}
-
-.w::after {
-  content: '';
-  width: 1px;
-  height: 100%;
-  position: absolute;
-  right: 0;
-  top: 0;
-  box-shadow: 1px 0 2rem 1rem rgba(0, 0, 0, .1);
-  z-index: -1;
-}
-
 .flex-center {
   display: flex;
   align-items: center;
@@ -284,7 +227,6 @@ strong,
 .iconfont {
   color: var(--warn-color);
   font-size: 2rem;
-
 }
 
 .tips {
@@ -314,23 +256,9 @@ strong,
   text-indent: 2em;
 }
 
-.quote {
-  font-size: 1.4rem;
-  text-align: right;
-}
-
-.quote::before {
-  content: '-';
-}
-
 @media screen and (max-width:768px) {
   html {
     font-size: 60%;
-  }
-
-  .w::before,
-  .w::after {
-    display: none;
   }
 
   table {

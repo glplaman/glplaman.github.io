@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>列表 List</title>
-  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/page.css">
   </link>
 </head>
@@ -15,9 +15,9 @@
     <div class="ham" id="ham"><span class="iconfont icon-menu"></span></div>
     <aside id="aside">
       <a href="#overview"><span>概述</span> <span>Overview</span></a>
-      <a href="#item"><span>术语</span> <span>Item</span></a>
+      <a href="#item"><span>术语</span> <span>Items</span></a>
       <a href="#create"><span>创建</span> <span>Create</span></a>
-      <a href="#oper"><span>操作</span> <span>Operation</span></a>
+      <a href="#oper"><span>方法</span> <span>Methods</span></a>
       <a href="#sort"><span>排序</span> <span>Sort</span></a>
       <a href="#other"><span>其它</span> <span>Other</span></a>
       <a href="#summary"><span>总结</span> <span>Summary</span></a>
@@ -48,50 +48,53 @@
           <dd>根据索引值可以方便的访问元素</dd>
           <dd>索引值越界/溢出会告警</dd>
           <pre>
-nums = [1, 2, 3, 4, 5]
-num[0] #1
-num[-1] #5
-num[4] #5
+nums = [1,2,3,4,5]
+num[0] # 1
+num[-1] # 5
+num[4] # 5
 num[6] # IndexError: list index out of range</pre>
         </dl>
       </section>
       <h2 id="create">创建 Creation</h2>
       <section>
-        <ol>
-          <li>一个 square brackets []</li>
-          <pre>chars = ["a", "b", "c", "d", "e", "f", "g"]</pre>
-          <pre>nums = [0, 1, 2, 3, 4, 5, 6]</pre>
-          <li>多个 []：以逗号分隔</li>
+        <dl>
+          <dt>[]</dt>
+          <dd>使用列表直接赋值</dd>
+          <pre>chars = ["a","b","c","d","e"]</pre>
+          <pre>nums = [0,1,2,3,4]</pre>
+          <!-- <li>多个 []：以逗号分隔</li>
           <pre>
 # ([0, 1, 2, 3, 4, 5], ['a', 'b', 'c', 'd', 'e', 'f'])
 temp = chars, nums</pre>
           <pre>
 # ([1, 2, 3, 4], [5, 6, 7, 8])
-temp = [1, 2, 3, 4], [5, 6, 7, 8]</pre>
-          <li>构造函数 type constructor list()</li>
+temp = [1, 2, 3, 4], [5, 6, 7, 8]</pre> -->
+          <dt>list()</dt>
+          <dd>使用构造函数 type constructor</dd>
           <pre>chars = list() # []</pre>
-          <pre>letters = list("abc") # ['a', 'b', 'c']</pre>
-          <pre>nums = list( range(10) ) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
-          <li>推导式 list comprehension：由一个数据获取新的数据</li>
-          <p> [x for x in iterable condition]：借助 for 循环遍历可迭代数据</p>
-          <p>第一个 x 可以是表达式，对处理每一个迭代数据</p>
-          <p>可以先筛选数据再生成新数据</p>
+          <pre>letters = list("abc") # ['a','b','c']</pre>
+          <pre>nums = list( range(5) ) # [0,1,2,3,4]</pre>
+          <dt>[y for x in iterable condition]</dt>
+          <dd>使用列表推导式 list comprehension</dd>
+          <dd>y：由 x 获取/导出新的数据；通常是 x 的表达式</dd>
+          <dd>x in iterable：可迭代范围的每个元素</dd>
+          <dd>condition：根据条件筛选数据 x 再生成新数据</dd>
           <pre>
-# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-nums = [x for x in range(10)]</pre>
+# [0,1,2,3,4]
+nums = [x for x in range(5)]</pre>
           <pre>
-# [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-nums = [2 * x for x in range(10)]
+# [0,2,4,6,8]
+nums = [2 * x for x in range(5)]
 </pre>
           <pre>
-# [False, False, False, False, False, False, True, True, True, True]
-nums = [x > 5 for x in range(10)]</pre>
+# [False,False,False,True,True]
+nums = [x > 2 for x in range(5)]</pre>
           <pre>
-# [6, 7, 8, 9]
-nums = [x for x in range(10) if x > 5]</pre>
-        </ol>
+# [3,4]
+nums = [x for x in range(5) if x > 2]</pre>
+        </dl>
       </section>
-      <h2 id="oper">操作 Operation</h2>
+      <h2 id="oper">方法 Methods</h2>
       <section>
         <dl>
           <dd>适用通用序列操作和可变序列操作 - Lists implement all of the <a href="./sequence.html">common and mutable
@@ -213,6 +216,16 @@ stus.sort(key=lambda x: len(x["name"]))</pre>
           <dd>删除元素</dd>
           <dd>无法获取删除的元素</dd>
           <pre>del [1,2,3,4,5][0] # [2,3,4,5]</pre>
+          <dd>针对数字序列的函数</dd>
+          <dt>min(List)</dt>
+          <dd>最小值</dd>
+          <pre>min([1,2,3,4,5]) # 1</pre>
+          <dt>max(List)</dt>
+          <dd>最大值</dd>
+          <pre>max([1,2,3,4,5]) # 5</pre>
+          <dt>sum(List)</dt>
+          <dd>求和</dd>
+          <pre>sum([1,2,3,4,5]) # 15</pre>
         </dl>
       </section>
       <h2 id="summary">总结 summary</h2>
@@ -273,6 +286,18 @@ stus.sort(key=lambda x: len(x["name"]))</pre>
               <td>del List(index)</td>
               <td>删除列表元素</td>
             </tr>
+            <tr>
+              <td>min(List)</td>
+              <td>最小值</td>
+            </tr>
+            <tr>
+              <td>max(List)</td>
+              <td>最大值</td>
+            </tr>
+            <tr>
+              <td>sum(List)</td>
+              <td>求和</td>
+            </tr>
           </tbody>
         </table>
       </section>
@@ -283,31 +308,7 @@ stus.sort(key=lambda x: len(x["name"]))</pre>
     </main>
   </div>
   <script src="/utils/custom/footer.js"></script>
-  <script>
-    const ham = document.getElementById('ham');
-    const aside = document.getElementById('aside');
-    const links = aside.querySelectorAll('a');
-    const toggleAside = () => {
-      if (document.body.classList.contains('locked')) {
-        document.body.classList.remove('locked');
-      }
-    }
-    links.forEach(link => {
-      link.addEventListener('click', () => {
-        toggleAside()
-      })
-    })
-
-    ham.addEventListener('click', (e) => {
-      e.stopPropagation()
-      document.body.classList.toggle('locked');
-    });
-
-    document.addEventListener('click', (e) => {
-      toggleAside()
-    });
-
-  </script>
+  <script src="./js/app.js"></script>
 </body>
 
 </html>

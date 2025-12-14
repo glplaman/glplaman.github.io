@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>文本序列 Text Sequence Type</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
   <base target="_blank">
 </head>
 
@@ -14,26 +15,52 @@
     <h1>文本序列</h1>
     <span>Text Sequence Type</span>
   </header>
-  <dl>
-    <dt></dt>
-    <dd>
-      <div>Text Sequence Type</div>
-    </dd>
-    <dt>f-string</dt>
-    <dd>
-      <div>formatting operations</div>
-    </dd>
-    <dt>String Methods</dt>
-    <dd>
-      <p class="tips">使用点 . 触发代码提示，查看更多函数</p>
-      <p>查看字符串所有的普通函数</p>
+  <h2>String Methods</h2>
+  <section>
+    <dl>
+      <dt>一般操作</dt>
+      <dd>len(String)：字符串的长度</dd>
+      <pre>len('hi,there.') # 9</pre>
+
+      <dt>大小写转变</dt>
+      <dd>upper()：大写</dd>
+      <pre>'Hi,there.'.upper() # HI,THERE.</pre>
+      <dd>lower()：小写</dd>
+      <pre>'Hi,there.'.lower() # hi,there.</pre>
+      <dd>title()：首字母大写</dd>
+      <pre>'Hi,there.'.title() # Hi,There.</pre>
+
+      <div class="tips">不影响原来的变量</div>
+      <dt>空格去除</dt>
+      <dd>lstrip()：去除左边末尾空格 left space</dd>
+      <pre>' hi,there. '.lstrip()</pre>
+      <dd>rstrip()：去除左边末尾空格 right space</dd>
+      <pre>' hi,there. '.rstrip()</pre>
+      <dd>strip()：去除两侧空格</dd>
+      <pre>' hi,there. '.strip()</pre>
+      <p>使用长度函数验证空格去除效果 <span class="iconfont icon-help"></span></p>
+
+      <li>前后缀移除</li>
+      <dd>removeprefix()：移除指定前缀</dd>
+      <pre>'https://glplaman.github.io'.removeprefix('https://') # glplaman.github.io</pre>
+      <dd>removesuffix()：移除指定后缀</dd>
+      <pre>'fav.icon'.removesuffix('.icon') # fav</pre>
+      <dd>更多信息，请访问 <a href="https://docs.python.org/3/ddbrary/functions.html">Python - 内置函数</a></dd>
+      <div class="tips">使用点 . 触发代码提示，查看更多函数</div>
+      <dd>查看字符串所有的普通函数</dd>
       <pre>
 mehods = dir(str)
 for method in mehods:
     if not method.startswith("__"):
-        print(method)      </pre>
-    </dd>
-  </dl>
+        print(method)</pre>
+    </dl>
+  </section>
+  <h2>f-string</h2>
+  <section>
+    <dl>
+      <dd>formatting operations</dd>
+    </dl>
+  </section>
   <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>
 </body>
