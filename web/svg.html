@@ -60,14 +60,14 @@
     </dd>
     <dt>特点 Features</dt>
     <dd>
-      <div>可以使用SVG属性</div>
-      <div>也可以使用内联样式或外部CSS样式，更加方便js控制</div>
+      <div>可以使用 SVG 属性</div>
+      <div>也可以使用内联样式或外部 CSS 样式，更加方便 JavaScript 控制</div>
     </dd>
     <dt>SVG vs Canvas</dt>
     <dd>
-      <div>Canvas 是HTML5 提供的新标签元素，而 SVG 存在的历史要比 Canvas 久远，已经有十几年</div>
-      <div>Canvas 绘制出来的图形或传入的图片都依赖分辨率，能够以 .png 和 .jpg格式保存存储图像，是位图|标量图；SVG绘制的是矢量图</div>
-      <div>Canvas 不支持事件处理器，SVG支持事件处理器</div>
+      <div>Canvas 是 HTML5 提供的新标签元素，而 SVG 存在的历史要比 Canvas 久远，已经有十几年</div>
+      <div>Canvas 绘制出来的图形或传入的图片都依赖分辨率，能够以 .png 和 .jpg 格式保存存储图像，是位图|标量图；SVG 绘制的是矢量图</div>
+      <div>Canvas 不支持事件处理器，SVG 支持事件处理器</div>
       <div>Canvas多用于统计用的图表、大型的网络游戏；SVG：地图、动态的小图标 icon</div>
     </dd>
     <dt>步骤 steps</dt>
@@ -87,7 +87,7 @@
     <dd>圆的半径 radius for &lt;circle&gt; </dd>
     <dt>圆角半径 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/rx">rx</a> <a
         href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/ry">ry</a></dt>
-    <dd>xy轴上的圆角半径 radius；适用于 &lt;ellipse&gt; &lt;rect&gt; </dd>
+    <dd>x、y 轴上的圆角半径 radius；适用于 &lt;ellipse&gt; &lt;rect&gt; </dd>
     <dt>水平对齐 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-anchor">text anchor</a></dt>
     <dd>
       <div>文本<span class="warn">相对于中心点 - relative to a given point</span> 的对齐方式；默认start</div>
@@ -140,8 +140,8 @@
       </table>
     </dd>
     <dd class="tips">
-      <div>以下属性建议使用CSS代替</div>
-      <div>CSS的优先级高于元素的属性</div>
+      <div>以下属性建议使用 CSS 代替</div>
+      <div>CSS 的优先级高于元素的属性</div>
     </dd>
     <dt>垂直对齐 <a
         href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dominant-baseline">dominant-baseline</a>
@@ -171,13 +171,13 @@
       <pre>stroke-dasharray：length | percentage</pre>
       <div>stroke-linecap：笔刷端点类型，子弹形、圆形、方形</div>
       <pre>stroke-linecap：butt | round | square;</pre>
-      <div>fill：颜色填充；默认黑色；如果不需要，请显式指定为none</div>
+      <div>fill：颜色填充；默认黑色；如果不需要，请显式指定为 none</div>
       <div>fill-opacity：透明填充</div>
     </dd>
     <dt>填充 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill">fill</a></dt>
     <dd>
       <div>默认是黑色 black</div>
-      <div>如不需要，可以设为none或transparent</div>
+      <div>如不需要，可以设为 none 或 transparent</div>
     </dd>
     <dt>颜色 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/color">color</a></dt>
     <dd>
@@ -295,8 +295,8 @@
     <dt class="nav-cont">多边形 <a
         href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/polygon">&lt;polygon&gt;</a></dt>
     <dd>
-      <div>利用点的集合points和笔触颜色stroke和宽度stroke-width或填充fill绘制</div>
-      <div>填充fill默认黑色；如不需要，可以设置为none</div>
+      <div>利用点的集合 points 和笔触颜色 stroke 和宽度 stroke-width 或填充 fill 绘制</div>
+      <div>填充fill默认黑色；如不需要，可以设置为 none</div>
       <pre>
 &lt;svg class="svg-basic"&gt;
     &lt;polygon class="svg-polygon" points="0,0 50,50 50,100"&gt;&lt;/polygon&gt;
@@ -474,6 +474,17 @@
     <dd>
       <div>. SVG 基本形状中最强大的一个。通用绘图工具 - generic element to define a shape；可以创建线条、曲线、弧形等基本图形 - the basic shapes</div>
       <div>. path 元素的形状是通过属性 d 定义的，属性 d 的值是一个“命令 + 参数”的序列</div>
+      <div>. 核心属性 Attributes
+        <p>- d</p>
+        <p>- pathLength</p>
+      </div>
+      <pre>
+&lt;svg&gt;
+  &lt;path id="path"&gt;&lt;/path&gt;
+&lt;/svg&gt;</pre>
+      <pre>
+const path = document.getElementById('path');
+console.log(path.getTotalLength());</pre>
     </dd>
   </dl>
   <div class="chap">综合实例 Demo</div>
@@ -482,9 +493,9 @@
     <dd>矩形 &lt;rect&gt;、文字 &lt;text&gt;、对齐</dd>
     <dd>[<span class="iconfont icon-keyboard"></span>] 静态描边文字</dd>
     <dd>
-      <div>. SVG容器为320*120，定位点为160*60；当水平居中middle垂直居中central时，文字位于容器正中间</div>
+      <div>. SVG容器为320*120，定位点为160*60；当水平居中 middle 垂直居中 central 时，文字位于容器正中间</div>
       <div>. 在画布外，增加一个&lt;div&gt;放置背景图片</div>
-      <div>. 给text增加文字阴影[2重]</div>
+      <div>. 给 text 增加文字阴影[2重]</div>
       <div>. 采用<a href="./text.html">自定义字体</a></div>
       <div class="svg-txt-box">
         <svg class="svg-txt">
@@ -515,7 +526,7 @@
     </dd>
     <dd>[<span class="iconfont icon-keyboard"></span>] 动态描边文字</dd>
     <dd>
-      <div>. 借助<a href="./animation.html">帧动画</a>，改变stroke-dashoffset实现动态描边</div>
+      <div>. 借助<a href="./animation.html">帧动画</a>，改变 stroke-dashoffset 实现动态描边</div>
       <div class="svg-txt-box">
         <svg class="svg-txt">
           <text class="title" x="160" y="60" text-anchor="middle" dominant-baseline="central">路在前方人在路上</text>
@@ -555,7 +566,7 @@
     </dd>
     <dd>[<span class="iconfont icon-keyboard"></span>] 动态颜色文字</dd>
     <dd>. 使用 JavaScript 生成随机颜色</dd>
-    <dd>. 使用 CSS变量修改颜色</dd>
+    <dd>. 使用 CSS 变量修改颜色</dd>
     <dd>
       <pre>
 &lt;svg&gt;
@@ -566,11 +577,11 @@
     <dd style="text-align: center;"><img style="width: unset;" src="./imgs/svg.png" alt=""></dd>
     <dt>设计思路</dt>
     <dd class="sn">
-      <div>绘制一个fill为黑灰色、带轮廓stroke的圆circle</div>
-      <div>再绘制一个无填充、有轮廓stroke颜色和宽度，并指定一定占空比的同心圆</div>
-      <div>再绘制一个无填充、有轮廓stroke颜色和宽度、更大占空比的同心圆，并指定偏移offset</div>
-      <div>添加3个text，以中心为参考，分别是水平end对齐、水平start对齐和垂直hanging对齐</div>
-      <div>微调text坐标完成设计</div>
+      <div>绘制一个 fill 为黑灰色、带轮廓 stroke 的圆 circle</div>
+      <div>再绘制一个无填充、有轮廓 stroke 颜色和宽度，并指定一定占空比的同心圆</div>
+      <div>再绘制一个无填充、有轮廓stroke颜色和宽度、更大占空比的同心圆，并指定偏移 offset</div>
+      <div>添加3个 text，以中心为参考，分别是水平 end 对齐、水平 start 对齐和垂直 hanging 对齐</div>
+      <div>微调 text 坐标完成设计</div>
       <svg class="svg-demo">
         <circle class="inner" cx=150 cy=150 r="130"></circle>
         <circle class="middle" cx=150 cy=150 r="130"></circle>
