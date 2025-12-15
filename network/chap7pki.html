@@ -25,21 +25,33 @@
       <dd>数据完整性与不可否认性：支持数字签名，确保消息来源真实、未被篡改</dd>
       <dd>密钥管理：安全地生成、存储、更新和吊销密钥对</dd>
       <dd>访问控制与审计：为系统提供基于证书的身份识别机制</dd>
-      <dt>核心组件 Component</dt>
-      <dd>CA（Certificate Authority）：权威机构，负责签发和吊销数字证书</dd>
-      <dd>RA（Registration Authority）：负责审核用户身份信息，提交给 CA</dd>
-      <dd>数字证书：X.509 格式文件，包含用户公钥、身份信息、有效期和 CA 签名</dd>
-      <dd>证书库（Repository）：存放已签发证书和 CRL（证书吊销列表）</dd>
+      <dt>核心组件 Components</dt>
+      <dd>注册机构 RA - Registration Authority）：负责审核用户身份信息，提交给 CA</dd>
+      <dd>颁发机构 CA - Certificate Authority）：负责签发和吊销数字证书</dd>
+      <dd>数字证书：X.509 格式文件，包含
+        <p>用户公钥、身份信息</p>
+        <p>有效期</p>
+        <p>CA 签名</p>
+      </dd>
+      <dd>证书库 Repository
+        <p>存放已签发证书</p>
+        <p>证书吊销列表 CRL - Certificate Revocation List</p>
+      </dd>
       <dd>CRL / OCSP：用于实时查询证书是否有效</dd>
       <dd>终端实体：使用证书的用户、服务器或设备（如网站、移动应用）</dd>
       <dt>工作流程简述 Workflow</dt>
       <ol>
-        <li>用户生成密钥对（私钥保密，公钥提交）</li>
-        <li>向 CA 提交 CSR（证书签名请求）</li>
-        <li>CA 验证身份后，用其私钥签发证书</li>
+        <li>用户生成密钥对和证书签名请求 CSR - Certificate Signing Request</li>
+        <li>用户向 RA 提交公钥和 CSR</li>
+        <li>RA 验证用户身份（如：身份证、企业资质等）；如果验证通过，将申请转发给 CA</li>
+        <li>CA 使用其私钥对发送方的公钥和身份信息进行数字签名，生成数字证书，并返还给用户</li>
         <li>用户部署证书，用于加密通信或数字签名</li>
-        <li>接收方使用 CA 的公钥验证证书有效性，进而信任该公钥</li>
+        <li>接收方使用 CA 的公钥自己或向第三方验证</li>
       </ol>
+      <figure>
+        <img src="./imgs/pki.png" alt="">
+        <figcaption>PKI的签名认证</figcaption>
+      </figure>
       <dt>应用场景 Application</dt>
       <dd>HTTPS/SSL/TLS：网站身份认证与安全传输</dd>
       <dd>电子合同与电子签名：具备法律效力的数字签署</dd>
@@ -47,30 +59,40 @@
       <dd>金融交易：银行系统、支付平台的安全接入</dd>
       <dd>代码签名：软件发布时证明来源可信</dd>
       <dd>物联网设备认证：设备入网前身份验证</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] Github SSH登陆</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] Github SSH 请求并验证仓库的读写权限</div>
       <ol>
-        <li>客户端发起连接
-          <p>SSH 客户端连接到服务器的 22 端口</p>
-          <p>双方协商加密算法、协议版本等</p>
+        <li>SSH 客户端发起连接到服务器的 22 端口</li>
+        <li>双方协商加密算法、协议版本等</li>
+        <li>服务器要求身份认证；会查找所有绑定到你账户的公钥</li>
+        <li>服务器发送挑战 Challenge 给 SSH 客户端；要求 SSH 客户端用对应的私钥对该挑战进行签名
+          <p>这个挑战是随机、一次性、不可预测的，防止重放攻击</p>
         </li>
-        <li>服务器要求身份认证
-          <p>服务器看到你想用 user 账号登录</p>
-          <p>它检查 ~user/.ssh/authorized_keys 文件，发现里面有你的 公钥</p>
+        <li>SSH 客户端找到对应的 私钥（如 ~/.ssh/id_ed25519），用私钥签名，把签名结果发回服务器</li>
+        <li>服务器用存储的你的公钥去验证这个签名
+          <p>如果签名有效 → 证明你确实持有对应的私钥 → 身份合法 → 允许访问</p>
+          <p>如果无效 → 拒绝访问</p>
         </li>
-        <li>服务器发送“挑战”（Challenge）
-          <p>服务器生成一个随机字符串（比如一串 256 位的随机数），并发送给客户端</p>
-          <p>这个挑战是一次性、不可预测的，防止重放攻击</p>
+      </ol>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译：
+          <p>Certificates are used in digital communication for authentication, encryption, and as a signature. They
+            consist of various pieces of information, including:
+          </p>
+          <p>the certificate’s expiration date</p>
+          <p>the digital signature of the issuing certification authority, and</p>
+          <p>the public key of the certificate holder.</p>
         </li>
-        <li>客户端用私钥签名
-          <p>你的 SSH 客户端（如 OpenSSH）自动找到对应的 私钥（如 ~/.ssh/id_ed25519）</p>
-          <p>用该私钥对这个随机挑战进行 数字签名（不是加密！）</p>
-          <p>把签名结果发回服务器</p>
-        </li>
-        <li>服务器用公钥验证
-          <p>服务器用 authorized_keys 中存储的 你的公钥 去验证这个签名</p>
-          <p>如果签名有效 → 证明你确实持有对应的私钥 → 身份合法 → 允许登录</p>
-          <p>如果无效 → 拒绝登录</p>
-        </li>
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.essendi.ch/en/what-is-a-public-key-infrastructure-pki/">What is a public key
+            infrastructure (PKI)? <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://carreersupport.com/what-is-public-key-infrastructure/">What is Public Key Infrastructure
+            and How Does it Work? <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>

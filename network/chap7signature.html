@@ -17,40 +17,41 @@
       <span>&commat;Signature</span>
     </header>
     <dl>
-      <dt>场景需求</dt>
-      <dd>用户A向用户B发信息</dd>
-      <dd>用户B需要确认：
-        <p>主体鉴别：信息是A发出的</p>
-        <p>消息鉴别：消息没有被篡改</p>
-        <p>不可否认：防抵赖；第三方举证</p>
+      <dt>场景需求 Need</dt>
+      <dd>Alice 向 Bob 发信息</dd>
+      <dd> Bob 需要确认：
+        <p>主体鉴别 Authentication：信息是 Alice 发出的</p>
+        <p>消息鉴别 Integrity：消息没有被篡改</p>
+        <p>不可否认 Non-repudiation：防抵赖；第三方举证</p>
       </dd>
-      <dt>技术支撑</dt>
-      <dd>非对称加密</dd>
+      <dt>技术支撑 Support</dt>
+      <dd>公钥体制/非对称加密</dd>
       <dd>消息摘要</dd>
-      <dt>签名过程</dt>
+      <dd>公钥基础设施</dd>
+      <dt>签名过程 Signature</dt>
       <ol>
-        <li>用户A采用摘要算法对原始消息计算得到摘要</li>
+        <li>Alice 采用摘要算法如 MD5 对原始消息计算得到摘要</li>
         <li>使用自己的私钥对摘要进行签名，生成数字签名</li>
-        <li>将原始消息、数字签名和自己的公钥一起发给用户B
+        <li>将原始消息、数字签名和自己的公钥一起发给 Bob
           <p>公钥通常预先分发或通过证书获取，不需要每次发送</p>
-          <p>若 B 已知 A 的公钥（如通过 CA 证书），则无需重复发送</p>
+          <p>若 Bob 已知 Alice 的公钥（如通过 CA 证书），则无需重复发送</p>
         </li>
-        <li>用户B使用 A 的公钥验证签名，
+        <li>Bob 使用 Alice 的公钥验证签名，
           <p>若验证成功，得到一个哈希值 - 摘要1</p>
-          <p>否则不是A发送的消息</p>
+          <p>否则不是用户 Alice 发送的消息</p>
         </li>
-        <li>用户B再用同样的摘要算法对明文计算，得到摘要2，比较摘要1和摘要2
+        <li>Bob 再用同样的摘要算法对明文计算，得到摘要2，比较摘要1和摘要2
           <p>如果相等，则能确定消息未被篡改</p>
           <p>否则消息被篡改</p>
         </li>
-        <li>事后如果A反悔，不承认是自己发送的消息；B可向颁发公钥的机构 PKI 申请认证</li>
-        <li>PKI 或第三方仲裁机构可用 CA 的公钥验证签名，并确认 A 的身份</li>
+        <li>事后，如果 Alice 反悔，不承认是自己发送的消息；Bob 可向颁发公钥的机构 PKI 申请认证</li>
+        <li>PKI 或第三方仲裁机构可用 CA 的公钥验证签名，并确认用户 Alice 的身份</li>
       </ol>
       <figure class="img-sn">
         <img src="./imgs/signature0.png" alt="">
-        <figcaption>签名过程</figcaption>
+        <figcaption>Signature</figcaption>
       </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] Alice向Bob发送消息并签名</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] Alice 向 Bob 发送消息并签名</div>
       <dd>加密与签名
         <p>Alice 使用 Bob 的公钥对消息进行加密 → 确保只有 Bob 能解密</p>
         <p>Alice 使用自己的私钥对消息进行签名 → 确保消息来自 Alice，且未被篡改</p>
@@ -63,6 +64,39 @@
         <img src="./imgs/key0.jpg" alt="">
         <figcaption>加密和签名</figcaption>
       </figure>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Homework</dt>
+      <ol>
+        <li>翻译：
+          <p>A digital signature is a specific type of electronic signature that serves as a virtual “fingerprint” used
+            to authenticate the identity of the signer and the digital document they sign. </p>
+        </li>
+        <li>翻译：
+          <p>Digital signature is one of the electronic signature technologies, and it is also the most mature and
+            widely used electronic signature technology in the world. A digital signature is a digital string, it can
+            only be created by the sender of information and can not be forged by others. It is equivalent to a digital
+            fingerprint. And this digital string is also significant proof of the authenticity of the information of the
+            sender.</p>
+        </li>
+        <li>翻译：
+          <p>Digital signatures have many advantages. It can save time, reduce cost, and speed up work efficiency; It
+            also has strong security and legal benefits. Nowadays, it is widely used in business, finance, and other
+            fields.</p>
+        </li>
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.ssla.co.uk/digital-signature/">What is digital signature? <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://codesigningstore.com/what-is-a-digital-signature-in-cryptography">What Is a Digital
+            Signature in Cryptography? <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.signix.com/blog/what-is-a-digital-signature">What is a Digital Signature? <span
+              class="iconfont icon-share"></span></a></li>
+        <li><a href="https://hub.techoneglobal.com/digital-signature-and-e-signature/">Digital Signature and E-Signature
+            <span class="iconfont icon-share"></span></a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

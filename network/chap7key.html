@@ -16,6 +16,10 @@
       <span>&commat;Key</span>
     </header>
     <dl>
+      <figure>
+        <img src="./imgs/key7.png" alt="">
+        <figcaption>xmind</figcaption>
+      </figure>
       <dd>加密和解密用的密钥 K 是一串秘密的字符串（即比特串）</dd>
       <dd>解密算法是加密算法的逆运算</dd>
       <dd>明文通过加密算法 E 和加密密钥 K 变成密文 Y</dd>
@@ -39,19 +43,31 @@
     <h2>对称加密 Symmetric Encryption</h2>
     <dl>
       <dd>加密密钥与解密密钥都使用相同密钥的密码体制</dd>
-      <dt>特点 Feature</dt>
       <dd>发送方和接收方必须事先共享同一个密钥</dd>
-      <dd>密钥短</dd>
-      <dd>速度快</dd>
-      <dd>适合加密 <strong>大量</strong> 数据</dd>
+      <dd>也称私钥体制；密钥始终保密</dd>
       <figure>
         <img src="./imgs/key5.png" alt="">
         <figcaption>Symmetric Encryption</figcaption>
       </figure>
+      <dt>特点 Feature</dt>
+      <dd>密钥短</dd>
+      <dd>速度快</dd>
+      <dd>易于实现</dd>
+      <dd>适合加密 <strong>大量</strong> 数据</dd>
       <dt>焦点 Focus</dt>
       <dd>密钥分发困难（Key Distribution）：双方必须 <strong>安全</strong> 地共享同一个密钥，否则会被窃听</dd>
       <dd>密钥管理复杂（Key Management）：每对通信双方都需要一个独立密钥，n 个用户需要约 n(n−1)/2 个密钥</dd>
       <dd>多采用物理介质</dd>
+      <dt>加密类型 Type</dt>
+      <dd>流加密 Stream Ciphers
+        <p>一次对一位或一个字节的数据进行加密</p>
+        <p>中性能优异、速度快</p>
+        <p>适合实时加密场景，如流媒体</p>
+      </dd>
+      <dd>分组加密 Block Ciphers
+        <p>将数据按固定大小的块进行加密（例如128位的块）</p>
+        <p>速度通常慢于流密码，但应用极为广泛</p>
+      </dd>
       <dt>DES - 已淘汰</dt>
       <dd>Data Encryption Standard - 数据加密标准</dd>
       <dd>DES 属于对称密钥密码体制，是一种分组密码</dd>
@@ -85,14 +101,16 @@
       <dd>加密步骤复杂，运算速度比 3DES 快得多，安全性也大大加强</dd>
       <dd>2002 年成为美国政府加密标准</dd>
       <dd>现在是 ISO/IEC 18033-3 标准</dd>
-      <div class="tips">分组的运用</div>
+      <div class="tips">
+        <p>分组的运用</p>
+      </div>
     </dl>
     <h2>非对称加密 Asymmetric Encryption</h2>
     <dl>
-      <dd>又称公开密钥密码体制</dd>
       <dd>加密和解密使用不同的密钥</dd>
       <dd>私钥 Private Key：带有个人特征，可用于 <strong>解密、验证签名</strong></dd>
       <dd>公钥 Public Key：用于 <strong>加密、签名</strong></dd>
+      <dd>私钥自己保存，公钥公开；又称公开密钥密码体制，简称公钥体制</dd>
       <dd>不存在密钥配送问题，容易导致中间人攻击</dd>
       <dd>计算开销大，速度慢（比对称加密慢数百到上千倍）</dd>
       <dd>不适合加密大量数据</dd>
@@ -115,7 +133,7 @@
       <dd>Digital Signature Algorithm - 数字签名算法</dd>
       <dd>专门用于数字签名</dd>
       <dd>应用：SSH</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] Bob 向 Alice 发送加密消息</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] Bob 向 Alice 发送加密消息 - 公钥体制</div>
       <dd>不希望让第三方知道消息</dd>
       <dd>Bob 使用 Alice 的公钥加密信息，发送给 Alice</dd>
       <figure class="img-sn">
@@ -249,9 +267,51 @@
           </tr>
         </tbody>
       </table>
+      <dt>Homework</dt>
+      <ol>
+        <li>下述消息的处理过程是公钥体制还是私钥体制？
+          <p>Alice wants to send a secret message to Bob</p>
+          <p>Alice and Bob agree on a secret key</p>
+          <p>Alice encrypts the plaintext message using the secret key</p>
+          <p>Alice sends the encrypted ciphertext to Bob</p>
+          <p>Bob decrypts the ciphertext back into plaintext using the same secret key</p>
+        </li>
+        <li>翻译：
+          <p>Symmetric encryption (or “private key” encryption) is the process of using a single key to both encrypt and
+            decrypt data. It’s called “private key” because the use of a single encryption key necessitates that the key
+            is always kept private.</p>
+        </li>
+        <li>翻译：
+          <p>Asymmetric cryptographic keys are usually used. Public and private keys are always generated as a pair and
+            are mathematically linked to each other. In asymmetric encryption, data encrypted with the first key of a
+            key pair can only be decrypted with the corresponding second key.</p>
+          <p>A distinction is made between a public and a private key. The public key is freely accessible to everyone
+            in the network. The private key, however, is only known to the owner and is not shared.s</p>
+        </li>
+        <li>翻译：
+          <div>A challenge with symmetric key encryption is safely exchanging the secret key between participants.
+            Common solutions include:</div>
+          <p>Meet in person to exchange keys</p>
+          <p>Use asymmetric encryption to send the symmetric key</p>
+          <p>Use a key exchange protocol like Diffie-Hellman</p>
+          <p>Rely on a Public Key Infrastructure (PKI) and certificates</p>
+        </li>
+      </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://md5jiami.bmcx.com/">MD5 <span class="iconfont icon-share"></span></a> </li>
+        <li><a href="https://carreersupport.com/what-is-symmetric-key-encryption/">What is Symmetric Key Encryption?
+            <span class="iconfont icon-share"></span></a> </li>
+        <li><a href="https://www.okta.com/identity-101/asymmetric-encryption/">Asymmetric Encryption: Definition,
+            Architecture, Usage <span class="iconfont icon-share"></span></a> </li>
+        <li><a
+            href="https://www.thesslstore.com/blog/asymmetric-encryption-what-it-is-why-your-security-depends-on-it/">Asymmetric
+            Encryption: What It Is & Why Your Security Depends on It
+            <span class="iconfont icon-share"></span></a> </li>
+        <li><a href="https://www.babypips.com/crypto/learn/what-is-asymmetric-encryption">What is Asymmetric Encryption?
+            <span class="iconfont icon-share"></span></a> </li>
+        <li><a href="https://www.scaler.com/topics/symmetric-and-asymmetric-cryptography/">Difference between Symmetric
+            and Asymmetric Key Encryption
+            <span class="iconfont icon-share"></span></a> </li>
       </ol>
     </dl>
     <div id="footer"></div>
