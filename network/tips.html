@@ -6,11 +6,47 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tips</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
+    body {
+      counter-reset: sn;
+    }
+
     header {
+      display: flex;
+      align-items: flex-end;
+      height: 300px;
+      color: #fff;
       background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/10/NWLink-ipx-spx-compatible-transport.webp);
+      background-size: cover;
+    }
+
+    main {
+      margin: var(--p-m-g);
+    }
+
+    h2 {
+      background-color: var(--pink-color);
+      padding: var(--p-m-g);
+      color: #fff;
+      margin: 0 calc(var(--p-m-g)*-1);
+    }
+
+    table thead {
+      background-color: unset;
+      border-top: 1px solid var(--pink-color);
+      border-bottom: 1px solid var(--pink-color);
+    }
+
+    h3 {
+      counter-increment: sn;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    h3::before {
+      content: counter(sn, cjk-ideographic)'. ';
     }
   </style>
 </head>
@@ -20,17 +56,139 @@
     <header>
       <h1>Tips</h1>
     </header>
-    <dl>
-      <dd>Loopback in IPv4 is 127.0.0.1, while in IPv6 is ::1.</dd>
-      <dd>log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</dd>
-      <dd>ARP - determine a device's Media Access Control (MAC) address based on its Internet Protocol (IP) address.
-      </dd>
-      <dd>IP - The IP address of a host is partitioned by the network’s subnet mask into two parts, a network ID and a
-        host
-        ID.</dd>
-      <dd>A router connects devices across multiple networks. Switch’s main objective is to connect various devices in a
-        network.</dd>
-    </dl>
+    <main>
+      <ul>
+        <li>Loopback in IPv4 is 127.0.0.1, while in IPv6 is ::1.</li>
+        <li>log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</li>
+        <li>ARP - determine a device's Media Access Control (MAC) address based on its Internet Protocol (IP) address.
+        </li>
+        <li>IP - The IP address of a host is partitioned by the network’s subnet mask into two parts, a network ID and a
+          host
+          ID.</li>
+        <li>A router connects devices across multiple networks. Switch’s main objective is to connect various devices in
+          a
+          network.</li>
+      </ul>
+      <h2>Drill</h2>
+      <h3>已知某台设备的IP地址是 177.189.120.25, 其子网掩码为255.224.0.0，请问这台设备的主机号是多少？网络前缀是多少？子网内第一个可用IP地址是多少？网络地址是多少？子网内第一个可用IP地址是多少
+      </h3>
+      <p>答：</p>
+      <ul>
+        <li>IP地址：10110001.10111101.01111000.00011001</li>
+        <li>子网掩码：11111111.11100000.00000000.00000000</li>
+        <li>网络前缀11位</li>
+        <li>主机号（11位掩码部分取0）：00000000 00011101 01111000 00011001 → 0.29.120.25</li>
+        <li>IP所在的网络地址：177.189.120.25 & 255.224.0.0 = 177.160.0.0</li>
+        <!-- 189=128+32+16+8+4+1  → 1011 1101 -->
+        <!-- 224=128+64+32 → 1110 0000 -->
+        <li>第一个可以IP地址：177.160.0.1</li>
+      </ul>
+      <h3>某企业需要建设企业内部网络，现在需要你为该企业规划IP地址分配方案，需要将原198.28.32.0/24网段划分为均等的4个子网，分配给企业的4个部门使用，请写出划分子网后的子网掩码、4个子网各自的网络地址和广播地址。
+      </h3>
+      <p>答：</p>
+      <ul>
+        <li>198.28.32.0/24对应的IP地址块</li>
+        <li>198.28.32.0 - 198.28.32.255 共256个地址</li>
+        <li>平均分给4个部门。每个部门IP地址数量为 256/4=64</li>
+        <li>主机位需要6位即可，所以掩码是 32 - 6 = 26位</li>
+        <li>另：4个子网，需要向主机位借2位，所以是 24 + 2 = 26</li>
+        <li>从地址块中依次分割即可</li>
+        <div>部门1</div>
+        <p>198.28.32.0 - 网络地址</p>
+        <p>198.28.32.1 - 最小主机地址</p>
+        <p>198.28.32.62 - 最大主机地址</p>
+        <p>198.28.32.63 - 广播地址</p>
+        <p>子网掩码：255.255.255.192</p>
+        <div>部门2</div>
+        <p>198.28.32.64 - 网络地址</p>
+        <p>198.28.32.65 - 最小主机地址</p>
+        <p>198.28.32.126 - 最大主机地址</p>
+        <p>198.28.32.127 - 广播地址</p>
+        <p>子网掩码：255.255.255.192</p>
+        <div>部门3</div>
+        <p>198.28.32.128 - 网络地址</p>
+        <p>198.28.32.129 - 最小主机地址</p>
+        <p>198.28.32.190 - 最大主机地址</p>
+        <p>198.28.32.191 - 广播地址</p>
+        <p>子网掩码：255.255.255.192</p>
+        <div>部门4</div>
+        <p>198.28.32.192 - 网络地址</p>
+        <p>198.28.32.193 - 最小主机地址</p>
+        <p>198.28.32.254 - 最大主机地址</p>
+        <p>198.28.32.255 - 广播地址</p>
+        <p>子网掩码：255.255.255.192</p>
+      </ul>
+      <h3>某路由器R1建立了如下表所示的路由表，求各目标IP地址的转发</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>目的网络</th>
+            <th>子网掩码</th>
+            <th>下一跳设备或接口</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+          </tr>
+        </tbody>
+        <tr>
+          <td>196.138.0.0</td>
+          <td>255.255.255.0</td>
+          <td>F0/1</td>
+        </tr>
+        <tr>
+          <td>132.188.0.0</td>
+          <td>255.255.224.0</td>
+          <td>F0/2</td>
+        </tr>
+        <tr>
+          <td>198.166.180.0</td>
+          <td>255.255.255.128</td>
+          <td>R2</td>
+        </tr>
+        <tr>
+          <td>198.166.180.128</td>
+          <td>255.255.255.128</td>
+          <td>R3</td>
+        </tr>
+        <tr>
+          <td>0.0.0.0</td>
+          <td>0.0.0.0</td>
+          <td>R4</td>
+        </tr>
+      </table>
+      <div class="tips">
+        <p>分析：</p>
+        <p>已经给出目标网络，无须计算</p>
+        <p>只需逐个计算转发的IP地址是否匹配路由表对应的目标网络，找出最长网络前缀即可</p>
+      </div>
+      <p>答：</p>
+      <ol>
+        <li>目标IP地址196.138.0.100/24，下一跳设备或接口应为？</li>
+        <p>第一条路由记录：196.138.0.100 & 255.255.255.0 = 196.138.0.0 → 匹配当前记录对应的网络，且没有其它匹配路由 → 由 F0/1 转发</p>
+        <li>目标IP地址192.168.115.200/24，下一跳设备或接口应为？</li>
+        <p>第一条路由记录：192.168.115.200 & 255.255.255.0 = 192.168.115.0 → 不匹配路由网络</p>
+        <p>第二条路由记录：192.168.115.200 & 255.255.254.0 = 192.168.114.0 → 不匹配路由网络
+        <p>第三条路由记录：192.168.115.200 & 255.255.255.128 = 192.168.115.128 → 不匹配路由网络</p>
+        <p>第四条路由记录：192.168.115.200 & 255.255.255.128 = 192.168.115.128 → 不匹配路由网络</p>
+        <p>无具体匹配路由 → 选择默认路由 0.0.0.0 → 由 R4 转发</p>
+        <li>目标IP地址198.166.180.135/24，下一跳设备或接口应为？</li>
+        <p>第三条路由记录：198.166.180.135 & 255.255.255.128 = 198.166.180.128 → 不匹配路由网络
+          <!-- 135 = 10000111 -->
+          <!-- 128 = 10000000 -->
+        <p>第四条路由记录：198.166.180.135 & 255.255.255.128 = 198.166.180.128 → 匹配路由网络 → 由 R3 转发</p>
+        <li>目标IP地址198.166.180.115/24，下一跳设备或接口应为？</li>
+        <p>IP：198.166.180.115/24</p>
+        <p>第三条路由记录：198.166.180.115 & 255.255.255.128 = 198.166.180.0 → 匹配路由网络 → 由 R2 转发</p>
+        <!-- <p>115 = 01110011</p> -->
+        <!-- <p>128 = 10000000</p> -->
+        <li>目标IP地址132.188.20.20/24，下一跳设备或接口应为？</li>
+        <p>第二条路由记录：132.188.20.20 & 255.255.254.0 = 132.188.254.0 → 匹配路由网络 → 由 F0/2 转发</p>
+        <!-- 20 = 00010100 -->
+        <!-- 254 = 11111110 -->
+      </ol>
+    </main>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>
