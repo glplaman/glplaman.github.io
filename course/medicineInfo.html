@@ -20,7 +20,7 @@
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
-      gap: 10vw;
+      gap: clamp(10px, 10vw, 100px);
       overflow-y: auto;
       margin: 0 auto;
       padding: var(--p-m-g);
@@ -36,47 +36,80 @@
       line-height: 60px;
       text-align: center;
       border-radius: 50%;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(0, 210, 255, 1.0);
       flex-shrink: 0;
       cursor: pointer;
       user-select: none;
+      animation:
+        drop 0.5s ease-in-out forwards,
+        floating 2s ease-in-out infinite alternate;
+      animation-delay:
+        calc(0.1s * var(--delay)),
+        /* drop 延迟 */
+        calc(0.6s + 0.2s * var(--delay));
     }
 
-    .item-abbr:nth-child(odd) {
-      transform: translateY(-15px);
+    .item-abbr:hover {
+      animation-play-state: paused;
     }
 
-    .item-abbr:nth-child(even) {
-      transform: translateY(15px);
+    @keyframes drop {
+      from {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes floating {
+      0% {
+        transform: translateY(0px);
+        filter: hue-rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-40px);
+        filter: hue-rotate(180deg);
+      }
+
+      100% {
+        transform: translateY(40px);
+        filter: hue-rotate(360deg);
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>个人医疗数据库 PMID</h1>
+    <h1>个人医疗数据库</h1>
+    <p>Personal Medical Information Database</p>
   </header>
   <main>
-    <div class="item-abbr">0</div>
-    <div class="item-abbr">1</div>
-    <div class="item-abbr">2</div>
-    <div class="item-abbr">3</div>
-    <div class="item-abbr">4</div>
-    <div class="item-abbr">5</div>
-    <div class="item-abbr">6</div>
-    <div class="item-abbr">7</div>
-    <div class="item-abbr">8</div>
-    <div class="item-abbr">9</div>
+    <div class="item-abbr" style="--delay:0">0</div>
+    <div class="item-abbr" style="--delay:1">1</div>
+    <div class="item-abbr" style="--delay:2">2</div>
+    <div class="item-abbr" style="--delay:3">3</div>
+    <div class="item-abbr" style="--delay:4">4</div>
+    <div class="item-abbr" style="--delay:5">5</div>
+    <div class="item-abbr" style="--delay:6">6</div>
+    <div class="item-abbr" style="--delay:7">7</div>
+    <div class="item-abbr" style="--delay:8">8</div>
+    <div class="item-abbr" style="--delay:9">9</div>
   </main>
   <div class="modal" id="modal">
     <div class="item">
       <span id="btn-close" class="btn-close">&times;</span>
       <div class="item-header">
-        <p class="flex">日期 <span class="iconfont icon-clock"></span>：2025-12-17 19:40:30</p>
-        <p class="flex">类别 <span class="iconfont icon-outpatient"></span>：门诊</p>
-        <p class="flex">医院 <span class="iconfont icon-place"></span>：xxx</p>
-        <p class="flex">科室 <span class="iconfont icon-enshrine"></span>：yyy</p>
-        <p class="flex">医生 <span class="iconfont icon-doctor"></span>：zzz</p>
+        <p class="flex"><span>类别</span> <span class="iconfont icon-outpatient"></span>：门诊</p>
+        <p class="flex"><span>医院</span> <span class="iconfont icon-place"></span>：Lorem ipsum dolor sit amet</p>
+        <p class="flex"><span>科室</span> <span class="iconfont icon-enshrine"></span>：Lorem ipsum dolor sit</p>
+        <p class="flex"><span>医生</span> <span class="iconfont icon-doctor"></span>：Lorem, ipsum dolor</p>
+        <p class="flex"><span>日期</span> <span class="iconfont icon-clock"></span>：2025-12-17 19:40:30</p>
       </div>
       <div class="item-body">
         <details>
@@ -85,27 +118,27 @@
             <span class="iconfont icon-comment"></span>
             <span class="iconfont icon-arrow-right"></span>
           </summary>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
         </details>
         <details>
           <summary class="flex">
@@ -113,30 +146,30 @@
             <span class="iconfont icon-capsule"></span>
             <span class="iconfont icon-arrow-right"></span>
           </summary>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
         </details>
         <details>
           <summary class="flex">
@@ -144,18 +177,18 @@
             <span class="iconfont icon-card"></span>
             <span class="iconfont icon-arrow-right"></span>
           </summary>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur id, totam at dolor eum laborum
             illo
-            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</div>
+            accusamus sunt doloremque aut, quidem eaque quasi dolore vero numquam odio dolorem harum. Explicabo?</p>
         </details>
       </div>
     </div>
@@ -193,6 +226,9 @@
     items.forEach(item => {
       item.addEventListener('click', () => {
         modal.classList.add('active')
+        items.forEach(item => {
+          item.style.animationPlayState = 'paused'
+        })
       })
     })
     modal.addEventListener('click', (e) => {
@@ -202,9 +238,16 @@
     })
     btnClose.addEventListener('click', () => {
       modal.classList.remove('active')
+      items.forEach(item => {
+        item.style.animationPlayState = 'running'
+      })
     })
     avatar.addEventListener('click', () => {
-      avatarCont.classList.toggle('active')
+      if (avatarCont.classList.contains('active')) return
+      avatarCont.classList.add('active')
+      setTimeout(() => {
+        avatarCont.classList.remove('active')
+      }, 3000)
     })
     const years = [2020, 2021, 2022, 2024, 2025]
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -233,7 +276,7 @@
         monthInd++
         monthTxt.innerHTML = months[monthInd]
       }
-
+      animationInit()
     })
     btnMonthDec.addEventListener('click', () => {
       console.log('m dec');
@@ -241,7 +284,16 @@
         monthInd--
         monthTxt.innerHTML = months[monthInd]
       }
+      animationInit()
     })
+    function animationInit() {
+      const items = document.querySelectorAll('.item-abbr')
+      items.forEach(item => {
+        item.style.animation = 'none'
+        item.offsetHeight
+        item.style.animation = null
+      })
+    }
   </script>
 </body>
 

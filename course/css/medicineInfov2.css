@@ -2,7 +2,7 @@
 
     :root {
       --txt-color: #fff;
-      --main-color: #00d2ff;
+      --main-color: rgb(0, 210, 255);
       --w: 800px;
       --header-h: 100px;
       --p-m-g: 10px;
@@ -13,6 +13,11 @@
       margin: 0;
       box-sizing: border-box;
       font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    p {
+      text-align: justify;
     }
 
     .iconfont {
@@ -38,7 +43,11 @@
     }
 
     header {
-      line-height: var(--header-h);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: var(--header-h);
       padding: 0 var(--p-m-g);
       text-align: center;
     }
@@ -116,7 +125,6 @@
       justify-content: center;
       align-items: center;
       z-index: 99;
-      overflow-y: auto;
       opacity: 0;
       visibility: hidden;
     }
@@ -128,6 +136,7 @@
 
     .item {
       width: 90%;
+      max-width: 800px;
       height: 80%;
       padding: var(--p-m-g);
       background-color: var(--txt-color);
@@ -142,6 +151,8 @@
       /* animation: fade-in-out 0.2s ease-in-out; */
       /* animation-timeline: view(80% 0%); */
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--main-color) transparent;
     }
 
     .item::-webkit-scrollbar {
@@ -150,13 +161,12 @@
     }
 
     .item::-webkit-scrollbar-thumb {
-      width: 8px;
       background-color: var(--main-color);
     }
 
     .item-header {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
     @keyframes fade-in-out {
