@@ -30,6 +30,10 @@
       width: 8px;
     }
 
+    .itemsWrap.paused .item-abbr {
+      animation-play-state: paused !important;
+    }
+
     .item-abbr {
       width: 60px;
       height: 60px;
@@ -89,7 +93,7 @@
     <h1>个人医疗数据库</h1>
     <p>Personal Medical Information Database</p>
   </header>
-  <main>
+  <main class="item-abbr-wrap" id="item-abbr-wrap">
     <div class="item-abbr" style="--delay:0">0</div>
     <div class="item-abbr" style="--delay:1">1</div>
     <div class="item-abbr" style="--delay:2">2</div>
@@ -223,24 +227,24 @@
     const modal = document.getElementById('modal')
     const btnClose = document.getElementById('btn-close')
     const items = document.querySelectorAll('.item-abbr')
+    const itemsWrap = document.getElementById('item-abbr-wrap')
     items.forEach(item => {
       item.addEventListener('click', () => {
         modal.classList.add('active')
         items.forEach(item => {
-          item.style.animationPlayState = 'paused'
+          itemsWrap.classList.add('paused')
         })
       })
     })
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.remove('active')
+        itemsWrap.classList.add('paused')
       }
     })
     btnClose.addEventListener('click', () => {
       modal.classList.remove('active')
-      items.forEach(item => {
-        item.style.animationPlayState = 'running'
-      })
+      itemsWrap.classList.add('paused')
     })
     avatar.addEventListener('click', () => {
       if (avatarCont.classList.contains('active')) return
