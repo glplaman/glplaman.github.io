@@ -12,7 +12,7 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="./css/index2025.css">
   <style>
-    .stars {
+    /* .stars {
       position: absolute;
       left: 0;
       top: 0;
@@ -20,26 +20,36 @@
       display: flex;
       justify-content: space-between;
       z-index: 2;
-    }
+    } */
 
-    .stars .iconfont {
-      font-size: 14px;
-      color: #ff0;
-      animation: fall 10s linear calc(-40s/var(--i)) infinite;
+    .stars .star {
+      position: absolute;
+      bottom: 0;
+      width: 10px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background-color: #ff0;
+      box-shadow: 0 0 10px #ff0,
+        0 0 20px #ff0,
+        0 0 30px #ff0,
+        0 0 40px #ff0;
+      animation: fall 10s linear forwards;
       pointer-events: none;
     }
 
-    .stars .iconfont:nth-child(odd) {
-      filter: blur(1px);
-    }
-
     @keyframes fall {
-      from {
-        transform: translateY(600px) rotate(0deg);
+      0% {
+        transform: translateY(0px);
+        opacity: 1;
       }
 
-      to {
-        transform: translateY(-10px) rotate(calc(360deg/var(--i)));
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-600px);
+        opacity: 0;
       }
     }
   </style>
@@ -47,36 +57,7 @@
 
 <body>
 
-  <header>
-    <div class="stars" id="stars">
-      <span class="iconfont icon-star" style="--i:27"></span>
-      <span class="iconfont icon-star" style="--i:2"></span>
-      <span class="iconfont icon-star" style="--i:21"></span>
-      <span class="iconfont icon-star" style="--i:1"></span>
-      <span class="iconfont icon-star" style="--i:14"></span>
-      <span class="iconfont icon-star" style="--i:9"></span>
-      <span class="iconfont icon-star" style="--i:29"></span>
-      <span class="iconfont icon-star" style="--i:13"></span>
-      <span class="iconfont icon-star" style="--i:3"></span>
-      <span class="iconfont icon-star" style="--i:15"></span>
-      <span class="iconfont icon-star" style="--i:4"></span>
-      <span class="iconfont icon-star" style="--i:8"></span>
-      <span class="iconfont icon-star" style="--i:17"></span>
-      <span class="iconfont icon-star" style="--i:5"></span>
-      <span class="iconfont icon-star" style="--i:30"></span>
-      <span class="iconfont icon-star" style="--i:19"></span>
-      <span class="iconfont icon-star" style="--i:28"></span>
-      <span class="iconfont icon-star" style="--i:6"></span>
-      <span class="iconfont icon-star" style="--i:25"></span>
-      <span class="iconfont icon-star" style="--i:7"></span>
-      <span class="iconfont icon-star" style="--i:16"></span>
-      <span class="iconfont icon-star" style="--i:26"></span>
-      <span class="iconfont icon-star" style="--i:12"></span>
-      <span class="iconfont icon-star" style="--i:18"></span>
-      <span class="iconfont icon-star" style="--i:10"></span>
-      <span class="iconfont icon-star" style="--i:2"></span>
-      <span class="iconfont icon-star" style="--i:11"></span>
-    </div>
+  <header id="stars" class="stars">
     <div class="info">
       <a class="avatar" href="./web/demo/up2u.html" target="_blank">glpla.github.io</a>
       <h1>
@@ -214,6 +195,21 @@
   };
 
   // setInterval(setBg, 2000);
+</script>
+<script>
+  function gerStars() {
+    const stars = document.getElementById('stars')
+    let span = document.createElement('div')
+    span.className = 'star'
+    span.style.width = Math.random() * 12 + 'px'
+    span.style.left = Math.random() * window.innerWidth + 'px'
+    span.style.animationDuration = 6 + Math.random() * 4 + 's'
+    stars.appendChild(span)
+    setTimeout(() => {
+      span.remove()
+    }, 5000)
+  }
+  setInterval(gerStars, 200);
 </script>
 
 </html>
