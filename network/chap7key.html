@@ -7,6 +7,19 @@
   <title>密钥 Key</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    header {
+      background-image: url(./imgs/key9.png);
+      background-size: 324px;
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      background-color: var(--third-color);
+    }
+
+    header h1 {
+      color: var(--third-color);
+    }
+  </style>
 </head>
 
 <body>
@@ -59,30 +72,30 @@
       <dd>密钥管理复杂（Key Management）：每对通信双方都需要一个独立密钥，n 个用户需要约 n(n−1)/2 个密钥</dd>
       <dd>多采用物理介质</dd>
       <dt>加密类型 Type</dt>
-      <dd>流加密 Stream Ciphers
+      <dd>流加密 <strong>Stream</strong> Ciphers
         <p>一次对一位或一个字节的数据进行加密</p>
         <p>中性能优异、速度快</p>
         <p>适合实时加密场景，如流媒体</p>
       </dd>
-      <dd>分组加密 Block Ciphers
-        <p>将数据按固定大小的块进行加密（例如128位的块）</p>
+      <dd>分组加密 <strong>Block</strong> Ciphers
+        <p>将数据按固定大小的块进行加密（例如 128bit 的块）</p>
         <p>速度通常慢于流密码，但应用极为广泛</p>
       </dd>
       <dt>DES - 已淘汰</dt>
       <dd>Data Encryption Standard - 数据加密标准</dd>
       <dd>DES 属于对称密钥密码体制，是一种分组密码</dd>
-      <dd>在加密前，先对整个明文进行分组；每一个组长为 64 位</dd>
-      <dd>然后对每一个 64 位二进制数据进行加密处理，产生一组 64 位密文数据</dd>
+      <dd>在加密前，先对整个明文进行分组；每一个组长为 64bit</dd>
+      <dd>然后对每一个 64bit 二进制数据进行加密处理，产生一组 64bit 密文数据</dd>
       <dd>最后将各组密文串接起来，即得出整个的密文</dd>
-      <dd>使用的密钥为 64 位(实际密钥长度为 56 位，有 8 位用于奇偶校验)</dd>
+      <dd>使用的密钥为 64bit (实际密钥长度为 56bit，有 8bit 用于奇偶校验)</dd>
       <dd>仅取决于对密钥的保密，其算法是公开的</dd>
       <dd>严重问题：DES 密钥长度较短</dd>
       <dd>现在已经设计出搜索 DES 密钥的专用芯片</dd>
-      <dd>56 位 DES 已不再认为是安全的了</dd>
+      <dd>56bit DES 已不再认为是安全的了</dd>
       <dt>3DES - 已淘汰</dt>
       <dd>Triple DES - 3重 DES</dd>
-      <dd>使用两个 56 位的密钥</dd>
-      <dd>把一个 64 位明文用一个密钥加密</dd>
+      <dd>使用两个 56bit 的密钥</dd>
+      <dd>把一个 64bit 明文用一个密钥加密</dd>
       <dd>再用另一个密钥解密</dd>
       <dd>然后再使用第一个密钥加密</dd>
       <figure>
@@ -96,8 +109,8 @@
       <dt>AES</dt>
       <dd>Advanced Encryption Standard - 高级加密标准</dd>
       <dd>是一种分组密码</dd>
-      <dd>分组长度为 128 位</dd>
-      <dd>有三种加密标准，其密钥分别为 128 位、192 位和 256 位</dd>
+      <dd>分组长度为 128bit</dd>
+      <dd>有三种加密标准，其密钥分别为 128bit、192bit 和 256bit</dd>
       <dd>加密步骤复杂，运算速度比 3DES 快得多，安全性也大大加强</dd>
       <dd>2002 年成为美国政府加密标准</dd>
       <dd>现在是 ISO/IEC 18033-3 标准</dd>
@@ -174,6 +187,10 @@
     <h2>Summary & Homework</h2>
     <dl>
       <dt>Summary</dt>
+      <ol>
+        <li>私钥体制/对称加密</li>
+        <li>公钥体制/非对称加密</li>
+      </ol>
       <table class="txt-left">
         <caption>对称加密 vs 非对称加密</caption>
         <thead>

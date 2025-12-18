@@ -7,6 +7,11 @@
   <title>公钥基础设施 PKI</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    header {
+      background-image: url(./imgs/pki0.jpg);
+    }
+  </style>
 </head>
 
 <body>
@@ -29,13 +34,17 @@
       <dd>注册机构 RA - Registration Authority）：负责审核用户身份信息，提交给 CA</dd>
       <dd>颁发机构 CA - Certificate Authority）：负责签发和吊销数字证书</dd>
       <dd>数字证书：X.509 格式文件，包含
+        <p>版本号</p>
+        <p>序列号</p>
         <p>用户公钥、身份信息</p>
         <p>有效期</p>
         <p>CA 签名</p>
       </dd>
       <dd>证书库 Repository
-        <p>存放已签发证书</p>
-        <p>证书吊销列表 CRL - Certificate Revocation List</p>
+        <p>存放已签发证书：审计（Audit）、吊销管理（生成 CRL / 响应 OCSP）、重新签发或续订、合规性（如 WebTrust、ETSI 标准要求）</p>
+        <p>证书吊销列表 CRL - Certificate Revocation List <span class="iconfont icon-help"></span></p>
+        <!-- <p>因为“有效证书数量巨大，无法实时维护；而无效证书数量极少，可以高效管理</p> -->
+        <!-- <p>即使 CA 内部保存了所有有效证书，验证过程也不依赖这个有效列表</p> -->
       </dd>
       <dd>CRL / OCSP：用于实时查询证书是否有效</dd>
       <dd>终端实体：使用证书的用户、服务器或设备（如网站、移动应用）</dd>

@@ -8,6 +8,18 @@
   <title>数字签名 Signature</title>
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    header {
+      background-image: url(./imgs/signature4.png);
+      background-size: 500px;
+      background-repeat: no-repeat;
+      background-position: left bottom;
+    }
+
+    header h1 {
+      color: var(--main-color);
+    }
+  </style>
 </head>
 
 <body>
@@ -36,16 +48,19 @@
           <p>公钥通常预先分发或通过证书获取，不需要每次发送</p>
           <p>若 Bob 已知 Alice 的公钥（如通过 CA 证书），则无需重复发送</p>
         </li>
+        <li>Bod 从 Alice 证书中提取她的公钥
+          <p>证书可以由 Alice 发送或向 PKI 申请</p>
+        </li>
         <li>Bob 使用 Alice 的公钥验证签名，
           <p>若验证成功，得到一个哈希值 - 摘要1</p>
-          <p>否则不是用户 Alice 发送的消息</p>
+          <p>否则不是用户 Alice 发送的消息 - 主体鉴别</p>
         </li>
         <li>Bob 再用同样的摘要算法对明文计算，得到摘要2，比较摘要1和摘要2
-          <p>如果相等，则能确定消息未被篡改</p>
+          <p>如果相等，则能确定消息未被篡改 - 消息鉴别</p>
           <p>否则消息被篡改</p>
         </li>
         <li>事后，如果 Alice 反悔，不承认是自己发送的消息；Bob 可向颁发公钥的机构 PKI 申请认证</li>
-        <li>PKI 或第三方仲裁机构可用 CA 的公钥验证签名，并确认用户 Alice 的身份</li>
+        <li>PKI 或第三方仲裁机构可用 CA 的公钥验证签名，并确认用户 Alice 的身份 - 不可否认</li>
       </ol>
       <figure class="img-sn">
         <img src="./imgs/signature0.png" alt="">
@@ -96,6 +111,7 @@
               class="iconfont icon-share"></span></a></li>
         <li><a href="https://hub.techoneglobal.com/digital-signature-and-e-signature/">Digital Signature and E-Signature
             <span class="iconfont icon-share"></span></a></li>
+        <li><a href="https://www.yishuzi.cn/">艺术字 <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
