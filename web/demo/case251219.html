@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SetInterval Animation Position</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #111;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .line {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background-color: #0f0;
+      box-shadow: 0 0 10px #0f0,
+        0 0 20px #0f0,
+        0 0 30px #0f0,
+        0 0 50px #0f0;
+      animation: floating 5s linear forwards;
+    }
+
+    .line::before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 25%;
+      width: 50%;
+      height: 100vh;
+      opacity: 0.5;
+      background-image: linear-gradient(#0f0, transparent);
+    }
+
+    @keyframes floating {
+      0% {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    function line() {
+      let posx = Math.random() * window.innerWidth;
+      let w = Math.random() * 12;
+      let d = Math.random() * 3;
+      let e = document.createElement("div");
+      // e.setAttriute("class", "line");
+      e.className = "line";
+      e.style.left = posx + "px";
+      e.style.width = w + "px";
+      e.style.animationDuration = 2 + d + "s";
+      // e.classList.add("line");
+      document.body.appendChild(e);
+      setTimeout(() => {
+        e.remove();
+      }, 5000);
+    }
+    setInterval(line, 200);
+  </script>
+</body>
+
+</html>
