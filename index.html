@@ -199,15 +199,19 @@
 <script>
   const stars = document.getElementById('stars')
   function gerStars() {
+    let dur = 6 + Math.random() * 4
     let span = document.createElement('div')
     span.className = 'star'
     span.style.width = Math.random() * 12 + 'px'
     span.style.left = Math.random() * window.innerWidth + 'px'
-    span.style.animationDuration = 6 + Math.random() * 4 + 's'
+    span.style.animationDuration = dur + 's'
     stars.appendChild(span)
-    setTimeout(() => {
+    span.addEventListener('animationend', () => {
       span.remove()
-    }, 5000)
+    })
+    // setTimeout(() => {
+    //   span.remove()
+    // }, (dur + 0.1) * 1000)
   }
   setInterval(gerStars, 200);
 </script>
