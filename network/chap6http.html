@@ -28,6 +28,24 @@
     .code span::before {
       content: counter(code-sn, decimal-leading-zero)'    ';
     }
+
+    figure div {
+      width: 180px;
+      margin: 0 auto;
+      background-color: var(--tips-bold-color);
+      padding: var(--p-m-g);
+    }
+
+    figure p {
+      text-align: left;
+      line-height: 2;
+      padding: 0 var(--p-m-g);
+      background-color: var(--tips-color);
+    }
+
+    figure p:not(:last-child) {
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 
@@ -384,6 +402,15 @@ cookie = （同上）</pre>
         <p>实体主体：请求报文中一般不用，响应报文中也可能没有该字段</p>
       </dd>
       <dt>请求报文 Request</dt>
+      <figure>
+        <div>
+          <p>Request Line</p>
+          <p>Request Headers</p>
+          <p>CRLF</p>
+          <p>Request Body</p>
+        </div>
+        <figcaption>Request</figcaption>
+      </figure>
       <div>1. 请求行 Request Line</div>
       <dd>URI
         <p>请求标识符 Uniform Resource Identifier</p>
@@ -443,12 +470,15 @@ cookie = （同上）</pre>
   "password": "123456"
 }</pre>
       <dt>响应报文 Response</dt>
-      <dd>HTTP 响应也由四部分组成：
-        <p>状态行</p>
-        <p>响应头（Header）</p>
-        <p>空行（CRLF）</p>
-        <p>响应体（Body，可选）</p>
-      </dd>
+      <figure>
+        <div>
+          <p>Response Line</p>
+          <p>Response Headers</p>
+          <p>CRLF</p>
+          <p>Response Body</p>
+        </div>
+        <figcaption>Response</figcaption>
+      </figure>
       <div>1. 状态行 Status Line</div>
       <pre>&lt;HTTP版本&gt; &lt;状态码&gt; &lt;原因短语&gt;</pre>
       <dd>示例</dd>
@@ -596,6 +626,65 @@ console.log(res)
       <pre>&lt;img src="x" alt="y"&gt;</pre>
       <pre>&lt;img src="x" alt="y" /&gt;</pre>
       <div class="tips">现代IDE都是以 HTML5 为标准设计</div>
+    </dl>
+    <h2>实操 Drill</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 使用 REST Client发送请求</div>
+      <ol>
+        <li>下载并安装 Vs code（已有可略）</li>
+        <li>安装扩展 REST Client</li>
+        <li>设置重定向：取消 Rest-client: Followredirect</li>
+        <li>创建后缀名为 .http 的文件，如 demo.http</li>
+        <li>测试 GET</li>
+        <li>按照 http 请求的格式写入以下内容</li>
+        <pre>
+get /utils/data/rank/2024jk02.json http/1.1
+host: glplaman.github.io
+
+</pre>
+        <li>保存</li>
+        <li>在工作区任意位置，右键 → 发送请求 Send Request 发送请求</li>
+        <li>查看并分析响应</li>
+        <li>查看重定向</li>
+        <pre>
+get / http/1.1
+host: www.douyutv.com</pre>
+        <li>测试 POST</li>
+        <p>json值对</p>
+        <pre>
+POST /api/user/login HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+
+{
+  "loginId": "admin",
+  "loginPwd": "123123"
+}</pre>
+        <p>表单普通值对</p>
+        <pre>
+POST /api/user/login HTTP/1.1
+Host: study.duyiedu.com
+Content-Type: application/x-www-form-urlencoded
+
+loginId=admin&loginPwd=123123</pre>
+        <p>文件上传</p>
+        <pre>
+POST /upload HTTP/1.1
+Host: example.com
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="username"
+
+zhangsan
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="photo.jpg"
+Content-Type: image/jpeg
+
+[二进制图片数据]
+------WebKitFormBoundary7MA4YWxkTrZu0gW--</pre>
+      </ol>
+
     </dl>
     <dl>
       <dt>Reading</dt>

@@ -94,16 +94,6 @@
     <p>Personal Medical Information Database</p>
   </header> -->
   <main class="item-abbr-wrap" id="item-abbr-wrap">
-    <div class="item-abbr" style="--delay:0">0</div>
-    <div class="item-abbr" style="--delay:1">1</div>
-    <div class="item-abbr" style="--delay:2">2</div>
-    <div class="item-abbr" style="--delay:3">3</div>
-    <div class="item-abbr" style="--delay:4">4</div>
-    <div class="item-abbr" style="--delay:5">5</div>
-    <div class="item-abbr" style="--delay:6">6</div>
-    <div class="item-abbr" style="--delay:7">7</div>
-    <div class="item-abbr" style="--delay:8">8</div>
-    <div class="item-abbr" style="--delay:9">9</div>
   </main>
   <div class="modal" id="modal">
     <div class="item">
@@ -200,7 +190,7 @@
   <div class="menu flex">
     <div class="btns flex">
       <span class="iconfont icon-Arrowup btn" id="btn-year-inc"></span>
-      <div class="menu-btn year flex" id="btn-year-txt">2020</div>
+      <div class="menu-btn year flex" id="btn-year-txt">2023</div>
       <span class="iconfont icon-Arrowdown btn" id="btn-year-dec"></span>
     </div>
     <img class="user-img" src="/imgs/chrome.jpg" alt="" id="avatar">
@@ -253,7 +243,7 @@
         avatarCont.classList.remove('active')
       }, 3000)
     })
-    const years = [2020, 2021, 2022, 2024, 2025]
+    const years = [2023, 2024, 2025]
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let yearInd = 0
     let monthInd = 9
@@ -290,14 +280,28 @@
       }
       animationInit()
     })
-    function animationInit() {
-      const items = document.querySelectorAll('.item-abbr')
-      items.forEach(item => {
-        item.style.animation = 'none'
-        item.offsetHeight
-        item.style.animation = null
-      })
+    async function animationInit() {
+      try {
+        itemsWrap.innerHTML = '数据加载中...'
+        const res = await fetch(`https://glplaman.github.io/utils/data/rank/${years[yearInd]}0${months[monthInd]}.json`)
+        const data = await res.json()
+        console.log(data);
+
+        itemsWrap.innerHTML = data.cont.map((item, ind) => {
+          return `<div class="item-abbr" style='--delay:${ind}'>${item.ucredit}</div>`
+        }).join('')
+        // const items = document.querySelectorAll('.item-abbr')
+        // items.forEach(item => {
+        //   item.style.animation = 'none'
+        //   item.offsetHeight
+        //   item.style.animation = null
+        // })
+      } catch (error) {
+        itemsWrap.innerHTML = '数据为空'
+      }
+
     }
+    animationInit()
   </script>
 </body>
 

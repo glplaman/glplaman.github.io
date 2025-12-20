@@ -23,19 +23,21 @@
       <span>&lt;form&gt;</span>
     </header>
     <dl>
-      <dt>概述 Overview</dt>
-      <dd>人机交互 - 通过种类多样的表单元素，以值对 name-value 的形式收集/采集数据，提交给后端服务器 backend server处理</dd>
-      <dd>表单本身并不可见，除了承载脚本外，更多是作为一个壳/ <span class="warn">容器</span></dd>
-      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form">MDN - &lt;form&gt;</a>
-      </dd>
       <figure>
         <img src="./imgs/xmind-form.png" alt="">
-        <figcaption>表单思维导图</figcaption>
+        <figcaption>xmind</figcaption>
       </figure>
-      <dt>&lt;form&gt;</dt>
+      <dt>概述 Overview</dt>
+      <dd>人机交互 - 通过种类多样的表单元素，以值对 name-value 的形式收集/采集数据，提交给后端服务器 backend server处理</dd>
+      <dd>表单本身并不可见，除了承载脚本外，更多是作为一个壳/ <span class="warn">容器</span>，提供数据请求的能力</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form">MDN - &lt;form&gt;</a>
+      </dd>
+      <div class="tips">除了表单可以发送请求外，HTML页面解析时，碰到
+        &lt;link&gt;、&lt;img&gt;、&lt;audio&gt;、&lt;video&gt;、&lt;script&gt;等会主动请求对应的资源</div>
+      <dt>表单 &lt;form&gt;</dt>
       <dd>容器</dd>
       <dd>块元素 block</dd>
-      <dd>表单结构及属性 Attribute 如下</dd>
+      <dd>表单基本结构及属性 Attribute 如下</dd>
       <pre>&lt;form action="" method="" target="" name=""&gt;&lt;/form&gt;</pre>
       <table>
         <caption>&lt;form&gt;属性</caption>
@@ -48,17 +50,25 @@
         <tbody>
           <tr>
             <td>action</td>
-            <td>表单提交后端处理；通常由服务器端脚本负责处理，如 PHP 或 Node.js</td>
+            <td>表单提交给后端处理的脚本或接口</td>
           </tr>
           <tr>
             <td>method</td>
-            <td>表单提交的方式，常见有 GET | POST；默认 GET
-              <br>GET：获取数据，数据地址栏可见；数据少，不安全；便于分享[绩效]，通常使用各种 ID 来标记资源<br>POST：提交数据；数据不可见；数据多，安全；适合上传数据，如用户注册
+            <td>表单提交方式：
+              <br>get：默认；请求数据；参数通过 URL 传递；参数地址栏可见
+              <br>post：提交数据；数据不可见</br>
             </td>
           </tr>
           <tr>
             <td>target</td>
-            <td>展示响应的位置；可以指定 &lt;iframe&gt; 为响应区域而不跳转</td>
+            <td>展示响应的位置:
+              <br>_self：默认，当前页面
+              <br>_blank：新页面
+              <br>_parent：父页面
+              <br>_top：最顶层页面
+              <br>iframe：&lt;iframe&gt; 页面
+              <br>其他：指定页面名称</br>
+            </td>
           </tr>
           <tr>
             <td>name</td>
@@ -66,7 +76,10 @@
           </tr>
         </tbody>
       </table>
-      <dd>表单作为一个容器，可以容纳的表单元素 Element 类型很多；常见的表单元素和属性如下</dd>
+      <dd>GET方式默认不指定请求体，而是使用query的形式指定参数，易于分享</dd>
+      <pre>url?id=12123</pre>
+      <dt>表单元素</dt>
+      <dd>表单作为一个容器，可以容纳的表单元素类型很多；常见的表单元素和属性如下</dd>
       <table>
         <caption>常见表单元素</caption>
         <thead>
@@ -90,8 +103,10 @@
           </tr>
           <tr>
             <td><a href="./input_button.html">&lt;button&gt;</a></td>
-            <td>按钮；通过 type 可以指定为提交 submit 或清除 reset；默认是 submit
-              <br>也可以使用 &lt;input&gt; 指定其 type 为 button
+            <td>按钮；通过 type 可以指定：
+              <br>提交 submit：默认
+              <br>清除 reset：清除表单数据，重新填写
+              <br>也可使用 &lt;input&gt; 指定对应类型 type
             </td>
           </tr>
           <tr>
@@ -101,7 +116,9 @@
           </tr>
           <tr>
             <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/legend"> &lt;legend&gt;</a></td>
-            <td>分组的标题；分组的好处是操作整个分组，如使用 disabled 属性禁止整个分组</td>
+            <td>分组的标题
+              <br>操作整个分组，如使用 disabled 属性禁止整个分组
+            </td>
           </tr>
           <tr>
             <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist"> &lt;datalist&gt;</a>
@@ -131,16 +148,19 @@
           </tr>
           <tr>
             <td>id</td>
-            <td>可以用和 &lt;label&gt; 的 for 绑定，改善用户体验</td>
+            <td>通常用和 &lt;label&gt; 的属性 for 绑定，改善用户体验</td>
           </tr>
           <tr>
             <td>hidden</td>
-            <td>隐藏；也可以使用CSS隐藏 display: none</td>
+            <td>隐藏；也可以使用 CSS 隐藏 display: none</td>
           </tr>
         </tbody>
       </table>
-      <dt>Style</dt>
-      <dd>表单元素在不同浏览器上的默认样式不尽相同；为了统一，通常需要覆盖/初始化默认样式，再重新自定义新的样式</dd>
+    </dl>
+    <h2>样式 Style</h2>
+    <dl>
+      <dd>表单元素在不同浏览器上的默认样式不尽相同</dd>
+      <dd>为了统一，通常需要覆盖/初始化默认样式，再重新自定义新的样式</dd>
       <dd>初始化设置
         <p>各表单元素为 border-box</p>
         <p>字体大小、类型、边框、背景、轮廓、默认的占位符样式和文本选择样式</p>
@@ -186,13 +206,18 @@ input::placeholder {
         <li>根据表单元素之间的关系确定更为丰富的效果</li>
         <li>更多表单操作，请参考后续内容</li>
       </ul>
-      <dt>Event</dt>
-      <dd>支持2个事件，如下</dd>
+    </dl>
+    <h2>事件 Event</h2>
+    <dl>
+      <dd>表单 &lt;form&gt; 支持2个<a href="./js/event_form.html">事件 Event</a>，如下表</dd>
       <table>
-        <tr>
-          <th>item</th>
-          <th>desc</th>
-        </tr>
+        <caption>&lt;form&gt; 事件类型</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
             <td>submit</td>
@@ -204,48 +229,45 @@ input::placeholder {
           </tr>
         </tbody>
       </table>
-      <ul>
-        <li>提交 submit
-          <p>表单的默认事件；单击按钮时触发</p>
-          <p>表单提交数据时，要求表单元素必须指定 name 属性，否则提交时无法获取数据</p>
-          <p>表单提交时，默认页面会跳转；有时需要阻止表单的默认提交事件；但是需要 JavaScript 参与才能提交数据</p>
-        </li>
-        <li>清除 reset
-          <p>清除各表单元素数据，重新填写</p>
-          <p>更多信息，请访问 <a href="./js/event_form.html">表单事件 - JavaScript</a></p>
-        </li>
-        <li>提交后，默认会跳转</li>
-        <pre>
+      <dt>提交 submit</dt>
+      <dd>表单的默认事件；单击提交按钮或按回车触发</dd>
+      <dd>表单提交数据时，要求表单元素必须指定 name 属性，否则提交时无法获取数据</dd>
+      <dd>表单提交时，默认页面会跳转</dd>
+      <dd>本例提交使用 &lt;input&gt;</dd>
+      <pre>
 &lt;form action="https://www.baidu.com" method="get" name="demo"&gt;
   &lt;input type="text" name="uname" id=""&gt;
   &lt;input type="password" name="upass" id=""&gt;
   &lt;input type="submit" value="submit"&gt;
   &lt;input type="reset" value="reset"&gt;
 &lt;/form&gt;</pre>
-        <p>. 取消默认提交 - 使用内联方式；页面不发生跳转，数据不会发送到服务器，不能成功提交</p>
-        <pre>
-&lt;form action="https://www.baidu.com" method="get" name="demo" onsubmit='return false'&gt;
-  &lt;input type="text" name="uname" id=""&gt;
-  &lt;input type="password" name="upass" id=""&gt;
-  &lt;input type="submit" value="submit"&gt;
-  &lt;input type="reset" value="reset"&gt;
-&lt;/form&gt;</pre>
-        <p>. 提交数据并取消默认跳转 - 使用 JavaScript</p>
-        <pre>
+      <dd>有时/现在需要阻止表单的默认提交事件；需要 JavaScript 参与才能提交数据</dd>
+      <dd>提交数据并取消默认跳转 - 使用 JavaScript</dd>
+      <dd>本例提交使用 &lt;button&gt;</dd>
+      <pre>
 &lt;form action="https://www.baidu.com" method="get" name="demo"&gt;
   &lt;input type="text" name="uname" id=""&gt;
   &lt;input type="password" name="upass" id=""&gt;
-  &lt;input type="submit" value="submit"&gt;
-  &lt;input type="reset" value="reset"&gt;
+  &lt;button type="submit" value="submit"&gt;submit&lt;/button&gt;
+  &lt;button type="reset" value="reset"&gt;reset&lt;/button&gt;
 &lt;/form&gt;</pre>
-        <pre>
+      <pre>
 const form = document.querySelector('form')
 form.addEventListener('submit', (e) => {
   e.preventDefault()
   // ...
   // 提交数据
 })</pre>
-      </ul>
+      <!-- <dd>取消默认提交 - 使用内联方式；页面不发生跳转，数据不会发送到服务器，不能成功提交</dd>
+      <pre>
+&lt;form action="https://www.baidu.com" method="get" name="demo" onsubmit='return false'&gt;
+  &lt;input type="text" name="uname" id=""&gt;
+  &lt;input type="password" name="upass" id=""&gt;
+  &lt;input type="submit" value="submit"&gt;
+  &lt;input type="reset" value="reset"&gt;
+&lt;/form&gt;</pre> -->
+      <dt>清除 reset</dt>
+      <dd>清除各表单元素数据，重新填写</dd>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>

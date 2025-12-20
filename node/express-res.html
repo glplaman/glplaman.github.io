@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express Response</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>Express</h1>
+    <span>&commat;Response</span>
+  </header>
+  <dl>
+    <dt>res.json()</dt>
+    <dd>专门用于发送 JSON 格式数据，强制将数据序列化为 JSON，并设置 Content-Type: application/json</dd>
+    <dd>更常见</dd>
+    <dd>在写后端 API 时，优先使用 res.json()，这是行业惯例，也更安全、可读性更强</dd>
+    <pre>
+res.json({
+  "errno": 0,
+  "data": {
+    "url": 'http://127.0.0.1:3000/upload/' + req.file.filename,
+  }
+})</pre>
+    <dt>res.send()</dt>
+    <dd>是 Express 提供的高级方法，功能更强大</dd>
+    <dd>通用响应方法，可发送字符串、Buffer、对象、数组等，Express 会根据内容类型自动设置 Content-Type</dd>
+    <dd>自动设置合适的 Content-Type（如 text/html、application/json 等）</dd>
+    <dd>自动处理多种数据类型：
+      <p>字符串 → 发送为文本 text/html(字符串也看作 text/html”，这是 Express 的默认行为)</p>
+      <p>对象/数组 → 自动 JSON.stringify() 并设为 application/json</p>
+      <p>Buffer → 二进制数据</p>
+      <p>null/undefined → 发送空响应，状态码 204</p>
+    </dd>
+    <pre>
+app.get('/1.txt', (req, res) => {
+  res.send('大树1.txt') // 自动处理 OK
+})</pre>
+    <dd>自动设置状态码（如 200），也可配合 res.status(404).send(...) 使用</dd>
+    <dd>自动调用 res.end()，无需再手动结束</dd>
+    <pre>res.send('hi,there.') </pre>
+    <pre>res.send('&lt;h1&gt;hi,there.&lt;/h1&gt;') </pre>
+    <pre>res.send({ id: 10, name: 'gl' }) </pre>
+    <dt>res.write()</dt>
+    <dd>写回流时，需要显式指定结束 end()</dd>
+    <dd>argument: must be of type string or an instance of Buffer or Uint8Array</dd>
+    <pre>
+res.write(data)
+res.end()</pre>
+    <dt>res.end()</dt>
+    <dd>不会自动设置 Content-Type 或状态码（除非你手动设置），否则可能出现乱码（因为没指定编码）</dd>
+    <dd>不支持自动序列化对象（传对象会报错或显示 [object Object]）</dd>
+    <dd>不建议使用；请使用 send()</dd>
+    <pre>
+app.get('/1.txt', (req, res) => {
+  res.end('大树1.txt') // 乱码
+})</pre>
+    <pre>
+app.get('/1.txt', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+  res.end('大树1.txt') // OK
+})</pre>
+    <div class="tips">在开发者工具中，使用 encodeURIComponent() 测试编码</div>
+    <dt>res.sendFile()</dt>
+    <dd>发送文件；需要指定参考路径</dd>
+    <dd>直接传输文件，不需要将文件从用户空间拷贝到内核空间，文件传输效率提高；减少内存拷贝，减少CPU消耗，提高系统性能</dd>
+    <dd>只能用于发送静态文件，不能传输其他类型的数据</dd>
+    <dd>只能传输2GB以下的文件</dd>
+    <pre>res.sendFile('./www/index.html', { root: __dirname })</pre>
+
+    <dt>res.render()</dt>
+    <dd>渲染页面；页面路径依据配置的静态资源路径</dd>
+    <pre>
+res.render('home/index', {
+  navIndex: 0
+})</pre>
+    <dt>res.status()</dt>
+    <dd>设置 HTTP 响应的状态码。状态码是服务器返回给客户端的一个数字，用于表示请求的处理结果</dd>
+    <dd>成功的响应</dd>
+    <pre>res.status(200).json({ 'msg': 'ok' });</pre>
+    <pre>res.status(200).json({ 'code': 200, 'msg': 'Success', 'data': jsonData });</pre>
+    <dd>400 错误，并附带一个错误消息</dd>
+    <pre>res.status(400).json({ 'msg': 'Bad Request' });</pre>
+    <pre>res.status(400).json({ 'code': 400, 'msg': 'Invalid request parameters' });</pre>
+  </dl>
+  <h2>方法</h2>
+  <dl>
+    <dt>404</dt>
+    <dd>以中间件 use() 的形式实现</dd>
+    <dd>所有路由都匹配失败，则匹配 404；所以 404 中间件应该放在所有路由的 <span class="warn">后面</span></dd>
+    <dd>注意路径的拼接</dd>
+    <dd>
+      <pre>
+//其它路由
+
+server.use((req, res) => {
+  res.status(404).sendFile('./www//lost.html', { root: __dirname })
+})</pre>
+    </dd>
+    <dd>
+      <pre>
+//其它路由
+
+server.use((req, res) => {
+  res.status(404).sendFile('lost.html', { root: __dirname + '/www/' })
+})</pre>
+    </dd>
+    <dd class="tips">中间件在 req 和res 之间执行；拿到 res 后就没有必要了</dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

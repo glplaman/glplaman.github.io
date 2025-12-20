@@ -16,6 +16,15 @@
     <span>&commat;Middleware</span>
   </header>
   <dl>
+    <dt>express.urlencoded({ extended: true })</dt>
+    <dd>解析值对类型的数据，如表单提交的数据；表单默认的编码形式</dd>
+    <dd>extended 使用哪种库来解析请求体。true，使用qs库，允许解析更复杂的对象和数组；false，使用querystring库，能力较弱，不支持数组和对象的嵌套结构
+    </dd>
+    <dd>请求成功后，在开发者工具 → 网络 Network → Fetch/XHR中选择请求，在 负载 Payload 中查看解析后的数据 Form Data</dd>
+    <dt>express.json()</dt>
+    <dd>解析json数据，无需手动解析：JSON.parse()</dd>
+  </dl>
+  <dl>
     <dd>本质是一个函数function</dd>
     <dd>通过use挂载</dd>
     <dd>每个中间件都可以处理请求或响应</dd>
