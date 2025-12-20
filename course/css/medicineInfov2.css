@@ -167,10 +167,17 @@
       background-color: var(--main-color);
     }
 
+    .item h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      border-bottom: 1px solid var(--main-color);
+    }
+
     .item-header {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
+
 
     @keyframes fade-in-out {
       from {
@@ -184,6 +191,35 @@
       }
     }
 
+    @keyframes drop {
+      from {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes floating {
+      0% {
+        transform: translateY(0px);
+        filter: hue-rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-40px);
+        filter: hue-rotate(180deg);
+      }
+
+      100% {
+        transform: translateY(40px);
+        filter: hue-rotate(360deg);
+      }
+    }
+
     .btn-close {
       position: absolute;
       right: 1rem;
@@ -194,13 +230,27 @@
     }
 
     summary {
+      display: flex;
+      align-items: center;
+      gap: 2px;
       border-bottom: 1px solid var(--main-color);
       cursor: pointer;
+      user-select: none;
+    }
+
+    .item-cont {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s;
     }
 
     summary .icon-arrow-right {
       margin-left: auto;
       transition: 0.5s;
+    }
+
+    details[open] .item-cont {
+      max-height: 1000px;
     }
 
     details[open] .icon-arrow-right {
@@ -210,5 +260,34 @@
     @media screen and (max-width:768px) {
       main {
         flex-direction: column;
+      }
+
+      @keyframes drop {
+        from {
+          transform: translateX(-200px);
+          opacity: 0;
+        }
+
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes floating {
+        0% {
+          transform: translateX(0px);
+          filter: hue-rotate(0deg);
+        }
+
+        50% {
+          transform: translateX(-40px);
+          filter: hue-rotate(180deg);
+        }
+
+        100% {
+          transform: translateX(40px);
+          filter: hue-rotate(360deg);
+        }
       }
     }

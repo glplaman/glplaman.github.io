@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Element - Document Object Model</title>
-  <link rel="stylesheet" href="../../css/common.css">
-
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="../css/page.css">
   <base target="_blank">
   <style>
     .cards-wrap {
@@ -51,45 +51,35 @@
 </head>
 
 <body>
-  <header>
-    <h1>元素</h1>
-    <span>&commat;Element</span>
-    <span class="ham"></span>
-    <nav class="nav">
-      <a href="" style="--delay:0" class="nav-item">属性 Properties</a>
-      <a href="" style="--delay:1" class="nav-item">方法 Methods</a>
-      <a href="" style="--delay:2" class="nav-item">事件 Events</a>
-    </nav>
-  </header>
-  <dl>
-    <dt>概述 Overview</dt>
-    <dd>
-      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a> 是 <a
-          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</div>
-      <div>.最通用的的基类 - the most general base class</div>
-      <div>.节点 Node 的一个子集：元素节点 ELEMENT_NODE；同样可以继承并使用节点的属性、方法和事件</div>
-    </dd>
-  </dl>
-  <div class="chap">属性 Properties</div>
-  <dl class="nav-cont">
-    <dt>基本属性</dt>
-    <dd class="sn">
-      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes">Element.attributes</a></div>
-      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/children">Element.children</a></div>
-      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/id">Element.id</a></div>
-      <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a></div>
-      <p>.带标记的内容 - the HTML or XML markup contained within the element</p>
-    </dd>
-    <dd>.类似的属性还有：</dd>
-    <dd>
-      <div>.<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText">HTMLElement.innerText</a>
-      </div>
-      <div>.返回已经渲染的节点和其后代的文本内容 - the rendered text content of a node and its descendants</div>
-      <div>.使用内联样式 style 隐藏的元素不在获取范围 - 未被渲染；而样式文件中，隐藏的元素仍然可以被获取 - 因为它已经被渲染，但是被隐藏了</div>
-      <div>.如果设置该属性，就删除原有的所有后代元素 - Setting innerText on a node removes all of the node's children and replaces them with
-        a single text node with the given string value</div>
-      <div>. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">Node.textcontent</a></div>
-      <div>.无论是否被渲染，都可以获取</div>
+  <div class="w">
+    <header>
+      <h1>元素</h1>
+      <span>&commat;Element</span>
+    </header>
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a> 是 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API">Web API</a> 之一</dd>
+      <dd>最通用的的基类 - the most general base class</dd>
+      <dd>节点 Node 的一个子集：元素节点 ELEMENT_NODE；同样可以继承并使用节点的属性、方法和事件</dd>
+    </dl>
+    <h2>属性 Properties</h2>
+    <dl>
+      <dt>基本属性</dt>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/attributes">Element.attributes</a></dd>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/children">Element.children</a></dd>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/id">Element.id</a></dd>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">Element.innerHTML</a></dd>
+      <dd>带标记的内容 - the HTML or XML markup contained within the element</dd>
+      <dd>类似的属性还有：</dd>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText">HTMLElement.innerText</a>
+      </dd>
+      <dd>返回已经渲染的节点和其后代的文本内容 - the rendered text content of a node and its descendants</dd>
+      <dd>使用内联样式 style 隐藏的元素不在获取范围 - 未被渲染；而样式文件中，隐藏的元素仍然可以被获取 - 因为它已经被渲染，但是被隐藏了</dd>
+      <dd>如果设置该属性，就删除原有的所有后代元素 - Setting innerText on a node removes all of the node's children and replaces them
+        with a single text node with the given string value</dd>
+      <dd><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent">Node.textcontent</a></dd>
+      <dd>无论是否被渲染，都可以获取</dd>
       <pre>
 &lt;div id="box" class="wrap container"&gt;
     hi,there.
@@ -102,71 +92,63 @@ console.log(dom.innerHTML);//所有内容，包括标签
 console.log(dom.innerText);//不包括 hidden text with style
 console.log(dom.textContent);//包括所有文本内容
       </pre>
-    </dd>
-    <dt>class 系列</dt>
-    <dd>
-      <div>.开发的灵魂和重点</div>
-      <div>.通常结合静态类和动态类以及过渡动画等实现交互效果</div>
-      <div>.直接使用类名即可，不需要使用.</div>
+      <dt>class 系列</dt>
+      <dd>开发的灵魂和重点</dd>
+      <dd>通常结合静态类和动态类以及过渡动画等实现交互效果</dd>
+      <dd>直接使用类名即可，不需要使用.</dd>
       <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/className">Element.className</a></div>
-      <div>.以字符串的形式返回元素应用的类；多个类名以空格分隔</div>
-      <div>.对该属性赋值将会增加、删除类</div>
+      <dd>以字符串的形式返回元素应用的类；多个类名以空格分隔</dd>
+      <dd>对该属性赋值将会增加、删除类</dd>
       <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList">Element.classList</a></div>
-      <div>.以数组的形式返回元素应用的类</div>
+      <dd>以数组的形式返回元素应用的类</dd>
       <pre>&lt;div id="box" class="wrap container"&gt;hi,there.&lt;/div&gt;</pre>
       <pre>
 console.log(box);
 console.log(box.classList);//DOMTokenList(2)
 console.log(box.className);//wrap container</pre>
-    </dd>
-    <dt>client 系列</dt>
-    <dd>
+      <dt>client 系列</dt>
       <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth">Element.clientWidth</a>
       </div>
-      <div>如果没有指定样式设置大小或者是 inline 元素，则为 0</div>
-      <div>元素的样式高度，不包括隐藏部分、border、margin、滚动条 - the inner height of the element</div>
-      <div>includes padding but excludes borders, margins, and vertical scrollbars</div>
+      <dd>如果没有指定样式设置大小或者是 inline 元素，则为 0</dd>
+      <dd>元素的样式高度，不包括隐藏部分、border、margin、滚动条 - the inner height of the element</dd>
+      <dd>includes padding but excludes borders, margins, and vertical scrollbars</dd>
       <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight">Element.clientHeight</a>
       </div>
-      <div>the inner width of the element</div>
-      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientLeft">Element.clientLeft</a></div>
-      <div>the width of the left border of the element</div>
+      <dd>the inner width of the element</dd>
+      <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientLeft">Element.clientLeft</a>
+      </div>
+      <dd>the width of the left border of the element</dd>
       <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientTop">Element.clientTop</a></div>
-      <div>the width of the top border of the element</div>
-    </dd>
-    <dt>scroll 系列</dt>
-    <dd>
+      <dd>the width of the top border of the element</dd>
+      <dt>scroll 系列</dt>
       <div>1. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollWidth">Element.scrollWidth</a>
       </div>
-      <div>元素滚动视图的宽高；整数 - round the value to an integer</div>
-      <div>包括 padding、不可见的部分，不包括 border、滚动条</div>
-      <div>the scroll view width of the element</div>
-      <div>a measurement of the width of an element's content, including content not visible on the screen due to
-        overflow</div>
-      <div>includes the element's padding, but not its border, margin</div>
+      <dd>元素滚动视图的宽高；整数 - round the value to an integer</dd>
+      <dd>包括 padding、不可见的部分，不包括 border、滚动条</dd>
+      <dd>the scroll view width of the element</dd>
+      <dd>a measurement of the width of an element's content, including content not visible on the screen due to
+        overflow</dd>
+      <dd>includes the element's padding, but not its border, margin</dd>
       <div>2. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight">Element.scrollHeight</a>
       </div>
-      <div>the scroll view height of the element</div>
+      <dd>the scroll view height of the element</dd>
       <div>3. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft">Element.scrollLeft</a>、
       </div>
-      <div>the left scroll offset of the element</div>
+      <dd>the left scroll offset of the element</dd>
       <div>4. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTop">Element.scrollTop</a></div>
-      <div>the top of the element is scrolled vertically</div>
+      <dd>the top of the element is scrolled vertically</dd>
       <div class="tips">
         <div>日常开发中，更多关注 scrollHeight 和 scrollTop</div>
       </div>
-    </dd>
-  </dl>
-  <div class="chap">方法 Methods</div>
-  <dl class="nav-cont">
-    <dt>获取元素相关 Element</dt>
-    <dd>
-      <div>.在指定元素的后代中获取元素 - Element.getElementsByTagName is similar to Document.getElementsByTagName(), except that it
-        only
-        searches for elements that are descendants of the specified element.</div>
-      <div>.更广泛使用的是 <a href="./document.html">Document</a> 的方法获取</div>
-      <div>.通常先使用 Document 获取一个元素，再使用 Element 获取内部的元素，可以减少检索的范围，提升检索效率</div>
-      <div>.没有 getElementById 方法</div>
+    </dl>
+    <h2>方法 Methods</h2>
+    <dl>
+      <dt>获取元素相关 Element</dt>
+      <dd>在指定元素的后代中获取元素 - Element.getElementsByTagName is similar to Document.getElementsByTagName(), except that it
+        only searches for elements that are descendants of the specified element.</dd>
+      <dd>更广泛使用的是 <a href="./document.html">Document</a> 的方法获取</dd>
+      <dd>通常先使用 Document 获取一个元素，再使用 Element 获取内部的元素，可以减少检索的范围，提升检索效率</dd>
+      <dd>没有 getElementById 方法</dd>
       <table>
         <tr>
           <th>类别</th>
@@ -195,43 +177,40 @@ console.log(box.className);//wrap container</pre>
           <td>获取匹配选择器的所有元素</td>
         </tr>
       </table>
-    </dd>
-    <dt>属性相关 Attribute</dt>
-    <dd>
-      <div>.和元素的属性相关的方法</div>
-    </dd>
-    <table>
-      <tr>
-        <th>类别</th>
-        <th>说明</th>
-      </tr>
-      <tr>
-        <td>getAttribute()</td>
-        <td>获取属性</td>
-      </tr>
-      <tr>
-        <td>hasAttribute()</td>
-        <td>拥有单个属性</td>
-      </tr>
-      <tr>
-        <td>hasAttributes()</td>
-        <td>拥有多个属性</td>
-      </tr>
-      <tr>
-        <td>setAttribute()</td>
-        <td>设置属性</td>
-      </tr>
-      <tr>
-        <td>removeAttribute()</td>
-        <td>删除属性</td>
-      </tr>
-      <tr>
-        <td>toggleAttribute()</td>
-        <td>切换属性；有则删除，无则添加</td>
-      </tr>
-    </table>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 创建元素并为元素添加类名</dd>
-    <pre>
+      <dt>属性相关 Attribute</dt>
+      <dd>和元素的属性相关的方法</dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>getAttribute()</td>
+          <td>获取属性</td>
+        </tr>
+        <tr>
+          <td>hasAttribute()</td>
+          <td>拥有单个属性</td>
+        </tr>
+        <tr>
+          <td>hasAttributes()</td>
+          <td>拥有多个属性</td>
+        </tr>
+        <tr>
+          <td>setAttribute()</td>
+          <td>设置属性</td>
+        </tr>
+        <tr>
+          <td>removeAttribute()</td>
+          <td>删除属性</td>
+        </tr>
+        <tr>
+          <td>toggleAttribute()</td>
+          <td>切换属性；有则删除，无则添加</td>
+        </tr>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 创建元素并为元素添加类名</div>
+      <pre>
 let e = document.crehateElement("div");
 // option 1
 e.setAttriute("class", "line");
@@ -240,16 +219,16 @@ e.className = "line";
 // option 3
 e.classList.add("line");
 document.body.appendChild(e);</pre>
-
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView">scrollIntoView()</a>
-    </dt>
-    <dd>
-      <div>.滚动进入视图 - 滚动父级容器，使当前元素可见</div>
-      <div>.默认和可滚动的祖先容器顶部对齐 - aligned to the top of the visible area of the scrollable ancestor</div>
-      <div>.选项可以指定和容器的对齐方式：顶部 start、底部 bottom、中部 center对齐等</div>
-      <div>.选项可以指定滚动行为 behavior；也可以有 CSS 实现</div>
-      <div>.可以代替 &lt;a&gt;实现页面内部导航/锚点跳转</div>
-      <div>.适合用于导航、焦点定位等场景</div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView">scrollIntoView()</a>
+      </dt>
+      <dd>滚动进入视图 - 滚动父级容器，使当前元素可见</dd>
+      <dd>默认和可滚动的祖先容器顶部对齐
+        <p>aligned to the top of the visible area of the scrollable ancestor</p>
+      </dd>
+      <dd>选项可以指定和容器的对齐方式：顶部 start、底部 bottom、中部 center对齐等</dd>
+      <dd>选项可以指定滚动行为 behavior；也可以有 CSS 实现</dd>
+      <dd>可以代替 &lt;a&gt;实现页面内部导航/锚点跳转</dd>
+      <dd>适合用于导航、焦点定位等场景</dd>
       <pre>
 const links = document.querySelectorAll('.nav-item')
 const conts = document.querySelectorAll('.nav-cont')
@@ -258,40 +237,35 @@ links.forEach((link, ind) => {
         conts[ind].scrollIntoView({ behavior: 'smooth' })
     })
 })</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTo">scrollTo()</a></dt>
-    <dd>
-      <div>.滚动指定元素的内容，使其内部的滚动位置发生变化 - 平滑滚动到特定位置</div>
-      <div>.当你需要精确控制元素内部的滚动位置时使用</div>
-      <div>.适合用于实现自定义滚动效果或复杂布局</div>
-      <div>.可以使用选项式指定位置</div>
-      <div>.响应用户交互，如点击按钮滚动到特定内容 </div>
-      <div>.实现无限滚动和分页加载 </div>
-      <div>.固定头部或侧边栏等复杂布局需求</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 返回顶部</dd>
-    <dd>
-      <div>使用 window</div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTo">scrollTo()</a></dt>
+      <dd>滚动指定元素的内容，使其内部的滚动位置发生变化
+        <p>滚动到特定位置</p>
+      </dd>
+      <dd>当你需要精确控制元素内部的滚动位置时使用</dd>
+      <dd>适合用于实现自定义滚动效果或复杂布局</dd>
+      <dd>可以使用选项式指定位置</dd>
+      <dd>响应用户交互，如点击按钮滚动到特定内容 </dd>
+      <dd>实现无限滚动和分页加载 </dd>
+      <dd>固定头部或侧边栏等复杂布局需求</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 返回顶部</div>
+      <dd>使用 window</dd>
       <pre>window.scrollTo(0, 0);</pre>
-      <div>不要使用 body</div>
+      <dd>不要使用 body</dd>
       <pre>document.body.scrollTo({ top: 0, left: 0, behavior: 'smooth' });</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen">requestFullscreen()</a>
-    </dt>
-    <dd>.请求全屏，更多应用，请访问 <a href="./document.html">文档 Document - 全屏事件</a></dd>
-    <dt><a
-        href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">getBoundingClientRect()</a>
-    </dt>
-    <dd>
-      <div>.只读属性</div>
-      <div>.获取元素位置的高频操作；用了都说好；更加方便</div>
-      <div>.返回一个 DOMRect 对象，其提供了元素的大小及其相对于 <span class="warn">视口</span> 的位置 - the size of an element and its position
-        relative to the viewport</div>
-      <div>.描述整个矩形的位置和大小：left、top、right、bottom、x、y、width 、height</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 背景跟随</dd>
-    <dd>
-      <div>CSS 变量</div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen">requestFullscreen()</a>
+      </dt>
+      <dd>请求全屏，更多应用，请访问 <a href="./document.html">文档 Document - 全屏事件</a></dd>
+      <dt><a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">getBoundingClientRect()</a>
+      </dt>
+      <dd>只读属性</dd>
+      <dd>获取元素位置的高频操作；用了都说好；更加方便</dd>
+      <dd>返回一个 DOMRect 对象，其提供了元素的大小及其相对于 <span class="warn">视口</span> 的位置
+        <p>the size of an element and its position relative to the viewport</p>
+      </dd>
+      <dd>描述整个矩形的位置和大小：left、top、right、bottom、x、y、width 、height</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 背景跟随</div>
+      <dd>CSS 变量</dd>
       <div class="cards-wrap">
         <div class="cards">
           <div class="card">
@@ -323,14 +297,12 @@ links.forEach((link, ind) => {
           </div>
         </div>
       </div>
-    </dd>
-  </dl>
-  <div class="chap">事件 Events</div>
-  <dl class="nav-cont">
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#mouse_events">Mouse events</a></dt>
-    <dd>
-      <div>.更多鼠标事件信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent">MouseEvent</a></div>
-      <div>.鼠标事件</div>
+    </dl>
+    <h2>事件 Events</h2>
+    <dl>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#mouse_events">Mouse events</a></dt>
+      <dd>更多鼠标事件信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent">MouseEvent</a></dd>
+      <dd>鼠标事件</dd>
       <table>
         <tr>
           <th>item</th>
@@ -370,24 +342,21 @@ links.forEach((link, ind) => {
           <td>鼠标释放</td>
         </tr>
         <tr>
-          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event">contextmenu</a></td>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event">contextmenu</a>
+          </td>
           <td>右键菜单</td>
         </tr>
       </table>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 鼠标单击</dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 鼠标单击</div>
       <div>1. <a href="./demo/mouse-falling.html">坠落 falling</a></div>
-      <div>.帧动画 animation</div>
-      <div>.变换 transform</div>
-      <div>.DOM</div>
-      <div>.BOM</div>
+      <dd>帧动画 animation</dd>
+      <dd>变换 transform</dd>
+      <dd>DOM</dd>
+      <dd>BOM</dd>
       <div>2. <a href="./demo/mouse-rating.html">评分 rating</a></div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 鼠标跟随</dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 鼠标跟随</div>
       <div>1. <a href="./demo/mouse-follow.html">视口跟随</a></div>
-      <div>.通常跟随鼠标在视口内移动 clientY、clientY - 元素应脱离文档流 固定定位 fixed</div>
+      <dd>通常跟随鼠标在视口内移动 clientY、clientY - 元素应脱离文档流 固定定位 fixed</dd>
       <div class="cursor" id="cursor"></div>
       <pre>
 document.addEventListener('mousemove', (e) => {
@@ -396,8 +365,8 @@ document.addEventListener('mousemove', (e) => {
 })</pre>
       <div>2. <a href="./demo/mouse-follow-light.html">探照灯</a>、<a href="https://codepen.io/glpla/full/bGZdXEM">探照灯 -
           CodePen</a></div>
-      <div>.鼠标跟随</div>
-      <div>.路径剪切 clip-path</div>
+      <dd>鼠标跟随</dd>
+      <dd>路径剪切 clip-path</dd>
       <pre>
 const light = document.querySelector('.light')
 document.addEventListener('mousemove', (e) => {
@@ -405,11 +374,11 @@ document.addEventListener('mousemove', (e) => {
   let posy = e.clientY
   light.style.setProperty('--x', `${posx}px`)
   light.style.setProperty('--y', `${posy}px`)
-})      </pre>
+})</pre>
       <div>3. <a href="./demo/mouse-follow-inside.html">元素跟随</a></div>
-      <div>.鼠标仅仅在某个元素内部跟随</div>
-      <div>.脱离文档流 绝对定位 absolute</div>
-      <div>.局部范围内可以使用 pageX、pageY 配合 offsetX、offsetY</div>
+      <dd>鼠标仅仅在某个元素内部跟随</dd>
+      <dd>脱离文档流 绝对定位 absolute</dd>
+      <dd>局部范围内可以使用 pageX、pageY 配合 offsetX、offsetY</dd>
       <pre>
 box.addEventListener('mousemove', fn);
 function fn(e) {
@@ -418,19 +387,15 @@ function fn(e) {
     img.style.left = x + 'px';
     img.style.top = y + 'px';
 }      </pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 禁止右键菜单</dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 禁止右键菜单</div>
       <pre>
 document.addEventListener('contextmenu', (e) => {
   e.preventDefault()
 })</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#keyboard_events">Keyboard events</a></dt>
-    <dd>
-      <div>.按键事件</div>
-      <div>.返回按键对应的编码 - provide a code indicating which key is pressed</div>
-      <div>.部分事件不能使用侦听，只能使用传统事件 onXXX</div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#keyboard_events">Keyboard events</a></dt>
+      <dd>按键事件</dd>
+      <dd>返回按键对应的编码 - provide a code indicating which key is pressed</dd>
+      <dd>部分事件不能使用侦听，只能使用传统事件 onXXX</dd>
       <div class="tips">keypress 已废弃；请使用 keydown 代替</div>
       <table>
         <tr>
@@ -508,10 +473,8 @@ document.addEventListener('contextmenu', (e) => {
           <td>!、 @、 #、 $、 %、 ^、 &、 *、 (、 )</td>
         </tr>
       </table>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] JD搜索优化</dd>
-    <dd>
-      <div>.页面任何位置按下 s，激活搜索框；为了避免在按下 s 键时，s 被当作值输入到输入框中，需要在触发 sqlBtn.focus() 后阻止默认行为</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] JD搜索优化</div>
+      <dd>页面任何位置按下 s，激活搜索框；为了避免在按下 s 键时，s 被当作值输入到输入框中，需要在触发 sqlBtn.focus() 后阻止默认行为</dd>
       <pre>
 const sql = document.getElementById('sql');
 
@@ -522,7 +485,7 @@ document.addEventListener('keydown', (e) => {
   }
 })
 </pre>
-      <div>.如果搜索框是聚焦状态，按下 Escape，搜索框失去焦点</div>
+      <dd>如果搜索框是聚焦状态，按下 Escape，搜索框失去焦点</dd>
       <pre>
 document.addEventListener('keyup', (e) => {
   console.log('keyup', e.key);
@@ -530,33 +493,27 @@ document.addEventListener('keyup', (e) => {
     sql.blur()
   }
 })</pre>
-      <div>.输入过程中，按 Ctrl + Enter，提交信息</div>
-      <div>.如果要使用组合键，则可以利用 event.ctrlKey，event.shiftKey，event.altKey 判断是否按下了 Ctrl 键、Shift 键以及 Alt 键</div>
+      <dd>输入过程中，按 Ctrl + Enter，提交信息</dd>
+      <dd>如果要使用组合键，则可以利用 event.ctrlKey，event.shiftKey，event.altKey 判断是否按下了 Ctrl 键、Shift 键以及 Alt 键</dd>
       <pre>
   document.addEventListener('keydown', (e) => {
     if (sql === document.activeElement && e.ctrlKey && e.key === 'Enter') {
       console.log('hi');
     }
   })</pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] JD快递单号查询</dd>
-    <dd>
-      <div>.为方便阅读，在原搜索框上方额外显示一个字体略大的提示框</div>
-      <div>.获取焦点时，如果内容不为空，则显示提示框</div>
-      <div>.失去焦点时，隐藏提示框</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 禁止 F12 键</dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] JD快递单号查询</div>
+      <dd>为方便阅读，在原搜索框上方额外显示一个字体略大的提示框</dd>
+      <dd>获取焦点时，如果内容不为空，则显示提示框</dd>
+      <dd>失去焦点时，隐藏提示框</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 禁止 F12 键</div>
       <pre>
 document.addEventListener('keydown', (e) => {
   if (e.key === 'F12') {
     e.preventDefault()
   }
 })</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#focus_events">Focus events</a></dt>
-    <dd>
-      <div>.表单元素事件；更多表单运用，请访问 <a href="./event_form.html">表单事件</a></div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#focus_events">Focus events</a></dt>
+      <dd>表单元素事件；更多表单运用，请访问 <a href="./event_form.html">表单事件</a></dd>
       <table>
         <tr>
           <th>item</th>
@@ -573,9 +530,7 @@ document.addEventListener('keydown', (e) => {
           <td>获取焦点</td>
         </tr>
       </table>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#animation_events">Animation events</a></dt>
-    <dd>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#animation_events">Animation events</a></dt>
       <div>.帧动画事件</div>
       <table>
         <tr>
@@ -605,7 +560,7 @@ document.addEventListener('keydown', (e) => {
           <td>动画开始下一次迭代；多次动画</td>
         </tr>
       </table>
-      <div>如果一个元素的帧动画执行2次，那么会依次输出 start iteration end</div>
+      <dd>如果一个元素的帧动画执行2次，那么会依次输出 start iteration end</dd>
       <pre>
 const box = document.querySelector('.box');
 box.addEventListener('animationstart', () => {
@@ -619,11 +574,10 @@ box.addEventListener('animationend', () => {
 box.addEventListener('animationiteration', () => {
     console.log('iteration');
 })    </pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../demo/loading.html">页面跳转/加载页</a></dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#transition_events">Transition events</a></dt>
-    <dd>
-      <div>.过渡动画事件</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="../demo/loading.html">页面跳转/加载页</a></div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#transition_events">Transition events</a>
+      </dt>
+      <dd>过渡动画事件</dd>
       <table>
         <tr>
           <th>item</th>
@@ -652,12 +606,10 @@ box.addEventListener('animationiteration', () => {
           <td>动画运行中</td>
         </tr>
       </table>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#scroll_events">Scroll events</a></dt>
-    <dd>
-      <div>.元素的滚动事件</div>
-      <div>.元素应出现滚动条</div>
-      <div>.通常会采取 <a href="./debounce.html">节流</a> 措施 - fire at a high rate</div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#scroll_events">Scroll events</a></dt>
+      <dd>元素的滚动事件</dd>
+      <dd>元素应出现滚动条</dd>
+      <dd>通常会采取 <a href="./debounce.html">节流</a> 措施 - fire at a high rate</dd>
       <table>
         <tr>
           <th>item</th>
@@ -682,28 +634,22 @@ wrap.addEventListener('scroll', function () {
 wrap.addEventListener('scrollend', function () {
     console.log('end');
 })</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#clipboard_events">Clipboard events</a></dt>
-    <dd class="sn">
-      <p>.针对特定元素的内容的操作</p>
-      <p>.为了避免一个一个元素的操作，通常由 <a href="./document.html">Document</a>、<a href="./bom-event.html">Window</a>统一处理</p>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#clipboard_events">Clipboard events</a></dt>
+      <dd>针对特定元素的内容的操作</dd>
+      <dd>为了避免一个一个元素的操作，通常由 <a href="./document.html">Document</a>、<a href="./bom-event.html">Window</a>统一处理</dd>
       <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/copy_event">copy</a></div>
       <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/cut_event">cut</a></div>
       <div><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/paste_event">paste</a></div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 阻止页面复制和粘贴</dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 阻止页面复制和粘贴</div>
       <pre>
 document.addEventListener('copy', (e) => {
   e.preventDefault()
 })
 document.addEventListener('paste', (e) => {
   e.preventDefault()
-})      </pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#touch_events">Touch events</a></dt>
-    <dd>
-      <div>.触摸事件；移动端</div>
+})</pre>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element#touch_events">Touch events</a></dt>
+      <dd>触摸事件；移动端</dd>
       <table>
         <tr>
           <th>item</th>
@@ -722,11 +668,12 @@ document.addEventListener('paste', (e) => {
           <td>触摸结束；触发一次</td>
         </tr>
         <tr>
-          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchcancel_event">touchcancel</a></td>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchcancel_event">touchcancel</a>
+          </td>
           <td>触摸取消/中断</td>
         </tr>
       </table>
-      <div>.触摸事件属性</div>
+      <dd>触摸事件属性</dd>
       <table>
         <tr>
           <th>item</th>
@@ -741,11 +688,11 @@ document.addEventListener('paste', (e) => {
           <td>发生改变的触摸的手指个数；通常使用这个属性作为判断的依据</td>
         </tr>
       </table>
-      <div>.优先触发移动端事件[移动优先]，普通单击事件会有延迟：为了判断用户是否要双击，所以第一次单击后，要延迟一定时间[300ms]，等待用户下一次单击。如果有，就是双击，否则判定为单击</div>
-      <div>.300ms 是早期的一个评估值，和硬件设备和用户操作有关系；目前通常在 100ms 左右</div>
+      <dd>优先触发移动端事件[移动优先]，普通单击事件会有延迟：为了判断用户是否要双击，所以第一次单击后，要延迟一定时间[300ms]，等待用户下一次单击。如果有，就是双击，否则判定为单击</dd>
+      <dd>300ms 是早期的一个评估值，和硬件设备和用户操作有关系；目前通常在 100ms 左右</dd>
       <div>[解决方案]</div>
-      <div>.使用第三方插件 <a href="https://github.com/ftlabs/fastclick">fastclick</a>；既不影响桌面端使用，也可以在移动端正常使用</div>
-      <div>.封装 touch 函数</div>
+      <dd>.使用第三方插件 <a href="https://github.com/ftlabs/fastclick">fastclick</a>；既不影响桌面端使用，也可以在移动端正常使用</dd>
+      <dd>.封装 touch 函数</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 事件触发顺序</div>
       <pre>
 let box = document.querySelector('.cont');
@@ -762,20 +709,10 @@ box.addEventListener('touchstart', () => {
 box.addEventListener('touchend', () => {
   console.log('touchend');
 })</pre>
-    </dd>
-  </dl>
-  <a class="back2top" target="_self" href="#">
-    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-      p-id="31526" width="32" height="32">
-      <path
-        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
-        fill="#ffffff" p-id="31527"></path>
-    </svg>
-  </a>
-  <div id="footer"></div>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
-  <script src="/utils/custom/ham2024.js"></script>
-  <script src="/utils/custom/back2top.js"></script>
   <script>
     // document.addEventListener('copy', (e) => {
     //   e.preventDefault()
