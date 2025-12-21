@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本 Text</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <base target="_blank">
+  <style>
+    .svg-basic {
+      width: 300px;
+      height: 60px;
+      background-color: #f1f2f0;
+    }
+
+    .svg-txt-box {
+      background-image: url(./imgs/banner.png);
+    }
+
+    .svg-txt {
+      display: block;
+      width: 320px;
+      height: 120px;
+      margin: 0 auto;
+    }
+
+    .title {
+      font-size: 40px;
+      text-shadow: 0 0 10px #ff0, 0 0 10px #ff0;
+    }
+
+    .dynamic {
+      stroke-dasharray: 10 1000;
+      stroke-dashoffset: 10;
+      animation: draw 5s ease-in-out infinite;
+    }
+
+    @keyframes draw {
+      100% {
+        stroke-dasharray: 800;
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .svg-cell {
+      width: 300px;
+      height: 300px;
+      margin: 2rem auto;
+
+    }
+
+    .svg-cell .inner {
+      fill: #2f2f2f;
+      stroke: #3d3d3d;
+      stroke-width: 40px;
+    }
+
+    .svg-cell .middle {
+      fill: none;
+      stroke: #f489f3;
+      stroke-width: 40px;
+      stroke-dasharray: 360 250;
+      stroke-linecap: round;
+    }
+
+    .svg-cell .outer {
+      fill: none;
+      stroke: #01b3fd;
+      stroke-width: 40px;
+      stroke-dasharray: 100 700;
+      stroke-dashoffset: 990;
+      stroke-linecap: round;
+    }
+
+    .txt1 {
+      font-size: 40px;
+      font-weight: 600;
+      fill: #ffffff;
+    }
+
+    .txt2 {
+      font-size: 20px;
+      font-weight: 600;
+      fill: #ffffff;
+    }
+
+    .txt3 {
+      font-size: 14px;
+      fill: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>文本</h1>
+      <span>&commat;Text</span>
+    </header>
+    <dl>
+      <dd>SVG 允许您像图形一样修改文本并应用渐变、图案、剪切路径、蒙版或过滤器</dd>
+      <dd>默认情况下，text 使用以下默认属性：
+        <p>颜色：黑色</p>
+        <p>字体大小：16px</p>
+        <p>不换行</p>
+      </dd>
+      <dd>x y：基线的起点 - the starting point of the text baseline；设置文本的起点</dd>
+      <dd>dx dy：用于指定每个字符或子字符串&lt;tspan&gt;相对于其父元素的额外偏移量，用来微调文本的位置，特别是在处理多行文本或特定字符的对齐时非常有用</dd>
+      <dd>结合水平对齐属性 text-anchor和垂直对齐属性 dominant-baseline，更加精准控制文本</dd>
+      <dd>SVG尺寸：300*60</dd>
+      <dd>默认</dd>
+      <pre>&lt;text&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt" viewbox="0 0 300 60">
+          <text>遇见最好的自己</text>
+        </svg>
+        <figcaption>默认</figcaption>
+      </figure>
+      <dd>偏移</dd>
+      <pre>&lt;text x="16" y="16"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt" viewbox="0 0 300 60">
+          <text x="16" y="16">遇见最好的自己</text>
+        </svg>
+        <figcaption>x="16" y="16"</figcaption>
+      </figure>
+      <dt>文本锚点 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-anchor">text anchor</a></dt>
+      <dd>控制水平对齐：文本内容以指定的 x 坐标为中心对齐
+        <p>相对于中心点 - relative to a given point</p>
+        <p>包括：start | middle | end</p>
+      </dd>
+      <dd>end</dd>
+      <pre>&lt;text text-anchor="end"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text text-anchor="end">遇见最好的自己</text>
+        </svg>
+        <figcaption>text-anchor="end"</figcaption>
+      </figure>
+      <dd>middle</dd>
+      <pre>&lt;text text-anchor="middle"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text text-anchor="middle">遇见最好的自己</text>
+        </svg>
+        <figcaption>text-anchor="middle"</figcaption>
+      </figure>
+      <dt>基线 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dominant-baseline">dominant-baseline</a></dt>
+      <dd>控制垂直对齐：决定文本的哪条线作为参考线（基线），来对齐到 y 坐标</dd>
+      <dd>它决定了文本的顶部、底部或中间如何与 y 值对齐</dd>
+      <dd>文本相对于基线的垂直对齐方式</dd>
+      <dd>baseline：文本的底部边缘所在的水平线</dd>
+      <dd>middle：将文本的中部对齐到指定的基线位置。适用于将文本的中部与某个容器或行的中部对齐</dd>
+      <dd>central：将文本的中心对齐到指定的基线位置。适用于将文本整体居中于容器或行的高度内</dd>
+      <dd>包括：auto | hanging | ideographic | alphabetic | middle | central</dd>
+      <dd>对英文字体有影响</dd>
+      <dd>在中文排版中，central 通常更自然，因为汉字没有明显的“基线”概念，视觉中心更重要</dd>
+      <figure>
+        <img src="./imgs/svg-central.png" alt="">
+        <figcaption>middle vs central</figcaption>
+      </figure>
+      <dd>central
+        <p>y = 0</p>
+      </dd>
+      <pre>&lt;text dominant-baseline="central"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text dominant-baseline="central">遇见最好的自己</text>
+        </svg>
+        <figcaption>dominant-baseline="central"</figcaption>
+      </figure>
+      <dd>middle
+        <p>y = 0</p>
+      </dd>
+      <pre>&lt;text dominant-baseline="middle"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text dominant-baseline="middle">遇见最好的自己</text>
+        </svg>
+        <figcaption>dominant-baseline="middle"</figcaption>
+      </figure>
+      <dt>子文本 <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan">&lt;tspan&gt;</a></dt>
+      <dd>&lt;text&gt;的子文本 subtext，便于精准控制</dd>
+      <pre>
+&lt;text x="16" y="16"&gt;
+  &lt;tspan&gt;Hi,&lt;/tspan&gt;
+  &lt;tspan&gt;glpla；无偏移&lt;/tspan&gt;
+&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text x="16" y="16">
+            <tspan>Hi,</tspan>
+            <tspan>glpla；无偏移</tspan>
+          </text>
+        </svg>
+      </figure>
+      <pre>
+&lt;text x="16" y="16"&gt;
+  &lt;tspan&gt;Hi,&lt;/tspan&gt;
+  &lt;tspan dx="16" dy="16"&gt;glpla；相对父元素偏移&lt;/tspan&gt;
+&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text x="16" y="16">
+            <tspan>Hi,</tspan>
+            <tspan dx="16" dy="16">glpla；相对父元素偏移</tspan>
+          </text>
+        </svg>
+
+      </figure>
+      <pre>
+&lt;svg class="svg-basic txt"&gt;
+  &lt;text x="150" y="30" dominant-baseline="middle" text-anchor="middle"&gt;
+    &lt;tspan&gt;Hi,&lt;/tspan&gt;
+    &lt;tspan font-size="18"&gt;glpla&lt;/tspan&gt;
+    &lt;tspan font-size="20"&gt;小字体&lt;/tspan&gt;
+    &lt;tspan font-size="24"&gt;大字体&lt;/tspan&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" dominant-baseline="middle" text-anchor="middle">
+            <tspan>Hi,</tspan>
+            <tspan font-size="18">glpla</tspan>
+            <tspan font-size="20">小字体</tspan>
+            <tspan font-size="24">大字体</tspan>
+          </text>
+        </svg>
+
+      </figure>
+      <pre>
+&lt;svg class="svg-basic txt"&gt;
+  &lt;text x="150" y="30" dominant-baseline="central" text-anchor="middle"&gt;
+    &lt;tspan&gt;Hi,&lt;/tspan&gt;
+    &lt;tspan font-size="18"&gt;glpla&lt;/tspan&gt;
+    &lt;tspan font-size="20"&gt;小字体&lt;/tspan&gt;
+    &lt;tspan font-size="24"&gt;大字体&lt;/tspan&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" dominant-baseline="central" text-anchor="middle">
+            <tspan>Hi,</tspan>
+            <tspan font-size="18">glpla</tspan>
+            <tspan font-size="20">小字体</tspan>
+            <tspan font-size="24">大字体</tspan>
+          </text>
+        </svg>
+
+      </figure>
+    </dl>
+    <h2>综合实例 Demo</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 居中</div>
+      <pre>&lt;text x="150" y="30" 
+  text-anchor="middle" 
+  dominant-baseline="central"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <figure>
+        <svg class="svg-basic txt">
+          <text x="150" y="30" text-anchor="middle" dominant-baseline="central">遇见最好的自己</text>
+        </svg>
+        <figcaption>居中</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 静态描边文字</div>
+      <dd>SVG容器为320*120，定位点为160*60；当水平居中 middle 垂直居中 central 时，文字位于容器正中间</dd>
+      <dd>在画布外，增加一个容器放置背景图片</dd>
+      <dd>增加文字阴影 text-shadow</dd>
+      <dd>请使用 <a href="./text.html"> 自定义字体</a> 和 <a href="./filter.html">滤镜 Filter</a> 优化案例</dd>
+      <div class="svg-txt-box">
+        <svg class="svg-txt">
+          <text class="title static" x="160" y="60" text-anchor="middle" dominant-baseline="central" fill="none"
+            stroke="#fff" stroke-width="1">遇见最好的自己</text>
+        </svg>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 动态描边文字</div>
+      <dd>借助 <a href="./animation.html">帧动画 @keyframes</a>，改变 stroke-dashoffset 实现动态描边</dd>
+      <div class="svg-txt-box">
+        <svg class="svg-txt">
+          <text class="title dynamic" x="160" y="60" text-anchor="middle" dominant-baseline="central" fill="none"
+            stroke="#fff" stroke-width="1">遇见最好的自己</text>
+        </svg>
+      </div>
+      <pre>
+.dynamic {
+  stroke-dasharray: 10 1000;
+  stroke-dashoffset: 10;
+  animation: draw 5s ease-in-out infinite;
+}
+
+@keyframes draw {
+  100% {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 0;
+  }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 手机清理空间效果图</div>
+      <dd>绘制一个 fill 为黑灰色、带轮廓 stroke 的圆 circle</dd>
+      <dd>再绘制一个无填充、有轮廓 stroke 颜色和宽度，并指定一定占空比的同心圆</dd>
+      <dd>再绘制一个无填充、有轮廓stroke颜色和宽度、更大占空比的同心圆，并指定偏移 offset</dd>
+      <dd>添加3个 text，以中心为参考，分别是水平 end 对齐、水平 start 对齐和垂直 hanging 对齐</dd>
+      <figure>
+        <svg class="svg-cell">
+          <circle class="inner" cx=150 cy=150 r="130"></circle>
+          <circle class="middle" cx=150 cy=150 r="130"></circle>
+          <circle class="outer" cx=150 cy=150 r="130"></circle>
+          <text class="txt1" x="150" y="150" text-anchor="end">5.3</text>
+          <text class="txt2" x="160" y="150" text-anchor="start">GB</text>
+          <text class="txt3" x="150" y="160" text-anchor="middle" dominant-baseline="hanging">QQ占手机存储9.4%</text>
+        </svg>
+        <figcaption>手机清理</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 动态颜色文字</div>
+      <dd>使用 JavaScript 生成随机颜色</dd>
+      <dd>使用 CSS 变量修改颜色</dd>
+      <pre>&lt;text  fill="var(--main-color)"&gt;遇见最好的自己&lt;/text&gt;</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./css.html">流程图</a></div>
+      <dd>矩形 &lt;rect&gt;、文字 &lt;text&gt;、对齐</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 绘制弧线</div>
+      <div>A rx ry x-axis-rotation large-arc-flag sweep-flag x y</div>
+      <div>rx：轴半径</div>
+      <div>ry：轴半径</div>
+      <div>弧形的旋转角度：x-axis-rotation</div>
+      <div>large-arc-flag：决定弧线是大于还是小于 180 度，0 表示小角度弧，1 表示大角度弧</div>
+      <div>sweep-flag：表示弧线的方向，0 表示从起点到终点沿逆时针画弧，1 表示从起点到终点沿顺时针画弧</div>
+      <div>sweep-flag：弧线方向</div>
+      <div>x y：弧形的终点</div>
+      <pre>
+&lt;svg width="400" height="200">
+  &lt;path d="M 0 -200 A 3 1 0 1 0 400 0 V 200  A 3 1 0 1 0 0 300 Z" fill="#f40" />
+&lt;/svg></pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 使用 SVG 模拟 <a href="./demo/clock.html">时钟</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 验证码</div>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <dd>SVG 的各种使用</dd>
+      <dt>Homework</dt>
+      <dd>分别完成以上案例</dd>
+      <dd>利用 SVG 优化个人网站</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    // let dashOffset = document.querySelector('#dash-offset')
+    // let dashTar = document.querySelector('#dash-tar')
+    // dashOffset.addEventListener('change', (e) => {
+    //   console.log(dashOffset.value);
+    //   dashTar.style.strokeDashoffset = dashOffset.value
+    // })
+  </script>
+</body>
+
+</html>
