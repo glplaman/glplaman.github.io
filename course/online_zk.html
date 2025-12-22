@@ -39,12 +39,33 @@
     h2:target {
       color: var(--main-color);
     }
+
+    .ball {
+      position: absolute;
+      bottom: 0;
+      width: 10px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background-color: #ff0;
+      box-shadow: 0 0 10px rgb(255, 255, 0, 1),
+        0 0 20px rgb(255, 255, 0, 1),
+        0 0 40px rgb(255, 255, 0, 1),
+        0 0 80px rgb(255, 255, 0, 1);
+      animation: floating 8s linear forwards;
+      user-select: none;
+    }
+
+    @keyframes floating {
+      to {
+        bottom: 100vh;
+      }
+    }
   </style>
 </head>
 
 <body class="lock">
   <div class="modal" id="modal">
-    <video class="video" src="/utils/video/zk.mp4" muted autoplay loop></video>
+    <!-- <video class="video" src="/utils/video/zk.mp4" muted autoplay loop></video> -->
     <div class="modal-cont">
       <img src="https://www.zcst.edu.cn/_upload/tpl/04/1f/1055/template1055/indeximage/logo-bai.png" alt="">
       <div class="modal-code mt2" id="modal-code">
@@ -929,7 +950,22 @@ console.log(logger1 === logger2); // true</pre>
     modalClose.addEventListener('click', () => {
       modal.classList.add('active')
       document.body.classList.remove('lock');
+      // clearInterval(inter)
     })
+
+    // function gerBall() {
+    //   const ball = document.createElement('div')
+    //   ball.classList.add('ball')
+    //   ball.style.left = Math.random() * window.innerWidth + 'px'
+    //   ball.style.width = Math.random() * 12 + 'px'
+    //   modal.appendChild(ball)
+    //   setTimeout(() => {
+    //     ball.remove()
+    //   }, 8000)
+    // }
+    // let inter = setInterval(() => {
+    //   gerBall()
+    // }, 400)
   </script>
 </body>
 
