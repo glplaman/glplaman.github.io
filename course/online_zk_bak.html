@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珠海科技学院 https://www.zcst.edu.cn/</title>
-  <link rel="stylesheet" href="./css/online2025up.css">
+  <link rel="stylesheet" href="./css/online2025.css">
+  <base target="_blank">
   <style>
     .logo {
       background-image: url(/utils/logo/zk.png);
@@ -901,11 +902,15 @@ console.log(logger1 === logger2); // true</pre>
 
     const init = () => {
       document.body.classList.remove('lock');
+      ul.classList.remove('nav-active');
+      ham.classList.remove('active');
     }
 
     navs.forEach((nav, index) => {
       nav.addEventListener('click', (e) => {
+        e.preventDefault();
         init()
+        conts[index].scrollIntoView()
         navs.forEach(nav => {
           nav.classList.remove('nav-item-active')
         })
@@ -918,7 +923,28 @@ console.log(logger1 === logger2); // true</pre>
     })
 
     ham.addEventListener('click', () => {
-      document.body.classList.toggle('lock');
+      document.body.classList.add('lock');
+      ul.classList.add('nav-active');
+      ham.classList.add('active');
+    })
+
+    ul.addEventListener('click', (e) => {
+      if (e.target.tagName == 'UL') {
+        init()
+      }
+    })
+
+    window.addEventListener('scroll', () => {
+      let top = window.scrollY + 150
+      sections.forEach((section, ind) => {
+        let offset = section.offsetTop
+        let height = section.offsetHeight
+        if (top >= offset && top < offset + height) {
+          navs[ind].classList.add('nav-item-active')
+        } else {
+          navs[ind].classList.remove('nav-item-active')
+        }
+      })
     })
 
     modalClose.addEventListener('click', () => {
