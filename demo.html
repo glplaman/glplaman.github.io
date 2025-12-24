@@ -12,61 +12,24 @@
       box-sizing: border-box;
     }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #000;
-    }
-
-    h1 {
-      font-size: 2rem;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    h1.active {
-      cursor: pointer;
-      pointer-events: all;
-    }
-
-    h1 span {
-      color: #f40;
-      animation: flash 1s ease-in-out both;
-    }
-
-    @keyframes flash {
-      from {
-        opacity: 0;
-        transform: scale(0);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+    svg {
+      background-color: #f1f2f3;
+      width: 600px;
+      height: 300px;
     }
   </style>
 </head>
 
 <body>
-  <h1>glplaman.github.io</h1>
+  <svg>
+    <rect x="100" y="100" width="100" height="50" fill="#f40"></rect>
+  </svg>
   <script>
-    const h = document.querySelector('h1')
-    h.innerHTML = h.textContent.replace(/\S/g, `<span>$&</span>`)
-    const spans = h.querySelectorAll('span')
-    console.log(spans);
-
-    spans.forEach((span, ind) => {
-      span.style.animationDelay = `${ind * 0.2}s`
-    })
-    spans[spans.length - 1].addEventListener('animationend', () => {
-      h.classList.add('active')
-    })
-    h.addEventListener('click', () => {
-      window.location.href = '/course/online_zk.html'
-    })
+    // fetch('https://weibo.com/ajax/statuses/buildComments?is_reload=1&id=5247363888448271&is_show_bulletin=2&is_mix=0&count=10&uid=1796087453&fetch_level=0&locale=zh-CN')
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     console.log(res)
+    //   })
   </script>
 </body>
 
