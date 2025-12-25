@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包 Closure</title>
+  <link rel="stylesheet" href="/css/reset2026.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>闭包</h1>
+      <span>&commat;Closure</span>
+    </header>
+    <dl>
+      <dd>函数的嵌套：在一个函数内部定义另外一个函数，并返回该内部函数；该内部函数形成闭包，可以访问外部的函数和变量</dd>
+      <dd>保护变量
+        <p>利用创建私有变量来保护数据、隐藏数据；外部无法直接访问，只能通过内部函数访问</p>
+        <p>尽量少使用全局变量；避免全局变量污染环境</p>
+        <p>通常使用 return 把内部变量/临时变量暴露出去给外部使用</p>
+      </dd>
+      <dd>数据封装</dd>
+      <dd>记忆效果</dd>
+      <dd>函数工厂</dd>
+      <dd>异步操作</dd>
+      <pre>
+const singleton = (() => {
+  let instance;
+  
+  return () => {
+    if (!instance)
+      //创建instance
+    return instance
+  }
+})()</pre>
+      <dt>给变量赋值/返回值</dt>
+      <dd>执行其它函数/闭包函数获取返回值</dd>
+      <pre>
+let a;
+function fa() {
+    let tmp = 10;
+    return res => () {
+        return tmp;
+    }
+}
+a = fa();
+console.log(a());</pre>
+      <dd>还可以携带参数</dd>
+      <pre>
+function fb() {
+    let a = 10;
+    return res => (inc) {
+        a += inc;
+        return a;
+    }
+}
+let b = fb();
+console.log(b(2));
+console.log(b(2));</pre>
+      <dt>给函数赋值</dt>
+      <dd>执行一个其它函数/闭包函数来给某个函数赋值；和上述略有不同</dd>
+      <pre>
+let fn;
+function assign() {
+    let tmp = 12;
+    fn = () => {
+        return tmp;
+    }
+}
+assign();
+console.log(fn());</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 统计函数调用次数</div>
+      <dd>传统方法：使用全局变量</dd>
+      <pre>
+let num = 0;
+function fn() {
+    num++;
+    console.log('fn() done ', num);
+    return num;
+}</pre>
+      <dd>按F12在控制台调试；因为使用全局变量，当该变量被手动修改后，结果就会错误</dd>
+      <pre>
+fn()
+fn() done  1
+1
+fn()
+fn() done  2
+2
+fn()
+fn() done  3
+3
+fn()
+fn() done  4
+4
+num=100
+100
+fn()
+fn() done  101
+101</pre>
+      <dd>使用闭包：以函数的形式返回执行结果</dd>
+      <pre>
+function fn() {
+    let num = 0;
+    return ()  => {
+        num++;
+        console.log('fn() done ', num);
+    }
+}
+let a = fn();</pre>
+      <dd>按F12调试，结果正常</dd>
+      <pre>
+a()
+fn() done  1
+undefined
+a()
+fn() done  2
+undefined
+num=100
+100
+a()
+fn() done  3
+undefined
+a()
+fn() done  4
+undefined</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

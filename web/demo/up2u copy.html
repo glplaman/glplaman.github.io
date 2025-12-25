@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>青春有我|个人网站</title>
   <link rel="stylesheet" href="/utils/lib/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="../css/up2u.css">
+  <link rel="stylesheet" href="../css/up2u copy.css.css">
   <style>
     .swiper {
       height: 100%;
@@ -95,10 +95,10 @@
         <i class="iconfont icon-tool"></i>
         <span>工作</span>
       </a>
-      <!-- <a class="nav-item nav-link" style="--delay:2" href="#awards">
+      <a class="nav-item nav-link" style="--delay:2" href="#awards">
         <i class="iconfont icon-top-raning"></i>
         <span>荣誉</span>
-      </a> -->
+      </a>
       <a class="nav-item nav-link" style="--delay:3" href="#gal">
         <i class="iconfont icon-picture"></i>
         <span>图册</span>
@@ -419,7 +419,7 @@
         </div>
       </div>
     </div>
-    <!-- <div id="awards" class="nav-cont" style="--color:#eb2f06;--second-color:#e55039;" title="awards">
+    <div id="awards" class="nav-cont" style="--color:#eb2f06;--second-color:#e55039;" title="awards">
       <h2>
         <span class="title-bar" data-title="awards"></span>
         <span class="iconfont icon-top-raning"></span>
@@ -434,7 +434,7 @@
           <div class="awards-item" style="--url:url('/utils/wallpaper/w4.jpg')"></div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div id="gal" class="nav-cont" style="--color:#2ed573;--second-color:#7bed9f;" title="gal">
       <h2>
         <span class="title-bar" data-title="gallery"></span>
@@ -889,7 +889,9 @@
     })
 
     ham.addEventListener('click', () => {
+      nav.classList.toggle('active')
       body.classList.toggle('active')
+      ham.classList.toggle('active')
     })
 
     links.forEach((item, ind) => {
@@ -897,7 +899,9 @@
         e.preventDefault()
         conts[ind].scrollIntoView()
         // 
-        body.classList.remove('active')
+        nav.classList.toggle('active')
+        body.classList.toggle('active')
+        ham.classList.toggle('active')
         // 
         links.forEach(item => {
           item.classList.remove('active')

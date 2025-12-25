@@ -6,76 +6,66 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>变量 Variable</title>
-  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="/css/reset2026.css">
   <base target="_blank">
 </head>
 
 <body>
-  <header>
-    <h1>变量</h1>
-    <span>&commat;Variable</span>
-  </header>
-  <dl>
-    <dd>
-      <div>.变量声明 - Declaring variables</div>
-      <div>.JavaScript 具有隐含的全局概念，意味着你不声明的任何变量都会成为一个全局对象属性</div>
-      <div>.JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型</div>
-      <div>.更多语句，请访问 <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements">Statements</a>
-      </div>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var">var</a></dt>
-    <dd>
-      <div>.默认是全局变量</div>
-      <div>.编译时，存在变量提升，并且被初始化为 undefined；意味着你可以在声明之前访问变量，但它的值会是 undefined</div>
-      <div>.使用较少</div>
+  <div class="w">
+    <header>
+      <h1>变量</h1>
+      <span>&commat;Variable</span>
+    </header>
+    <dl>
+      <dd>变量声明 - Declaring variables</dd>
+      <dd>JavaScript 具有隐含的全局概念，意味着你不声明的任何变量都会成为一个全局对象属性</dd>
+      <dd>JavaScript 拥有动态类型。这意味着相同的变量可用作不同的类型</dd>
+      <dd>更多语句，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements">Statements</a>
+      </dd>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var">var</a></dt>
+      <dd>默认是全局变量</dd>
+      <dd>意味着你可以在声明之前访问变量，但它的值会是 undefined</dd>
+      <dd>编译时，存在变量提升，并且被初始化为 undefined</dd>
+      <dd>使用较少</dd>
       <pre>
 console.log(num);//undefined
 var num;</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">let</a></dt>
-    <dd>
-      <div>.块作用域 - Declares a block scope local variable</div>
-      <div>.编译时，存在变量提升，但是不会被初始化，因此在变量声明之前访问它会导致引用错误 - ReferenceError。这种情况称为暂时性死区 TDZ - Temporal Dead Zone</div>
-      <div>.应：<span class="warn">先声明再使用</span></div>
-      <div>.应用较多</div>
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">let</a></dt>
+      <dd>块作用域 - Declares a block scope local variable</dd>
+      <dd>编译时，存在变量提升，但是不会被初始化，因此在变量声明之前访问它会导致引用错误 - ReferenceError</dd>
+      <dd>这种情况称为暂时性死区 TDZ - Temporal Dead Zone</dd>
+      <dd>应：<strong>先声明再使用</strong></dd>
+      <dd>应用较多</dd>
       <pre>
 console.log(num);//Uncaught ReferenceError: Cannot access 'num' before initialization
 let num;</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">const</a></dt>
-    <dd>
-      <div>.block-scoped local variables</div>
-      <div>.read-only</div>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#literals">literals</a>
-    </dt>
-    <dd>
-      <div>.字面量</div>
-      <div>.字面量是语法概念，指的是代码中直接写出的值</div>
-      <div>.字面量没有作用域概念，它们就在那里</div>
-      <div>.直接嵌入在代码中，不需要额外存储</div>
-      <div>.常量是语义概念，指的是程序运行期间不会改变的值</div>
-      <div>.字面量是"what you see is what you get"，常量强调"不会改变"</div>
-      <div>.所有字面量都是固定的值；但不是所有固定值都是通过字面量形式写的</div>
-    </dd>
-    <dt>变量提升 Variable hoisting</dt>
-    <dd>
-      <div>.代码执行前，变量声明和函数声明提升到当前作用域的顶部，即：先处理变量声明和函数声明</div>
-      <div>.如果有重复声明，则后面的声明覆盖前面的声明；然后再处理其它逻辑，如赋值</div>
-      <div>.赋值不会触发提升</div>
-      <div>.更多信息，请访问 <a
+      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">const</a></dt>
+      <dd>block-scoped local variables</dd>
+      <dd>read-only</dd>
+      <dt><a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#literals">literals</a>
+      </dt>
+      <dd>字面量</dd>
+      <dd>字面量是语法概念，指的是代码中直接写出的值</dd>
+      <dd>字面量没有作用域概念，它们就在那里</dd>
+      <dd>直接嵌入在代码中，不需要额外存储</dd>
+      <dd>常量是语义概念，指的是程序运行期间不会改变的值</dd>
+      <dd>字面量是"what you see is what you get"，常量强调"不会改变"</dd>
+      <dd>所有字面量都是固定的值；但不是所有固定值都是通过字面量形式写的</dd>
+      <dt>变量提升 Variable hoisting</dt>
+      <dd>代码执行前，变量声明和函数声明提升到当前作用域的顶部，即：先处理变量声明和函数声明</dd>
+      <dd>如果有重复声明，则后面的声明覆盖前面的声明；然后再处理其它逻辑，如赋值</dd>
+      <dd>赋值不会触发提升</dd>
+      <dd>更多信息，请访问 <a
           href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variable_hoisting">variable_hoisting</a>、<a
-          href="./precompile.html">预编译 pre-compiler</a></div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 变量提升 - msg</dd>
-    <dd>
-      <div>.原始代码</div>
+          href="./precompile.html">预编译 pre-compiler</a></dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] 变量提升 - msg</dd>
+      <dd>原始代码</dd>
       <pre>
 console.log(msg);
 var msg = 'hi,there.'
 console.log(msg);</pre>
-      <div>.JavaScript 编译后，代码逻辑为</div>
+      <dd>JavaScript 编译后，代码逻辑为</dd>
       <pre>
 //提升
 var msg;
@@ -83,11 +73,9 @@ var msg;
 console.log(msg);
 msg = 'hi,there.'
 console.log(msg);</pre>
-      <div>.所以俩次log结果依次为：undefined、hi,there</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 变量 a 和函数 foo 提升</dd>
-    <dd>
-      <div>.原始代码</div>
+      <dd>所以俩次log结果依次为：undefined、hi,there</dd>
+      <dd>[<span class="iconfont icon-keyboard"></span>] 变量 a 和函数 foo 提升</dd>
+      <dd>原始代码</dd>
       <pre>
 var a = 1;
 function foo() {
@@ -97,7 +85,7 @@ function foo() {
 }
 console.log('3', a);
 foo()</pre>
-      <div>.JavaScript 编译后，代码逻辑为</div>
+      <dd>JavaScript 编译后，代码逻辑为</dd>
       <pre>
 //提升
 var a;
@@ -110,21 +98,19 @@ foo()
   console.log('1', a);//undefined - 当前作用域只声明还没有赋值
   a = 3
   console.log('2', a);//3</pre>
-    </dd>
-  </dl>
-  <a class="back2top" target="_self" href="#">
-    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-      p-id="31526" width="32" height="32">
-      <path
-        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
-        fill="#ffffff" p-id="31527"></path>
-    </svg>
-  </a>
-  <div id="footer"></div>
+    </dl>
+    <a class="back2top" target="_self" href="#">
+      <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        p-id="31526" width="32" height="32">
+        <path
+          d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+          fill="#ffffff" p-id="31527"></path>
+      </svg>
+    </a>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
   <script src="/utils/custom/back2top.js"></script>
-  <script>
-  </script>
 </body>
 
 </html>

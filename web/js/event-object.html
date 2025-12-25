@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件对象 Event Object</title>
+  <link rel="stylesheet" href="/css/reset2026.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>事件对象</h1>
+      <span>&commat;Event Object</span>
+    </header>
+    <dl>
+      <dt>事件对象 Event Object</dt>
+      <dd>事件产生时，由系统自动创建；包含事件的详细信息
+        <p>事件类型 bubbles [冒泡与否]</p>
+        <p>发生位置 [screen、page]</p>
+        <p>大小 [offset、cddent]</p>
+        <p>时间 timestamp</p>
+        <p>响应事件的目标 target</p>
+        <p>...</p>
+      </dd>
+      <dd>通常使用 event、e、evt 等语义化名字</dd>
+      <dd>可以利用事件对象阻止 <a href="./event_default.html">默认事件</a></dd>
+      <dt>事件目标 target</dt>
+      <dd>事件对象 Event Object 的一个属性，表示实际触发事件的元素</dd>
+      <dd>target 始终指向实际触发事件的元素，而不是绑定事件监听器的元素，无论该元素是否绑定事件；即：与元素是否绑定事件监听器无关，只要元素存在于 DOM 中并且被点击，它就会成为 target 的值</dd>
+      <!-- <dd>事件监听器只是决定了哪个函数会被执行，但不影响 e.target 的值</dd> -->
+      <dt>当前事件目标 currentTarget</dt>
+      <dd>响应事件的当前目标；随着事件流的变化，事件当前目标也在变化</dd>
+      <dd>中间的元素只有绑定事件，才会有事件对象；如果没有绑定事件，依然会在事件流中，但是不会有响应</dd>
+      <dt>冒泡 Bubbddng 和捕获 Capture</dt>
+      <dd>页面接受事件的顺序，即：事件发生时，在元素节点之间按照特定的顺序传播的过程</dd>
+      <dd>三个阶段：捕获阶段 capture phrase → 目标阶段 target phrase → 冒泡阶段 bubbddng phrase</dd>
+      <dd>捕获阶段：从元素的根节点/祖先元素开始，向下传播，直到到达目标元素</dd>
+      <dd>目标阶段：事件到达目标元素</dd>
+      <dd>冒泡阶段：事件逐层向上传递回根元素</dd>
+      <dd>先捕获事件才能处理；事件捕获：网景提出；事件冒泡：微软提出|IE提出</dd>
+      <dd>JavaScript <span class=" warn">只能</span> 执行冒泡或捕获中的一个阶段；默认是<span class="warn">冒泡</span></dd>
+      <dd>使用 e.stopPropagation | e.cancelBubble 可以取消冒泡</dd>
+      <dd>更多信息，请访问 <a href="https://mp.weixin.qq.com/s/WrvHOTnPVcVsNH_-5cm_bg">一个DOM元素绑定多个事件时，先执行冒泡还是捕获</a></dd>
+      <div class="tips">
+        <div>stopPropagation() 和 cancelBubble() 都可以阻止浏览器默认的事件冒泡行为</div>
+        <div>cancelBubble() 方法不符合W3C标准，只支持 IE 浏览</div>
+        <div>stopPropagation() 符合 W3C 标准，适用于 FireFox 等浏览器，不支持 IE</div>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 冒泡事件和捕获事件</div>
+      <dd>三个嵌套盒子</dd>
+      <pre>
+&lt;div class="box1"&gt;box1
+  &lt;div class="box2"&gt;box2
+    &lt;div class="box3"&gt;box3&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <div>1. 冒泡：默认方式；单击里层的元素，事件会逐步冒泡到外层</div>
+      <div>. 单击 box1，输出 box1 clicked</div>
+      <div>. 单击 box2，从 box2 开始，向上冒泡到 box1，依次输出 box2 clicked、box1 clicked</div>
+      <div>. 单击 box3，从 box3 开始，逐步向上冒泡到 box2、box1，依次输出 box3 clicked、box2 clicked、box1 clicked</div>
+      <pre>
+const box1 = document.querySelector('.box1')
+const box2 = document.querySelector('.box2')
+const box3 = document.querySelector('.box3')
+box1.addEventListener('click', (e) => {
+  console.log('box1 clicked');
+})
+box2.addEventListener('click', (e) => {
+  console.log('box2 clicked');
+})
+box3.addEventListener('click', (e) => {
+  console.log('box3 clicked');
+})</pre>
+      <div>2. 捕获：开启捕获；单击里层的元素，事件首先由外层捕获并逐步传递到内层</div>
+      <div>. 单击 box1，输出 box1 clicked</div>
+      <div>. 单击 box2，首先由 box1 捕获并向内层传递，依次输出 box1 clicked、box2 clicked</div>
+      <div>. 单击 box3，首先由 box1 捕获并向内层传递，依次输出 box1 clicked、box2 clicked、box3 clicked</div>
+      <pre>
+let box1 = document.querySelector('.box1')
+let box2 = document.querySelector('.box2')
+let box3 = document.querySelector('.box3')
+box1.addEventListener('click', (e) => {
+  console.log('box1 clicked');
+}, true)
+box2.addEventListener('click', (e) => {
+  console.log('box2 clicked');
+}, true)
+box3.addEventListener('click', (e) => {
+  console.log('box3 clicked');
+}, true)</pre>
+      <div>. 借助事件对象e，取消事件传递；如果是冒泡，单击哪个元素，触发哪个元素的事件；如果是捕获，则始终是顶层元素</div>
+      <pre>
+box1.addEventListener('click', (e) => {
+  e.stopPropagation();
+  console.log('box1 clicked');
+})
+box2.addEventListener('click', (e) => {
+  e.stopPropagation();
+  console.log('box2 clicked');
+})
+box3.addEventListener('click', (e) => {
+  e.stopPropagation();
+  console.log('box3 clicked');
+})</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] target 和 currentTarget - 以冒泡为例</div>
+      <dd>单击 outer：点的是 outer；向上没有父级或者说没有冒泡，响应事件的也是 outer，所以 target 和 currentTarget 都是 outer</dd>
+      <dd>单击inner：首先 inner 响应事件，所以 target 和 currentTarget 都是 inner；然后事件冒泡到 outer，outer 响应的是 inner 绑定的事件，所以
+        target 是 inner，currentTarget 是 outer</dd>
+      <pre>
+&lt;div class="outer"&gt;
+  &lt;div class="inner"&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <pre>
+outer.addEventListener('click', (e) => {
+    console.log('outer', e.target, e.currentTarget);
+})
+inner.addEventListener('click', (e) => {
+    console.log('inner', e.target, e.currentTarget);
+})
+</pre>
+      <div class="tips">如果只有一个元素，则 currentTarget 为 null；所以更多的是操作 target</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 模态框 - 代理；更多案例实现，请访问 <a href="../demo/up2u.html">图册</a></div>
+      <dd>单击打开按钮，打开模态框</dd>
+      <dd>单击模态框中的关闭按钮，关闭模态框</dd>
+      <dd>单击除了模态框中除了关闭按钮外的任意地方，关闭模态框</dd>
+      <pre>
+btnOpen.addEventListener('click', () => {
+  modal.classList.add('show')
+})
+
+btnClose.addEventListener('click', (e) => {
+  // 可以阻止冒泡
+  // e.stopPropagation()
+  modal.classList.remove('show')
+})
+
+modal.addEventListener('click', (e) => {
+  // MUST
+  if (e.target === modal) {
+    modal.classList.remove('show')
+  }
+})</pre>
+      <dd>对象的类名、ID、标签名都可以作为判定的依据，但是必须能唯一确定</dd>
+      <pre>
+modal.addEventListener('click', (e) => {
+  if (e.target.id === 'modal') {
+    console.log('close');
+  }
+})
+
+btnClose.addEventListener('click', (e) => {
+  if (e.target.id === 'close') {
+    console.log('close');
+  }
+})</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 共用事件 - 汉堡菜单的展开和折叠</div>
+      <dd>为菜单类或容器类增加或减少状态类实现</dd>
+      <dd>移花接木</dd>
+      <pre>
+.nav {
+  left: -300px;
+  transition: 0.4s;
+}
+
+body.open .nav {
+  left: 0;
+}</pre>
+      <pre>
+const navs = document.querySelectorALL('.nav');
+const openBtn = document.getElementById('open');
+const closeBtn = document.getElementById('close');
+
+openBtn.addEventListener('click', () => {
+  document.body.classList.toggle('open')
+})
+
+closeBtn.addEventListener('click', () => {
+  openBtn.click()
+})
+
+navs.forEach(nav=>{
+  nav.addEventListener('click', (e)=>{
+    openBtn.click()
+  })
+})</pre>
+    </dl>
+    <h2>自定义数据 data-</h2>
+    <dl>
+      <dd>如果元素使用了自定义数据 data- ，应该在目标元素 target 的 dateset 去获取</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 单元素自定义数据 data- 的获取</div>
+      <dd>事件对象e对应的target、currentTarget相同</dd>
+      <dd>注意函数 fn 的封装</dd>
+      <pre>&lt;div class="tmp" data-id="1001"&gt;单元素自定义数据的获取&lt;/div></pre>
+      <pre>
+const el = document.querySelector('.tmp');
+
+el.addEventListener('click', fn)
+function fn(e) {
+  console.log(e.target.dataset.id);
+  // 或者
+  console.log(this.getAttribute('data-id'));
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 父元素自定义数据 data- 的获取</div>
+      <dd>多个元素存在，data- 数据在父级元素</dd>
+      <dd>事件目标通常是子元素，如果使用 dataset，就会导致自定义数据获取失败；只能使用 this 来获取属性</dd>
+      <pre>
+&lt;div class="tmp" data-id="1001"&gt;
+  &lt;div&gt;child&lt;/div&gt;
+  &lt;div&gt;child&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <dd>使用同样的 JavaScript，则第2个 log 是 undefined。因为事件目标是子元素，它没有对应的自定义数据</dd>
+      <div>方案1. 判断目标是否是当前标签[要采用大写形式]，如果不是，就查找其父元素；直到找到最外层的父级；也可以用根据当前目标是否有某个属性判断</div>
+      <pre>
+function fn(e) {
+  console.log(this.getAttribute('data-id'));
+  let tar = e.target
+  while (tar.nodeName != 'DIV') {
+      tar = tar.parentNode
+  }
+  console.log(tar.dataset.id);
+}</pre>
+      <div>方案2. 取消父级所有后代的事件响应，只保留父元素的事件行为，所以事件目标一定就是父元素；简单粗暴</div>
+      <pre>
+.tmp * {
+  pointer-events: none;
+}</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

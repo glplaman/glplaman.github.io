@@ -831,6 +831,96 @@ audio {
   color: var(--color);
 }
 
+/* 
+.lists li {
+  counter-increment: list-sn;
+  display: flex;
+  align-items: center;
+  gap: var(--p-m-g);
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.lists li::before {
+  content: counter(list-sn)'. ';
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.lists li:nth-child(-n+3)::before {
+  color: #fff;
+  background-color: var(--color);
+}
+
+.lists li::after {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(../imgs/dot.png);
+  background-repeat: repeat-x;
+}
+
+.lists li .iconfont {
+  order: 1;
+}
+
+.music-modal .modal-wrap {
+  background-color: var(--color);
+  color: #fff;
+}
+
+.disc {
+  width: 240px;
+  height: 240px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.range,
+.control {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--p-m-g);
+  margin: 4rem auto;
+}
+
+.range input {
+  flex: 1;
+}
+
+.control div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+.control div:nth-child(2) {
+  width: 8rem;
+  height: 8rem;
+}
+
+.control .iconfont {
+  font-size: 2.4rem;
+}
+
+.music-modal.active {
+  visibility: visible;
+}
+
+body:has(.music-modal.active) {
+  overflow: hidden;
+} */
+
 /* help start */
 .help {
   position: relative;
@@ -977,6 +1067,10 @@ footer img {
     transition: .2s;
   }
 
+  .ham.active {
+    background-color: transparent;
+  }
+
   .ham::before {
     transform: translateY(-8px);
   }
@@ -985,16 +1079,11 @@ footer img {
     transform: translateY(8px);
   }
 
-  body.active .ham {
-    background-color: transparent;
-  }
-
-
-  body.active .ham::before {
+  .ham.active::before {
     transform: rotate(45deg);
   }
 
-  body.active .ham::after {
+  .ham.active::after {
     transform: rotate(-45deg);
   }
 
@@ -1012,7 +1101,7 @@ footer img {
     transition: 0.5s;
   }
 
-  body.active .nav {
+  .nav.active {
     right: 0;
   }
 
@@ -1026,7 +1115,7 @@ footer img {
     transition-delay: calc(var(--delay)*0.05s);
   }
 
-  body.active .nav .nav-item {
+  .nav.active .nav-item {
     transform: translateX(0) translateY(0);
     opacity: 1;
   }

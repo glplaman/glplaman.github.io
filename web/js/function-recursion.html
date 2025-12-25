@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>递归函数 Recursion</title>
+  <link rel="stylesheet" href="/css/reset2026.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>递归函数</h1>
+      <span>&commat;Recursion</span>
+    </header>
+    <dl>
+      <dd>自己调用自己</dd>
+      <dd>找规律、找出口</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 输入一个小于10的数字，求其阶层n!</div>
+      <pre>
+function fn(n) {
+  // if (n == 0) {
+  //   return 1;
+  // } else {
+  //   return n * fn(n - 1);
+  // }
+  return n == 0 ? 1 : n * fn(n - 1);
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 输入一个小于10的数字，求其斐波那契数列Fibonacci
+        sequence：f(n)=f(n-1)+f(n-2); n&ge;2; f(0)=1; f(1)=1;
+      </div>
+      <pre>
+function fn(n) {
+  if (n == 0 || n == 1) {
+    return 1;
+  } else {
+    return fn(n - 1) + fn(n - 2);
+  }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 数组扁平化 flat()- 将2维数组或多维数组都处理为1维数组</div>
+      <dd>可以封装在对象原型函数prototype上</dd>
+      <dd>创建空数组</dd>
+      <dd>遍历每一个数据项，如果也是数组，就继续深入遍历</dd>
+      <dd>如果不是数组，是一个普通数据，就添加到空数组</dd>
+      <dd>返回创建的数组，实现数组扁平化</dd>
+      <pre>
+Array.prototype.flat = function () {
+  let flatArr = []
+  for (let item of this) {
+    if (Array.isArray(item)) {
+      flatArr = flatArr.concat(item.flatArr())
+    } else {
+      flatArr.push(item)
+    }
+  }
+  return flatArr;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 数组去重 - unique()</div>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

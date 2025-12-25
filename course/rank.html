@@ -73,23 +73,23 @@
           title: "2025",
           cont: [
             {
-              subind: 2,
+              subind: 0,
               desc: '2024计科2班',
               url: '202503.json',
             }, {
-              subind: 4,
+              subind: 1,
               desc: '2024计科4班',
               url: '202504.json',
             }, {
-              subind: 5,
+              subind: 2,
               desc: '2024计科6班',
               url: '202505.json',
             }, {
-              subind: 0,
+              subind: 3,
               desc: '2023软工4班',
               url: '202502.json',
             }, {
-              subind: 1,
+              subind: 4,
               desc: '2023软工3班',
               url: '202501.json',
             }]
@@ -185,19 +185,18 @@
               rank.value = { info: res.info || {}, cont: res.cont || [] };
               ind.value = $event ? $event.target.dataset.ind : 0;
               subind.value = $event ? $event.target.dataset.subind : 0;
-              console.log(rank.value);
+              console.log(ind.value);
+              console.log(subind.value);
+
               isSubShow.value = false;
               isShow.value = false;
 
               subNav.value.forEach(item => {
-                // console.log(item);
                 item.classList.remove('active');
               });
-              // console.log(isLoading.value);
             })
             .finally(() => {
               isLoading.value = false;
-              // console.log(isLoading.value);
             });
         }
 

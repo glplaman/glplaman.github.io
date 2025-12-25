@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件代理 Delegation</title>
+  <link rel="stylesheet" href="/css/reset2026.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>事件代理</h1>
+      <span>&commat;Delegation</span>
+    </header>
+    <dl>
+      <dd>默认情况下，子元素的事件会冒泡到父元素</dd>
+      <dd>所以父元素可以响应任何一个子元素的事件；利用这个特性可以让父元素作为各个子元素的 <a
+          href="https://stackoverflow.com/questions/1687296/what-is-dom-event-delegation">Event
+          Delegation</a></dd>
+      <dd>适合子元素多，且动态变化的情况</dd>
+      <dd>单击 outer，target 是 outer；没有冒泡，currentTarget 也是 outer</dd>
+      <dd>单击 &lt;p&gt;，target 是 &lt;p&gt;；冒泡到 outer，currentTarget 是 outer</dd>
+      <dd>同理，单击 &lt;span&gt;，target 是 &lt;span&gt;；冒泡到 outer，currentTarget 是 outer</dd>
+      <pre>
+&lt;div class="outer" @click="doOut"&gt;
+  &lt;p class="inner"&gt;1111&lt;/p&gt;
+  &lt;span class="inner"&gt;2222&lt;/span&gt;
+&lt;/div&gt;</pre>
+      <dd>通过判断 target 来确定单击了哪个子元素；可以根据子元素的标签名（大写）或自定义数据 data-判断</dd>
+      <pre>
+const doOut = (e) => {
+  console.log(e.target.tagName);
+  console.log(e.target.dataset.id);
+  console.log(e.target.innerHTML);
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 单击标签页，显示对应的内容</div>
+      <pre>
+&lt;ul&gt;
+  &lt;li&gt;Lorem.&lt;/li&gt;
+  &lt;li&gt;Magni.&lt;/li&gt;
+  &lt;li&gt;Nihil.&lt;/li&gt;
+  &lt;li&gt;Id?&lt;/li&gt;
+  &lt;li&gt;Ipsa!&lt;/li&gt;
+  &lt;li&gt;Earum?&lt;/li&gt;
+  &lt;li&gt;Laboriosam.&lt;/li&gt;
+  &lt;li&gt;Voluptatum?&lt;/li&gt;
+  &lt;li&gt;Veniam.&lt;/li&gt;
+  &lt;li&gt;Aliquid.&lt;/li&gt;
+&lt;/ul&gt;
+    </pre>
+      <div>1. 默认方式 - 遍历所有子元素并绑定事件</div>
+      <pre>
+let ul = document.querySelector('ul');
+let lis = ul.querySelectorAll('li');
+lis.forEach(li => {
+  li.addEventListener('click', () => {
+    console.log(li.innerHTML);
+  })
+})</pre>
+      <div>2. 事件委托方式 - 给父级元素指定事件，只有 target 是 LI 才响应，即：只有点到了 LI 才响应</div>
+      <pre>
+let ul = document.querySelector('ul');
+ul.addEventListener('click', (e) => {
+  console.log(e.target.tagName);
+  if(e.target.tagName==='LI'){
+    //do
+  }
+})</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

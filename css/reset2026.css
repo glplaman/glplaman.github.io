@@ -17,6 +17,7 @@
   --paper: #F5F5DC;
   --w: 1024px;
   --header-h: 100px;
+  --section-h: 100px;
   --p-m-g: 10px;
 }
 
@@ -91,8 +92,7 @@ header {
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+  color: var(--main-color);
   font: inherit;
 }
 
@@ -113,6 +113,14 @@ h2,
 h2,
 dl {
   padding: 0 var(--p-m-g);
+}
+
+h2 {
+  display: flex;
+  align-items: flex-end;
+  height: var(--section-h);
+  background-color: var(--second-color);
+  color: var(--bg-color);
 }
 
 h3,
@@ -155,6 +163,7 @@ dd::before {
 
 dt {
   font-weight: 600;
+  margin-top: 2rem;
 }
 
 figure {
@@ -325,6 +334,45 @@ strong,
 
 .txt-indent {
   text-indent: 2em;
+}
+
+.back2top {
+  position: fixed;
+  right: 2rem;
+  bottom: -10rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: var(--warn-color);
+  border-radius: 50%;
+  transition: 0.5s;
+  z-index: 99;
+}
+
+.back2top::before {
+  content: '';
+  position: absolute;
+  inset: 0px;
+  border: 1px solid var(--warn-color);
+  border-radius: 50%;
+}
+
+.back2top:hover::before {
+  animation: fade-out 0.8s ease-in-out infinite;
+}
+
+@keyframes fade-out {
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.back2top.active {
+  bottom: 4rem;
 }
 
 @media screen and (max-width:768px) {

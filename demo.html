@@ -12,24 +12,70 @@
       box-sizing: border-box;
     }
 
-    svg {
-      background-color: #f1f2f3;
-      width: 600px;
-      height: 300px;
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: #000400;
+      color: #fff;
+    }
+
+    .modal.show {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cont {
+      position: relative;
+      width: 80%;
+    }
+
+    .close {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: #40f;
+      right: -1rem;
+      top: -1rem;
     }
   </style>
 </head>
 
 <body>
-  <svg>
-    <rect x="100" y="100" width="100" height="50" fill="#f40"></rect>
-  </svg>
+  <button>show</button>
+  <div class="modal">
+    <div class="cont">
+      <div class="close">&times;</div>
+      <div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas facere maxime sint. Hic fugit ea, eligendi
+          praesentium animi aliquam quam vitae aliquid totam similique suscipit sapiente delectus modi possimus laborum.
+        </p>
+        <p>Aliquam aut rerum repudiandae vitae quidem incidunt cum voluptates dolor, nihil placeat ratione voluptatibus
+          commodi et, fugit quod quos suscipit corrupti soluta id veritatis error exercitationem cumque qui! Vitae,
+          ratione.</p>
+        <p>Soluta porro atque impedit omnis, illo repellendus? Libero corporis itaque sed officiis minus veniam
+          accusantium rem dignissimos similique aperiam unde ratione maxime dicta voluptate blanditiis, sapiente, esse
+          repudiandae tempora quod.</p>
+      </div>
+    </div>
+  </div>
   <script>
-    // fetch('https://weibo.com/ajax/statuses/buildComments?is_reload=1&id=5247363888448271&is_show_bulletin=2&is_mix=0&count=10&uid=1796087453&fetch_level=0&locale=zh-CN')
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     console.log(res)
-    //   })
+    const modal = document.querySelector('.modal')
+    const close = document.querySelector('.close')
+    const btns = document.querySelector('button')
+    btns.addEventListener('click', () => {
+      modal.classList.add('show')
+    })
+    close.addEventListener('click', (e) => {
+
+      modal.classList.remove('show')
+    })
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show')
+      }
+    })
   </script>
 </body>
 
