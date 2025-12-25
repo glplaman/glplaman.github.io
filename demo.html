@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Demo</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
     * {
       margin: 0;
@@ -12,69 +13,106 @@
       box-sizing: border-box;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: #000400;
-      color: #fff;
-    }
-
-    .modal.show {
+    body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100vh;
     }
 
-    .cont {
+    .cart {
+      position: fixed;
+      right: 5rem;
+      top: 5rem;
+    }
+
+    .box {
+      width: 300px;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .box p {
       position: relative;
-      width: 80%;
+      cursor: pointer;
     }
 
-    .close {
+    .box p span {
       position: absolute;
-      width: 30px;
-      height: 30px;
-      background-color: #40f;
-      right: -1rem;
-      top: -1rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #f40;
+      animation: move 2s cubic-bezier(0, .65, .4, 1) forwards;
+      opacity: 0;
+    }
+
+    @keyframes move {
+      to {
+        opacity: 1;
+        transform: translate(var(--start-left), var(--start-top));
+      }
+    }
+
+    .tmp div {
+      height: 20vh;
     }
   </style>
 </head>
 
 <body>
-  <button>show</button>
-  <div class="modal">
-    <div class="cont">
-      <div class="close">&times;</div>
-      <div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas facere maxime sint. Hic fugit ea, eligendi
-          praesentium animi aliquam quam vitae aliquid totam similique suscipit sapiente delectus modi possimus laborum.
-        </p>
-        <p>Aliquam aut rerum repudiandae vitae quidem incidunt cum voluptates dolor, nihil placeat ratione voluptatibus
-          commodi et, fugit quod quos suscipit corrupti soluta id veritatis error exercitationem cumque qui! Vitae,
-          ratione.</p>
-        <p>Soluta porro atque impedit omnis, illo repellendus? Libero corporis itaque sed officiis minus veniam
-          accusantium rem dignissimos similique aperiam unde ratione maxime dicta voluptate blanditiis, sapiente, esse
-          repudiandae tempora quod.</p>
-      </div>
-    </div>
+  <div class="tmp">
+    <div>Lorem.</div>
+    <div>Beatae.</div>
+    <div>Consequatur?</div>
+    <div>Harum!</div>
+    <div>Fugit.</div>
+    <div>Excepturi.</div>
+    <div>Nisi?</div>
+    <div>Cumque!</div>
+    <div>Eius.</div>
+    <div>Quia?</div>
+  </div>
+  <p class="cart">
+    <i class='bx bxs-cart bx-lg'></i>
+  </p>
+  <div class="box">
+    <p><i class='bx bxs-user-minus bx-md'></i></p>
+    <p><i class='bx bxs-user-plus bx-md'></i></p>
+    <p><i class='bx bxs-user-check bx-md'></i></p>
+    <p><i class='bx bxs-user-x bx-md'></i></p>
+  </div>
+  <div class="tmp">
+    <div>Lorem.</div>
+    <div>Beatae.</div>
+    <div>Consequatur?</div>
+    <div>Harum!</div>
+    <div>Fugit.</div>
+    <div>Excepturi.</div>
+    <div>Nisi?</div>
+    <div>Cumque!</div>
+    <div>Eius.</div>
+    <div>Quia?</div>
   </div>
   <script>
-    const modal = document.querySelector('.modal')
-    const close = document.querySelector('.close')
-    const btns = document.querySelector('button')
-    btns.addEventListener('click', () => {
-      modal.classList.add('show')
-    })
-    close.addEventListener('click', (e) => {
-
-      modal.classList.remove('show')
-    })
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
-        modal.classList.remove('show')
-      }
+    const cart = document.querySelector('.cart');
+    const icons = document.querySelectorAll('.box p');
+    const cartPos = cart.getBoundingClientRect()
+    icons.forEach((icon, ind) => {
+      icon.addEventListener('click', () => {
+        const iconPos = icon.getBoundingClientRect()
+        const ball = document.createElement('span');
+        ball.style.setProperty('--start-left', `${cartPos.left - cartPos.width / 2 + 10 - iconPos.left}px`);
+        ball.style.setProperty('--start-top', `${cartPos.top + 10 - iconPos.top}px`);
+        icon.appendChild(ball);
+        ball.addEventListener('animationend', () => {
+          ball.remove();
+        })
+      })
     })
   </script>
 </body>

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scheme</title>
   <style>
+    /* 当用户选择特定主题时 */
     /* 包含匹配；元素可能还有其它内联样式 */
     :root[style*="--theme: light"] {
       --theme-color: #f40;
@@ -17,6 +18,7 @@
       color-scheme: dark;
     }
 
+    /* 当用户选择系统主题时 */
     @media (prefers-color-scheme: light) {
       :root {
         --theme: light;
@@ -96,7 +98,7 @@
     }
 
     ::view-transition-new(root) {
-      animation: move-in 1s;
+      animation: circle-in 1s;
       animation-timing-function: linear(0, 0.223 11.7%, 0.392 18.4%, 0.619 24.8%, 0.999 33.3%, 0.748 40%, 0.691 42.7%, 0.672 45.3%, 0.69 47.8%, 0.743 50.4%, 0.999 57.7%, 0.883 61.8%, 0.856 63.6%, 0.848 65.3%, 0.855 67%, 0.879 68.8%, 0.999 74.5%, 0.953 77.5%, 0.94 80.2%, 0.95 82.7%, 1 88.2%, 0.987 91.9%, 1);
     }
 
@@ -143,7 +145,10 @@
   const select = document.getElementById('select');
 
   select.addEventListener('change', (e) => {
-    // 兼容性处理
+    console.log(e.target);
+    console.log(e.target.value);
+
+    // 兼容性处理：不支持 startViewTransition 时直接更新主题
     if (!document.startViewTransition) {
       updateTheme(e.target.value)
       return
