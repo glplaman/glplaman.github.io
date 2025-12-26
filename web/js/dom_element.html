@@ -264,6 +264,37 @@ links.forEach((link, ind) => {
         <p>the size of an element and its position relative to the viewport</p>
       </dd>
       <dd>描述整个矩形的位置和大小：left、top、right、bottom、x、y、width 、height</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 添加购物车动画</div>
+      <dd>获取购物车位置</dd>
+      <dd>获取当前对象位置</dd>
+      <dd>添加到购物车时，创建小球</dd>
+      <dd>计算小球和购物车的位置</dd>
+      <dd>动画移动到购物车</dd>
+      <dd>动画结束后，移除小球</dd>
+      <dd>微调距离</dd>
+      <pre>
+@keyframes move {
+  100% {
+    transform: translate(var(--start-left), var(--start-top));
+  }
+}</pre>
+      <pre>
+const cart = document.querySelector('.cart');
+const icons = document.querySelectorAll('.icon');
+
+const cartPos = cart.getBoundingClientRect()
+icons.forEach((icon, ind) => {
+  icon.addEventListener('click', () => {
+    const iconPos = icon.getBoundingClientRect()
+    const ball = document.createElement('span');
+    ball.style.setProperty('--start-left', `${cartPos.left - cartPos.width / 2 + 10 - iconPos.left}px`);
+    ball.style.setProperty('--start-top', `${cartPos.top + 10 - iconPos.top}px`);
+    icon.appendChild(ball);
+    ball.addEventListener('animationend', () => {
+      ball.remove();
+    })
+  })
+})</pre>
       <div>[<span class="iconfont icon-keyboard"></span>] 背景跟随</div>
       <dd>CSS 变量</dd>
       <div class="cards-wrap">
@@ -466,7 +497,9 @@ document.addEventListener('contextmenu', (e) => {
         </tr>
         <tr>
           <td>其它</td>
-          <td>Escape、Tab、Capslock、Shift、Control、Meta、Alt、Delete、Backspace</td>
+          <td>Escape、Tab、Capslock、Shift、Control、Meta、Alt
+            <br>Delete、Backspace
+          </td>
         </tr>
         <tr>
           <td>复合键，如shift+8是*</td>

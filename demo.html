@@ -16,7 +16,7 @@
     body {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      /* justify-content: center; */
       align-items: center;
       height: 100vh;
     }
@@ -24,7 +24,7 @@
     .cart {
       position: fixed;
       right: 5rem;
-      top: 5rem;
+      bottom: 5rem;
     }
 
     .box {
@@ -47,25 +47,52 @@
       height: 10px;
       border-radius: 50%;
       background-color: #f40;
-      animation: move 2s cubic-bezier(0, .65, .4, 1) forwards;
-      opacity: 0;
+      animation: move 2s cubic-bezier(0, .65, .4, 1) both;
     }
 
     @keyframes move {
-      to {
-        opacity: 1;
+      100% {
         transform: translate(var(--start-left), var(--start-top));
       }
     }
 
-    .tmp div {
-      height: 20vh;
+    .float {
+      position: relative;
+      width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+      text-align: justify;
+    }
+
+    .float img {
+      width: 200px;
+      float: left;
+      shape-outside: url(./imgs/running.png);
+      shape-margin: 10px;
+    }
+
+    .float div {
+      width: 30%;
+      float: left;
+    }
+
+    .float p {
+      width: 30%;
+      float: left;
     }
   </style>
 </head>
 
 <body>
   <div class="tmp">
+    <div class="float">
+      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur vero dignissimos quas repellat aliquam
+        doloremque provident temporibus laudantium eos corrupti explicabo consequuntur excepturi, quam beatae,
+        accusantium illum ipsa perferendis dolores.</div>
+      <img src="./imgs/running.png" alt="">
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt nisi quos commodi eveniet nam at, id ipsam
+        fuga aliquid illo error inventore, dolorem quam aliquam nostrum sit ullam fugiat sed?</p>
+    </div>
     <div>Lorem.</div>
     <div>Beatae.</div>
     <div>Consequatur?</div>
