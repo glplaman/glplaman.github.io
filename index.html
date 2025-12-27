@@ -1,32 +1,158 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=yes">
   <title>大树小站 glplaman.github.io</title>
   <meta name="description"
     content="大树小站; WEB; HTML5; Vue3; Unity; Network; OA; Java; Linux; Ubuntu; Word; Excel; PPT; Office; only for personal use.">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="./css/index2025.css">
   <style>
-    /* .stars {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      z-index: 2;
-    } */
+    @import url(//at.alicdn.com/t/c/font_3834292_bzwva2beroa.css);
+    @import url(/css/fonts_GreatVibes.css);
+
     :root {
-      --ani-h: 600px;
+      --main-color: rgba(255, 255, 255, 0.2);
+      --active-color: #ffde00;
+      --side-w: 90px;
+      --p-m-g: 10px;
     }
 
-    .stars .star {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: linear-gradient(#eb2c58, #de2812);
+      /* perspective: 800px; */
+      overflow: hidden;
+    }
+
+    h1 {
+      position: fixed;
+      left: 50%;
+      top: 10vh;
+      width: max-content;
+      transform: translateX(-50%);
+      font-family: 'GreatVibes';
+      color: var(--active-color);
+      user-select: none;
+      text-transform: capitalize;
+    }
+
+    .container {
+      --offset-w: calc(var(--side-w)/2);
+      position: relative;
+      width: var(--side-w);
+      height: var(--side-w);
+      border-radius: var(--p-m-g);
+      background-color: var(--main-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      /* animation: roll 10s linear infinite; */
+    }
+
+    /* .container:hover {
+      --offset-w: 120px;
+    } */
+
+    /* @keyframes roll {
+      to {
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+      }
+    } */
+
+    .item {
       position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translate(calc(var(--x)*20px), calc(var(--y)*20px));
+      transition: .4s calc(var(--delay)*0.06s);
+      pointer-events: none;
+    }
+
+    .item span {
+      opacity: 0;
+      transform: scale(0);
+      transition: .2s;
+      font-size: 32px;
+    }
+
+    .container.active .item {
+      width: 60px;
+      height: 60px;
+      transform: translate(calc(var(--x)*90px), calc(var(--y)*90px));
+      pointer-events: all;
+      background-color: var(--main-color);
+    }
+
+    .container.active .item span {
+      opacity: 1;
+      transform: scale(1);
+      color: #fff;
+    }
+
+    .container.active .item:hover span {
+      color: var(--active-color);
+      filter: drop-shadow(0 0 4px var(--main-color));
+      transform: scale(1.4);
+    }
+
+    /* .side {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 1px solid #fff;
+      transition: 0.4s;
+    }
+
+    .side:nth-child(1) {
+      transform: translateZ(var(--offset-w));
+    }
+
+    .side:nth-child(2) {
+      transform: rotateY(180deg) translateZ(var(--offset-w));
+    }
+
+    .side:nth-child(3) {
+      transform: rotateY(90deg) translateZ(var(--offset-w));
+    }
+
+    .side:nth-child(4) {
+      transform: rotateY(-90deg) translateZ(var(--offset-w));
+    }
+
+    .side:nth-child(5) {
+      transform: rotateX(90deg) translateZ(var(--offset-w));
+    }
+
+    .side:nth-child(6) {
+      transform: rotateX(-90deg) translateZ(var(--offset-w));
+    } */
+
+    /* snow */
+    .star {
+      position: fixed;
       bottom: 0;
       width: 10px;
       aspect-ratio: 1/1;
@@ -36,13 +162,13 @@
         0 0 20px #fff,
         0 0 30px #fff,
         0 0 40px #fff;
-      animation: fall 10s linear forwards;
+      animation: fall 12s linear forwards;
       pointer-events: none;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(calc(var(--ani-h)*-1));
+        transform: translateY(-100vh);
         opacity: 1;
       }
 
@@ -55,175 +181,86 @@
         opacity: 0;
       }
     }
-
-    @media screen and (max-width:768px) {
-      :root {
-        --ani-h: 100svh;
-      }
-    }
   </style>
 </head>
 
 <body>
-
-  <header id="stars" class="stars">
-    <div class="info">
-      <a class="avatar" href="./web/demo/up2u.html" target="_blank">glpla.github.io</a>
-      <h1>
-        <svg class="svg-txt" viewBox="0 0 120 60">
-          <text class="title" x="60" y="30" text-anchor="middle" dominant-baseline="central">大树小站</text>
-        </svg>
-      </h1>
-    </div>
-    <div class="stamp-box">
-      <div class="stamp"></div>
-    </div>
-  </header>
-  <section>
-    <div class="top">
-      <!-- <a class="item" data-title="ZCST" target="_blank" href="/course/online_zk.html">珠海科技学院</a> -->
-      <a class="item" data-title="Scholar" target="_blank" href="/course/paper.html">论文规范要点</a>
-      <a class="item" data-title="Fighter" target="_blank"
-        href="https://huacheng.gz-cmc.com/pages/2024/12/13/SF130662133e6ab8b65ce6462b9a2421.html">粤美勇士曾素聪</a>
-      <a class="item" data-title="Resource" target="_blank" href="/utils/index.html">在线资源</a>
-      <a class="item" data-title="Ranking" target="_blank" href="/course/rank.html">积分榜</a>
-      <!-- <a class="item" data-title="Teaching Demonstration" target="_blank" href="/course/td.html">说课</a> -->
-      <a class="item" data-title="HomePage" target="_blank" href="./index_cover.html">最美2024</a>
-      <a class="item" data-title="HomePage" target="_blank" href="./index3d.html">3D入口</a>
-      <a class="item" data-title="Log" target="_blank" href="/common/log.html">更新日志</a>
-      <a class="item" data-title="Medical" target="_blank" href="/course/medicineInfo.html">PMID</a>
-    </div>
-    <nav class="nav">
-      <!-- <a class="nav-item" href="./course/index.html">
-        <span class="iconfont icon-update"></span>
-        <h2 data-label="Course">Course</h2>
-      </a> -->
-      <a class="nav-item" href="./web/index.html">
-        <span class="iconfont icon-HTML-5"></span>
-        <h2 data-label="Front-End">Front-End</h2>
-      </a>
-      <a class="nav-item" href="./vue/index.html">
-        <span class="iconfont icon-vue"></span>
-        <h2 data-label="Vue.js">Vue.js</h2>
-      </a>
-      <a class="nav-item" href="./minip/index.html">
-        <span class="iconfont icon-weixinxiaochengxu2x"></span>
-        <h2 data-label="Mini Program">Mini Program</h2>
-      </a>
-      <a class="nav-item" href="./network/index.html">
-        <span class="iconfont icon-framework"></span>
-        <h2 data-label="Network">Network</h2>
-      </a>
-      <a class="nav-item" href="./react/index.html">
-        <span class="iconfont icon-react"></span>
-        <h2 data-label="React.js">React.js</h2>
-      </a>
-      <a class="nav-item" href="./node/index.html">
-        <span class="iconfont icon-node-dot-js"></span>
-        <h2 data-label="Node.js">Node.js</h2>
-      </a>
-      <a class="nav-item" href="https://supabase.com/">
-        <span class="iconfont icon-supabase"></span>
-        <h2 data-label="Supabase">Supabase</h2>
-      </a>
-      <a class="nav-item" href="./pattern/index.html">
-        <span class="iconfont icon-slack"></span>
-        <h2 data-label="Pattern">Pattern</h2>
-      </a>
-      <a class="nav-item" href="./unity/index.html">
-        <span class="iconfont icon-unity"></span>
-        <h2 data-label="Unity">Unity</h2>
-      </a>
-      <a class="nav-item" href="./dataStruct/index.html">
-        <span class="iconfont icon-applicationgroup"></span>
-        <h2 data-label="Data Structures">Data Structures</h2>
-      </a>
-      <a class="nav-item" href="./os/index.html">
-        <span class="iconfont icon-os-icon-OScope"></span>
-        <h2 data-label="Operating System">Operating System</h2>
-      </a>
-      <a class="nav-item" href="./python/index.html">
-        <span class="iconfont icon-python"></span>
-        <h2 data-label="Python">Python</h2>
-      </a>
-      <a class="nav-item" href="./linux/index.html">
-        <span class="iconfont icon-ubuntu"></span>
-        <h2 data-label="Ubuntu">Ubuntu</h2>
-      </a>
-      <a class="nav-item" href="./harmony/index.html">
-        <span class="iconfont icon-huawei"></span>
-        <h2 data-label="Harmony OS">Harmony OS</h2>
-      </a>
-      <a class="nav-item" href="./office/index.html">
-        <span class="iconfont icon-Office"></span>
-        <h2 data-label="Office">Office</h2>
-      </a>
-      <a class="nav-item" href="./java/index.html">
-        <span class="iconfont icon-java"></span>
-        <h2 data-label="Java">Java</h2>
-      </a>
-      <a class="nav-item" href="./wsn/index.html">
-        <span class="iconfont icon-ic"></span>
-        <h2 data-label="WSN">WSN</h2>
-      </a>
-      <a class="nav-item" href="./common/index.html">
-        <span class="iconfont icon-chengguozhuanhuafuwu"></span>
-        <h2 data-label="Case">Case</h2>
-      </a>
-    </nav>
-
-    <footer>
-      <div class="svg">
-        <svg t="1753594322751" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-          p-id="8138" width="64" height="64">
-          <path
-            d="M467.384747 1.905778C482.090525 0.654222 496.966969 0 512.014081 0c282.766222 0 512 229.233778 512 512a503.182222 503.182222 0 0 1-91.534223 290.759111l86.215111 86.186667-129.706666 129.735111-87.381334-87.381333A514.56 514.56 0 0 1 512.014081 1019.591111c-123.733333 0-242.261333-42.865778-336.099556-110.592l-7.594667 9.671111a85.333333 85.333333 0 1 1-65.792-63.601778l4.010667-5.12a497.664 497.664 0 0 1-68.408889-85.276444l78.108445-79.075556c78.250667 92.074667 248.348444 163.128889 361.244444 163.128889 78.592 0 143.587556-16.725333 195.982222-45.539555L335.089636 464.782222l-95.175111 95.232-141.795556-141.795555 251.761778-251.733334a159.687111 159.687111 0 0 0 51.171556 8.419556c41.244444 0 79.445333-15.900444 110.734222-42.951111l78.108444 78.08-125.098666 125.041778 336.554666 336.554666c31.431111-59.733333 46.250667-129.564444 46.250667-201.528889 0-166.684444-163.697778-447.715556-380.245333-468.195555z"
-            p-id="8139" fill="var(--second-color)"></path>
-        </svg>
-      </div>
-      <p>All rights reserved &copy; glpla 2025-2026</p>
-      <a href="./web/demo/contact.html" target="_blank" title="单击给我留言"><span class="iconfont icon-email"></span>
-        glpla@hotmail.com</a>
-      <p>桂林 · 中国</p>
-    </footer>
-  </section>
-
-</body>
-<script>
-  const setBg = () => {
-    // 色相：0（红）到 40（橙）
-    const hue = Math.random() * 40; // 0 ~ 40
-
-    // 饱和度：高饱和更鲜艳（70%~100%）
-    const saturation = 80 + Math.random() * 20;
-
-    // 亮度：避免太亮或太暗（40%~70% 比较舒适）
-    const lightness = 50 + Math.random() * 20;
-
-    const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-    document.documentElement.style.setProperty('--second-color', color);
-  };
-
-  // setInterval(setBg, 2000);
-</script>
-<script>
-  const stars = document.getElementById('stars')
-  function gerStars() {
-    let dur = 6 + Math.random() * 4
-    let span = document.createElement('div')
-    span.className = 'star'
-    span.style.width = Math.random() * 12 + 'px'
-    span.style.left = Math.random() * window.innerWidth + 'px'
-    span.style.animationDuration = dur + 's'
-    stars.appendChild(span)
-    span.addEventListener('animationend', () => {
-      span.remove()
+  <div class="container">
+    <!-- <div class="side"></div>
+    <div class="side"></div>
+    <div class="side"></div>
+    <div class="side"></div>
+    <div class="side"></div>
+    <div class="side"></div> -->
+    <a class="item" style="--delay:0;--x:-1;--y:-1" href="./web/index.html">
+      <span class="iconfont icon-HTML-5"></span>
+    </a>
+    <a class="item" style="--delay:1;--x:0;--y:-1" href="./vue/index.html">
+      <span class="iconfont icon-vue"></span>
+    </a>
+    <a class="item" style="--delay:2;--x:1;--y:-1" href="./minip/index.html">
+      <span class="iconfont icon-weixinxiaochengxu2x"></span>
+    </a>
+    <a class="item" style="--delay:3;--x:-1;--y:0" href="./network/index.html">
+      <span class="iconfont icon-framework"></span>
+    </a>
+    <a class="item" style="--delay:2;--x:0;--y:0" href="./node/index.html">
+      <span class="iconfont icon-node-dot-js"></span>
+    </a>
+    <a class="item" style="--delay:3;--x:1;--y:0" href="./unity/index.html">
+      <span class="iconfont icon-unity"></span>
+    </a>
+    <a class="item" style="--delay:2;--x:-1;--y:1" href="./dataStruct/index.html">
+      <span class="iconfont icon-applicationgroup"></span>
+    </a>
+    <a class="item" style="--delay:1;--x:0;--y:1" href="./python/index.html">
+      <span class="iconfont icon-python"></span>
+    </a>
+    <a class="item" style="--delay:3;--x:1;--y:1" href="./wsn/index.html">
+      <span class="iconfont icon-ic"></span>
+    </a>
+  </div>
+  <h1>happy new year 2026</h1>
+  <script>
+    const container = document.querySelector('.container')
+    container.addEventListener('click', (e) => {
+      if (container == e.target) {
+        container.classList.toggle('active')
+      }
     })
-    // setTimeout(() => {
-    //   span.remove()
-    // }, (dur + 0.1) * 1000)
-  }
-  setInterval(gerStars, 200);
-</script>
+    document.body.addEventListener('click', (e) => {
+      if (document.body == e.target)
+        container.classList.remove('active')
+    })
+    const items = container.querySelectorAll('.item')
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault()
+        container.classList.remove('active')
+        container.addEventListener('transitionend', () => {
+          window.location.href = item.href
+        }, { once: true })
+      })
+    })
+    // snowing
+    const stars = document.body
+    function gerStars() {
+      let dur = 6 + Math.random() * 4
+      let span = document.createElement('div')
+      span.className = 'star'
+      span.style.width = Math.random() * 10 + 'px'
+      span.style.left = Math.random() * window.innerWidth + 'px'
+      span.style.animationDuration = dur + 's'
+      stars.appendChild(span)
+      span.addEventListener('animationend', () => {
+        span.remove()
+      })
+      // setTimeout(() => {
+      //   span.remove()
+      // }, (dur + 0.1) * 1000)
+    }
+    setInterval(gerStars, 400);
+  </script>
+</body>
 
 </html>

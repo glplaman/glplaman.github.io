@@ -6,103 +6,116 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>事件 Event</title>
-  <link rel="stylesheet" href="../../css/common2025.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="../css/page.css">
   <base target="_blank">
-  <style>
-    .btns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      align-items: center;
-      height: 20vh;
-    }
-  </style>
 </head>
 
 <body>
-  <header>
-    <h1>事件</h1>
-    <span>&commat;Event</span>
-  </header>
-  <figure>
-    <img src="../imgs/event.png" alt="">
-    <figcaption>思维导图</figcaption>
-  </figure>
-  <section>
-    <h3>标签属性 Tag Attributes</h3>
-    <ul>
-      <li>事件以 onXXX 的形式作为元素的一个属性 Properties 写在<span class="warn">结构</span>元素上；事件处理逻辑可以写在结构中也可以写在脚本中</li>
-      <li>可以携带参数</li>
-      <li>内联事件 - 只能满足当前元素的需求</li>
-      <li>只能处理冒泡阶段</li>
-      <li>适合简单逻辑</li>
-      <li>不符合结构 - 样式 - 逻辑分离的开发原则，较少使用</li>
-    </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] 完全耦合 - 全部写在结构中</div>
-    <pre>&lt;div onclick="alert('hi,there.')"&gt;点击我&lt;/div&gt;</pre>
-    <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 结构逻辑分离</div>
-    <pre>&lt;div onclick="fn()"&gt;点击我&lt;/div&gt;</pre>
-    <pre>
+  <div class="w">
+    <header>
+      <h1>事件</h1>
+      <span>&commat;Event</span>
+    </header>
+    <figure>
+      <img src="../imgs/event.png" alt="">
+      <figcaption>xmind</figcaption>
+    </figure>
+    <dl>
+      <dt>标签属性 Tag Attributes</dt>
+      <dd>事件以 onXXX 的形式作为元素的一个属性 Properties 写在<span class="warn">结构</span>元素上；事件处理逻辑可以写在结构中也可以写在脚本中</dd>
+      <dd>可以携带参数</dd>
+      <dd>内联事件 - 只能满足当前元素的需求</dd>
+      <dd>只能处理冒泡阶段</dd>
+      <dd>适合简单逻辑</dd>
+      <dd>不符合结构 - 样式 - 逻辑分离的开发原则，较少使用</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 完全耦合 - 全部写在结构中</div>
+      <pre>&lt;div onclick="alert('hi,there.')"&gt;点击我&lt;/div&gt;</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 结构逻辑分离</div>
+      <pre>&lt;div onclick="fn()"&gt;点击我&lt;/div&gt;</pre>
+      <pre>
 function fn() {
   alert('hi,there.')
 }</pre>
-    <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 携带形参；参数类型可以是简单数据类型，也可以是复杂数据类型</div>
-    <pre>&lt;div onclick="fn_para({id:1,name:'glpla'})"&gt;点击我&lt;/div&gt;</pre>
-    <pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 携带形参；参数类型可以是简单数据类型，也可以是复杂数据类型</div>
+      <pre>&lt;div onclick="fn_para({id:1,name:'glpla'})"&gt;点击我&lt;/div&gt;</pre>
+      <pre>
 function fn_para(p) {
     console.log(this);
     console.log(p);
 }</pre>
-    <h3>实例属性 Instance Properties</h3>
-    <ul>
-      <li>以实例属性 Properties 的形式分配事件 onXXX</li>
-      <li>先获取对象实例再分配事件 - <span class="warn">脚本</span>中处理</li>
-      <li>兼容性好</li>
-      <li>只能满足当前元素；且元素只能绑定一个事件</li>
-      <li>事件函数可以接受参数；可以使用形参 e 获取事件对象；可以使用 this 获取执行事件函数的元素；也可以显式的指明参数</li>
-      <li>需要等页面加载完成 onload 后才能获取元素</li>
-      <li>不方便传递参数</li>
-    </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] onXXX 事件 - 默认形参 this 和事件对象 e</div>
-    <pre>
+      <dt>实例属性 Instance Properties</dt>
+      <dd>以实例属性 Properties 的形式分配事件 onXXX</dd>
+      <dd>先获取对象实例再分配事件 - <span class="warn">脚本</span>中处理</dd>
+      <dd>兼容性好</dd>
+      <dd>只能满足当前元素；且元素只能绑定一个事件</dd>
+      <dd>事件函数可以接受参数；可以使用形参 e 获取事件对象；可以使用 this 获取执行事件函数的元素；也可以显式的指明参数</dd>
+      <dd>需要等页面加载完成 onload 后才能获取元素</dd>
+      <dd>不方便传递参数</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] onXXX 事件 - 默认形参 this 和事件对象 e</div>
+      <pre>
 const el = document.querySelector('div')
 el.onclick = function () {
     console.log(this);
 }</pre>
-    <pre>
+      <pre>
 const el = document.querySelector('div')
 el.onclick = function (e) {
     console.log(e);
     console.log(this);
 }</pre>
-    <div class="tips">
-      <div>如果使用箭头函数，则 this 指向为 window</div>
-      <div>事件对象为形参，可以使用任何合法标识符，通常使用 e 或 event</div>
-    </div>
-    <h3>事件侦听 Event AddEventListene</h3>
-    <ul>
-      <li>为元素添加/注册事件监听器，允许注册多个</li>
-      <li>支持事件捕获、冒泡阶段处理，更容易管理事件</li>
-      <li>符合结构 - 样式 - 逻辑分离的开发原则</li>
-    </ul>
-    <div>1. 事件注册 addEventListener</div>
-    <pre>el.addEventListener(event-type, event-handle, capture)</pre>
-    <ol>
-      <li>event-type - 不需要带 on，如click、mouseover</li>
-      <li>event-handle - 当事件发生时调用的函数，也叫响应；可以使用形参 e 获取事件对象，访问事件的详细信息</li>
-      <li>capture - 事件处理的时机，默认是冒泡 false；如果为 true，则是捕获；实际开发中，更关注冒泡</li>
-    </ol>
-    <div>2. 事件移除 removeEventListener</div>
-    <pre>el.removeEventListener(event-type, event-handle, capture)</pre>
-    <ul>
-      <li>性能考虑，有事件注册就应该有事件清除</li>
-      <li>正常起见，必须传入与注册中完全相同的函数引用；怎么注册就怎么清除</li>
-      <li>避免调试干扰：如果你在开发阶段频繁刷新或测试页面跳转逻辑，保留未解绑的监听器可能会导致行为异常，例如旧监听器被意外触发</li>
-      <li>防止某些特殊情况下的内存泄漏：在一些老旧浏览器或复杂 SPA 架构中，如果组件/模块没有正确销毁，监听器未解绑可能导致内存无法释放</li>
-      <li>编码规范 & 可维护性：主动解除绑定是一种良好的编程习惯，有助于代码可读性和资源管理意识</li>
-    </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] 绑定多个事件侦听器</div>
-    <pre>
+      <div class="tips">
+        <div>如果使用箭头函数，则 this 指向为 window</div>
+        <div>事件对象为形参，可以使用任何合法标识符，通常使用 e 或 event</div>
+      </div>
+    </dl>
+    <h2>事件侦听 Event Listener</h2>
+    <dl>
+      <dd>为元素添加/注册事件监听器，允许注册多个</dd>
+      <dd>支持事件捕获、冒泡阶段处理，更容易管理事件</dd>
+      <dd>符合结构 - 样式 - 逻辑分离的开发原则</dd>
+      <dt>事件注册 addEventListener</dt>
+      <pre>target.addEventListener(type, listener, options);</pre>
+      <dd>type - 事件类型名称，如 click、mouseover；不需要带 on</dd>
+      <dd>listener - 事件处理函数；当事件发生时调用的函数，也叫响应；可以使用形参 e 获取事件对象，访问事件的详细信息</dd>
+      <dd>options - 配置事件监听行为</dd>
+      <table>
+        <caption>事件选项 Option</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>once</td>
+            <td>Boolean；事件监听器执行一次后自动移除</td>
+          </tr>
+          <tr>
+            <td>capture</td>
+            <td>Boolean；是否在捕获阶段执行</td>
+          </tr>
+          <tr>
+            <td>passive</td>
+            <td>Boolean；是否阻止事件的默认行为</td>
+          </tr>
+          <tr>
+            <td>signal</td>
+            <td>AbortSignal；用于稍后移除监听器</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>事件移除 removeEventListener</dt>
+      <pre>target.removeEventListener(type, listener, options);</pre>
+      <dd>性能考虑，有事件注册就应该有事件清除</dd>
+      <dd>正常起见，必须传入与注册中完全相同的函数引用；怎么注册就怎么清除</dd>
+      <dd>避免调试干扰：如果你在开发阶段频繁刷新或测试页面跳转逻辑，保留未解绑的监听器可能会导致行为异常，例如旧监听器被意外触发</dd>
+      <dd>防止某些特殊情况下的内存泄漏：在一些老旧浏览器或复杂 SPA 架构中，如果组件/模块没有正确销毁，监听器未解绑可能导致内存无法释放</dd>
+      <dd>编码规范 & 可维护性：主动解除绑定是一种良好的编程习惯，有助于代码可读性和资源管理意识</dd>
+      <dd>如果添加事件时使用了 options 对象，移除时就必须提供相同的 options 对象</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 绑定多个事件侦听器</div>
+      <pre>
 //具名函数
 wrap.addEventListener('click', fn)
 
@@ -120,19 +133,18 @@ card.addEventListener('click', (e) => {
 console.log('card', e.target);
 wrap.removeEventListener('click', fn)
 })</pre>
-    <div class="tips">
-      <div>部分事件如：blur / focus / submit / change / reset / select / mouseleave / mouseenter 没有冒泡</div>
-      <div>事件处理函数尽量不要采用匿名函数的方式，否则无法清除</div>
-      <div>适用于函数表达式</div>
-      <div>使用开发者工具 → 事件侦听器，查看事件的添加和移除</div>
-      <div>使用 beforeunload 比 unload 更合适；unload 的兼容性和执行稳定性较差（部分浏览器限制 JS 执行）</div>
-    </div>
-  </section>
-  <h2>事件传参 Parameter/todo</h2>
-  <section>
-    <ul>
-      <li>不能直接使用，否则会被立即执行</li>
-      <li>需要使用匿名函数，在匿名函数里执行封装的带参函数</li>
+      <div class="tips">
+        <div>部分事件如：blur / focus / submit / change / reset / select / mouseleave / mouseenter 没有冒泡</div>
+        <div>事件处理函数尽量不要采用匿名函数的方式，否则无法清除</div>
+        <div>适用于函数表达式</div>
+        <div>使用开发者工具 → 事件侦听器，查看事件的添加和移除</div>
+        <div>使用 beforeunload 比 unload 更合适；unload 的兼容性和执行稳定性较差（部分浏览器限制 JS 执行）</div>
+      </div>
+    </dl>
+    <h2>事件传参 Parameter/todo</h2>
+    <dl>
+      <dd>不能直接使用，否则会被立即执行</dd>
+      <dd>需要使用匿名函数，在匿名函数里执行封装的带参函数</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 封装表单域的获取焦点和失去焦点函数</div>
       <pre>
 function setBg(color) {
@@ -140,11 +152,11 @@ console.log('hi');
 console.log(ta);
 ta.style.background = color;
 }</pre>
-      <li>获取元素并侦听事件，发现函数被立即执行了其中的log，但是元素并没有按照设想改变颜色；继续交互同样不会执行</li>
+      <dd>获取元素并侦听事件，发现函数被立即执行了其中的log，但是元素并没有按照设想改变颜色；继续交互同样不会执行</dd>
       <pre>
 ta.addEventListener('focus', setBg('#f40'));
 ta.addEventListener('blur', setBg('#ccc'));</pre>
-      <li>将封装的带参函数，放在匿名函数中执行。问题解决</li>
+      <dd>将封装的带参函数，放在匿名函数中执行。问题解决</dd>
       <pre>
 ta.addEventListener('focus', function () {
 setBg('#f40')
@@ -152,7 +164,7 @@ setBg('#f40')
 ta.addEventListener('blur', function () {
 setBg('#ccc')
 });</pre>
-      <li>也可以使用箭头函数，同时获取事件对象e</li>
+      <dd>也可以使用箭头函数，同时获取事件对象e</dd>
       <pre>
 ta.addEventListener('focus', (e) => {
 console.log(e);
@@ -162,28 +174,19 @@ ta.addEventListener('blur', (e) => {
 console.log(e);
 setBg('#ccc')
 });</pre>
-    </ul>
-  </section>
-  <a class="back2top" target="_self" href="#">
-    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-      p-id="31526" width="32" height="32">
-      <path
-        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
-        fill="#ffffff" p-id="31527"></path>
-    </svg>
-  </a>
-  <div id="footer"></div>
+    </dl>
+    <a class="back2top" target="_self" href="#">
+      <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        p-id="31526" width="32" height="32">
+        <path
+          d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
+          fill="#ffffff" p-id="31527"></path>
+      </svg>
+    </a>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
   <script src="/utils/custom/back2top.js"></script>
-  <script>
-    let btns = document.querySelector('.btns');
-    const changeColor = (color) => {
-      btns.style.color = color;
-    }
-    const changeBg = (bg) => {
-      btns.style.backgroundImage = `URL(../imgs/${bg})`;
-    }
-  </script>
 </body>
 
 </html>
