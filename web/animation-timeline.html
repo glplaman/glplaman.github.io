@@ -26,16 +26,15 @@
       background-color: #f1f3f5;
       border: 10px solid #fff;
       animation: radialProgress 1ms ease-out forwards;
-      animation-timeline: view(block);
+      animation-timeline: view(30% 10%);
       animation-range: entry 100% contain 90%;
       margin: 4rem auto;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .spinner::before {
-      --progress-fixed: calc(var(--radial-progress) * 100);
       content: "" counter(per) "%";
-      counter-reset: per var(--progress-fixed);
+      counter-reset: per calc(var(--radial-progress) * 100);
       font-size: 3rem;
       font-weight: 700;
       z-index: 10;
@@ -45,18 +44,14 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: conic-gradient(from 0deg,
-          #8b5cf6 0deg,
-          #8b5cf6 var(--progress, 0deg),
-          transparent var(--progress, 0deg));
+      background: conic-gradient(#8b5cf6 0deg calc(var(--radial-progress) * 360deg),
+          transparent 0);
       mask: radial-gradient(circle,
           transparent 0,
           transparent calc(50% - 5px),
           black calc(50% - 10px),
           black 100%);
     }
-
-
 
     @keyframes radialProgress {
       from {
@@ -174,10 +169,44 @@
           view()
           时间轴动画</a></div>
       <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-timeline.html">时间轴联动导航</a></div>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-timeline.html">进度环</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 进度环</div>
       <div class="spinner">
         <div class="spinner-pro"></div>
       </div>
+      <ol>
+        <li>定义数值属性 --radial-progress</li>
+        <pre>
+@property --radial-progress {
+  syntax: "&lt;number&gt;";
+  inherits: true;
+  initial-value: 0;
+}</pre>
+        <li>定义动画；在生效范围内从 0 逐步变换到 1</li>
+        <p>因为要兼顾计数器的 0 - 100 和圆周的 0 - 360deg</p>
+        <pre>
+@keyframes radialProgress {
+  from {
+    --radial-progress: 0;
+  }
+
+  to {
+    --radial-progress: 1;
+  }
+}</pre>
+        <li>引用动画及时间轴生效范围</li>
+        <p>动画时间由视口决定，所以 1ms 可以移除</p>
+        <pre>
+animation: radialProgress 1ms ease-out forwards;
+animation-timeline: view(30% 10%);</pre>
+        <li>圆周的变化范围 0 - 360deg</li>
+        <pre>
+background: 
+  conic-gradient(
+    #8b5cf6 0deg calc(var(--radial-progress) * 360deg),
+    transparent 0);</pre>
+        <li>计数器的范围：0 - 100</li>
+        <pre>counter-reset: per calc(var(--radial-progress) * 100);</pre>
+      </ol>
     </dl>
     <h2>scroll()</h2>
     <dl>
