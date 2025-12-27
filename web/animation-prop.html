@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动画自定义属性 @Property</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <base target="_blank">
+  <style>
+    :root {
+      --deg: 0deg;
+    }
+
+    @property --deg {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    .conic {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background-color: #f1f1f1;
+      border-radius: 50%;
+      margin: 4rem auto;
+    }
+
+    .conic::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background-image: conic-gradient(from var(--deg), transparent, #f40 90deg, transparent 0);
+      animation: scan 3s linear infinite;
+      animation-play-state: paused;
+    }
+
+    .conic:hover::before {
+      animation-play-state: running;
+    }
+
+    @keyframes scan {
+      to {
+        --deg: 360deg;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>动画自定义属性</h1>
+      <span>&commat;Property</span>
+    </header>
+    <dl>
+      <dd>某些复合动画属性无法直接使用</dd>
+      <dd>定义某个 CSS 属性以便参与动画运算</dd>
+      <pre>
+@property --deg {
+  syntax: "&lt;angle&gt;";
+  initial-value: 0deg;
+  inherits: false;
+}</pre>
+      <dd>创建动画</dd>
+      <pre>
+@keyframes scroll {
+  from {
+    --deg: 0deg
+  }
+
+  to {
+    --deg: 360deg
+  }
+}</pre>
+      <dd>使用动画</dd>
+      <pre>
+.box {
+  width: 300px;
+  height: 200px;
+  background-image: conic-gradient(from var(--deg), red, yellow, blue);
+  animation: scroll 1s linear infinite;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 锥图扫描动画</div>
+      <dd>鼠标悬停时，锥图起点变化 - 旋转</dd>
+      <div class="conic"></div>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

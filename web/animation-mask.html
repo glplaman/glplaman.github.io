@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>遮罩动画 Mask</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <base target="_blank">
+  <style>
+    .demo-wrap {
+      border: 1px solid #000;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    .demo {
+      width: 100%;
+      height: 100%;
+      background-color: #f1f3f5;
+      background-image: url(/utils/wallpaper/blue.jpg);
+      background-size: cover;
+      mask: url(/imgs/house.png);
+    }
+
+    .demo0 {
+      mask-repeat: no-repeat;
+    }
+
+    .demo1 {
+      mask-size: cover;
+    }
+
+    .demo2 {
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
+
+    .demo3 {
+      mask-repeat: no-repeat;
+      mask-position: right bottom;
+    }
+
+    .box {
+      mask-image: url(../imgs/ink0.gif);
+      mask-size: contain;
+      mask-position: center;
+      mask-repeat: no-repeat;
+      filter: grayscale(1);
+      transition: 0.5s;
+    }
+
+    .box:hover {
+      filter: grayscale(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>遮罩动画</h1>
+      <span>&commat;Mask</span>
+    </header>
+    <dl>
+      <dd>使用遮罩去控制元素的显示</dd>
+      <dd>遮罩通常为透明图片；也可以是渐变背景图片</dd>
+      <dd>遮罩可以是静态图片；也可以是动态图片</dd>
+      <dd>遮罩使用同背景图片的使用</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/mask">MDN - mask</a>
+      </dd>
+      <dt>复合属性</dt>
+      <pre>mask</pre>
+      <dt>独立属性 Shorthand</dt>
+      <pre>
+mask-clip
+mask-image
+mask-size
+mask-position
+mask-repeat
+mask-mode</pre>
+      <dt>示例 Demo</dt>
+      <dd>容器 300*300</dd>
+      <dd>遮罩图像 128*128</dd>
+      <ol>
+        <li>默认情况：平铺</li>
+        <figure>
+          <div class="demo-wrap">
+            <div class="demo"></div>
+          </div>
+          <figcaption>默认参数</figcaption>
+        </figure>
+        <li>不重复 mask-repeat</li>
+        <figure>
+          <div class="demo-wrap">
+            <div class="demo demo0"></div>
+          </div>
+          <figcaption>no-repeat</figcaption>
+        </figure>
+        <li>指定遮罩图片大小 mask-size</li>
+        <figure>
+          <div class="demo-wrap">
+            <div class="demo demo1"></div>
+          </div>
+          <figcaption>cover</figcaption>
+        </figure>
+        <li>指定遮罩图片不重复和位置 mask-repeat mask-position</li>
+        <figure>
+          <div class="demo-wrap">
+            <div class="demo demo2"></div>
+          </div>
+          <figcaption>no-repeat center</figcaption>
+        </figure>
+        <figure>
+          <div class="demo-wrap">
+            <div class="demo demo3"></div>
+          </div>
+          <figcaption>no-repeat right bottom</figcaption>
+        </figure>
+      </ol>
+      <div>[<span class="iconfont icon-keyboard"></span>] 动画遮罩</div>
+      <dd>遮罩使用 gif 动画图片</dd>
+      <dd>鼠标悬停时，恢复颜色</dd>
+      <dd>使用灰度滤镜</dd>
+      <pre>
+.box:hover {
+  filter: grayscale(0);
+}</pre>
+      <div class="demo-wrap">
+        <div class="demo box"></div>
+      </div>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

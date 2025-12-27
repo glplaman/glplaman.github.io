@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动画事件 Events</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>动画事件</h1>
+      <span>&commat;Events</span>
+    </header>
+    <dl>
+      <dd>可以使用 JavaScript 监测或控制动画的属性，如播放、暂停等</dd>
+      <dd>javaScript 操作动画的播放或暂停，会覆盖样式中的控制</dd>
+      <dd>建议使用控制类</dd>
+      <table>
+        <caption>动画事件 Events</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>开始</td>
+            <td>animationstart </td>
+          </tr>
+          <tr>
+            <td>结束</td>
+            <td>animationend</td>
+          </tr>
+          <tr>
+            <td>重新播放</td>
+            <td>animationiteration</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/loading.html">个人网站加载</a></div>
+      <dd>页面加载完毕跳转到主页面</dd>
+      <dd>先设计动画并应用到某元素，然后在 JavaScript 中监测元素的动画状态，结束时跳转到主页面</dd>
+      <pre>
+let item = document.querySelector('.item')
+item.addEventListener('animationend', () => {
+  location.href = './index.html'
+})</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/miniplayer.html">MINI音乐播放器</a>
+      </div>
+      <dd>一开始动画暂停，监听播放状态。播放就执行动画；否则暂停</dd>
+      <pre>
+audio.addEventListener('play', () => {
+  img.style.animationPlayState = `running`
+})
+audio.addEventListener('pause', () => {
+  img.style.animationPlayState = `paused`
+})</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animHop.html">字节跳动</a></div>
+      <dd>变换 - 缩放动画</dd>
+      <dd>每次鼠标滑过 mouseover 都触发3次动画 - 鼠标事件</dd>
+      <pre>
+let spans = document.querySelectorAll("span");
+spans.forEach((span) => {
+    span.addEventListener("mouseover", () => {
+        span.classList.add("active");
+    });
+    span.addEventListener("animationend", () => {
+        span.classList.remove("active");
+    });
+});</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 单击后左移2次，结束后移除事件响应</div>
+      <dd>事先应创建好动画样式</dd>
+      <pre>
+let btn = document.querySelector('.btn');
+btn.addEventListener('click', () => {
+    btn.style.animation = 'moveOut 1s 2 forwards'
+})
+btn.addEventListener('animationend', () => {
+    btn.style.pointerEvents = 'none'
+})
+btn.addEventListener('animationiteration', logging)
+function logging() {
+    console.log('animationiteration');
+}</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

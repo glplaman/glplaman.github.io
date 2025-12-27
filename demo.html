@@ -4,144 +4,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo</title>
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <title>Document</title>
   <style>
+    :root {
+      --w: 50%;
+      --margin: -133px
+    }
+
     * {
-      margin: 0;
       padding: 0;
+      margin: 0;
       box-sizing: border-box;
     }
 
     body {
       display: flex;
-      flex-direction: column;
-      /* justify-content: center; */
+      justify-content: center;
       align-items: center;
       height: 100vh;
     }
 
-    .cart {
-      position: fixed;
-      right: 5rem;
-      bottom: 5rem;
-    }
-
     .box {
-      width: 300px;
-      height: 100px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 auto;
-    }
-
-    .box p {
-      position: relative;
-      cursor: pointer;
-    }
-
-    .box p span {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: #f40;
-      animation: move 2s cubic-bezier(0, .65, .4, 1) both;
-    }
-
-    @keyframes move {
-      100% {
-        transform: translate(var(--start-left), var(--start-top));
-      }
-    }
-
-    .float {
-      position: relative;
       width: 800px;
-      margin: 0 auto;
-      overflow: hidden;
-      text-align: justify;
+      height: 400px;
     }
 
-    .float img {
-      width: 200px;
-      float: left;
-      shape-outside: url(./imgs/running.png);
+    .left,
+    .right {
+      flex-basis: 50%;
+      overflow: hidden;
+    }
+
+    .left .img {
+      width: 128px;
+      height: 599px;
+      background-image: url(./imgs/mao.png);
+      background-repeat: no-repeat;
+      float: right;
+      shape-outside: url(./imgs/mao.png);
       shape-margin: 10px;
     }
 
-    .float div {
-      width: 30%;
+    .right .img {
+      width: 128px;
+      height: 599px;
+      background-image: url(./imgs/mao.png);
+      background-repeat: no-repeat;
+      background-position: 100% 0;
       float: left;
+      shape-outside: url(./imgs/mao.png);
+      shape-margin: 10px;
     }
 
-    .float p {
-      width: 30%;
-      float: left;
+    .cont {
+      padding: 10px 0;
+    }
+
+    .cont p {
+      text-align: justify;
+      margin-bottom: 10px;
+    }
+
+    @media screen and (max-width:768px) {
+      :root {
+        --w: 65%;
+        --margin: -90px
+      }
+
+      .cont p:nth-child(n+2) {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="tmp">
-    <div class="float">
-      <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur vero dignissimos quas repellat aliquam
-        doloremque provident temporibus laudantium eos corrupti explicabo consequuntur excepturi, quam beatae,
-        accusantium illum ipsa perferendis dolores.</div>
-      <img src="./imgs/running.png" alt="">
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt nisi quos commodi eveniet nam at, id ipsam
-        fuga aliquid illo error inventore, dolorem quam aliquam nostrum sit ullam fugiat sed?</p>
-    </div>
-    <div>Lorem.</div>
-    <div>Beatae.</div>
-    <div>Consequatur?</div>
-    <div>Harum!</div>
-    <div>Fugit.</div>
-    <div>Excepturi.</div>
-    <div>Nisi?</div>
-    <div>Cumque!</div>
-    <div>Eius.</div>
-    <div>Quia?</div>
-  </div>
-  <p class="cart">
-    <i class='bx bxs-cart bx-lg'></i>
-  </p>
   <div class="box">
-    <p><i class='bx bxs-user-minus bx-md'></i></p>
-    <p><i class='bx bxs-user-plus bx-md'></i></p>
-    <p><i class='bx bxs-user-check bx-md'></i></p>
-    <p><i class='bx bxs-user-x bx-md'></i></p>
+    <div class="left">
+      <div class="img"></div>
+      <div class="cont">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ex maxime velit praesentium et, ipsa
+          iure sequi delectus repellat cum distinctio dolores nesciunt, aliquam nobis impedit corporis est consequuntur
+          eaque?</p>
+        <p>Aut nulla cupiditate iure vitae voluptatibus quod ex, consequuntur eos! Sint aut labore vero, perferendis
+          explicabo a, impedit, necessitatibus tempora hic cumque iusto. Quos voluptatibus, laborum deserunt odit
+          aliquid vel?</p>
+        <p>Consectetur velit sequi sit itaque exercitationem doloribus esse, et molestiae debitis ullam accusamus? In
+          adipisci hic, quis aliquam molestiae quae inventore iure reprehenderit voluptatem. Ratione voluptatem ab quo
+          enim harum.</p>
+      </div>
+    </div>
+    <div class="right">
+      <div class="img"></div>
+      <div class="cont">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui soluta asperiores natus corporis atque dolore
+          vitae pariatur earum quibusdam assumenda voluptates et quasi magni beatae excepturi in, fugit, similique
+          reiciendis.</p>
+        <p>Amet saepe deleniti velit soluta corporis, blanditiis voluptates iure nesciunt maiores expedita cumque
+          numquam eos voluptas est voluptatibus. Tempore adipisci autem voluptatum ipsa accusantium doloremque aperiam
+          alias porro quis consequatur.</p>
+        <p>Dolores velit doloribus laborum, ratione vero excepturi modi nobis voluptates ea, totam cum obcaecati
+          necessitatibus nihil nesciunt voluptas placeat eum, aspernatur nostrum quae labore! Cum recusandae rem nostrum
+          a in!</p>
+      </div>
+    </div>
   </div>
-  <div class="tmp">
-    <div>Lorem.</div>
-    <div>Beatae.</div>
-    <div>Consequatur?</div>
-    <div>Harum!</div>
-    <div>Fugit.</div>
-    <div>Excepturi.</div>
-    <div>Nisi?</div>
-    <div>Cumque!</div>
-    <div>Eius.</div>
-    <div>Quia?</div>
-  </div>
-  <script>
-    const cart = document.querySelector('.cart');
-    const icons = document.querySelectorAll('.box p');
-    const cartPos = cart.getBoundingClientRect()
-    icons.forEach((icon, ind) => {
-      icon.addEventListener('click', () => {
-        const iconPos = icon.getBoundingClientRect()
-        const ball = document.createElement('span');
-        ball.style.setProperty('--start-left', `${cartPos.left - cartPos.width / 2 + 10 - iconPos.left}px`);
-        ball.style.setProperty('--start-top', `${cartPos.top + 10 - iconPos.top}px`);
-        icon.appendChild(ball);
-        ball.addEventListener('animationend', () => {
-          ball.remove();
-        })
-      })
-    })
-  </script>
 </body>
 
 </html>

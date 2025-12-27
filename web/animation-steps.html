@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>帧步进动画 Steps</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>帧步进动画</h1>
+      <span>&commat;steps</span>
+    </header>
+    <dl>
+      <dd>动画方式还可以按照指定的阶段数 steps 逐步完成</dd>
+      <dd>由时间函数 steps() 指定分段过渡效果</dd>
+      <dd>同过渡动画 transition</dd>
+      <pre>steps(number_of_steps，direction)</pre>
+      <dd>number_of_steps：数字，过渡分几个阶段完成</dd>
+      <dd>direction：start 和 end，默认是 end，指每个阶段过渡结束后才渲染；start 则是过渡开始前就渲染</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/loading-line.html">进度条 - 步进</a>、<a
+          href="./demo/loading.html">进度条 - 模拟加载页</a></div>
+      <dd>元素的宽度经过10次步进从0变换到100%</dd>
+      <pre>
+.step {
+  width: 0;
+    background-image: linear-gradient(to right, #089, #0af);
+    box-shadow: 0 0 10px #08a, 0 0 20px #08a, 0 0 40px #08a;
+    animation: --per 5s steps(10) forwards;
+}
+
+@keyframes --per {
+    to {
+        width: 100%;
+    }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animIcon.html">图标动画 - 3D Icon</a></div>
+      <dd>使用精灵图作为背景，包括24个icon</dd>
+      <dd>每个icon大小为150*150，精灵图大小为150*3600；24*150 = 3600</dd>
+      <dd>最上边位置为0 0，最下边位置为 0 -（3600 - 150）</dd>
+      <dd>通过步进调整背景图片位置</dd>
+      <dd>分别定义静态动画和鼠标悬停 hover 动画</dd>
+      <dd>注意素材的设计和收集</dd>
+      <dd>鼠标移出：从底部返回顶部</dd>
+      <pre>
+@keyframes icon-leave {
+    from {
+        background-position: 0 -3450px;
+    }
+
+    to {
+        background-position: 0 0;
+    }
+}
+</pre>
+      <dd>鼠标移入：从顶部移动到底部</dd>
+      <pre>
+@keyframes icon-enter {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 0 -3450px;
+    }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/animCountdown.html">倒计时 - Countdown</a></div>
+      <div>1. 使用4张背景图片</div>
+      <dd>从3依次减到0，分3段进行</dd>
+      <dd>利用步进调整图片的水平位置</dd>
+      <div>2. 使用精灵图</div>
+      <dd>精灵图大小50*500</dd>
+      <dd>每个数字大小50*50</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/anim-swiper.html">轮播图 - swiper</a></div>
+      <dd>使用 flex；不换行</dd>
+      <dd>初始定位在左侧 left 0</dd>
+      <dd>采用步进 steps() 逐步设置swiper的左侧 left 位置</dd>
+      <dd>循环</dd>
+      <pre>
+animation: swiper 5s steps(5) infinite;
+</pre>
+      <pre>
+@keyframes swiper {
+  to {
+      left: -500%;
+  }
+}</pre>
+      <dd>不循环</dd>
+      <pre>
+animation: swiper 4s steps(4) forwards;
+</pre>
+      <pre>
+@keyframes swiper {
+  to {
+      left: -400%;
+  }
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="https://codepen.io/glpla/full/oNVjXLE">打字 typing -
+          CodePen</a>、<a href="./framework/typedjs.html">typed.js</a></div>
+      <dd>字体等宽</dd>
+      <dd>多动画使用：移位动画和闪烁动画</dd>
+      <dd>重复动画 infinite</dd>
+      <dd>动画延迟 animation-delay</dd>
+      <div class="tips">
+        <div>动画infinite时，最后一个字符会被忽略</div>
+        <div>动画forwards时，最后一个字符会显示</div>
+      </div>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

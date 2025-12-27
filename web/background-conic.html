@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>锥向渐变 Conic-gradient</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <base target="_blank">
+  <style>
+    .basic {
+      width: 150px;
+      height: 150px;
+      margin: 1rem auto;
+    }
+
+    .pie0 {
+      border-radius: 50%;
+      background-image: conic-gradient(#f1f2f3, #078);
+    }
+
+    .pie1 {
+      border-radius: 50%;
+      background-image: conic-gradient(#078 0 60deg, #f1f2f3 0);
+    }
+
+    .pie2 {
+      border-radius: 50%;
+      background-image: conic-gradient(#078 40deg,
+          #890 0 120deg,
+          #f1f2f3 0);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>锥向渐变</h1>
+    <span>&commat;Conic-gradient</span>
+  </header>
+  <dl>
+    <dd>
+      <div>. 角度渐变</div>
+      <div>. 适合做圆锥图/饼状图</div>
+      <div>. 默认从 0/12点 方向开始；可以使用 from 指定起始位置</div>
+      <div>. 可以使用度 deg 或百分比 %</div>
+      <div>. 使用 0 表示从前面部分结束的位置开始</div>
+      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient">MDN -
+          conic-gradient</a></div>
+      <pre>background-image:
+  conic-gradient([from angle] [at position,] color degree, color degree, ...);</pre>
+    </dd>
+    <dt>示例 Demo</dt>
+    <div>1. 默认 0 - 360deg</div>
+    <div class="basic pie0"></div>
+    <pre>
+background-image: 
+  conic-gradient(#f3f3f3, #078);</pre>
+    <dd>2. 划分1个区域：0-60deg</dd>
+    <div class="basic pie1"></div>
+    <pre>background-image:
+  conic-gradient(#078 0 60deg, #fff 0);</pre>
+    <dd>3. 划分3个区域：0-40deg、40-120deg、120-360deg</dd>
+    <div class="basic pie2"></div>
+    <pre>
+background-image: 
+  conic-gradient(
+    #078 0deg  40deg, 
+    #890 0 120deg, 
+    #f1f2f3 0);</pre>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-ring.html">环图</a> - 多背景或多元素；覆盖一个白色背景；可以使用伪元素
+    </dd>
+    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-adv.html">动态饼图</a></dd>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./animation-prop.html">锥图扫描动画</a></div>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
