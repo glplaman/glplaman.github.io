@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>文本 Text</title>
   <link rel="stylesheet" href="../css/common2025.css">
-  <link rel="stylesheet" href="./css/text.css">
   <base target="_blank">
   <style>
     p {
@@ -152,8 +151,6 @@
           </tr>
         </tbody>
       </table>
-    </ul>
-    <ul>
       <!-- <div>. 英文优先 - 首先使用最适合的英文，然后是中文字体，最后是兼容字体</div> -->
       <!-- <pre>font-family: "微软雅黑", "Microsoft YaHei", Quicksand, Arial, Helvetica, sans-serif;</pre> -->
       <pre>font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
@@ -255,10 +252,10 @@ button {
     </ul>
     <h3>基本使用</h3>
     <ul>
-      <li>定义字体样式文件 sample.css</li>
-      <li>可以使用本地字体，也可以使用在线字体</li>
-      <li>可以指定颜色 color、大小 font-size 等属性，也可以使用时再指定</li>
-      <li>建议指定字体格式</li>
+      <li>定义字体样式</li>
+      <li>可以使用本地字体；也可以使用在线字体</li>
+      <li>定义字体时，不可以指定 font-size；应在使用时指定</li>
+      <li>建议每个字体单独存放在一个 .css 文件</li>
       <pre>
 @font-face {
     font-family: font_name;
@@ -278,8 +275,9 @@ body {
   font-family: font_name;
 }</pre>
     </ul>
-    <div>[<span class="iconfont icon-keyboard"></span>] 定制西文字体 - Poppins；分轻型、普通和加粗字体，具体要看提供的字体文件有什么类型</div>
+    <div>[<span class="iconfont icon-keyboard"></span>] 定制西文字体 - Poppins</div>
     <ul>
+      <li>分轻型、普通和加粗字体；具体要看提供的字体文件有什么类型</li>
       <pre>
 @font-face {
   font-family: 'Poppins';
@@ -300,6 +298,12 @@ body {
   src: url(../fonts/Poppins/Poppins-Bold.ttf);
   font-weight: 600;
   font-display: swap;
+}</pre>
+      <li>使用时，如不指定 weight，则应用 400</li>
+      <pre>
+strong {
+  font-family: font_name;
+  font-weight: 600;
 }</pre>
     </ul>
     <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/font.html">定制中文字体</a> -
