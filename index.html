@@ -13,63 +13,68 @@
 
 <body>
   <div class="container">
-    <!-- <div class="side"></div>
-    <div class="side"></div>
-    <div class="side"></div>
-    <div class="side"></div>
-    <div class="side"></div>
-    <div class="side"></div> -->
-    <a class="item" style="--delay:0;--x:-1;--y:-1" href="./web/index.html">
-      <span class="iconfont icon-HTML-5"></span>
-    </a>
-    <a class="item" style="--delay:1;--x:0;--y:-1" href="./vue/index.html">
-      <span class="iconfont icon-vue"></span>
-    </a>
-    <a class="item" style="--delay:2;--x:1;--y:-1" href="./minip/index.html">
-      <span class="iconfont icon-weixinxiaochengxu2x"></span>
-    </a>
-    <a class="item" style="--delay:2;--x:-1;--y:0" href="./network/index.html">
-      <span class="iconfont icon-framework"></span>
-    </a>
-    <a class="item" style="--delay:3;--x:0;--y:0" href="./index2026.html">
-      <span class="iconfont icon-house"></span>
-    </a>
-    <a class="item" style="--delay:2;--x:1;--y:1" href="./node/index.html">
-      <span class="iconfont icon-node-dot-js"></span>
-    </a>
-    <a class="item" style="--delay:1;--x:1;--y:0" href="./unity/index.html">
-      <span class="iconfont icon-unity"></span>
-    </a>
-    <a class="item" style="--delay:1;--x:-1;--y:1" href="./dataStruct/index.html">
-      <span class="iconfont icon-applicationgroup"></span>
-    </a>
-    <a class="item" style="--delay:3;--x:0;--y:1" href="./python/index.html">
-      <span class="iconfont icon-python"></span>
-    </a>
-
+    <div class="cube" id="cube">
+      <div class="side">
+        <span class="iconfont icon-horse0"></span>
+      </div>
+      <div class="side">
+        <span class="iconfont icon-horse1"></span>
+      </div>
+      <div class="side">
+        <span class="iconfont icon-horse2"></span>
+      </div>
+      <div class="side">
+        <span class="iconfont icon-horse3"></span>
+      </div>
+      <div class="side">
+        <span class="iconfont icon-horse4"></span>
+      </div>
+      <div class="side">
+        <span class="iconfont icon-horse5"></span>
+      </div>
+      2026
+    </div>
+    <nav class="nav" id="nav">
+      <a class="item" style="--delay:0;--x:-1;--y:-1" href="./web/index.html">
+        <span class="iconfont icon-HTML-5"></span>
+      </a>
+      <a class="item" style="--delay:1;--x:0;--y:-1" href="./vue/index.html">
+        <span class="iconfont icon-vue"></span>
+      </a>
+      <a class="item" style="--delay:2;--x:1;--y:-1" href="./minip/index.html">
+        <span class="iconfont icon-weixinxiaochengxu2x"></span>
+      </a>
+      <a class="item" style="--delay:2;--x:-1;--y:0" href="./network/index.html">
+        <span class="iconfont icon-framework"></span>
+      </a>
+      <a class="item" style="--delay:3;--x:0;--y:0" href="./index2026.html">
+        <span class="iconfont icon-house"></span>
+      </a>
+      <a class="item" style="--delay:2;--x:1;--y:1" href="./node/index.html">
+        <span class="iconfont icon-node-dot-js"></span>
+      </a>
+      <a class="item" style="--delay:1;--x:1;--y:0" href="./unity/index.html">
+        <span class="iconfont icon-unity"></span>
+      </a>
+      <a class="item" style="--delay:1;--x:-1;--y:1" href="./dataStruct/index.html">
+        <span class="iconfont icon-applicationgroup"></span>
+      </a>
+      <a class="item" style="--delay:3;--x:0;--y:1" href="./python/index.html">
+        <span class="iconfont icon-python"></span>
+      </a>
+    </nav>
   </div>
-  <h1>happy new year 2026</h1>
+  <h1>happy new year</h1>
   <script>
     const container = document.querySelector('.container')
     container.addEventListener('click', (e) => {
-      if (container == e.target) {
-        container.classList.toggle('active')
-      }
+      container.classList.toggle('active')
     })
     document.body.addEventListener('click', (e) => {
       if (document.body == e.target)
         container.classList.remove('active')
     })
-    const items = container.querySelectorAll('.item')
-    items.forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault()
-        container.classList.remove('active')
-        container.addEventListener('transitionend', () => {
-          window.location.href = item.href
-        }, { once: true })
-      })
-    })
+    const items = container.querySelectorAll('.nav .item')
     // snowing
     const stars = document.body
     function gerStars() {

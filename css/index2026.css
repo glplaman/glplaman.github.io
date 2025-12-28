@@ -1,10 +1,10 @@
-    @import url(//at.alicdn.com/t/c/font_3834292_77g016lfqm8.css);
+    @import url(//at.alicdn.com/t/c/font_3834292_m2wykr84oc.css);
     @import url(/css/fonts_GreatVibes.css);
 
     :root {
-      --main-color: rgba(255, 255, 255, 0.2);
+      --main-color: rgba(255, 255, 255, 0.4);
       --active-color: #ffde00;
-      --side-w: 90px;
+      --side-w: 120px;
       --p-m-g: 10px;
     }
 
@@ -13,6 +13,7 @@
       padding: 0;
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     a {
@@ -24,8 +25,33 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-image: linear-gradient(#eb2c58, #de2812);
-      /* perspective: 800px; */
+      background:
+        linear-gradient(#0006, #0000 30% 70%, #0004) 50% 0% / 100% 60%,
+        linear-gradient(hsl(0deg 50% 50%) 0 0) 50% 0% / 5vw 60%,
+        linear-gradient(hsl(30deg 50% 50%) 0 0) 50% 0% / 15vw 60%,
+        linear-gradient(hsl(60deg 50% 50%) 0 0) 50% 0% / 25vw 60%,
+        linear-gradient(hsl(90deg 50% 50%) 0 0) 50% 0% / 35vw 60%,
+        linear-gradient(hsl(120deg 50% 50%) 0 0) 50% 0% / 45vw 60%,
+        linear-gradient(hsl(150deg 50% 50%) 0 0) 50% 0% / 55vw 60%,
+        linear-gradient(hsl(180deg 50% 50%) 0 0) 50% 0% / 65vw 60%,
+        linear-gradient(hsl(210deg 50% 50%) 0 0) 50% 0% / 75vw 60%,
+        linear-gradient(hsl(240deg 50% 50%) 0 0) 50% 0% / 85vw 60%,
+        linear-gradient(hsl(270deg 50% 50%) 0 0) 50% 0% / 95vw 60%,
+        linear-gradient(hsl(300deg 50% 50%) 0 0) 50% 0% / 105vw 60%,
+        radial-gradient(100vw 50vw, #0004, #0000),
+        conic-gradient(from 170.5deg at 50% calc(60% - 14.8vw), hsl(0deg 50% 50%) 19deg, #0000 0) 0 100% / 100vw 100%,
+        conic-gradient(from 153deg at 50% calc(60% - 14.8vw), hsl(30deg 50% 50%) 54deg, #0000 0),
+        conic-gradient(from 140deg at 50% calc(60% - 14.8vw), hsl(60deg 50% 50%) 80deg, #0000 0),
+        conic-gradient(from 130deg at 50% calc(60% - 14.8vw), hsl(90deg 50% 50%) 100deg, #0000 0),
+        conic-gradient(from 123deg at 50% calc(60% - 14.8vw), hsl(120deg 50% 50%) 114deg, #0000 0),
+        conic-gradient(from 118.5deg at 50% calc(60% - 14.8vw), hsl(150deg 50% 50%) 123deg, #0000 0),
+        conic-gradient(from 114.5deg at 50% calc(60% - 14.8vw), hsl(180deg 50% 50%) 131deg, #0000 0),
+        conic-gradient(from 111.5deg at 50% calc(60% - 14.8vw), hsl(210deg 50% 50%) 137deg, #0000 0),
+        conic-gradient(from 109.2deg at 50% calc(60% - 14.8vw), hsl(240deg 50% 50%) 141.6deg, #0000 0),
+        conic-gradient(from 107.3deg at 50% calc(60% - 14.8vw), hsl(270deg 50% 50%) 145.3deg, #0000 0),
+        hsl(300deg 50% 50%);
+      background-repeat: no-repeat;
+      perspective: 800px;
       overflow: hidden;
     }
 
@@ -36,35 +62,54 @@
       width: max-content;
       transform: translateX(-50%);
       font-family: 'GreatVibes';
-      color: var(--active-color);
+      color: #fff;
       user-select: none;
       text-transform: capitalize;
     }
 
     .container {
-      --offset-w: calc(var(--side-w)/2);
       position: relative;
       width: var(--side-w);
       height: var(--side-w);
-      border-radius: var(--p-m-g);
-      background-color: var(--main-color);
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      transform-style: preserve-3d;
-      /* animation: roll 10s linear infinite; */
     }
 
-    /* .container:hover {
-      --offset-w: 120px;
-    } */
+    .cube {
+      --offset-w: calc(var(--side-w)/2);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+      animation: roll 10s linear infinite;
+      color: #fff;
+      font-size: 24px;
+    }
 
-    /* @keyframes roll {
+    @keyframes roll {
       to {
         transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
       }
-    } */
+    }
+
+    .container:hover .cube {
+      --offset-w: 120px;
+    }
+
+    .nav {
+      position: absolute;
+      inset: 0;
+      /* border-radius: var(--p-m-g); */
+      /* background-color: var(--main-color); */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+    }
 
     .item {
       position: absolute;
@@ -77,7 +122,7 @@
       align-items: center;
       transform: translate(calc(var(--x)*20px), calc(var(--y)*20px));
       transition: .4s calc(var(--delay)*0.06s);
-      pointer-events: none;
+      cursor: pointer;
     }
 
     .item span {
@@ -87,7 +132,15 @@
       font-size: 32px;
     }
 
-    .container.active .item {
+    .container.active .cube {
+      visibility: hidden;
+    }
+
+    .container.active .nav {
+      visibility: visible;
+    }
+
+    .container.active .nav .item {
       width: 60px;
       height: 60px;
       transform: translate(calc(var(--x)*90px), calc(var(--y)*90px));
@@ -95,24 +148,35 @@
       background-color: var(--main-color);
     }
 
-    .container.active .item span {
+    .container.active .nav .item span {
       opacity: 1;
       transform: scale(1);
       color: #fff;
     }
 
-    .container.active .item:hover span {
+    .container.active .nav .item:hover span {
       color: var(--active-color);
       filter: drop-shadow(0 0 4px var(--main-color));
       transform: scale(1.4);
     }
 
-    /* .side {
+    .side {
       position: absolute;
       inset: 0;
       background-color: rgba(255, 255, 255, 0.2);
       border: 1px solid #fff;
       transition: 0.4s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 4px rgba(255, 255, 255, 1);
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
+    }
+
+    .side span {
+      font-size: 3rem;
+      color: #fff;
     }
 
     .side:nth-child(1) {
@@ -137,7 +201,7 @@
 
     .side:nth-child(6) {
       transform: rotateX(-90deg) translateZ(var(--offset-w));
-    } */
+    }
 
     /* snow */
     .star {
