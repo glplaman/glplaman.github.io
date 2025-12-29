@@ -4,138 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>联系我们 Contact Us</title>
-  <style>
-    @import url(//at.alicdn.com/t/c/font_4061940_19xdjyaz1if.css);
-
-    :root {
-      --p-m-g: 10px;
-      --w: 500px;
-      --main-color: #FC427B;
-      --border-r: 6px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
-    }
-
-    h2 {
-      text-align: center;
-      color: var(--main-color);
-      user-select: none;
-    }
-
-    .btns {
-      text-align: center;
-      color: #fff;
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    form {
-      width: 92%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: column;
-      gap: calc(2*var(--p-m-g));
-      padding: calc(4*var(--p-m-g)) calc(4*var(--p-m-g)) var(--p-m-g);
-      background-color: #fff2;
-      backdrop-filter: blur(4px);
-    }
-
-    input,
-    button,
-    textarea {
-      background-color: transparent;
-      outline: none;
-      font: inherit;
-      color: inherit;
-      border: 1px solid #ddd;
-      border-radius: var(--border-r);
-      padding: 0 var(--p-m-g);
-    }
-
-    input {
-      width: 100%;
-      height: 50px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 120px;
-      resize: none;
-    }
-
-    textarea {
-      padding: var(--p-m-g);
-    }
-
-    textarea:invalid,
-    input:invalid {
-      color: var(--main-color);
-    }
-
-    .label {
-      position: absolute;
-      right: var(--p-m-g);
-      top: 0px;
-      padding: 0 var(--p-m-g);
-      line-height: 50px;
-      font-size: 15px;
-      pointer-events: none;
-    }
-
-    button {
-      padding: 10px 40px;
-      text-transform: capitalize;
-      color: var(--main-color);
-      border: 1px solid var(--main-color);
-      cursor: pointer;
-      user-select: none;
-      background-image: linear-gradient(45deg, #711d36, #FC427B 50%, #fff0 0);
-      background-size: 250% 100%;
-      background-position: 150% 0;
-      background-repeat: no-repeat;
-      transition: 0.4s;
-    }
-
-    button:hover {
-      color: #fff;
-      background-position: 0% 0;
-    }
-
-    .iconfont {
-      font-size: 20px;
-    }
-
-    .input-box {
-      position: relative;
-      width: 100%;
-    }
-
-    .ipt:focus {
-      border-color: var(--main-color);
-    }
-
-    .ipt:focus+.label {
-      color: var(--main-color);
-    }
-  </style>
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="./css/contact.css">
 </head>
 
 <body>
   <form id="form">
-    <h2>任何建议，欢迎留言 <span class="iconfont icon-qianming"></span></h2>
+    <h2>message here <span class="iconfont icon-qianming"></span></h2>
     <div class="input-box">
       <input class="ipt" type="text" name="name" required maxlength="8" placeholder="your nickname">
       <span class="label iconfont icon-User"></span>
@@ -148,56 +23,12 @@
       <textarea class="ipt" name="message" required maxlength="60" placeholder="your message"></textarea>
       <span class="label iconfont icon-bianjiwenben"></span>
     </div>
-    <div class="btns">
-      <button type="submit" id="btn">提交</button>
-      <button type="reset">重填</button>
-    </div>
+    <button type="submit" id="btn">submit</button>
+    <button type="reset">reset</button>
   </form>
   <!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> -->
   <script src="/utils/lib/email.min.js"></script>
-  <script>
-    // const msgBox = document.querySelector('.msg-box');
-    // (async () => {
-    //   const msgs = await fetch('/utils/data/data2023/msg.json')
-    //   const res = await msgs.json()
-    //   console.log(res);
-    //   msgBox.innerHTML = res.map((item, ind) =>
-    //     `
-    //   <div class="msg-item">
-    //     <div class="msg-title">
-    //       <img src="https://glpla.github.io/utils/avatar/avatar${ind}.png" alt=""> 
-    //       <span>${item.name}</span>
-    //       <p>${item.mail}</p>
-    //       </div>
-    //     <p class="msg-cont">${item.msg}</p>
-    //   </div>
-    //   `
-    //   ).join('')
-    // })()
-
-    emailjs.init('MgQhPPBjNMMss5kbw')
-    const btn = document.getElementById('btn');
-    const from = document.getElementById('form');
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      btn.innerHTML = '提交中';
-
-      const serviceID = 'service_bokj9m5';
-      const templateID = 'template_ur5o2es';
-
-      emailjs.sendForm(serviceID, templateID, this)
-        .then(() => {
-          btn.innerHTML = '提交';
-          alert('留言发送成功!');
-          form.reset();
-        }, (err) => {
-          btn.innerHTML = '提交';
-          alert(JSON.stringify(err));
-        });
-    });
-  </script>
+  <script src="./js/contact.js"></script>
 </body>
 
 </html>
