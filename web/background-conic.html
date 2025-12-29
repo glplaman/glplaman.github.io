@@ -5,89 +5,107 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>锥向渐变 Conic-gradient</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <title>锥向渐变 conic-gradient</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
   <base target="_blank">
   <style>
     .basic {
       width: 150px;
       height: 150px;
       margin: 1rem auto;
+      border-radius: 50%;
     }
 
     .pie0 {
-      border-radius: 50%;
-      background-image: conic-gradient(#f1f2f3, #078);
+      background-image: conic-gradient(#f1f2f3, #1393c7);
     }
 
     .pie1 {
-      border-radius: 50%;
-      background-image: conic-gradient(#078 0 60deg, #f1f2f3 0);
+      background-image: conic-gradient(#1393c7 60deg, #f1f2f3 0);
     }
 
     .pie2 {
-      border-radius: 50%;
-      background-image: conic-gradient(#078 40deg,
+      background-image: conic-gradient(#1393c7 40deg,
           #890 0 120deg,
           #f1f2f3 0);
     }
 
-    header {
-      /* background: linear-gradient(#f40 0 0) 50% 0/4vw 60%; */
-      background: conic-gradient(from 175deg at 50% 10%, #f40 10deg, #0000 0) 50% 40%/10vw 100%;
-      background-repeat: no-repeat;
+    .pie3 {
+      background-image:
+        radial-gradient(#fff 40%, transparent 0),
+        conic-gradient(from 30deg,
+          #1393c7 15%,
+          #e44545 0 40%,
+          #00F260 0 70%,
+          #fd871c 0);
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>锥向渐变</h1>
-    <span>&commat;Conic-gradient</span>
-  </header>
-  <dl>
-    <dd>
-      <div>. 角度渐变</div>
-      <div>. 适合做圆锥图/饼状图</div>
-      <div>. 默认从 0/12点 方向开始；可以使用 from 指定起始位置</div>
-      <div>. 可以使用度 deg 或百分比 %</div>
-      <div>. 使用 0 表示从前面部分结束的位置开始</div>
-      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient">MDN -
-          conic-gradient</a></div>
+  <div class="w">
+    <header>
+      <h1>锥向渐变</h1>
+      <span>&commat;conic-gradient</span>
+    </header>
+    <dl>
+      <dd>角度渐变</dd>
+      <dd>适合做圆锥图/饼状图</dd>
+      <dd>默认从 0/12点 方向开始；可以使用 from 指定起始位置</dd>
+      <dd>默认从容器中心 center 绘制；可以使用 at x y 指定绘制位置</dd>
+      <dd>可以使用度 deg 或百分比 %</dd>
+      <dd>使用 0 表示从前面部分结束的位置开始</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/conic-gradient">MDN -
+          conic-gradient</a></dd>
       <pre>background-image:
   conic-gradient([from angle] [at position,] color degree, color degree, ...);</pre>
-    </dd>
-    <dt>示例 Demo</dt>
-    <div>1. 默认 0 - 360deg</div>
-    <div class="basic pie0"></div>
-    <pre>
+      <dt>示例 Demo</dt>
+      <div>1. 默认 0 - 360deg</div>
+      <div class="basic pie0"></div>
+      <pre>
 background-image: 
-  conic-gradient(#f1f2f3, #078);</pre>
-    <dd>2. 划分1个区域：0-60deg</dd>
-    <div class="basic pie1"></div>
-    <pre>background-image:
-  conic-gradient(#078 0 60deg, #f1f2f3 0);</pre>
-    <dd>3. 划分3个区域：0-40deg、40-120deg、120-360deg</dd>
-    <div class="basic pie2"></div>
-    <pre>
+  conic-gradient(#f1f2f3, #1393c7);</pre>
+      <div>2. 划分1个区域：0-60deg</div>
+      <div class="basic pie1"></div>
+      <pre>background-image:
+  conic-gradient(#1393c7 60deg, #f1f2f3 0);</pre>
+      <div>3. 划分3个区域：0-40deg、40-120deg、120-360deg</div>
+      <dd>第2个色块的 0 表示前一个值 40deg</dd>
+      <dd>第3个色块的 0 表示前一个值 120deg；因为它是最后一个，可以省略，表示到 360deg</dd>
+      <div class="basic pie2"></div>
+      <pre>
 background-image: 
   conic-gradient(
-    #078 0deg  40deg, 
+    #1393c7 40deg, 
     #890 0 120deg, 
     #f1f2f3 0);</pre>
-    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-ring.html">环图</a></div>
-    <dd>多背景或多元素</dd>
-    <dd>覆盖一个白色背景</dd>
-    <dd>可以使用伪元素</dd>
-    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-adv.html">动态饼图</a></div>
-    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./animation-prop.html">锥图扫描动画</a></div>
-    <dd>借助自定义属性实现</dd>
-    <div>[<span class="iconfont icon-keyboard"></span>] 背景合成</div>
-    <dd>上方一个矩形色块，纯色</dd>
-    <dd>下方一个锥形色块，纯色</dd>
-    <div class="bar"></div>
-  </dl>
-  <div id="footer"></div>
+    </dl>
+    <h2>案例 Cases</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 环图</div>
+      <dd>先绘制一个白色的圆</dd>
+      <dd>再绘制锥形</dd>
+      <dd>先绘制的圆会覆盖住锥形</dd>
+      <div class="basic pie3"></div>
+      <pre>
+background-image:
+  radial-gradient(#fff 40%, transparent 0),
+  conic-gradient(from 30deg,
+    #1393c7 15%,
+    #e44545 0 40%,
+    #00F260 0 70%,
+    #fd871c 0);</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/pie-adv.html">动态饼图</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./animation-prop.html">锥图扫描动画</a></div>
+      <dd>借助自定义属性实现</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="/index.html">背景合成</a></div>
+      <dd>上方一个矩形色块，纯色</dd>
+      <dd>下方一个锥形色块，纯色</dd>
+      <div class="bar"></div>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 

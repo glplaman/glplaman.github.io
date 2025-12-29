@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>其它背景应用 Background</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
+  <base target="_blank">
+  <style>
+    .blend-img {
+      width: 320px;
+      min-height: 180px;
+      background: url(./imgs/bg.jpg), url(./imgs/mask0.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      background-blend-mode: screen;
+    }
+
+    .mask-bg {
+      width: 300px;
+      background-image:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.1)),
+        url(./imgs/cover.jpg);
+      background-size: cover;
+    }
+
+    .mbm {
+      background-image: url(./../imgs/lg.jpg);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .mbm>div {
+      text-align: center;
+      font-size: 48px;
+      background-color: #fff;
+      mix-blend-mode: screen;
+    }
+
+    .img0,
+    .img1 {
+      width: 300px;
+      height: 300px;
+      background-color: #eee;
+      display: flex;
+      margin: 1rem auto;
+    }
+
+    .img0 img,
+    .img1 img {
+      margin: auto;
+    }
+
+    .img1 img {
+      mix-blend-mode: darken;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>其它背景应用</h1>
+      <span>&commat;Background</span>
+    </header>
+    <dl>
+      <dt>background-blend-mode</dt>
+      <dd>指定上下层图像的混合模式</dd>
+      <table>
+        <tr>
+          <th>类别</th>
+          <th>说明</th>
+        </tr>
+        <tr>
+          <td>screen</td>
+          <td>滤色模式</td>
+        </tr>
+        <tr>
+          <td>overlay</td>
+          <td>叠加模式</td>
+        </tr>
+        <tr>
+          <td>darken</td>
+          <td>变暗模式</td>
+        </tr>
+        <tr>
+          <td>lighten</td>
+          <td>变亮模式</td>
+        </tr>
+        <tr>
+          <td>color-dodge</td>
+          <td>颜色减淡模式</td>
+        </tr>
+        <tr>
+          <td>saturation</td>
+          <td>饱和度模式</td>
+        </tr>
+        <tr>
+          <td>color</td>
+          <td>颜色模式</td>
+        </tr>
+        <tr>
+          <td>luminosity</td>
+          <td>亮度模式</td>
+        </tr>
+      </table>
+      <dd>原始图片、遮罩图片和合成图片</dd>
+      <dd>遮罩图片请使用高对比度素材</dd>
+      <div class="grid">
+        <img src="./imgs/bg.jpg" alt="">
+        <img src="./imgs/mask0.jpg" alt="">
+        <div class="blend-img"></div>
+        <pre>
+.blend-img {
+    width: 320px;
+    height: 180px;
+    background: 
+      url(../imgs/bg.jpg), 
+      url(../imgs/mask.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-blend-mode: screen;
+}</pre>
+      </div>
+      <dt>mix-blend-mode</dt>
+      <div>普通元素和背景图片的混合模式</div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 文字背景</div>
+      <div class="grid">
+        <div class="mbm">
+          <div>mix-blend-mode</div>
+        </div>
+        <pre>
+.mbm {
+  background-image: url(../../imgs/lg.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.mbm>div {
+  text-align: center;
+  font-size: 60px;
+  background-color: #fff;
+  mix-blend-mode: screen;
+}      </pre>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 移除图片背景 - 和容器背景融合</div>
+      <div>1. 初始情况，图片背景和容器背景</div>
+      <div class="img0">
+        <img src="../imgs/chrome.jpg" alt="">
+      </div>
+      <div>2. 混合背景 darken - 两两相比取深色</div>
+      <div class="img1">
+        <img src="../imgs/chrome.jpg" alt="">
+      </div>
+      <pre>
+.img1 img {
+  mix-blend-mode: darken;
+}</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

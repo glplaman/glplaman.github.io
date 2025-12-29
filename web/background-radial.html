@@ -5,149 +5,193 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>径向渐变 Radial-gradient</title>
-  <link rel="stylesheet" href="../css/common.css">
-  <link rel="stylesheet" href="./css/bg3.css">
-  <style>
-    .bg-txt {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100px;
-      background-color: #000;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .bg-txt p {
-      color: hsla(0, 0%, 100%, 0.2);
-      font-size: 3rem;
-      background-size: 0% 100%;
-      background-image: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
-      background-repeat: no-repeat;
-      background-clip: text;
-      transition: 3s;
-    }
-
-    .bg-txt:hover p {
-      background-size: 100% 100%;
-    }
-  </style>
+  <title>径向渐变 radial-gradient</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/page.css">
   <base target="_blank">
+  <style>
+    .basic {
+      width: 150px;
+      height: 250px;
+      margin: 1rem auto;
+    }
+
+    .r0 {
+      background: radial-gradient(#1393c7, #f1f2f3);
+    }
+
+    .r1 {
+      background-image:
+        radial-gradient(circle at left top, #1393c7, #f1f2f3);
+    }
+
+    .r2 {
+      background-image:
+        radial-gradient(circle at top left, #1393c7 50%, #f1f2f3 0);
+    }
+
+    .r3 {
+      background-image:
+        radial-gradient(at 0% 0%, transparent 80%, #1393c7 0);
+    }
+
+    .r4 {
+      background-image:
+        radial-gradient(circle at 10% 10%, transparent 75%, #1393c7 0),
+        radial-gradient(circle at 5% 20%, transparent 70%, #e44545 0),
+        radial-gradient(circle at -10% 10%, transparent 70%, #00F260 0);
+    }
+
+    .r5 {
+      background:
+        radial-gradient(circle 30px at 0% 0%, transparent 50%, #1393c7 0) 0 0/50% 50% no-repeat;
+    }
+
+    .r6 {
+      background:
+        radial-gradient(circle 30px at 100% 0%, transparent 50%, #1393c7 0) 0 0/50% 50% no-repeat;
+    }
+
+    .r7 {
+      background:
+        radial-gradient(circle 30px at 0% 0%, transparent 50%, #1393c7 0) 0 0/50% 50% no-repeat,
+        radial-gradient(circle 30px at 100% 0%, transparent 50%, #1393c7 0) 100% 0/50% 50% no-repeat,
+        radial-gradient(circle 30px at 100% 100%, transparent 50%, #1393c7 0) 100% 100%/50% 50% no-repeat,
+        radial-gradient(circle 30px at 0% 100%, transparent 50%, #1393c7 0) 0 100%/50% 50% no-repeat;
+    }
+
+    /* .r8 {
+      background-image:
+        radial-gradient(circle closest-side,
+          #f40 100%, #f1f2f3 0);
+    }
+
+    .r9 {
+      background-image:
+        radial-gradient(circle closest-corner,
+          #f40 100%, #f1f2f3 0);
+    } */
+  </style>
 </head>
 
 <body>
-  <header>
-    <h1>径向渐变</h1>
-    <span>&commat;Radial-gradient</span>
-  </header>
-  <div class="chap">径向渐变 Radial-gradient</div>
-  <dl>
-    <dd>
-      <div>. 径向渐变 Radial Gradients - 由它们的中心和到容器边或角的大小决定</div>
-      <div>. 同线性渐变一样：创建一个径向渐变，至少定义两个色块；可以定义每个色块的渐变范围；可以指定大小；可以定义多重径向渐变等等</div>
-      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient">MDN -
-          radial-gradient</a></div>
+  <div class="w">
+    <header>
+      <h1>径向渐变</h1>
+      <span>&commat;Radial-gradient</span>
+    </header>
+    <dl>
+      <dd>径向渐变 Radial Gradients - 由它们的中心和到容器边或角的大小决定</dd>
+      <dd>同线性渐变一样：创建一个径向渐变，至少定义两个色块</dd>
+      <dd>可以定义每个色块的渐变范围</dd>
+      <dd>可以指定大小</dd>
+      <dd>可以定义多重径向渐变等等</dd>
+      <dd>根据需要使用复合属性或简写属性</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/radial-gradient">MDN -
+          radial-gradient</a></dd>
       <pre>background-image: 
   radial-gradient([shape] [size] at position, start-color, ..., last-color);</pre>
-    </dd>
-    <dt>参数说明：</dt>
-    <dd>
-      <div>. shape： 椭圆eclipse[默认]，圆circle</div>
-      <div>. size：到容器的边或角的距离；closest-side、farthest-side、closest-corner、farthest-corner[默认]</div>
-      <div>. position：为中心；可以使用关键字指定位置；可以使用数字；可以百分比</div>
-      <img class="tips-bg" src="./imgs/bg0.png" alt="">
-    </dd>
-    <dt>基本渐变</dt>
-    <dd class="grid">
-      <div class="basic default-radial"></div>
+      <dt>参数说明</dt>
+      <dd>shape： 椭圆eclipse[默认]，圆circle</dd>
+      <dd>size：到容器的边或角的距离；closest-side、farthest-side、closest-corner、farthest-corner[默认]</dd>
+      <dd>position：为中心；可以使用关键字指定位置；可以使用数字；可以百分比</dd>
+      <figure>
+        <img class="tips-bg" src="./imgs/bg0.png" alt="">
+        <figcaption>参数说明</figcaption>
+      </figure>
+      <dt>示例 Demo</dt>
+      <dd>默认渐变：椭圆从中心向外</dd>
+      <div class="basic r0"></div>
       <pre>
-// 默认渐变：从中心向外
 background-image: 
-  radial-gradient(#f40, #ff0);</pre>
-      <div class="basic lt-radial"></div>
+  radial-gradient(#1393c7, #f1f2f3);</pre>
+      <dd>椭圆从左上向外渐变</dd>
+      <div class="basic r1"></div>
       <pre>
-// 圆形从左上向外渐变
 background-image: 
-  radial-gradient(circle at left top, #f40, #ff0);</pre>
-      <div class="basic lt-clip-radial"></div>
+  radial-gradient(circle at left top, #1393c7, #f1f2f3);</pre>
+      <dd>指定圆形，从左上向外断点渐变</dd>
+      <dd>0 表示前一个值 50%</dd>
+      <div class="basic r2"></div>
       <pre>
-// 圆形从左上向外断点渐变
 background-image: 
-  radial-gradient(circle at top left, #f40 50%, #ff0 0);</pre>
-      <div class="basic rt-clip-radial"></div>
+  radial-gradient(circle at top left, #1393c7 50%, #f1f2f3 0);</pre>
+      <dd>弧度 - 单重渐变</dd>
+      <div class="basic r3"></div>
       <pre>
-// 放置于右上角的50px的圆形
 background-image: 
-  radial-gradient(circle at top left, #f40 50%, #ff0 0);</pre>
-      <div class="radial-basic single-radial"></div>
+  radial-gradient(at 0% 0%, transparent 80%, #1393c7 0);</pre>
+      <dd>指定大小</dd>
+      <dd>在容器左上角1/4的区域不重复绘制</dd>
+      <dd>绘制的圆形位于区域的左上角 0 0，大小30px</dd>
+      <div class="basic r5"></div>
       <pre>
-// 弧度 - 单重渐变
-background-image: 
-  radial-gradient(at 0% 0%, transparent 71%, #f40 0);</pre>
-      <div class="radial-basic ad-radial"></div>
+background:
+  radial-gradient(circle 30px at 0% 0%, transparent 50%, #1393c7 0) 0 0/50% 50% no-repeat;</pre>
+      <dd>指定大小</dd>
+      <dd>在容器左上角1/4的区域不重复绘制</dd>
+      <dd>绘制的圆形位于区域的右上角 100% 0，大小30px</dd>
+      <div class="basic r6"></div>
       <pre>
-// 弧度 - 多重渐变
-//可以使用background-image或background
-background: 
-    radial-gradient(circle at -10% 10%, transparent 70%, rgba(255, 68, 0, 0.3) 0), 
-    radial-gradient(circle at 5% 20%, transparent 70%, rgba(255, 68, 0, 0.6) 0), 
-    radial-gradient(circle at 10% 10%, transparent 75%, rgb(255, 68, 0) 0);</pre>
-      <div class="radial-basic size-bg"></div>
+background:
+  radial-gradient(circle 30px at 100% 0%, transparent 50%, #1393c7 0) 0 0/50% 50% no-repeat;</pre>
+
+      <!-- <div>[<span class="iconfont icon-keyboard"></span>] 利用断点渐变体会参数 size</div>
+      <dd>观察到哪个边最近</dd>
+      <div class="basic r8"></div>
       <pre>
-// 指定图形大小
-background: 
-    radial-gradient(30px circle at 0 0, transparent 50%, #f40 0),
-    radial-gradient(30px circle at 100% 0, transparent 50%, #f40 0) right top,
-    radial-gradient(30px circle at 100% 100%, transparent 50%, #f40 0) right bottom, 
-    radial-gradient(30px circle at 0% 100%, transparent 50%, #f40 0) left bottom;
-background-repeat: no-repeat;
-background-size: 50% 50%;</pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 利用断点渐变体会参数 size</dd>
-    <dd>调整背景的位置，再观察结果</dd>
-    <dd class="grid size">
-      <div></div>
-      <pre>
-// 观察到哪个边最近
 background-image: 
   radial-gradient(circle closest-side, 
-  #f40 50%, #089 0);</pre>
-      <div></div>
+  #f40 100%, #f1f2f3 0);</pre>
+      <div class="basic r9"></div>
+      <dd>观察到哪个角最近</dd>
       <pre>
-// 观察到哪个边最远
+background-image: 
+  radial-gradient(circle closest-corner, 
+  #f40 100%, #f1f2f3 0);
+      </pre>
+      <dd>观察到哪个边最远</dd>
+      <pre>
 background-image: 
   radial-gradient(circle farthest-side, 
   #f40 50%, #089 0);</pre>
-      <div></div>
+
+      <dd>观察到哪个角最远</dd>
       <pre>
-// 观察到哪个角最近
-background-image: 
-  radial-gradient(circle closest-corner, 
-  #f40 50%, #089 0);
-      </pre>
-      <div></div>
-      <pre>
-// 观察到哪个角最远
 background-image: 
   radial-gradient(circle farthest-corner, 
   #f40 50%, #089 0);
-      </pre>
-    </dd>
-    <dd class="tips">更多径向渐变背景，请访问重复径向渐变：repeating-radial-gradient()</dd>
-  </dl>
-  <div class="chap">Summary & Homework</div>
-  <dl>
-    <dt>Summary</dt>
-    <dd>. 径向渐变背景的使用</dd>
-    <dt>Homework</dt>
-    <dd>1. 卡片设计</dd>
-    <figure>
-      <img src="./imgs/card1.png" alt="">
-      <figcaption>卡片设计</figcaption>
-    </figure>
-  </dl>
-  <div id="footer"></div>
+      </pre> -->
+    </dl>
+    <h2>案例 Cases</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 卡片设计</div>
+      <dd>弧度 - 多重渐变</dd>
+      <dd>前面的渐变会覆盖后面的渐变</dd>
+      <div class="basic r4"></div>
+      <pre>
+background-image:
+  radial-gradient(circle at 10% 10%, transparent 75%, #1393c7 0),
+  radial-gradient(circle at 5% 20%, transparent 70%, #e44545 0),
+  radial-gradient(circle at -10% 10%, transparent 70%, #00F260 0);</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 卡片设计</div>
+      <dd>指定大小 - 多个拼接</dd>
+      <dd>分别在容器的4个区域绘制圆形并分布于区域的不同位置</dd>
+      <div class="basic r7"></div>
+      <pre>
+background:
+  radial-gradient(circle 30px at 0% 0%, transparent 50%, #1393c7 0) 0 0/50% 50% no-repeat,
+  radial-gradient(circle 30px at 100% 0%, transparent 50%, #1393c7 0) 100% 0/50% 50% no-repeat,
+  radial-gradient(circle 30px at 100% 100%, transparent 50%, #1393c7 0) 100% 100%/50% 50% no-repeat,
+  radial-gradient(circle 30px at 0% 100%, transparent 50%, #1393c7 0) 0 100%/50% 50% no-repeat;</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 卡片设计</div>
+      <figure>
+        <img src="./imgs/card1.png" alt="">
+        <figcaption>卡片设计</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 
