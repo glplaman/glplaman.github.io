@@ -1,8 +1,8 @@
 @charset "utf-8";
-@import url(//at.alicdn.com/t/c/font_5035820_b0aqtfm4eq9.css);
+@import url(//at.alicdn.com/t/c/font_5035820_kdzs2e0dyv.css);
 
 :root {
-  --main-color: #c81623;
+  --main-color: #4bc2ce;
   --second-color: #34ace0;
   --third-color: #ff7b00;
   --pink-color: #c5237a;
@@ -16,6 +16,8 @@
   --tips-bold-color: #2ed573;
   --paper: #F5F5DC;
   --w: 1024px;
+  --header-h: 240px;
+  --nav-h: 80px;
   --p-m-g: 10px;
 }
 
@@ -88,10 +90,6 @@ a {
   font: inherit;
 }
 
-a:hover {
-  color: var(--second-color);
-}
-
 h1,
 .txt-xl {
   font-size: 2rem;
@@ -143,6 +141,10 @@ dl {
 dt {
   font-weight: 600;
   margin: 2rem auto 1rem;
+}
+
+dd>p::before {
+  content: '- ';
 }
 
 figure {
@@ -280,13 +282,11 @@ textarea {
 strong,
 .warn {
   color: var(--warn-color);
-  font-weight: 600;
 }
 
 .iconfont {
   color: var(--warn-color);
   font-size: 2rem;
-
 }
 
 .tips {
@@ -328,6 +328,10 @@ strong,
 @media screen and (max-width:768px) {
   html {
     font-size: 60%;
+  }
+
+  body.lock {
+    overflow: hidden;
   }
 
   .w::before,

@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>代码托管 Git</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
   <style>
     :root {
@@ -18,48 +19,41 @@
 </head>
 
 <body>
-  <header>
-    <h1>版本管理</h1>
-    <span>&commat;Git</span>
-    <span class="ham"></span>
-    <nav class="nav">
-      <a href="" style="--delay:0" class="nav-item">概述</a>
-      <a href="" style="--delay:1" class="nav-item">工作流</a>
-      <a href="" style="--delay:2" class="nav-item">基本使用</a>
-      <a href="" style="--delay:3" class="nav-item">仓库</a>
-      <a href="" style="--delay:4" class="nav-item">分支</a>
-      <a href="" style="--delay:5" class="nav-item">标签</a>
-      <a href="" style="--delay:6" class="nav-item">复刻</a>
-    </nav>
-  </header>
-  <dl class="nav-cont">
-    <dd>
+  <div class="w">
+    <header>
+      <h1>版本管理</h1>
+      <span>&commat;Git</span>
+      <span class="ham"></span>
+      <nav class="nav">
+        <a href="" style="--delay:1" class="nav-item">Workflow</a>
+        <a href="" style="--delay:2" class="nav-item">Usage</a>
+        <a href="" style="--delay:3" class="nav-item">Repository</a>
+        <a href="" style="--delay:4" class="nav-item">Branch</a>
+        <a href="" style="--delay:5" class="nav-item">Tag</a>
+        <a href="" style="--delay:6" class="nav-item">Fork</a>
+      </nav>
+    </header>
+    <dl class="nav-cont">
       <div>代码仓库管理工具</div>
       <div>分布式版本控制系统</div>
       <div class="tips">
         <div>-x：简化命令参数</div>
         <div>--x：完整命令参数</div>
       </div>
-    </dd>
-    <dt>下载和安装</dt>
-    <dd>. 打开 Git 官网 <a href="https://git-scm.com/" class="link">https://git-scm.com/</a>，选择对应的操作系统和版本，点击下载并安装</dd>
-    <dt>查看 Git 版本</dt>
-    <dd>
+      <dt>下载和安装</dt>
+      <dd>. 打开 Git 官网 <a href="https://git-scm.com/" class="link">https://git-scm.com/</a>，选择对应的操作系统和版本，点击下载并安装</dd>
+      <dt>查看 Git 版本</dt>
       <div>右键点击桌面空白处，选择 Git Bash Here，打开终端窗口，输入以下命令</div>
       <pre>$ git -v</pre>
       <div>或</div>
       <pre>$ git --version</pre>
       <div class="tips">Git Bash 就是一个迷你型的 Linux 系统哦</div>
-    </dd>
-    <dt>自助 Help</dt>
-    <dd>
+      <dt>自助 Help</dt>
       <div>查看所有命令</div>
       <pre>$ git -h</pre>
       <div>查看特定命令，如 remote</div>
       <pre>$ git remote -h</pre>
-    </dd>
-    <dt>配置 Git</dt>
-    <dd>
+      <dt>配置 Git</dt>
       <div>使用户名和邮箱将 Git 和用户[自己的代码仓库，如 Github ]关联起来</div>
       <div>用户名和邮箱仅仅作为签名，以区分提交的用户，和仓库账号没有关系 - 仅用于提交记录，不涉及登录或权限</div>
       <div>没有关联，无法提交 commit</div>
@@ -81,32 +75,25 @@ $ git config  user.email
       <div>查看/配置缓冲区大小</div>
       <pre>git config http.postBuffer</pre>
       <pre>git config http.postBuffer 524288000</pre>
-    </dd>
-  </dl>
-  <div class="chap">工作流 workflow</div>
-  <dl class="nav-cont">
-    <dd>
+    </dl>
+    <h2>工作流 Workflow</h2>
+    <dl class="nav-cont">
       <figure class="img-sn">
         <img src="./imgs/git.jpg" alt="">
         <figcaption>Git工作流</figcaption>
-    </dd>
-    <dt>工作区 workspace</dt>
-    <dd>
+      </figure>
+      <dt>工作区 workspace</dt>
       <div>存放项目文件的地方，通常就是你的项目工作目录</div>
       <div>利用 add 可以将文件从工作区放到暂存区</div>
       <div>点 . 表示所有文件；也可以指定需要提交的具体的文件；不包括被忽略的文件</div>
       <div>单个文件体积大小不要超过50MB</div>
       <pre>$ git add .</pre>
-    </dd>
-    <dt>暂存区 stage</dt>
-    <dd>
+      <dt>暂存区 stage</dt>
       <div>临时存放文件便于调整</div>
       <div>利用 commit 可以将文件从暂存区放到本地仓库区/版本区</div>
       <div>每次提交都有一个 commitId 记录</div>
       <pre>$ git commit -m ""</pre>
-    </dd>
-    <dt>本地仓库区 local repository</dt>
-    <dd>
+      <dt>本地仓库区 local repository</dt>
       <div>版本区</div>
       <div>文件只有放到了版本区才可以进行真正意义上的管理</div>
       <div>将本地分支的提交推送到远程仓库对应的分支 - 不仅要指定推送的仓库/别名，还要指定推送到哪个分支</div>
@@ -121,14 +108,12 @@ $ git config  user.email
       <div>后续只需要使用 git push 即可推送</div>
       <pre>$ git push</pre>
       <div>从版本区也可以切换回去工作区，使用 git reset --hard命令</div>
-    </dd>
-    <dt>远程仓库区 remote repository</dt>
-    <dd>. 线上仓库，如GitHub、Gitee</dd>
-  </dl>
-  <div class="chap">常见使用 usage</div>
-  <dl class="nav-cont">
-    <dt>初始化仓库 init</dt>
-    <dd>
+      <dt>远程仓库区 remote repository</dt>
+      <dd>线上仓库，如GitHub、Gitee</dd>
+    </dl>
+    <h2>常见使用 Usage</h2>
+    <dl class="nav-cont">
+      <dt>初始化仓库 init</dt>
       <div>为当前工作目录生成一个隐藏文件夹 .git，里面是 Git 配置信息</div>
       <div>初始化后，该目录将被 Git 托管，可以追踪代码的任何变化</div>
       <div>如果生成的 .git 被删除，有关的托管信息将丢失</div>
@@ -138,9 +123,7 @@ $ git config  user.email
       <pre>$ git init</pre>
       <div>初始化并创建 main 分支 - <span class="warn">推荐</span></div>
       <pre>$ git init -b main</pre>
-    </dd>
-    <dt>创建忽略文件 .gitignore</dt>
-    <dd>
+      <dt>创建忽略文件 .gitignore</dt>
       <div>.gitignore 文件用于指定 Git 应该忽略的文件和目录，以避免将不需要的文件提交到版本控制系统中</div>
       <div>常见有：包依赖、测试文件等</div>
       <div>.gitignore 只对未被跟踪的文件生效</div>
@@ -148,36 +131,37 @@ $ git config  user.email
       <div>可以删除、提交后再重新添加；也可以取消追踪后再提交；文件名有空格应使用引号</div>
       <pre>git rm --cached demo.html</pre>
       <pre>git rm --cached 'demo copy.html'</pre>
-    </dd>
-    <dt>查看文件状态 status</dt>
-    <dd>
+      <dt>查看文件状态 status</dt>
       <pre>$ git status</pre>
       <table>
         <caption>Git文件状态</caption>
-        <tr>
-          <th>item</th>
-          <th>desc</th>
-        </tr>
-        <tr>
-          <td>untracked</td>
-          <td>未记录的；VS code 中使用标记 U</td>
-        </tr>
-        <tr>
-          <td>modified</td>
-          <td>修改过的；VS code 中使用标记 M</td>
-        </tr>
-        <tr>
-          <td>staged</td>
-          <td>已暂存的</td>
-        </tr>
-        <tr>
-          <td>committed</td>
-          <td>已提交的</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>untracked</td>
+            <td>未记录的；VS code 中使用标记 U</td>
+          </tr>
+          <tr>
+            <td>modified</td>
+            <td>修改过的；VS code 中使用标记 M</td>
+          </tr>
+          <tr>
+            <td>staged</td>
+            <td>已暂存的</td>
+          </tr>
+          <tr>
+            <td>committed</td>
+            <td>已提交的</td>
+          </tr>
+        </tbody>
       </table>
-    </dd>
-    <dt>查看本地仓库提交记录 log</dt>
-    <dd>
+      </dd>
+      <dt>查看本地仓库提交记录 log</dt>
       <div>按 Q/q 退出</div>
       <pre>
 $ git log
@@ -194,9 +178,7 @@ Date:   Wed Jan 3 10:48:20 2024 +0800
     web</pre>
       <div>将每条记录压缩成一行查看 --oneline</div>
       <pre>$ git log --oneline</pre>
-    </dd>
-    <dt>查看远程仓库提交记录 reflog</dt>
-    <dd>
+      <dt>查看远程仓库提交记录 reflog</dt>
       <div>按 Q/q 退出</div>
       <div>main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</div>
       <div>HEAD 前面的字符串序列是提交的版本号；利用这个可以实现版本穿梭</div>
@@ -207,16 +189,12 @@ cc355cb (HEAD -> main, origin/main, origin/HEAD) HEAD@{0}: commit: web
 32eefc9 HEAD@{1}: commit: web
 aae5d51 HEAD@{2}: commit: web
 065c08e HEAD@{3}: commit: fn</pre>
-    </dd>
-    <dt>撤销本地修改 checkout</dt>
-    <dd>
+      <dt>撤销本地修改 checkout</dt>
       <div>丢弃工作区的修改</div>
       <div>修改了文件，但是没有 add 到暂存区，使用该命令可以撤销对文件的修改，相当于在编辑环境中使用了 CTRL + Z 操作</div>
       <div>修改了文件，已经 add 到暂存区，使用该命令，可以拉取暂存区的文件到工作区，覆盖当前文件，相当于放弃了对文件的修改，即和暂存区保持一致</div>
       <pre>$ git checkout -- file</pre>
-    </dd>
-    <dt>撤销本地/远程提交 reset</dt>
-    <dd>
+      <dt>撤销本地/远程提交 reset</dt>
       <div>--mixed：默认行为；撤销最近一次提交，并将更改回退到工作区 - 取消暂存</div>
       <div>撤销本地提交</div>
       <pre>$ git reset commitId</pre>
@@ -229,27 +207,21 @@ aae5d51 HEAD@{2}: commit: web
 git reset --hard 版本号
 
 Head is now at xxxxx</pre>
-    </dd>
-  </dl>
-  <div class="chap">仓库</div>
-  <dl class="nav-cont">
-    <dt>克隆仓库 clone</dt>
-    <dd>
+    </dl>
+    <h2>仓库 Repository</h2>
+    <dl class="nav-cont">
+      <dt>克隆仓库 clone</dt>
       <div>将远程仓库复制到本地</div>
       <div>通常是第一次使用别人的仓库；后续直接拉取 pull 就可以和仓库保持一致</div>
       <pre>$ git clone url</pre>
       <div>克隆指定分支到指定目录；如果不指定目录，则使用项目的默认目录</div>
       <pre>git clone -b &lt;branch&gt; url &lt;dir&gt;</pre>
-    </dd>
-    <dt>拉取仓库 pull</dt>
-    <dd>
+      <dt>拉取仓库 pull</dt>
       <div>在第一次克隆 clone 的基础上，通过拉取和原来仓库保持一致</div>
       <div>如果之前提交使用 -u 设置了追踪，可以直接拉取</div>
       <pre>$ git pull &lt;name&gt; &lt;branch&gt;</pre>
       <pre>$ git pull</pre>
-    </dd>
-    <dt>仓库管理 remote</dt>
-    <dd>
+      <dt>仓库管理 remote</dt>
       <div>git remote 命令用于管理和查看 Git 仓库中的远程仓库配置。它有多种用法，具体取决于你提供的参数</div>
       <div>1. 查看关联的远程仓库 remote</div>
       <pre>
@@ -274,16 +246,14 @@ origin  https://github.com/glpla/glpla.github.io.git (push)</pre>
       <pre>$ git remote rename &lt;old-name&gt; &lt;new-name&gt;</pre>
       <div>5. 修改远程仓库 set-url</div>
       <pre>$ git remote set-url &lt;name&gt; &lt;new-url&gt;</pre>
-    </dd>
-  </dl>
-  <div class="chap">分支 Branch</div>
-  <dl class="nav-cont">
-    <dd>通过分支实现项目的分工协作</dd>
-    <dd>各分支的操作并不影响主分支；且分支的进度通常要领先于主分支</dd>
-    <dd>当分支合并到主分支后，主分支的整个时间线才往前推进，进度才能和分支保持一致</dd>
-    <dd>main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</dd>
-    <dd>只有提交 commit 过1次后才能查看分支</dd>
-    <dd>
+    </dl>
+    <h2>分支 Branch</h2>
+    <dl class="nav-cont">
+      <dd>通过分支实现项目的分工协作</dd>
+      <dd>各分支的操作并不影响主分支；且分支的进度通常要领先于主分支</dd>
+      <dd>当分支合并到主分支后，主分支的整个时间线才往前推进，进度才能和分支保持一致</dd>
+      <dd>main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</dd>
+      <dd>只有提交 commit 过1次后才能查看分支</dd>
       <figure class="img-sn">
         <img src="./imgs/branch2.jpg" alt="">
         <figcaption>无分支时，HEAD指向主分支</figcaption>
@@ -296,9 +266,7 @@ origin  https://github.com/glpla/glpla.github.io.git (push)</pre>
         <img src="./imgs/branch1.jpg" alt="">
         <figcaption>分支合并到主分支</figcaption>
       </figure>
-    </dd>
-    <dt>查看分支</dt>
-    <dd>
+      <dt>查看分支</dt>
       <div>当前分支以 * 号表示，且颜色为绿色</div>
       <div>只有被追踪的分支才显示 - 提交过</div>
       <pre>
@@ -319,23 +287,17 @@ $ git branch -v
 
 //查看远程分支 remote
 $ git branch -r</pre>
-    </dd>
-    <dt>创建分支</dt>
-    <dd>
+      <dt>创建分支</dt>
       <div>创建仓库的同时创建分支</div>
       <pre>$ git branch branch_name</pre>
       <div>创建分支</div>
       <pre>$ git init -b branch_name</pre>
       <div>创建并切换分支</div>
       <pre>$ git checkout -b branch_name</pre>
-    </dd>
-    <dt>切换分支 checkout</dt>
-    <dd>
+      <dt>切换分支 checkout</dt>
       <div>指定要切换的分支名</div>
       <pre>$ git checkout branch_name</pre>
-    </dd>
-    <dt>合并分支 merge</dt>
-    <dd>
+      <dt>合并分支 merge</dt>
       <div>通常在主分支合并其它分支</div>
       <div>将其它分支合并到主分支；主分支会前进一次 forwards</div>
       <div>原有分支仍然存在</div>
@@ -346,9 +308,7 @@ Fast-forward
  demo.txt | 0
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 demo.txt</pre>
-    </dd>
-    <dt>删除分支</dt>
-    <dd>
+      <dt>删除分支</dt>
       <div>指定删除的分支名</div>
       <div>只能在当前分支删除其它分支</div>
       <div>-d：合并过才允许删除</div>
@@ -356,38 +316,30 @@ Fast-forward
       <pre>$ git branch -d branch_name</pre>
       <div>删除远程分支</div>
       <pre>$ git push &lt;name&gt; -d &lt;branch_name&gt;</pre>
-    </dd>
-    <dt>重命名分支</dt>
-    <dd>
+      <dt>重命名分支</dt>
       <div>-m：如果有同名分支，则拒绝 - 建议</div>
       <div>-M：强制命名，如果有同名分支，会被覆盖</div>
       <pre>$ git branch -m branch_name_old branch_name_new</pre>
       <div>将当前分支强制命名为main</div>
       <pre>$ git branch -M main</pre>
-    </dd>
-    <dd class="tips">
-      <div>冲突</div>
-      <div>.主分支提交前进的同时，某一分支也提交。当主分支合并分支时，就会出现冲突</div>
-      <div>.尽量避免同时操作同一个文件</div>
-      <div>.主分支面向生成环境，应只做阶段性的合并</div>
-      <div>.日常工作应使用开发分支和团队分支、个人分支：个人分支合并到团队分支；团队分支合并到开发分支</div>
-    </dd>
-  </dl>
-  <div class="chap">标签 Tag</div>
-  <dl class="nav-cont">
-    <dt>Overview</dt>
-    <dd>
+      <div class="tips">
+        <div>冲突</div>
+        <div>.主分支提交前进的同时，某一分支也提交。当主分支合并分支时，就会出现冲突</div>
+        <div>.尽量避免同时操作同一个文件</div>
+        <div>.主分支面向生成环境，应只做阶段性的合并</div>
+        <div>.日常工作应使用开发分支和团队分支、个人分支：个人分支合并到团队分支；团队分支合并到开发分支</div>
+      </div>
+    </dl>
+    <h2>标签 Tag</h2>
+    <dl class="nav-cont">
+      <dt>Overview</dt>
       <div>版本控制</div>
       <div>不能重复</div>
-    </dd>
-    <dt>查看标签</dt>
-    <dd>
+      <dt>查看标签</dt>
       <pre>$ git tag</pre>
       <div>查看详细信息</div>
       <pre>$ git show &lt;tag_name&gt;</pre>
-    </dd>
-    <dt>打标签</dt>
-    <dd>
+      <dt>打标签</dt>
       <pre>$ git tag &lt;tag_name&gt;</pre>
       <div>1. 给 HEAD 指向的提交打个标签</div>
       <div>未打标签前查看</div>
@@ -406,35 +358,27 @@ b638f0b modify readme
 e318093 init</pre>
       <div>2. 为指定 commitId 打 标签</div>
       <pre>$ git tag v1.0 commitId</pre>
-    </dd>
-    <dt>推送标签</dt>
-    <dd>
+      <dt>推送标签</dt>
       <pre>$ git push &lt;name&gt; &lt;tag_name&gt;</pre>
       <div>推送所有标签</div>
       <pre>$ git push &lt;name&gt; --tags</pre>
-    </dd>
-    <dt>删除标签</dt>
-    <dd>
+      <dt>删除标签</dt>
       <div>删除本地标签</div>
       <pre>$ git tag -d &lt;tag_name&gt;</pre>
       <div>删除远程标签 - 同分支，利用推送的方式删除</div>
       <pre>$ git push &lt;name&gt; -d &lt;tag_name&gt;</pre>
-    </dd>
-  </dl>
-  <div class="chap">复刻 Fork</div>
-  <dl class="nav-cont">
-    <dd>
+    </dl>
+    <h2>复刻 Fork</h2>
+    <dl class="nav-cont">
       <div>fork 是 GitHub 上的一个功能，用于复制一个仓库，从而创建一个同样的仓库 - identical</div>
       <div>fork 的仓库与原仓库是各自独立的 - independent</div>
       <div>修改后，通过 PR - Pull Request，去覆盖或更新原来仓库；当然需要确认，这就是开源共享</div>
       <div>复刻出来的仓库不包括标签，其它都是一样的</div>
       <div>复刻出来的内容经过修改后，可能和原来的仓库大相径庭，所以叫分叉</div>
-    </dd>
-  </dl>
-  <div class="chap">Homework</div>
-  <dl>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 新项目第一次推送 - 请使用自己的仓库地址 url</dd>
-    <dd>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 新项目第一次推送 - 请使用自己的仓库地址 url</div>
       <pre>
 $ git init
 $ git add .
@@ -451,35 +395,35 @@ git add . && \
 git commit -m "first commit" && \
 git remote add origin url && \
 git push -u origin master</pre>
-      <div>专业版：使用 shell 脚本</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 分支操作</dd>
-    <dd>请使用 shell 完成以下操作</dd>
-    <dd class="sn">
-      <div>创建新文件夹 Demo 作为工作目录</div>
-      <div>初始化工作目录</div>
-      <div>查看分支</div>
-      <div>创建测试文件 test.txt 并 add、commit 提交到本地仓库</div>
-      <div>查看分支</div>
-      <div>创建分支 dev</div>
-      <div>切换至分支 dev</div>
-      <div>查看分支</div>
-      <div>创建测试文件 demo.txt 并 add、commit 提交到本地仓库</div>
-      <div>切换回 master 分支，查看工作目录中文件的变换情况</div>
-      <div>合并分支 dev 到主分支</div>
-      <div>查看分支</div>
-      <div>删除分支 dev</div>
-      <div>查看分支</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 其它</dd>
-    <dd class="sn">
-      <div>克隆参考项目 https://github.com/glpla/vue3.git</div>
-      <div>克隆练习项目 https://gitee.com/cnplaman_admin/luckin.git</div>
-    </dd>
-  </dl>
-  <div id="footer"></div>
+      <dd>专业版：使用 shell 脚本</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 分支操作</div>
+      <dd>请使用 shell 完成以下操作</dd>
+      <div class="sn">
+        <div>创建新文件夹 Demo 作为工作目录</div>
+        <div>初始化工作目录</div>
+        <div>查看分支</div>
+        <div>创建测试文件 test.txt 并 add、commit 提交到本地仓库</div>
+        <div>查看分支</div>
+        <div>创建分支 dev</div>
+        <div>切换至分支 dev</div>
+        <div>查看分支</div>
+        <div>创建测试文件 demo.txt 并 add、commit 提交到本地仓库</div>
+        <div>切换回 master 分支，查看工作目录中文件的变换情况</div>
+        <div>合并分支 dev 到主分支</div>
+        <div>查看分支</div>
+        <div>删除分支 dev</div>
+        <div>查看分支</div>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 其它</div>
+      <div class="sn">
+        <div>克隆参考项目 https://github.com/glpla/vue3.git</div>
+        <div>克隆练习项目 https://gitee.com/cnplaman_admin/luckin.git</div>
+      </div>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
-  <script src="/utils//custom/ham2024.js"></script>
+  <script src="/utils//custom/ham2025.js"></script>
 </body>
 
 </html>
