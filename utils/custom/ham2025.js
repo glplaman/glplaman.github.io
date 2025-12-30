@@ -33,5 +33,5 @@ document.addEventListener("scroll", () => {
   nav.classList.toggle("active", scrollY > innerHeight / 4);
   setTimeout(() => {
     back2top.classList.remove("active");
-  }, 5000);
+  }, 10000);
 });
