@@ -6,30 +6,41 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>下拉列表 &lt;select&gt;</title>
-  <link rel="stylesheet" href="/css/reset2026.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
 </head>
 
 <body>
   <div class="w">
-    <header>
+    <header></header>
+    <nav>
       <h1>下拉列表</h1>
       <span>&lt;select&gt;</span>
-    </header>
-    <ul>
-      <li>行内盒 inline-block</li>
-      <li>配合 &lt;option&gt; 使用；其子元素只能是 &lt;option&gt; block</li>
-      <li>name-value 比较特别
-        <p>name 写在 &lt;select&gt;</p>
-        <p>value 写在 &lt;option&gt;；也可以省略 value，系统会把 &lt;option&gt; 的值自动作为 value</p>
-      </li>
-      <li>&lt;select&gt; 的宽度决定了 &lt;option&gt; 的宽度</li>
-      <li>&lt;option&gt; 很难动态增加或减少</li>
-      <li>使用 &lt;optgroup&gt; 分组；分组标题不能选择，仅仅作为提示</li>
-      <li>如果需要动态增加或减少选项，需要从头定制。如利用无序列表实现选项</li>
-      <li>更多信息，请访问<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">MDN -
+      <span class="iconfont icon-menu ham"></span>
+      <div class="nav">
+        <a href="" style="--delay:0" class="nav-item active">Tags</a>
+        <a href="" style="--delay:1" class="nav-item">CSS</a>
+        <a href="" style="--delay:2" class="nav-item">Event</a>
+      </div>
+    </nav>
+    <dl class="nav-cont">
+      <dt>&lt;select&gt;</dt>
+      <dd>行内盒 inline-block</dd>
+      <dd>配合 &lt;option&gt; 使用</dd>
+      <dd>其子元素只能是 &lt;option&gt;</dd>
+      <dd>name 写在 &lt;select&gt;</dd>
+      <dd>value 写在 &lt;option&gt;；也可以省略 value，系统会把 &lt;option&gt; 的值自动作为 value</dd>
+      <dt>&lt;option&gt;</dt>
+      <dd>块盒 block</dd>
+      <dd>&lt;select&gt; 的宽度决定了 &lt;option&gt; 的宽度</dd>
+      <dd>&lt;option&gt; 很难动态增加或减少</dd>
+      <dt>&lt;optgroup&gt;</dt>
+      <dd>分组；分组标题不能选择，仅仅作为提示</dd>
+      <dd>如果需要动态增加或减少选项，需要从头定制。如利用无序列表实现选项</dd>
+      <dd>更多信息，请访问<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">MDN -
           &lt;select&gt;</a>、<a href="https://www.filamentgroup.com/lab/select-css.html">making
-          a better one</a></li>
+          a better one</a></dd>
       <table>
         <caption>属性</caption>
         <thead>
@@ -62,15 +73,16 @@
   &lt;option value="haikou" selected&gt;haikou&lt;/option&gt;
   &lt;option value="dongguan"&gt;dongguan&lt;/option&gt;
 &lt;/select&gt;</pre>
-    </ul>
+    </dl>
     <h2>CSS</h2>
-    <dl>
+    <dl class="nav-cont">
       <dd>下拉菜单的样式由浏览器原生控件控制，无法通过CSS完全自定义；具体要看浏览器支持</dd>
       <dd>通常要隐去原有样式/初始化再定制样式</dd>
       <dd>去除边框、轮廓、背景</dd>
       <dd>字体和颜色继承父级</dd>
       <dd>&lt;select&gt; 可以设置字体颜色、大小、选项选中，其它可以设置的属性比较少</dd>
-      <dd>&lt;option&gt 不支持 :hover；通过自定义数据 data- 可以单独设置样式</dd>
+      <dd>&lt;option&gt 不支持 :hover；通过 <strong>自定义数据 data-</strong> 可以单独设置基本样式</dd>
+      <dd>标签属性使用 selected 指定选中列表项；CSS 中使用 <a href="./selector_class.html">伪类选择器 :checked</a> 设计交互</dd>
       <dd>更多信息，请访问 <a
           href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Advanced_form_styling#appearance_controlling_os-level_styling">MDN
           - appearance</a> 以便重新设计 - notoriously difficult to style productively with CSS</dd>
@@ -125,9 +137,17 @@ option[data-bg="#f40"] {
         全新定制</div>
       <dd>完全抛弃表单元素，从0开始设计</dd>
       <dd>无法响应表单事件</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/theme-select.html">主题切换 :checked</a></div>
+      <dd>使用 &lt;option&gt; 的 :checked 实现</dd>
+      <pre>
+body:has(option[value="dark"]:checked) {
+  --bg-color: #000;
+  --txt-color: #fff;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/theme-simple.html">主题切换 data-</a></div>
     </dl>
-    <h2 id="js">JavaScript</h2>
-    <dl>
+    <h2 id="js">Event</h2>
+    <dl class="nav-cont">
       <dd>获取元素</dd>
       <dd>响应事件</dd>
       <table>
@@ -184,18 +204,13 @@ theme.addEventListener('change', () => {
       <dt>Homework</dt>
       <dd>使用 &lt;select&gt; 元素完善个人网站的留言板或信息采集表的设计</dd>
     </dl>
-    <a class="back2top" target="_self" href="#">
-      <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        p-id="31526" width="32" height="32">
-        <path
-          d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
-          fill="#ffffff" p-id="31527"></path>
-      </svg>
-    </a>
     <div id="footer"></div>
-    <script src="/utils/custom/footer.js"></script>
   </div>
-  <script src="/utils/custom/back2top.js"></script>
+  <a class="back2top" href="#" target="_self">
+    <span class="iconfont icon-top"></span>
+  </a>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2025.js"></script>
 </body>
 
 </html>

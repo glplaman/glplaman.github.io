@@ -46,22 +46,23 @@
       <span class="ham"></span>
       <div class="nav">
         <a href="" style="--delay:0" class="nav-item">rgba</a>
-        <a href="" style="--delay:1" class="nav-item">attr</a>
-        <a href="" style="--delay:2" class="nav-item">var</a>
-        <a href="" style="--delay:3" class="nav-item">calc</a>
-        <a href="" style="--delay:4" class="nav-item">clamp</a>
-        <a href="" style="--delay:5" class="nav-item">other</a>
+        <a href="" style="--delay:1" class="nav-item">min</a>
+        <a href="" style="--delay:2" class="nav-item">max</a>
+        <a href="" style="--delay:3" class="nav-item">var</a>
+        <a href="" style="--delay:4" class="nav-item">calc</a>
+        <a href="" style="--delay:5" class="nav-item">attr</a>
+        <a href="" style="--delay:6" class="nav-item">clamp</a>
+        <a href="" style="--delay:7" class="nav-item">other</a>
       </div>
     </nav>
-    <h2>颜色函数 rgb()</h2>
-    <dl class="nav-cont">
-      <dt>Overview</dt>
+    <dl>
+      <dt class="nav-cont">颜色函数 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb">rgb()</a>
+      </dt>
       <dd>使用红(R)、绿(G)、蓝(B)三个颜色的叠加来生成各式各样的颜色</dd>
       <dd>红色(R)：0 到 255 间的整数，代表颜色中的红色成分</dd>
       <dd>绿色(G)：0 到 255 间的整数，代表颜色中的绿色成分</dd>
       <dd>蓝色(B)：0 到 255 间的整数，代表颜色中的蓝色成分</dd>
       <dd>透明度(A)：取值 0~1 之间， 代表透明度</dd>
-      <dd>更多信息，请参考 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/rgb">rgb()</a></dd>
       <div class="tips">rbga() 是 rgb() 的别名- an alias for rgb()；推荐使用 rgb() - recommended to use rgb()</div>
       <div>[<span class="iconfont icon-keyboard"></span>] 定义透明色</div>
       <pre>
@@ -70,63 +71,49 @@
   --warn-color: rgb(var(--base-color), 1);
   --warn-color-light: rgb(var(--base-color), 0.05);
 }</pre>
-    </dl>
-    <h2>属性函数 attr()</h2>
-    <dl class="nav-cont">
-      <dt>Overview</dt>
-      <dd>获取 <span class="warn">当前</span> 元素的属性值，在 CSS 样式中使用</dd>
-      <dd>也可以用在伪类元素里；在伪类元素里使用，它得到的是伪元素的原始元素的值</dd>
-      <dd>attr() 函数通常和自定义属性 data- 配合使用</dd>
-      <dd>attr() 函数可以和任何 CSS 属性一起使用；使用较多的是伪元素的 content 属性</dd>
-      <dd>还可以动态生成页面，实现部分 JavaScript 功能</dd>
-      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/attr">MDN - attr()</a></dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] attr() 应用 - <a href="./opening.html">开课啦</a></div>
+      <dt class="nav-cont">最小值 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/min">min()</a>
+      </dt>
+      <dd>选择最小的值</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 版心设计</div>
+      <dd>最大宽带</dd>
+      <dd>宽屏/桌面端：1200px；90% > 1200px</dd>
+      <dd>移动端：90%； 1200px > 90%</dd>
       <pre>
-.title::after {
-    content: attr(data-tip);
-    //... ...
+.w{
+  width: 90%;
+  max-width: 1200px;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./js/skin.html">换肤</a></div>
-      <dd>获取元素</dd>
-      <dd>修改元素属性</dd>
-      <div>[<span class="iconfont icon-bell"></span>]如何使用纯 CSS 实现?</div>
+      <dd>最佳设计</dd>
       <pre>
-&lt;div&gt;
-  &lt;button data-src="./imgs/1.jpg"&gt;1&lt;/button&gt;
-  &lt;button data-src="./imgs/2.jpg"&gt;2&lt;/button&gt;
-  &lt;button data-src="./imgs/3.jpg"&gt;3&lt;/button&gt;
-&lt;/div&gt;
-&lt;div class="box"&gt;
-  &lt;img src="" alt=""&gt;
-&lt;/div&gt;</pre>
-      <pre>
-.active {
-  background-color: #f40;
+.w{
+  min(1200px, 90%);
 }</pre>
+      <dt class="nav-cont">最大值 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/max">max()</a>
+      </dt>
+      <dd>选择最大的值</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 表格设计</div>
+      <dd>最小宽带</dd>
+      <dd>宽屏/桌面端：60%；60% > 350px</dd>
+      <dd>移动端：350px； 350px > 60%</dd>
       <pre>
-let btns = document.querySelectorAll('button');
-let img = document.querySelector('img');
-btns.forEach(item =&gt; {
-  item.addEventListener('click', () =&gt; {
-    img.src = item.getAttribute('data-src');
-    btns.forEach(btn => {
-      btn.classList.remove('active');
-    })
-    item.classList.add('active');
-  })
-})</pre>
-    </dl>
-    <h2>变量函数 var()</h2>
-    <dl class="nav-cont">
-      <dt>Overview</dt>
+table{
+  width: 60%;
+  min-width: 350px;
+}</pre>
+      <dd>最佳设计</dd>
+      <pre>
+table {
+  width: max(350px, 60%);
+}</pre>
+      <dt class="nav-cont">变量函数 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/var">var()</a></dt>
       <dd>使用全局变量或内联变量</dd>
       <dd>变量以双 -- 号开始，如 --main-color</dd>
       <dd>通常配合 calc() 函数一起运算</dd>
       <pre>var(custom-property-name[, value])</pre>
       <dd>custom-property-name：必需。自定义属性的名称，必需以 -- 开头</dd>
       <dd>value：可选。备用值，在属性不存在的时候使用</dd>
-      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/var">MDN - var()</a></dd>
-      <dt>使用全局CSS变量</dt>
+      <dd>更多信息，请访问 <a href="./css-variable.html">CSS Variable</a></dd>
+      <div>1. 使用全局CSS变量</div>
       <dd>如果变量定义在根选择器 :root，则所有元素都可以使用-全局变量</dd>
       <dd>如果变量定义在某个选择器，则只有该选择器选中的元素和它的所有后代元素使用-局部变量</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 定义并使用告警颜色</div>
@@ -142,7 +129,7 @@ btns.forEach(item =&gt; {
 .warn {
     color: var(--txt-wran-color);
 }</pre>
-      <dt>使用内联 CSS 变量</dt>
+      <div>2. 使用内联 CSS 变量</div>
       <dd>利用 style 在元素上定义，仅供当前元素使用</dd>
       <dd>[<span class="iconfont icon-keyboard"></span>] 渐变背景</dd>
       <div class="fn-var-bg">
@@ -207,16 +194,12 @@ btns.forEach(item =&gt; {
     background: #f40;
     transform: translateY(-50%) rotate(calc(var(--rot)*120deg));
 }</pre>
-    </dl>
-    <h2>计算函数 calc()</h2>
-    <dl class="nav-cont">
-      <dt>Overview</dt>
+      <dt class="nav-cont">计算函数 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/calc">calc()</a></dt>
       <dd>利用 + - * / 四则运算的结果作为元素的 CSS 属性</dd>
       <dd>可以<span class="warn">直接使用单位</span>运算：绝对单位/像素）与相对单位/百分比/视口单位</dd>
       <dd>为了和负值区分开来，+ 和 - 这两个运算符两侧需要额外添加一个空格，否则会报错</dd>
       <dd>* 和 / 不需要空格，但考虑到统一性，推荐加上空格</dd>
       <dd>计算函数，使得 CSS 更像一门编程语言</dd>
-      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/calc">MDN - calc()</a></dd>
       <pre>calc(100% - 20px);</pre>
       <div>[<span class="iconfont icon-keyboard"></span>] 定义根字体大小</div>
       <dd>通常推荐一行最多容纳不超过30个字符，可以基于视口设置根元素的字体大小为视口宽度的一部分。</dd>
@@ -230,18 +213,55 @@ html {
 .col {
     width: calc(100% / 12);
 }</pre>
-    </dl>
-    <h2>限制比较函数 clamp()</h2>
-    <dl class="nav-cont">
-      <dt>Overview</dt>
+      <dt class="nav-cont">属性函数 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/attr">attr()</a></dt>
+      <dd>获取 <span class="warn">当前</span> 元素的属性值，在 CSS 样式中使用</dd>
+      <dd>也可以用在伪类元素里；在伪类元素里使用，它得到的是伪元素的原始元素的值</dd>
+      <dd>attr() 函数通常和自定义属性 data- 配合使用</dd>
+      <dd>attr() 函数可以和任何 CSS 属性一起使用；使用较多的是伪元素的 content 属性</dd>
+      <dd>还可以动态生成页面，实现部分 JavaScript 功能</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] attr() 应用 - <a href="./opening.html">开课啦</a></div>
+      <pre>
+.title::after {
+    content: attr(data-tip);
+    //... ...
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./js/skin.html">换肤</a></div>
+      <dd>获取元素</dd>
+      <dd>修改元素属性</dd>
+      <div>[<span class="iconfont icon-bell"></span>]如何使用纯 CSS 实现?</div>
+      <pre>
+&lt;div&gt;
+  &lt;button data-src="./imgs/1.jpg"&gt;1&lt;/button&gt;
+  &lt;button data-src="./imgs/2.jpg"&gt;2&lt;/button&gt;
+  &lt;button data-src="./imgs/3.jpg"&gt;3&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="box"&gt;
+  &lt;img src="" alt=""&gt;
+&lt;/div&gt;</pre>
+      <pre>
+.active {
+  background-color: #f40;
+}</pre>
+      <pre>
+let btns = document.querySelectorAll('button');
+let img = document.querySelector('img');
+btns.forEach(item =&gt; {
+  item.addEventListener('click', () =&gt; {
+    img.src = item.getAttribute('data-src');
+    btns.forEach(btn => {
+      btn.classList.remove('active');
+    })
+    item.classList.add('active');
+  })
+})</pre>
+      <dt class="nav-cont">限制比较函数 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">clamp()</a></dt>
       <dd>对 CSS 属性执行 min-width、max-width 等等操作，即：把一个值限制在一个下限 min 和上限 max 之间</dd>
       <dd>函数接收三个参数：最小值、首选值、最大值；用逗号分隔；可以是表达式</dd>
       <dd>当首选值比最小值要小时，则使用最小值</dd>
       <dd>当首选值介于最小值和最大值之间时，用首选值</dd>
       <dd>当首选值比最大值要大时，则使用最大值</dd>
       <dd>最大值和最小值一般都是固定值；而首选值是动态的</dd>
-      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">MDN - clamp()</a>、<a
-          href="./responsive.html">响应式开发</a></dd>
+      <dd>更多信息，请访问 <a href="./responsive.html">响应式开发</a></dd>
       <div>[<span class="iconfont icon-keyboard"></span>]字体跟着视口宽度变换，通过钳制避免字体过大</div>
       <pre>
 html {
@@ -261,9 +281,6 @@ html {
       <dd>径向渐变 radial-gradient()</dd>
       <dd>锥向渐变 Conic-gradient()</dd>
       <dd>更多信息，请参考 <a href="./background3.html">渐变背景</a></dd>
-      <dt>最大最小函数</dt>
-      <dd>最小函数 min()</dd>
-      <dd>最小函数 minmax()</dd>
       <dt>选择器函数</dt>
       <dd>:nth-child()</dd>
       <dd>:nth-of-type()</dd>

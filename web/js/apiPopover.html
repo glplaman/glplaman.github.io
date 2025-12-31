@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popover</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/page2025.css">
+  <style>
+    button {
+      display: block;
+      border: none;
+      outline: none;
+      margin: auto;
+      background-color: var(--pink-color);
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1.6rem;
+    }
+
+    .popover {
+      margin: auto;
+    }
+
+    .bg::backdrop {
+      background-image: linear-gradient(#0005, #000a);
+    }
+
+    .filter::backdrop {
+      backdrop-filter: blur(4px);
+    }
+
+    .pos:popover-open,
+    .event:popover-open {
+      inset: unset;
+      top: 5px;
+      right: 5px;
+      border: none;
+      padding: 0 var(--p-m-g);
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header></header>
+    <nav>
+      <h1>弹出窗口</h1>
+      <span>&commat;Popover</span>
+      <span class="iconfont icon-menu ham"></span>
+      <div class="nav">
+        <a href="" style="--delay:0" class="nav-item">Attributes</a>
+        <a href="" style="--delay:1" class="nav-item">Style</a>
+        <a href="" style="--delay:2" class="nav-item">Methods</a>
+        <a href="" style="--delay:2" class="nav-item">Event</a>
+      </div>
+    </nav>
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd>实现弹出窗口</dd>
+      <dd>一个触发元素：&lt;button&gt;或&lt;input&gt;</dd>
+      <dd>一个弹出窗口：普通元素</dd>
+    </dl>
+    <h2>元素属性 Attributes</h2>
+    <dl class="nav-cont">
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#html_attributes">attributes</a>
+      </dd>
+      <dt>popovertarget</dt>
+      <dd>触发元素目标属性，值为弹出窗口的 id</dd>
+      <dt>popovertargetaction</dt>
+      <dd>触发元素动作属性，显示 show | 隐藏 hide | 切换 toggle；默认是 toggle</dd>
+      <dt>popover</dt>
+      <dd>弹出窗口指定 popover 属性：自动 auto | 手动 manual | hint 提示框；默认是自动切换</dd>
+      <dd>弹出窗口分配 id，关联到触发元素目标属性；也用于区分用多个弹出窗口</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 基本示例</div>
+      <div>
+        <button popovertarget="mypopover">Popover</button>
+        <div class="popover" id="mypopover" popover>Popover content</div>
+      </div>
+      <pre>
+&lt;button popovertarget="mypopover"&gt;Toggle the popover&lt;/button&gt;
+&lt;div id="mypopover" popover&gt;Popover content&lt;/div&gt;</pre>
+    </dl>
+    <h2>样式 Style</h2>
+    <dl class="nav-cont">
+      <dd>弹出窗口默认固定定位、视口居中、无背景</dd>
+      <dd>初始化的 margin: 0; 会破坏默认居中布局；请单独、显示恢复设置</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#css_features">CSS</a></dd>
+      <dd>这里为弹出窗口指定类为 .mypopover</dd>
+      <pre>
+.mypopover {
+  margin: auto;
+}</pre>
+      <dt>::backdrop</dt>
+      <dd>伪元素选择器</dd>
+      <dd>设置弹出窗口背景样式</dd>
+      <div>1. 背景颜色或背景图像</div>
+      <pre>
+.mypopover::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 背景示例</div>
+      <div>
+        <button popovertarget="popover-bg">Popover with bg</button>
+        <div class="popover bg" id="popover-bg" popover>Popover content</div>
+      </div>
+      <div>2. 背景模糊</div>
+      <pre>
+.mypopover::backdrop {
+  backdrop-filter: blur(5px);
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 背景模糊示例</div>
+      <div>
+        <button popovertarget="popover-filter">Popover with filter</button>
+        <div class="popover filter" id="popover-filter" popover>Popover content</div>
+      </div>
+      <dt>:popover-open</dt>
+      <dd>伪类选择器</dd>
+      <dd>设置弹出窗口显示时的样式</dd>
+      <dd>默认是在视口中间显示
+        <p>By default, popovers appear in the middle of the viewport</p>
+      </dd>
+      <pre>
+[popover] {
+  position: fixed;
+  width: fit-content;
+  height: fit-content;
+  color: canvastext;
+  background-color: canvas;
+  inset: 0px;
+  margin: auto;
+  border-width: initial;
+  border-style: solid;
+  border-color: initial;
+  border-image: initial;
+  padding: 0.25em;
+  overflow: auto;
+}</pre>
+      <dd>通过覆盖或重写来定制显示位置</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 定位在右上角</div>
+      <dd>为 Popover 指定类 pos</dd>
+      <div>
+        <button popovertarget="popover-pos">Popover with position</button>
+        <div class="popover pos" id="popover-pos" popover>Popover content</div>
+      </div>
+      <pre>
+.pos:popover-open {
+  inset: unset;
+  top: 5px;
+  right: 5px;
+  border: none;
+  padding: 0 10px;
+  margin: 0;
+}</pre>
+    </dl>
+    <h2>实例方法 Methods</h2>
+    <dl class="nav-cont">
+      <dd>实例方法见下表</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#instance_methods">methods</a>
+      </dd>
+      <table>
+        <caption>方法 Methods</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>showPopover()</td>
+            <td>打开</td>
+          </tr>
+          <tr>
+            <td>hidePopover()</td>
+            <td>隐藏</td>
+          </tr>
+          <tr>
+            <td>togglePopover()</td>
+            <td>切换</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 按下 h/H 查看或关闭帮助</div>
+      <dd>获取元素实例并分配方法</dd>
+      <pre>
+const popover = document.querySelector("#popover-filter");
+document.addEventListener("keydown", (e) => {
+  if (e.key === "h" || e.key === "H") {
+    popover.togglePopover();
+  }
+});</pre>
+    </dl>
+    <h2>实例事件 Events</h2>
+    <dl class="nav-cont">
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#events">Events</a></dd>
+      <table>
+        <caption>事件 Events</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>beforetoggle</td>
+            <td>切换之前</td>
+          </tr>
+          <tr>
+            <td>toggle</td>
+            <td>切换时</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>[<span class="iconfont icon-keyboard"></span>] 自动关闭</div>
+      <dd>打开时，启动定时器</dd>
+      <dd>3s 后关闭</dd>
+      <dd>使用元素方法 <a href="./dom_element.html">Matches()</a> 匹配伪类 :popover-open</dd>
+      <dd>如何节流 <span class="iconfont icon-help"></span></dd>
+      <div>
+        <button popovertarget="popover-event">Popover with event</button>
+        <div class="popover event" id="popover-event" popover>Popover content</div>
+      </div>
+      <pre>
+const popoverEvent = document.querySelector("#popover-event");
+popoverEvent.addEventListener("toggle", (e) => {
+  if (popoverEvent.matches(":popover-open")) {
+    setTimeout(() => {
+      popoverEvent.hidePopover();
+    }, 3000);
+  }
+});</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <a class="back2top" href="#" target="_self">
+    <span class="iconfont icon-top"></span>
+  </a>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/custom/ham2025.js"></script>
+  <script>
+    const popover = document.querySelector("#popover-filter");
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "h" || e.key === "H") {
+        popover.togglePopover();
+      }
+    });
+
+    const popoverEvent = document.querySelector("#popover-event");
+    popoverEvent.addEventListener("toggle", (e) => {
+      if (popoverEvent.matches(":popover-open")) {
+        setTimeout(() => {
+          popoverEvent.hidePopover();
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+
+</html>

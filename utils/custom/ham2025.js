@@ -13,7 +13,7 @@ items.forEach((item, ind) => {
     e.preventDefault()
     e.stopPropagation()
     toggleLock()
-    navConts[ind].scrollIntoView()
+    navConts[ind].scrollIntoView({ behavior: "smooth", container: 'nearest' })
 
 
     items.forEach(item => {

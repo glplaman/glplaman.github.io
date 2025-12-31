@@ -784,6 +784,22 @@
         <div class="btn" id="team-btn-prev"><span class="iconfont icon-chevron-left"></span></div>
         <div class="btn" id="team-btn-next"><span class="iconfont icon-chevron-right"></span></div>
       </div>
+      <div class="works-wrap">
+        <div id="wbtn0" class="works-item" style="--src:url('/utils/screen/screen0.jpg')"></div>
+        <div id="wbtn1" class="works-item" style="--src:url('/utils/screen/screen1.jpg')"></div>
+        <div id="wbtn2" class="works-item" style="--src:url('/utils/screen/screen2.jpg')"></div>
+        <div id="wbtn3" class="works-item" style="--src:url('/utils/screen/screen3.jpg')"></div>
+        <div id="wbtn4" class="works-item" style="--src:url('/utils/screen/screen4.jpg')"></div>
+        <div id="wbtn5" class="works-item" style="--src:url('/utils/screen/screen5.jpg')"></div>
+      </div>
+      <div class="works-btns">
+        <a href="#wbtn0" class="active">1</a>
+        <a href="#wbtn1">2</a>
+        <a href="#wbtn2">3</a>
+        <a href="#wbtn3">4</a>
+        <a href="#wbtn4">5</a>
+        <a href="#wbtn5">6</a>
+      </div>
     </div>
     <div class="help">
       <dl class="help-item">
@@ -895,7 +911,7 @@
     links.forEach((item, ind) => {
       item.addEventListener('click', (e) => {
         e.preventDefault()
-        conts[ind].scrollIntoView()
+        conts[ind].scrollIntoView({ behavior: "smooth", container: 'nearest' })
         // 
         body.classList.remove('active')
         // 
@@ -1049,6 +1065,20 @@
     //     player.pause()
     //   }
     // })
+  </script>
+  <script>
+    const worksBtns=document.querySelectorAll('.works-btns a')
+    const worksItem=document.querySelectorAll('.works-wrap .works-item')
+    worksBtns.forEach((btn,ind)=>{
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        worksItem[ind].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})
+        worksBtns.forEach(item=>{
+          item.classList.remove('active')
+        })
+        btn.classList.add('active')
+      })
+    })
   </script>
 </body>
 
