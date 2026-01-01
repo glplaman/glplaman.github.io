@@ -27,11 +27,8 @@
       padding: 10px 20px;
     }
 
-    nav {
-      width: min(1024px, 90%);
-      background-color: var(--main-color);
-      line-height: 40px;
-      margin: 4rem auto;
+    ul {
+      list-style: none;
     }
 
     .nav {
@@ -46,7 +43,6 @@
       position: relative;
       padding: 0 10px;
       cursor: pointer;
-      color: #fff;
     }
 
     .nav-item:focus-within,
@@ -81,49 +77,125 @@
     .sub-nav-item:hover {
       color: #f40;
     }
+
+    body {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+        "header header"
+        "aside main"
+        "aside footer";
+      min-height: 100vh;
+    }
+
+    header {
+      grid-area: header;
+      position: sticky;
+      top: 0;
+      z-index: 9;
+      background-color: #f40;
+      height: 40px;
+    }
+
+    aside {
+      grid-area: aside;
+      background-color: #089;
+    }
+
+    .aside {
+      position: sticky;
+      top: 40px;
+    }
+
+    main {
+      grid-area: main;
+    }
+
+    footer {
+      grid-area: footer;
+    }
+
+    main p {
+      height: 50vh;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      background-color: var(--main-color);
+      line-height: 40px;
+      color: #fff;
+    }
   </style>
 </head>
 
 <body>
-  <nav>
-    <ul class="nav">
-      <li class="nav-item">
-        <div>Lorem.</div>
-        <div class="sub-nav">
-          <a class="sub-nav-item" href="">Lorem.</a>
-          <a class="sub-nav-item" href="">Pariatur!</a>
-          <a class="sub-nav-item" href="">Quasi?</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <div>Praesentium?</div>
-        <div class="sub-nav">
-          <a class="sub-nav-item" href="">Lorem.</a>
-          <a class="sub-nav-item" href="">Consequuntur.</a>
-          <a class="sub-nav-item" href="">Eum.</a>
-          <a class="sub-nav-item" href="">Exercitationem!</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="sub-nav-item" href="">Lorem.</a>
-      </li>
-      <li class="nav-item">
-        <div>Dolor.</div>
-        <div class="sub-nav">
-          <a class="sub-nav-item" href="">Lorem.</a>
-          <a class="sub-nav-item" href="">Pariatur!</a>
-          <a class="sub-nav-item" href="">Quasi?</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <div>Fugiat.</div>
-        <div class="sub-nav">
-          <a class="sub-nav-item" href="">Lorem.</a>
-          <a class="sub-nav-item" href="">Consequuntur.</a>
-        </div>
-      </li>
-    </ul>
-  </nav>
+  <header>header
+    <!-- <div class="header">
+      <div class="logo">Logo</div>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item">
+            <div>Lorem.</div>
+            <div class="sub-nav">
+              <a class="sub-nav-item" href="">Lorem.</a>
+              <a class="sub-nav-item" href="">Pariatur!</a>
+              <a class="sub-nav-item" href="">Quasi?</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div>Praesentium?</div>
+            <div class="sub-nav">
+              <a class="sub-nav-item" href="">Lorem.</a>
+              <a class="sub-nav-item" href="">Consequuntur.</a>
+              <a class="sub-nav-item" href="">Eum.</a>
+              <a class="sub-nav-item" href="">Exercitationem!</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="sub-nav-item" href="">Lorem.</a>
+          </li>
+          <li class="nav-item">
+            <div>Dolor.</div>
+            <div class="sub-nav">
+              <a class="sub-nav-item" href="">Lorem.</a>
+              <a class="sub-nav-item" href="">Pariatur!</a>
+              <a class="sub-nav-item" href="">Quasi?</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div>Fugiat.</div>
+            <div class="sub-nav">
+              <a class="sub-nav-item" href="">Lorem.</a>
+              <a class="sub-nav-item" href="">Consequuntur.</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div> -->
+  </header>
+  <aside>
+    <div class="aside">
+      <ul>
+        <li>Lorem.</li>
+        <li>Unde!</li>
+        <li>Ex.</li>
+        <li>Quidem!</li>
+        <li>Quaerat?</li>
+      </ul>
+    </div>
+  </aside>
+  <main>
+    <p>Lorem.</p>
+    <p>Ut.</p>
+    <p>Ut?</p>
+    <p>Laudantium.</p>
+    <p>Ullam.</p>
+  </main>
+  <footer>footer</footer>
+
 </body>
 
 </html>

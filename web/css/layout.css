@@ -1,0 +1,168 @@
+ :root {
+   --pos-h: 80px;
+   --w: 1200px;
+ }
+
+ html {
+   scroll-padding-top: var(--pos-h);
+ }
+
+ body:has(#theme-mode:checked) {
+   --bg-color: #111;
+   --txt-color: #fff;
+   --shadow-color: var(--second-color);
+ }
+
+ table {
+   width: 100%;
+ }
+
+ h2 {
+   text-transform: capitalize;
+   font-weight: 600;
+   margin-bottom: 2rem;
+   padding-top: 2rem;
+   padding-bottom: 2rem;
+ }
+
+ .theme {
+   display: flex;
+   align-items: center;
+ }
+
+
+ .theme label {
+   position: relative;
+   width: 40px;
+   height: 26px;
+   border-radius: 13px;
+   background-color: var(--txt-color);
+   cursor: pointer;
+ }
+
+ .theme label::before {
+   content: '\e612';
+   font-family: 'iconfont';
+   position: absolute;
+   left: 3px;
+   top: 3px;
+   width: 20px;
+   height: 20px;
+   display: flex;
+   font-size: 20px;
+   justify-content: center;
+   align-items: center;
+   border-radius: 50%;
+   color: #fff200;
+   transition: .2s;
+ }
+
+ #theme-mode:checked+label::before {
+   content: '\e611';
+   left: 18px;
+   color: #34ace0;
+ }
+
+ .w {
+   display: grid;
+   grid-template-columns: 120px 1fr;
+   grid-template-areas:
+     "header header"
+     "nav nav"
+     "aside main"
+     "aside footer";
+   grid-template-rows: auto auto 1fr auto;
+   min-height: 100vh;
+ }
+
+ header {
+   grid-area: header;
+ }
+
+ nav {
+   grid-area: nav;
+ }
+
+ aside {
+   grid-area: aside;
+ }
+
+ main {
+   grid-area: main;
+ }
+
+ .footer {
+   grid-area: footer;
+ }
+
+ header {
+   height: var(--header-h);
+   background-image: url(/imgs/banner.png);
+   background-size: cover;
+ }
+
+ /* nav */
+ nav {
+   position: sticky;
+   top: 0;
+ }
+
+ .nav {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: var(--p-m-g);
+   background-color: var(--bg-color);
+   height: var(--pos-h);
+ }
+
+ nav.active {
+   box-shadow: 0 2px 10px var(--shadow-color);
+ }
+
+ .ham {
+   display: none;
+ }
+
+ /* aside */
+ .aside {
+   position: sticky;
+   top: var(--pos-h);
+   display: flex;
+   flex-direction: column;
+   padding: var(--p-m-g);
+ }
+
+ .nav-item {
+   text-transform: capitalize;
+ }
+
+ .nav-item.active {
+   color: var(--main-color);
+ }
+
+ .nav-cont:target h2 {
+   background-color: var(--main-color);
+   color: #fff;
+ }
+
+ /* main */
+ .links a {
+   text-decoration: underline;
+   text-transform: capitalize;
+ }
+
+ .links a:hover {
+   color: var(--warn-color);
+ }
+
+ .links a::after {
+   content: '\ed0b';
+   font-family: 'iconfont';
+ }
+
+ .back2top {
+   position: fixed;
+   bottom: 1rem;
+   right: 1rem;
+ }
