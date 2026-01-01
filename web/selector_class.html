@@ -6,35 +6,52 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>伪类选择器 Pseudo class</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/page2025.css">
   <link rel="stylesheet" href="./css/selector.css">
-
   <base target="_blank">
 </head>
 
 <body>
-  <header>
-    <h1>伪类选择器</h1>
-    <span>&commat;Pseudo class</span>
-  </header>
-  <dl>
-    <dd>. 和普通类的可以应用在多个元素不同，伪类<span class="warn">仅仅限定当前元素使用</span>，所以叫伪类</dd>
-    <dd>. 伪元素会增加元素，伪类不增加元素</dd>
-    <dd>. 伪元素使用::，伪类使用:</dd>
-    <dd>. 更多信息，请访问 <a
-        href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements">MDN
-        - Pseudo class</a></dd>
-    <dt>超链接伪类</dt>
-    <dd>
-      <div>. 常见于超链接 &lt;a&gt; 桌面端应用</div>
-      <div>. &lt;a&gt; 使用时，需按下述顺序定义：a:link → a:visted → a:hover → a:active</div>
-      <div>. 除了超链接 &lt;a&gt;，部分伪类还可以作用于其它元素，如表单元素</div>
-      <!-- <div>. 无法直接高亮highlight当前元素；需要借助其它方法</div> -->
+  <div class="w">
+    <header></header>
+    <nav>
+      <h1>伪类选择器</h1>
+      <span>&commat;Pseudo class</span>
+      <span class="iconfont icon-menu ham"></span>
+      <div class="nav">
+        <a href="#" style="--delay:0" class="nav-item active">&lt;a&gt;</a>
+        <a href="#" style="--delay:1" class="nav-item">&lt;form&gt;</a>
+        <a href="#" style="--delay:2" class="nav-item">:nth-child</a>
+        <a href="#" style="--delay:3" class="nav-item">:nth-of-type</a>
+        <a href="#" style="--delay:4" class="nav-item">:root</a>
+        <a href="#" style="--delay:5" class="nav-item">:has</a>
+        <a href="#" style="--delay:6" class="nav-item">:not</a>
+        <a href="#" style="--delay:7" class="nav-item">:where</a>
+        <a href="#" style="--delay:8" class="nav-item">:is</a>
+        <a href="#" style="--delay:9" class="nav-item">:empty</a>
+      </div>
+    </nav>
+    <dl>
+      <dd>和普通类的可以应用在多个元素不同，伪类<span class="warn">仅仅限定当前元素使用</span>，所以叫伪类</dd>
+      <dd>伪元素会增加元素，伪类不增加元素</dd>
+      <dd>伪元素使用::，伪类使用:</dd>
+      <dd>更多信息，请访问 <a
+          href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements">MDN
+          - Pseudo class</a></dd>
+      <dt class="nav-cont">&lt;a&gt;</dt>
+      <dd>常见于超链接 &lt;a&gt; 桌面端应用</dd>
+      <dd>&lt;a&gt; 使用时，需按下述顺序定义：a:link → a:visted → a:hover → a:active</dd>
+      <dd>除了超链接 &lt;a&gt;，部分伪类还可以作用于其它元素，如表单元素</dd>
+      <!-- <dd>无法直接高亮highlight当前元素；需要借助其它方法</dd> -->
       <table>
-        <tr>
-          <th>类别</th>
-          <th>说明</th>
-        </tr>
+        <caption>超链接相关</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
         <tr>
           <td>:link</td>
           <td>&lt;a&gt; 初始状态/为访问过；静态样式</td>
@@ -87,29 +104,28 @@ a:active {
   background-color: #f40;
   color: #fff;
 }</pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] :hover 使用，请参考 <a href="./demo/acc_flex.html">抽屉相册</a>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] :target 使用，请参考 <a href="./demo/acc_target.html#item1">古诗鉴赏</a>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] :focus-within 使用，请参考 <a href="./demo/login_deer.html">一路有你</a>
-    </dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] :hover 使用，请参考 <a href="./demo/acc_flex.html">抽屉相册</a>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] :target 使用，请参考 <a href="./demo/acc_target.html#item1">古诗鉴赏</a>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] :focus-within 使用，请参考 <a href="./demo/login_deer.html">一路有你</a>
+      </div>
       <pre>
 .wrap:focus-within {
   border-color: #ff0;
 }</pre>
-    </dd>
-    <dt id="checked">表单伪类</dt>
-    <dd>
-      <div>. 多用于表单元素</div>
-      <div>. 功能非常强大，很多纯CSS效果甚至可以媲美 JavaScript</div>
-      <div>. 凡是鼠标点击的联动响应，都可以使用 :checked，如标签页、轮播、导航；见后续案例</div>
+      <dt id="checked" class="nav-cont">&lt;form&gt;</dt>
+      <dd>多用于表单元素</dd>
+      <dd>功能非常强大，很多纯CSS效果甚至可以媲美 JavaScript</dd>
+      <dd>凡是鼠标点击的联动响应，都可以使用 :checked，如标签页、轮播、导航；见后续案例</dd>
       <table>
-        <tr>
-          <th>类别</th>
-          <th>说明</th>
-        </tr>
+        <caption>表单相关</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
         <tr>
           <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus">:focus</a></td>
           <td>获取焦点 - received focus</td>
@@ -151,29 +167,28 @@ input[type='text']:focus+label {
 input[type='radio']:checked+label {
   color: #f40;
 }        </pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/acc_flex.html">注意事项</a></div>
+      <dd>一开始禁用</dd>
+      <dd>下滑阅读完毕后，移除 disabled 属性</dd>
       <pre>
 button {
-  padding: 10px;
-  border: none;
-  background-color: transparent;
-  font: inherit;
-  color: #f40;
   cursor: pointer;
 }
 
 button:disabled {
-  color: #ccc;
   cursor: not-allowed;
 }</pre>
-    </dd>
-    <dt id="nth">结构伪类</dt>
-    <dd class="sn">
-      <div>根据序号选择元素</div>
+      <dt id="nth" class="nav-cont">:nth-child</dt>
+      <dd>结构伪类</dd>
+      <dd>根据序号选择元素</dd>
       <table>
-        <tr>
-          <th>类别</th>
-          <th>说明</th>
-        </tr>
+        <caption>:nth-child</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
         <tr>
           <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child">:nth-child(n)</a></td>
           <td>第几个孩子；孩子从1开始
@@ -194,11 +209,11 @@ button:disabled {
           <td>唯一的子元素/孩子</td>
         </tr>
       </table>
-      <p>. 根据文档结构来选择，通常配合父级元素一起使用</p>
-      <p>. nth-child 可以使用关键字；odd 选中序号为奇数的孩子；even 选中序号为偶数的孩子</p>
-      <p>. nth-child 可以使用 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child#anb">表达式 An+B</a>；n
-        只能是非负数字，从0开始；n 必须是表达式的第一项 - n is all nonnegative integers, starting from 0</p>
-      <p>. 以上选择器不区分元素类型 - according to their position</p>
+      <dd>根据文档结构来选择，通常配合父级元素一起使用</dd>
+      <dd>nth-child 可以使用关键字；odd 选中序号为奇数的孩子；even 选中序号为偶数的孩子</dd>
+      <dd>nth-child 可以使用 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child#anb">表达式 An+B</a>；n
+        只能是非负数字，从0开始；n 必须是表达式的第一项 - n is all nonnegative integers, starting from 0</dd>
+      <dd>以上选择器不区分元素类型 - according to their position</dd>
       <pre>
 :nth-child(even)//选择序号为偶数的元素
 :nth-child(odd)//选择序号为奇数的元素
@@ -214,7 +229,7 @@ button:disabled {
       <pre>
 :nth-child(-n+3)//前3 - 选择序号为3、2、1的元素；:nth-child(3-n)错误
 :nth-last-child(-n+3)//后3</pre>
-      <p>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table2.html"> 表格 - 斑马纹表格</a></p>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table.html"> 表格 - 斑马纹表格</a></div>
       <pre>
 tr:nth-child(odd) {
   background-color: #dcb0ff;
@@ -222,17 +237,22 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
   background-color: #faccff;
 }      </pre>
-      <div>根据<span class="warn">类型/标签</span>选择元素 <a
-          href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type">:nth-of-type()</a></div>
-      <p>. 指定类型的元素按照序号 position 选择</p>
-      <p>. 根据类型选择符合条件的元素；适合多种元素类型并存的情况</p>
-      <p>. 同样可以使用关键字或表达式</p>
-      <p>. 不可以依据类名或其它选择器类型</p>
+      <dt class="nav-cont">:nth-of-type</dt>
+      <dd>结构伪类</dd>
+      <dd>根据<span class="warn">类型/标签</span>选择元素 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-of-type">:nth-of-type()</a></dd>
+      <dd>指定类型的元素按照序号 position 选择</dd>
+      <dd>根据类型选择符合条件的元素；适合多种元素类型并存的情况</dd>
+      <dd>同样可以使用关键字或表达式</dd>
+      <dd>不可以依据类名或其它选择器类型</dd>
       <table>
-        <tr>
-          <th>类别</th>
-          <th>说明</th>
-        </tr>
+        <caption>:nth-of-type</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
         <tr>
           <td>first-of-type()</td>
           <td>选择指定类型第一个</td>
@@ -246,34 +266,33 @@ tr:nth-child(even) {
           <td>选择指定类型第几个</td>
         </tr>
       </table>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 应用示例</dd>
-    <dd class="sn">
+      <div>[<span class="iconfont icon-keyboard"></span>] 应用示例</div>
       <pre>
 .item:nth-of-type(n+2) {
   color: #f40;
 }      </pre>
-      <div>同样的标签应用不同的类名 - 从第2个 &lt;div&gt; 开始选中</div>
-      <img src="./imgs/select3.png" alt="">
-      <p class="fig-sn">都是&lt;div&gt;</p>
-      <div>不同的标签应用不同的类名 - 从第2个 &lt;p&gt; 开始选中；推荐 <span class="iconfont icon-dianzan"></span></div>
-      <img src="./imgs/select4.png" alt="">
-      <p class="fig-sn">&lt;div&gt;和&lt;p&gt;</p>
-      <p>[<span class="iconfont icon-keyboard"></span>] 同样的类名不同的标签</p>
-      <p>. 选中元素范围：分别从&lt;div&gt;的第2个开始和&lt;p&gt;的第2个开始</p>
-      <img src="./imgs/select5.png" alt="">
-      <p class="fig-sn">&lt;div&gt;和&lt;p&gt;</p>
-    </dd>
-  </dl>
-  <div class="chap">其它伪类选择器</div>
-  <dl>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:root">:root</a></dt>
-    <dd>
-      <div>. 定义 <span class="warn">全局CSS变量</span>，供当前 CSS 文件所有元素使用</div>
-      <div>. 借助函数 var() 使用/获取定义的变量</div>
-      <div>. 方便统一调整</div>
-      <div>. 还可以在元素上使用style定义 <span class="warn">内联CSS变量</span>，供当前元素使用，详情请查看 <a href="./variable.html">CSS变量</a> 一节
-      </div>
+      <dd>同样的标签应用不同的类名 - 从第2个 &lt;div&gt; 开始选中</dd>
+      <figure>
+        <img src="./imgs/select3.png" alt="">
+        <figcaption>都是&lt;div&gt;</figcaption>
+      </figure>
+      <dd>不同的标签应用不同的类名 - 从第2个 &lt;p&gt; 开始选中；推荐 <span class="iconfont icon-dianzan"></span></dd>
+      <figure>
+        <img src="./imgs/select4.png" alt="">
+        <figcaption>&lt;div&gt;和&lt;p&gt;</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 同样的类名不同的标签</div>
+      <dd>选中元素范围：分别从&lt;div&gt;的第2个开始和&lt;p&gt;的第2个开始</dd>
+      <figure>
+        <img src="./imgs/select5.png" alt="">
+        <figcaption>&lt;div&gt;和&lt;p&gt;</figcaption>
+      </figure>
+      <dt class="nav-cont"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:root">:root</a></dt>
+      <dd>定义 <span class="warn">全局CSS变量</span>，供当前 CSS 文件所有元素使用</dd>
+      <dd>借助函数 var() 使用/获取定义的变量</dd>
+      <dd>方便统一调整</dd>
+      <dd>还可以在元素上使用style定义 <span class="warn">内联CSS变量</span>，供当前元素使用，详情请查看 <a href="./css-variable.html">CSS变量</a> 一节
+      </dd>
       <pre>
 //定义
 :root {
@@ -292,102 +311,22 @@ tr:nth-child(even) {
   font-weight: 600;
   color: var(--main-color-red);
 }</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:empty">:empty</a></dt>
-    <dd>
-      <div>元素为空的样式</div>
-      <div>列表渲染时，如果数据为空，则给出特定样式，如不显示</div>
-      <div>也可以通过 JavaScript 实现</div>
-      <pre>
-li {
-  //
-}
-
-li:empty {
-  display: none;
-}      </pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:not">:not()</a></dt>
-    <dd>. 选中不符合条件的元素</dd>
-    <dd class="tips">
-      <div>The :not() CSS pseudo-class represents elements that do not match a list of selectors. Since it prevents
-        specific items from being selected, it is known as the negation pseudo-class.</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 元素彼此之间等间隔排列 - 最后一个 &lt;li&gt; 不指定 margin-right</dd>
-    <dd>
-      <pre>
-//传统方案
-ul li:not(:last-child) {
-  margin-right: 10px;
-}
-
-//优化方案：使用相邻兄弟选择器实现
-ul li + li {
-  margin-left: 10px;
-}
-
-//优化方案：使用flex的gap实现
-ul {
-  display: flex;
-  gap: 10px;
-}</pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 选中不属于 &lt;header&gt; 或 &lt;section&gt; 的 &lt;h2&gt;；范围中的 h2 不能省略
-    </dd>
-    <dd>
-      <pre>
-h2:not(header h2, section h2) {
-  color: #f40;
-}</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:is">:is()</a></dt>
-    <dd>. 为选择器列表中指定的元素分配样式；共享样式</dd>
-    <dd>. 后代选择器的高级用法；简化代码；而且可以容错；独立写法中，如果有一个语法错误，则所有样式都不生效；:is 则可以大胆使用</dd>
-    <dd class="tips">
-      <div>. The :is() CSS pseudo-class function takes a selector list as its argument, and selects any element that can
-        be
-        selected by one of the selectors in that list. This is useful for writing large selectors in a more compact
-        form.
-    </dd>
-    <dd>
-      <pre>
-.box h1,
-.box h2,
-.box h3 {
-  color: #f40;
-}
-
-.box :is(h1, h2, h3) {
-  color: #f40;
-}
-
-//或者当前元素是哪些状态，如表单的伪类选择器
-input:is(:hover, :focus) {
-  border: 1px solid #f40;
-  outline: none;
-}</pre>
-    </dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:has">:has()</a></dt>
-    <dd>
-      <div>. 选中具备某种关系的元素</div>
-      <div>. 如果某个选择器 <span class="warn">有</span> 哪些选择器，则选中当前选择器</div>
-      <div>. 可以根据子元素的状态设置父元素的样式，经常被认为是 <span class="warn">父级选择器</span> -referred to as the parent
-        selector；也有看作是家庭选择器，还可以匹配兄弟关系</div>
-      <div>. 本质上是一个函数，参数就是和当前元素存在父子关系或兄弟关系的选择器列表，以逗号分隔 - a comma-separated list</div>
-      <div>. 属于关系型伪类选择器的范畴-The Relational Pseudo-class</div>
+      <dt class="nav-cont"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:has">:has()</a></dt>
+      <dd>选中具备某种关系的元素</dd>
+      <dd>如果某个选择器 <span class="warn">有</span> 哪些选择器，则选中当前选择器</dd>
+      <dd>可以根据子元素的状态设置父元素的样式，经常被认为是 <span class="warn">父级选择器</span> -referred to as the parent
+        selector；也有看作是家庭选择器，还可以匹配兄弟关系</dd>
+      <dd>本质上是一个函数，参数就是和当前元素存在父子关系或兄弟关系的选择器列表，以逗号分隔 - a comma-separated list</dd>
+      <dd>属于关系型伪类选择器的范畴-The Relational Pseudo-class</dd>
       <div class="tips">This pseudo-class presents a way of selecting a parent element or a previous sibling element
         with respect to a reference element by taking a relative selector list as an argument.</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table2.html">斑马纹</a> - 有 &lt;th&gt; 的使用背景样式
-    </dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/table.html">斑马纹</a> - 有 &lt;th&gt; 的使用背景样式
+      </div>
       <pre>
 tr:has(th) {
   background-color: #fff;
 }</pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/select-cart.html">商品筛选</a></dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/select-cart.html">商品筛选</a></div>
       <pre>
 select:has(option[value="jd"]:checked)+.cont img.jd {
     display: block;
@@ -396,9 +335,7 @@ select:has(option[value="jd"]:checked)+.cont img.jd {
 select:has(option[value="jd"]:checked)+.cont img:not(.jd) {
     display: none;
 }      </pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="../os/sql/quiz.html">试题分割</a> - 相邻的题目以实线分割</dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="../os/sql/quiz.html">试题分割</a> - 相邻的题目以实线分割</div>
       <pre>
 //如果包含有一个图形img和一个紧跟着图形的段落p，则选中
 .card:has(img + p) {
@@ -430,19 +367,47 @@ body:has(#p0:checked) {
 .grid:has(.left:hover) {
   --left-width: 30%;
 }</pre>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-sample.html">菜单停靠栏</a></dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/not-has.html">树状手风琴</a></dd>
-    <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:where">:where()</a></dt>
-    <dd>. 使用选择器列表|集合作为参数；某个/些元素符合选择器条件时设置对应的样式</dd>
-    <dd>. 对于缩短一个较长的选择器列表非常有用</dd>
-    <dd>. 如果样式使用比较频繁，建议定义为公共类</dd>
-    <dd class="tips">
-      <div>. The :where() CSS pseudo-class function takes a selector list as its argument, and selects any element that
-        can
-        be selected by one of the selectors in that list.</div>
-    </dd>
-    <dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-sample.html">菜单停靠栏</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/not-has.html">树状手风琴</a></div>
+      <dt class="nav-cont"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:not">:not()</a></dt>
+      <dd>选中不符合条件的元素</dd>
+      <div class="tips">
+        <div>The :not() CSS pseudo-class represents elements that do not match a list of selectors. Since it prevents
+          specific items from being selected, it is known as the negation pseudo-class.</div>
+      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] 元素彼此之间等间隔排列 - 最后一个 &lt;li&gt; 不指定 margin-right</div>
+      <pre>
+//传统方案
+ul li:not(:last-child) {
+  margin-right: 10px;
+}
+
+//优化方案：使用相邻兄弟选择器实现
+ul li + li {
+  margin-left: 10px;
+}
+
+//优化方案：使用flex的gap实现
+ul {
+  display: flex;
+  gap: 10px;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 选中不属于 &lt;header&gt; 或 &lt;section&gt; 的 &lt;h2&gt;；范围中的 h2
+        不能省略
+      </div>
+      <pre>
+h2:not(header h2, section h2) {
+  color: #f40;
+}</pre>
+      <dt class="nav-cont"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:where">:where()</a></dt>
+      <dd>使用选择器列表|集合作为参数；某个/些元素符合选择器条件时设置对应的样式</dd>
+      <dd>对于缩短一个较长的选择器列表非常有用</dd>
+      <dd>如果样式使用比较频繁，建议定义为公共类</dd>
+      <div class="tips">
+        <div>The :where() CSS pseudo-class function takes a selector list as its argument, and selects any element that
+          can
+          be selected by one of the selectors in that list.</div>
+      </div>
       <pre>
 //为多个元素指定样式
 :where(.left, .center, .right):hover {
@@ -462,11 +427,44 @@ body:has(#p0:checked) {
   justify-content: center;
   align-items: center;
 }</pre>
-    </dd>
-    <dt>过滤器 - filter</dt>
-    <dd>
-      <div>使用 &lt;select&gt; 配合相应的选择器完成对商品的过滤/筛选</div>
-      <div>使用不同的类标识不同的商品</div>
+      <dt class="nav-cont"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:is">:is()</a></dt>
+      <dd>为选择器列表中指定的元素分配样式；共享样式</dd>
+      <dd>后代选择器的高级用法；简化代码；而且可以容错；独立写法中，如果有一个语法错误，则所有样式都不生效；:is 则可以大胆使用</dd>
+      <div class="tips">
+        The :is() CSS pseudo-class function takes a selector list as its argument, and selects any element that can
+        be selected by one of the selectors in that list. This is useful for writing large selectors in a more compact
+        form. </div>
+      <pre>
+.box h1,
+.box h2,
+.box h3 {
+  color: #f40;
+}
+
+.box :is(h1, h2, h3) {
+  color: #f40;
+}
+
+//或者当前元素是哪些状态，如表单的伪类选择器
+input:is(:hover, :focus) {
+  border: 1px solid #f40;
+  outline: none;
+}</pre>
+      <dt class="nav-cont"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:empty">:empty</a></dt>
+      <dd>元素为空的样式</dd>
+      <dd>列表渲染时，如果数据为空，则给出特定样式，如不显示</dd>
+      <dd>也可以通过 JavaScript 实现</dd>
+      <pre>
+li {
+  //
+}
+
+li:empty {
+  display: none;
+}      </pre>
+      <dt>过滤器 - filter</dt>
+      <dd>使用 &lt;select&gt; 配合相应的选择器完成对商品的过滤/筛选</dd>
+      <dd>使用不同的类标识不同的商品</dd>
       <pre>
 select:has(option[value='blue']:checked)+.goods div:not(.blue) {
   display: none;
@@ -479,19 +477,14 @@ select:has(option[value='red']:checked)+.goods div:not(.yellow) {
 select:has(option[value='yellow']:checked)+.goods div:not(.yellow) {
   display: none;
 }</pre>
-    </dd>
-  </dl>
-  <a class="back2top" target="_self" href="#">
-    <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-      p-id="31526" width="32" height="32">
-      <path
-        d="M414.90963001 900.3614811l0-291.27111111 194.18074112 0 0 291.27111111 242.72592554 0 0-388.3614811 145.63555556 0-485.45185223-436.90666667-485.45185223 436.90666667 145.63555556 0 0 388.3614811z"
-        fill="#ffffff" p-id="31527"></path>
-    </svg>
-  </a>
-  <div id="footer"></div>
+    </dl>
+    <div id="footer"></div>
+    <a class="back2top" href="#" target="_self">
+      <span class="iconfont icon-top"></span>
+    </a>
+  </div>
   <script src="/utils/custom/footer.js"></script>
-  <script src="/utils/custom/back2top.js"></script>
+  <script src="/utils/custom/ham2025.js"></script>
 </body>
 
 </html>
