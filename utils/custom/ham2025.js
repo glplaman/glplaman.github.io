@@ -1,8 +1,14 @@
 const body = document.body
+const theme = body.querySelector('#theme')
 const nav = body.querySelector('nav')
 const items = body.querySelectorAll('.nav-item')
 const navConts = body.querySelectorAll('.nav-cont')
 const ham = body.querySelector('.ham')
+
+
+theme.addEventListener('click', () => {
+  body.classList.toggle('dark')
+})
 const toggleLock = () => {
   if (body.classList.contains('lock')) {
     body.classList.remove('lock');

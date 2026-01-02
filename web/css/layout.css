@@ -7,7 +7,7 @@
    scroll-padding-top: var(--pos-h);
  }
 
- body:has(#theme-mode:checked) {
+ body.dark {
    --bg-color: #111;
    --txt-color: #fff;
    --shadow-color: var(--second-color);
@@ -33,39 +33,25 @@
  .theme {
    display: flex;
    align-items: center;
- }
-
-
- .theme label {
-   position: relative;
-   width: 40px;
-   height: 26px;
-   border-radius: 13px;
-   background-color: var(--txt-color);
    cursor: pointer;
+   padding: 0 6px;
  }
 
- .theme label::before {
-   content: '\e612';
-   font-family: 'iconfont';
-   position: absolute;
-   left: 3px;
-   top: 3px;
-   width: 20px;
-   height: 20px;
-   display: flex;
-   font-size: 20px;
-   justify-content: center;
-   align-items: center;
-   border-radius: 50%;
-   color: #fff200;
-   transition: .2s;
+ .theme span {
+   color: var(--theme-color);
+   font-size: 2.4rem;
  }
 
- #theme-mode:checked+label::before {
-   content: '\e611';
-   left: 18px;
-   color: #34ace0;
+ .theme span:last-child {
+   display: none;
+ }
+
+ body.dark .theme span:first-child {
+   display: none;
+ }
+
+ body.dark .theme span:last-child {
+   display: block;
  }
 
  .w {
@@ -120,7 +106,6 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
-   gap: var(--p-m-g);
    padding: var(--p-m-g);
    background-color: var(--bg-color);
    height: var(--pos-h);
@@ -192,6 +177,7 @@
      display: block;
      color: var(--txt-color);
      font-size: 2.4rem;
+     padding: 0 6px;
    }
 
    aside {

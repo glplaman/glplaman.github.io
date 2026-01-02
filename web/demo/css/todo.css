@@ -28,10 +28,8 @@ button {
   outline: none;
   color: #fff;
   border: none;
-  pointer-events: none;
   border-radius: 5px;
   cursor: pointer;
-  opacity: 0.5;
   font: inherit;
 }
 
@@ -53,7 +51,7 @@ body {
   gap: var(--p-m-g);
   background-color: #fff;
   width: 85%;
-  max-width: 800px;
+  max-width: 600px;
   padding: 80px var(--p-m-g) 1rem;
   border-radius: var(--p-m-g);
   margin: var(--p-m-g);
@@ -97,13 +95,13 @@ h1::after {
   background-color: var(--main-color);
 }
 
-.input-field {
+.form {
   display: flex;
   height: 40px;
   gap: var(--p-m-g);
 }
 
-.input-field input {
+.form input {
   flex: 1;
   height: 100%;
   border-radius: 5px;
@@ -111,9 +109,14 @@ h1::after {
   padding: 0 var(--p-m-g);
 }
 
-.input-field input:hover,
-.input-field input:focus {
+.form input:hover,
+.form input:focus {
   border-color: var(--main-color);
+}
+
+.form input:invalid:placeholder-shown+button {
+  pointer-events: none;
+  opacity: .8;
 }
 
 .msg-list {

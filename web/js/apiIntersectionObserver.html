@@ -16,18 +16,19 @@
       <h1>IntersectionObserver</h1>
     </header>
     <dl>
-      <dd>IntersectionObserver 是现代浏览器提供的一种高性能API，用于异步监测目标元素与其祖先元素或视口的交叉状态。相比传统的滚动事件监听方式，它具有更好的性能表现。</dd>
+      <dd>IntersectionObserver 是现代浏览器提供的一种高性能API，用于异步监测目标元素与其祖先元素或视口的交叉状态</dd>
+      <dd>相比传统的滚动事件监听方式，它具有更好的性能表现</dd>
       <pre>const observer = new IntersectionObserver(callback, options);</pre>
       <dt>参数说明</dt>
-      <dd>callback: 当元素交叉状态发生变化时触发的回调函数</dd>
+      <dd>callback: 当元素交叉状态发生变化时触发的回调函数
+        <p>进入视口，触发</p>
+        <p>离开视口，触发</p>
+      </dd>
       <dd>options (可选): 配置对象，定义观测条件</dd>
       <dt>核心方法 Methods</dt>
       <dd>observe(target)：开始观察指定的目标元素 </dd>
-
       <dd>unobserve(target)：停止观察指定的目标元素 </dd>
-
       <dd>disconnect()：停止观察所有目标元素 </dd>
-
       <dt>回调函数参数 callback</dt>
       <dd>回调函数接收一个 entries 数组，可以批量处理多个元素的状态变化
         <p>如：不只一个元素进入视口</p>
@@ -40,6 +41,14 @@
         <p>rootBounds: 根元素的边界矩形</p>
         <p>intersectionRect: 相交区域的边界矩形</p>
       </dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 淡入淡出</div>
+      <figure class="fade">
+        <img src="../../imgs/810.jpg" alt="">
+        <figcaption>fade</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 触底加载/动态加载/无限</div>
+      <dd>侦听最后一项</dd>
+      <dd>如果有交叉，就开始加载</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 图片懒加载</div>
       <dd>图片进入视口时，指定src属性，开始渲染图片</dd>
       <pre>&lt;img class="ob-img" loading="lazy" data-src="/utils/zeng/0.jfif" alt="" src=""></pre>
@@ -87,6 +96,13 @@ function cb(entries) {
     <div id="footer"></div>
   </div>
   <script src="/utils/custom/footer.js"></script>
+  <script>
+    const cb = (entries) => {
+      console.log(entries);
+    }
+    const obs = new IntersectionObserver(cb, {})
+    obs.observe(document.querySelector('.fade'))
+  </script>
 </body>
 
 </html>

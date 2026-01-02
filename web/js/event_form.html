@@ -8,41 +8,6 @@
   <title>表单事件 Form - Event</title>
   <link rel="stylesheet" href="../../css/common.css">
   <base target="_blank">
-  <style>
-    form {
-      width: 100%;
-      max-width: 350px;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin: 5rem auto;
-    }
-
-    input,
-    textarea,
-    button {
-      border: 1px solid #ccc;
-      outline: none;
-      font: inherit;
-      color: inherit;
-      padding: 0 1rem;
-      height: 40px;
-      background-color: transparent;
-    }
-
-    textarea {
-      resize: none;
-      height: 100px;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-      background-color: #0aa;
-      color: #fff;
-      text-transform: uppercase;
-    }
-  </style>
 </head>
 
 <body>
@@ -51,39 +16,61 @@
     <span>&commat;Form</span>
   </header>
   <dl class="nav-cont" data>
+    <table>
+      <caption>表单事件</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event">submit</a>
+          </td>
+          <td>表单提交</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset_event">reset</a></td>
+          <td>表单重置</td>
+        </tr>
+        <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/formdata_event">formdata</a>
+          </td>
+          <td>表单提交时构建数据</td>
+        </tr>
+      </tbody>
+    </table>
     <dt>表单默认事件</dt>
-    <dd>
-      <div>.默认情况下，表单提交时，页面会发生跳转；类似的还有 &lt;a&gt;</div>
-      <div>.有时候需要阻止该默认行为</div>
-      <pre>
+    <dd>默认情况下，表单提交时，页面会发生跳转；类似的还有 &lt;a&gt;</dd>
+    <dd>有时候需要阻止该默认行为</dd>
+    <pre>
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 })</pre>
-      <div>或</div>
-      <pre>
+    <dd>或</dd>
+    <pre>
 form.addEventListener('submit', () => {
   return false;
 })</pre>
-    </dd>
     <dt>获取表单数据</dt>
-    <dd>
-      <div>.数据提交后交给后端获取并处理</div>
-      <div>.前端如果需要获取数据，需要特别处理</div>
-      <div>1. 单个元素</div>
-      <pre>
+    <dd>数据提交后交给后端获取并处理</dd>
+    <dd>前端如果需要获取数据，需要特别处理</dd>
+    <div>1. 单个元素</div>
+    <pre>
 input.addEventListener('change', () => {
   console.log(input.value);
 })</pre>
-      <div>2. 利用表单提交事件获取所有元素值</div>
-      <pre>
+    <div>2. 利用表单提交事件获取所有元素值</div>
+    <pre>
 &lt;form action="https://www.baidu.com" method="get" name="demo"&gt;
   &lt;input type="text" name="uname" id="uname"&gt;
   &lt;input type="password" name="upass" id="upass"&gt;
   &lt;input type="submit" value="submit"&gt;
   &lt;input type="reset" value="reset"&gt;
 &lt;/form&gt;</pre>
-      <div>.如果表单元素指定了 id，不获取元素也可以访问其值</div>
-      <pre>
+    <dd>如果表单元素指定了 id，不获取元素也可以访问其值</dd>
+    <pre>
 const form = document.querySelector('form')
 form.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -91,32 +78,32 @@ form.addEventListener('submit', (e) => {
   // 查看提交的数据
   console.log(uname.value, upass.value);
 })</pre>
-      <p>.如果需要修改或者追加，需要使用 form 构造的 FormData 集中获取</p>
-    </dd>
+    <dd>如果需要修改或者追加，需要使用 form 构造的 FormData 集中获取</dd>
   </dl>
   <div class="chap">FormData</div>
   <dl>
     <dt>FormData() 构造函数</dt>
-    <dd>
-      <div>FormData(form)：在表单的提交事件中构造数据</div>
-      <div>FormData(form, submitter)：表单提交时，自动构造</div>
-      <div>.更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">MDN - FormData</a>、<a
-          href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/formdata_event">MDN -
-          formdata_event</a></div>
-    </dd>
+    <dd>FormData(form)：在表单的提交事件中构造数据</dd>
+    <dd>FormData(form, submitter)：表单提交时，自动构造</dd>
+    <dd style="text-decoration: line-through;">如果提交后，马上获取，有可能数据还未构造完毕，导致失败</dd>
+    <dd>直接构造 FormData；无需触发事件；<strong>可以直接获取</strong></dd>
+    <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">MDN - FormData</a>、<a
+        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/formdata_event">MDN -
+        formdata_event</a></dd>
     <dt>formdata 事件</dt>
-    <dd>
-      <div>数据构造完毕时，会触发 formdata 事件</div>
-      <div>可以根据需要增加、修改或验证某些数据</div>
-      <div>也可以直接在提交事件中处理数据</div>
-    </dd>
-    <dt>常用方法</dt>
-    <dd>
-      <table>
+    <dd>数据构造完毕时，会触发 formdata 事件</dd>
+    <dd>可以根据需要增加、修改或验证某些数据</dd>
+    <dd>也可以直接在提交事件中处理数据</dd>
+    <dt>常用方法 Methods</dt>
+    <table>
+      <caption>常用方法</caption>
+      <thead>
         <tr>
           <th>item</th>
           <th>desc</th>
         </tr>
+      </thead>
+      <tbody>
         <tr>
           <td>FormData.append(name, value)</td>
           <td>添加一个值对</td>
@@ -153,26 +140,22 @@ form.addEventListener('submit', (e) => {
           <td>FormData.entries()</td>
           <td>迭代器对象 iterator；所有的 key 和所有的值 value</td>
         </tr>
-      </table>
-      <div class="tips">
-        <div>对于迭代器对象 iterator，可以使用数组方法 Array.from 或 for-of 遍历访问</div>
-        <div>FormData 本身也是值对，同样可以迭代遍历</div>
-      </div>
-      <div>[<span class="iconfont icon-bell"></span>]console.log(formdata) 打印出来的结果 始终为 FormData {}
-        它有一个隐藏域：所有的操作对象的方法全部是在它的原型中</div>
+      </tbody>
+    </table>
+    <div class="tips">
+      <div>对于迭代器对象 iterator，可以使用数组方法 Array.from 或 for-of 遍历访问</div>
+      <div>FormData 本身也是值对，同样可以迭代遍历</div>
+    </div>
+    <dd>console.log(formdata) 打印出来的结果 始终为 FormData {} 它有一个隐藏域：所有的操作对象的方法全部是在它的原型中</dd>
+    <figure>
       <img src="../imgs/formData.png" alt="">
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 获取表单数据 - 提交时构造数据；数据构造完毕后，提取数据；如果提交后，马上获取，有可能数据还未构造完毕，导致失败</dd>
-    <dd>
-      <form id="formdata">
-        <h2>Message me</h2>
-        <input type="text" name="uname" placeholder="your name" required>
-        <input type="password" name="upass" placeholder="your pass" required>
-        <textarea name="umsg" placeholder="your message" required></textarea>
-        <button>submit</button>
-      </form>
-      <div>1. 获取提交的数据</div>
-      <pre>
+      <figcaption>查看 FormData</figcaption>
+    </figure>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="../demo/todo.html">留言板</a></div>
+    <dd>获取表单数据并保存到本地</dd>
+    <dd>提交时构造数据；数据构造完毕后，提取数据</dd>
+    <dd>获取提交的数据</dd>
+    <pre>
 const form = document.querySelector('form')
 form.addEventListener('submit', e => {
   e.preventDefault()
@@ -180,20 +163,20 @@ form.addEventListener('submit', e => {
   console.log('formData', formData);
   console.log('formdata', Array.from(formData));
   console.log('formdata', Array.from(formData.keys()));
-  console.log('uname', formData.get('uname'));/* 获取数据 */
+  console.log('msg', formData.get('msg'));/* 获取数据 */
 })</pre>
-      <div>2. 修改提交的数据</div>
-      <pre>
+    <dd>修改提交的数据</dd>
+    <pre>
 form.addEventListener('submit', e => {
   e.preventDefault()
   let formData = new FormData(form)
   console.log('formdata 1', Array.from(formData));
-  formData.set('uname', 'glpla.github.io')/* 修改数据 */
+  formData.set('msg', 'glpla.github.io')/* 修改数据 */
   console.log('formdata 2', Array.from(formData));
 
 })</pre>
-      <div>3. 追加数据</div>
-      <pre>
+    <dd>追加数据</dd>
+    <pre>
 form.addEventListener('submit', e => {
   e.preventDefault()
   let formData = new FormData(form)
@@ -201,16 +184,16 @@ form.addEventListener('submit', e => {
   formData.set('ugender', 'male')/* 追加数据 */
   console.log('formdata 2', Array.from(formData));
 })</pre>
-      <div>4. 删除数据</div>
-      <pre>
+    <dd>删除数据</dd>
+    <pre>
 form.addEventListener('submit', e => {
   e.preventDefault()
   let formData = new FormData(form)
   console.log('formdata 1', Array.from(formData));
-  formData.delete('umsg')/* 删除数据 */
+  formData.delete('msg')/* 删除数据 */
   console.log('formdata 2', Array.from(formData));
 })</pre>
-      <!-- <div>1. 数据少的时候，直接获取</div>
+    <!-- <div>1. 数据少的时候，直接获取</div>
       <pre>
 let form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
@@ -265,25 +248,9 @@ function JSON2FormData(json) {
   }
   return formdata;
 }</pre> -->
-    </dd>
   </dl>
   <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>
-  <script>
-    const form = document.querySelector('form')
-    form.addEventListener('submit', e => {
-      e.preventDefault()
-      let formData = new FormData(form)
-      console.log('formdata 1', Array.from(formData));
-      formData.delete('umsg')
-      console.log('formdata 2', Array.from(formData));
-    })
-    // form.addEventListener('formdata', (e) => {
-    //   const data = e.formData;
-    //   data.set('uname', 'glpla.github.io')
-    //   console.log('formdata 2', Array.from(data));
-    // })
-  </script>
 </body>
 
 </html>

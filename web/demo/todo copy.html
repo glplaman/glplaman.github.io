@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>代办事项 Todo</title>
   <link rel="stylesheet" href="./css/todo.css">
@@ -11,10 +12,9 @@
 <body>
   <div class="msg-box">
     <h1>Message Me</h1>
-    <form class="form">
-      <input type="text" name="msg" placeholder="Message here, Press Enter to submit" maxlength="20" minlength="8"
-        id='msg' required autofocus>
-      <button type="submit"><span class="iconfont icon-plus"></span></button>
+    <form class="input-field" action="">
+      <input type="text" placeholder="Message here, Press Enter to submit" maxlength="20" id='msg' required>
+      <button id="sub-btn" class="sub-btn"><span class="iconfont icon-plus"></span></button>
     </form>
     <ul class="msg-list" id='list'>
     </ul>
@@ -36,10 +36,13 @@
   </div>
   <script>
     let listArr;
+    let msg = document.querySelector('#msg');
     let form = document.querySelector('form');
+    let subBtn = document.querySelector('#sub-btn');
     let clearBtn = document.querySelector('#clear-btn');
     let list = document.querySelector('#list');
     let num = document.querySelector('#num');
+
     let modalBox = document.querySelector('#modal-box');
     let confirmBtn = document.querySelector('#confirm-btn');
     let cancleBtn = document.querySelector('#cancel-btn');
@@ -47,14 +50,22 @@
 
     showList();
 
+    msg.addEventListener('keyup', () => {
+      if (msg.value.trim() == '') {
+        subBtn.classList.remove('msg-active');
+      } else {
+        subBtn.classList.add('msg-active');
+      }
+    })
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
-      const msg = formData.get('msg');
+      let userIpt = msg.value;
       listArr = JSON.parse(localStorage.getItem('msgs')) || [];
-      listArr.unshift(msg)
+      listArr.unshift(userIpt)
       localStorage.setItem('msgs', JSON.stringify(listArr));
       form.reset();
+      subBtn.classList.remove('msg-active');
       showList();
     })
 
@@ -63,6 +74,9 @@
     })
 
     modalBox.addEventListener('click', (e) => {
+      // if (e.target.id == 'modal-box') {
+      //   modalBox.classList.remove('active')
+      // }
       if (e.target == modalBox) {
         modalBox.classList.remove('active')
       }
