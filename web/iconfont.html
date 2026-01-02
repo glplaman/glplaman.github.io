@@ -34,7 +34,7 @@
       <h1>&commat;Iconfont</h1>
       <span class="iconfont icon-menu ham"></span>
       <div class="nav">
-        <a href="#" style="--delay:0" class="nav-item active">Class</a>
+        <a href="#" style="--delay:0" class="nav-item">Class</a>
         <a href="#" style="--delay:1" class="nav-item">Symbol</a>
         <a href="#" style="--delay:2" class="nav-item">Unicode</a>
         <a href="#" style="--delay:3" class="nav-item">Vue</a>
@@ -229,6 +229,28 @@ h4::before {
   </a>
   <script src="/utils/custom/footer.js"></script>
   <script src="/utils/custom/ham2025.js"></script>
+  <script>
+    const sections = document.querySelectorAll('dl.nav-cont')
+    window.addEventListener('scroll', () => {
+      // nav
+      const top = window.scrollY
+      sections.forEach((section, ind) => {
+
+        const offset = section.offsetTop - 80
+        const height = section.offsetHeight
+
+        // const id = section.getAttribute('id')
+        // const itemTarget = document.querySelector(`a[href*=${id}]`)
+        const itemTarget = document.querySelectorAll('a.nav-item')[ind]
+
+        if (top >= offset && top < offset + height) {
+          itemTarget.classList.add('active')
+        } else {
+          itemTarget.classList.contains('active') && itemTarget.classList.remove('active');
+        }
+      })
+    })
+  </script>
 </body>
 
 </html>

@@ -14,7 +14,7 @@
   --pre-txt-color: #cdcd85;
   --tips-color: #edf8db;
   --tips-bold-color: var(--main-color);
-  --header-h: 100px;
+  --header-h: 80px;
   --section-title-h: 60px;
   --footer-h: 150px;
 }
@@ -40,7 +40,7 @@ html {
 }
 
 body {
-  width: 96%;
+  width: 100%;
   max-width: var(--main-w);
   margin: 0 auto;
   font-size: 1.6rem;
@@ -61,9 +61,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: underline;
   font: inherit;
   color: inherit;
+}
+
+a:hover {
+  color: var(--main-color);
 }
 
 a[target="_blank"]::after {
@@ -76,10 +80,8 @@ h1 {
 }
 
 h2 {
-  position: sticky;
-  top: var(--header-h);
-  background-color: var(--bg-color);
   font-size: 1.8rem;
+  margin-bottom: 2rem;
 }
 
 h3 {
@@ -204,14 +206,6 @@ ol>li::before {
   content: counter(list-sn)'. ';
 }
 
-ol.reference>li::before {
-  content: '[' counter(list-sn)'] ';
-}
-
-.reference a:hover {
-  color: var(--main-color);
-}
-
 .iconfont {
   color: var(--main-color);
   font-size: 2rem;
@@ -230,18 +224,22 @@ ol.reference>li::before {
   color: #000;
 }
 
+.banner {
+  height: 240px;
+  background-image: url(/imgs/bt.jpg);
+  background-size: cover;
+}
+
 header {
-  position: fixed;
+  position: sticky;
   top: 0;
   display: flex;
   align-items: center;
   gap: var(--p-m-g);
-  width: 96%;
-  max-width: var(--main-w);
+  width: 100%;
   height: var(--header-h);
   background-color: var(--bg-color);
   padding: 0 var(--p-m-g);
-  /* border-bottom: 1px solid var(--main-color); */
   z-index: 1;
 }
 
@@ -266,17 +264,10 @@ header {
   font-size: 2rem;
 }
 
-.banner {
-  height: 250px;
-  background-image: url(../imgs/banner.png);
-  background-size: cover;
-}
-
 .nav-wrap {
   position: fixed;
   top: 0;
   right: 0;
-  padding: var(--p-m-g);
   z-index: 99;
   background-color: var(--bg-color);
 }
@@ -302,6 +293,7 @@ header {
   animation-name: --nav;
   animation-timeline: var(--s);
   font-size: 1.8rem;
+  text-decoration: none;
 }
 
 .nav-item .iconfont {
@@ -323,7 +315,7 @@ header {
   view-timeline-inset: 50%;
   margin-bottom: calc(4*var(--p-m-g));
   line-height: 2;
-  padding-top: var(--header-h);
+  padding: 0 var(--p-m-g);
 }
 
 .section-title {
@@ -342,6 +334,14 @@ header {
 }
 
 @media screen and (max-width: 768px) {
+  body.lock {
+    overflow: hidden;
+  }
+
+  .banner {
+    display: none;
+  }
+
   .ham {
     display: block;
   }
@@ -359,7 +359,7 @@ header {
     overflow: hidden;
   }
 
-  .nav-wrap.active {
+  body.lock .nav-wrap {
     height: calc(100vh - var(--header-h));
     opacity: 1;
   }
