@@ -44,7 +44,7 @@
       <dd>&lt;a&gt; 使用时，需按下述顺序定义：a:link → a:visted → a:hover → a:active</dd>
       <dd>除了超链接 &lt;a&gt;，部分伪类还可以作用于其它元素，如表单元素</dd>
       <!-- <dd>无法直接高亮highlight当前元素；需要借助其它方法</dd> -->
-      <dd>如果你希望 :target 生效，就不要阻止 <a> 的默认跳转行为</dd>
+      <dd>如果你希望 :target 生效，就不要阻止 &lt;a&gt; 的默认跳转行为</dd>
       <table>
         <caption>超链接相关</caption>
         <thead>
@@ -53,34 +53,28 @@
             <th>desc</th>
           </tr>
         </thead>
-        <tr>
-          <td>:link</td>
-          <td>&lt;a&gt; 初始状态/为访问过；静态样式</td>
-        </tr>
-        <tr>
-          <td>:visited</td>
-          <td>访问过/点击后状态；较少使用</td>
-        </tr>
-        <tr>
-          <td>:hover</td>
-          <td>鼠标置于元素上时；使用最广泛；移动端无效</td>
-        </tr>
-        <tr>
-          <td>:focus</td>
-          <td>获取焦点时[使用 tab 查看获取焦点效果]</td>
-        </tr>
-        <tr>
-          <td>:focus-within</td>
-          <td>如果有子元素获取焦点时，即：选择包含有获得焦点元素的祖先元素</td>
-        </tr>
-        <tr>
-          <td>:active</td>
-          <td>单击时的状态；多用于提示；较少使用</td>
-        </tr>
-        <tr>
-          <td>:target</td>
-          <td>当前锚点选中时；使用 ID 指定锚点</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>:link</td>
+            <td>&lt;a&gt; 初始状态/为访问过；静态样式</td>
+          </tr>
+          <tr>
+            <td>:visited</td>
+            <td>访问过/点击后状态；较少使用</td>
+          </tr>
+          <tr>
+            <td>:hover</td>
+            <td>鼠标置于元素上时；使用最广泛；移动端无效</td>
+          </tr>
+          <tr>
+            <td>:active</td>
+            <td>单击时的状态；多用于提示；较少使用</td>
+          </tr>
+          <tr>
+            <td>:target</td>
+            <td>当前锚点选中时；使用 ID 指定锚点</td>
+          </tr>
+        </tbody>
       </table>
       <pre>
 a {
@@ -105,19 +99,15 @@ a:active {
   background-color: #f40;
   color: #fff;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] :hover 使用，请参考 <a href="./demo/acc_flex.html">抽屉相册</a>
-      </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] :target 使用，请参考 <a href="./demo/acc_target.html#item1">古诗鉴赏</a>
-      </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] :focus-within 使用，请参考 <a href="./demo/login_deer.html">一路有你</a>
-      </div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/acc_flex.html">抽屉相册 :hover</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/acc_target.html#item1">古诗鉴赏 :target</a></div>
       <pre>
 .wrap:focus-within {
   border-color: #ff0;
 }</pre>
       <dt id="checked" class="nav-cont">&lt;form&gt;</dt>
       <dd>多用于表单元素</dd>
-      <dd>功能非常强大，很多纯CSS效果甚至可以媲美 JavaScript</dd>
+      <dd>功能非常强大，很多纯 CSS 效果甚至可以媲美 JavaScript</dd>
       <dd>凡是鼠标点击的联动响应，都可以使用 :checked，如标签页、轮播、导航；见后续案例</dd>
       <table>
         <caption>表单相关</caption>
@@ -148,6 +138,16 @@ a:active {
           <td>验证无效 - contents fail to validate</td>
         </tr>
         <tr>
+          <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:focus">:focus</a></td>
+          <td>获取焦点时[使用 tab 查看获取焦点效果]</td>
+        </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:focus-within">:focus-within</a>
+          </td>
+          <td>如果有子元素获取焦点时，即：选择包含有获得焦点元素的祖先元素</td>
+        </tr>
+        <tr>
           <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:in-range">:in-range</a></td>
           <td>在指定范围 - current value is within the range limits</td>
         </tr>
@@ -159,6 +159,12 @@ a:active {
           <td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:disabled">:disabled</a></td>
           <td>元素功能被禁止生效时</td>
         </tr>
+        <tr>
+          <td><a
+              href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:placeholder-shown">:placeholder-shown</a>
+          </td>
+          <td>显示占位符时；可用于验证</td>
+        </tr>
       </table>
       <pre>
 input[type='text']:focus+label {
@@ -168,7 +174,7 @@ input[type='text']:focus+label {
 input[type='radio']:checked+label {
   color: #f40;
 }        </pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/acc_flex.html">注意事项</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/acc_flex.html">用户须知/注意事项</a></div>
       <dd>一开始禁用</dd>
       <dd>下滑阅读完毕后，移除 disabled 属性</dd>
       <pre>
@@ -179,6 +185,8 @@ button {
 button:disabled {
   cursor: not-allowed;
 }</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/login_deer.html">一路有你 :focus-within</a></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/contact.html">留言板</a></div>
       <dt id="nth" class="nav-cont">:nth-child</dt>
       <dd>结构伪类</dd>
       <dd>根据序号选择元素</dd>
