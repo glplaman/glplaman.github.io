@@ -6,7 +6,8 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>详情 Details</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
   <style>
     .indent summary::marker {
@@ -32,35 +33,70 @@
     .indent[open] ul {
       border-left: 1px solid #bdc3c7;
     }
+
+    .panel {
+      width: 90%;
+      max-width: 400px;
+      margin: 2rem auto;
+      background-color: #000;
+      border-radius: var(--p-m-g);
+      color: #fff;
+      padding: var(--p-m-g);
+    }
+
+    .panel summary {
+      cursor: pointer;
+    }
+
+    .panel summary::marker {
+      content: '\e61f' ' ';
+      font-family: 'iconfont';
+    }
+
+    .panel[open] summary {
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>详情</h1>
-    <span>&commat;&lt;details&gt;</span>
-  </header>
-  <dl>
-    <dd>. &lt;details&gt;详情|细节标签，配合摘要标签 &lt;summary&gt; 一起使用，构建折叠面板</dd>
-    <dd>. 内容可以使用任意标签呈现</dd>
-    <dd>. 内容可以展开或折叠起来；默认情况下，是折叠状态</dd>
-    <dd>. 可以指定属性 open 调整为默认展开状态</dd>
-    <dd>. 可以实现多级导航</dd>
-    <dd>. 更多信息，请访问<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN -
-        &lt;details&gt;</a>、<a href="https://www.w3school.com.cn/cssref/css_entities.asp#google_vignette">CSS实体</a></dd>
-    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]基本使用</dd>
-    <dd>
-      <details open>
-        <summary>title</summary>
-        <ul>
-          <li>item1</li>
-          <li>item2</li>
-          <li>item3</li>
-          <li>item4</li>
-        </ul>
-      </details>
-    </dd>
-    <dd>
+  <div class="w">
+    <header></header>
+    <nav>
+      <h1>详情</h1>
+      <span>&commat;&lt;details&gt;</span>
+    </nav>
+    <dl>
+      <dd>多标签配合使用</dd>
+      <ol>
+        <li>细节标签 &lt;details&gt;，也叫详情标签</li>
+        <li>摘要标签 &lt;summary&gt;，作为标题/提示</li>
+        <li>内容：任意元素内容；可以嵌套</li>
+      </ol>
+      <dt>属性 open</dt>
+      <dd>&lt;details&gt; 的属性</dd>
+      <dd>表示展开或折叠</dd>
+      <dd>内容可以展开或折叠起来；默认情况下，是折叠状态</dd>
+      <dd>可以指定属性选择器 [open] 调整展开样式</dd>
+      <dt>标记 ::marker</dt>
+      <dd>&lt;summary&gt; 的伪元素</dd>
+      <dd>可以定制提示标记</dd>
+      <dd>可以实现多级导航、折叠面板</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN -
+          &lt;details&gt;</a>、<a href="https://www.w3school.com.cn/cssref/css_entities.asp#google_vignette">CSS实体</a>
+      </dd>
+      <div class="mt2">[<span class="iconfont icon-keyboard"></span>] 基本使用</div>
+      <div>
+        <details open>
+          <summary>title</summary>
+          <ul>
+            <li>item1</li>
+            <li>item2</li>
+            <li>item3</li>
+            <li>item4</li>
+          </ul>
+        </details>
+      </div>
       <pre>
 &lt;details open&gt;
   &lt;summary&gt;title&lt;/summary&gt;
@@ -70,23 +106,58 @@
     &lt;li&gt;item3&lt;/li&gt;
     &lt;li&gt;item4&lt;/li&gt;
   &lt;/ul&gt;
-&lt;/details&gt;      </pre>
-    </dd>
-    <dd class="mt2">[<span class="iconfont icon-keyboard"></span>]定制样式</dd>
-    <dd>. 自定义标记</dd>
-    <dd>. 具备层级、缩进</dd>
-    <dd>
-      <details open class="indent">
-        <summary>title</summary>
-        <ul>
-          <li>item1</li>
-          <li>item2</li>
-          <li>item3</li>
-          <li>item4</li>
-        </ul>
-      </details>
-    </dd>
-    <dd>
+&lt;/details&gt;</pre>
+      <div class="tips">定制样式，主要围绕 &lt;summary&gt; 展开</di>
+    </dl>
+    <h2>案例 Cases</h2>
+    <dl>
+      <div>[<span class="iconfont icon-keyboard"></span>] 定制样式 - 折叠面板</div>
+      <dd>定制 ::marker；这里使用 <a href="./iconfont.html">字体图标</a></dd>
+      <div>
+        <details class="panel">
+          <summary>click for more</summary>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum porro reiciendis voluptatem molestiae
+            dignissimos beatae suscipit consequuntur soluta amet aliquam nihil, nam quam explicabo ipsum eaque
+            similique. Modi, similique corporis.</p>
+        </details>
+      </div>
+      <pre>
+.panel {
+  width: 90%;
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: #000;
+  border-radius: var(--p-m-g);
+  color: #fff;
+  padding: var(--p-m-g);
+}
+
+.panel summary {
+  cursor: pointer;
+}
+
+.panel summary::marker {
+  content: '\e61f' ' ';
+  font-family: 'iconfont';
+}
+
+.panel[open] summary {
+  margin-bottom: 1rem;
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 定制样式 - 高阶版</div>
+      <dd>自定义标记</dd>
+      <dd>具备层级、缩进</dd>
+      <div>
+        <details open class="indent">
+          <summary>title</summary>
+          <ul>
+            <li>item1</li>
+            <li>item2</li>
+            <li>item3</li>
+            <li>item4</li>
+          </ul>
+        </details>
+      </div>
       <pre>
 .indent summary::marker {
   content: '+ ';
@@ -110,10 +181,11 @@
 
 .indent[open] ul {
   border-left: 1px solid #bdc3c7;
-}      </pre>
-    </dd>
-  </dl>
-  <div id="footer"></div>
+}</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/nav-aside.html">多级菜单</a></div>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 

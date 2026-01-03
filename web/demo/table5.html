@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>排序表格 Table</title>
+  <link rel="stylesheet" href="//at.alicdn.com/t/c/font_3859342_6edyvdmtfj.css">
+  <style>
+    /* init start */
+    :root {
+      --main-color: #1abc9c;
+      --second-color: #035c4a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      min-height: 100vh;
+    }
+
+    thead tr {
+      background-color: var(--main-color);
+      color: #f1f2f3;
+    }
+
+    thead th {
+      cursor: pointer;
+    }
+
+    .wrap {
+      width: 96%;
+      max-width: 800px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      line-height: 2;
+      text-align: center;
+    }
+
+    table tbody td:first-child,
+    .ellipsis {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <table class="sort" id="sort">
+      <caption>表8 排序表格</caption>
+      <thead>
+        <tr>
+          <th onclick="sortTbl(0)">Name <label><span class="iconfont icon-sort" id="icon-0"></span></label>
+          </th>
+          <th onclick="sortTbl(1)">Price<label><span class="iconfont icon-sort" id="icon-1"></span></label></th>
+          <th onclick="sortTbl(2)">Stock<label><span class="iconfont icon-sort" id="icon-2"></span></label></th>
+          <th onclick="sortTbl(3)">Discount<label><span class="iconfont icon-sort" id="icon-3"></span></label></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <script>
+    const sortUp = (key) => {
+      obj.sort((a, b) => {
+        return a[key] - b[key]
+      })
+    }
+    const sortDown = (key) => {
+      obj.sort((a, b) => {
+        return b[key] - a[key]
+      })
+    }
+
+    const tbody = document.querySelector('#tbody')
+    let data = []
+    let sortedData = []
+    let isAscending = true
+
+    fetch('/utils/data/coffee.json')
+      .then(res => res.json())
+      .then(res => {
+        data = res.cont.map(item => ({
+          id: item.id,
+          name: item.title,
+          price: item.price,
+          stock: item.stock,
+          discount: item.discount
+        }))
+        createTable(data)
+      })
+
+    function createTable(data) {
+      let html = data.map(item => {
+        return `<tr>
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>${item.stock}</td>
+            <td>${item.discount}</td>
+          </tr>`
+      }).join('')
+      tbody.innerHTML = html
+    }
+
+    function sortString(key) {
+      sortedData = data.sort((a, b) => {
+        return isAscending ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key])
+      })
+      createTable(sortedData)
+      isAscending = !isAscending
+    }
+
+    function sortDigt(key) {
+      sortedData = data.sort((a, b) => {
+        return isAscending ? a[key] - b[key] : b[key] - a[key]
+      })
+      createTable(sortedData)
+      isAscending = !isAscending
+    }
+
+    function updateIcon(ind, flag) {
+      let icon = document.querySelector(`#icon-${ind}`)
+      icon.className = flag ? 'iconfont icon-sortup' : 'iconfont icon-sortdown'
+    }
+
+    function resetIcons() {
+      for (let i = 0; i < 4; i++) {
+        let icon = document.querySelector(`#icon-${i}`)
+        icon.className = 'iconfont icon-sort'
+      }
+    }
+
+    function sortTbl(ind) {
+      resetIcons()
+      sortedData = [...data].sort((a, b) => {
+        let aVal, bVal;
+        switch (ind) {
+          case 0:
+            aVal = a.name
+            bVal = b.name
+            return isAscending ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal)
+            break;
+          case 1:
+            aVal = a.price
+            bVal = b.price
+            break;
+          case 2:
+            aVal = a.stock
+            bVal = b.stock
+            break;
+          case 3:
+            aVal = a.discount
+            bVal = b.discount
+            break;
+        }
+        return isAscending ? aVal - bVal : bVal - aVal
+      })
+      updateIcon(ind, isAscending);
+      createTable(sortedData);
+      isAscending = !isAscending;
+    }
+
+  </script>
+</body>
+
+</html>

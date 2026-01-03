@@ -1,0 +1,155 @@
+@import url(//at.alicdn.com/t/c/font_4690841_ykzkqpk15l.css);
+
+:root {
+  --main-color: #00abf0;
+  --p-m-g: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+  list-style: none;
+  line-height: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+}
+
+aside {
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  background-color: #000;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-color) #000;
+  color: #fff;
+}
+
+.sub-nav {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: 0.5s;
+}
+
+.sub-nav>div {
+  overflow: hidden;
+}
+
+.ham {
+  display: none;
+}
+
+li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.85rem;
+}
+
+li a:hover,
+li a.active {
+  color: var(--main-color);
+}
+
+.drop-down:hover {
+  background-color: #212530;
+  color: var(--main-color);
+}
+
+.drop-down {
+  display: flex;
+  align-items: center;
+  gap: var(--p-m-g);
+  padding: 0.80rem;
+  cursor: pointer;
+}
+
+.drop-down .arrow {
+  margin-left: auto;
+  transition: 0.5s;
+}
+
+.drop-down.active {
+  background-color: #212530;
+}
+
+.drop-down.active .arrow {
+  transform: rotate(90deg);
+}
+
+.drop-down.active+.sub-nav {
+  grid-template-rows: 1fr;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    display: block;
+  }
+
+  .ham {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: var(--main-color);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9;
+  }
+
+  .ham span:last-child {
+    display: none;
+  }
+
+  aside {
+    position: fixed;
+    right: -100%;
+    top: 0px;
+    padding-top: calc(40px + 1rem);
+    width: 100%;
+    height: 100vh;
+    transition: 0.4s;
+  }
+
+  body.lock {
+    overflow: hidden;
+  }
+
+  body.lock aside {
+    right: 0;
+  }
+
+  body.lock .ham span:first-child {
+    display: none;
+  }
+
+  body.lock .ham span:last-child {
+    display: block;
+  }
+
+  .drop-down {
+    position: sticky;
+    top: 0;
+  }
+}

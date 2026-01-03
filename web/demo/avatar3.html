@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>头像 Avatar</title>
+  <style>
+    @import url(../../css/fonts_GreatVibes.css);
+
+    :root {
+      --bg-color: #171f2b;
+      --second-bg-color: #1f2733;
+      --nav-bg-color: rgba(255, 255, 255, .1);
+      --main-color: #5988b0;
+      --second-color: #de5096;
+      --w: 150px;
+      --h: 150px;
+      --lh: 15px;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      min-height: 100vh;
+    }
+
+    .mask-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--p-m-g);
+    }
+
+    .mask {
+      position: relative;
+      --h: 200px;
+      width: var(--w);
+      height: var(--h);
+      border-bottom-left-radius: 120px;
+      border-bottom-right-radius: 120px;
+      /* background-color: #fff; */
+    }
+
+    .mask::before,
+    .mask::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: var(--w);
+      height: var(--w);
+    }
+
+    .mask::before {
+      background-image: linear-gradient(to top, #f42, #f39c12);
+      border-radius: 50%;
+      border: 4px solid #fff;
+      z-index: 1;
+    }
+
+    .mask::after {
+      height: var(--h);
+      background-image: url(../../imgs/avatar.webp);
+      background-size: 90%;
+      background-position: right 10px bottom 0;
+      background-repeat: no-repeat;
+      border-bottom-left-radius: 120px;
+      border-bottom-right-radius: 120px;
+      transform-origin: bottom center;
+      transition: 0.4s;
+      z-index: 2;
+    }
+
+    .bg {
+      position: absolute;
+      bottom: 0;
+      width: var(--w);
+      height: var(--w);
+      border-radius: 50%;
+      border: 4px solid #fff;
+      border-top-color: transparent;
+      z-index: 3;
+    }
+
+    .mask:hover::after {
+      background-size: 110%;
+    }
+
+    .mask-title {
+      font-size: calc(var(--lh)*2);
+      text-transform: capitalize;
+      color: var(--color, #f39c12);
+      font-family: 'greatvibes';
+      font-weight: 600;
+      mask-image: linear-gradient(to right, #0000, #000 50%, #000);
+      mask-size: 200% 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mask-wrap">
+    <div class="mask">
+      <div class="bg"></div>
+    </div>
+    <div class="mask-title" style="--color:#f39c12">wang fei</div>
+  </div>
+</body>
+
+</html>

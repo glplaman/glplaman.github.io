@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>头像 Avatar</title>
+  <style>
+    @import url(../../css/fonts_GreatVibes.css);
+
+    :root {
+      --bg-color: #171f2b;
+      --second-bg-color: #1f2733;
+      --nav-bg-color: rgba(255, 255, 255, .1);
+      --main-color: #5988b0;
+      --second-color: #de5096;
+      --w: 150px;
+      --h: 150px;
+      --lh: 15px;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      min-height: 100vh;
+    }
+
+    .bg {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--p-m-g);
+    }
+
+    @keyframes scan {
+
+      100% {
+        mask-position: right;
+      }
+    }
+
+    .bg:hover .static-title {
+      animation: scan 3s linear alternate infinite;
+    }
+
+    .bg-avatar {
+      position: relative;
+      width: calc(var(--w) - 10px);
+      height: calc(var(--h) - 10px);
+      background-image: url(../imgs/wangfei.png);
+      background-position: center;
+      background-size: cover;
+      border-radius: 50%;
+    }
+
+    .bg-avatar::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      background-image: linear-gradient(#a00, #d5a88b, #124c5c);
+      border-radius: 50%;
+      z-index: -1;
+      animation: roll 5s linear infinite;
+    }
+
+    .bg-title {
+      font-size: calc(var(--lh)*2);
+      text-transform: capitalize;
+      color: transparent;
+      font-family: 'greatvibes';
+      font-weight: 600;
+      background-image: linear-gradient(to right, #a00, #d5a88b, #124c5c);
+      background-clip: text;
+      background-size: 200% auto;
+      background-position: 0 0;
+      transition: background-position 0.5s;
+    }
+
+    .bg:hover .bg-title {
+      background-position: 100% 0;
+    }
+
+    @keyframes roll {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <div class="bg-avatar"></div>
+    <div class="bg-title" style="--color:#de5096">wang fei</div>
+  </div>
+</body>
+
+</html>

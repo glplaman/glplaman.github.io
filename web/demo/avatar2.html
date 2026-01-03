@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>头像 Avatar</title>
+  <style>
+    @import url(../../css/fonts_GreatVibes.css);
+
+    :root {
+      --bg-color: #171f2b;
+      --second-bg-color: #1f2733;
+      --nav-bg-color: rgba(255, 255, 255, .1);
+      --main-color: #5988b0;
+      --second-color: #de5096;
+      --w: 150px;
+      --h: 150px;
+      --lh: 15px;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      min-height: 100vh;
+    }
+
+    .rotate {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--p-m-g);
+    }
+
+    .rotate-avatar {
+      position: relative;
+      width: var(--w);
+      height: var(--h);
+      border-radius: 50%;
+    }
+
+    .rotate-avatar::before {
+      content: '';
+      position: absolute;
+      inset: 0px;
+      transition: .5s;
+      border-radius: 50%;
+      background-image: linear-gradient(#098 50%, #fff 0);
+    }
+
+    .rotate-avatar:hover::before {
+      transform: rotate(180deg);
+    }
+
+    .rotate-avatar div {
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .rotate-avatar div::after {
+      content: '';
+      position: absolute;
+      inset: 0px;
+      border-radius: 50%;
+      background-image: url(https://images.unsplash.com/photo-1699901853492-8bc942fc6a5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MDIxMDczNTB8&ixlib=rb-4.0.3&q=80&w=400);
+      background-size: cover;
+      background-position: center;
+      transition: .5s;
+    }
+
+    .rotate-avatar:hover div::after {
+      transform: scale(1.5);
+    }
+
+    .rotate-title {
+      font-size: calc(var(--lh)*2);
+      text-transform: capitalize;
+      color: var(--color, #f39c12);
+      font-family: 'greatvibes';
+      font-weight: 600;
+      mask-image: linear-gradient(to right, #0000, #000 50%, #000);
+      mask-size: 200% 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="rotate">
+    <div class="rotate-avatar">
+      <div></div>
+    </div>
+    <div class="rotate-title" style="--color:#098">wang fei</div>
+  </div>
+</body>
+
+</html>

@@ -6,9 +6,7 @@ const navConts = body.querySelectorAll('.nav-cont')
 const ham = body.querySelector('.ham')
 
 
-theme.addEventListener('click', () => {
-  body.classList.toggle('dark')
-})
+
 const toggleLock = () => {
   if (body.classList.contains('lock')) {
     body.classList.remove('lock');
@@ -41,3 +39,7 @@ document.addEventListener("scroll", () => {
     back2top.classList.remove("active");
   }, 10000);
 });
+
+theme && theme.addEventListener('click', () => {
+  body.classList.toggle('dark')
+})

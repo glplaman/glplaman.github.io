@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>头像 Avatar</title>
+  <style>
+    @import url(../../css/fonts_GreatVibes.css);
+
+    :root {
+      --bg-color: #171f2b;
+      --second-bg-color: #1f2733;
+      --nav-bg-color: rgba(255, 255, 255, .1);
+      --main-color: #5988b0;
+      --second-color: #de5096;
+      --w: 150px;
+      --h: 150px;
+      --lh: 15px;
+      --p-m-g: 10px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      min-height: 100vh;
+    }
+
+    .static {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--p-m-g);
+      cursor: pointer;
+    }
+
+    .static img {
+      width: var(--w);
+      height: var(--h);
+      border: 5px solid #fff;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .static div {
+      font-size: calc(var(--lh)*2);
+      text-transform: capitalize;
+      color: var(--color, #f39c12);
+      font-family: 'greatvibes';
+      font-weight: 600;
+      mask-image: linear-gradient(to right, #0000, #000 50%, #000);
+      mask-size: 200% 100%;
+    }
+
+    .static:hover div {
+      animation: scan 3s linear alternate infinite;
+    }
+
+    @keyframes scan {
+
+      100% {
+        mask-position: right;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="static">
+    <img src="../imgs/wangfei.png" alt="">
+    <div>wang fei</div>
+  </div>
+</body>
+
+</html>
