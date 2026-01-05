@@ -9,6 +9,44 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
+  <style>
+    .grid {
+      width: max-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 4rem auto;
+    }
+
+    .grid>div {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #000;
+    }
+
+    .grid1>div:nth-of-type(4)::after {
+      content: '↑';
+      color: var(--warn-color);
+      position: absolute;
+      bottom: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .grid2>div:nth-of-type(3)::after {
+      content: '↑';
+      color: var(--warn-color);
+      position: absolute;
+      bottom: -100%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
 </head>
 
 <body>
@@ -191,6 +229,7 @@ $ git push</pre>
       </table>
       <dt>查看本地仓库提交记录 log</dt>
       <dd>按 Q/q 退出</dd>
+      <dd>Author 就是配置中关联的用户名和用户邮箱</dd>
       <pre>
 $ git log
 commit cc355cbd2a03d61f0ef440706fee7c6257f9fee3 (HEAD -> main, origin/main, origin/HEAD)
@@ -217,54 +256,49 @@ cc355cb (HEAD -> main, origin/main, origin/HEAD) HEAD@{0}: commit: web
 32eefc9 HEAD@{1}: commit: web
 aae5d51 HEAD@{2}: commit: web
 065c08e HEAD@{3}: commit: fn</pre>
-      <dt>撤销本地修改 checkout</dt>
-      <dd>丢弃工作区的修改</dd>
-      <dd>修改了文件，但是没有 add 到暂存区，使用该命令可以撤销对文件的修改，相当于在编辑环境中使用了 CTRL + Z 操作</dd>
-      <dd>修改了文件，已经 add 到暂存区，使用该命令，可以拉取暂存区的文件到工作区，覆盖当前文件，相当于放弃了对文件的修改，即和暂存区保持一致</dd>
-      <pre>$ git checkout -- file</pre>
       <dt>撤销本地/远程提交 reset</dt>
       <dd>--mixed：默认行为；撤销最近一次提交，并将更改回退到工作区 - 取消暂存</dd>
       <dd>撤销本地提交</dd>
       <pre>$ git reset commitId</pre>
       <dd>--soft：撤销最近一次提交，但保留工作区和暂存区的更改，不希望丢失任何更改</dd>
-      <pre>$ git reset --soft HEAD~1</pre>
+      <pre>$ git reset --soft commitId</pre>
       <dd>撤销远程提交 - 版本穿梭</dd>
       <dd>--hard：撤销最近一次提交，并完全丢弃更改，恢复到上一个提交的状态</dd>
-      <pre>$ git reset --hard HEAD~1</pre>
+      <pre>$ git reset --hard commitId</pre>
       <pre>
-git reset --hard 版本号
+git reset --hard commitId
 
 Head is now at xxxxx</pre>
     </dl>
     <h2>仓库 Repository</h2>
     <dl class="nav-cont">
       <dt>克隆仓库 clone</dt>
-      <div>将远程仓库复制到本地</div>
-      <div>通常是第一次使用别人的仓库；后续直接拉取 pull 就可以和仓库保持一致</div>
+      <dd>将远程仓库复制到本地</dd>
+      <dd>通常是第一次使用别人的仓库；后续直接拉取 pull 就可以和仓库保持一致</dd>
       <pre>$ git clone url</pre>
-      <div>克隆指定分支到指定目录；如果不指定目录，则使用项目的默认目录</div>
+      <dd>克隆指定分支到指定目录；如果不指定目录，则使用项目的默认目录</dd>
       <pre>git clone -b &lt;branch&gt; url &lt;dir&gt;</pre>
       <dt>拉取仓库 pull</dt>
-      <div>在第一次克隆 clone 的基础上，通过拉取和原来仓库保持一致</div>
-      <div>如果之前提交使用 -u 设置了追踪，可以直接拉取</div>
+      <dd>在第一次克隆 clone 的基础上，通过拉取和原来仓库保持一致</dd>
+      <dd>如果之前提交使用 -u 设置了追踪，可以直接拉取</dd>
       <pre>$ git pull &lt;name&gt; &lt;branch&gt;</pre>
       <pre>$ git pull</pre>
       <dt>仓库管理 remote</dt>
-      <div>git remote 命令用于管理和查看 Git 仓库中的远程仓库配置。它有多种用法，具体取决于你提供的参数</div>
+      <dd>git remote 命令用于管理和查看 Git 仓库中的远程仓库配置。它有多种用法，具体取决于你提供的参数</dd>
       <div>1. 查看关联的远程仓库 remote</div>
       <pre>
 git remote
 origin</pre>
-      <div>使用 -v 参数查看关联仓库的详细信息</div>
+      <dd>使用 -v 参数查看关联仓库的详细信息</dd>
       <pre>
 git remote -v
 origin  https://github.com/glpla/glpla.github.io.git (fetch)
 origin  https://github.com/glpla/glpla.github.io.git (push)</pre>
       <div>2. 添加远程仓库 add</div>
-      <div>使用 add 添加/关联远程仓库并指定一个 <span class="warn">别名</span> - 因为仓库 url 太长</div>
-      <div>可以关联多个远程仓库，使用别名区分</div>
+      <dd>使用 add 添加/关联远程仓库并指定一个 <span class="warn">别名</span> - 因为仓库 url 太长</dd>
+      <dd>可以关联多个远程仓库，使用别名区分</dd>
       <pre>$ git remote add &lt;name&gt; &lt;url&gt;</pre>
-      <div>分别为 Github 和 Gitee 指定别名</div>
+      <dd>分别为 Github 和 Gitee 指定别名</dd>
       <pre>$ git remote add origin https://github.com/glpla/glpla.github.io.git</pre>
       <pre>$ git remote add gitee https://gitee.com/cnplaman_admin/case1-helloworld.git</pre>
       <div>3. 删除远程仓库 remove</div>
@@ -277,58 +311,136 @@ origin  https://github.com/glpla/glpla.github.io.git (push)</pre>
     </dl>
     <h2>分支 Branch</h2>
     <dl class="nav-cont">
+      <div>[<span class="iconfont icon-keyboard"></span>] Git 基本协作流程详解</div>
+      <ol>
+        <li>Clone the repository</li>
+        <li>Create a new branch from main or another branch</li>
+        <li>Make your changes</li>
+        <li>Push the branch to the remote repo</li>
+        <li>Open a Pull Request (PR) / Merge Request (MR)</li>
+        <li>Merge the changes</li>
+        <li>Pull the merged changes into your local main branch</li>
+        <li>Repeat from step 2</li>
+      </ol>
+      <dt>说明</dt>
       <dd>通过分支实现项目的分工协作</dd>
       <dd>各分支的操作并不影响主分支；且分支的进度通常要领先于主分支</dd>
       <dd>当分支合并到主分支后，主分支的整个时间线才往前推进，各分支进度才保持一致</dd>
       <dd>默认分支如 main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</dd>
       <dd>只有提交 commit 过1次后才能查看分支</dd>
-      <figure class="img-sn">
+      <figure>
         <img src="./imgs/branch2.jpg" alt="">
         <figcaption>无分支时，HEAD指向主分支</figcaption>
       </figure>
-      <figure class="img-sn">
+      <figure>
         <img src="./imgs/branch0.jpg" alt="">
         <figcaption>分支单独工作，HEAD指向活动分支</figcaption>
       </figure>
-      <figure class="img-sn">
+      <figure>
         <img src="./imgs/branch1.jpg" alt="">
         <figcaption>分支合并到主分支</figcaption>
       </figure>
       <dt>查看分支</dt>
-      <div>当前分支以 * 号表示，且颜色为绿色</div>
-      <div>只有被追踪的分支才显示 - 提交过</div>
+      <dd>当前分支以 * 号表示，且颜色为绿色</dd>
+      <dd>只有被追踪的分支才显示 - 提交过</dd>
+      <dd>不带参数：查看本地分支</dd>
       <pre>
-//不带参数：查看本地分支
 $ git branch
   dev
-* master
-
-//查看所有本地和远程跟踪的分支 all
+* master</pre>
+      <dd>查看所有本地和远程跟踪的分支 all</dd>
+      <pre>
 $ git branch -a
 dev
-* master
-
-//查看分支最近一次提交信息
+* master</pre>
+      <dd>查看分支最近一次提交信息</dd>
+      <pre>
 $ git branch -v
   dev    29aee33 1st commit
-* master 29aee33 1st commit
-
-//查看远程分支 remote
-$ git branch -r</pre>
+* master 29aee33 1st commit</pre>
+      <dd>查看远程分支 remote</dd>
+      <pre>$ git branch -r</pre>
       <dt>创建分支</dt>
-      <div>创建仓库的同时创建分支</div>
+      <dd>创建的分支自动拥有/继承当前分支的内容</dd>
+      <dd>相对于开启了一个备份</dd>
+      <dd>隔离你的开发工作，不影响主干代码</dd>
+      <dd>完成分支开发后，再并入主分支</dd>
+      <dd>特别适合团队协作</dd>
+      <div>1. 单独创建分支</div>
       <pre>$ git branch branch_name</pre>
-      <div>创建分支</div>
+      <div>2. 创建仓库的同时创建分支</div>
       <pre>$ git init -b branch_name</pre>
-      <div>创建并切换分支</div>
+      <div>3. 创建并切换分支</div>
       <pre>$ git checkout -b branch_name</pre>
+      <div>4. 从指定分支创建新分支</div>
       <dt>切换分支 checkout</dt>
-      <div>指定要切换的分支名</div>
+      <div>1. 指定要切换的分支名，切换到该分支，HEAD 指向该分支最新提交</div>
       <pre>$ git checkout branch_name</pre>
+      <div>2. 撤销工作区的修改</div>
+      <dd>修改了文件，但是没有 add 到暂存区，使用该命令可以撤销对文件的修改</dd>
+      <dd>清除追踪到的编辑状态</dd>
+      <dd>相当于在编辑环境中使用了 CTRL + Z 操作</dd>
+      <pre>$ git checkout -- &lt;file&gt;</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] 示例</div>
+      <dd>编辑文件</dd>
+      <dd>查看状态，有编辑</dd>
+      <pre>modified:   hello.txt</pre>
+      <dd>撤销文件的编辑</dd>
+      <pre>$ git checkout -- hello.txt</pre>
+      <dd>查看状态，无编辑，还原工作树</dd>
+      <pre>nothing to commit, working tree clean</pre>
+      <div>3. 撤销暂存区的文件</div>
+      <dd>用暂存区（或 HEAD）中的版本覆盖工作区的文件；未暂存的修改将永久丢失</dd>
+      <dd>修改了文件，已经 add 到暂存区</dd>
+      <dd>使用该命令，可以拉取暂存区的文件到工作区，覆盖工作区当前文件</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 示例</div>
+      <dd>编辑文件</dd>
+      <dd>提交到暂存区</dd>
+      <pre>$ git add .</pre>
+      <dd>重新编辑文件，不提交</dd>
+      <dd>撤销暂存区的提交</dd>
+      <pre>$ git checkout head -- hello.txt</pre>
+      <dd>检查：当前修改的文件被替换为暂存区的文件</dd>
+      <div>4. 切换暂存区</div>
+      <dd>指定提交 commitID 来切换/查看暂存区</dd>
+      <dd>切换后，工作区和暂存区保持一致</dd>
+      <figure>
+        <div class="grid grid1">
+          <div>A</div>
+          <span>→</span>
+          <div>B</div>
+          <span>→</span>
+          <div>C</div>
+          <span>→</span>
+          <div>D</div>
+        </div>
+        <figcaption>切换前</figcaption>
+      </figure>
+      <figure>
+        <div class="grid grid2">
+          <div>A</div>
+          <span>→</span>
+          <div>B</div>
+          <span>→</span>
+          <div>C</div>
+          <span>→</span>
+          <div>D</div>
+        </div>
+        <figcaption>切换后</figcaption>
+      </figure>
+      <dd>注意命令提示符从之前的分支名变成了提交ID名 - <strong>detached HEAD 分离头指针状态</strong></dd>
+      <pre>huawei@LAPTOP-E61J88MK MINGW64 /d/demo ((19d99b4...))</pre>
+      <dd>HEAD 指针直接指向某个提交，而不是某个分支的引用</dd>
+      <dd>如果你在这种状态做修改并提交</dd>
+      <dd>新提交会被创建，但它不属于任何分支</dd>
+      <dd>更糟的是：如果你切回原分支（比如 main），这些修改将无法被追溯，除非你记住那个 commit ID</dd>
+      <dd>它是一个孤儿提交 orphan commit，除非你主动创建分支或合并回去，否则很容易丢失</dd>
+      <dd>需要显示的切换回某个分支再继续后续操作</dd>
+      <pre>huawei@LAPTOP-E61J88MK MINGW64 /d/demo (main)</pre>
       <dt>合并分支 merge</dt>
-      <div>通常在主分支合并其它分支</div>
-      <div>将其它分支合并到主分支；主分支会前进一次 forwards</div>
-      <div>原有分支仍然存在</div>
+      <dd>通常在主分支合并其它分支</dd>
+      <dd>将其它分支合并到主分支；主分支会前进一次 forwards</dd>
+      <dd>原有分支仍然存在</dd>
       <pre>$ git merge branch_name</pre>
       <pre>
 Updating 29aee33..c9f8938
@@ -337,18 +449,18 @@ Fast-forward
  1 file changed, 0 insertions(+), 0 deletions(-)
  create mode 100644 demo.txt</pre>
       <dt>删除分支</dt>
-      <div>指定删除的分支名</div>
-      <div>只能在当前分支删除其它分支</div>
-      <div>-d：合并过才允许删除</div>
-      <div>-D：强制删除，无论是否合并过</div>
+      <dd>指定删除的分支名</dd>
+      <dd>只能在当前分支删除其它分支</dd>
+      <dd>-d：合并过才允许删除</dd>
+      <dd>-D：强制删除，无论是否合并过</dd>
       <pre>$ git branch -d branch_name</pre>
-      <div>删除远程分支</div>
+      <dd>删除远程分支</dd>
       <pre>$ git push &lt;name&gt; -d &lt;branch_name&gt;</pre>
       <dt>重命名分支</dt>
-      <div>-m：如果有同名分支，则拒绝 - 建议</div>
-      <div>-M：强制命名，如果有同名分支，会被覆盖</div>
+      <dd>-m：如果有同名分支，则拒绝 - 建议</dd>
+      <dd>-M：强制命名，如果有同名分支，会被覆盖</dd>
       <pre>$ git branch -m branch_name_old branch_name_new</pre>
-      <div>将当前分支强制命名为main</div>
+      <dd>将当前分支强制命名为main</dd>
       <pre>$ git branch -M main</pre>
       <div class="tips">
         <div>冲突</div>
@@ -407,7 +519,7 @@ e318093 init</pre>
     <h2>Homework</h2>
     <dl>
       <div>[<span class="iconfont icon-keyboard"></span>] 新项目第一次推送 - 请使用自己的仓库地址 url</div>
-      <div>进阶版：一次性执行所有命令；使用 && 分隔命令并使用 \ 换行；加入了仓库配置；没有更改分支名</div>
+      <dd>进阶版：一次性执行所有命令；使用 && 分隔命令并使用 \ 换行；加入了仓库配置；没有更改分支名</dd>
       <pre>
 git config --global user.name "xxx" && \
 git config --global user.email "yyy" && \
@@ -418,28 +530,28 @@ git remote add origin url && \
 git push -u origin master</pre>
       <dd>专业版：使用 shell 脚本</dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 分支操作</div>
-      <dd>请使用 shell 完成以下操作</dd>
-      <div class="sn">
-        <div>创建新文件夹 Demo 作为工作目录</div>
-        <div>初始化工作目录</div>
-        <div>查看分支</div>
-        <div>创建测试文件 test.txt 并 add、commit 提交到本地仓库</div>
-        <div>查看分支</div>
-        <div>创建分支 dev</div>
-        <div>切换至分支 dev</div>
-        <div>查看分支</div>
-        <div>创建测试文件 demo.txt 并 add、commit 提交到本地仓库</div>
-        <div>切换回 master 分支，查看工作目录中文件的变换情况</div>
-        <div>合并分支 dev 到主分支</div>
-        <div>查看分支</div>
-        <div>删除分支 dev</div>
-        <div>查看分支</div>
-      </div>
+      <ol>
+        <li>创建新文件夹 Demo 作为工作目录</li>
+        <li>初始化工作目录</li>
+        <li>查看分支</li>
+        <li>创建测试文件 test.txt 并 add、commit 提交到本地仓库</li>
+        <li>查看分支</li>
+        <li>创建分支 dev</li>
+        <li>切换至分支 dev</li>
+        <li>查看分支</li>
+        <li>创建测试文件 demo.txt 并 add、commit 提交到本地仓库</li>
+        <li>切换回 master 分支，查看工作目录中文件的变换情况</li>
+        <li>合并分支 dev 到主分支</li>
+        <li>查看分支</li>
+        <li>删除分支 dev</li>
+        <li>查看分支</li>
+      </ol>
+      <div>[<span class="iconfont icon-keyboard"></span>] 如何删除远程仓库的文件</div>
+      <!-- <dd>删除本地文件并提交</dd> -->
+      <!-- <dd>仍然可以回退到前一次提交从而恢复文件</dd> -->
       <div>[<span class="iconfont icon-keyboard"></span>] 其它</div>
-      <div class="sn">
-        <div>克隆参考项目 https://github.com/glpla/vue3.git</div>
-        <div>克隆练习项目 https://gitee.com/cnplaman_admin/luckin.git</div>
-      </div>
+      <dd>克隆参考项目 https://github.com/glpla/vue3.git</dd>
+      <dd>克隆练习项目 https://gitee.com/cnplaman_admin/luckin.git</dd>
     </dl>
     <div id="footer"></div>
   </div>

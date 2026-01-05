@@ -207,21 +207,24 @@
     .star {
       position: fixed;
       bottom: 0;
-      width: 10px;
+      color: #fff;
+      font-size: 20px;
+      /* width: 10px;
       aspect-ratio: 1/1;
       border-radius: 50%;
-      background-color: #fff;
-      box-shadow: 0 0 10px #fff,
+      background-color: #fff; */
+      /* box-shadow: 0 0 10px #fff,
         0 0 20px #fff,
         0 0 30px #fff,
-        0 0 40px #fff;
+        0 0 40px #fff; */
+      filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #fff) drop-shadow(0 0 30px #fff);
       animation: fall 12s linear forwards;
       pointer-events: none;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(-100vh);
+        transform: translateY(-100vh) rotate(0);
         opacity: 1;
       }
 
@@ -230,7 +233,7 @@
       }
 
       100% {
-        transform: translateY(0px);
+        transform: translateY(0px) rotate(360deg);
         opacity: 0;
       }
     }
