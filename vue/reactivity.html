@@ -21,8 +21,8 @@
     <dd>
       <div>. 简单事件</div>
       <div>. setTimeout() </div>
-      <div>. 开发工具 <a href="https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home?hl=zh-CN">vue
-          devtools</a></div>
+      <div>. 开发工具 <a href="https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home?hl=zh-CN">Vue
+          Devtools</a></div>
     </dd>
     <dt>Why</dt>
     <dd>
@@ -128,7 +128,9 @@ const obj = ref({
 })
 console.log(age, state, obj);</pre>
     </dd>
-    <dt>Limitations</dt>
+  </dl>
+  <div class="chap">Limitations</div>
+  <dl>
     <dd>
       <div>使用不当，会丢失数据的响应式 - Breaks Reactivity</div>
       <div>更多注意事项，请访问 <a
@@ -137,31 +139,33 @@ console.log(age, state, obj);</pre>
           href="https://www.fadocodecamp.com/posts/maintaining-reactivity-in-vuejs-the-pitfall-of-destructuring-props">The
           Pitfall of Destructuring Props</a>
       </div>
-      <div>1. 不能声明简单数据类型 - value cannot be made reactive: 10</div>
-      <pre>const count = reactive(10)</pre>
-      <div>2. 不能重新赋值/不能轻易地“替换”响应式对象</div>
+    </dd>
+    <dt>不能重新赋值</dt>
+    <dd>
+      <div>不能轻易地“替换”响应式对象</div>
       <pre>
 let obj = reactive({
     id: 10,
     name: 'gz'
 })
 
-const done = () => {
-    obj = {
-      id: 20,
-      name: 'gl'
-    }
+// 不能重新赋值
+obj = {
+  id: 20,
+  name: 'gl'
 }</pre>
-      <div>3. 不能解构 - destructuring props；因为它是一个整体</div>
-      <pre>const { id, name } = obj</pre>
-      <!-- <div>也可以使用对象的分配方法，更新数据</div>
+      <div>可以使用对象的分配方法，更新数据</div>
       <pre>
-const done = () => {
-    Object.assign(obj,{
-        id: 20,
-        name: 'gz'
-    })
-}</pre> -->
+Object.assign(obj,{
+    id: 20,
+    name: 'gz'
+})</pre>
+    </dd>
+    <dt>不能解构</dt>
+    <dd>
+      <div>destructuring props</div>
+      <div>因为它是一个整体</div>
+      <pre>const { id, name } = obj</pre>
     </dd>
   </dl>
   <div class="chap">Summary & Homework</div>

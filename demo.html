@@ -21,181 +21,35 @@
       box-sizing: border-box;
     }
 
-    a {
-      text-decoration: none;
-      color: #000;
-      padding: 10px 20px;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    .nav {
-      display: flex;
-    }
-
-    .nav li {
-      list-style: none;
-    }
-
-    .nav-item {
-      position: relative;
-      padding: 0 10px;
-      cursor: pointer;
-    }
-
-    .nav-item:focus-within,
-    .nav-item:hover {
-      background-color: var(--second-color);
-    }
-
-    .sub-nav {
-      display: none;
-    }
-
-    .nav-item:hover .sub-nav {
-      display: block;
-      position: absolute;
-      left: 0;
-    }
-
-    .nav-item>.sub-nav-item {
-      color: #fff;
-    }
-
-    .nav-item:hover>.sub-nav-item {
-      background-color: var(--second-color);
-      color: #fff;
-    }
-
-    .sub-nav-item {
-      display: block;
-      padding: 0 10px;
-    }
-
-    .sub-nav-item:hover {
-      color: #f40;
-    }
-
     body {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      grid-template-rows: auto 1fr auto;
-      grid-template-areas:
-        "header header"
-        "aside main"
-        "aside footer";
-      min-height: 100vh;
-    }
-
-    header {
-      grid-area: header;
-      position: sticky;
-      top: 0;
-      z-index: 9;
-      background-color: #f40;
-      height: 40px;
-    }
-
-    aside {
-      grid-area: aside;
-      background-color: #089;
-    }
-
-    .aside {
-      position: sticky;
-      top: 40px;
-    }
-
-    main {
-      grid-area: main;
-    }
-
-    footer {
-      grid-area: footer;
-    }
-
-    main p {
-      height: 50vh;
-    }
-
-    .header {
       display: flex;
-      justify-content: space-between;
-      padding: 0 10px;
-      background-color: var(--main-color);
-      line-height: 40px;
-      color: #fff;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
   </style>
 </head>
 
 <body>
-  <header>header
-    <!-- <div class="header">
-      <div class="logo">Logo</div>
-      <nav>
-        <ul class="nav">
-          <li class="nav-item">
-            <div>Lorem.</div>
-            <div class="sub-nav">
-              <a class="sub-nav-item" href="">Lorem.</a>
-              <a class="sub-nav-item" href="">Pariatur!</a>
-              <a class="sub-nav-item" href="">Quasi?</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div>Praesentium?</div>
-            <div class="sub-nav">
-              <a class="sub-nav-item" href="">Lorem.</a>
-              <a class="sub-nav-item" href="">Consequuntur.</a>
-              <a class="sub-nav-item" href="">Eum.</a>
-              <a class="sub-nav-item" href="">Exercitationem!</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="sub-nav-item" href="">Lorem.</a>
-          </li>
-          <li class="nav-item">
-            <div>Dolor.</div>
-            <div class="sub-nav">
-              <a class="sub-nav-item" href="">Lorem.</a>
-              <a class="sub-nav-item" href="">Pariatur!</a>
-              <a class="sub-nav-item" href="">Quasi?</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div>Fugiat.</div>
-            <div class="sub-nav">
-              <a class="sub-nav-item" href="">Lorem.</a>
-              <a class="sub-nav-item" href="">Consequuntur.</a>
-            </div>
-          </li>
-        </ul>
-      </nav>
-    </div> -->
-  </header>
-  <aside>
-    <div class="aside">
-      <ul>
-        <li>Lorem.</li>
-        <li>Unde!</li>
-        <li>Ex.</li>
-        <li>Quidem!</li>
-        <li>Quaerat?</li>
-      </ul>
-    </div>
-  </aside>
-  <main>
-    <p>Lorem.</p>
-    <p>Ut.</p>
-    <p>Ut?</p>
-    <p>Laudantium.</p>
-    <p>Ullam.</p>
-  </main>
-  <footer>footer</footer>
+  <div id="app">
+    <div @click="age++">{{ age }}</div>
+  </div>
 
+  <script type="module">
+    import { createApp, ref } from '/utils/lib/vue.esm-browser.js'
+    const app = createApp({
+      setup() {
+
+        // data
+        let age = ref(18)
+        // function
+        return {
+          age
+        }
+      }
+    })
+    app.mount('#app')
+  </script>
 </body>
 
 </html>

@@ -28,6 +28,7 @@
         <img style="width: 80%;" src="./imgs/lifecycle.png" alt="">
         <figcaption>Vue的生命周期函数</figcaption>
       </figure>
+      <div>每个生命周期函数接收一个回调函数作为参数</div>
       <details open>
         <summary style="font-weight: 600;">Lifetime</summary>
         <details>
@@ -59,6 +60,12 @@ onMounted(() => {
 onMounted(() => {
     console.log("onMounted:Initialization now");
 })</pre>
+            <div>加载时，注册事件</div>
+            <div>使用具名函数方便注册和移除</div>
+            <pre>
+onMounted(() => {
+  window.addEventListener('scroll', fn)
+})</pre>
           </div>
         </details>
         <details>
@@ -70,6 +77,7 @@ onMounted(() => {
           <div>更新完毕</div>
           <div>注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之后调用</div>
           <div>捕获响应式数据的更新；静态数据更新不会响应</div>
+          <div>避免在回调函数中操作响应式数据，导致死循环</div>
         </details>
         <details>
           <summary>onBeforeUnmount()</summary>
@@ -81,6 +89,13 @@ onMounted(() => {
           <summary>onUnmounted()</summary>
           <div>注册一个回调函数，在组件实例被卸载之后调用</div>
           <div>vue2中是destroy</div>
+          <div>如果注册了事件侦听或者启用了定时器，记得要及时移除和清除</div>
+          <div>卸载时，移除事件</div>
+          <div>怎么注册就怎么移除</div>
+          <pre>
+onUnmounted(() => {
+  window.removeEventListener('scroll', fn)
+})</pre>
         </details>
         <details>
           <summary>onActivated()</summary>
@@ -102,9 +117,8 @@ onMounted(() => {
         &lt;div&gt;about&lt;/div&gt;
         &lt;div&gt;{{ cd }}秒后返回/work&lt;/div&gt;
     &lt;/div&gt;
-&lt;/template&gt;
-    
-&lt;script setup&gt;
+&lt;/template&gt;</pre>
+      <pre>
 import { onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
     
@@ -133,8 +147,7 @@ onBeforeUnmount(() =&gt; {
 })
 onUnmounted(() =&gt; {
     console.log('onUnmounted');
-})
-&lt;/script&gt;</pre>
+})</pre>
       <img src="./imgs/lifetime0.png" alt="">
       <div class="tips">
         <div>已安装 Vs Code 扩展 Vue Vscode Snippets 的，请注意编辑过程中的代码片段提示，不要一个一个字母编辑</div>
@@ -171,8 +184,8 @@ const isShow = ref(false)</pre>
     <dd>
       <div>方案1：固定定位的元素变换样式，如添加阴影、显示返回顶部</div>
       <div>&lt;header&gt; 固定在顶部 fixed；当滚动超过一定距离后，为 &lt;header&gt; 指定阴影</div>
-      <div>页面加载时，绑定事件处理器 - 监听页面的滚动事件</div>
-      <div>页面卸载时，移除绑定的事件处理器；别要注意定时器的清除</div>
+      <div>页面加载时，绑定事件处理器，监听页面的滚动事件</div>
+      <div>页面卸载时，移除绑定的事件处理器</div>
       <div>1.1 使用 <a href="./useTemplateRef.html">模板引用</a> 实现</div>
       <pre>&lt;header class="header" ref="header"&gt;header&lt;/header&gt;</pre>
       <pre>
@@ -196,13 +209,17 @@ onUnmounted(() => {
       <pre>
 const isShow = ref(false)
 
+const fn = () => {
+  isShow.value = window.scrollY > 300
+}
+
 onMounted(() => {
-  window.addEventListener('scroll', () => {
-    isShow.value = window.scrollY > 300
-  })
+  window.addEventListener('scroll', fn)
 })
 
-// ...</pre>
+onUnmounted(() => {
+  window.removeEventListener('scroll', fn)
+})</pre>
       <div>样式略</div>
       <div>方案2：粘性定位的元素变换样式 - <a href="./pro/dist/index.html">HomeView.vue</a> 页面/视图滚动到某个位置时，粘性定位在顶部
       </div>
@@ -212,31 +229,17 @@ onMounted(() => {
       <div>这里使用传统事件方式 - 建议使用事件侦听的方式</div>
       <pre>&lt;div class="tab-box" ref="tab-box"&gt;&lt;/div&gt;</pre>
       <pre>
-import { onMounted, onUnmounted, useTemplateRef } from 'vue'
-
-const tabBox = useTemplateRef('tab-box')
+const fn=() => {
+  let rect = tabBox.value.getBoundingClientRect()
+  tabBox.value.classList.toggle('sticky', rect.top &lt;= 0)
+}
 
 onMounted(() => {
-  window.onscroll = function () {
-    const rect = tabBox.value.getBoundingClientRect()
-    if (rect.top &lt;= 0) {
-      tabBox.value.classList.add('sticky')
-    } else {
-      tabBox.value.classList.remove('sticky')
-    }
-  }
+  window.addEventListener('scroll', fn)
 })
 
 onUnmounted(() => {
-  window.onscroll = null
-})</pre>
-      <div>使用事件监听 addEventListener() 和 样式的 toggle() 优化，如使用具名函数便于清除事件侦听</div>
-      <pre>
-onMounted(() => {
-  window.addEventListener('scroll', () => {
-    let rect = tabBox.value.getBoundingClientRect()
-    tabBox.value.classList.toggle('sticky', rect.top &lt;= 0)
-  })
+  window.removeEventListener('scroll', fn)
 })</pre>
     </dd>
     <dd>[<span class="iconfont icon-keyboard"></span>] 定位页面</dd>
@@ -247,7 +250,7 @@ onMounted(() => {
   window.scrollTo(0, 0)
   // ...
 })</pre>
-      <div>多个页面需要控制时，可以使用 <a href="./route_guard.html">路由守卫 Guard</a></div>
+      <div>多个页面需要控制时，可以使用 <a href="./router_guard.html">路由守卫 Guard</a></div>
       <pre>
 router.afterEach((to, from) => {
   document.title = to.meta.title;
