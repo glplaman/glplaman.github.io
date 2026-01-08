@@ -16,19 +16,19 @@
     <span>&commat;Style</span>
   </header>
   <dl>
-    <dt>Xmind</dt>
-    <dd>
+    <figure>
       <iframe src="https://xmind.ai/embed/Sl7plXJ1?sheet-id=a34d7a6d-c43e-4e19-ac74-b42e8dadaa63" width="900px"
         height="540px" frameborder="0" scrolling="no" allow="fullscreen"></iframe>
-    </dd>
+      <figcaption>mindmap</figcaption>
+    </figure>
     <dt>Introduction</dt>
     <dd>
-      <div>. 除了可以自定义样式外，还可以使用 Vue 提供的内置样式类</div>
-      <div>. 区分匹配当前路由样式 active 和严格匹配当前路由样式 exactActive</div>
-      <div>. 嵌套路由下，路由链上的会匹配应用当前路由样式 active - 无论嵌套路径多么深，只要链接的目标路径是当前路径的一部分，就会添加</div>
-      <div>. 而末端子路由应用严格匹配当前路由样式 exactActive - 仅当 to 属性<span class="warn">精确匹配</span>当前激活的路由时才会应用；<span
+      <div>除了可以自定义样式外，还可以使用 Vue 提供的内置样式类</div>
+      <div>区分匹配当前路由样式 active 和严格匹配当前路由样式 exactActive</div>
+      <div>嵌套路由下，路由链上的会匹配应用当前路由样式 active - 无论嵌套路径多么深，只要链接的目标路径是当前路径的一部分，就会添加</div>
+      <div>而末端子路由应用严格匹配当前路由样式 exactActive - 仅当 to 属性<span class="warn">精确匹配</span>当前激活的路由时才会应用；<span
           class="warn">重定向路由</span>不在考虑之内</div>
-      <div>. 单级路由下，当前路由会<span class="warn">同时叠加</span>两种样式类</div>
+      <div>单级路由下，当前路由会<span class="warn">同时叠加</span>两种样式类</div>
       <div class="mt4">[<span class="iconfont icon-magicwand"></span>] 匹配 active 和严格匹配 exactActive</div>
       <div>路由a：重定向到路由b，最后匹配的是路由b，路由a无法激活匹配路由和严格匹配路由</div>
       <div>路由b：最后匹配的也是路由b，可以激活匹配路由和严格匹配路由</div>
@@ -36,10 +36,10 @@
     <dt>Specific</dt>
     <dd>
       <div>1. 默认类 Default</div>
-      <div>. 默认情况下，Vue会为 &lt;RouterLink&gt; <a
+      <div>默认情况下，Vue会为 &lt;RouterLink&gt; <a
           href="https://router.vuejs.org/zh/guide/essentials/active-links.html">匹配当前路由的链接</a> 自动添加两个空白
         的CSS样式类：router-link-active 和 router-link-exact-active，以高亮当前路由</div>
-      <div>. 通过覆盖/修改其样式可以定制路由样式</div>
+      <div>通过覆盖/修改其样式可以定制路由样式</div>
       <pre>
 .router-link-active {
   color: #f40;
@@ -50,32 +50,32 @@
 }</pre>
       <div class="mt4">2. 路由属性类 <a href="https://router.vuejs.org/api/interfaces/RouterOptions.html">RouterOptions</a>
       </div>
-      <div>. 配置路由时指定属性选项：linkActiveClass、linkExactActiveClass</div>
-      <div>. 会<span class="warn">覆盖</span>上述默认的路由样式类</div>
-      <div>. 两个样式类默认为空，通过定制实现个性化开发</div>
-      <div>. 使用不同的样式类；样式内容可以一致</div>
+      <div>配置路由时指定属性选项：linkActiveClass、linkExactActiveClass</div>
+      <div>会<span class="warn">覆盖</span>上述默认的路由样式类</div>
+      <div>两个样式类默认为空，通过定制实现个性化开发</div>
+      <div>使用不同的样式类；样式内容可以一致</div>
       <pre>
 const router = createRouter({
   // ...
   linkActiveClass : "nav-color",
   linkExactActiveClass : "exact-nav-color",
 })</pre>
-      <div>. 或使用 options 属性更加明确的指定</div>
+      <div>或使用 options 属性更加明确的指定</div>
       <pre>
 router.options = {
   linkActiveClass: "nav-color",
   linkExactActiveClass: "exact-nav-color",
 };</pre>
-      <div>. 或</div>
+      <div>或</div>
       <pre>router.options.linkActiveClass = "nav-color"</pre>
       <pre>router.options.linkExactActiveClass = "exact-nav-color"</pre>
       <div class="mt4">3. 标签属性类 <a href="https://router.vuejs.org/api/interfaces/RouterLinkProps.html">
           RouterLinkProps</a></div>
-      <div>. &lt;RouterLink&gt; 标签有2个样式属性 ：activeClass、exactActiveClass</div>
-      <div>. 需要为<span class="warn">每个</span> &lt;RouterLink&gt; 都指定该属性</div>
-      <div>. 指定后，会覆盖默认的两个路由样式类</div>
-      <div>. 支持小驼峰和连字符两种格式</div>
-      <div>. 使用不同的样式类；样式内容可以一致</div>
+      <div>&lt;RouterLink&gt; 标签有2个样式属性 ：activeClass、exactActiveClass</div>
+      <div>需要为<span class="warn">每个</span> &lt;RouterLink&gt; 都指定该属性</div>
+      <div>指定后，会覆盖默认的两个路由样式类</div>
+      <div>支持小驼峰和连字符两种格式</div>
+      <div>使用不同的样式类；样式内容可以一致</div>
       <pre>
 &lt;RouterLink activeClass="btm" exactActiveClass="color" to="/home"&gt;home&lt;/RouterLink&gt;
 &lt;RouterLink active-class="btm" exact-active-class="color" to="/mine"&gt;mine&lt;/RouterLink&gt;</pre>
@@ -88,28 +88,21 @@ router.options = {
   border-bottom: 1px solid #f40;
 }</pre>
     </dd>
-    <!-- <dt>匹配路由</dt>
-    <dd>
-      <div>以上是全局路由样式，对所有路由生效</div>
-      <div>自定义路由样式 - 适合某个特定路由</div>
-      <div>根据当前路由和页面是否匹配来设置动态样式</div>
-      <pre>&lt;div :class = "{'active':route.path.includes('/home')}"&gt;Home&lt;/div&gt;</pre>
-    </dd> -->
     <dt>General</dt>
     <dd>
-      <div>. 以上是 <span class="warn">针对</span> 使用了 &lt;RouterLink&gt; 的声明式导航</div>
-      <div>. 如果是编程式导航，按照元素的普通样式和激活样式区分设计即可；请参照 <a href="./class.html#tabcard">标签页</a> 设计</div>
+      <div>以上是 <span class="warn">针对</span> 使用了 &lt;RouterLink&gt; 的声明式导航</div>
+      <div>如果是编程式导航，按照元素的普通样式和激活样式区分设计即可；请参照 <a href="./class.html#tabcard">标签页</a> 设计</div>
     </dd>
     <dd class="tips">
-      <div>. 可以使用专有方案，如默认样式类、标签属性类和路由属性类实现；也可以使用通用方案实现</div>
-      <div>. 可以分别设计路由样式；也可以先设置全局路由样式，再单独指定某个或某些路由样式，覆盖全局路由样式</div>
+      <div>可以使用专有方案，如默认样式类、标签属性类和路由属性类实现；也可以使用通用方案实现</div>
+      <div>可以分别设计路由样式；也可以先设置全局路由样式，再单独指定某个或某些路由样式，覆盖全局路由样式</div>
     </dd>
   </dl>
   <div class="chap">Drill</div>
   <dl>
     <dd>
       <div>[<span class="iconfont icon-keyboard"></span>] 路由样式设计</div>
-      <div>. 本例采用路由属性类，通过全局、单独定制的方式实现</div>
+      <div>本例采用路由属性类，通过全局、单独定制的方式实现</div>
       <div>1. 配置路由时，指定路由样式类</div>
       <pre>
 const router = createRouter({

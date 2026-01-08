@@ -23,116 +23,124 @@
       <div>观察页面加载情况：浏览器刷新按钮、浏览器开发者视图 F12 → 网络 Network</div>
     </dd>
     <dt>导航分类</dt>
+    <dd>路由配置好后，根据使用方式，分为</dd>
     <dd class="sn">
       <div>声明式导航：使用内置组件 &lt;RouterLink&gt;，通过配置 <a href="https://router.vuejs.org/api/">Router API</a> 的 <a
           href="https://router.vuejs.org/api/interfaces/RouterLinkProps.html">路由属性 RouterLinkProps</a> 实现</div>
       <div><a href="./userouter.html">编程式导航</a>：使用 vue-router 的组合函数 <a
           href="https://router.vuejs.org/zh/api/#Functions-useRoute">useRouter()</a> 实现</div>
     </dd>
+    <dd>为了展示路由对应的视图，使用内置组件 &lt;RouterView&gt;</dd>
+    <dd>有 &lt;RouterLink&gt; 路由，则必须有 &lt;RouterView&gt; 路由出口</dd>
+    <div>[<span class="iconfont icon-keyboard"></span>] 声明式导航基本使用</div>
+    <pre>
+&lt;template&gt;
+  &lt;RouterLink to = "/home" &gt;Home&lt;/RouterLink&gt;
+  &lt;RouterLink to = "/about" replace &gt;About&lt;/RouterLink&gt;
+  &lt;RouterView name="aside"&gt;&lt;/RouterView&gt;
+&lt;/template&gt;</pre>
   </dl>
   <div class="chap">&lt;RouterLink&gt;</div>
   <dl>
-    <dd>
-      <div>用来渲染一个链接的组件，该链接在被点击时会触发导航</div>
-      <div>全局组件；不需要在组件模板中导入</div>
-      <div>不会刷新页面 - doesn't need to be reloaded from the server</div>
-      <table>
-        <caption>RouterLinkProps 属性</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>desc</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>to</td>
-            <td>当点击该链接时应该进入的路由地址
-              <br>使用 to 属性代替 href 属性
-            </td>
-          </tr>
-          <tr>
-            <td>replace?</td>
-            <td>默认是 push 模式，浏览器可以回退
-              <br>使用 replace 属性可以防止浏览器回退
-            </td>
-          </tr>
-          <tr>
-            <td>activeClass?</td>
-            <td>链接在匹配当前路由时被应用到 class
-            </td>
-          </tr>
-          <tr>
-            <td>exactActiveClass?</td>
-            <td>链接在严格匹配当前路由时被应用到 class
-              <br>多用于嵌套路由中
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="tips">? 表示可选属性；下同</div>
-    </dd>
+    <dd>用来渲染一个链接的组件，该链接在被点击时会触发导航</dd>
+    <dd>使用 to 属性代替 href 属性</dd>
+    <dd>全局组件；不需要在组件模板中导入</dd>
+    <dd>不会刷新页面 - doesn't need to be reloaded from the server</dd>
+    <table>
+      <caption>RouterLinkProps 属性</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>to</td>
+          <td>当点击该链接时应该进入的路由地址
+            <br>字符串，静态使用
+            <br>对象，就必须用动态绑定 :to
+          </td>
+        </tr>
+        <tr>
+          <td>replace?</td>
+          <td>默认是 push 模式，浏览器可以回退
+            <br>使用 replace 属性可以防止浏览器回退
+          </td>
+        </tr>
+        <tr>
+          <td>activeClass?</td>
+          <td>链接在匹配当前路由时被应用到 class
+          </td>
+        </tr>
+        <tr>
+          <td>exactActiveClass?</td>
+          <td>链接在严格匹配当前路由时被应用到 class
+            <br>多用于嵌套路由中
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <dt>1. 普通路由</dt>
-    <dd>
-      <pre>
+    <dd>使用 path 字符串</dd>
+    <pre>
 &lt;RouterLink to = "/home" &gt;Home&lt;/RouterLink&gt;
 &lt;RouterLink to = "/about" replace &gt;About&lt;/RouterLink&gt;</pre>
-      <div>使用命名路由 - 更简洁</div>
-      <pre>&lt;RouterLink :to = "{name:'home'}" &gt;Home&lt;/RouterLink&gt;</pre>
-    </dd>
+    <dd>使用命名路由 - 对象，应动态绑定，更简洁</dd>
+    <pre>&lt;RouterLink :to = "{name:'home'}" &gt;Home&lt;/RouterLink&gt;</pre>
     <dt>2. 嵌套路由</dt>
-    <dd>
-      <div>指定完整路由</div>
-      <pre>
+    <dd>指定完整路由</dd>
+    <pre>
 &lt;RouterLink to = "/menu/goods" &gt;Goods&lt;/RouterLink&gt;
 &lt;RouterLink to = "/menu/vip" &gt;Vip&lt;/RouterLink&gt;</pre>
-      <div>使用命名路由 - 更简洁</div>
-      <pre>&lt;RouterLink :to = "{name:'goods'}" &gt;Goods&lt;/RouterLink&gt;</pre>
-    </dd>
+    <dd>使用命名路由 - 更简洁</dd>
+    <pre>&lt;RouterLink :to = "{name:'goods'}" &gt;Goods&lt;/RouterLink&gt;</pre>
     <dt>3. 查询路由</dt>
-    <dd>
-      <div>静态数据</div>
-      <pre>&lt;RouterLink to="/team?id=100"&gt;Team&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - 拼接</div>
-      <pre>&lt;RouterLink  :to="'/menu/vip?id=' + id"&gt;Team&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - 模板字符串</div>
-      <pre>&lt;RouterLink :to="`/menu/vip?id=${id}`"&gt;Team&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - path</div>
-      <pre>&lt;RouterLink :to="{ name: 'vip', query: { id: 100 } }"&gt;Team&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - name</div>
-      <pre>&lt;RouterLink :to="{ path: '/menu/vip', query: { id: 100 } }"&gt;Team&lt;/RouterLink&gt;</pre>
-    </dd>
+    <dd>使用 ? 和值对的方式传递参数</dd>
+    <dd>不需要额外配置路由</dd>
+    <dd>静态数据</dd>
+    <pre>&lt;RouterLink to="/team?id=100"&gt;Team&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - 拼接</dd>
+    <pre>&lt;RouterLink  :to="'/menu/vip?id=' + id"&gt;Team&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - 模板字符串</dd>
+    <pre>&lt;RouterLink :to="`/menu/vip?id=${id}`"&gt;Team&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - path</dd>
+    <pre>&lt;RouterLink :to="{ name: 'vip', query: { id: 100 } }"&gt;Team&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - name</dd>
+    <pre>&lt;RouterLink :to="{ path: '/menu/vip', query: { id: 100 } }"&gt;Team&lt;/RouterLink&gt;</pre>
     <dt>4. 动态路由</dt>
-    <dd>
-      <div>静态数据</div>
-      <pre>&lt;RouterLink to="/details/100"&gt;Details - 100&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - 拼接</div>
-      <pre>&lt;RouterLink :to="'/details/' + id"&gt;details - id=100&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - 模板字符串</div>
-      <pre>&lt;RouterLink :to="`/details/${id}`"&gt;details - id=100&lt;/RouterLink&gt;</pre>
-      <div>动态绑定 - 使用 name，不能使用 path，因为匹配不到</div>
-      <div class="warn">Path "/xxx" was passed with params but they will be ignored. Use a named route alongside
-        params instead.</div>
-      <pre>&lt;RouterLink :to="{ name: 'details', params: { id: 100 } }"&gt;details - id&lt;/RouterLink&gt;</pre>
-    </dd>
+    <dd>使用路径参数传递参数</dd>
+    <dd>需要额外配置路由</dd>
+    <div>静态数据</div>
+    <pre>&lt;RouterLink to="/details/100"&gt;Details - 100&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - 拼接</dd>
+    <pre>&lt;RouterLink :to="'/details/' + id"&gt;details - id=100&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - 模板字符串</dd>
+    <pre>&lt;RouterLink :to="`/details/${id}`"&gt;details - id=100&lt;/RouterLink&gt;</pre>
+    <dd>动态绑定 - 使用 name，不能使用 path，因为匹配不到</dd>
+    <dd class="warn">Path "/xxx" was passed with params but they will be ignored. Use a named route alongside
+      params instead.</dd>
+    <pre>&lt;RouterLink :to="{ name: 'details', params: { id: 100 } }"&gt;details - id&lt;/RouterLink&gt;</pre>
+    <div class="tips">
+      <p>查询路由和动态路由都是路由传递参数方式之一</p>
+      <p>此外，还可以使用路由的 props 属性传递参数</p>
+    </div>
   </dl>
   <div class="chap">&lt;RouterView&gt;</div>
   <dl>
-    <dd>
-      <div>用于显示用户当前所处路由的组件</div>
-      <div>全局组件；不需要在组件模板中导入</div>
-      <div>路由目标占位符</div>
-      <div>借助系统组件 <a href="https://router.vuejs.org/zh/api/#Variables-RouterView">&lt;RouterView&gt;</a> 显示与 URL
-        对应的组件|路由出口 - where to render the current route component</div>
-      <div>有 &lt;RouterLink&gt; 路由，则必须有 &lt;RouterView&gt; 路由出口</div>
-      <div>还可以像缓存组件那样，缓存 &lt;RouterView&gt;，见后例</div>
-      <div>1. 单 &lt;RouterView&gt;</div>
-      <div>根据路由动态切换视图；必须有一个</div>
-      <div>应用更为常见，如单页应用 SPA</div>
-      <div>2. 多 &lt;RouterView&gt;</div>
-      <div>允许在同一个视图同时展示多个组件，每个组件对应不同的视图区域，提高了单页应用的复用性和可维护性</div>
-      <div>路由配置由 component 该为 components</div>
-      <pre>
+    <dd>借助系统组件 <a href="https://router.vuejs.org/zh/api/#Variables-RouterView">&lt;RouterView&gt;</a> 显示与 URL
+      对应的组件|路由出口 - where to render the current route component</dd>
+    <dd>全局组件；不需要在组件模板中导入</dd>
+    <dd>路由目标占位符</dd>
+    <dd>还可以像缓存组件那样，缓存 &lt;RouterView&gt;，见后例</dd>
+    <dt>单路由视图 &lt;RouterView&gt;</dt>
+    <dd>页面视图只有一个路由视图，如单页应用 SPA</dd>
+    <dd>应用更为常见</dd>
+    <dt>多路由视图 &lt;RouterView&gt;</dt>
+    <dd>允许在同一个页面视图同时展示多个组件</dd>
+    <dd>每个组件对应不同的视图区域，提高了单页应用的复用性和可维护性</dd>
+    <dd>路由配置由 component 该为 components</dd>
+    <pre>
 {
   path: '/',
   name: 'home',
@@ -143,16 +151,12 @@
     main: () => import('../components/Main.vue'),
   }
 }</pre>
-      <div>多个 &lt;RouterView&gt; 使用 name 属性区分，避免嵌套路由</div>
-      <pre>
+    <dd>多个 &lt;RouterView&gt; 使用 name 属性区分，避免嵌套路由</dd>
+    <pre>
 &lt;RouterView name="aside"&gt;&lt;/RouterView&gt;
 &lt;RouterView name="header"&gt;&lt;/RouterView&gt;
 &lt;RouterView name="main"&gt;&lt;/RouterView&gt;</pre>
-    </dd>
-  </dl>
-  <div class="chap">Drill</div>
-  <dl>
-    <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./drill_router.html">路由设计</a></dd>
+    <div>[<span class="iconfont icon-keyboard"></span>] <a href="./drill_router.html">路由设计</a></div>
     <dd class="sn">
       <div>创建项目，使用路由</div>
       <div>基本视图组件 HomeView.vue、MenuView.vue、MallView.vue、VipView.vue、MineView.vue</div>
@@ -163,7 +167,7 @@
       <p>. 为菜单视图 MenuView.vue 创建到 商品 Goods.vue、Vip.vue、Rank.vue、Favorite.vue 的子路由及对应的组件</p>
       <p>. 为菜单视图 MenuView.vue 的商品 GoodsItem.vue 使用商品 id 创建到详情页视图 DetailsView.vue的动态路由 /details/:id</p>
       <p>. 增加 404 异常路由处理</p>
-      <div>使用 &lt;RouterLink&gt;创建导航</div>
+      <div>使用 &lt;RouterLink&gt;创建声明式导航</div>
       <div>调试路由正常</div>
     </dd>
   </dl>

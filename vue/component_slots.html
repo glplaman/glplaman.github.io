@@ -28,10 +28,11 @@
       <div>可以声明多个插槽；为了区分，多个插槽应该指定 name 属性</div>
       <div>大规模应用于前端框架UI中，如 <a href="../web/framework/vant.html">Vant</a></div>
     </dd>
-    <dt><a href="https://cn.vuejs.org/guide/components/slots.html#fallback-content">一个插槽</a></dt>
+    <dt>默认插槽 <a href="https://cn.vuejs.org/guide/components/slots.html#fallback-content">Default Slots</a></dt>
     <dd>
-      <div>只预留一个位置</div>
-      <div>1. 子组件 Test.vue 创建过程中，预留一个位置/一个占位符，父组件传递进来的内容就会渲染在这里</div>
+      <div>只能预留一个位置</div>
+      <div>1. 子组件 Child.vue</div>
+      <div>预留一个位置/一个占位符，父组件传递进来的内容就会渲染在这里</div>
       <pre>
 &lt;div&gt;
   //其它内容
@@ -43,21 +44,30 @@
   //其它内容
   &lt;slot&gt;插槽默认内容&lt;/slot&gt;
 &lt;/div&gt;</pre>
-      <div>2. 父组件 - 不可以使用单标签形式；使用内容填充插槽；可以是普通文本，也可以是HTML节点</div>
+      <div>2. 父组件 Father.vue</div>
+      <div>不可以使用单标签形式；使用内容填充插槽；可以是普通文本，也可以是HTML节点</div>
       <pre>
-&lt;Test&gt;
+&lt;Child&gt;
   Something bad happened. 
-&lt;/Test&gt;</pre>
+&lt;/Child&gt;</pre>
+      <div>多插槽情况下建议使用默认名</div>
+      <pre>
+&lt;Child&gt;
+  &lt;template #default&gt;
+    Something bad happened. 
+  &lt;/template&gt;
+&lt;/Child&gt;</pre>
       <div>使用默认内容的插槽</div>
-      <pre>&lt;Test&gt; &lt;/Test&gt;</pre>
+      <pre>&lt;Child&gt; &lt;/Child&gt;</pre>
     </dd>
-    <dt><a href="https://cn.vuejs.org/guide/components/slots.html#named-slots">多个插槽</a></dt>
+    <dt>具名插槽 <a href="https://cn.vuejs.org/guide/components/slots.html#named-slots">Named Slots</a></dt>
     <dd>
-      <div>预留多个位置/多个插槽</div>
-      <div>使用属性 name 区分 - 又称具名插槽 Named Slots</div>
+      <div>预留多个插槽/多个位置</div>
+      <div>使用属性 name 区分</div>
       <div>没有指定 name 的，使用默认名字 default</div>
       <div>同样可以指定默认内容</div>
-      <div>前端UI框架用大量使用插槽使用达到结构复用，如 <a href="../web/framework/vant.html">Vant</a></div>
+      <div>前端 UI 框架用大量使用插槽使用达到结构复用，如 <a href="../web/framework/vant.html">Vant</a></div>
+      <div>1. 子组件 Child.vue 预留插槽</div>
       <pre>
 &lt;div&gt;
     //其它内容
@@ -65,22 +75,25 @@
     &lt;slot name = 'header'&gt;&lt;/slot&gt;
     &lt;slot name = 'footer'&gt;&lt;/slot&gt;
 &lt;/div&gt;</pre>
-      <div>使用具名插槽 - 使用 &lt;template&gt; 并指定对应的 <span class="warn">v-slot</span> 指令；可以简写为 <span class="warn">#</span>
+      <div>2. 父组件 Father.vu 使用具名插槽</div>
+      <div>使用 &lt;template&gt; 并指定对应的 <span class="warn">v-slot</span> 指令；可以简写为 <span class="warn">#</span>
       </div>
       <pre>
-&lt;Test&gt;  
+&lt;Child&gt;  
   &lt;template v-slot:header&gt;
       &lt;h1&gt;Here might be a page title&lt;/h1&gt;
   &lt;/template&gt;
   &lt;template #footer&gt;
       &lt;h1&gt;Here might be a page footer&lt;/h1&gt;
   &lt;/template&gt;
-&lt;/Test&gt;</pre>
+&lt;/Child&gt;</pre>
     </dd>
-    <dt><a href="https://cn.vuejs.org/guide/components/slots.html#conditional-slots">条件插槽</a>*</dt>
+    <dt>条件插槽 <a href="https://cn.vuejs.org/guide/components/slots.html#conditional-slots">Conditional Slots</a></dt>
     <dd>
-      <div>条件插槽 Conditional Slots - 利用插槽的 $slots 属性判断</div>
-      <div>多用于具名插槽；只有当父组件提供了相应的插槽内容时，才会渲染对应的 DOM 结构；非条件插槽则必须使用</div>
+      <div>利用插槽对应的全局属性 <a href="https://cn.vuejs.org/api/component-instance.html#slots">$slots</a> 与 <a
+          href="./vif.html">v-if</a> 判断</div>
+      <div>多用于具名插槽；只有当父组件提供了相应的插槽内容，如 footer 时，才会渲染对应的 DOM 结构</div>
+      <div>1. 子组件 Child.vue</div>
       <pre>
 &lt;div&gt;
     //内容
@@ -90,16 +103,27 @@
         &lt;slot name = 'footer'&gt;&lt;/slot&gt;
     &lt;/div&gt;
 &lt;/div&gt;</pre>
-      <div>使用条件插槽 - 不指定 footer</div>
+      <div>2. 父组件 父组件 Father.vu</div>
+      <div>指定 footer，则渲染</div>
       <pre>
-&lt;Test&gt;  
+&lt;Child&gt;  
     &lt;template v-slot:header&gt;
         &lt;h1&gt;Here might be a page title&lt;/h1&gt;
     &lt;/template&gt;
-&lt;/Test&gt;</pre>
+    &lt;template v-slot:footer&gt;
+        &lt;h1&gt;Here might be a page footer&lt;/h1&gt;
+    &lt;/template&gt;
+&lt;/Child&gt;</pre>
+      <div>不指定 footer，则不渲染</div>
+      <pre>
+&lt;Child&gt;  
+    &lt;template v-slot:header&gt;
+        &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+    &lt;/template&gt;
+&lt;/Child&gt;</pre>
 
     </dd>
-    <dt><a href="https://cn.vuejs.org/guide/components/slots#dynamic-slot-names">动态插槽</a></dt>
+    <dt>动态插槽 <a href="https://cn.vuejs.org/guide/components/slots#dynamic-slot-names">Dynamic Slot</a></dt>
     <dd>
       <div>使用 <a
           href="https://cn.vuejs.org/guide/essentials/template-syntax.html#dynamic-arguments">动态参数</a>（需要包含在一对方括号内）
@@ -167,11 +191,12 @@ img {
     <dd>
       <div>插槽数据的访问</div>
       <div>插槽内容可以使用/访问父组件域内的数据 - Slot content has access to the data scope of the parent component</div>
+      <div>插槽内容无法访问子组件的数据</div>
       <div>如果还想使用子组件域内的数据 - 子组件在渲染时将一部分数据提供给插槽</div>
-      <div>传递 props 那样，向一个插槽的出口传递 attributes</div>
-      <div>接收插槽 props 时，默认插槽和具名插槽的使用方式有一些小区别；建议使用具名插槽</div>
+      <div>传递 props 那样，向一个插槽的出口传递 attributes - <strong>子传数据、父控结构</strong></div>
+      <div>更多信息，请访问 <a href="https://cn.vuejs.org/guide/components/slots#scoped-slots">Scoped Slots</a></div>
     </dd>
-    <dt>默认插槽 - default slots</dt>
+    <dt>默认插槽 - Default slots</dt>
     <dd>
       <div>创建插槽组件 - 为默认插槽指定属性 msg 并绑定一个数据 msg</div>
       <pre>
@@ -182,21 +207,25 @@ img {
       <div>使用插槽组件 - 使用 v-slot 指定 <span class="warn">一个插槽 props 对象</span> 并访问；属性对象名可以是任何合法标识符，建议使用 slot 作为前缀或者后缀，如
         propsSlot；如果属性不匹配，并不会告警</div>
       <pre>
-&lt;Test v-slot="propsSlot"&gt;;
+&lt;Child v-slot="propsSlot"&gt;;
   {{ propsSlot.msg }}
-&lt;/Test&gt;;</pre>
+&lt;/Child&gt;;</pre>
+      <pre>
+&lt;Child #default="propsSlot"&gt;;
+  {{ propsSlot.msg }}
+&lt;/Child&gt;;</pre>
       <div>使用解构更简洁 - 省略了为属性命名的麻烦</div>
       <pre>
-&lt;Test v-slot="{ msg }"&gt;;
+&lt;Child #default="{ msg }"&gt;;
   {{ msg }}
-&lt;/Test&gt;;</pre>
-      <div>假设指定了多个属性</div>
+&lt;/Child&gt;;</pre>
+      <div>假设指定了多个属性，更简洁</div>
       <pre>
-&lt;Test v-slot="{{ msg, age }}"&gt;;
+&lt;Child #default="{{ msg, age }}"&gt;;
   {{ msg }} {{ age }}
-&lt;/Test&gt;;</pre>
+&lt;/Child&gt;;</pre>
     </dd>
-    <dt>具名插槽 - named slots</dt>
+    <dt>具名插槽 - Named slots</dt>
     <dd>
       <div>插槽组件 - 为具名插槽指定 name 和属性 msg 并绑定一个数据 msg</div>
       <pre>
@@ -239,9 +268,9 @@ img {
     <dt>Summary</dt>
     <dd class="sn">
       <div>&lt;slot&gt;：默认插槽、具名插槽</div>
-      <div>v-slot / #</div>
+      <div>指令：v-slot / #</div>
       <div>插槽样式 - 建议由父组件指定</div>
-      <div>插槽作用域</div>
+      <div>插槽作用域 - 如果想使用子组件的数据</div>
     </dd>
     <dt>Homework</dt>
     <dd>[<span class="iconfont icon-keyboard"></span>] 版权组件进阶版 - 插槽版</dd>
