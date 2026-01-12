@@ -3,236 +3,154 @@
 
 <head>
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>积分榜 Rank</title>
-  <link rel="stylesheet" href="./css/rank.css">
-  <script src="//at.alicdn.com/t/c/font_4240947_umh5d220s7n.js"></script>
+  <title>Apache ECharts</title>
+  <base target="_blank">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: #fa0 #eee;
+    }
+
+    .w {
+      width: 96%;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 2rem;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    select {
+      border: none;
+      outline: none;
+    }
+
+    .chart-box {
+      height: 300px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container" id="app">
-    <header>
-      <div :class="{loading:isLoading}"></div>
-      <div class="logo">
-        <svg class="icon icon-logo">
-          <use xlink:href="#icon-icon-medal-1st"></use>
-        </svg>
-        <span class="logo-title">积分榜</span>
-      </div>
-      <div class="ham" @click="toggleMenu">
-        <svg class="icon">
-          <use xlink:href="#icon-thlist"></use>
-        </svg>
-      </div>
-
-      <div class="nav-wrap" :class="{active:isShow}">
-        <nav class="nav" v-for="(item, index) in navs" :key="item.ind">
-          <div class="nav-item" :class="{'active':ind==item.ind && isSubShow}" @click="toggleSubMenu(index)">
-            {{item.title}}
-          </div>
-          <div class="sub-nav">
-            <div class="sub-nav-item" v-for="(subitem, subindex) in item.cont" :key="subitem.url"
-              @click="getData(subindex)">
-              {{subitem.desc}}
-            </div>
-          </div>
-        </nav>
-      </div>
-    </header>
-    <div class="main">
-      <div class="main-cont" v-if="rank.cont.length">
-        <div class="item" v-for="(item,ind) in rank.cont" :key="item.id" :title="item.ucredit">
-          <div class="sn">{{item.usn}}</div>
-          <svg class="icon icon-avatar">
-            <use :xlink:href=`#icon-avatar${getInd(ind)}`></use>
-          </svg>
-          <span class='name' :data-remarke="item.remark">{{item.uname}}</span>
-          <div class="star">
-            <svg class="icon icon-star" v-for="star in item.ucredit">
-              <use xlink:href="#icon-star"></use>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div v-else>No Records</div>
-    </div>
-    <svg class="icon icon-pos">
-      <use xlink:href="#icon-a-guzhang"></use>
-    </svg>
-
-    <footer>
-      <h4>
-        <p>{{rank.info.grade}}级{{rank.info.major}}{{rank.info.class}}班</p>
-        <p>{{rank.info.course}}</p>
-      </h4>
-      <h5>All Rights Reserved &copy; By Cnplaman 2022-2025</h5>
-    </footer>
+  <div class="w">
+    <h1>积分榜</h1>
+    <select name="select" id="select">
+      <option value="202501.json">前端开发框架与应用-23软工-3班</option>
+      <option value="202502.json">前端开发框架与应用-23软工-4班</option>
+      <option value="202503.json">计算机网络-24计科-2班</option>
+      <option value="202504.json">计算机网络-24计科-4班</option>
+      <option value="202505.json">计算机网络-24计科-6班</option>
+    </select>
+    <div id="echarts-rank" class="chart-box"></div>
+    <div id="footer"></div>
   </div>
-  <script type="module">
-    import { createApp, ref, onMounted, onBeforeMount, watch } from '/utils/lib/vue.esm-browser.js'
-    const app = createApp({
-      setup() {
-        const navs = ref([{
-          ind: 0,
-          title: "2025",
-          cont: [
-            {
-              subind: 0,
-              desc: '2024计科2班',
-              url: '202503.json',
-            }, {
-              subind: 1,
-              desc: '2024计科4班',
-              url: '202504.json',
-            }, {
-              subind: 2,
-              desc: '2024计科6班',
-              url: '202505.json',
-            }, {
-              subind: 3,
-              desc: '2023软工4班',
-              url: '202502.json',
-            }, {
-              subind: 4,
-              desc: '2023软工3班',
-              url: '202501.json',
-            }]
-        }, {
-          ind: 1,
-          title: '2024',
-          cont: [
-            {
-              subind: 0,
-              desc: '2022软工1班',
-              url: '202401.json',
-            },
-            {
-              desc: '2022数媒1班',
-              url: '202402.json',
-              subind: 1,
-            },
-            {
-              subind: 2,
-              desc: '2023软工1班',
-              url: '202403.json',
-            },
-            {
-              subind: 3,
-              desc: '2023软工3班',
-              url: '202404.json',
-            },
-            {
-              subind: 4,
-              desc: '2023数媒1班',
-              url: '202405.json',
-            },
-            {
-              subind: 5,
-              desc: '2023数媒2班',
-              url: '202406.json',
-            },
-            {
-              subind: 6,
-              desc: '2023数媒3班',
-              url: '202407.json',
-            },
-          ]
-        },
-        {
-          ind: 2,
-          title: '2023',
-          cont: [
-            {
-              subind: 0,
-              desc: '2022软工1班',
-              url: '202301.json',
-            },
-            {
-              subind: 1,
-              desc: '2023经济和语言1班',
-              url: '202302.json',
-            },
-            {
-              subind: 2,
-              desc: '2023服装1班',
-              url: '202303.json',
-            },
-            {
-              subind: 3,
-              desc: '2023播音网络1班',
-              url: '202304.json',
-            }
-          ]
-        }
-        ])
-        const ind = ref(0)
-        const rank = ref({
-          info: {
-            grade: '',
-            class: '',
-            course: ''
-          },
-          cont: []
-        });
-        const isLoading = ref(false)
-        const isShow = ref(false)
-        const isSubShow = ref(false)
-        const getData = (index) => {
-          isLoading.value = true;
-          fetch(`/utils/data/rank/${navs.value[ind.value].cont[index].url}`)
-            .then(res => res.json())
-            .then(res => {
-              console.log(res);
-              isSubShow.value = false;
-              isShow.value = false;
-              rank.value = { info: res.info || {}, cont: res.cont || [] };
-            }).finally(() => {
-              isLoading.value = false;
-            });
-        }
-
-        const getInd = (ind) => {
-          return ind % 10;
-        }
-
-        const toggleMenu = () => {
-          isShow.value = !isShow.value;
-        }
-        const toggleSubMenu = (index) => {
-          isSubShow.value = !isSubShow.value;
-          ind.value = index;
-        }
-
-        watch(ind, (newval, oldval) => {
-          if (newval !== oldval) {
-            isSubShow.value = true;
-          }
-        })
-
-        onBeforeMount(() => {
-          isLoading.value = true;
-        })
-
-        onMounted(() => {
-          getData(0)
-        })
-
-        return {
-          navs,
-          ind,
-          rank,
-          isShow,
-          isSubShow,
-          isLoading,
-          getData,
-          getInd,
-          toggleMenu,
-          toggleSubMenu
-        }
-      }
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils/lib/echarts.min.js"></script>
+  <script>
+    const select = document.getElementById('select')
+    select.addEventListener('change', (e) => {
+      console.log(e.target.value);
+      loadDta(e.target.value)
     })
+    const rank = document.getElementById('echarts-rank');
+    const myChartRank = echarts.init(rank);
+    const loadDta = async (url) => {
+      const res = await fetch('/utils/data/rank/' + url)
+      const json = await res.json()
+      const source = json.cont.map(item => {
+        return [item.ucredit, item.uname]
+      })
+      rank.style.height = source.length * 30 + 'px'
 
-    app.mount('#app')
+      const option = {
+        color: ['#f40', '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+        // title: {
+        //   text: '积分榜',
+        //   subtext: json.info.course + '-' + json.info.grade + json.info.major + '-' + json.info.class + '班',
+        //   left: 'center',
+        // },
+        dataset: {
+          source
+        },
+        grid: {
+          containLabel: true,
+          top: 20,
+          bottom: 20,
+          left: 60,
+          right: 10
+        },
+        xAxis: {
+          // name: 'Stars',
+          max: Math.ceil(Math.max(...source.map(item => item[0])) * 1.2)
+        },
+        yAxis: {
+          // name: 'Name',
+          type: 'category',
+          axisLabel: {
+            width: 60, // 标签宽度
+            fontSize: 14,
+            rotate: 0,
+            overflow: 'truncate',
+            ellipsis: '...',
+            interval: 0 // 强制显示所有标签，不省略；每隔 0 个就显示一个 → 全部显示
+          }
+        },
+        series: [
+          {
+            type: 'bar',
+            encode: {
+              x: 'Stars',
+              y: 'Name'
+            },
+            barWidth: 20,
+            showBackground: true,
+            backgroundStyle: { color: '#eee' },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#f90' },
+                { offset: 1, color: '#f40' }
+              ]),
+            },
+            emphasis: {
+              itemStyle: {
+                color: '#ff4400'
+                // color: (params) => `rgba(${255 - params.dataIndex * 10}, 100, 100, 1)`,
+              },
+              focus: 'series', // 'none' | 'series' | 'self'
+              blurScope: 'coordinateSystem' // 模糊其他元素（可选）
+            }
+          },
+        ],
+        tooltip: {
+          // 触发类型为 item（柱子）
+          // trigger: 'item',
+          // 鼠标悬停时显示阴影区域
+          // axisPointer: {
+          //   type: 'shadow'
+          // },
+          // formatter: (params) => {
+          //   console.log(params);
+          //   return `${params.value.reverse().join('')} Stars`;
+          // }
+        },
+      };
+      myChartRank.setOption(option);
+      myChartRank.resize();
+    }
+    loadDta('202501.json')
   </script>
 </body>
 

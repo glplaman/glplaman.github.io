@@ -6,41 +6,72 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apache ECharts</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
   <style>
     .chart-box {
-      height: 320px;
+      min-height: 300px;
       margin: 1rem auto;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>&commat;Apache ECharts</h1>
-  </header>
-  <dl>
-    <dd>需要指定图表容器高度</dd>
-    <dd>更多使用，请访问 <a href="https://echarts.apache.org/zh/index.html">Apache ECharts</a></dd>
-    <dd>其它图标库：<a href="./apxcharts.html">Apxcharts</a>、<a href="https://www.chartjs.org/">Chartjs</a></dd>
-    <dt>安装 Installation </dt>
-    <dd>
-      <pre>npm i echarts -S</pre>
-    </dd>
-    <dt>引入 Import</dt>
-    <dd>可以全部引入；也可以按需引入-推荐</dd>
-    <dt>使用 Usage</dt>
-    <dd><a href="https://echarts.apache.org/examples/zh/index.html">示例</a>给出了所有的图表使用实例。只需修改数据集即可</dd>
-    <dd class="example-sn">HTML5</dd>
-    <dd id="echarts" class="chart-box"></dd>
-    <dd class="example-sn">Vue</dd>
-    <dd>需要调整示例代码为Vue，以饼图为例，按需引入，需要调整的有：</dd>
-    <dd>DOM节点的获取 - ref</dd>
-    <dd>配置项 - onmounted</dd>
-    <dd>调整后的示例代码如下</dd>
-    <dd>逻辑</dd>
-    <dd>
+  <div class="w">
+    <header>
+      <span>可视化</span>
+      <h1>&commat;Apache ECharts</h1>
+    </header>
+    <dl>
+      <dd>需要指定图表容器高度</dd>
+      <dd>更多使用，请访问 <a href="https://echarts.apache.org/zh/index.html">Apache ECharts</a></dd>
+      <dd>其它图标库：<a href="./apxcharts.html">Apxcharts</a>、<a href="https://www.chartjs.org/">Chartjs</a></dd>
+      <dt>安装 Installation </dt>
+      <pre>npm i echarts</pre>
+      <dt>引入 Import</dt>
+      <dd>可以全部引入；也可以按需引入-推荐</dd>
+      <dt>使用 Usage</dt>
+      <dd><a href="https://echarts.apache.org/examples/zh/index.html">echarts 示例</a> 给出了所有的图表使用实例。只需修改数据集即可</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] HTML5</div>
+      <figure>
+        <div id="echarts-demo" class="chart-box"></div>
+        <figcaption>HTML5</figcaption>
+      </figure>
+      <div>[<span class="iconfont icon-keyboard"></span>] 积分榜 Rank
+        <select name="select" id="select">
+          <option value="202501.json">202501.json</option>
+          <option value="202502.json">202502.json</option>
+          <option value="202503.json">202503.json</option>
+          <option value="202504.json">202504.json</option>
+          <option value="202505.json">202505.json</option>
+        </select>
+      </div>
+      <figure>
+        <div id="echarts-rank" class="chart-box"></div>
+        <figcaption>Rank</figcaption>
+      </figure>
+      <dt>series.itemStyle.color</dt>
+      <dd>bar的颜色</dd>
+      <dd>纯色；所有柱子都用这个颜色</dd>
+      <pre>color: '#ff4400'</pre>
+      <dd>不同色；根据值的大小决定</dd>
+      <pre>
+color: (params) => {
+  return params.value[0] > 5 ? '#098' : '#f40'
+}</pre>
+      <dd>渐变色</dd>
+      <pre>
+color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+  { offset: 0, color: '#87CEFA' },
+  { offset: 1, color: '#1E90FF' }
+])</pre>
+      <div>[<span class="iconfont icon-keyboard"></span>] Vue</div>
+      <dd>需要调整示例代码为Vue，以饼图为例，按需引入，需要调整的有：</dd>
+      <dd>DOM节点的获取 - ref</dd>
+      <dd>配置项 - onmounted</dd>
+      <dd>调整后的示例代码如下</dd>
+      <dd>逻辑</dd>
       <pre>
 import { ref, onMounted } from 'vue';
 import * as echarts from 'echarts/core';
@@ -106,16 +137,16 @@ onMounted(() => {
   };
   option && myChart.setOption(option);
 })</pre>
-    </dd>
-    <dd>结构 - 略</dd>
-    <dd>样式 - 略</dd>
-  </dl>
-  <div id="footer"></div>
+      <dd>结构 - 略</dd>
+      <dd>样式 - 略</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
   <script src="../utils/lib/echarts.min.js"></script>
   <script>
-    let myChart = echarts.init(document.getElementById('echarts'));
-    let option = {
+    const myChartDemo = echarts.init(document.getElementById('echarts-demo'));
+    const option = {
       title: {
         text: 'ECharts 入门示例',
         subtext: 'just for demo',
@@ -159,7 +190,92 @@ onMounted(() => {
         fontSize: '24'
       }
     };
-    myChart.setOption(option);
+    myChartDemo.setOption(option);
+    // ranking
+    const select = document.getElementById('select')
+    select.addEventListener('change', (e) => {
+      console.log(e.target.value);
+      loadDta(e.target.value)
+    })
+    const rank = document.getElementById('echarts-rank');
+    const myChartRank = echarts.init(rank);
+    const loadDta = async (url) => {
+      const res = await fetch('/utils/data/rank/' + url)
+      const json = await res.json()
+      const source = json.cont.map(item => {
+        return [item.ucredit, item.uname]
+      })
+      rank.style.height = source.length * 30 + 'px'
+
+      const option = {
+        color: ['#f40', '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
+        title: {
+          text: '积分榜',
+          subtext: json.info.course + json.info.grade + json.info.major,
+          left: 'center',
+        },
+        dataset: {
+          source
+        },
+        grid: {
+          containLabel: true
+        },
+        xAxis: { name: 'Stars', max: Math.max(...source.map(item => item[0])) },
+        yAxis: {
+          name: 'Name',
+          type: 'category',
+          axisLabel: {
+            width: 80, // 标签宽度
+            fontSize: 14,
+            rotate: 0,
+            overflow: 'truncate',
+            ellipsis: '...',
+            interval: 0 // 强制显示所有标签，不省略；每隔 0 个就显示一个 → 全部显示
+          }
+        },
+        series: [
+          {
+            type: 'bar',
+            encode: {
+              x: 'Stars',
+              y: 'Name'
+            },
+            barMinHeight: 0,
+            showBackground: true,
+            backgroundStyle: { color: '#eee' },
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#f90' },
+                { offset: 1, color: '#f40' }
+              ]),
+            },
+            emphasis: {
+              itemStyle: {
+                color: '#ff4400'
+                // color: (params) => `rgba(${255 - params.dataIndex * 10}, 100, 100, 1)`,
+              },
+              focus: 'series', // 'none' | 'series' | 'self'
+              blurScope: 'coordinateSystem' // 模糊其他元素（可选）
+            }
+          },
+        ],
+        tooltip: {
+          // 触发类型为 item（柱子）
+          // trigger: 'item',
+          // 鼠标悬停时显示阴影区域
+          // axisPointer: {
+          //   type: 'shadow'
+          // },
+          // formatter: (params) => {
+          //   console.log(params);
+          //   return `${params.value.reverse().join('')} Stars`;
+          // }
+        },
+      };
+      myChartRank.setOption(option);
+      myChartRank.resize();
+    }
+    loadDta('202501.json')
   </script>
 </body>
 

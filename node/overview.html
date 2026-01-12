@@ -6,76 +6,160 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>概述 Overview</title>
-  <link rel="stylesheet" href="../../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
 </head>
 
 <body>
-  <header>
-    <h1>概述</h1>
-    <span>&commat;Overview</span>
-  </header>
-  <dl>
-    <dt>URL</dt>
-    <dd>统一资源定位符，定位资源在服务器上的位置</dd>
-    <dd class="txt-center">schema://host:port/path?query=value#fragment</dd>
-    <dd class="sn">
-      <div>schema：协议；HTTP、HTTPS、FTP</div>
-      <div>host：主机名；以域名活IP地址表示，如glpla.github.io或185.199.109.153</div>
-      <div>port：端口；HTTP 默认 80</div>
-      <div>path：路径；请求资源在服务器上的具体位置；默认为 /，根路由</div>
-      <div>query：查询参数；以 ? 拼接值对键值对参数，多个值对使用 & 连接</div>
-      <div>fragment：片段；锚点；锚链接，以 # 表示，用以定位页面某个位置；也叫哈希值 Hash</div>
-    </dd>
-    <dt>类型</dt>
-    <dd>也称Restful API，指的是是HTTP的请求方式</dd>
-    <dd class="sn">
-      <div>GET</div>
-      <div>POST</div>
-      <div>PUT</div>
-      <div>DELETE</div>
-      <div>PATCH</div>
-    </dd>
-    <dd>
-      <table>
-        <caption>请求示例</caption>
-        <tr>
-          <td>GET</td>
-          <td>http://www.baidu.com/good</td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>http://www.baidu.com/good</td>
-        </tr>
-        <tr>
-          <td>PUT</td>
-          <td>http://www.baidu.com/good/123</td>
-        </tr>
-        <tr>
-          <td>DELETE</td>
-          <td>http://www.baidu.com/good/123</td>
-        </tr>
+  <div class="w">
+    <header>
+      <h1>概述</h1>
+      <span>Overview</span>
+    </header>
+    <dl>
+      <dt>统一资源定位 URL</dt>
+      <dd>资源：指在互联网上可以被访问的任何对象，包括文件目录、文件、文档、图像、声音等，以及与互联网相连的任何形式的数据</dd>
+      <dd>互联网上的资源，都有一个唯一确定的 URL</dd>
+      <dd>对字符大写或小写没有要求</dd>
+      <figure>
+        <img src="../network/imgs/url1.png" alt="">
+        <figcaption>URL</figcaption>
+      </figure>
+      <figure>
+        <p>schema://host:port/path?query=value#fragment</p>
+        <figcaption>带参数URL</figcaption>
+      </figure>
+      <table class="line">
+        <caption>URL</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>schema</td>
+            <td>协议；HTTP、HTTPS、FTP</td>
+          </tr>
+          <tr>
+            <td>host</td>
+            <td>主机名；以域名或IP地址表示，如glpla.github.io或185.199.109.153</td>
+          </tr>
+          <tr>
+            <td>port</td>
+            <td>端口；HTTP 默认 80</td>
+          </tr>
+          <tr>
+            <td>path</td>
+            <td>路径；请求资源在服务器上的具体位置；默认为 /，根路由</td>
+          </tr>
+          <tr>
+            <td>query</td>
+            <td>查询参数；以 ? 拼接值对键值对参数，多个值对使用 & 连接</td>
+          </tr>
+          <tr>
+            <td>fragment</td>
+            <td>锚点；锚链接，以 # 表示，用以定位页面某个位置；也叫哈希值 Hash</td>
+          </tr>
+        </tbody>
       </table>
-    </dd>
-    <dt>GET</dt>
-    <dt>POST</dt>
-    <dd>提交的数据包含请求类型 Content-Type 和消息主体编码方式两部分。服务器端依据Content-Type来决定使用何种方式解析主体部分</dd>
-    <dd>表单form的属性 enctype 可以指定请求类型；现在通常在请求头header中指定</dd>
-    <dd>简单场景下，可以抛弃form这个壳</dd>
-    <dd>常见的Content-Type有：</dd>
-    <dd class="sn">
-      <div>application/x-www-form-urlencoded</div>
-      <p>浏览器默认的编码格式，使用键值对参数</p>
-      <div>multipart/form-data</div>
-      <p>上传文件；必须指定 &lt;form&gt; 的 enctype 为 multipart/form-data</p>
-      <div>application/json:</div>
-      <p>序列化后的 JSON 字符串</p>
-      <div>text/xml</div>
-      <p>XML 作为编码方式的远程调用规范；使用较少</p>
-      <div>text/plain</div>
-    </dd>
-  </dl>
-  <div id="footer"></div>
+      <div>[<span class="iconfont icon-keyboard"></span>] URL示例</div>
+      <figure>
+        <img src="../network/imgs/url.png" alt="">
+        <figcaption>使用缺省端口的URL</figcaption>
+      </figure>
+      <dt>类型</dt>
+      <dd>指的是HTTP的请求方式</dd>
+      <dd>早期多依托表单 &lt;form&gt;；现在多使用自定义事件，可以抛弃 &lt;form&gt; 这个壳</dd>
+      <table class="line">
+        <caption>请求类型</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GET</td>
+            <td>获取资源</td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>提交资源</td>
+          </tr>
+          <tr>
+            <td>PUT</td>
+            <td>修改资源</td>
+          </tr>
+          <tr>
+            <td>DELETE</td>
+            <td>删除资源</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>1. GET</div>
+      <dd>参数通过 URL 查询字符串传递（如 ?id=123&name=张三）</dd>
+      <dd>不能携带复杂数据（受限于 URL 长度）</dd>
+      <dd>可被缓存、可收藏、可书签</dd>
+      <dd>必须是只读操作（不应修改数据）</dd>
+      <div>2. POST</div>
+      <dd>数据放在请求体中（body），支持任意格式（JSON、form-data 等）</dd>
+      <dd>不是幂等的（多次提交可能创建多个资源）</dd>
+      <dd>通常用于新建记录、登录、评论等</dd>
+      <dd>提交的数据包含请求类型 Content-Type 和消息主体编码方式两部分</dd>
+      <table class="line">
+        <caption>常见 Content-Type</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>application/x-www-form-urlencoded</td>
+            <td> HTML 表单提交时浏览器默认的编码方式
+              <br>使用键值对参数
+              <br>适用于普通文本数据，不支持文件上传
+            </td>
+          </tr>
+          <tr>
+            <td>multipart/form-data</td>
+            <td>用于上传文件或包含二进制数据的表单
+              <br>必须指定 &lt;form&gt; 的 enctype 为该值
+            </td>
+          </tr>
+          <tr>
+            <td>application/json</td>
+            <td>发送 JSON 数据的标准格式
+              <br>常用于 API 接口通信，如 RESTful 接口
+            </td>
+          </tr>
+
+          <tr>
+            <td>text/plain</td>
+            <td>纯文本内容，无任何结构或编码规则
+              <br>可用于发送简单字符串、日志、配置等
+            </td>
+          </tr>
+          <tr>
+            <td>text/xml</td>
+            <td>用于发送 XML 文档
+              <br>已逐渐被 JSON 取代
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>Restful API</dt>
+      <dd>Representational State Transfer</dd>
+      <dd>由 Roy Fielding 在 2000 年博士论文中提出的一种软件架构风格，不是协议、不是标准，而是一组设计约束</dd>
+      <dd>HTTP 请求方法是实现 RESTful API 的核心工具</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 

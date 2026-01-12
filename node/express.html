@@ -62,24 +62,168 @@ app.get('/books/:bookId', (req, res) => {
 })      </pre>
     </dd>
   </dl>
-  <div class="chap">请求 req</div>
+  <div class="chap">路由 Router</div>
   <dl>
-    <dt>属性</dt>
-    <dd class="number">
-      <div>req.protocol</div>
-      <p>请求的协议 http 或 https</p>
-      <div>req.url</div>
-      <p>请求url地址</p>
-      <div>查询路由 query - 使用?拼接字符串；/detail?key=value&key=value&...</div>
+    <dt>主页文件 index.html</dt>
+    <dd>如果指定了静态资源，且有主页文件index.html，即使没有显式的声明根路由/，服务器也会引导并显式主页</dd>
+    <dd>如果主页文件不是index.html，需要显示主页时，必须显示的声明根路由/</dd>
+    <dt>GET 路由</dt>
+    <!-- <div>req.protocol</div>
+    <p>请求的协议 http 或 https</p>
+    <div>req.url</div>
+    <p>请求url地址</p> -->
+    <dd>
+      <div>普通路由 - 访问根路由</div>
+      <pre>
+server.get('/', (req, res) => {
+  res.json({message: 'hi, there.'})
+})</pre>
+      <div>查询路由参数 req.query - 使用?拼接值对，如 /detail?id=100</div>
       <pre>
 server.get('/detail', (req, res) => {
-  res.send(req.query)
-})      </pre>
-      <div>动态路由 params - 拼接路径；/detail/:id</div>
+  console.log(req.query);
+})</pre>
+      <div>动态路由参数 req.params - 使用/拼接，如 /detail/:id</div>
       <pre>
 server.get('/detail/:id', (req, res) => {
-  res.send(req.params)
-})      </pre>
+  console.log(req.params);
+})</pre>
+    </dd>
+    <dt>POST 路由</dt>
+    <dd>
+      <div>提交的数据，在 req.body 中获取</div>
+      <div>表单默认方式提交 application/x-www-form-urlencoded </div>
+      <div>提交 JSON 数据；更广泛</div>
+      <div>应在使用路由前提取准备好中间件</div>
+      <pre>
+// 解析不同类型的请求体
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+
+server.POST('/register', (req, res) => {
+  console.log(req.body);
+})</pre>
+      <div>Front-end：表单提交；页面会跳转；无法直接操作数据；服务器压力大</div>
+      <pre>
+&lt;form action="http://localhost:3000/users/register" method="post"&gt;
+  &lt;input type="text" name="uname"&gt;
+  &lt;input type="password" name="upass"&gt;
+  &lt;button type="submit"&gt;submit&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+      <div>永远不要相信前端提交的数据，一定要白名单过滤，从中筛选需要的数据</div>
+      <div>如订单数据表，除了商品名称和规格数量以及价格、地址等信息外，还有一个未支付标记</div>
+      <div>如果入库的数据中被恶意携带了支付标记。。。</div>
+    </dd>
+    <div>[<span class="iconfont icon-keyboard"></span>] 异步等待请求数据</div>
+    <pre>
+server.get('/detail', async(req, res) => {
+  try {
+    const res= await fetch('https://api.github.com/products?id=' + req.query.id)
+    res.json({
+      status: true,
+      message: 'hi, there.',
+      data: res.data
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: 'Server not available.',
+      error: error
+    })
+  }
+})</pre>
+    <div>[<span class="iconfont icon-keyboard"></span>] JSON 方式提交数据</div>
+    <div>
+      <div>禁止表单默认提交，而是获取数据，单独发起请求</div>
+      <div>需要解决跨域的问题。这里由服务器端解决</div>
+      <div>服务器其它逻辑不变</div>
+      <div>安装依赖</div>
+      <pre>npm i cors</pre>
+      <div>使用中间件</div>
+      <pre>
+const cors = require("cors");
+server.use(cors());
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+
+server.POST('/register', (req, res) => {
+  console.log(req.body);
+})</pre>
+      <div>前端调整如下</div>
+      <pre>
+&lt;form&gt;
+  &lt;input type="text" name="uname"&gt;
+  &lt;input type="password" name="upass"&gt;
+  &lt;button type="submit"&gt;submit&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+      <pre>
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const uname = form.uname.value;
+  const upass = form.upass.value;
+
+  fetch('http://localhost:3000/users/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ uname, upass })
+  })
+    .then(res => res.json())
+    .then(res => console.log(res));
+});</pre>
+      <div>也可以抛弃 &lt;form&gt; 这个壳，获取数据并发起请求</div>
+    </div>
+    <dt>路由模块化</dt>
+    <dd>
+      <div>创建路由文件：使用 express.Router() 和 Module.exports 将路由独立到不同的 JavaScript 文件中</div>
+      <div>导入路由文件：在主 JavaScript 导入 require()</div>
+      <div>使用路由文件：通过中间件的方式使用use()</div>
+      <div>建议创建单独的文件夹如router，存放路由模块文件</div>
+      <div>模块文件 food.js - 处理json数据并返回；可以增加对 food 的增删改查等业务路由</div>
+      <pre>
+const fs = require('fs');
+const express = require('express')
+//MUST
+const router = express.Router()
+
+// 读取JSON数据方法1：同步sync，执行完才继续下一步，会阻塞工作流
+const jsonStr = fs.readFileSync('./public/data/food.json', {
+  encoding: 'utf8'
+});
+const food = JSON.parse(jsonStr);
+//请求格式 url?page=1&pageSize=10
+
+//定义路由
+router.get('/food', (req, res) => {
+  console.log(req.query);
+  let [...arr] = food
+  let start = (req.query.page - 1) * req.query.pageSize;
+  let result = arr.splice(start, req.query.pageSize)
+  res.setHeader('X-Total-Count', food.length);
+  res.send(result);
+});
+
+//MUST
+module.exports = router</pre>
+      <div>主入口文件 index.js</div>
+      <pre>
+//引入 - 注意路径
+const routerFood = require('./router/food')
+
+app.use(routerFood)</pre>
+    </dd>
+    <dd>每个模块都可以有自己的根路由；为了更加精准，使用的时候，可以为不同的模块指定专有路由</dd>
+    <dd>
+      <div>主入口文件 index.js - 改进版</div>
+      <pre>
+//引入 - 注意路径
+const routerFood = require('./router/food')
+
+app.use('/food', routerFood)
+  .use('/order', routerOrder)</pre>
     </dd>
     <dt>方法</dt>
     <dd class="sn">

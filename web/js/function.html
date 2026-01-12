@@ -22,15 +22,14 @@
       <figcaption>mindmap</figcaption>
     </figure>
     <dl>
+      <div class="txt-center txt-xl">DRY - Don't Repeat Yourself</div>
       <dt>概述 Overview</dt>
       <dd>封装需要重复执行的代码，有助于模块化开发 - 黑盒子</dd>
       <dd>可以在任何地方、任何时候调用执行</dd>
       <dd>一等公民 First-class citizens - 可以存储在变量中；可以作为参数；可以作为返回值</dd>
       <dd>函数也是对象</dd>
-      <dd>更多信息，请访问 <a target="_blank"
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions">MDN -
-          Functions</a>、<a target="_blank"
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">MDN -
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions">MDN -
+          Functions</a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">MDN -
           Functions Guide</a></dd>
       <div class="tips">Functions are blocks of code designed to perform a specific task and can be executed when
         called.</div>
@@ -74,6 +73,16 @@ function 函数名 (形式参数列表) {
       <dd>逻辑处理过程中，可以随时使用 return退出函数，如数组遍历中，已经拿到了需要的数据，不需要继续执行后面的代码</dd>
       <dd>推荐：让函数始终都返回一个值，便于调试</dd>
       <dd>返回值可以是函数；返回的函数仍然需要执行才能拿到最后的结果</dd>
+      <div>[<span class="iconfont icon-keyboard"></span>] 封装成功请求的结果返回</div>
+      <pre>
+function success(res, data={}, message={},code=200) { 
+  res.status(code).json({
+    status: true,
+    message,
+    code
+  })
+}</pre>
+      <dd>参数指定默认值</dd>
       <dt>函数表达式 Function Expression</dt>
       <dd>函数没有名称，而且位于一条赋值语句右边，被赋给一个常量，又叫 <span class="warn">匿名函数</span></dd>
       <dd>因为是赋值语句，所以最好末尾加上;</dd>

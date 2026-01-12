@@ -21,6 +21,27 @@
       margin-top: 1em;
       font-weight: normal;
     }
+
+    .heading-title {
+      display: grid;
+      place-items: center;
+      padding-top: 4rem;
+    }
+
+    .heading-title p {
+      width: 120px;
+      text-align: center;
+      padding: 4px var(--p-m-g);
+      border-radius: var(--p-m-g);
+      background-color: rgba(var(--warn-alpha-color), var(--alpha, 1));
+      color: #fff;
+    }
+
+    .heading-title div {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
   </style>
 </head>
 
@@ -30,9 +51,24 @@
     <span>&commat;Route</span>
   </header>
   <dl>
-    <dd class="heading-title"><span>部署路由环境</span> <span>↓</span> <span>创建路由</span> <span>↓</span> <span>使用路由</span>
-      <span>↓</span> <span>渲染路由</span>
-    </dd>
+    <figure>
+      <div class="heading-title">
+        <p style="--alpha:0.4">部署路由环境</p>
+        <span>↓</span>
+        <p style="--alpha:0.6">创建路由</p>
+        <span>↓</span>
+        <div style="--alpha:0.8;">
+          <p>声明式导航</p>
+          <span>←</span>
+          <p>使用路由</p>
+          <span>→</span>
+          <p>编程式导航</p>
+        </div>
+        <span>↓</span>
+        <p style="--alpha:1.0">渲染路由</p>
+      </div>
+      <figcaption>Router & Route</figcaption>
+    </figure>
     <dt>Deployment</dt>
     <dd>
       <div>方案1：<a href="https://router.vuejs.org/zh/installation.html">单独安装路由</a>并引入，比较麻烦，不推荐</div>
@@ -364,8 +400,8 @@ const router = createRouter({
           <summary>meta</summary>
           <dl>
             <dd>路由元数据 <a href="./userouter.html#meta">meta</a></dd>
-            <dd>指定元信息，方便路由引用</dd>
-            <dd>如 <a href="./router_guard.html#meta">导航守卫</a> 时，更新页面标题；显示主导航菜单</dd>
+            <dd>指定元信息，方便路由引用，拓展业务，如传递参数</dd>
+            <dd>常见应用：<a href="./router_guard.html#meta">导航守卫</a> 时，更新页面标题；显示主导航菜单</dd>
             <pre>
   {
     path: "/mall",
@@ -377,8 +413,8 @@ const router = createRouter({
         </details>
         <details data-title="beforeEnter">
           <summary>beforeEnter</summary>
-          <div>路由独享的守卫 <a href="./router_guard.html">beforeEnter</a></div>
-          <div>当前路由切换时触发，用以控制访问</div>
+          <div>当前路由的控制访问</div>
+          <div>更多信息，请访问 <a href="./router_guard.html">路由守卫</a></div>
         </details>
         <details data-title="props">
           <summary>props</summary>

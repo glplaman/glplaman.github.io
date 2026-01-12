@@ -31,24 +31,62 @@
 </head>
 
 <body>
-  <div id="app">
-    <div @click="age++">{{ age }}</div>
+  <div>
+    <form>
+      <input type="text" name="uname">
+      <input type="password" name="upass">
+      <button type="submit">submit</button>
+    </form>
   </div>
+  <script>
+    const form = document.querySelector('form');
+    // form.addEventListener('submit', (e) => {
+    //   e.preventDefault()
+    //   const formData = new FormData(form)
+    //   console.log(formData.get('uname'), formData.get('upass'));
+    //   fetch('http://localhost:3000/users/register', {
+    //     method: 'POST',
+    //     body: formData
+    //   }).then(res => res.json()).then(res => {
+    //     console.log(res);
+    //   })
+    // })
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const uname = form.uname.value;
+      const upass = form.upass.value;
 
-  <script type="module">
+      fetch('http://localhost:3000/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ uname, upass })
+      })
+        .then(res => res.json())
+        .then(res => console.log(res));
+    });
+  </script>
+  <!-- <div id="app">
+    <div @click="age++">{{ age }}</div>
+  </div> -->
+
+  <!-- <script type="module">
     import { createApp, ref, computed } from '/utils/lib/vue.esm-browser.js'
     const app = createApp({
       setup() {
-        // data
         let age = ref(18)
-        // function
         return {
           age
         }
       }
     })
+    console.log(app.config);
+    for (let key in app.config) {
+      console.log(key, app.config[key]);
+    }
     app.mount('#app')
-  </script>
+  </script> -->
 </body>
 
 </html>

@@ -6,16 +6,16 @@
   --second-color: #34ace0;
   --third-color: #ff7b00;
   --pink-color: #c5237a;
-  --pink-light-color: #FCCFE9;
-  --tbl-header-color: #eaf6e9;
+  --pink-light-color: #fccfe9;
   --warn-color: #9f103a;
   --pre-color: #dcdcaa;
   --bg-color: #fff;
   --txt-color: #111;
-  --shadow-color: rgba(0, 0, 0, .1);
+  --shadow-color: rgba(0, 0, 0, 0.1);
   --tips-color: #edf8db;
-  --tips-bold-color: #2ed573;
-  --paper: #F5F5DC;
+  --tips-bold-color: #1ac388;
+  --table-color: #1ac388;
+  --paper: #f5f5dc;
   --w: 1024px;
   --header-h: 240px;
   --nav-h: 80px;
@@ -87,9 +87,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+  color: var(--warn-color);
   font: inherit;
+  text-decoration: none;
 }
 
 h1,
@@ -116,24 +116,24 @@ ol {
   list-style: none;
 }
 
-ul>li::before {
-  content: '. ';
+ul > li::before {
+  content: ". ";
 }
 
 ul p::before {
-  content: '- ';
+  content: "- ";
 }
 
-ol>li {
+ol > li {
   counter-increment: list-sn;
 }
 
-ol>li::before {
-  content: counter(list-sn)'. ';
+ol > li::before {
+  content: counter(list-sn) ". ";
 }
 
 ol p::before {
-  content: '. ';
+  content: ". ";
 }
 
 dl {
@@ -145,8 +145,8 @@ dt {
   margin: 2rem auto 1rem;
 }
 
-dd>p::before {
-  content: '- ';
+dd > p::before {
+  content: "- ";
 }
 
 figure {
@@ -161,7 +161,7 @@ figcaption {
 }
 
 figcaption::before {
-  content: '图' counter(img-sn)' ';
+  content: "图" counter(img-sn) " ";
 }
 
 img {
@@ -171,7 +171,7 @@ img {
 }
 
 table {
-  width: max(350px, 60%);
+  width: 100%;
   border-collapse: collapse;
   counter-increment: tbl-sn;
   margin: 4rem auto;
@@ -183,11 +183,18 @@ caption {
 }
 
 caption::before {
-  content: '表' counter(tbl-sn)' ';
+  content: "表" counter(tbl-sn) " ";
 }
 
 thead {
-  background-color: var(--tbl-header-color);
+  background-color: var(--table-color);
+  color: #fff;
+}
+table.line thead {
+  background-color: transparent;
+  border-bottom: 1px solid var(--table-color);
+  border-top: 1px solid var(--table-color);
+  color: #111;
 }
 
 th {
@@ -196,8 +203,8 @@ th {
 
 th,
 td {
-  padding-left: .4rem;
-  padding-right: .4rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
 }
 
 table.zebra tbody tr:nth-child(even) {
@@ -209,7 +216,7 @@ pre {
   padding: var(--p-m-g);
   background-color: var(--txt-color);
   border-radius: 6px;
-  font-family: 'Inconsolata', 'Courier New', Courier;
+  font-family: "Inconsolata", "Courier New", Courier;
   overflow: auto;
   margin: var(--p-m-g) auto;
 }
@@ -250,7 +257,7 @@ textarea {
 }
 
 .w::before {
-  content: '';
+  content: "";
   width: 1px;
   height: 100%;
   position: absolute;
@@ -261,7 +268,7 @@ textarea {
 }
 
 .w::after {
-  content: '';
+  content: "";
   width: 1px;
   height: 100%;
   position: absolute;
@@ -314,16 +321,7 @@ strong,
   text-indent: 2em;
 }
 
-.quote {
-  font-size: 1.4rem;
-  text-align: right;
-}
-
-.quote::before {
-  content: '-';
-}
-
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   html {
     font-size: 60%;
   }
