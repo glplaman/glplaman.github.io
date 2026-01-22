@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>集合 Set</title>
+  <link rel="stylesheet" href="/css/reset.css" />
+  <base target="_blank" />
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>集合</h1>
+      <span>&commat;Set</span>
+    </header>
+    <dl>
+      <dd>ES6 新增数据类型</dd>
+      <dd>数据类型仍然归类于 Object</dd>
+      <dd>Set 的设计初衷是只存储唯一值的集合，不像 Object/Map 那样是键值对</dd>
+      <dd>Set 结构通常没有键名，只有键值；或者说键名和键值是同一个值</dd>
+      <dd>Set 更多的是 <strong>存储值和使用值</strong></dd>
+      <dd>为了与 Map 接口保持一致，也提供了类似的键值方法</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN
+          - Set</a></dd>
+      <dd>使用构造函数</dd>
+      <pre>let set = new Set()</pre>
+      <dd>使用迭代对象</dd>
+      <pre>let set = new Set([1,2,3])</pre>
+      <pre>let set = new Set([{id:0},{id:1},{id:2}])</pre>
+      <dt>实例属性 Instance Properties</dt>
+      <table>
+        <caption>Instance properties</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>size</td>
+            <td>大小</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>实例方法 Instance Methods</dt>
+      <table>
+        <caption>Instance methods</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>add(key,value)</td>
+            <td>增；没有增加；有则改之</td>
+          </tr>
+          <tr>
+            <td>delete(key)</td>
+            <td>删</td>
+          </tr>
+          <tr>
+            <td>get(key)</td>
+            <td>查</td>
+          </tr>
+          <tr>
+            <td>clear()</td>
+            <td>清</td>
+          </tr>
+          <tr>
+            <td>has(key)</td>
+            <td>是否存在</td>
+          </tr>
+          <tr>
+            <td>forEach()</td>
+            <td>遍历</td>
+          </tr>
+          <tr>
+            <td>values()</td>
+            <td>值集</td>
+          </tr>
+          <tr>
+            <td>keys()</td>
+            <td>键集</td>
+          </tr>
+          <tr>
+            <td>entries()</td>
+            <td>迭代对象；包含 Map 对象中所有键值对 [key, value] 二元数组</td>
+          </tr>
+          <tr>
+            <td>union()</td>
+            <td>并集</td>
+          </tr>
+          <tr>
+            <td>difference()</td>
+            <td>差集</td>
+          </tr>
+          <tr>
+            <td>intersection()</td>
+            <td>交集</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo"> 链式使用</div>
+      <pre>let len=set.add(1).add(2).add(1).size</pre>
+      <div class="demo"> Set 转换成 Array</div>
+      <dd>
+        <div>使用数组方法构建 Array.from(set)</div>
+        <pre>let arr = Array.from(set)</pre>
+        <div>使用扩展运算符 ... 直接展开</div>
+        <pre>let arr = [...set]</pre>
+      </dd>
+      <div class="demo"> 遍历集合；set 是某个集合</div>
+      <dd>of</dd>
+      <pre>
+for (let item of set) {
+  console.log(item);
+}</pre>
+      <dd>forEach</dd>
+      <pre>
+set.forEach(item => {
+  console.log(item);
+})</pre>
+    </dl>
+    <h2>应用 Application</h2>
+    <dl>
+      <dd>Set 的主要价值在于它的 <strong>自动去重</strong> 和 <strong>高效的成员检测</strong></dd>
+      <dt>现实场景</dt>
+      <dd>合并多个数据源，比如本地缓存 + 网络新数据，可能有交集</dd>
+      <dd>用户多次点击导致重复提交，前端未防抖，造成同一项被多次加入列表</dd>
+      <dd>分页/筛选切换时状态管理错误，导致旧数据和新数据混合</dd>
+      <dd>测试或 mock 数据不规范，开发阶段临时数据可能重复</dd>
+      <div class="demo"> 简单数组去重</div>
+      <dd>先把 Array 转换为 Set</dd>
+      <dd>再把 Set 转换为 Arrayy</dd>
+      <pre>
+let arr = [1, 2, 3, 4, 5, 3, 2, 5, 6, 7, 8]
+arr = [...Array.from(new Set(arr))]
+console.log(arr);</pre>
+      <div class="demo"> 字符串去重</div>
+      <pre>
+let str='helloworld'
+let set=[...new Set(str)]</pre>
+      <div class="demo"> 对象数组去重</div>
+      <dd>去除 id 相同的值</dd>
+      <pre>
+let arr = [
+  { id: 1, name: 'Alice' },
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+];</pre>
+      <dd>生成 key 唯一 的 Map</dd>
+      <pre>let map = new Map( arr.map(item=>[item.id,item]))</pre>
+      <dd>获取 Map 的值</dd>
+      <pre>let vals = map.values()</pre>
+      <div>使用扩展运算符 ...</div>
+      <pre>arr = [... vals]</pre>
+      <div>一步到位</div>
+      <pre>arr =[... new Map(arr.map(item=>[item.id, item])).values()]</pre>
+      <dd>虽然我们可以事后去重，但更优的做法是在数据进入集合前就防止重复</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    let arr = [1, 2, 3, 4, 5, 3, 2, 5, 6, 7, 8]
+    arr = [...new Set(arr)]
+  </script>
+</body>
+
+</html>

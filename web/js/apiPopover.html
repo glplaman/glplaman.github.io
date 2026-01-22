@@ -49,8 +49,8 @@
     <nav>
       <h1>弹窗</h1>
       <span>&commat;Popover</span>
-      <span class="iconfont icon-menu ham"></span>
-      <div class="nav">
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <div class="nav" id="nav">
         <a href="" style="--delay:0" class="nav-item">Attributes</a>
         <a href="" style="--delay:1" class="nav-item">Style</a>
         <a href="" style="--delay:2" class="nav-item">Methods</a>
@@ -74,7 +74,7 @@
       <dt>popover</dt>
       <dd>弹窗指定 popover 属性：自动 auto | 手动 manual | hint 提示框；默认是自动切换</dd>
       <dd>弹窗分配 id，关联到触发元素目标属性；也用于区分用多个弹窗</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 基本示例</div>
+      <div class="demo"> 基本示例</div>
       <div>
         <button popovertarget="mypopover">Popover</button>
         <div class="popover" id="mypopover" popover>Popover content</div>
@@ -101,7 +101,7 @@
 .mypopover::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 背景示例</div>
+      <div class="demo"> 背景示例</div>
       <div>
         <button popovertarget="popover-bg">Popover with bg</button>
         <div class="popover bg" id="popover-bg" popover>Popover content</div>
@@ -111,7 +111,7 @@
 .mypopover::backdrop {
   backdrop-filter: blur(5px);
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 背景模糊示例</div>
+      <div class="demo"> 背景模糊示例</div>
       <div>
         <button popovertarget="popover-filter">Popover with filter</button>
         <div class="popover filter" id="popover-filter" popover>Popover content</div>
@@ -139,7 +139,7 @@
   overflow: auto;
 }</pre>
       <dd>通过覆盖或重写来定制显示位置</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定位在右上角</div>
+      <div class="demo"> 定位在右上角</div>
       <dd>为 Popover 指定类 pos</dd>
       <div>
         <button popovertarget="popover-pos">Popover with position</button>
@@ -183,7 +183,7 @@
           </tr>
         </tbody>
       </table>
-      <div>[<span class="iconfont icon-keyboard"></span>] 按下 h/H 查看或关闭帮助</div>
+      <div class="demo"> 按下 h/H 查看或关闭帮助</div>
       <dd>获取元素实例并分配方法</dd>
       <pre>
 const popover = document.querySelector("#popover-filter");
@@ -215,7 +215,7 @@ document.addEventListener("keydown", (e) => {
           </tr>
         </tbody>
       </table>
-      <div>[<span class="iconfont icon-keyboard"></span>] 自动关闭</div>
+      <div class="demo"> 自动关闭</div>
       <dd>打开时，启动定时器</dd>
       <dd>3s 后关闭</dd>
       <dd>使用元素方法 <a href="./dom_element.html">Matches()</a> 匹配伪类 :popover-open</dd>
@@ -236,7 +236,7 @@ popoverEvent.addEventListener("toggle", (e) => {
     </dl>
     <div id="footer"></div>
   </div>
-  <a class="back2top" href="#" target="_self">
+  <a class="back2top" id="back2top" href="#" target="_self">
     <span class="iconfont icon-top"></span>
   </a>
   <script src="/utils/custom/footer.js"></script>

@@ -7,24 +7,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>事件 Event Handling</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
 </head>
 
 <body>
   <div class="w">
     <header>
-    </header>
-    <nav>
       <h1>事件</h1>
       <span>&commat;Event Handling</span>
-    </nav>
+    </header>
     <dl>
       <dt>Introduction</dt>
       <dd>使用原生方式 onXXX 添加交互；handleClick 是事件处理函数</dd>
-      <pre>&lt;div onClick = {handleClick}&gt;click me&lt;div&gt;</pre>
+      <dd>不支持事件侦听</dd>
+      <dd>定义一个事件处理函数 - define a function</dd>
+      <dd>以属性的形式传递给结构 - pass it as a prop to the appropriate tag</dd>
+      <dd>事件处理函数通常使用 handle 作为前缀，如 handlexxx</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/learn/responding-to-events">Responding to Events</a></dd>
+      <div class="demo">示例</div>
+      <pre>
+function Button() {
+  const handleClick = () => {
+    console.log('click');
+  };
+  return (
+    &lt;&gt;
+      &lt;button onClick={handleClick}&gt;Click me&lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+export default Button;</pre>
+      <dd>简单逻辑，可以使用内联事件 Inline event</dd>
+      <pre>
+function Button() {
+  return (
+    &lt;&gt;
+      &lt;button onClick={()=>alert('hi,there.')}&gt;Click me&lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+export default Button;</pre>
       <table>
-        <caption>normal</caption>
+        <caption>常见事件</caption>
         <thead>
           <tr>
             <th>item</th>
@@ -38,8 +62,33 @@
           </tr>
         </tbody>
       </table>
+      <dt>Reading props in event handlers</dt>
+      <dd>以属性的形式，传递参数</dd>
+    </dl>
+    <h2>Form</h2>
+    <dl>
+      <dd>区分表单事件和表单元素事件</dd>
       <table>
-        <caption>form</caption>
+        <caption>表单事件</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>onSubmit</td>
+            <td>提交</td>
+          </tr>
+          <tr>
+            <td>onReset</td>
+            <td>重置</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>表单元素事件</caption>
         <thead>
           <tr>
             <th>item</th>
@@ -52,15 +101,61 @@
             <td>改变</td>
           </tr>
           <tr>
-            <td>onSubmit</td>
+            <td>onInput</td>
             <td>提交</td>
+          </tr>
+          <tr>
+            <td>onFocus</td>
+            <td>获取焦点</td>
+          </tr>
+          <tr>
+            <td>onBlur</td>
+            <td>失去焦点</td>
           </tr>
         </tbody>
       </table>
+      <div class="demo">示例</div>
+      <dd>阻止表单的默认提交</dd>
+      <dd>绑定 value 实现双向数据</dd>
+      <pre>
+import { useState } from 'react';
+function Login() {
+  const [uname, setUname] = useState('');
+  const [upass, setUpass] = useState('');
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(e);
+    alert(`'uname',${uname},'upass',${upass}`);
+    setUname('');
+    setUpass('');
+  };
+  return (
+    &lt;&gt;
+      &lt;form onSubmit={handleSubmit}>
+        &lt;input
+          type="text"
+          placeholder="your name"
+          value={uname}
+          name="uname"
+          onChange={(e) => setUname(e.target.value)}
+        /&gt;
+        &lt;input
+          type="password"
+          placeholder="your pass"
+          value={upass}
+          name="upass"
+          onChange={(e) => setUpass(e.target.value)}
+        /&gt;
+        &lt;button type="submit"&gt;submit&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+export default Login;</pre>
     </dl>
     <h2>Homework</h2>
     <dl>
-      <div>[<span class="iconfont icon-keyboard"></span>] </div>
+      <div class="demo"> </div>
     </dl>
     <div id="footer"></div>
   </div>

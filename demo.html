@@ -4,67 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    @import url(/css/fonts_Lato.css);
-
-    :root {
-      --bg-color: #fff;
-      --txt-color: #000;
-      --main-color: #c0392b;
-      --second-color: #e74c3c;
-    }
-
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      font-family: 'Lato', 'Microsoft YaHei';
-    }
-
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #000;
-    }
-
-    .radar {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid #0f0;
-    }
-
-    .radar::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 50%;
-      height: 50%;
-      background-image: linear-gradient(45deg, #0f0, transparent 50%);
-      animation: scan 5s linear infinite;
-      transform-origin: left top;
-    }
-
-    @keyframes scan {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
+  <title>Demo</title>
 </head>
 
 <body>
-  <div class="radar"></div>
+  <script>
+    const address = { district: "xxx", city: "ay", province: "gx", code: "455112" }
+    console.log(Object.keys(address));
+    console.log(Object.values(address));
+    console.log(Object.entries(address));
+    let tmp = Object.entries(address).map(([key, value]) => {
+      return `${key}: ${value}`
+    })
+    console.log(tmp);
+
+  </script>
 </body>
 
 </html>

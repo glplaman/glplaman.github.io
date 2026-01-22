@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>样式 Style</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>样式</h1>
+      <span>&commat;Style</span>
+    </header>
+    <dl>
+      <dt>Class</dt>
+      <dd>样式类</dd>
+      <dd>先引入样式文件，再使用</dd>
+      <dd>使用 <strong>className</strong>，不是 class</dd>
+      <dd>整体使用单花括号 {}</dd>
+      <div class="demo">使用静态样式类</div>
+      <dd>组件引入样式文件 demo.cs；.warn .bold 是其中的一个样式类</dd>
+      <dd>注意路径</dd>
+      <pre>import './demo.css';</pre>
+      <dd>组件使用样式类；单个或多个类</dd>
+      <pre>&lt;div className = "warn"&gt;Notice&lt;/div&gt;</pre>
+      <pre>&lt;div className = "bold warn"&gt;Notice&lt;/div&gt;</pre>
+      <div class="demo">使用动态类 - 导航菜单</div>
+      <dd>包括基本样式和高亮样式</dd>
+      <dd>菜单项选中时，应用高亮样式 active</dd>
+      <dd>ind 是响应式数据，表示当前选择的菜单项</dd>
+      <dd>使用三元表达式 ?:</dd>
+      <pre>
+&lt;div className={ind == 0 ? "active" : ""}&gt;home&lt;/div&gt;
+&lt;div className={ind == 1 ? "active" : ""}&gt;work&lt;/div&gt;
+&lt;div className={ind == 2 ? "active" : ""}&gt;team&lt;/div&gt;
+&lt;div className={ind == 3 ? "active" : ""}&gt;about&lt;/div&gt;</pre>
+      <dd>多个类的情况下，使用模板字符串</dd>
+      <dd>整体使用嵌套双花括号 {{}}</dd>
+      <pre>&lt;div className={`link ${ind == 3 ? "active" : ""}`}&gt;about&lt;/div&gt;</pre>
+      <div class="demo">使用动态类 - 表单验证</div>
+      <dd>使用 &lt;input&gt; 的 text</dd>
+      <dd>密码长度不够，以告警类 warn，如红色字体提示</dd>
+      <pre>&lt;div className={upass.length &lt; 6 ? "warn" : ""}&gt;length at leaset 6&lt;/div&gt;</pre>
+      <div>提前 <strong>计算 derived state</strong> 类名；适合复杂条件</div>
+      <pre>const warnClass=upass.length &lt; 6 ? "warn" : ""</pre>
+      <pre>&lt;div className={warnClass}&gt;length at leaset 6&lt;/div&gt;</pre>
+      <div class="demo">使用动态类 - 用户须知</div>
+      <dd>使用 &lt;input&gt; 的 checkbox</dd>
+      <dd>单击后为真，否则为假</dd>
+      <dd>flag 和 setFlag 为响应式数据</dd>
+      <dd>e.target.value 默认是 on，和是否选中无关</dd>
+      <dd>应检查 e.target.checked</dd>
+      <pre>
+&lt;label&gt;
+  &lt;input type="checkbox" name="cb" onChange={(e) =&gt; setFlag(e.target.checked)} /&gt;
+  &lt;span className={flag ? "" : "warn"}&gt;Lorem ipsum dolor sit.&lt;/span&gt;
+&lt;/label&gt;</pre>
+      <dd>直接取反</dd>
+      <pre>
+&lt;label&gt;
+  &lt;input type="checkbox" name="cb" onChange={() =&gt; setFlag(!flag)} /&gt;
+  &lt;span className={flag ? "" : "warn"}&gt;Lorem ipsum dolor sit.&lt;/span&gt;
+&lt;/label&gt;</pre>
+      <div class="demo">使用动态类 - 切换主题</div>
+      <dd>使用下拉菜单 &lt;select&gt;</dd>
+      <dd>theme 和 setTheme 是响应式数据</dd>
+      <dd>dark 和 light 是对应的主题样式类</dd>
+      <pre>
+&lt;select name="theme" onChange={(e) => setTheme(e.target.value)}&gt;
+  &lt;option value=""&gt;Please Select&lt;/option&gt;
+  &lt;option value="dark"&gt;dark&lt;/option&gt;
+  &lt;option value="light"&gt;light&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;div className={theme}&gt;hi,there&lt;/div&gt;</pre>
+      <dt>Style</dt>
+      <dd>内联样式 inline style</dd>
+      <dd>整体使用双花括号 {{}}</dd>
+      <dd>复合属性使用小驼峰，如 fontSize；不支持连字符 -</dd>
+      <dd>属性值使用引号</dd>
+      <div class="demo">静态样式</div>
+      <pre>&lt;div style={{fontWeight: '600'}}&gt;hi,there.&lt;/div&gt;</pre>
+      <pre>&lt;div style={{color: '#f40'}}&gt;hi,there.&lt;/div&gt;</pre>
+      <pre>&lt;div style={{borderBottom: '1px solid #f40'}}&gt;hi,there.&lt;/div&gt;</pre>
+      <div class="demo">动态样式；其中，m 是响应式数据</div>
+      <pre>&lt;div style={{margin: m + 'px'}}&gt;hi,there.&lt;/div&gt;</pre>
+      <pre>&lt;div style={{fontSize: m + 'px'}}&gt;hi,there.&lt;/div&gt;</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

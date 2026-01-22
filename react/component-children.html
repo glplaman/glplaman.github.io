@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件嵌套 Children</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>组件嵌套</h1>
+      <span>&commat;Children</span>
+    </header>
+    <dl>
+      <dd>像普通 html 标签嵌套那样，使用 children 实现组件嵌套</dd>
+      <dd>在组件内部整合</dd>
+      <pre>
+&lt;Super&gt;
+  &lt;Child /&gt;
+&lt;/Super&gt;</pre>
+      <dd>引入组件</dd>
+      <pre>import Rank from "./Rank";</pre>
+      <dd>创建组件；使用 children 属性为嵌套的组件预留位置；可以是任何内容，如多个组件</dd>
+      <pre>
+function Desc({ children }) {
+  return (
+    &lt;div className="desc"&gt;
+      &lt;p&gt;desc content start&lt;/p&gt;
+      {children}
+      &lt;p&gt;desc content end&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+      <dd>整合组件；可以使用多个组件</dd>
+      <pre>
+export default function Card() {
+  return (
+    &lt;&gt;
+      &lt;Avatar /&gt;
+      &lt;Desc&gt;
+        &lt;Rank /&gt;
+      &lt;/Desc&gt;
+    &lt;/&gt;
+  );
+}</pre>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <div class="demo"> 卡片组件进阶</div>
+      <dd>参考以下结构设计</dd>
+      <pre>
+&lt;&gt;
+  &lt;Avatar /&gt;
+  &lt;Desc&gt;
+    &lt;Skill /&gt;
+    &lt;Rank /&gt;
+  &lt;/Desc&gt;
+  &lt;Foot /&gt;
+&lt;/&gt;</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

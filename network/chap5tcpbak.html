@@ -165,7 +165,7 @@
       <dd>2byte</dd>
       <dt>目标端口 Destination Port</dt>
       <dd>2byte</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 端口应用</div>
+      <div class="demo"> 端口应用</div>
       <dd>客户端在端口49155向目标主机80端口的应用[WEB]发起HTTP请求</dd>
       <dd>服务端在80端口处理请求后，回发一个响应经过49155端口给客户端</dd>
       <dt>序号 Sequence Number</dt>
@@ -176,7 +176,7 @@
       </dd>
       <dd>增加到最大值后，重新回到0 - 模加</dd>
       <dd>第1个随机产生</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 序号应用</div>
+      <div class="demo"> 序号应用</div>
       <dd>TCP 报文长度 MSS 为1000byte；现有5000byte数据；加上初始序号为1001</dd>
       <dd>则：
         <p>第一个 TCP 报文：1001 - 2000</p>
@@ -185,7 +185,7 @@
         <p>第四个 TCP 报文：4001 - 5000</p>
         <p>第五个 TCP 报文：5001 - 6000</p>
       </dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 序号应用</div>
+      <div class="demo"> 序号应用</div>
       <dd>发送方要发送一个 1000 byte的数据流，初始序号为 100：
         <p>第一个 TCP 段携带 500 byte，则其序号为 100</p>
         <p>第二个 TCP 段携带剩下的 500 byte，则其序号为 100 + 500 = 600</p>
@@ -218,13 +218,13 @@
         <p>1. 使用ACK表示确认号，除非特别说明是控制位；如ACK = 101，表示希望收到101序号的字节数据；序号100之前的数据已经收讫；默认控制位为1</p>
         <p>2. 使用大小写区分；ACK表示控制位；ack表示确认号，如下例</p>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
+      <div class="demo"> 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
       <div>A: ACK = 0；ack = 701</div>
       <div>B: ACK = 1；ack = 701</div>
       <div>C: ACK = 0；ack = 700</div>
       <div>D: ACK = 1；ack = 700</div>
       <!-- B -->
-      <div>[<span class="iconfont icon-keyboard"></span>] 序号和确认号应用</div>
+      <div class="demo"> 序号和确认号应用</div>
       <dd>A发送序号为201开始的报文，长度是100</dd>
       <dd>下一次发送时，A 的序号将变为 301</dd>
       <dd>同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</dd>
@@ -460,14 +460,14 @@
         <img src="./imgs/arq5.png" alt="">
         <figcaption>发送窗口</figcaption>
       </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] 窗口应用</div>
+      <div class="demo"> 窗口应用</div>
       <dd>假设发送窗口大小 = 4，当前可发送分组 [1, 2, 3, 4]</dd>
       <dd>发送 1 - 4</dd>
       <dd>收到 ACK=3，表示 1、2 已收到，等待接收 3</dd>
       <dd>1、2移出窗口，后面的分组补进来并发出去，等待确认</dd>
       <dd>其它没有收到确认的 3、4，保留，以备超时重传</dd>
       <dd>窗口滑动到 [3, 4, 5, 6]</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 已知发送窗口大小为500，某主机收到的确认号为201。如果已经发送了300B的数据，则还可以发送多少数据？
+      <div class="demo"> 已知发送窗口大小为500，某主机收到的确认号为201。如果已经发送了300B的数据，则还可以发送多少数据？
       </div>
       <dd>发送了300B，对方确认了200B</dd>
       <dd>还有100B没有确认</dd>
@@ -514,7 +514,7 @@
       <dd>若收到窗口仍为 0，则重启计时器，继续等待
         <p>ACK = 1; rwnd = 0</p>
       </dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 流量控制</div>
+      <div class="demo"> 流量控制</div>
       <dd>A 向 B 发送数据，MSS = 100 字节</dd>
       <dd>在连接建立时，B 告诉 A：我的接收窗口 rwnd = 400字节</dd>
       <dd>右侧为A的发送方窗口</dd>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>钩子函数 useEffect</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>钩子函数</h1>
+      <span>&commat;useEffect</span>
+    </header>
+    <dl>
+      <dd>将组件与外部系统同步</dd>
+      <dd>先引入再使用</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/reference/react/useEffect">useEffect()</a> </dd>
+      <dt>Syntax</dt>
+      <pre>useEffect(setup, dependencies?)</pre>
+      <div class="tips">
+        <p>在开发环境中，React 会故意调用某些函数两次，以帮助发现潜在问题</p>
+        <p>确保您的副作用函数（如 API 调用）是幂等的，即多次调用不会产生副作用</p>
+        <p>React 的开发模式调试特性，只在开发环境出现，生产环境不会发生</p>
+      </div>
+      <div class="demo">示例</div>
+      <dd>引入</dd>
+      <pre>import { useEffect } from "react";</pre>
+      <dd>使用</dd>
+      <pre>
+useEffect(()=>{
+  console.log("components init");  
+}, [])</pre>
+      <div class="demo">加载数据</div>
+      <dd>创建函数</dd>
+      <pre>
+const getRank = async () => {
+  let res = await fetch("https://glplaman.github.io/utils/data/rank/202501.json");
+  let data = await res.json();
+  return data;
+};</pre>
+      <dd>在钩子中使用函数</dd>
+      <pre>
+useEffect(() => {
+  getRank();
+}, []);</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

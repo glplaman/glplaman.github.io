@@ -7,46 +7,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>渲染 Rendering</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
 </head>
 
 <body>
   <div class="w">
     <header>
-    </header>
-    <nav>
       <h1>渲染</h1>
       <span>&commat;Rendering</span>
-    </nav>
+    </header>
     <dl>
       <dt>Introduction</dt>
-      <dd>vdom</dd>
+      <dd>使用 {} 绑定状态/响应式数据 - Curly braces</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/learn#displaying-data">Displaying data</a></dd>
+      <dd>内容绑定</dd>
+      <pre>&lt;div&gt;{msg}&lt;/div&gt;</pre>
+      <dd>属性绑定</dd>
+      <pre>&lt;div className={flag ? 'active' : ''}&gt;{msg}&lt;/div&gt;</pre>
     </dl>
     <h2>Conditional rendering</h2>
     <dl>
-      <dd>if statement</dd>
-      <dd>Show some content conditionally</dd>
-      <dt>conditional ? operator</dt>
-      <pre>show ? &lt;p&gt;hi,there.&lt;/p&gt;</pre>
-      <dt>logical && syntax</dt>
+      <dd>条件渲染 - Show some content conditionally</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/learn#conditional-rendering">Conditional rendering </a>、<a
+          href="https://react.dev/learn/conditional-rendering">Conditional rendering</a></dd>
+      <dt>if</dt>
+      <dd>在逻辑中使用</dd>
+      <dd>无法在结构中直接使用</dd>
+      <pre>
+const getAge = (age) => {
+  if (age > 18) {
+    return "成年";
+  } else {
+    return "未成年";
+  }
+};</pre>
+      <pre>&lt;p&gt;{getAge(user.age)}&lt;p&gt;</pre>
+      <dt><a href="https://react.dev/learn/conditional-rendering#conditional-ternary-operator--">?:</a></dt>
+      <dd>三元操作符 ternary operator</dd>
+      <dd>直接在结构中使用数据，适合简单逻辑</dd>
+      <pre>&lt;button disabled={isLoading}&gt;submit&lt;/button&gt;</pre>
+      <pre>&lt;div&gt;{isLoading ? "加载中" : ""}&lt;/div&gt;</pre>
+      <pre>&lt;p&gt;{age > 18 ? "成年" : "未成年"}&lt;p&gt;</pre>
+      <dd>先在逻辑中处理好数据，再在结构中使用</dd>
+      <pre>
+const age: number = 18;
+const getAge = age > 18 ? "成年" : "未成年";</pre>
+      <pre>&lt;p&gt;{getAge}&lt;p&gt;</pre>
+      <dt><a href="https://react.dev/learn/conditional-rendering#logical-and-operator-">&&</a></dt>
+      <dd>先判断数据是否符合要求再使用；代码更健壮</dd>
+      <dd>如数据是否存在？数组长度是否为空？</dd>
       <pre>show && &lt;p&gt;hi,there.&lt;/p&gt;</pre>
-      <dt>if-else statement</dt>
     </dl>
     <h2>Rendering lists</h2>
     <dl>
-      <dd>Displaying a list</dd>
-      <dd>key attribute</dd>
+      <dd>列表渲染 - Displaying a list</dd>
+      <dd>渲染集合中的数据，如数组</dd>
+      <dd>使用 key 区分数据项</dd>
+      <dd>可以嵌套使用</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/learn#rendering-lists">rendering-lists</a>、<a
+          href="https://react.dev/learn/rendering-lists">Rendering lists</a></dd>
       <dt>map()</dt>
+      <dd>使用 map 可以对数据源进行2次加工</dd>
+      <div class="demo">示例</div>
+      <dd>参考数据</dd>
       <pre>
-items.map(item=>{
-  &lt;div key={item.id}&gt;{ item.desc }&lt;/div&gt;
-})</pre>
-      <dt>for loop</dt>
+const users = [
+  { id: 0, name: "gl", gender: "male" },
+  { id: 1, name: "gz", gender: "female" },
+  { id: 2, name: "sz", gender: "male" },
+];</pre>
+      <dd>先处理数据</dd>
+      <pre>
+const items = users.map((item) => &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;);</pre>
+      <dd>再使用处理好的数据</dd>
+      <pre>&lt;ul&gt;{items}&lt;/ul&gt;</pre>
+      <dt>filter()</dt>
+      <dd>渲染指定数据</dd>
+      <div class="demo">示例</div>
+      <dd>先过滤再渲染</dd>
+      <pre>
+const items = users.filter((item) => item.gender == "male")
+  .map((item) => &lt;li key={item.id}&gt;{item.name}&lt;/li&gt;);</pre>
+    </dl>
+    <h2>Rendering Object</h2>
+    <dl>
+      <dd>无法直接渲染对象</dd>
+      <dd>将其转换为键 key、值 value 或键值后再渲染</dd>
+      <div class="demo">示例</div>
+      <pre>const address={ district: "xxx", city: "ay", province: "gx", code: "455112" }</pre>
+      <dd>使用值 value；key 留空</dd>
+      <pre>&lt;div&gt;{Object.entries(address).map(([, val]) => val)}&lt;/div&gt;</pre>
     </dl>
     <h2>Homework</h2>
     <dl>
-      <div>[<span class="iconfont icon-keyboard"></span>] </div>
+      <div class="demo">综合案例</div>
+      <dd>参考下述数据样本，构建10条用户数据并渲染
+        <p>如果 gender 为 male，显示 男生；否则显示女生</p>
+        <p>如果 age 大于 18，显示成年；否则显示未成年</p>
+        <p>如果某个字段数据缺失，显示暂无</p>
+      </dd>
+      <pre>
+{ 
+  id: 0, 
+  name: "gl", 
+  address: { district: "xxx", city: "ay", province: "gx", code: "455112" }, 
+  work: ['上海', '重庆', '深圳', '桂林'] }</pre>
+      <dd>参考代码</dd>
+      <dd>使用类型定义</dd>
+      <dd>使用函数</dd>
+      <pre>
+import "./demo.css";
+interface Address {
+  district: string;
+  city: string;
+  province: string;
+  code: string;
+}
+
+interface User {
+  id: number;
+  name: string;
+  age: number;
+  gender: string;
+  address: Address;
+  msg: number[];
+}
+
+function Demo() {
+  const users: User[] = [
+    { id: 0, name: "gl", age: 18, gender: "male", address: { district: "xxx", city: "ay", province: "gx", code: "455112" }, msg: [0, 1, 2] },
+    { id: 1, name: "gz", age: 15, gender: "female", address: { district: "yyy", city: "gl", province: "gd", code: "541000" }, msg: [0, 1, 2] },
+    { id: 2, name: "sh", age: 28, gender: "male", address: { district: "zzz", city: "sh", province: "js", code: "200240" }, msg: [0, 1, 2] },
+  ];
+
+  const getMsg = (list: number[]) => {
+    return list.length ? list.map((item) => &lt;li key={item}&gt;{item}&lt;/li&gt;) : "暂无";
+  };
+
+  const getAddress = (obj: Address) => {
+    return Object.entries(obj).map(([key, val]) => &lt;li key={key}&gt;{val}&lt;/li&gt;);
+  };
+
+  const getGender = (gender: string) => (gender == "male" ? "男" : "女");
+
+  const getAge = (age: number) => (age > 18 ? "成年" : "未成年");
+
+  const items = users.map((item) => {
+    return (
+      &lt;li key={item.id}&gt;
+        &lt;p&gt;Name：{item.name}&lt;/p&gt;
+        &lt;p&gt;Age：{getAge(item.age)}&lt;/p&gt;
+        &lt;p&gt;Gender：{getGender(item.gender)}&lt;/p&gt;
+        &lt;p&gt;Address：&lt;/p&gt;
+        &lt;ul&gt;{getAddress(item.address)}&lt;/ul&gt;
+        &lt;p&gt;Message：&lt;/p&gt;
+        &lt;ul&gt;{item.msg.length ? getMsg(item.msg) : "暂无"}&lt;/ul&gt;
+      &lt;/li&gt;
+    );
+  });
+
+  return (
+    &lt;&gt;
+      &lt;ul&gt;{items}&lt;/ul&gt;
+    &lt;&gt;
+  );
+}
+export default Demo;</pre>
     </dl>
     <div id="footer"></div>
   </div>

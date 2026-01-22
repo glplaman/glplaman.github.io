@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组件传参 Props</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>组件传参</h1>
+      <span>&commat;Props</span>
+    </header>
+    <dl>
+      <dd>父组件以属性 Props 的形式分享/传递数据给子组件 - Sharing data between components</dd>
+      <dd>子组件使用/解构使用父组件分享的数据</dd>
+      <dd>anything will be ok as a props</dd>
+      <dd>key: built-in props</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/learn/passing-props-to-a-component">Passing Props to a Component</a></dd>
+      <dt>父组件</dt>
+      <dd>导入子组件</dd>
+      <pre>import Greeting from "./components/Greeting.tsx";</pre>
+      <dd>以属性 props 的形式指定属性 - 传递数据/通信</dd>
+      <pre>&lt;Greeting user="glplaman"&gt;&lt;/Greeting&gt;</pre>
+      <dt>子组件 Greeting.tsx</dt>
+      <dd>在函数中使用 props</dd>
+      <dd>父组件分享的所有数据都在这个对象中</dd>
+      <pre>
+const Greeting = (props) => {
+  return &lt;div&gt;hi, {props.user}&lt;/div&gt;;
+};
+export default Greeting;</pre>
+      <dd>通常从 props 中解构数据，以便更清楚的查看数据</dd>
+      <dd>可以指定默认参数</dd>
+      <pre>
+const Greeting = ({ user = 'glpla' }) => {
+  return &lt;div&gt;hi, {user}&lt;/div&gt;;
+};
+export default Greeting;</pre>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <div class="demo"> 版权组件</div>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

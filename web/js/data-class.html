@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>类 Class</title>
+  <link rel="stylesheet" href="../../css/common.css" />
+  <base target="_blank" />
+</head>
+
+<body>
+  <header>
+    <h1>类</h1>
+    <span>&commat;Class</span>
+  </header>
+  <dl>
+    <dd>ES6 新增数据类型</dd>
+    <dd>数据类型仍然归类于 Object</dd>
+    <dt>class 类</dt>
+    <dd>
+      <div>是一种蓝图或模板</div>
+      <div>用于创建具有相同属性和方法的对象</div>
+      <div>使用关键字 class 定义</div>
+      <div>类名采用大驼峰</div>
+      <div>1. 创建；包括3部分：构造函数、属性和方法</div>
+      <pre>
+class Stu {
+  // part1：constructor
+  constructor(name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  // part2：attributes
+
+  // part3：methods
+  getAge() {
+    return this.age
+  }
+}</pre>
+      <div>2. 使用；实例化</div>
+      <pre>
+let stu = new Stu('gl', 18)
+console.log(stu.getAge());</pre>
+    </dd>
+    <div class="demo"> 分析下面类的特点并思考：类的定义中，哪些地方可以使用 this？哪些地方不可以使用 this？</div>
+    <pre>
+class Singleton {
+  static _instance = null;
+  constructor(name) {
+    if (Singleton._instance) {
+      return Singleton._instance;
+    }
+
+    this.name = name;
+    this.instanceId = Math.random().toString(36).substring(2, 10);
+    Singleton._instance = this;
+
+    return this;
+  }
+
+  static getInstance(name) {
+    if (!Singleton._instance) {
+      Singleton._instance = new Singleton(name);
+    }
+    return Singleton._instance;
+  }
+
+  static resetInstance() {
+    Singleton._instance = null;
+  }
+}</pre>
+    <dt>extends 继承</dt>
+    <dd>
+      <div>继承父类的非私有属性和方法</div>
+      <div>可以增加自己专有的属性和方法</div>
+      <pre>
+class Clert extends Stu {
+  constructor(name, age, position) {
+    super(name, age)
+    this.position = position
+    console.log('clert init');
+  }
+  doPosition() {
+    console.log('my position');
+  }
+}      </pre>
+    </dd>
+  </dl>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+  <!-- <script>
+      class Stu {
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+          console.log("stu init");
+        }
+        getAge() {
+          console.log(this.age);
+          return this.age;
+        }
+      }
+      class Clert extends Stu {
+        constructor(name, age, position) {
+          super(name, age);
+          this.position = position;
+          console.log("clert init");
+        }
+        doPosition() {
+          console.log("my position");
+        }
+      }
+      let clert = new Clert("gl", 18, "full stack");
+      clert.getAge();
+      clert.doPosition();
+    </script> -->
+  <script>
+    class Singleton {
+      static _instance = null;
+      constructor(name) {
+        if (Singleton._instance) {
+          return Singleton._instance;
+        }
+
+        this.name = name;
+        this.instanceId = Math.random().toString(36).substring(2, 10);
+        Singleton._instance = this;
+
+        return this;
+      }
+
+      static getInstance(name) {
+        if (!Singleton._instance) {
+          Singleton._instance = new Singleton(name);
+        }
+        return Singleton._instance;
+      }
+
+      static resetInstance() {
+        Singleton._instance = null;
+      }
+    }
+
+    // 使用示例
+    const instance1 = Singleton.getInstance("first");
+    const instance2 = new Singleton("second"); // 仍返回同一实例
+    const instance3 = Singleton.getInstance("third"); // 仍返回同一实例
+
+    console.log(instance1 === instance2); // true
+    console.log(instance1 === instance3); // true
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>映射 Map</title>
+  <link rel="stylesheet" href="/css/reset.css" />
+  <base target="_blank" />
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>映射</h1>
+      <span>&commat;Map</span>
+    </header>
+    <dl>
+      <dd>ES6 新增数据类型</dd>
+      <dd>数据类型仍然归类于 Object</dd>
+      <dd><strong>存储键值对</strong> - holds key-value pairs</dd>
+      <dd>key 可以是任意类型；普通对象的键只能是字符串或 Symbol</dd>
+      <dd>每个 key 只能出现一次/唯一 - may only occur once/unique</dd>
+      <dd>利用 key 的唯一，可以去重；后续同名的 key 会覆盖前面 key 的值</dd>
+      <!-- <dd>无法触发视图更新</dd> -->
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">MDN
+          - Map</a></dd>
+      <dt>构造函数 Constructor</dt>
+      <pre>new Map()</pre>
+      <dd>一个可迭代对象</dd>
+      <pre>new Map(iterable)</pre>
+      <dd>或是一个二元数组</dd>
+      <pre>const map = new Map([['name', 'glpla'], ['gender', 'male'], ['age', 18]])</pre>
+      <dd>可以从数组 map() 的处理结果中获取</dd>
+      <pre>const map=new Map(arr.map(item=>[item.id,item.title]))</pre>
+      <dd>
+        也可以从对象中获取：<a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries">Object.entries()</a>
+      </dd>
+      <pre>const arr = new Map(Object.entries({ id: 1, name: 'glpla', age: 18 }))</pre>
+      <dt>实例属性 Instance properties</dt>
+      <table>
+        <caption>Instance properties</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>size</td>
+            <td>大小</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>实例方法 Instance methods</dt>
+      <table>
+        <caption>Instance methods</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>set(key,value)</td>
+            <td>增；没有增加；有则改之</td>
+          </tr>
+          <tr>
+            <td>delete(key)</td>
+            <td>删</td>
+          </tr>
+          <tr>
+            <td>get(key)</td>
+            <td>查</td>
+          </tr>
+          <tr>
+            <td>clear()</td>
+            <td>清</td>
+          </tr>
+          <tr>
+            <td>has(key)</td>
+            <td>是否存在</td>
+          </tr>
+          <tr>
+            <td>forEach()</td>
+            <td>遍历</td>
+          </tr>
+          <tr>
+            <td>values()</td>
+            <td>值集</td>
+          </tr>
+          <tr>
+            <td>keys()</td>
+            <td>键集</td>
+          </tr>
+          <tr>
+            <td>entries()</td>
+            <td>迭代对象；包含 Map 对象中所有键值对 [key, value] 二元数组</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo"> 基本使用</div>
+      <pre>
+const map = new Map()
+map.set('name', 'glpla')
+map.set('gender', 'male')
+map.set('age', 18)
+console.log(map.keys());// [name, gender, age]
+console.log(map.values());// [glpla, male, 18]
+console.log(map.size);// 3
+map.delete('name')
+console.log(map.size);// 2</pre>
+      <div class="demo"> Map 转换成 Array</div>
+      <dd>方法1：Array.from(map) - 从一个 Map 转换为 Array</dd>
+      <dd>方法2：[...Map] - 扩展运算符，从一个 Map 展开为 Array</dd>
+    </dl>
+    <h2>应用 Application</h2>
+    <dl>
+      <dd>相比普通对象 Object，Map 在键的类型、插入顺序、性能和语义清晰度等方面具有显著优势</dd>
+      <div class="demo"> 商品的收藏和取消</div>
+      <dd>利用映射作为判断依据</dd>
+      <dd>单击时，如果为真，则收藏，key 为商品 id，value 为收藏时间</dd>
+      <pre>favorites.set(product._id, new Date().toLocaleString())</pre>
+      <dd>单击时，如果为假，删除对应的key</dd>
+      <dd>删除时，是否需要判断 key 是否存在 <span class="iconfont icon-help"></span></dd>
+      <pre>favorites.delete(product._id)</pre>
+      <!-- <dd>更新全局数据</dd>
+      <pre>app.globalData.favorites = favorites</pre>
+      <dd>无法直接本地存储，会丢失数据的映射特性</dd>
+      <pre>wx.setStorageSync('favorites', favorites)// x</pre>
+      <dd>
+        将 Map 的键值对经过
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries">Object.fromEntries()</a>
+        处理后，转换成对象，然后再缓存
+      </dd>
+      <pre>wx.setStorageSync('favorites', Object.fromEntries(favorites))</pre>
+      <dd>
+        相应的，启动/获取/初始化时，也不能直接获取，必须使用
+        <a
+          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries">Object.entries()</a>
+        重新创建
+      </dd>
+      <pre>favorites = new Map(Object.entries(wx.getStorageSync('favorites') || {})) || new Map(),</pre> -->
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    const map = new Map()
+    map.set('name', 'glpla')
+    map.set('gender', 'male')
+    map.set('age', 18)
+    console.log(map.keys());
+    console.log(map.values());
+    console.log(map.size);
+    map.delete('name')
+    console.log(map.size);
+
+    // for (item of map) {
+    //   console.log(item);
+    // }
+    const obj = new Object()
+    obj.name = 'glpla'
+    obj.gender = 'male'
+    obj.age = 18
+    console.log(Object.keys(obj));
+
+  </script>
+</body>
+
+</html>

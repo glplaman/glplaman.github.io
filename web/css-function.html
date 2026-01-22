@@ -43,8 +43,8 @@
     <header></header>
     <nav>
       <h1>函数&commat;Function</h1>
-      <span class="ham"></span>
-      <div class="nav">
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <div class="nav" id="nav">
         <a href="" style="--delay:0" class="nav-item">rgba</a>
         <a href="" style="--delay:1" class="nav-item">min</a>
         <a href="" style="--delay:2" class="nav-item">max</a>
@@ -64,7 +64,7 @@
       <dd>蓝色(B)：0 到 255 间的整数，代表颜色中的蓝色成分</dd>
       <dd>透明度(A)：取值 0~1 之间， 代表透明度</dd>
       <div class="tips">rbga() 是 rgb() 的别名- an alias for rgb()；推荐使用 rgb() - recommended to use rgb()</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定义透明色</div>
+      <div class="demo"> 定义透明色</div>
       <pre>
 :root{
   --base-color: 255, 68, 0;
@@ -74,7 +74,7 @@
       <dt class="nav-cont">最小值 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/min">min()</a>
       </dt>
       <dd>选择最小的值</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 版心设计</div>
+      <div class="demo"> 版心设计</div>
       <dd>最大宽带</dd>
       <dd>宽屏/桌面端：1200px；90% > 1200px</dd>
       <dd>移动端：90%； 1200px > 90%</dd>
@@ -91,7 +91,7 @@
       <dt class="nav-cont">最大值 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/max">max()</a>
       </dt>
       <dd>选择最大的值</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 表格设计</div>
+      <div class="demo"> 表格设计</div>
       <dd>最小宽带</dd>
       <dd>宽屏/桌面端：60%；60% > 350px</dd>
       <dd>移动端：350px； 350px > 60%</dd>
@@ -116,7 +116,7 @@ table {
       <div>1. 使用全局CSS变量</div>
       <dd>如果变量定义在根选择器 :root，则所有元素都可以使用-全局变量</dd>
       <dd>如果变量定义在某个选择器，则只有该选择器选中的元素和它的所有后代元素使用-局部变量</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定义并使用告警颜色</div>
+      <div class="demo"> 定义并使用告警颜色</div>
       <pre>
 :root {
     --txt-wran-color: #c81623;
@@ -156,7 +156,7 @@ table {
 .fn-var-bg div {
     background-color: rgba(255, 44, 00, calc(var(--alpha)*0.1));
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>]
+      <div class="demo">
         自适应布局 - 没有 --left 就使用48px；当元素 left 处于 hover 状态时，定义 --left 变量为30%</div>
       <pre>
 .grid {
@@ -168,7 +168,7 @@ table {
 .grid:has(.left:hover) {
   --left: 30%;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 自定义图形</div>
+      <div class="demo"> 自定义图形</div>
       <div>. 在 HTML 中利用 style 属性为元素指定不同的旋转角度，在 CSS 中使用</div>
       <div>. 每个元素旋转120deg</div>
       <div>. 可以制作加载，参考实例 <a href="./animation.html">animation</a></div>
@@ -201,13 +201,13 @@ table {
       <dd>* 和 / 不需要空格，但考虑到统一性，推荐加上空格</dd>
       <dd>计算函数，使得 CSS 更像一门编程语言</dd>
       <pre>calc(100% - 20px);</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定义根字体大小</div>
+      <div class="demo"> 定义根字体大小</div>
       <dd>通常推荐一行最多容纳不超过30个字符，可以基于视口设置根元素的字体大小为视口宽度的一部分。</dd>
       <pre>
 html {
     font-size: calc(100vw / 30);
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定义栅格</div>
+      <div class="demo"> 定义栅格</div>
       <dd>如12分栅格,定义更清晰</dd>
       <pre>
 .col {
@@ -219,13 +219,13 @@ html {
       <dd>attr() 函数通常和自定义属性 data- 配合使用</dd>
       <dd>attr() 函数可以和任何 CSS 属性一起使用；使用较多的是伪元素的 content 属性</dd>
       <dd>还可以动态生成页面，实现部分 JavaScript 功能</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] attr() 应用 - <a href="./opening.html">开课啦</a></div>
+      <div class="demo"> attr() 应用 - <a href="./opening.html">开课啦</a></div>
       <pre>
 .title::after {
     content: attr(data-tip);
     //... ...
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./js/skin.html">换肤</a></div>
+      <div class="demo"> <a href="./js/skin.html">换肤</a></div>
       <dd>获取元素</dd>
       <dd>修改元素属性</dd>
       <div>[<span class="iconfont icon-bell"></span>]如何使用纯 CSS 实现?</div>
@@ -262,7 +262,7 @@ btns.forEach(item =&gt; {
       <dd>当首选值比最大值要大时，则使用最大值</dd>
       <dd>最大值和最小值一般都是固定值；而首选值是动态的</dd>
       <dd>更多信息，请访问 <a href="./responsive.html">响应式开发</a></dd>
-      <div>[<span class="iconfont icon-keyboard"></span>]字体跟着视口宽度变换，通过钳制避免字体过大</div>
+      <div class="demo">字体跟着视口宽度变换，通过钳制避免字体过大</div>
       <pre>
 html {
     font-size: clamp(14px, 100vw/30, 24px);
@@ -298,7 +298,7 @@ html {
     </dl>
     <div id="footer"></div>
   </div>
-  <a class="back2top" href="#" target="_self">
+  <a class="back2top" id="back2top" href="#" target="_self">
     <span class="iconfont icon-top"></span>
   </a>
   <script src="/utils/custom/footer.js"></script>

@@ -17,8 +17,8 @@
     <nav>
       <h1>下拉列表</h1>
       <span>&lt;select&gt;</span>
-      <span class="iconfont icon-menu ham"></span>
-      <div class="nav">
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <div class="nav" id="nav">
         <a href="" style="--delay:0" class="nav-item active">Tags</a>
         <a href="" style="--delay:1" class="nav-item">CSS</a>
         <a href="" style="--delay:2" class="nav-item">Event</a>
@@ -98,7 +98,7 @@ select {
   background-color: transparent;
   padding: 0 10px;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定制样式1 - 不增加元素 </div>
+      <div class="demo"> 定制样式1 - 不增加元素 </div>
       <dd>隐去默认样式</dd>
       <dd>使用边框 border</dd>
       <dd>使用背景图片代替小三角，不能使用伪元素</dd>
@@ -115,7 +115,7 @@ background-position: right 10px top 10px;
 .school:hover {
 border-color: #f40;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定制样式2 - <a href="./demo/theme-simple.html">下拉列表</a></div>
+      <div class="demo"> 定制样式2 - <a href="./demo/theme-simple.html">下拉列表</a></div>
       <dd>使用自定义数据定制 &lt;option&gt; 静态效果</dd>
       <pre>&lt;option value="#f40" data-bg="#f40"&gt;红色&lt;/option&gt;</pre>
       <pre>
@@ -123,7 +123,7 @@ option[data-bg="#f40"] {
   background-color: #f40;
   color: #fff;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 定制样式3 - 额外增加1个容器、1个遮罩和1个标记</div>
+      <div class="demo"> 定制样式3 - 额外增加1个容器、1个遮罩和1个标记</div>
       <dd>增加一个容器元素 wrap 包裹表单元素 &lt;select&gt;；wrap 为 <a href="./position.html">相对定位</a>，为 mask 和 marker 提供定位依据</dd>
       <dd>增加一个遮罩元素 mask，用于显示选中的值；mask 为绝对定位，覆盖 &lt;select&gt;；取消事件响应</dd>
       <dd>增加一个标记元素 marker，显示上下箭头，用于提示用户操作；marker 为绝对定位到容器右部；取消事件响应；可以是图片或字体图标</dd>
@@ -133,18 +133,18 @@ option[data-bg="#f40"] {
       <dd>其它细节设计，如 高度、:hover、:focus等</dd>
       <dd>更多设计细节，请参考<a href="https://login.taobao.com/">天猫登录页面</a>、<a href="./demo/login_taobao.html">淘宝高仿</a></dd>
 
-      <div>[<span class="iconfont icon-keyboard"></span>] 定制样式4 - <a href="./demo/select.html">下拉列表</a>
+      <div class="demo"> 定制样式4 - <a href="./demo/select.html">下拉列表</a>
         全新定制</div>
       <dd>完全抛弃表单元素，从0开始设计</dd>
       <dd>无法响应表单事件</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/theme-select.html">主题切换 :checked</a></div>
+      <div class="demo"> <a href="./demo/theme-select.html">主题切换 :checked</a></div>
       <dd>使用 &lt;option&gt; 的 :checked 实现</dd>
       <pre>
 body:has(option[value="dark"]:checked) {
   --bg-color: #000;
   --txt-color: #fff;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/theme-simple.html">主题切换 data-</a></div>
+      <div class="demo"> <a href="./demo/theme-simple.html">主题切换 data-</a></div>
     </dl>
     <h2 id="js">Event</h2>
     <dl class="nav-cont">
@@ -178,7 +178,7 @@ school.addEventListener('change',  (e)=> {
     console.log(e.target.value);
     // ...
 })</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/theme.html">主题切换 Theme</a></div>
+      <div class="demo"> <a href="./demo/theme.html">主题切换 Theme</a></div>
       <dd>使用自定义数据 data- 设置对应的背景色，用于提示用户</dd>
       <dd>单击时，选择颜色，修改页面背景</dd>
       <dd>其它设计：使用 <a href="./js/localStorage.html">本地保存 localStorage</a> 保存主题色</dd>
@@ -206,7 +206,7 @@ theme.addEventListener('change', () => {
     </dl>
     <div id="footer"></div>
   </div>
-  <a class="back2top" href="#" target="_self">
+  <a class="back2top" id="back2top" href="#" target="_self">
     <span class="iconfont icon-top"></span>
   </a>
   <script src="/utils/custom/footer.js"></script>

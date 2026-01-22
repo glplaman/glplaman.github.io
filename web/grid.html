@@ -19,8 +19,8 @@
     <nav>
       <h1>网格</h1>
       <span>&commat;Grid</span>
-      <span class="iconfont icon-menu ham"></span>
-      <div class="nav">
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <div class="nav" id="nav">
         <a href="#" style="--delay:0" class="nav-item active">Overview</a>
         <a href="#" style="--delay:1" class="nav-item">Container</a>
         <a href="#" style="--delay:2" class="nav-item">Item</a>
@@ -220,7 +220,7 @@
         <div>尽量指定容器大小</div>
         <div>尽量指定行划分</div>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 跨行/跨列；完整实现请参考后续九宫格案例</div>
+      <div class="demo"> 跨行/跨列；完整实现请参考后续九宫格案例</div>
       <div>
         <div>九宫格</div>
         <figure>
@@ -287,7 +287,7 @@
     <dl class="nav-cont">
       <dd>布局元素只做布局的事情；元素内部的样式由元素完成</dd>
       <dd>通常不显式指定容器高度，而由子项撑开</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 两列布局/左右布局</div>
+      <div class="demo"> 两列布局/左右布局</div>
       <pre>
 .aside {
     display: grid;
@@ -301,14 +301,14 @@
     grid-template-columns: minmax(150px, 25%) 1fr;
     gap: 1rem;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 三列布局/圣杯布局/双飞燕布局</div>
+      <div class="demo"> 三列布局/圣杯布局/双飞燕布局</div>
       <pre>
 .cup {
     display: grid;
     grid-template-columns: 8rem 1fr 4rem;
     gap: 1rem;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 等分/不等分布局</div>
+      <div class="demo"> 等分/不等分布局</div>
       <pre>
 .grid {
     display: grid;
@@ -321,7 +321,7 @@
     grid-template-columns: 1fr 2fr 1fr;
     gap: 1rem;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 栈布局/煎饼布局</div>
+      <div class="demo"> 栈布局/煎饼布局</div>
       <dd>不划分列而划分行</dd>
       <dd>需要指定容器高度</dd>
       <figure>
@@ -336,7 +336,7 @@
   grid-template-rows: auto 1fr auto;
   gap: 1rem;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 全站布局；更多案例请访问 <a href="./demo/site.html">全站布局</a></div>
+      <div class="demo"> 全站布局；更多案例请访问 <a href="./demo/site.html">全站布局</a></div>
       <dd>可以采用划分区域实现</dd>
       <dd>也可以使用跨列实现</dd>
       <dd>如果指定子项高度，当子项的内容超过子项大小时，默认情况仍然会撑开，并不能直接出现滚动条；解决的方案是为容器和子项都设置自动溢出</dd>
@@ -380,8 +380,7 @@
     </dl>
     <h2>案例 Cases</h2>
     <dl class="nav-cont">
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/grid-sudoku.html">九宫格</a>、<a
-          href="./demo/up2u.html">个人网站 - 相册</a></div>
+      <div class="demo"> <a href="./demo/grid-sudoku.html">九宫格</a>、<a href="./demo/up2u.html">个人网站 - 相册</a></div>
       <figure>
         <img src="./imgs/grid19.png" alt="" loading="lazy">
         <figcaption></figcaption>
@@ -392,8 +391,8 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 异构布局 <a href="./demo/grid-hybrid.html">IE</a>、<a
-          href="./demo/personal.html">个人网站 - 事迹</a></div>
+      <div class="demo"> 异构布局 <a href="./demo/grid-hybrid.html">IE</a>、<a href="./demo/personal.html">个人网站 - 事迹</a>
+      </div>
       <figure>
         <img src="./imgs/grid18.png" alt="" loading="lazy">
         <figcaption></figcaption>
@@ -426,8 +425,7 @@
 .item:nth-child(5) {
   grid-column: 2/4;
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] <a href="./tabcard.html">标签页/手风琴</a>、<a
-          href="./demo/cases.html">多级菜单</a></div>
+      <div class="demo"> <a href="./tabcard.html">标签页/手风琴</a>、<a href="./demo/cases.html">多级菜单</a></div>
       <dd>使用 <a href="./transition.html">过渡动画</a> 展开和折叠</dd>
       <dd>使用 <a href="./js/event_mouse.html">鼠标单击事件</a> 切换动态类</dd>
       <dd>结构：网格容器，如 wrap 有唯一子元素，如 ul，且子元素溢出隐藏；子元素可以有多个子元素，如 li</dd>
@@ -515,7 +513,7 @@
         <div>广州工商学院</div>
         <div>海口经济学院</div>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 情况2：指定容器尺寸的对齐</div>
+      <div class="demo"> 情况2：指定容器尺寸的对齐</div>
       <dd>指定容器高度；可以指定垂直方向上的对齐</dd>
       <dd>容器高度由子项换行撑满</dd>
       <dd>没有显式指定子项高度</dd>
@@ -564,7 +562,7 @@
         <div>广州工商学院</div>
         <div>海口经济学院</div>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 情况3：指定容器尺寸和单元格尺寸的对齐</div>
+      <div class="demo"> 情况3：指定容器尺寸和单元格尺寸的对齐</div>
       <dd>通常在容器有剩余空间的时候需要决定：各个子项放在容器哪个位置?</dd>
       <pre>
 .case2 {
@@ -614,7 +612,7 @@
         <div>广州工商学院</div>
         <div>海口经济学院</div>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 子项对齐</div>
+      <div class="demo"> 子项对齐</div>
       <dd>单独设置每个子项的对齐方式</dd>
       <div class="self">
         <div>1</div>
@@ -698,7 +696,7 @@
     </dl>
     <div id="footer"></div>
   </div>
-  <a class="back2top" href="#" target="_self">
+  <a class="back2top" id="back2top" href="#" target="_self">
     <span class="iconfont icon-top"></span>
   </a>
   <script src="/utils/custom/footer.js"></script>

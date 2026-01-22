@@ -75,7 +75,7 @@
         <p>类比 VLAN 1</p>
       </dd>
       <dd>只能用于目的地址，不能用于源地址</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] RIP 中的多播 IP 地址</div>
+      <div class="demo"> RIP 中的多播 IP 地址</div>
       <figure>
         <img src="./imgs/rip4.png" alt="">
         <img src="./imgs/rip3.png" alt="">
@@ -89,7 +89,7 @@
         <p>拼接到 01-00-5E 后面</p>
       </dd>
       <div class="txt-center txt-xl">01-00-5E-XX-XX-XX</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 多播地址 224.1.1.1对应的多播 MAC 地址</div>
+      <div class="demo"> 多播地址 224.1.1.1对应的多播 MAC 地址</div>
       <dd>高25位：00000001 00000000 01011110 0</dd>
       <dd>多播 IP 地址后23位：224.0<strong>0000001 00000001 00000001</strong></dd>
       <dd>多播 MAC 地址：00000001 00000000 01011110 0<strong>0000001 00000001 00000001</strong>
@@ -122,7 +122,7 @@
         <p>MBONE 网络就是靠隧道技术连接全球的多播岛 Multicast islands</p>
         <p>在学术和早期互联网中非常重要，但现代互联网中原生 IP 多播并未大规模商用</p>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 多播路由决策</div>
+      <div class="demo"> 多播路由决策</div>
       <dd>多播组 M2：(D, E, F) - 图中橙色部分</dd>
       <dd>多播组 M1：(A, B, C) - 图中绿色部分</dd>
       <dd>路由器 R 不应当向网络 N3 转发多播组 M1 的分组</dd>
@@ -181,14 +181,14 @@
       <dd>被动离开：不再响应后续的查询报文，多播路由器在多次查询无响应后自动判定其已离开</dd>
       <dd>多播路由器收到后，不能立即停止转发（因为可能还有其他成员），于是发送 Group-Specific Query（针对该组的查询）</dd>
       <dd>如果在若干次查询后无人响应 Report，多播路由器才真正停止向该子网转发该组的多播流</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 主机 H1 想要加入多播组 224.1.1.1；网络中有一台支持 IGMP 的多播路由器 R；使用 IGMPv2 协议
+      <div class="demo"> 主机 H1 想要加入多播组 224.1.1.1；网络中有一台支持 IGMP 的多播路由器 R；使用 IGMPv2 协议
       </div>
       <ol>
         <li>主机主动发送 IGMP Membership Report，目的 IP 地址：224.1.1.1（要加入的组地址），目的 MAC 地址：对应多播 MAC（01-00-5E-01-01-01）</li>
         <li>步骤 2：多播路由器 R 接收并记录：该接口下有组播 224.1.1.1 的成员</li>
         <li>开始向该接口转发发往该组播的流量（前提是上游已有多播源树建立）</li>
       </ol>
-      <div>[<span class="iconfont icon-keyboard"></span>] 主机 H1 离开多播组 224.1.1.1；网络中有一台支持 IGMP 的多播路由器 R；使用 IGMPv2 协议
+      <div class="demo"> 主机 H1 离开多播组 224.1.1.1；网络中有一台支持 IGMP 的多播路由器 R；使用 IGMPv2 协议
       </div>
       <ol>
         <li>主机向本地网段发送 IGMP Leave Group 报文，目的 IP：224.0.0.2，所有多播路由器；报文中携带要离开的组地址：224.1.1.1</li>

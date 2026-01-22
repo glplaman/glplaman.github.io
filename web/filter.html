@@ -17,8 +17,8 @@
     <header></header>
     <nav>
       <h1>&commat;Filter</h1>
-      <span class="iconfont icon-menu ham"></span>
-      <div class="nav">
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <div class="nav" id="nav">
         <a href="" style="--delay:0" class="nav-item active">blur</a>
         <a href="" style="--delay:1" class="nav-item">drop-shadow</a>
         <a href="" style="--delay:2" class="nav-item">grayscale</a>
@@ -73,7 +73,7 @@
         <div class="basic ds">早安中国</div>
         <figcaption>filter: drop-shadow(0 0 1px #000);</figcaption>
       </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] 气泡对话框 - 伪元素叠拼</div>
+      <div class="demo"> 气泡对话框 - 伪元素叠拼</div>
       <div class="bubble"></div>
       <dt class="nav-cont">3. grayscale()</dt>
       <dd>将图像转换为灰阶：0%为原图；100%为全灰</dd>
@@ -83,7 +83,7 @@
         <img class="gray" src="../utils/view/view0.jpg" alt="">
         <figcaption>grayscale</figcaption>
       </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] 工作经历</div>
+      <div class="demo"> 工作经历</div>
       <dd>鼠标 hover 时，突出显示</dd>
       <div class="work">
         <img src="/utils/logo/54414.png" alt="" loading="lazy">
@@ -119,7 +119,7 @@
     filter: hue-rotate(360deg);
   }
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 类重用</div>
+      <div class="demo"> 类重用</div>
       <dd>先定义好一个button，然后利用hue-rotate创造出其他同款的button</dd>
       <div class="hue-btn"><button class="primary">primary</button><button class="primary hue1">hue1</button><button
           class="primary hue2">hue2</button><button class="primary hue3">hue3</button><button
@@ -159,7 +159,7 @@
       <dd>如果值是 0%，图像会全黑</dd>
       <dd>值是 100%，则图像无变化</dd>
       <dd>超过 100%，图像会比原来更亮</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 模拟白天、黑夜</div>
+      <div class="demo"> 模拟白天、黑夜</div>
       <dt class="nav-cont">6. contrast(%)</dt>
       <dd>对比度</dd>
       <dd>调整图像的亮度；如果为0，则为灰度，rgb都是128</dd>
@@ -167,7 +167,7 @@
         <img class="contrast" src="../utils/view/view0.jpg" alt="">
         <figcaption>contrast</figcaption>
       </figure>
-      <div>[<span class="iconfont icon-keyboard"></span>] 查看原图-img</div>
+      <div class="demo"> 查看原图-img</div>
       <dd>利用img元素分别放置相同的图片；底层放灰图；上层放彩图</dd>
       <dd>使用定位使2层图片重叠</dd>
       <dd>通过input拖动使上层图片的裁剪变化，显示出下面的灰片，实现黑白到彩色的渐变</dd>
@@ -196,7 +196,7 @@ let tar = document.querySelector('#tar')
 slider.addEventListener('input', function () {
     tar.style.setProperty('--slider', this.value)
 })</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 查看原图 - 伪元素</div>
+      <div class="demo"> 查看原图 - 伪元素</div>
       <dd>利用伪元素实现</dd>
       <dd>hover 触发</dd>
       <div class="basic slider-pre"></div>
@@ -232,9 +232,8 @@ slider.addEventListener('input', function () {
 .slider-pre:hover::after {
     clip-path: inset(0 0 0 0);
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 水滴筹 - 子元素使用模糊 blur() 外扩；父元素使用对比增强 contrast() 内收；使用 <a
-          href="./animation.html">帧动画 - animation</a> 辅助；其它工具 <a
-          href="https://9elements.github.io/fancy-border-radius/">fancy-border-radius</a></div>
+      <div class="demo"> 水滴筹 - 子元素使用模糊 blur() 外扩；父元素使用对比增强 contrast() 内收；使用 <a href="./animation.html">帧动画 -
+          animation</a> 辅助；其它工具 <a href="https://9elements.github.io/fancy-border-radius/">fancy-border-radius</a></div>
       <dd>更多效果，请访问 <a href="./demo/drop.html">水滴 - drops</a></dd>
       <div class="water">
         <div class="drop" style="--delay:0"></div>
@@ -248,7 +247,7 @@ slider.addEventListener('input', function () {
       <dd>适用于元素背后所有元素</dd>
       <dd>为了看到效果，前面元素应<span class="warn">无</span>背景或背景<span class="warn">透明</span>；如果是实心背景，就看不到下面背景的毛玻璃效果</dd>
       <dd>应用：苹果UI、广告等毛玻璃效果、登录表单背景</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 毛玻璃</div>
+      <div class="demo"> 毛玻璃</div>
       <div class="basic glass-box">
         <div class="glass"></div>
       </div>
@@ -265,7 +264,7 @@ slider.addEventListener('input', function () {
     backdrop-filter: blur(1rem);
 }</pre>
     </dl>
-    <a class="back2top" href="#" target="_self">
+    <a class="back2top" id="back2top" href="#" target="_self">
       <span class="iconfont icon-top"></span>
     </a>
     <div id="footer"></div>

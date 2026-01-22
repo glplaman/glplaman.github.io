@@ -29,15 +29,15 @@
       <dd>只能处理冒泡阶段</dd>
       <dd>适合简单逻辑</dd>
       <dd>不符合结构 - 样式 - 逻辑分离的开发原则，较少使用</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 完全耦合 - 全部写在结构中</div>
+      <div class="demo"> 完全耦合 - 全部写在结构中</div>
       <pre>&lt;div onclick="alert('hi,there.')"&gt;点击我&lt;/div&gt;</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 结构逻辑分离</div>
+      <div class="demo"> 部分耦合 - 结构逻辑分离</div>
       <pre>&lt;div onclick="fn()"&gt;点击我&lt;/div&gt;</pre>
       <pre>
 function fn() {
   alert('hi,there.')
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 部分耦合 - 携带形参；参数类型可以是简单数据类型，也可以是复杂数据类型</div>
+      <div class="demo"> 部分耦合 - 携带形参；参数类型可以是简单数据类型，也可以是复杂数据类型</div>
       <pre>&lt;div onclick="fn_para({id:1,name:'glpla'})"&gt;点击我&lt;/div&gt;</pre>
       <pre>
 function fn_para(p) {
@@ -52,7 +52,7 @@ function fn_para(p) {
       <dd>事件函数可以接受参数；可以使用形参 e 获取事件对象；可以使用 this 获取执行事件函数的元素；也可以显式的指明参数</dd>
       <dd>需要等页面加载完成 onload 后才能获取元素</dd>
       <dd>不方便传递参数</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] onXXX 事件 - 默认形参 this 和事件对象 e</div>
+      <div class="demo"> onXXX 事件 - 默认形参 this 和事件对象 e</div>
       <pre>
 const el = document.querySelector('div')
 el.onclick = function () {
@@ -114,7 +114,7 @@ el.onclick = function (e) {
       <dd>防止某些特殊情况下的内存泄漏：在一些老旧浏览器或复杂 SPA 架构中，如果组件/模块没有正确销毁，监听器未解绑可能导致内存无法释放</dd>
       <dd>编码规范 & 可维护性：主动解除绑定是一种良好的编程习惯，有助于代码可读性和资源管理意识</dd>
       <dd>如果添加事件时使用了 options 对象，移除时就必须提供相同的 options 对象</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 绑定多个事件侦听器</div>
+      <div class="demo"> 绑定多个事件侦听器</div>
       <pre>
 //具名函数
 wrap.addEventListener('click', fn)
@@ -145,7 +145,7 @@ wrap.removeEventListener('click', fn)
     <dl>
       <dd>不能直接使用，否则会被立即执行</dd>
       <dd>需要使用匿名函数，在匿名函数里执行封装的带参函数</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 封装表单域的获取焦点和失去焦点函数</div>
+      <div class="demo"> 封装表单域的获取焦点和失去焦点函数</div>
       <pre>
 function setBg(color) {
 console.log('hi');
@@ -175,7 +175,7 @@ console.log(e);
 setBg('#ccc')
 });</pre>
     </dl>
-    <a class="back2top" target="_self" href="#">
+    <a class="back2top" id="back2top" target="_self" href="#">
       <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="31526" width="32" height="32">
         <path

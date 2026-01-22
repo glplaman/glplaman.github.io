@@ -60,7 +60,7 @@
       <dd>2byte</dd>
       <dt>目标端口 Destination Port</dt>
       <dd>2byte</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] TCP MSS 大小</div>
+      <div class="demo"> TCP MSS 大小</div>
       <dd>TCP MSS 通常设为 1460 = 1500 - 20 IP首部 - 20 TCP首部</dd>
       <dd>实际大小由三次握手时由双方协商确定的</dd>
       <dd>标准中规定536未默认值，是后向兼容 - 通信的最低需求；实际中很少使用</dd>
@@ -116,7 +116,7 @@
         <p>没有连接建立过程，也不会自动限制载荷大小，完全依赖应用层控制</p>
         <p>使用 UDP 的应用必须自己确保数据 ≤ 1472（IPv4/以太网）</p>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 端口应用</div>
+      <div class="demo"> 端口应用</div>
       <dd>客户端在端口49155向目标主机80端口的应用[WEB]发起HTTP请求</dd>
       <dd>服务端在80端口处理请求后，回发一个响应经过49155端口给客户端</dd>
       <dt>序号 Sequence Number</dt>
@@ -127,7 +127,7 @@
       </dd>
       <dd>增加到最大值后，重新回到0 - 模加</dd>
       <dd>第1个随机产生</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 序号应用</div>
+      <div class="demo"> 序号应用</div>
       <dd>TCP 报文长度 MSS 为1000byte；现有5000byte数据；加上初始序号为1001</dd>
       <dd>则：
         <p>第一个 TCP 报文：1001 - 2000</p>
@@ -136,7 +136,7 @@
         <p>第四个 TCP 报文：4001 - 5000</p>
         <p>第五个 TCP 报文：5001 - 6000</p>
       </dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 序号应用</div>
+      <div class="demo"> 序号应用</div>
       <dd>发送方要发送一个 1000 byte的数据流，初始序号为 100：
         <p>第一个 TCP 段携带 500 byte，则其序号为 100</p>
         <p>第二个 TCP 段携带剩下的 500 byte，则其序号为 100 + 500 = 600</p>
@@ -169,7 +169,7 @@
         <p>1. 使用ACK表示确认号，除非特别说明是控制位；如ACK = 101，表示希望收到101序号的字节数据；序号100之前的数据已经收讫；默认控制位为1</p>
         <p>2. 使用大小写区分；ACK表示控制位；ack表示确认号，如下例</p>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 序号和确认号应用</div>
+      <div class="demo"> 序号和确认号应用</div>
       <dd>A发送序号为201开始的报文，长度是100</dd>
       <dd>下一次发送时，A 的序号将变为 201 + 100 = 301</dd>
       <dd>同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</dd>
@@ -220,7 +220,7 @@
         <p>B 向 A 发送 200 字节数据（序号 800~999），同时确认 A 的数据（确认号 301）</p>
       </dd>
       <dd> 如果 A 没有收到 B 的响应，启动超时重传机制，重新发送序号为 201 的报文。 直到收到对 301 的确认为止</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
+      <div class="demo"> 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200B，则主机A给主机B的响应报文中（）。</div>
       <div>A: ACK = 0；ack = 701</div>
       <div>B: ACK = 1；ack = 701</div>
       <div>C: ACK = 0；ack = 700</div>

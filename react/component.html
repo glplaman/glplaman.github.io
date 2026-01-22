@@ -6,47 +6,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>组件 Component</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/page2025.css">
   <base target="_blank">
 </head>
 
 <body>
   <div class="w">
     <header>
-    </header>
-    <nav>
       <h1>组件</h1>
       <span>&commat;Component</span>
-    </nav>
+    </header>
     <dl>
+      <div class="tips">
+        <p>A component is a piece of the UI (user interface) that has its own logic and appearance.</p>
+        <p>React components are JavaScript functions that return markup:</p>
+      </div>
       <dt>Introduction</dt>
-    </dl>
-    <h2>Props</h2>
-    <dl>
-      <ul>
-        <li>anything will be ok as a props</li>
-        <li>key: built-in props</li>
-      </ul>
-      <dt>Father.jsx</dt>
-      <ol>
-        <li>导入</li>
-        <pre>import Greeting from "./components/Greeting";</pre>
-        <li>使用 - 传递数据</li>
-        <pre>&lt;Greeting user={"glpla"}&gt;&lt;/Greeting&gt;</pre>
-      </ol>
-      <dt>Child.jsx</dt>
+      <dd>React 应用由各种各样的组件构成</dd>
+      <dd>函数即组件；一切皆函数</dd>
+      <dd>在函数中返回 html 结构</dd>
+      <dd>组件函数名和组件文件名保持一致</dd>
+      <dd>组件名必须大写开头 - React component names must always start with a capital letter, while HTML tags must be lowercase
+      </dd>
+      <dd>单一根节点 - shared parent；可以是空标签 - empty &lt;&gt;...&lt;/&gt; wrapper</dd>
+      <dd>为了避免自动插入分号，return 使用 ()</dd>
+      <dd>如果返回只有一行代码，可以省略()；但是不建议</dd>
+      <dd>使用 javaScript 的组件后缀名为 .jsx</dd>
+      <dd>使用 TypeScript 的组件后缀名为 .tsx</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/learn#components">Creating and nesting components</a>、<a
+          href="https://react.dev/learn/your-first-component">Your First Component</a></dd>
+      <div class="demo">示例</div>
+      <dd>创建组件 HelloWorld.tsx</dd>
       <pre>
-import React from "react";
+function HelloWorld() {
+  return (
+    &lt;&gt;
+      &lt;div&gt;hi,there.&lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+export default HelloWorld;</pre>
+      <dd>父组件引入并使用</dd>
+      <pre>
+import HelloWorld from './components/HelloWorld.tsx';
+function App() {
 
-const Greeting = (props) => {
-  return &lt;div&gt;hi, {props.user}&lt;/div&gt;;
-};
+  return (
+    &lt;&gt;
+      &lt;HelloWorld /&gt;
+    &lt;/&gt;
+  );
+}
 
-export default Greeting;</pre>
+export default App;</pre>
     </dl>
     <h2>Homework</h2>
     <dl>
-      <div>[<span class="iconfont icon-keyboard"></span>] 版权组件</div>
+      <div class="demo"> 版权组件</div>
+      <div class="demo"> 卡片组件</div>
+      <dd>参考以下结构设计</dd>
+      <pre>
+import Desc from "./Desc";
+import Avatar from "./Avatar";
+export default function Card() {
+  return (
+    &lt;&gt;
+      &lt;Avatar /&gt;
+      &lt;Desc /&gt;
+    &lt;/&gt;
+  );
+}</pre>
     </dl>
     <div id="footer"></div>
   </div>

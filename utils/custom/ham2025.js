@@ -3,7 +3,7 @@ const theme = body.querySelector("#theme");
 const nav = body.querySelector("nav");
 const items = body.querySelectorAll(".nav-item");
 const navConts = body.querySelectorAll(".nav-cont");
-const ham = body.querySelector(".ham");
+const ham = body.querySelector("#ham");
 
 const toggleLock = () => {
   if (body.classList.contains("lock")) {
@@ -28,7 +28,7 @@ ham.addEventListener("click", (e) => {
   body.classList.toggle("lock");
 });
 
-const back2top = document.querySelector(".back2top");
+const back2top = document.querySelector("#back2top");
 document.addEventListener("scroll", () => {
   back2top.classList.toggle("active", scrollY > innerHeight / 4);
   nav.classList.toggle("active", scrollY > innerHeight / 4);

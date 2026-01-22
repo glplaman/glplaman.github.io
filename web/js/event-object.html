@@ -50,7 +50,7 @@
         <div>cancelBubble() 方法不符合W3C标准，只支持 IE 浏览</div>
         <div>stopPropagation() 符合 W3C 标准，适用于 FireFox 等浏览器，不支持 IE</div>
       </div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 冒泡事件和捕获事件</div>
+      <div class="demo"> 冒泡事件和捕获事件</div>
       <dd>三个嵌套盒子</dd>
       <pre>
 &lt;div class="box1"&gt;box1
@@ -106,7 +106,7 @@ box3.addEventListener('click', (e) => {
   e.stopPropagation();
   console.log('box3 clicked');
 })</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] target 和 currentTarget - 以冒泡为例</div>
+      <div class="demo"> target 和 currentTarget - 以冒泡为例</div>
       <dd>单击 outer：点的是 outer；向上没有父级或者说没有冒泡，响应事件的也是 outer，所以 target 和 currentTarget 都是 outer</dd>
       <dd>单击inner：首先 inner 响应事件，所以 target 和 currentTarget 都是 inner；然后事件冒泡到 outer，outer 响应的是 inner 绑定的事件，所以
         target 是 inner，currentTarget 是 outer</dd>
@@ -123,7 +123,7 @@ inner.addEventListener('click', (e) => {
 })
 </pre>
       <div class="tips">如果只有一个元素，则 currentTarget 为 null；所以更多的是操作 target</div>
-      <div>[<span class="iconfont icon-keyboard"></span>] 模态框 - 代理；更多案例实现，请访问 <a href="../demo/up2u.html">图册</a></div>
+      <div class="demo"> 模态框 - 代理；更多案例实现，请访问 <a href="../demo/up2u.html">图册</a></div>
       <dd>单击打开按钮，打开模态框</dd>
       <dd>单击模态框中的关闭按钮，关闭模态框</dd>
       <dd>单击除了模态框中除了关闭按钮外的任意地方，关闭模态框</dd>
@@ -157,7 +157,7 @@ btnClose.addEventListener('click', (e) => {
     console.log('close');
   }
 })</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 共用事件 - 汉堡菜单的展开和折叠</div>
+      <div class="demo"> 共用事件 - 汉堡菜单的展开和折叠</div>
       <dd>为菜单类或容器类增加或减少状态类实现</dd>
       <dd>移花接木</dd>
       <pre>
@@ -191,7 +191,7 @@ navs.forEach(nav=>{
     <h2>自定义数据 data-</h2>
     <dl>
       <dd>如果元素使用了自定义数据 data- ，应该在目标元素 target 的 dateset 去获取</dd>
-      <div>[<span class="iconfont icon-keyboard"></span>] 单元素自定义数据 data- 的获取</div>
+      <div class="demo"> 单元素自定义数据 data- 的获取</div>
       <dd>事件对象e对应的target、currentTarget相同</dd>
       <dd>注意函数 fn 的封装</dd>
       <pre>&lt;div class="tmp" data-id="1001"&gt;单元素自定义数据的获取&lt;/div></pre>
@@ -204,7 +204,7 @@ function fn(e) {
   // 或者
   console.log(this.getAttribute('data-id'));
 }</pre>
-      <div>[<span class="iconfont icon-keyboard"></span>] 父元素自定义数据 data- 的获取</div>
+      <div class="demo"> 父元素自定义数据 data- 的获取</div>
       <dd>多个元素存在，data- 数据在父级元素</dd>
       <dd>事件目标通常是子元素，如果使用 dataset，就会导致自定义数据获取失败；只能使用 this 来获取属性</dd>
       <pre>
