@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/drill.css">
+  <title>Drill</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Drill for SPM</h1>
+    <!-- <div class="loading ending" v-if="ending">{{score}}</div> -->
+    <div class="loading" v-if="loading">Loading...</div>
+    <form class="w" v-else @submit.prevent="submitForm">
+      <ul>
+        <li v-for="item in lists" :key="item.id">
+          <span>{{item.desc}}</span>
+          <div v-for="option in item.options" :key="option.id">
+            <!-- <div class="marker" :class="option.id === item.answer?'green':''"></div> -->
+            <label class="option">
+              <input type="radio" :name="item.id" :value="option.id" :disabled="ending"
+                :class="option.id === item.answer?'green':''">
+              <span>{{option.text}}</span>
+            </label>
+          </div>
+        </li>
+      </ul>
+      <button class="btn" type="submit" :disabled="ending">submit</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { createApp, ref, onMounted, watch } from '/utils/lib/vue.esm-browser.prod.min.js'
+
+    createApp({
+      setup() {
+        const lists = ref([])
+        const score = ref(0)
+        const loading = ref(false)
+        const ending = ref(false)
+        const loadData = async () => {
+          loading.value = true
+          const ul = document.getElementById('ul')
+          const res = await fetch('./data/drill0.json')
+          const data = await res.json()
+          console.log(data);
+          lists.value = data
+          loading.value = false
+        }
+        const submitForm = (e) => {
+          score.value = 0
+          let formData = new FormData(e.target)
+          const res = Array.from(formData)
+          console.log(res);
+
+          for (let i = 0; i < res.length; i++) {
+            if (res[i][1] == lists.value[i].answer) {
+              score.value++
+            }
+          }
+          ending.value = true
+
+        }
+        onMounted(() => {
+          loadData()
+        })
+        return {
+          lists,
+          loading,
+          score,
+          ending,
+          submitForm
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>

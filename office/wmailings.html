@@ -5,84 +5,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>邮件 Mailings</title>
+  <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="../css/sn.css">
 </head>
 
 <body>
   <header></header>
-  <main>
-    <h1 class="txt-center mt2">邮件</h1>
-    <h3 class="txt-center sub-title">Mailings</h3>
+  <div class="w">
+    <h1>邮件</h1>
+    <h3>Mailings</h3>
     <dl>
       <dt>内容 Contents</dt>
       <dd>邮件</dd>
-      <dt>方法 Methods</dt>
-      <dd>示范 + 实操</dd>
     </dl>
     <div class="chap">邮件</div>
     <dl>
-      <dt>说明</dt>
-      <dd>. 综合使用"开始邮件合并"和"编写和插入域"完成邮件的批量编辑</dd>
-      <dd>. 将一个Word文档与一个Excel数据源结合起来，快速生成一系列内容相同而收件人不同的输出文档的过程。相同的内容来自主文档，变化的内容来自数据源。</dd>
-      <dd>. 利用"规则"对数据进行区别操作，如根据性别调整称呼；或者过滤掉某些数据：信用低于3000的客户不在邀请范围等等</dd>
-      <dd>
-        <figure class="img-sn">
-          <img src="./imgs/rules0.png" alt="">
-          <figcaption>使用规则"如果...那么...否则"加入称呼</figcaption>
-        </figure>
+      <dd>综合使用"开始邮件合并"和"编写和插入域"完成邮件的批量编辑</dd>
+      <dd>将一个Word文档与一个Excel数据源结合起来，快速生成一系列内容相同而收件人不同的输出文档的过程。相同的内容来自主文档，变化的内容来自数据源。</dd>
+      <dd>利用"规则"对数据进行区别操作，如根据性别调整称呼；或者过滤掉某些数据：信用低于3000的客户不在邀请范围等等</dd>
+      <figure>
+        <img src="./imgs/rules0.png" alt="">
+        <figcaption>使用规则"如果...那么...否则"加入称呼</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rules1.png" alt="">
+        <figcaption>使用规则"跳过记录条件"过滤掉信用小于80的记录</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rules2.png" alt="">
+        <figcaption>使用规则"跳过记录条件"过滤掉信用为空的记录</figcaption>
+      </figure>
+      <div class="demo">邮邀请函</div>
+      <dd>点击下载 <a
+          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/工作通讯录.xlsx">工作通讯录.xlsx
+          <span class="iconfont icon-filedownload"></span></a>、<a
+          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/会议邀请函.docx">会议邀请函.docx
+          <span class="iconfont icon-filedownload"></span></a>
       </dd>
-      <dd>
-        <figure class="img-sn">
-          <img src="./imgs/rules1.png" alt="">
-          <figcaption>使用规则"跳过记录条件"过滤掉信用小于80的记录</figcaption>
-        </figure>
+      <dd class="number">
+        <div>打开会议邀请函，"邮件" → "开始邮件合并" → "信笺"</div>
+        <div>点击"选择收件人"选项，在下拉列表中选择"使用现有列表…"，在弹出的"选取数据源"对话框中选取下载的工作通信录文件并指定"普通信笺"工作表</div>
+        <div>在邀请函相应的位置，如称呼处，"编写和插入域" → "插入合并域"，选择工作通信录中相应的字段</div>
+        <div>利用"预览结果"检查是否有误</div>
+        <div>点击"完成并合并" → "编辑单个文档…" → 在"合并到新文档"对话框的"合并记录"中，选中"全部"并确定，系统便自动合并生成新文档</div>
       </dd>
-      <dd>
-        <figure class="img-sn">
-          <img src="./imgs/rules2.png" alt="">
-          <figcaption>使用规则"跳过记录条件"过滤掉信用为空的记录</figcaption>
-        </figure>
-      </dd>
-
+      <div class="demo">团学邀请学生家长参加年度迎新晚会，男家长显示为先生，女家长显示为女士</div>
+      <div class="demo">英语等级考试中心给考生发放CET-4考核成绩通知，通过显示为pass</div>
+      <div class="demo">教秘给上计算机应用基础的老师发送机房就绪通知</div>
+      <div class="demo">财务给在职的员工发送工资条</div>
     </dl>
     <div class="chap">高级使用 - 图片</div>
     <dl>
-      <dt>说明</dt>
-      <dd>. 需要配合文档部件中的域来实现，并使用绝对路径或相对路径拼接处完整的图片路径</dd>
+      <dd>需要配合文档部件中的域来实现，并使用绝对路径或相对路径拼接处完整的图片路径</dd>
       <dt>环境介绍</dt>
-      <dd class="number">
-        <div>准备图片：图片最好放在一个文件夹内</div>
-        <div>准备数据源文件：Excel文件；仅仅给出图片的文字名，如gl.png，没有给出路径，需要后面修改域代码完成拼接</div>
-        <div>准备邮件文件：Word文件，并编辑好文案</div>
-      </dd>
+      <dd>准备图片：图片最好放在一个文件夹内</dd>
+      <dd>准备数据源文件：Excel文件；仅仅给出图片的文字名，如gl.png，没有给出路径，需要后面修改域代码完成拼接</dd>
+      <dd>准备邮件文件：Word文件，并编辑好文案</dd>
       <dd>注意：以上文件位置不做要求，尽量放在一起</dd>
       <dt>使用步骤</dt>
-      <dd class="number">
-        <div>打开邮件文件，定位光标，插入"文档部件" → "域"，选择包含图片的域，并指定其路径；系统对外部的操作会给出警告信息，确认即可</div>
-        <figure class="img-sn">
-          <img src="./imgs/pic.png" alt="">
-          <caption>插入图片域</caption>
-        </figure>
-        <figure class="img-sn">
-          <img src="./imgs/pic1.png" alt="">
-          <caption>系统提示</caption>
-        </figure>
-        <div>按Alt + F9切换到域代码编辑状态，显示为：{INCLUDETEXT "E:\\OA\\imgs" \* MERGEFORMAT }</div>
-        <div>将光标定位在路径最后面imgs处，切换回"邮件"，插入图片域，此时的图片对应的域代码为：{INCLUDETEXT "E:\\OA\\imgs\\{MERGEFIELD 头像}" \* MERGEFORMAT }
-        </div>
-        <div>按Alt + F9，退出域代码编辑状态，按F9刷新，检查图片的加载情况</div>
-        <div>后续的完成合并同前；如果图片没有更新，请按F9</div>
-        <div>保存</div>
+      <dd>打开邮件文件，定位光标，插入"文档部件" → "域"，选择包含图片的域，并指定其路径；系统对外部的操作会给出警告信息，确认即可</dd>
+      <figure>
+        <img src="./imgs/pic.png" alt="">
+        <caption>插入图片域</caption>
+      </figure>
+      <figure>
+        <img src="./imgs/pic1.png" alt="">
+        <caption>系统提示</caption>
+      </figure>
+      <dd>按Alt + F9切换到域代码编辑状态，显示为：{INCLUDETEXT "E:\\OA\\imgs" \* MERGEFORMAT }</dd>
+      <dd>将光标定位在路径最后面imgs处，切换回"邮件"，插入图片域，此时的图片对应的域代码为：{INCLUDETEXT "E:\\OA\\imgs\\{MERGEFIELD 头像}" \* MERGEFORMAT }
       </dd>
-      <dd>
-        <table class="tbl-sn txt-center">
-          <caption>常见域的格式调整</caption>
+      <dd>按Alt + F9，退出域代码编辑状态，按F9刷新，检查图片的加载情况</dd>
+      <dd>后续的完成合并同前；如果图片没有更新，请按F9</dd>
+      <dd>保存</dd>
+      <table>
+        <caption>常见域的格式调整</caption>
+        <thead>
           <tr>
-            <th>格式</th>
-            <th>说明</th>
-            <th>示例</th>
+            <th>item</th>
+            <th>desc</th>
+            <th>demo</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>\# 0.00</td>
             <td>指定小数位数</td>
@@ -103,11 +108,11 @@
             <td>中文显示</td>
             <td>7/1/1995→一九九五七月一日</td>
           </tr>
-        </table>
-      </dd>
+        </tbody>
+      </table>
     </dl>
-  </main>
-  <div id="footer"></div>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 

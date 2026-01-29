@@ -1,15 +1,17 @@
 @charset "utf-8";
-@import url(//at.alicdn.com/t/c/font_5035820_ah8rewuy28j.css);
+@import url(//at.alicdn.com/t/c/font_5035820_95h57hnojwi.css);
 
 :root {
   --main-color: #4bc2ce;
   --second-color: #34ace0;
   --third-color: #ff7b00;
+  --warn-color: #f25e44;
+  --blue-color: #34ace0;
   --pink-color: #c5237a;
   --pink-light-color: #fccfe9;
+  --orange-color: #ff7b00;
   --yellow-color: #f1c40f;
   --green-color: #00f260;
-  --warn-color: #f25e44;
   --pre-color: #dcdcaa;
   --bg-color: #fff;
   --txt-color: #111;
@@ -85,6 +87,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 header {
+  position: relative;
   height: var(--header-h);
   background-color: var(--main-color);
   background-image: url(/imgs/banner.png);
@@ -94,11 +97,13 @@ header {
   align-items: flex-end;
   padding: 0 var(--p-m-g);
   color: #fff;
+  overflow: hidden;
 }
 
 a {
   color: var(--warn-color);
   font: inherit;
+  text-decoration: none;
 }
 
 h1,
@@ -165,7 +170,7 @@ dd>p::before {
 }
 
 figure {
-  margin: 4rem auto;
+  margin: 6rem auto;
   text-align: center;
   counter-increment: img-sn;
 }
@@ -173,6 +178,7 @@ figure {
 figcaption {
   text-align: center;
   font-size: 1.4rem;
+  margin-top: 2rem;
 }
 
 figcaption::before {
@@ -328,6 +334,10 @@ strong,
   margin: 4rem auto;
 }
 
+.filter {
+  filter: drop-shadow(1px 1px 10px rgba(0, 0, 0, 0.1));
+}
+
 .txt-center {
   text-align: center;
 }
@@ -355,10 +365,15 @@ strong,
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: var(--main-color);
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+}
+
+.back2top .iconfont {
+  color: #fff;
 }
 
 @media screen and (max-width: 768px) {
