@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    table {
+      max-width: 600px;
+    }
+  </style>
 </head>
 
 <body>
@@ -17,8 +22,8 @@
     <h3>Code</h3>
     <dl>
       <dt>内容 Contents</dt>
-      <dd>系统组成</dd>
-      <dd>信息表示</dd>
+      <dd>ASCII</dd>
+      <dd>Unicode</dd>
     </dl>
     <div class="chap">编码</div>
     <dl>
@@ -268,7 +273,7 @@
         <figcaption>码的转换</figcaption>
       </figure>
       <dd class="demo">某字符的区位码 2083，求x的GB2312编码和机内码</dd>
-      <dd class="number">
+      <dd>
         <div>拆分为区和位，并转换为16进制，得到x的区位码</div>
         <p>20 = 14H</p>
         <p>83 = 53H</p>
@@ -279,12 +284,6 @@
         <p>14H + A0H = B4H</p>
         <p>53H + A0H = F3H</p>
       </dd>
-      <pre>
->>> '大'.encode('gb2312')
-b'\xb4\xf3'</pre>
-      <pre>
->>> b'\xb4\xf3'.decode('gb2312')
-'大'</pre>
       <dd>如果不转为机内码会怎么样？</dd>
       <dt>Unicode</dt>
       <dd>Universal Code，通用码或统一码、也称<span class="warn">万国码</span></dd>
@@ -340,22 +339,6 @@ b'\xb4\xf3'</pre>
           </tr>
         </tbody>
       </table>
-      <pre>
->>> print('我'.encode('utf-8'))
-b'\xe6\x88\x91'
->>></pre>
-      <dd class="demo">使用python的ord函数和chr函数查看字符对应的编码或数字</dd>
-      <dd>ord()：字符编码</dd>
-      <dd>chr()：字符解码</dd>
-      <pre>
->>> ord('a')
-97
->>> chr(49)
-'1'
->>> ord('我')
-25105</pre>
-      <dd class="demo">借助现有环境，查看编码对中文的影响</dd>
-      <dd>更多汉字编码，请自行查阅在线编码工具</dd>
       <dt>BIG-5</dt>
       <dd>繁体字编码方案，又称大五码，主要为香港与台湾地区使用</dd>
       <dd>.
@@ -368,7 +351,7 @@ b'\xe6\x88\x91'
         <div>. 编码和解码必须使用相同的字符集</div>
         <div>. 英文一般不会出现乱码，因为一般字符集都兼容ASCII字符集，所以出现乱码的大都是非英文字符集</div>
         <div>. 码的转换</div>
-        <div class="number">
+        <div>
           <div>区位码 + 2020H = 国标码</div>
           <div>国标码 + 8080H = 机内码</div>
           <div>区位码 + A0A0H = 机内码</div>

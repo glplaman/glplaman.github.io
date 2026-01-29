@@ -227,25 +227,37 @@ $ git push</pre>
           </tr>
         </tbody>
       </table>
-      <dt>查看本地仓库提交记录 log</dt>
+      <dt>查看本地提交 commit history</dt>
+      <dd>显示当前分支（或指定分支/引用）上的提交记录，按时间倒序排列</dd>
+      <dd>-n：可以指定查看的记录条数</dd>
+      <dd>--oneline：将每条记录压缩成一行查看</dd>
       <dd>按 Q/q 退出</dd>
       <dd>Author 就是配置中关联的用户名和用户邮箱</dd>
+      <dd>git log 显示的是完整的 commit ID；一个 40 位的十六进制字符串</dd>
       <pre>
 $ git log
-commit cc355cbd2a03d61f0ef440706fee7c6257f9fee3 (HEAD -> main, origin/main, origin/HEAD)
-Author: glpla &lt;1942194789@qq.com>
-Date:   Wed Jan 3 12:34:20 2024 +0800
+commit e0ac96e55219d89fc3edec31aa9998d9184dcff7 (HEAD -> main, origin/main)
+Author: glpla &lt;glpla@hotmail.com&gt;
+Date:   Thu Jan 29 15:47:19 2026 +0800
 
-    web
+    spm removed large file
 
-commit 32eefc91550a970775689f1f2a7b239bd2b22753
-Author: glpla &lt;1942194789@qq.com>
-Date:   Wed Jan 3 10:48:20 2024 +0800
+commit b4ae9a83cd1d1a43d5b1dc7357d850abee7d19ad
+Author: glpla &lt;glpla@hotmail.com&gt;
+Date:   Thu Jan 22 15:56:25 2026 +0800
 
-    web</pre>
-      <dd>将每条记录压缩成一行查看 --oneline</dd>
+    react
+...</pre>
+      <dd>git log --oneline 显示的是缩写的 commit ID（默认 7 位）</dd>
+      <pre>
+$ git log --oneline -n 5
+e0ac96e (HEAD -> main, origin/main) spm removed large file
+b4ae9a8 react
+1012e0f course page index
+2a280c1 final
+8805a15 final</pre>
       <pre>$ git log --oneline</pre>
-      <dt>查看远程仓库提交记录 reflog</dt>
+      <!-- <dt>查看远程仓库提交记录 reflog</dt>
       <dd>按 Q/q 退出</dd>
       <dd>main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</dd>
       <dd>HEAD 前面的字符串序列是提交的版本号；利用这个可以实现版本穿梭</dd>
@@ -255,20 +267,43 @@ $ git reflog
 cc355cb (HEAD -> main, origin/main, origin/HEAD) HEAD@{0}: commit: web
 32eefc9 HEAD@{1}: commit: web
 aae5d51 HEAD@{2}: commit: web
-065c08e HEAD@{3}: commit: fn</pre>
-      <dt>撤销本地/远程提交 reset</dt>
-      <dd>--mixed：默认行为；撤销最近一次提交，并将更改回退到工作区 - 取消暂存</dd>
-      <dd>撤销本地提交</dd>
-      <pre>$ git reset commitId</pre>
-      <dd>--soft：撤销最近一次提交，但保留工作区和暂存区的更改，不希望丢失任何更改</dd>
-      <pre>$ git reset --soft commitId</pre>
-      <dd>撤销远程提交 - 版本穿梭</dd>
-      <dd>--hard：撤销最近一次提交，并完全丢弃更改，恢复到上一个提交的状态</dd>
-      <pre>$ git reset --hard commitId</pre>
-      <pre>
-git reset --hard commitId
-
-Head is now at xxxxx</pre>
+065c08e HEAD@{3}: commit: fn</pre> -->
+      <dt>撤销本地提交 reset</dt>
+      <dd>主要用于移动 HEAD 指针、重置暂存区（index）和/或工作区，从而撤销提交、取消暂存或丢弃更改</dd>
+      <dd>不要对已推送 pushed 的提交使用 git reset</dd>
+      <table>
+        <caption>git reset</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>git reset --soft</td>
+            <td>撤销提交，保留暂存；安全</td>
+          </tr>
+          <tr>
+            <td>git reset --mixed</td>
+            <td>撤销提交，取消暂存；安全；默认</td>
+          </tr>
+          <tr>
+            <td>git reset --hard</td>
+            <td>彻底回退；危险</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">应用场景：某次 commit 中，提交了一个大文件，导致 push 失败</div>
+      <div>
+        <p>查看那次提交的 commitid</p>
+        <pre>git log -n 5</pre>
+        <p>撤销提交</p>
+        <pre>$ git reset --soft commitId</pre>
+        <p>重新 add</p>
+        <p>重新 commit</p>
+        <p>重新 push</p>
+      </div>
     </dl>
     <h2>仓库 Repository</h2>
     <dl class="nav-cont">

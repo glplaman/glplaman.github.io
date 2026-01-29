@@ -8,15 +8,6 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
-  <style>
-    .uppercase dt {
-      text-transform: uppercase;
-    }
-
-    table {
-      table-layout: fixed;
-    }
-  </style>
 </head>
 
 <body>
@@ -26,68 +17,62 @@
     <h3>Formula</h3>
     <dl>
       <dt>基本使用</dt>
-      <dd>选择结果单元格，输入 <span class="em">=</span></dd>
+      <dd>选择某个空单元格显示计算结果，输入 <strong>=</strong>，激活计算功能</dd>
+      <dd>除了手动计算还可以使用公式</dd>
       <dd>输入函数开始几个字母，系统会出现可能的函数列表</dd>
-      <dd>使用 <span class="em">↑、↓预览</span> 函数，注意阅读函数的基本使用信息</dd>
-      <dd>使用 <span class="em">TAB选择</span> 函数，函数会出现公式栏，根据函数要求，指定参数，或者单击、或者拖动</dd>
-      <dd>所有参数都指定后，按回车Enter，完成公式的使用</dd>
+      <dd>使用 <strong>↑、↓</strong> 预览函数，注意阅读函数的基本使用信息</dd>
+      <dd>使用 <strong>TAB</strong> 选择函数，函数会出现顶部的公式栏；根据函数要求，指定参数，或者单击、或者拖动</dd>
+      <dd>所有参数都指定后，按回车 <strong>Enter</strong> 确认，完成计算</dd>
       <dd>如果结果异常，请查看参数是否正确、参数是否正确、符号是否正确、逻辑是否正确</dd>
       <figure>
         <img src="./imgs/form.png" alt="">
         <figcaption>公式栏</figcaption>
       </figure>
     </dl>
-    <div class="chap">常用公式</div>
-    <dl class="uppercase">
-      <dt>sum</dt>
+    <div class="chap">常用公式 Common Formula</div>
+    <dl>
+      <dd>先选择数据再使用公式</dd>
+      <dt>sum(number1,number2,...)</dt>
       <dd>求和</dd>
-      <dd>快捷键：ALT + =，快速求和</dd>
-      <dt>sumif</dt>
+      <dd>通常使用范围选择数据</dd>
+      <pre>=SUM(M1:M6)</pre>
+      <dd>快捷键：ALT + =，快速求和；在数据的下方生成结果</dd>
+      <dt>sumif(range, criteria)</dt>
       <dd>根据条件求和</dd>
+      <dd>条件使用双引号</dd>
+      <pre>=SUMIF(M1:M7,">80")</pre>
       <dt>average</dt>
       <dd>求平均</dd>
+      <pre>=AVERAGE(M1:M8)</pre>
       <dt>max</dt>
       <dd>求最大数值</dd>
+      <pre>=MAX(M1:M7)</pre>
       <dt>min</dt>
       <dd>求最小数值</dd>
+      <pre>=MIN(M1:M7)</pre>
       <dt>random</dt>
       <dd>0-1的随机数；小数</dd>
-      <dd>= RAND()</dd>
+      <pre>= RAND()</pre>
       <dt>randombetween</dt>
       <dd>指定区间的随机数；整数</dd>
-      <dd>= RANDBETWEEN(10, 20)</dd>
+      <pre>= RANDBETWEEN(10, 20)</pre>
       <dt>round</dt>
       <dd>按指定的位数对数值进行四舍五入</dd>
       <dd>需要指定保留几位小数，0为仅取整数</dd>
-      <table>
-        <caption>ROUND()</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>desc</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>= ROUND(4.567, 0)</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>= ROUND(4.567, 1)</td>
-            <td>4.6</td>
-          </tr>
-          <tr>
-            <td>= ROUND(4.567, 2)</td>
-            <td>4.57</td>
-          </tr>
-        </tbody>
-      </table>
+      <pre>= ROUND(4.567, 0) // 5</pre>
+      <pre>= ROUND(4.567, 1) // 4.6</pre>
+      <pre>= ROUND(4.567, 2) // 4.57</pre>
       <dt>if</dt>
-      <dd>条件判断；适合单条件判定或两条件判定；也可以多级嵌套；注意括号要匹配，不要丢失</dd>
-      <dd>多级条件推荐使用IFS</dd>
-      <dd>= IF(U112 >= 60, "及格", "不及格")：成绩大于等于60，为及格，否则不及格</dd>
-      <dd>= IF(M2 > $M$11,"pass", $M$11-M2)：如果达标，显示通过，否则给出差额</dd>
-      <dd>= IF(A2 >= 90, "A", (IF(A2 >= 80, "B", (IF(A2 >= 60, "C", "D")))))：依次判定分数，嵌套较多，不建议使用</dd>
+      <dd>条件判断</dd>
+      <dd>适合单条件判定或两条件判定</dd>
+      <dd>也可以多级嵌套；多级条件推荐使用IFS</dd>
+      <dd>注意括号要匹配，不要丢失</dd>
+      <div>成绩大于等于60，为及格，否则不及格；这里采用固定值</div>
+      <pre>= IF(U112 >= 60, "及格", "不及格")</pre>
+      <div>如果达标，显示通过，否则给出差额；这里绝对引用某个单元格的值</div>
+      <pre>= IF(M2 > $M$11,"pass", $M$11-M2)</pre>
+      <div>依次判定分数，嵌套较多，不建议使用</div>
+      <pre>= IF(A2 >= 90, "A", (IF(A2 >= 80, "B", (IF(A2 >= 60, "C", "D")))))</pre>
       <dt>ifs</dt>
       <dd>多分支判断，返回与第一个true条件匹配的值</dd>
       <dd>范围要全覆盖，否则会提示值无效；默认值应指定测试条件为TRUE</dd>
@@ -103,11 +88,57 @@
       <dt>countif</dt>
       <dd>计算区域中满足条件的单元格个数</dd>
       <dd>条件使用双引号括起来</dd>
-      <dd>= COUNTIF(H2:H16, ">=60")：大于等于60，即及格的人数</dd>
+      <pre>= COUNTIF(H2:H16, ">=60")：大于等于60，即及格的人数</pre>
       <dt>countifs</dt>
       <dd>多条件判定统计</dd>
       <dd>适合区间统计</dd>
-      <dd>= COUNTIFS(L2:L9, ">=70", L2:L9, "&lt;80")：大于等于70小于80的人数</dd>
+      <pre>= COUNTIFS(L2:L9, ">=70", L2:L9, "&lt;80")：大于等于70小于80的人数</pre>
+      <dt>rank</dt>
+      <dd>排名：返回某数字在一列数字中相对于其它数字的大小排名</dd>
+      <dd>区域应该是绝对引用</dd>
+      <pre>= RANK(H2, $H$2:$H$16)</pre>
+      <dt>len</dt>
+      <dd>文本字符的个数|长度</dd>
+      <pre>=LEN(M1) // hi,there. → 9</pre>
+      <dt>left(text,n)</dt>
+      <dd>从一个文本字符串的第一个字符|左边开始，返回指定个数的字符</dd>
+      <pre>=LEFT(M1,5) // hi,there. → hi,th</pre>
+      <dt>right(text,n)</dt>
+      <pre>=RIGHT(M1,5) // hi,there. → here.</pre>
+      <dd>从一个文本字符串的最后一个字符|右边开始，返回指定个数的字符</dd>
+      <dt>mid(text,start,n)</dt>
+      <dd>从文本字符串中指定的起始位置起，返回指定长度的字符；位置是第一个，就是LFET函数；位置是最后一个，就是RIGHT函数</dd>
+      <pre>=MID(M1,2,3) // hi,there. → i,t</pre>
+      <dt>vlookup</dt>
+      <dd>查找：先垂直方向|行找到关键字，再水平方向找到需要的目标|列</dd>
+      <dd>查找空间table通常使用绝对地址</dd>
+      <dd>可以模糊匹配TRUE或精确匹配FALSE；默认是模糊匹配</dd>
+      <dd>模糊匹配：如果没有匹配的关键字，就根据关键字的升序排序空间，模糊匹配；匹配不到会先#N/A；如成绩档次</dd>
+      <dd>精确匹配，通常配合其他错误函数一起使用</dd>
+      <dd>获取多个目标数据时，需要手动修改列数</dd>
+      <dd>学号对应的信息行中的平均成绩</dd>
+      <pre>= VLOOKUP($K$1,$A$1:$E$10,4,FALSE)</pre>
+      <dt>text</dt>
+      <dd>根据指定的数字格式将数值转换成文本</dd>
+      <dd>格式串通常以 0：普通数字、YYYY：年；MM：月；DD：日；AAAA：星期</dd>
+      <dd>在 text 前加 -- 可以将结果转换为数字。前提是结果可以转换为数字</dd>
+      <dd>此外可以实现四舍五入、条件计算等功能，但是建议使用更加直观的函数</dd>
+      <pre>= TEXT(A3, "000-0000-0000") // 13707735418 → 137-0773-5418</pre>
+      <pre>= TEXT(B4, "yyyy年m月d日") // 2023/11/12 →  2023年11月12日</pre>
+      <pre>= TEXT(B4, "YYYY") // 2023/11/12 →  2023</pre>
+      <pre>= TEXT(B4, "MM") // 2023/11/12 → 11</pre>
+      <pre>= TEXT(B4, "DD") // 2023/11/12 → 12</pre>
+      <pre>= TEXT(B4, "AAAA") // 2023/11/12 → 星期日</pre>
+      <pre>= TEXT(B6, "0.0") // 4.567 → 4.6</pre>
+      <pre>= TEXT(B6, "0.00") // 4.567 → 4.57</pre>
+      <dt>ttest</dt>
+      <dd>统计分析函数 t-检验函数</dd>
+      <dd>= TTEST(array1, array2, tail, type)</dd>
+      <dd class="tips">
+        <div>显示公式：CTRL + `</div>
+        <div>框选数据，常见的统计信息会显示在底部状态栏</div>
+        <div>有单元格更新时，随机函数random和randombetween会自动重新计算</div>
+      </dd>
       <dt>frequency</dt>
       <dd>统计一组数据在某个区间的分布；区间通常以本地表的形式给出</dd>
       <dd>区间不一定升序或降序</dd>
@@ -145,132 +176,37 @@
           </tr>
         </tbody>
       </table>
-      <dd class="number">
+      <dd>
         <div>全部选择结果区域</div>
         <div>输入公式，= FREQUENCY(A2:A16, D2:D5)：分别指定数据列和区间列</div>
-        <div>按CTRL + SHIFT + ENTER； <span class="warn">不要直接回车；不要拖动填充</span></div>
+        <div>按 CTRL + SHIFT + ENTER； <span class="warn">不要直接回车；不要拖动填充</span></div>
       </dd>
-      <dt>vlookup</dt>
-      <dd>查找：先垂直方向|行找到关键字，再水平方向找到需要的目标|列</dd>
-      <dd>查找空间table通常使用绝对地址</dd>
-      <dd>可以模糊匹配TRUE或精确匹配FALSE；默认是模糊匹配</dd>
-      <dd>模糊匹配：如果没有匹配的关键字，就根据关键字的升序排序空间，模糊匹配；匹配不到会先#N/A；如成绩档次</dd>
-      <dd>精确匹配，通常配合其他错误函数一起使用</dd>
-      <dd>获取多个目标数据时，需要手动修改列数</dd>
-      <dd>学号对应的信息行中的平均成绩</dd>
-      <dd>= VLOOKUP($K$1,$A$1:$E$10,4,FALSE)</dd>
-      <dt>left</dt>
-      <dd>从一个文本字符串的第一个字符|左边开始，返回指定个数的字符</dd>
-      <dt>right</dt>
-      <dd>从一个文本字符串的最后一个字符|右边开始，返回指定个数的字符</dd>
-      <dt>mid</dt>
-      <dd>从文本字符串中指定的起始位置起，返回指定长度的字符；位置是第一个，就是LFET函数；位置是最后一个，就是RIGHT函数</dd>
-      <dt>len</dt>
-      <dd>文本字符的个数|长度</dd>
-      <table>
-        <caption>Formula</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>desc</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>A1</th>
-            <th>公式</th>
-            <th>结果</th>
-          </tr>
-          <tr>
-            <td rowspan="4" class="txt-center">核心价值观</td>
-            <td>= LEFT(A1,2)</td>
-            <td>核心</td>
-          </tr>
-          <tr>
-            <td>= RIGHT(A1, 3)</td>
-            <td>价值观</td>
-          </tr>
-          <tr>
-            <td>= MID(A1, 3, 2)</td>
-            <td>价值</td>
-          </tr>
-          <tr>
-            <td>=LEN(A1)</td>
-            <td>5</td>
-          </tr>
-        </tbody>
-      </table>
-      <dt>text</dt>
-      <dd>根据指定的数字格式将数值转换成文本</dd>
-      <dd>格式串通常以0：普通数字、YYYY：年；MM：月；DD：日；AAAA：星期</dd>
-      <dd>在text前加--可以将结果转换为数字。前提是结果可以转换为数字</dd>
-      <dd>此外可以实现四舍五入、条件计算等功能，但是建议使用更加直观的函数</dd>
-      <table>
-        <caption>TEXT()</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>desc</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>13707735418</td>
-            <td>= TEXT(A3, "000-0000-0000")</td>
-            <td>137-0773-5418</td>
-          </tr>
-          <tr>
-            <td>2023/11/12</td>
-            <td>= TEXT(B4, "yyyy年m月d日")</td>
-            <td>2023年11月12日</td>
-          </tr>
-          <tr>
-            <td>2023/11/12</td>
-            <td>= TEXT(B4, "YYYY")</td>
-            <td>2023</td>
-          </tr>
-          <tr>
-            <td>2023/11/12</td>
-            <td>= TEXT(B4, "MM")</td>
-            <td>11</td>
-          </tr>
-          <tr>
-            <td>2023/11/12</td>
-            <td>= TEXT(B4, "DD")</td>
-            <td>12</td>
-          </tr>
-          <tr>
-            <td>2023/11/12</td>
-            <td>= TEXT(B4, "AAAA")</td>
-            <td>星期日</td>
-          </tr>
-          <tr>
-            <td>4.567</td>
-            <td>= TEXT(B6, "0.0")</td>
-            <td>4.6</td>
-          </tr>
-          <tr>
-            <td>4.567</td>
-            <td>= TEXT(B6, "0.00")</td>
-            <td>4.57</td>
-          </tr>
-        </tbody>
-      </table>
-      <dt>ttest</dt>
-      <dd>统计分析函数 t-检验函数</dd>
-      <dd>= TTEST(array1, array2, tail, type)</dd>
-      <dd class="tips">
-
-        <div>显示公式：CTRL + `</div>
-        <div>框选数据，常见的统计信息会显示在底部状态栏</div>
-        <div>有单元格更新时，随机函数random和randombetween会自动重新计算</div>
-      </dd>
-      <dt>rank</dt>
-      <dd>排名：返回某数字在一列数字中相对于其它数字的大小排名</dd>
-      <dd>区域应该是绝对引用</dd>
-      <dd>= RANK(H2, $H$2:$H$16)</dd>
+    </dl>
+    <div class="chap">Drill</div>
+    <dl>
+      <dd>资料下载 <a
+          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/学生成绩.xlsx"
+          title="点击下载">学生成绩 </a></dd>
+      <dt>案例1：处理学生成绩</dt>
+      <dd>考生个数、考勤率 - COUNT|COUNTA</dd>
+      <dd>平均成绩 - AVERAGE</dd>
+      <dd>平均成绩最高分 - MAX</dd>
+      <dd>最低分 - MIN</dd>
+      <dd>两级成绩判定 - IF：如果成绩大于等于60，显示及格；否则显示不及格</dd>
+      <dd>五级成绩判定：优秀：90+；良好：80+；中：70+；及格：60+；不及格：60-</dd>
+      <dd>学生平均成绩排名 - RANK</dd>
+      <dd>统计五级成绩评定中，不同档次的人数 - FREQUENCY</dd>
+      <dd>使用条件格式按照成绩档次等显示不同背景</dd>
+      <dd>高亮显示前3名同学</dd>
+      <dd>统计每个成绩档次的学生个数</dd>
+      <dt>案例2：查询学生成绩</dt>
+      <dd>分别在当前表和新表实现查询学生的功能：如果在当前表，功能实现后，应该隐藏数据区域；如果在新表，应该隐藏数据表</dd>
+      <dd>根据学号查询对应的信息</dd>
+      <dd>查询表格式自定义</dd>
+      <dt>案例3：优化查询学生成绩</dt>
+      <dd>如果输入异常，不符合学号格式，应给出提示</dd>
+      <dd>使用 IFERROR() 或数据验证功能</dd>
+      <pre>= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 2),"查无此人")</pre>
     </dl>
     <div id="footer"></div>
   </div>
