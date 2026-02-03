@@ -24,9 +24,12 @@
     .w {
       width: 96%;
       max-width: 800px;
+      min-height: 100vh;
       margin: 0 auto;
-      text-align: center;
       padding-top: 2rem;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      justify-items: center;
     }
 
     h1 {
@@ -38,8 +41,17 @@
       outline: none;
     }
 
+    .loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9;
+    }
+
     .chart-box {
-      height: 300px;
+      width: 100%;
     }
   </style>
 </head>
@@ -54,7 +66,10 @@
       <option value="202504.json">计算机网络-24计科-4班</option>
       <option value="202505.json">计算机网络-24计科-6班</option>
     </select>
-    <div id="echarts-rank" class="chart-box"></div>
+    <div class="loading" id="loading">Loading...</div>
+    <div class="chart-box">
+      <div id="echarts-rank"></div>
+    </div>
     <div id="footer"></div>
   </div>
   <script src="/utils/custom/footer.js"></script>
@@ -65,9 +80,12 @@
       console.log(e.target.value);
       loadDta(e.target.value)
     })
+    const loading = document.getElementById('loading')
     const rank = document.getElementById('echarts-rank');
     const myChartRank = echarts.init(rank);
     const loadDta = async (url) => {
+      loading.style.display = 'flex'
+      rank.style.display = 'none'
       const res = await fetch('/utils/data/rank/' + url)
       const json = await res.json()
       const source = json.cont.map(item => {
@@ -147,6 +165,8 @@
           // }
         },
       };
+      loading.style.display = 'none'
+      rank.style.display = 'block'
       myChartRank.setOption(option);
       myChartRank.resize();
     }
