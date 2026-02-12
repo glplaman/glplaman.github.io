@@ -6,44 +6,55 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>实体 Entity</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
 </head>
 
 <body>
-  <header>
-    <h1>实体</h1>
-    <span>&commat;Entity</span>
-  </header>
-  <dl>
-    <dd>
-      <div>. 实体是一段以连字号 & 开头、以分号 ; 结尾的文本/字符串</div>
-      <div>. 常用于显示保留字符和不可见的字符、或其他难以用标准键盘键入的字符</div>
-      <div>. 可以应用在结构或样式中</div>
-      <div>. 更多实体，请访问 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">MDN - Entity</a>、<a
+  <dd class="w">
+    <header>
+      <h1>实体</h1>
+      <span>&commat;Entity</span>
+    </header>
+    <dl>
+      <dd>除了直接使用对应的符号外 - 依赖输入法的支持，还可以使用符号对应的实体</dd>
+      <dd>实体是一段以连字号 & 开头、以分号 ; 结尾的文本/字符串</dd>
+      <dd>常用于显示保留字符和不可见的字符、或其他难以用标准键盘键入的字符</dd>
+      <dd>可以应用在结构或样式中</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Entity">MDN - Entity</a>、<a
           href="https://www.w3school.com.cn/cssref/css_entities.asp">CSS - entities</a>、<a href="https://symbl.cc/">WHEN
-          TEXT IS NOT ENOUGH</a></div>
-    </dd>
-    <dt>Usage</dt>
-    <dd>
-      <div>. 以 &commat; 符号为例，Unicode 编码为 U+000A9</div>
-      <div>1. 结构中使用</div>
-      <div>. 直接写符号；依赖输入法的支持</div>
-      <pre>@</pre>
-      <div>. 实体引用</div>
-      <pre>&amp;commat;</pre>
-      <div>. 十六进制 HEX 编码 - 推荐</div>
-      <pre>&amp;#x40;</pre>
-      <div>. 十进制 HEX 编码</div>
-      <pre>&amp;#64;</pre>
-      <div>2. 伪元素中使用</div>
-      <div>. 只能使用十六进制；不区分大小写；建议使用实际编码大写</div>
+          TEXT IS NOT ENOUGH</a>、<a href="https://symbl.cc">Unicode Lookup</a>
+      </dd>
+      <dt>Unicode</dt>
+      <dd>每个符号，包括实体，都有对应的 Unicode 编码，如 U+0041，表示大写字母 A</dd>
+      <dd>U：代表 Unicode</dd>
+      <dd>+：表示后面跟着的是十六进制数字</dd>
+      <dd>U+XXXX：至少4位十六进制数，不足补零</dd>
+      <dt>ASCII</dt>
+      <dd>ASCII 是 Unicode 的子集，且编码完全兼容、无冲突</dd>
+      <dd>Unicode 的前 128 个码点（U+0000 到 U+007F）与 ASCII 完全一致</dd>
+      <pre>
+ASCII 中的 'A' = 0x41
+Unicode 中的 'A' = U+0041 = 0x41</pre>
+    </dl>
+    <h2>使用</h2>
+    <dl>
+      <dd>以 &commat; 符号为例，Unicode 编码为 U+00040</dd>
+      <dt>结构中使用</dt>
+      <dd>使用实体；只有标准命名实体支持</dd>
+      <pre>&lt;span&gt;&amp;commat;&lt;/span&gt;</pre>
+      <dd>使用十六进制编码；通用性强</dd>
+      <pre>&lt;span&gt;&amp;#x40;&lt;/span&gt;</pre>
+      <dd>使用十进制编码</dd>
+      <pre>&lt;span&gt;&amp;#64;&lt;/span&gt;</pre>
+      <dt>样式中使用</dt>
+      <dd>在伪元素中使用 \ 引用</dd>
+      <dd>只能使用十六进制编码</dd>
+      <dd>不区分大小写；建议使用实际编码大写</dd>
       <pre>
 ul li::marker {
-  content: "\00A9";
+  content: "\0040";
 }</pre>
-    </dd>
-    <dd>
       <table>
         <caption>常见实体符号</caption>
         <thead>
@@ -58,19 +69,19 @@ ul li::marker {
           <tr>
             <td>&lt;</td>
             <td>&amp;lt;</td>
-            <td>U+0003C</td>
+            <td>U+003C</td>
             <td>小于</td>
           </tr>
           <tr>
             <td>&gt;</td>
             <td>&amp;gt;</td>
-            <td>U+0003E</td>
+            <td>U+003E</td>
             <td>大于</td>
           </tr>
           <tr>
             <td>&quot;</td>
             <td>&amp;quot;</td>
-            <td>U+00022</td>
+            <td>U+0022</td>
             <td>双引号</td>
           </tr>
           <tr>
@@ -92,6 +103,18 @@ ul li::marker {
             <td>商标</td>
           </tr>
           <tr>
+            <td>&blacktriangledown;</td>
+            <td>&amp;blacktriangledown;</td>
+            <td>U+25BE</td>
+            <td>下箭头</td>
+          </tr>
+          <tr>
+            <td>&searr;</td>
+            <td>&amp;searr</td>
+            <td>U+2198</td>
+            <td>右下箭头</td>
+          </tr>
+          <tr>
             <td>&#x2610;</td>
             <td></td>
             <td>U+02610</td>
@@ -105,10 +128,10 @@ ul li::marker {
           </tr>
         </tbody>
       </table>
-    </dd>
-  </dl>
-  <div id="footer"></div>
-  <script src="/utils/custom/footer.js"></script>
+    </dl>
+    <div id="footer"></div>
+    </div>
+    <script src="/utils/custom/footer.js"></script>
 </body>
 
 </html>
