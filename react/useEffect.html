@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>钩子函数 useEffect</title>
+  <title>副作用 useEffect</title>
   <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
 </head>
@@ -12,41 +12,105 @@
 <body>
   <div class="w">
     <header>
-      <h1>钩子函数</h1>
+      <h1>副作用</h1>
       <span>&commat;useEffect</span>
     </header>
     <dl>
       <dd>将组件与外部系统同步</dd>
-      <dd>先引入再使用</dd>
-      <dd>更多信息，请访问 <a href="https://react.dev/reference/react/useEffect">useEffect()</a> </dd>
-      <dt>Syntax</dt>
+      <dd>只能在客户端组件调用 - Effects only run on the client. They don’t run during server rendering.</dd>
+      <dd>更多信息，请访问 <a href="https://react.dev/reference/react/useEffect">useEffect()</a></dd>
+      <dd>先引入</dd>
+      <pre>import { useEffect } from "react";</pre>
+      <dd>再使用</dd>
       <pre>useEffect(setup, dependencies?)</pre>
+      <dd>setup：一个函数，用于定义副作用逻辑。这个函数会在组件挂载、更新或卸载时根据依赖项的变化执行</dd>
+      <dd>dependencies：可选参数；指定依赖，仅当依赖变化时，触发同步</dd>
       <div class="tips">
         <p>在开发环境中，React 会故意调用某些函数两次，以帮助发现潜在问题</p>
         <p>确保您的副作用函数（如 API 调用）是幂等的，即多次调用不会产生副作用</p>
         <p>React 的开发模式调试特性，只在开发环境出现，生产环境不会发生</p>
       </div>
       <div class="demo">示例</div>
-      <dd>引入</dd>
-      <pre>import { useEffect } from "react";</pre>
-      <dd>使用</dd>
+      <dd>初始化 - 执行1次</dd>
       <pre>
 useEffect(()=>{
   console.log("components init");  
 }, [])</pre>
-      <div class="demo">加载数据</div>
-      <dd>创建函数</dd>
+      <dd>指定依赖状态</dd>
       <pre>
-const getRank = async () => {
-  let res = await fetch("https://glplaman.github.io/utils/data/rank/202501.json");
-  let data = await res.json();
-  return data;
-};</pre>
+useEffect(() => {
+  console.log("state change");
+}, [state]);</pre>
+      <div class="demo">加载数据</div>
+      <pre>const [ranks, setRanks] = useState([]);</pre>
       <dd>在钩子中使用函数</dd>
       <pre>
 useEffect(() => {
   getRank();
 }, []);</pre>
+      <dd>创建函数</dd>
+      <pre>
+const getRank = async () => {
+  const res = await fetch("https://glplaman.github.io/utils/data/rank/202501.json");
+  const data = await res.json();
+  setRanks(data);
+};</pre>
+      <dd>在组件返回中渲染数据</dd>
+      <pre>
+return (
+  &lt;div>
+    &lt;ul>
+      {todos.map((todo) => (
+        &lt;li key={todo.id}>
+          {todo.id}-{todo.title}
+        &lt;/li>
+      ))}
+    &lt;/ul>
+  &lt;/div>
+);</pre>
+      <dd>IDE 语法检测会提示类型错误；使用泛型并指定类型</dd>
+      <pre>
+interface Todo {
+  id: number;
+  title: string;
+}</pre>
+      <pre>const [todos, setTodos] = useState&lt;Todo[]>([]);</pre>
+      <dd>next.js 中，组件默认是服务端组件，不需要使用钩子，可以直接加载数据并使用</dd>
+      <pre>
+interface Todo {
+  id: number;
+  title: string;
+}
+export default async function Demo() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const todos = await res.json();
+  return (
+    &lt;div>
+      &lt;ul>
+        {todos.map((todo: Todo) => (
+          &lt;li key={todo.id}>
+            {todo.id}-{todo.title}
+          &lt;/li>
+        ))}
+      &lt;/ul>
+    &lt;/div>
+  );
+}     </pre>
+      <div class="demo">监听状态变化</div>
+      <dd>count 变化时，触发同步</dd>
+      <pre>
+import { useEffect, useState } from "react";
+export default function Demo() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log("useEffect count", count);
+  }, []);
+  return (
+    &lt;div>
+      &lt;button onClick={() => setCount(count + 1)}>count: {count}&lt;/button>
+    &lt;/div>
+  );
+}</pre>
     </dl>
     <div id="footer"></div>
   </div>

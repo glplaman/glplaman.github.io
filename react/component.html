@@ -18,7 +18,7 @@
     <dl>
       <div class="tips">
         <p>A component is a piece of the UI (user interface) that has its own logic and appearance.</p>
-        <p>React components are JavaScript functions that return markup:</p>
+        <p>React components are JavaScript functions that return markup.</p>
       </div>
       <dt>Introduction</dt>
       <dd>React 应用由各种各样的组件构成</dd>
@@ -27,7 +27,8 @@
       <dd>组件函数名和组件文件名保持一致</dd>
       <dd>组件名必须大写开头 - React component names must always start with a capital letter, while HTML tags must be lowercase
       </dd>
-      <dd>单一根节点 - shared parent；可以是空标签 - empty &lt;&gt;...&lt;/&gt; wrapper</dd>
+      <dd>单一根节点 - shared parent</dd>
+      <dd>可以是空标签 - empty &lt;&gt;...&lt;/&gt; wrapper</dd>
       <dd>为了避免自动插入分号，return 使用 ()</dd>
       <dd>如果返回只有一行代码，可以省略()；但是不建议</dd>
       <dd>使用 javaScript 的组件后缀名为 .jsx</dd>
@@ -37,14 +38,13 @@
       <div class="demo">示例</div>
       <dd>创建组件 HelloWorld.tsx</dd>
       <pre>
-function HelloWorld() {
+export default function HelloWorld() {
   return (
     &lt;&gt;
       &lt;div&gt;hi,there.&lt;/div&gt;
     &lt;/&gt;
   );
-}
-export default HelloWorld;</pre>
+}</pre>
       <dd>父组件引入并使用</dd>
       <pre>
 import HelloWorld from './components/HelloWorld.tsx';
@@ -58,11 +58,15 @@ function App() {
 }
 
 export default App;</pre>
+      <div class="tips">
+        <p>react.js 中，默认都是 client component</p>
+        <p>next.js 中，默认都是 server component</p>
+      </div>
     </dl>
     <h2>Homework</h2>
     <dl>
-      <div class="demo"> 版权组件</div>
-      <div class="demo"> 卡片组件</div>
+      <div class="demo"> 设计版权组件</div>
+      <div class="demo"> 设计商品组件</div>
       <dd>参考以下结构设计</dd>
       <pre>
 import Desc from "./Desc";
