@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件管理 FIles</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+  <style>
+    .border-t-r {
+      border-top: 1px solid;
+      border-right: 1px solid;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .grid3>figure {
+      width: 100%;
+    }
+
+    .card {
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 10px 10px 20px #bebebe,
+        -10px -10px 20px #ffffff;
+    }
+
+    .card figcaption {
+      text-align: center;
+      background-color: #ff5d73;
+      color: #fff;
+      line-height: 2;
+      font-weight: 600;
+    }
+
+    .dis2 {
+      column-count: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>文件管理</h1>
+    <h3>FIles</h3>
+    <dl>
+      <div class="tips">面向对象的操作</div>
+      <dt>内容 Contents</dt>
+      <dd>文件 File</dd>
+      <dd>文件夹 Folder</dd>
+      <dd>路径 Directory</dd>
+      <dd>资源管理器 Explore</dd>
+    </dl>
+    <div class="chap">文件 File</div>
+    <dl>
+      <dd>文件通常用以实现某种功能或某个软件的部分功能 - 保存数据/信息</dd>
+      <dd>这些信息最初是在内存中建立的，然后以用户给予的名称转存在磁盘上，以便长期保存</dd>
+      <dd>文件标识由文件名 Filename 和扩展名 Extension 两部分组成，它们之间以小数点分隔</dd>
+      <figure>
+        <p class="txt-center">&lt;Filename&gt;[.&lt;Extension&gt;］</p>
+        <figcaption>文件命名格式</figcaption>
+      </figure>
+      <dt>文件名 Filename</dt>
+      <dd>文件的基本属性包括文件名、大小（存储容量）、类型、创建和修改时间等</dd>
+      <dd>文件通过<strong>文件名</strong>与其他文件相区别</dd>
+      <dd>对一个文件所有的操作（如复制、改名、删除等）都是基于文件名</dd>
+      <dt>命名规范 Regulation</dt>
+      <dd>最多可有255个字符 </dd>
+      <dd>可以使用汉字和空格，但文件名第一个字符不能为空格，文件名其他位置中可以包含有空格</dd>
+      <dd>禁用下列特殊符号： ? \ / : * " &lt; &gt; | </dd>
+      <dd>不能利用大小写区分文件名。例如，COMPUTER.DOCX与computer.docx 是同一个文件 </dd>
+      <dd>可以使用多个分隔符（即小数点），但文件名最右一个分隔点后面的部分才是扩展名。例如：computert.BAS.txt.docx
+        只有最后一个分隔符的后面部分（即.docx）才是扩展名</dd>
+      <dt>扩展名 Extension</dt>
+      <dd>使用扩展名来区别文件类型，从而决定用哪个程序打开</dd>
+      <dd>系统规定，文件名是必须有的，而扩展名是可选的</dd>
+      <table class="zebra">
+        <caption>常见后缀名</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>文本 Text</td>
+            <td>.txt 纯文本
+              <p>.docx: Word 文档</p>
+              <p>.xlsx: Excel 工作表</p>
+              <p>.pptx: PowerPoint 演示文稿</p>
+              <p>.pdf: Adobe Acrobat 文档</p>
+              <p>.csv: 逗号分隔值文件，常用于数据交换，可用Excel或文本编辑器打开</p>
+            </td>
+          </tr>
+          <tr>
+            <td>图像 Image</td>
+            <td>
+              <p>.jpg / .jpeg: 最常见的压缩图片格式，适合照片，文件较小</p>
+              <p>.png: 支持透明背景的无损压缩图片，适合图标、网页素材</p>
+              <p>.gif: 支持动画的图片格式，色彩较少</p>
+              <p>.bmp: 位图，未压缩，文件较大，画质高</p>
+              <p>.tif: TIFF 图像文件</p>
+              <p>.ico: 图标文件</p>
+              <p>.svg: 可缩放矢量图形，放大不失真，常用于网页图标</p>
+              <p>.psd: Adobe Photoshop 源文件，保留图层信息</p>
+              <p>.ai: Adobe Illustrator 矢量图源文件</p>
+            </td>
+          </tr>
+          <tr>
+            <td>音频 Audio</td>
+            <td>
+              <p>.mp3: 有损压缩音频格式，兼容性好</p>
+              <p>.wav: 未压缩的波形音频，音质高但文件大</p>
+              <p>.wma: Windows Media Audio 音频文件</p>
+              <p>.aac: 高级音频编码，效率优于MP3，常用于Apple设备</p>
+              <p>.ogg: 流音频文件</p>
+            </td>
+          </tr>
+          <tr>
+            <td>视频 Video</td>
+            <td>
+              <p>.mp4: 最通用的视频格式，兼容几乎所有设备和平台</p>
+              <p>.wmv: Windows Media Video 视频文件</p>
+              <p>.avi: 音频视频交错格式，老牌格式，文件通常较大</p>
+              <p>.mkv: 多媒体容器，可封装多种音轨和字幕，常用于高清电影</p>
+              <p>.flv: Flash 视频；已逐渐淘汰，在旧网页视频中常见</p>
+              <p>.mov: Apple QuickTime 视频格式，常用于Mac环境和专业剪辑</p>
+            </td>
+          </tr>
+          <tr>
+            <td>可执行文件 Executables </td>
+            <td>
+              <p>.exe: 可执行文件</p>
+              <p>.bat / .cmd: Windows 批处理脚本</p>
+              <p>.sh: Linux/Unix Shell 脚本</p>
+              <p>.msi: Windows 安装程序包</p>
+              <p>.dll: Windows 动态链接库文件</p>
+            </td>
+          </tr>
+          <tr>
+            <td>源代码文件 Code</td>
+            <td>
+              <p>.c：c 源文件</p>
+              <p>.cppp：c++ 源文件</p>
+              <p>.py：Python 源文件</p>
+              <p>.java：Java 源文件</p>
+              <p>.sql: SQL 数据库查询脚本</p>
+            </td>
+          </tr>
+          <tr>
+            <td>网页 Page</td>
+            <td>
+              <p>.html: 网页文件</p>
+              <p>.css: 样式表文件</p>
+              <p>.js: JavaScript 文件</p>
+            </td>
+          </tr>
+          <tr>
+            <td>字体文件 Font</td>
+            <td>
+              <p>.ttf: TrueType 字体</p>
+              <p>.otf: OpenType 字体</p>
+              <p>.woff / .woff2: Web 开放字体格式，用于网页</p>
+            </td>
+          </tr>
+          <tr>
+            <td>压缩文件 Compressed</td>
+            <td>
+              <p>.zip: 压缩文件</p>
+              <p>.rar: 压缩文件</p>
+              <p>.7z: 压缩文件</p>
+              <p>.tar: 压缩文件</p>
+              <p>.gz: 压缩文件</p>
+              <p>.iso: 光盘镜像文件</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">显示扩展名</div>
+      <dd>系统默认不显示扩展名</dd>
+      <dd>为了方便，通常设置为显示</dd>
+      <dd>资源管理器中，单击菜单栏的"查看" → "显示" → "文件扩展名"或单击"更多 → "查看"，取消隐藏</dd>
+      <figure>
+        <img src="./imgs/hide.png" alt="">
+        <figcaption>显示文件扩展名</figcaption>
+      </figure>
+    </dl>
+    <div class="chap">文件夹 Folder</div>
+    <dl>
+      <dd>管理文件和文件夹的容器</dd>
+      <dd>允许文件夹嵌套</dd>
+      <dd>文件夹命名同文件，但文件夹名不采用扩展名</dd>
+      <dd>每个磁盘都有一个根文件夹，根文件夹是在磁盘格式化时自动建立的，而其他一般的文件夹则是由用户按需要来建立的</dd>
+      <dd>不在同一文件夹下的子文件夹或文件可以同名，但在同一文件夹下不允许有相同的子文件夹名和文件名</dd>
+    </dl>
+    <div class="chap">路径 Directory</div>
+    <dl>
+      <dt>绝对路径</dt>
+      <dd>从盘符开始，如：D:\Doc\tmp.txt</dd>
+      <dt>相对路径</dt>
+      <dd>从当前目录开始，如Doc\tmp.txt</dd>
+      <dt>全文件名</dt>
+      <dd>绝对路径 + 文件名，如D:\Doc\tmp.txt</dd>
+    </dl>
+    <div class="chap">资源管理器 Explore</div>
+    <dl>
+      <dd>也叫文件资源管理器</dd>
+      <dd>集中管理文件和文件夹的核心系统工具</dd>
+      <dd>使用图形化界面，负责文件的查看、组织、搜索、复制、移动、删除以及属性设置</dd>
+      <dd>启动：点击任务栏上的文件夹图标</dd>
+      <dd>快捷键：Win + E</dd>
+      <dd>其各区域组成和划分和普通窗口类似</dd>
+      <dt>常见操作</dt>
+      <div>1. 文件和文件夹</div>
+      <dd>创建、复制、粘贴、删除</dd>
+      <table>
+        <caption>文件/文件夹常见操作 Operation</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>shortcut</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>全选</td>
+            <td>Ctrl + A</td>
+            <td>选择当前目录下所有文件；All</td>
+          </tr>
+          <tr>
+            <td>复制</td>
+            <td>Ctrl + C</td>
+            <td>创建一个新的同样的文件，默认情况下文件名带有copy字样，需重命名；Copy</td>
+          </tr>
+          <tr>
+            <td>剪切</td>
+            <td>Ctrl + X</td>
+            <td>从当前位置移到另外一个位置</td>
+          </tr>
+          <tr>
+            <td>粘贴</td>
+            <td>Ctrl + V</td>
+            <td>将复制的或剪切的文档粘贴到当前位置</td>
+          </tr>
+          <tr>
+            <td>重命名</td>
+            <td>F2</td>
+            <td>要先选择文件</td>
+          </tr>
+          <tr>
+            <td>删除</td>
+            <td>Del</td>
+            <td>删除文件到回收站；Delete</td>
+          </tr>
+          <tr>
+            <td>彻底删除</td>
+            <td>Shift + Del</td>
+            <td>彻底删除文件，谨慎操作；也可以设置回收站属性，不中转而直接删除</td>
+          </tr>
+          <tr>
+            <td>创建新文件夹</td>
+            <td>Ctrl + Shift + N</td>
+            <td>创建一个新文件夹；New</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>2. 查看与排序</div>
+      <div>3. 搜索与筛选</div>
+      <dd class="demo">文件和文件夹操作</dd>
+      <dd>
+        <div>选择</div>
+        <div>移动</div>
+        <div>剪切</div>
+        <div>复制</div>
+        <div>粘贴</div>
+        <div>重命名：F2</div>
+        <div>查看属性：万能的右键</div>
+        <div>快速查看路径：单击地址栏</div>
+      </dd>
+      <div class="demo">创建快捷方式</div>
+      <dd>选择文件/文件夹 → 右键 → 发送到 → 桌面快捷方式</dd>
+      <div class="demo">压缩|打包</div>
+      <dd>选择文件/文件夹 → 右键 → 发送到 → 压缩到</dd>
+      <div class="demo">解压</div>
+      <dd>选择压缩包 → 全部解压缩</dd>
+      <dd>为避免混乱，不要直接把文件内容解压到当前目录中，应该解压到对应的文件夹（默认解压方式）</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
