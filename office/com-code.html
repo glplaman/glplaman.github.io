@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编码 Code</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+  <style>
+    table {
+      max-width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>编码</h1>
+    <h3>Code</h3>
+    <dl>
+      <dt>内容 Contents</dt>
+      <dd>ASCII</dd>
+      <dd>GB2312</dd>
+      <dd>Unicode</dd>
+    </dl>
+    <div class="chap">ASCII 编码</div>
+    <dl>
+      <dd>American Standard Code for Information Interchange</dd>
+      <dd>美国国家标准信息交换码的简称，用于编码国际上最通用的西文字符：英文、数字、符号</dd>
+      <dd>为常见的字符，分配一个码位，也称编号，当作字符的ID信息，将其转换为二进制以便存储</dd>
+      <dd>ASCII 码是<strong>7</strong>位二进制码</dd>
+      <dd>使用1个字节|Byte 表示，最高位恒为0，只用低7位对字符进行编码，能表示2<sup>7</sup>=127，即0-127，共128种字符</dd>
+      <table>
+        <caption>ASCII编码</caption>
+        <thead>
+          <tr>
+            <th>7</th>
+            <th>6</th>
+            <th>5</th>
+            <th>4</th>
+            <th>3</th>
+            <th>2</th>
+            <th>1</th>
+            <th>0</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+            <td>x</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>常见ASCII编码关键字符</caption>
+        <thead>
+          <tr>
+            <th>字符</th>
+            <th>ASCII码 - 十进制</th>
+            <th>ASCII码 - 二进制</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>48</td>
+            <td>00110000</td>
+          </tr>
+          <tr>
+            <td>A</td>
+            <td>65</td>
+            <td>01000001</td>
+          </tr>
+          <tr>
+            <td>a</td>
+            <td>97</td>
+            <td>01100001</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <div class="chap">汉字编码 GB2312</div>
+    <dl>
+      <dd>简体中文字符集的国家标准，全称为《信息交换用汉字编码字符集•基本集》</dd>
+      <dd>国标码；GB是国标的首字母</dd>
+      <dd>由中国国家标准总局发布，<strong>1981</strong>年5月1日实施，标准号是 GB2312—1980</dd>
+      <dd>GB2312 编码通行于中国大陆；新加坡等地也采用此编码。中国大陆几乎所有的中文系统和国际化的软件都支持 GB2312</dd>
+      <dd>GB2312 标准共收录6763个汉字，其中一级汉字3755个，二级汉字3008个；同时，GB2312 收录了包括拉丁字母、希腊字母、日文平假名及片假名字母、俄语西里尔字母在内的682个全角字符 </dd>
+      <dt>区位码</dt>
+      <dd>因为中文数量庞大，不能像英文那样简单的编号，必须 <strong>分区</strong> 管理</dd>
+      <dd>整个 GB2312 字符集分成：
+        <p>94个区</p>
+        <p>每区有94个位</p>
+        <p>每个区位上只有一个字符</p>
+        <p>共计：94区*94位，也使用行和列表示</p>
+        <p>用所在的区和位来对字符进行编码，得到字符的4位<strong>区位码</strong>，高2位表示区，低2位表示位</p>
+      </dd>
+      <table>
+        <caption>GB码的分区</caption>
+        <thead>
+          <tr>
+            <th>区号</th>
+            <th>内容</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01-09</td>
+            <td>除汉字外的682个字符</td>
+          </tr>
+          <tr>
+            <td>10-15</td>
+            <td>暂时未启用</td>
+          </tr>
+          <tr>
+            <td>16-55</td>
+            <td>一级汉字，3755个，按拼音排列</td>
+          </tr>
+          <tr>
+            <td>56-87</td>
+            <td>二级汉字，3008个，按部首/壁画排列</td>
+          </tr>
+          <tr>
+            <td>88-94</td>
+            <td>暂时未启用</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>分区示意图</caption>
+        <tr>
+          <td>01</td>
+          <td>02</td>
+          <td>03</td>
+          <td>04</td>
+          <td>05</td>
+          <td>06</td>
+          <td>...</td>
+          <td>94</td>
+        </tr>
+        <tr>
+          <td>02</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>03</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>04</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>05</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>...</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>93</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>x</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>94</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+      <dd>&there4; 表中x的区位码为：9306，使用时，通常需要将区位转换为16进制</dd>
+      <dd>区位码是"户口本上的原始编号"</dd>
+      <dd>这是最原始的索引，方便查表</dd>
+      <dt>国标码</dt>
+      <dd>区位码不能直接在计算机中存储，因为 01-94 对应的 ASCII 码是控制字符（如换行、响铃等），会冲突</dd>
+      <dd>为了避免和 ASCII 码的前 32 个控制字符（0-31）冲突，将区位码+20H进行调整计算得到 <strong>国标码</strong></dd>
+      <div class="txt-center warn">国标码 = 区位码 (十六进制) + 2020H</div>
+      <dt>机内码</dt>
+      <dd>为区分计算机中混合使用的双字节汉字与单字节西文字符，将标识汉字的两个字节编码的最高位置为1，相当于在原有基础上加了80H，得到<strong>机内码</strong>，<span>不再规定低位>127</span>
+      </dd>
+      <div class="txt-center warn">机内码 = 国标码 + 8080H</div>
+      <dd>机内码是计算机内部真正用来存储、加工和处理汉字的代码</dd>
+      <figure>
+        <img src="./imgs/code.png" alt="">
+        <figcaption>码的转换</figcaption>
+      </figure>
+      <dd class="demo">某字符x的区位码 2083，求x的国标码和机内码</dd>
+      <dd>
+        <div>拆分为区和位，并转换为16进制，得到x的区位码</div>
+        <div>20 = 14H</div>
+        <div>83 = 53H</div>
+        <div>区位码分别加上20H，得到x的国标码</div>
+        <div>14H + 20H = 34H = 0011 0100B</div>
+        <div>53H + 20H = 73H = 0111 0110B</div>
+        <div>区位码分别加上A0H，得到x的机内码</div>
+        <div>14H + A0H = B4H</div>
+        <div>53H + A0H = F3H</div>
+        <div>或使用 国标码 + 8080H → 机内码</div>
+      </dd>
+      <div class="tips">严格来说，GB2312 编码通常指的就是机内码，而国标码是交换码</div>
+      <dt>GBK</dt>
+      <dd>GBK：GB2312 的扩展码；K表示扩展，全称《汉字内码扩展规范》Chinese Internal Code Specification</dd>
+      <dd>中华人民共和国全国信息技术标准化技术委员会<strong>1995</strong>年12月1日制订，国家技术监督局标准化司、电子工业部科技与质量监督司1995年12月15日联合以技监标函1995
+        229号文件的形式，将它确定为技术规范指导性文件
+      </dd>
+      <dd>共收录了21003个汉字，特别是繁体和生僻字，完全兼容 GB2312</dd>
+      <dd>GBK兼容ASCII字符集</dd>
+      <dd>现在的操作系统和网页大多默认支持 GBK 或 UTF-8，纯 GB2312 已很少单独使用</dd>
+    </dl>
+    <div class="chap">其它编码 Other</div>
+    <dl>
+      <dt>Unicode</dt>
+      <dd>Universal Code，通用码或统一码、也称<strong>万国码</strong></dd>
+      <dd>是当前国际上最通用的字符编码规范</dd>
+      <dd>它为全世界所有语言的每个字符都设定了统一并且唯一的二进制编码，以满足跨语言、跨平台进行文本转换、处理的要求</dd>
+      <dd>采取可变长编码方案：1个字节、2个字节、3个字节、4个字节，其中英文1个字符，中文3个字符</dd>
+      <dd>并不是简单的拼接，而是有一定的规则</dd>
+      <table>
+        <caption>UTF-8编码规则</caption>
+        <thead>
+          <tr>
+            <th>Unicode 范围</th>
+            <th>UTF-8字节数</th>
+            <th>Unicode 范围</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>U+0000 ~ U+007F</td>
+            <td>单字节</td>
+            <td>0xxxxxxx，就是ASCII码</td>
+          </tr>
+          <tr>
+            <td>U+0080 ~ U+07FF</td>
+            <td>双字节</td>
+            <td>110xxxxx 10xxxxxx</td>
+          </tr>
+          <tr>
+            <td>U+0800 ~ U+FFFF</td>
+            <td>三字节</td>
+            <td>1110xxxxx 10xxxxxx 10xxxxxx</td>
+          </tr>
+          <tr>
+            <td>U+10000 ~ U+10FFFF</td>
+            <td>四字节</td>
+            <td>1110xxxxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd class="demo">字符"我"的 UTF-8 码值为(25105)<sub>10</sub></dd>
+      <dd>十六进制为(6211)<sub>16</sub></dd>
+      <dd>二进制为(0110 0010 0001 0001)<sub>2</sub>，需要16位 → 3个字节</dd>
+      <dd>实际编码如下：从后面向前填充</dd>
+      <table>
+        <caption>编码</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>三字节 - 2进制</td>
+            <td><span class="warn">1110</span> 0110 <span class="warn">10</span> 0010 00 <span class="warn">10</span> 01
+              0001</td>
+          </tr>
+          <tr>
+            <td>三字节 - 16进制</td>
+            <td>E6 88 91</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>ANSI</dt>
+      <dd>American National Standard Institute</dd>
+      <dd>由于 ASCII 码只使用单字节编码单元中的低7位，因此 ASCII 码可被扩展</dd>
+      <dd>在 ANSI 标准中，ASCII 扩展字符集仍然使用单字节编码单元，要求 ASCII 码必须用1个等值的高位为0的编码单元表示。但对于其他高位为1的编码单元则依赖于特定字符集的具体定义</dd>
+      <dd>通常，将按ANSI标准派生的 ASCII 扩展字符集统称为ANSI字符集（如Latin-1、GB2312、Big-5等），有时也称为多字节字符集（Multi-Byte
+        Character Set，MBCS）</dd>
+      <dd>Window 系统的记事本，早期默认编码就是 ANSI 字符集</dd>
+      <dt>BIG-5</dt>
+      <dd>繁体字编码方案，又称大五码，主要为香港与台湾地区使用</dd>
+      <dd>BIG-5 收录13461个符号和汉字</dd>
+      <dd>每个汉字由两个字节构成，第一个字节的范围在A0H-FEH之间，第二个字节的范围不连续，分别为40H-7EH和A1H-FEH。因此。其第一个字节的最高位总是1，第二字节的最高位可能是1或0
+      </dd>
+      <dd class="tips">
+        <div>. ASCII字符集：1个字节</div>
+        <div>. GBK字符集：汉字占2个字节，英文、数字、符号占1个字节</div>
+        <div>. UTF-8字符集：1个字节、2个字节、3个字节、4个字节，其中：汉字占3个字节、英文、数字、符号占1个字节</div>
+        <div>. 编码和解码必须使用相同的字符集</div>
+        <div>. 英文一般不会出现乱码，因为一般字符集都兼容 ASCII 字符集，所以出现乱码的大都是非英文字符集</div>
+        <div>. 码的转换</div>
+        <div>
+          <div>区位码 + 2020H = 国标码</div>
+          <div>国标码 + 8080H = 机内码</div>
+          <div>区位码 + A0A0H = 机内码</div>
+        </div>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
