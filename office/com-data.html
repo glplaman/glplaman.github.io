@@ -31,7 +31,7 @@
       <dd>进制转换</dd>
       <dd>数据存储</dd>
     </dl>
-    <div class="chap">二进制</div>
+    <div class="chap">二进制 Binary</div>
     <dl>
       <dd>使用数字 0 和 1 表示</dd>
       <table>
@@ -51,8 +51,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="tips">正式场合，也使用 Radix 代替 Base</div>
       <dt>算术运算 Arithmetic</dt>
-      <dd>加法：满2进1 - carry</dd>
+      <dd>加法：满2进1 - Carry</dd>
       <table>
         <caption>加法真值表 True table</caption>
         <thead>
@@ -80,7 +81,7 @@
           </tr>
         </tbody>
       </table>
-      <dd>减法：不足借位 - borrow</dd>
+      <dd>减法：不足借位 - Borrow</dd>
       <table>
         <caption>减法真值表 True table</caption>
         <thead>
@@ -275,7 +276,7 @@
         </tbody>
       </table>
     </dl>
-    <div class="chap">其它进制</div>
+    <div class="chap">其它进制 More</div>
     <dl>
       <dt>十进制 Decimal</dt>
       <dd>日常应用最多</dd>
@@ -297,34 +298,16 @@
           </tr>
         </tbody>
       </table>
-      <div class="demo">93 = 9*10<sup>1</sup> + 3*<sup>0</sup> = 90 + 3</div>
-      <dd>9对应的1和3对应的0是数字的 <strong>位权</strong></dd>
-      <dd>位权从低到高依次为 0 1 2 3 ...</dd>
-      <dd>结合基数和当前数码就可以算出表示的数值</dd>
-      <div class="demo">1024 = 1*10<sup>3</sup> + 0*10<sup>2</sup> + 2*10<sup>1</sup> + 4*10<sup>0</sup> = 1000 + 20 + 4
+      <div class="demo">93 = 9×10<sup>1</sup> + 3×<sup>0</sup> = 90 + 3</div>
+      <dd>数字 9 所在的数位指数为 1， 位权 Weight 为 10×<sup>1</sup></dd>
+      <dd>数字 3 所在的数位指数为 0， 位权 Weight 为 10×<sup>0</sup></dd>
+      <dd>小数点前面位权从低到高依次为 0 1 2 3 ...</dd>
+      <dd>小数点后面位权从低到高依次为 -1 -2 -3 ...</dd>
+      <dd>结合基数和当前数码 Digit 就可以算出表示的数值 Value</dd>
+      <div class="demo">1024 = 1×10<sup>3</sup> + 0×10<sup>2</sup> + 2×10<sup>1</sup> + 4×10<sup>0</sup> = 1000 + 20 + 4
       </div>
       <dd>只计算不为0的数值</dd>
       <dd>任何非零整数的 0 次幂都等于 1</dd>
-      <dt>八进制 Octal</dt>
-      <dd>使用较少</dd>
-      <table>
-        <caption>八进制 Octal</caption>
-        <thead>
-          <tr>
-            <th>进制 Number System</th>
-            <th>数码 Digits</th>
-            <th>基数 Base</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>八进制 Octal</td>
-            <td>0 1 2 3 4 5 6 7</td>
-            <td>8</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="demo">(1024)<sub>8</sub> = 1*8<sup>3</sup> + 2*8<sup>1</sup> + 4 = 532</div>
       <dt>十六进制 Hexadecimal</dt>
       <dd>多用于计算机系统</dd>
       <table>
@@ -344,15 +327,35 @@
           </tr>
         </tbody>
       </table>
-      <div class="demo">(1024)<sub>16</sub> = 1*16<sup>3</sup> + 2*16<sup>1</sup> + 4 = 4132</div>
+      <div class="demo">(1024)<sub>16</sub> = 1×16<sup>3</sup> + 2×16<sup>1</sup> + 4 = 4132</div>
+      <dt>八进制 Octal</dt>
+      <dd>使用较少</dd>
+      <table>
+        <caption>八进制 Octal</caption>
+        <thead>
+          <tr>
+            <th>进制 Number System</th>
+            <th>数码 Digits</th>
+            <th>基数 Base</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>八进制 Octal</td>
+            <td>0 1 2 3 4 5 6 7</td>
+            <td>8</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">(1024)<sub>8</sub> = 1×8<sup>3</sup> + 2×8<sup>1</sup> + 4 = 532</div>
       <dd><span class="iconfont icon-help"></span>手表的秒和分是多少进制 </dd>
     </dl>
-    <div class="chap">数制和转换</div>
+    <div class="chap">十进制 ←→ X进制</div>
     <dl>
       <dt>数制</dt>
-      <dd>构成数制有两个要素：基数 base 和位权 index</dd>
-      <dd>基数：在一个数中的每一个数位上可能出现的不同数字的个数。例如：二进制数基数是2，十进制数基数为10</dd>
-      <dd>位权：某个位置上的数代表的数量大小。表示此数在整个数中所占的份量(权重)</dd>
+      <dd>构成数制有两个要素：</dd>
+      <dd>基数 Base：在一个数中的每一个数位上可能出现的不同数字的个数。例如：二进制数基数是2，十进制数基数为10</dd>
+      <dd>位权 Weight：某个位置上的数代表的数量大小。表示此数在整个数中所占的份量 (权重)</dd>
       <table>
         <caption>不同进制的数码表示</caption>
         <thead>
@@ -387,178 +390,198 @@
       </table>
       <div class="tips">多进制数值表示，使用小角标指定进制。10进制通常忽略</div>
       <dt>X进制 → 十进制</dt>
-      <dd>使用多项式，按照对应的权展开</dd>
-      <div class="demo">(1001)<sub>2</sub> = 1*2<sup>3</sup> + 1*2<sup>0</sup> = 8 + 1 = 9</div>
-      <dd>特别的，小数点前面是正数幂，小数点后面是 <strong>负数幂</strong></dd>
+      <dd>使用多项式，按照对应的权展开求和</dd>
+      <dd>整数部分：从右向左，位权的指数依次为 0,1,2,..</dd>
+      <dd>小数部分：从左向右，位权的指数依次为 -1,-2,..</dd>
+      <div class="txt-center">0.d<sub>1</sub>d<sub>2</sub>d<sub>3</sub>... = d<sub>1</sub>×B<sup>-1</sup> +
+        d<sub>2</sub>×B<sup>-2</sup> + d<sub>3</sub>×B<sup>-3</sup> + ...</div>
+      <div class="demo">(1001)<sub>2</sub> = 1×2<sup>3</sup> + 1×2<sup>0</sup> = 8 + 1 = 9</div>
       <dd class="demo">(101.01)<sub>2</sub></dd>
-      <dd>=1*2<sup>2</sup>
-        +0*2<sup>1</sup>+1*2<sup>0</sup>+0*2<sup>-1</sup>+1*2<sup>-2</sup> ＝ (5.25)<sub>10</sub></dd>
+      <dd>=1×2<sup>2</sup>
+        +0×2<sup>1</sup>+1×2<sup>0</sup>+0×2<sup>-1</sup>+1×2<sup>-2</sup> ＝ (5.25)<sub>10</sub></dd>
       <dd class="demo">(365.2)<sub>8</sub></dd>
-      <dd>= 3*8<sup>2</sup>+6*8<sup>1</sup>+5*8<sup>0</sup>+2*8<sup>-1</sup> = (245.25)<sub>10</sub>
+      <dd>= 3×8<sup>2</sup>+6×8<sup>1</sup>+5×8<sup>0</sup>+2×8<sup>-1</sup> = (245.25)<sub>10</sub>
       </dd>
       <dd class="demo">(F5.4)<sub>16</sub></dd>
-      <dd>=15*16<sup>1</sup>+5*16<sup>0</sup>+4*16<sup>-1</sup> = (245.25)<sub>10</sub></dd>
+      <dd>=15×16<sup>1</sup>+5×16<sup>0</sup>+4×16<sup>-1</sup> = (245.25)<sub>10</sub></dd>
       <dd class="demo">11111111.10000000.00000001.00000000 对应的IP地址是多少？</dd>
       <dt>十进制 → X进制</dt>
-      <dd>方法1：除X求余法 - 余数逆序|从后往前排列</dd>
-      <dd>方法2：最大凑整法</dd>
-      <dd class="demo">(97)<sub>10</sub>转二进制</dd>
-      <dd>[求余法]</dd>
+      <dd>整数部分
+        <p>方法1：除X求余法 - 余数逆序|从后往前排列</p>
+        <p>方法2：最大凑整法</p>
+      </dd>
+      <dd>小数部分
+        <p>小数部分持续乘X，结果取整，直到小数部分为0</p>
+        <p>通常有位数要求，如保留4位</p>
+        <p>顺序排列取整的值</p>
+      </dd>
+      <dd class="demo">(97)<sub>10</sub> = (1100001)<sub>2</sub></dd>
+      <dd>求余法</dd>
       <table>
-        <thead>
-          <tr>
-            <th>数</th>
-            <th>商</th>
-            <th>余 ↑</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>97</td>
-            <td>48</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>48</td>
-            <td>24</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>24</td>
-            <td>12</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>6</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>3</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>1</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>0</td>
-            <td>1</td>
-          </tr>
-        </tbody>
+        <tr>
+          <td>97/2</td>
+          <td>48</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>48/2</td>
+          <td>24</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>24/2</td>
+          <td>12</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>12/2</td>
+          <td>6</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>6/2</td>
+          <td>3</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>3/2</td>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>1/2</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
       </table>
-      <dd>&there4; (1100001)<sub>2</sub></dd>
-      <dd>[最大凑整法]</dd>
-      <dd>97 <br>= 64 + 32 + 1 <br>= 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>0</sup></dd>
-      <dd>&there4; (1100001)<sub>2</sub></dd>
-      <dd class="demo">IP 地址 192.16.8.1.0，对应的二进制是多少？</dd>
-      <dt>十六进制 → 二进制</dt>
-      <dd>.每1位十六进制对应4位二进制</dd>
-      <dd class="demo">(1C5.1B)<sub>16</sub></dd>
-      <dd>= (0001 1100 0101.0001 1011)<sub>2</sub></dd>
-      <dd></dd>
-      <dt>二进制 → 十六进制</dt>
-      <dd>.每4位二进制对应1位十六进制</dd>
-      <dd>.不足4位的，整数部分前面|高位补0；小数部分后面|低位补0</dd>
-      <dd class="demo">(1011010101.0111101)<sub>2</sub></dd>
-      <dd>= (10 1101 0101.0111 101)<sub>2</sub> <br>= (<span class="warn">00</span>10 1101 0101.0111
-        101<span class="warn">0</span>)<sub>2</sub> <br>= (2 D 5.7 A)<sub>16</sub></dd>
-      <dt>八进制 → 二进制</dt>
-      <dd>.每1位八进制对应3位二进制</dd>
-      <dd class="demo">(652.307)<sub>8</sub></dd>
-      <dd>= (6 5 2.3 0 7)<sub>8</sub> <br>= (110 101 010.011 000 111)<sub>2</sub></dd>
-      <dt>二进制 → 八进制</dt>
-      <dd>.每3位二进制对应1位八进制</dd>
-      <dd>.不足3位的，整数部分前面|高位补0；小数部分后面|低位补0</dd>
-      <dd class="demo">(11010101.0100101)<sub>2</sub></dd>
-      <dd>= (11 010 101.010 010 1)<sub>2</sub> <br>= (<span class="warn">0</span>11 010 101.010 010
-        1<span class="warn">00</span>)<sub>2</sub> <br>= (325.224)<sub>8</sub></dd>
-      <dt>十进制小数 → X进制小数</dt>
-      <dd>小数部分不断 <strong>乘</strong> X，结果取整，直到小数部分为0</dd>
-      <dd>通常有位数要求，如保留4位</dd>
-      <dd><span class="warn">顺序</span>排列取整的值</dd>
-      <dd class="demo">(0.3125)<sub>10</sub>= (0.0101)<sub>2</sub> </dd>
+      <dd>最大凑整法</dd>
+      <dd>97 = 64 + 32 + 1 = 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>0</sup></dd>
+      <div class="demo">(0.3125)<sub>10</sub>= (0.0101)<sub>2</sub> </div>
       <table>
-        <thead>
-          <tr>
-            <th>数</th>
-            <th>*2</th>
-            <th>取整 ↓</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0.3125</td>
-            <td>0.625</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>0.625</td>
-            <td>1.25</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>0.25</td>
-            <td>0.5</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>0.5</td>
-            <td>1.0</td>
-            <td>1</td>
-          </tr>
-        </tbody>
+        <tr>
+          <td>0.3125×2</td>
+          <td>0.625</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>0.625×2</td>
+          <td>1.25</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>0.25×2</td>
+          <td>0.5</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>0.5×2</td>
+          <td>1.0</td>
+          <td>1</td>
+        </tr>
       </table>
-      <dd class="demo">(0.8125)<sub>10</sub> = (0.1101)<sub>2</sub></dd>
+      <div class="demo">(0.8125)<sub>10</sub> = (0.1101)<sub>2</sub></div>
       <table>
-        <thead>
-          <tr>
-            <th>数</th>
-            <th>*2</th>
-            <th>取整 ↓</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0.8125</td>
-            <td>1.625</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>0.625</td>
-            <td>1.25</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>0.25</td>
-            <td>0.5</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>0.5</td>
-            <td>1.0</td>
-            <td>1</td>
-          </tr>
-        </tbody>
+        <tr>
+          <td>0.8125×2</td>
+          <td>1.625</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>0.625×2</td>
+          <td>1.25</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>0.25×2</td>
+          <td>0.5</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>0.5×2</td>
+          <td>1.0</td>
+          <td>1</td>
+        </tr>
       </table>
-      <dd class="demo">(4586.32)<sub>10</sub> = (11EA.51EB)<sub>16</sub></dd>
+      <div class="demo">(4586.32)<sub>10</sub> = (11EA.51EB)<sub>16</sub></div>
       <dd>
         <div>整数部分：11EA（略）</div>
-        <div>32*16 = 5.12，取整5，留.12</div>
-        <div>12*16 = 1.92，取整1，留.92</div>
-        <div>92*16 = 14.72，取整14，留.72</div>
-        <div>72*16 = 14.52，取整11，留.52</div>
+        <div>0.32*16 = 5.12，取整5，留0.12</div>
+        <div>0.12*16 = 1.92，取整1，留0.92</div>
+        <div>0.92*16 = 14.72，取整14，留0.72</div>
+        <div>0.72*16 = 14.52，取整11，留0.52</div>
       </dd>
-      <dd class="demo">(58.5)<sub>10</sub> = (72.4)<sub>8</sub></dd>
-      <dd>
-        <div>整数部分：72（略）</div>
-        <div>0.5*8=4.0，小数部分为0，已经乘完</div>
-      </dd>
+      <div class="demo">(58.5)<sub>10</sub> = (72.4)<sub>8</sub></div>
+      <dd>整数部分：72</dd>
+      <dd>0.5*8=4.0，小数部分为0，已经乘完</dd>
+      <div class="demo">十进制28.625的二进制数为（）。</div>
+      <div>
+        <p>A: 00101000.1010</p>
+        <p>B: 101000.101</p>
+        <p>C: 00011100.1010</p>
+        <p>D: 11101.101</p>
+      </div>
+      <!-- <p>排除法</p> -->
+      <!-- <p>D</p> -->
+      <div class="demo">IP 地址 192.16.8.1.0，对应的二进制是多少？</div>
     </dl>
-    <div class="chap">数据存储</div>
+    <div class="chap">幂次关系的进制转换</div>
+    <dl>
+      <dd>存在幂次关系的进制转换，可以使用十进制作为过渡，但是使用 <strong>分组法</strong> 更高效</dd>
+      <dt>二进制 → 十六进制</dt>
+      <dd>每4位二进制对应1位十六进制</dd>
+      <dd>不足4位的，整数部分 <strong>前面|高位</strong> 补0；小数部分 <strong>后面|低位</strong> 补0</dd>
+      <div class="demo">求 (1011010101.0111101)<sub>2</sub> 对应的十六进制</div>
+      <table>
+        <tr>
+          <td>分组</td>
+          <td>10 1101 0101.0111 101</td>
+        </tr>
+        <tr>
+          <td>补0</td>
+          <td><span class="warn">00</span>10 1101 0101.0111 101<span class="warn">0</span></td>
+        </tr>
+        <tr>
+          <td>结果</td>
+          <td>2 D 5.7 A</td>
+        </tr>
+      </table>
+      <dt>十六进制 → 二进制</dt>
+      <dd>每1位十六进制数可以使用4位二进制数表示</dd>
+      <div class="demo">(1C5.1B)<sub>16</sub></div>
+      <dd>= (0001 1100 0101.0001 1011)<sub>2</sub></dd>
+      <div class="demo">十六进制2B.C的二进制数为（）。</div>
+      <div>
+        <p>A: 10001011.11</p>
+        <p>B: 101011.11</p>
+        <p>C: 101011.0011</p>
+        <p>D: 10001011.0011</p>
+      </div>
+      <!-- <p>排除法</p> -->
+      <!-- <p>B</p> -->
+      <dt>八进制 → 二进制</dt>
+      <dd>每1位八进制对应3位二进制</dd>
+      <div class="demo">(652.307)<sub>8</sub></div>
+      <dd>= (6 5 2.3 0 7)<sub>8</sub> <br>= (110 101 010.011 000 111)<sub>2</sub></dd>
+      <dt>二进制 → 八进制</dt>
+      <dd>每3位二进制对应1位八进制</dd>
+      <dd>不足3位的，整数部分前面|高位补0；小数部分后面|低位补0</dd>
+      <div class="demo">(11010101.0100101)<sub>2</sub></div>
+      <table>
+        <tr>
+          <td>分组</td>
+          <td>(11 010 101.010 010 1)</td>
+        </tr>
+        <tr>
+          <td>补0</td>
+          <td><span class="warn">0</span>11 010 101.010 010 1<span class="warn">00</span></td>
+        </tr>
+        <tr>
+          <td>结果</td>
+          <td>(325.224)<sub>8</sub></td>
+        </tr>
+      </table>
+    </dl>
+    <div class="chap">数据存储 Storage</div>
     <dl>
       <dd>计算机使用二进制表示和存储数据 - 体现的是数据的 <strong>多少/容量</strong></dd>
       <dd>电路实现简单；可靠性高、运算简单</dd>
