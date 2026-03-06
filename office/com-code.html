@@ -28,11 +28,10 @@
     </dl>
     <div class="chap">ASCII 编码</div>
     <dl>
-      <dd>American Standard Code for Information Interchange</dd>
+      <dd> <a href="https://habaijian.com/">ASCII</a>：American Standard Code for Information Interchange</dd>
       <dd>美国国家标准信息交换码的简称，用于编码国际上最通用的西文字符：英文、数字、符号</dd>
       <dd>为常见的字符，分配一个码位，也称编号，当作字符的ID信息，将其转换为二进制以便存储</dd>
       <dd>ASCII 码是<strong>7</strong>位二进制码</dd>
-      <dd>使用1个字节|Byte 表示，最高位恒为0，只用低7位对字符进行编码，能表示2<sup>7</sup>=127，即0-127，共128种字符</dd>
       <table>
         <caption>ASCII编码</caption>
         <thead>
@@ -60,33 +59,11 @@
           </tr>
         </tbody>
       </table>
-      <table>
-        <caption>常见ASCII编码关键字符</caption>
-        <thead>
-          <tr>
-            <th>字符</th>
-            <th>ASCII码 - 十进制</th>
-            <th>ASCII码 - 二进制</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0</td>
-            <td>48</td>
-            <td>00110000</td>
-          </tr>
-          <tr>
-            <td>A</td>
-            <td>65</td>
-            <td>01000001</td>
-          </tr>
-          <tr>
-            <td>a</td>
-            <td>97</td>
-            <td>01100001</td>
-          </tr>
-        </tbody>
-      </table>
+      <dd>使用1个字节|Byte 表示，最高位恒为0，只用低7位对字符进行编码，能表示2<sup>7</sup>=127，即0-127，共128种字符
+        <p>0 ~ 31：共 32 个是控制字符（Control Characters）</p>
+        <p>32 ~ 126：共 95 个是可打印字符（Printable Characters），包括空格、字母、数字、标点等</p>
+        <p>127：DEL（删除符），也算控制字符</p>
+      </dd>
     </dl>
     <div class="chap">汉字编码 GB2312</div>
     <dl>
@@ -103,6 +80,9 @@
         <p>每个区位上只有一个字符</p>
         <p>共计：94区*94位，也使用行和列表示</p>
         <p>用所在的区和位来对字符进行编码，得到字符的4位<strong>区位码</strong>，高2位表示区，低2位表示位</p>
+        <p>使用时，通常需要将区位转换为16进制</p>
+        <p>区位码是"户口本上的原始编号"</p>
+        <p>这是最原始的索引，方便查表</p>
       </dd>
       <table>
         <caption>GB码的分区</caption>
@@ -218,31 +198,36 @@
           <td></td>
         </tr>
       </table>
-      <dd>&there4; 表中x的区位码为：9306，使用时，通常需要将区位转换为16进制</dd>
-      <dd>区位码是"户口本上的原始编号"</dd>
-      <dd>这是最原始的索引，方便查表</dd>
+      <dd>&there4; 表中x的区位码为：(9306)<sup>10</sup> → (5D06)<sup>16</sup></dd>
       <dt>国标码</dt>
       <dd>区位码不能直接在计算机中存储，因为 01-94 对应的 ASCII 码是控制字符（如换行、响铃等），会冲突</dd>
       <dd>为了避免和 ASCII 码的前 32 个控制字符（0-31）冲突，将区位码+20H进行调整计算得到 <strong>国标码</strong></dd>
       <div class="txt-center warn">国标码 = 区位码 (十六进制) + 2020H</div>
+      <dd>解决：
+        <p>打印、传真、不同电脑间传文件</p>
+      </dd>
+      <dd>缺陷：
+        <p>但仍未解决与 ASCII 可打印字符的冲突</p>
+        <p>无法存储</p>
+      </dd>
       <dt>机内码</dt>
       <dd>为区分计算机中混合使用的双字节汉字与单字节西文字符，将标识汉字的两个字节编码的最高位置为1，相当于在原有基础上加了80H，得到<strong>机内码</strong>，<span>不再规定低位>127</span>
       </dd>
       <div class="txt-center warn">机内码 = 国标码 + 8080H</div>
-      <dd>机内码是计算机内部真正用来存储、加工和处理汉字的代码</dd>
+      <dd>机内码是计算机内部真正用来 <strong>存储</strong>、加工和处理汉字的代码</dd>
       <figure>
         <img src="./imgs/code.png" alt="">
         <figcaption>码的转换</figcaption>
       </figure>
-      <dd class="demo">某字符x的区位码 2083，求x的国标码和机内码</dd>
+      <dd class="demo">某字符 x 的区位码 2083，求x的国标码和机内码</dd>
       <dd>
-        <div>拆分为区和位，并转换为16进制，得到x的区位码</div>
+        <div>拆分为区和位，并转换为16进制，得到 x 的区位码</div>
         <div>20 = 14H</div>
         <div>83 = 53H</div>
-        <div>区位码分别加上20H，得到x的国标码</div>
+        <div>区位码分别加上20H，得到 x 的国标码</div>
         <div>14H + 20H = 34H = 0011 0100B</div>
         <div>53H + 20H = 73H = 0111 0110B</div>
-        <div>区位码分别加上A0H，得到x的机内码</div>
+        <div>区位码分别加上A0H，得到 x 的机内码</div>
         <div>14H + A0H = B4H</div>
         <div>53H + A0H = F3H</div>
         <div>或使用 国标码 + 8080H → 机内码</div>
@@ -338,18 +323,19 @@
       <dd>BIG-5 收录13461个符号和汉字</dd>
       <dd>每个汉字由两个字节构成，第一个字节的范围在A0H-FEH之间，第二个字节的范围不连续，分别为40H-7EH和A1H-FEH。因此。其第一个字节的最高位总是1，第二字节的最高位可能是1或0
       </dd>
-      <dd class="tips">
-        <div>. ASCII字符集：1个字节</div>
-        <div>. GBK字符集：汉字占2个字节，英文、数字、符号占1个字节</div>
-        <div>. UTF-8字符集：1个字节、2个字节、3个字节、4个字节，其中：汉字占3个字节、英文、数字、符号占1个字节</div>
-        <div>. 编码和解码必须使用相同的字符集</div>
-        <div>. 英文一般不会出现乱码，因为一般字符集都兼容 ASCII 字符集，所以出现乱码的大都是非英文字符集</div>
-        <div>. 码的转换</div>
-        <div>
-          <div>区位码 + 2020H = 国标码</div>
-          <div>国标码 + 8080H = 机内码</div>
-          <div>区位码 + A0A0H = 机内码</div>
-        </div>
+    </dl>
+    <div class="chap">总结 Summary</div>
+    <dl>
+      <dd>ASCII字符集：1个字节</dd>
+      <dd>GBK字符集：汉字占2个字节，英文、数字、符号占1个字节</dd>
+      <dd>UTF-8字符集：1个字节、2个字节、3个字节、4个字节，其中：汉字占3个字节、英文、数字、符号占1个字节</dd>
+      <dd>编码和解码必须使用相同的字符集</dd>
+      <dd>英文一般不会出现乱码，因为一般字符集都兼容 ASCII 字符集，所以出现乱码的大都是非英文字符集</dd>
+      <dd>码的转换</dd>
+      <dd>
+        <div>区位码 + 2020H = 国标码</div>
+        <div>国标码 + 8080H = 机内码</div>
+        <div>区位码 + A0A0H = 机内码</div>
       </dd>
     </dl>
     <div id="footer"></div>

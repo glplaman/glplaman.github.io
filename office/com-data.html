@@ -15,6 +15,10 @@
     table {
       max-width: 600px;
     }
+
+    .btm {
+      border-bottom: 1px solid var(--main-color);
+    }
   </style>
   <base target="_blank">
 </head>
@@ -52,6 +56,8 @@
         </tbody>
       </table>
       <div class="tips">正式场合，也使用 Radix 代替 Base</div>
+      <div class="demo">(1101)<sub>2</sub> = 1×2<sup>3</sup> + 1×2<sup>2</sup> + 1×2<sup>1</sup> + 1×2<sup>0</sup> = 8 +
+        4 + 1 = 13</div>
       <dt>算术运算 Arithmetic</dt>
       <dd>加法：满2进1 - Carry</dd>
       <table>
@@ -109,14 +115,85 @@
           </tr>
         </tbody>
       </table>
+      <dd>计算机中，减法通常不直接使用上述借位法，而是通过补码 Complement 将减法转换为加法运算，这样硬件电路只需设计加法器即可</dd>
+      <dt>源码、反码、补码</dt>
+      <dd>为了区分正数和负数，需要拿出1位来表示符号，所以系统中的数分为2部分：符号位和数值位
+        <p>正数：符号位为 0</p>
+        <p>负数：符号位为 1</p>
+      </dd>
+      <dd>以8位二进制为例</dd>
+      <dd>源码 Original Code</dd>
+      <dd>反码 One's Complement
+        <p>正数：和源码相同</p>
+        <p>负数：符号位不变，其它各位取反</p>
+      </dd>
+      <dd>补码 Two's Complement
+        <p>正数：和源码相同、和反码相同</p>
+        <p>负数：反码 +1</p>
+      </dd>
+      <div class="demo">5-5=0</div>
+      <dd>对应的源码、反码和补码如下表</dd>
+      <table>
+        <tr>
+          <td>数值</td>
+          <td>源码</td>
+          <td>反码</td>
+          <td>补码</td>
+        </tr>
+        <tr>
+          <td>+5</td>
+          <td>00000101</td>
+          <td>00000101</td>
+          <td>00000101</td>
+        </tr>
+        <tr>
+          <td>-5</td>
+          <td>10000101</td>
+          <td>11111010</td>
+          <td>11111011</td>
+        </tr>
+      </table>
+      <dd>补码相加 = 00000101 + 11111011 = 1 00000000</dd>
+      <dd>进位1溢出，被抛弃。结果为 00000000，第1位为0，表示是1个整数或0，对应的源码仍然是 00000000，即 0</dd>
+      <dd>补码还能保证数的表示是唯一的</dd>
+      <div class="demo">0的唯一</div>
+      <dd>使用补码，能保证系统只有1个0</dd>
+      <table>
+        <tr>
+          <td>数值</td>
+          <td>源码</td>
+          <td>反码</td>
+          <td>补码</td>
+        </tr>
+        <tr>
+          <td>+0</td>
+          <td>00000000</td>
+          <td>00000000</td>
+          <td>00000000</td>
+        </tr>
+        <tr>
+          <td>-0</td>
+          <td>10000000</td>
+          <td>11111111</td>
+          <td>00000000</td>
+        </tr>
+      </table>
+      <div class="demo">使用补码求 6 - 8 的结果</div>
+      <div class="demo">求补码1111对应的原码</div>
+      <div>方法1：反推</div>
+      <dd>由补码反推源码</dd>
+      <dd>反码 = 补码 - 1 = 1110，符号位为1，是个负数</dd>
+      <dd>符号位不变，其它各位取反，源码 = 1001，即 -1</dd>
+      <dd>方法2：使用补码的 <strong>标准解码</strong> 方式 - 按幂展开求解</dd>
+      <dd>-1×2<sup>3</sup> + 1×2<sup>2</sup> + 1×2<sup>1</sup> + 1×2<sup>0</sup> = -8 + 4 + 2 + 1 = -1</dd>
       <dt>逻辑运算 Logical</dt>
       <dd>逻辑值只有“真”或“假”两个值</dd>
       <dd>一般用1表示真，用0表示假</dd>
-      <dd>逻辑运算是按对应位进行的，每位(二进制位)之间相互独立，不存在进位和借位关系</dd>
+      <dd>逻辑运算是 <strong>按位</strong> 进行，每位(二进制位)之间相互独立，不存在进位和借位关系；也叫位运算；相应的，& | ~ 也叫位运算符</dd>
       <dd>运算结果也是逻辑值</dd>
-      <dd>与 AND &&：全真，结果才为真；否则为假</dd>
+      <dd>与 AND &：全真，结果才为真；否则为假</dd>
       <table>
-        <caption>逻辑与真值表</caption>
+        <caption>逻辑与 & 真值表 True table</caption>
         <thead>
           <tr>
             <th>运算</th>
@@ -125,26 +202,26 @@
         </thead>
         <tbody>
           <tr>
-            <td>0 AND 0</td>
+            <td>0 & 0</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>0 AND 1</td>
+            <td>0 & 1</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>1 AND 0</td>
+            <td>1 & 0</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>1 AND 1</td>
+            <td>1 & 1</td>
             <td>1</td>
           </tr>
         </tbody>
       </table>
-      <dd>或 OR ||：有一个真，结果就为真</dd>
+      <dd>或 OR |：有一个真，结果就为真</dd>
       <table>
-        <caption>逻辑或真值表</caption>
+        <caption>逻辑或 | 真值表 True table</caption>
         <thead>
           <tr>
             <th>运算</th>
@@ -153,26 +230,26 @@
         </thead>
         <tbody>
           <tr>
-            <td>0 OR 0</td>
+            <td>0 | 0</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>0 OR 1</td>
+            <td>0 | 1</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>1 OR 0</td>
+            <td>1 | 0</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>1 OR 1</td>
+            <td>1 | 1</td>
             <td>1</td>
           </tr>
         </tbody>
       </table>
-      <dd>非 NOT !：非真为假；非假为真</dd>
+      <dd>非 NOT ~：非真为假；非假为真</dd>
       <table>
-        <caption>逻辑非真值表</caption>
+        <caption>逻辑非 ~ 真值表 True table</caption>
         <thead>
           <tr>
             <th>运算</th>
@@ -181,17 +258,16 @@
         </thead>
         <tbody>
           <tr>
-            <td>NOT 0</td>
+            <td>~0</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>NOT 1</td>
+            <td>~1</td>
             <td>0</td>
           </tr>
         </tbody>
       </table>
-      <dd>异或运算</dd>
-      <dd>比较分析上述两个表，如果不考虑进位和借位，就是二进制的异或(XOR)/模2(%2)运算：相同为0；不同为1</dd>
+      <dd>异或运算：相同为0；不同为1</dd>
       <table>
         <caption>异或真值表 True table</caption>
         <thead>
@@ -219,7 +295,45 @@
           </tr>
         </tbody>
       </table>
-      <dd>对应的10进制转换，请牢记</dd>
+      <div class="demo">多为二进制的逻辑运算</div>
+      <dd>用于控制状态
+        <p>开启，用 1 去或</p>
+        <p>关闭，用 0 去与</p>
+      </dd>
+      <div>1. 标志位清零 Clearing Flags：也叫掩码 Masking，把数据中的某1位或某几位置0，其它位不变</div>
+      <dd>数据：1101 0110，将高4位清零，只保留低4位</dd>
+      <table style="width: 200px;">
+        <tr>
+          <td class="txt-right">1101 0110</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="txt-right btm">0000 1111</td>
+          <td class="txt-left">&</td>
+        </tr>
+        <tr>
+          <td class="txt-right">0000 0110</td>
+          <td></td>
+        </tr>
+      </table>
+      <div>2. 标志位设置 Setting Flags：把数据中的某1位或某几位置1，其它位不变</div>
+      <dd>数据：1100 0110，将第4、5位打开，其它状态不变</dd>
+      <table style="width: 200px;">
+        <tr>
+          <td class="txt-right">1100 0110</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="txt-right btm">0011 0000</td>
+          <td class="txt-left">|</td>
+        </tr>
+        <tr>
+          <td class="txt-right">1111 0110</td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="tips">注意和逻辑运算符 && || ! 区别开来；逻辑运算符是对数据的整体操作</div>
+      <!-- <dd>对应的10进制转换，请牢记</dd>
       <table>
         <caption>2的n次幂</caption>
         <thead>
@@ -274,7 +388,7 @@
             <td>1024</td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </dl>
     <div class="chap">其它进制 More</div>
     <dl>
@@ -388,7 +502,10 @@
           </tr>
         </tbody>
       </table>
-      <div class="tips">多进制数值表示，使用小角标指定进制。10进制通常忽略</div>
+      <div class="tips">
+        <p>多进制数值表示，使用小角标指定进制。10进制通常忽略</p>
+        <p>学会使用计数器验证结果</p>
+      </div>
       <dt>X进制 → 十进制</dt>
       <dd>使用多项式，按照对应的权展开求和</dd>
       <dd>整数部分：从右向左，位权的指数依次为 0,1,2,..</dd>
