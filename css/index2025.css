@@ -1,4 +1,4 @@
-@import url(//at.alicdn.com/t/c/font_3834292_j2k8rqryvbq.css);
+/* @import url(//at.alicdn.com/t/c/font_3834292_j2k8rqryvbq.css); */
 
 :root {
   --bg-color: #f0f0f0;
@@ -187,8 +187,17 @@ footer .iconfont {
   vertical-align: middle;
 }
 
+footer a {
+  display: inline-flex;
+  align-items: center;
+}
+
 footer a:hover {
   color: var(--main-color);
+}
+
+footer a:hover svg {
+  fill: var(--main-color) !important;
 }
 
 .item {
@@ -219,23 +228,25 @@ footer a:hover {
 
 .nav {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
   margin-top: 8rem;
   margin-bottom: 8rem;
-  gap: 8rem;
+  gap: 1px;
+  background-color: #666;
+  border: 1px solid #666;
 }
 
 .nav-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  background-color: #fff;
+  padding: 2rem;
 }
 
 .nav-item h2 {
   position: relative;
-  color: #333;
+  color: #666;
   font-size: 20px;
   /* -webkit-text-stroke: 1px #fff; */
 }
@@ -269,12 +280,7 @@ footer a:hover {
   }
 
   .nav {
-    gap: 0rem;
-    margin-top: 2rem;
-  }
-
-  .nav-item {
-    border-bottom: 1px solid var(--main-color);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
