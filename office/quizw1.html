@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多重页码 Multiple Page Number</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>多重页码</h1>
+    <h3>Multiple Page Number</h3>
+    <dl>
+      <dt>论文页码一般要求</dt>
+      <dd>封面、原创性声明：不显示页码</dd>
+      <dd>中英文摘要、目录：页码大写罗马数字、从I开始</dd>
+      <dd>正文：页码阿拉伯数字，从1开始</dd>
+      <dd>参考文献：页码跟随正文</dd>
+      <dd>致谢：页码跟随正文</dd>
+      <dd>附录：无明确要求；一般从1开始</dd>
+      <dt>思路</dt>
+      <dd>使用分节符将文章划分为诺干节；添加页码，并取消节于节之间的链接，以便单独设置页码格式</dd>
+      <dd>各节划分如下
+        <p>封面、原创性声明：划分在一节</p>
+        <p>中、英文摘要、目录：划分在一节</p>
+        <p>正文、参考文献和致谢：划分在一节</p>
+      </dd>
+      <dt>操作</dt>
+      <ol>
+        <li>创建 Word 文档</li>
+        <li>编辑以下标题内容作为测试，每个标题单独一行/一个段落：
+          <p>cover</p>
+          <p>declaration</p>
+          <p>摘要</p>
+          <p>abstract</p>
+          <p>TOC</p>
+          <p>chap1</p>
+          <p>chap2</p>
+          <p>chap3</p>
+          <p>chap4</p>
+          <p>chap5</p>
+          <p>reference</p>
+          <p>acknowledge</p>
+        </li>
+        <li>光标定位到"摘要"前面，插入分页符：布局 → 页码设置 → 分隔符 → 下一页</li>
+        <li>光标定位到"chap1"前面，插入分页符</li>
+        <li>为每个标题指定"段前分页"，使得每个标题独占一页</li>
+        <li>鼠标定位在正文部分/第3节，插入页码 → 页面底部 → 普通数字2，在页面底部居中位置插入数字；此时，前面2节页同时插入数字页码并连续编号</li>
+        <li>取消链接到前一节</li>
+        <figure>
+          <img src="./imgs/pn0.png" alt="">
+          <figcaption>取消"链接到前一节"</figcaption>
+        </figure>
+        <li>编辑页码格式，设置从1开始</li>
+        <figure>
+          <img src="./imgs/pn1.png" alt="">
+          <figcaption>编辑"页码格式"</figcaption>
+        </figure>
+        <li>光标定位到第2节，同样取消链接到前一节，并设置页码格式为大罗马，从I开始</li>
+        <li>光标定位到第1节，删除页码</li>
+        <li>关闭"页码页脚"</li>
+        <li>最后效果，请访问 <a href="./data/page-number.docx">页码设置参考</a></li>
+      </ol>
+      <div class="tips">如果需要调整页码到底部的位置，应该先统一调整，再取消链接，否则每一节都要重复设置</div>
+      <dt>拓展练习</dt>
+      <dd>完善文档信息，以便在页眉引用</dd>
+      <dd>奇偶页不同：分别设置第2节、第3节的页眉为奇偶页不同</dd>
+      <dd>奇数页：章节标题 - "域" → "链接与引用" → "标题1"</dd>
+      <dd>偶数页：文档标题 - "文档部件" → "标题"</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

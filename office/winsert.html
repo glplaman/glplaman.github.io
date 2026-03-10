@@ -9,21 +9,19 @@
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
   <style>
-    .tbl-paper {
-      border-top: 2px solid #333;
-      border-bottom: 2px solid #333;
+    .line {
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+
     }
 
-    .tbl-paper td {
-      border: none;
+    .line thead tr {
+      border-bottom: 1px solid #000;
     }
 
-    .tbl-paper th {
-      border: unset;
+    .line thead th {
       background-color: unset;
-      color: unset;
-      text-align: unset;
-      border-bottom: 1px solid #333;
+      color: #000;
     }
   </style>
 </head>
@@ -47,57 +45,54 @@
       <dt>空白页</dt>
       <dd>任意位置插入新页，相当于增加了2个分页符</dd>
       <dt>分页</dt>
-      <dd>在当前位置结束，开始新一页；CTRL + Enter</dd>
+      <dd>在当前位置结束，开始新一页</dd>
+      <dd>快捷键：CTRL + Enter</dd>
+      <dd>也可以为后续元素使用段前分页</dd>
     </dl>
     <div class="chap">表格</div>
     <dl>
+      <dd>除了展示数据外，更多用于布局 Layout</dd>
       <dd>系统内置了很多样式，可以直接使用</dd>
       <dd>也可以根据需要单独设置表格样式：适合数量少、临时使用</dd>
       <dd>还可以先创建样式再使用：适合数量多、统一使用[<span class="iconfont icon-thumbup"></span>]</dd>
+      <dd>普通页面的快捷键，在表格中使用，通常需要配合 Ctrl</dd>
+      <dd>在表格单元格内设置的制表位，其位置是相对于“该单元格左边界”的偏移量，而不是相对于页面或整个表格的左边界</dd>
+      <dd>表格转excel：按F12另存为HTML→在excel中导入，可保持表格样式不变</dd>
+      <dd>分割表格：CTRL + SHIFT + Enter</dd>
       <dt>插入表格</dt>
       <dd>按照行数、列数插入表格</dd>
+      <dd>调整列宽/行高
+        <p>输入数值：单元格属性</p>
+        <p>拖动</p>
+        <p>拖动 + 微调：按住Alt</p>
+      </dd>
+      <figure>
+        <img src="./imgs/tbl0.png" alt="">
+        <figcaption>调整列宽/行高</figcaption>
+      </figure>
+      <div class="demo">使用表格完成<a href="./whome.html">封面设计</a></div>
+      <dd>插入表格</dd>
+      <dd>输入文本</dd>
+      <dd>调整行列宽度</dd>
+      <dd>边框设置：先选择表格取消所有边框，再为右侧每一个单元格单独应用下边框</dd>
+      <figure>
+        <img src="./imgs/home20.png" alt="">
+        <figcaption>封面设计</figcaption>
+      </figure>
       <dt>文本转换成表格</dt>
-      <dd>特定格式的文本可以转换为表格，通常使用制表位；使用Tab键控制</dd>
+      <dd>特定格式的文本可以转换为表格，通常使用制表位；使用 Tab 键控制</dd>
+      <dd>分隔符不支持中文</dd>
       <figure>
         <img src="./imgs/href2.png" alt="">
         <figcaption>文本转换成表格</figcaption>
       </figure>
       <dt>表格转文本</dt>
-      <dd>"表格工具"→"布局"→"数据"→"转换为文本"</dd>
-      <dt>使用公式</dt>
-      <dd>"表格工具"→"布局"→"数据"→"公式"</dd>
-      <dd>将光标定位在表格某处，点击"数据"区域的"公式fx"菜单，系统会自动判断如何运算，如向上求和SUM(ABOVE)、向左求和SUM(LEFT)</dd>
-      <dd>Word中的表格，使用关键字ABOVE、LEFT、RIGHT等表示数据的范围</dd>
-      <dd>计算功能有限，请尽量使用Excel完成</dd>
-      <table>
-        <caption>支持的公式</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>desc</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>MIN()</td>
-            <td>最小值</td>
-          </tr>
-          <tr>
-            <td>MAX()</td>
-            <td>最大值</td>
-          </tr>
-          <tr>
-            <td>SUM()</td>
-            <td>求和</td>
-          </tr>
-          <tr>
-            <td>AVERAGE()</td>
-            <td>求平均</td>
-          </tr>
-        </tbody>
-      </table>
+      <dd>定位在表格任意位置 → "表格工具" → "表布局" → "数据" → "转换为文本"</dd>
+
       <div class="demo">三线表格 - 手动设置</div>
-      <table>
+      <dd>先取消再单独设置</dd>
+      <dd>适合少量表格</dd>
+      <table class="line">
         <caption>三线表格</caption>
         <thead>
           <tr>
@@ -132,54 +127,56 @@
             <td>nj</td>
             <td>32</td>
           </tr>
-          <tr>
-            <td>6</td>
-            <td>gz</td>
-            <td>35</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>xm</td>
-            <td>38</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>hk</td>
-            <td>40</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>fs</td>
-            <td>42</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>dg</td>
-            <td>44</td>
-          </tr>
         </tbody>
       </table>
       <div class="demo">三线表格 - 新建表格样式</div>
       <dd>方便快速应用，避免重复设置</dd>
-      <dd>插入任意一个表格</dd>
-      <dd>顶部中间：多态选项卡"表格工具"→"表设计"→"表格样式"→<i class="ri-arrow-down-s-line"></i>→"新建表格样式"</dd>
-      <dd>将格式应用于"表格"，设置字体、字号、颜色等；线型、粗细、颜色、填充，选择"上边框"、"下边框"</dd>
-      <dd>将格式应用于"标题行"，同样设置，选择"下边框"</dd>
-      <dd>确定</dd>
+      <dd>适合大量表格</dd>
+      <dd>可以根据需要修改样式</dd>
+      <ol>
+        <li>插入任意一个表格，定位在表格任意位置，目的是为了激活表格工具</li>
+        <li>"表格工具" → "表设计" → "表格样式"→ &blacktriangledown; →"新建表格样式"</li>
+        <li>设置表格上下边框格式：将格式应用于"表格"，设置线型、粗细、颜色、填充，选择"上边框"、"下边框"</li>
+        <li>设置标题行下边框：将格式应用于"标题行"，粗细小一点，选择"下边框"</li>
+        <li>确定</li>
+        <li>进一步修改样式，完成字体、字号、颜色等</li>
+      </ol>
       <figure>
         <img src="./imgs/tbl.png" alt="">
         <figcaption>创建表格样式</figcaption>
       </figure>
-      <div>表格美化 - 斜线表头</div>
-      <dd>配合"边框底纹"实现</dd>
-      <div class="demo">论文封面设计</div>
-      <dd>文字对齐</dd>
-      <dd>表格布局</dd>
-      <dd>表格统计 - 公式使用</dd>
-      <div class="tips">
-        <div>表格转excel：按F12另存为HTML→在excel中导入，可保持表格样式不变</div>
-        <div>分割表格：CTRL + SHIFT + Enter</div>
-      </div>
+      <dt>使用公式</dt>
+      <dd>"表格工具"→"布局"→"数据"→"公式"</dd>
+      <dd>将光标定位在表格某处，点击"数据"区域的"公式fx"菜单，系统会自动判断如何运算，如向上求和 SUM(ABOVE)、向左求和 SUM(LEFT)</dd>
+      <dd>Word 中的表格，使用关键字 ABOVE、LEFT、RIGHT 等表示数据的范围</dd>
+      <dd>计算功能有限，请尽量使用 Excel 完成</dd>
+      <table>
+        <caption>支持的公式</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MIN()</td>
+            <td>最小值</td>
+          </tr>
+          <tr>
+            <td>MAX()</td>
+            <td>最大值</td>
+          </tr>
+          <tr>
+            <td>SUM()</td>
+            <td>求和</td>
+          </tr>
+          <tr>
+            <td>AVERAGE()</td>
+            <td>求平均</td>
+          </tr>
+        </tbody>
+      </table>
     </dl>
     <div class="chap">插图</div>
     <dl>
@@ -216,13 +213,13 @@
       <dt>交叉引用</dt>
       <dd>引用文档中的特定位置，如标题、图表、表格等，详情请参考 <a href="./wreferences.html">引用</a> 一节</dd>
     </dl>
-    <div class="chap">页眉页脚</div>
+    <div class="chap">页眉页脚 Header & Footer</div>
     <dl>
-      <dt>页眉、页脚</dt>
+      <dt>页眉 Header、页脚 Footer</dt>
       <dd>默认情况下，页眉页脚页码作用在同一个文档的所有节，彼此是关联的：于上一节相同</dd>
       <dd>可以取消链接，单独设置某个节</dd>
       <dd>可以充分利用"文档部件"的"文档属性"和"域"设计丰富的页眉页脚</dd>
-      <dt>页码</dt>
+      <dt>页码 Page Number</dt>
       <dd>页码可放在页眉或页脚</dd>
       <dd>页码是页眉或页脚的一部分</dd>
       <dd>在页眉或页脚存在的前体下，不能直接插入页码，应将光标定位在某个位置，再选择"当前位置"插入，否则会冲掉设置好的页眉或页脚</dd>
@@ -234,31 +231,7 @@
         <img src="./imgs/p2.png" alt="">
         <figcaption>取消链接</figcaption>
       </figure>
-      <div class="tips">
-        <div>论文页码一般要求</div>
-        <div>封面、原创性声明一节，不显示页码；不要页眉</div>
-        <div>中英文摘要、目录一节，大写罗马数字、从头开始；不要页眉</div>
-        <div>正文一节，阿拉伯数字，从头开始；有的要求每章都单独打码。操作一样</div>
-        <div>附录一节，从头开始</div>
-        <div>参考文献一节，从头开始</div>
-      </div>
-      <div class="demo">多重页码</div>
-      <dd>点击下载 <a
-          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/多重页码.docx">多重页码.docx
-          <span class="iconfont icon-filedownload"></span></a>
-      </dd>
-      <dd>封面、独创性声明：第1节；无页码</dd>
-      <dd>中、英文摘要、目录：第2节；页码大写罗马数字，从I开始</dd>
-      <dd>正文：第3节；页码阿拉伯数字，从1开始</dd>
-      <dd>关键点
-        <p>分节符</p>
-        <p>取消节于节之间的链接</p>
-      </dd>
-      <dd>拓展练习
-        <p>奇偶页不同：分别设置第2节、第3节的页眉为奇偶页不同</p>
-        <p>奇数页：章节标题 - "域" → "链接与引用" → "标题1"</p>
-        <p>偶数页：文档标题 - "文档部件" → "标题"</p>
-      </dd>
+      <div class="demo"><a href="./quizw1.html">多重页码</a></div>
     </dl>
     <div class="chap">文本</div>
     <dl>
@@ -347,11 +320,32 @@
       </table>
       <dt>符号</dt>
       <dd>特殊符号的使用</dd>
-      <dd>图形符号集中在wingdings区；如选项的√和×</dd>
+      <dd>图形符号集中在 Wingdings 区；如选项的 √ 和 ×</dd>
       <figure>
         <img src="./imgs/ins9.png" alt="">
         <figcaption>图形符号</figcaption>
       </figure>
+      <dd>也可以直接使用符号对应的 Unicode 编码：
+        <p>先输入对应的 Unicode 编码</p>
+        <p>选择编码</p>
+        <p>按 Alt + X</p>
+      </dd>
+      <dd>符号面板中，展示的编码是内部映射，并不是真正的 Unicode；如☑，只有当字体是 Wingdings 2 时才显示为；如果换成宋体、微软雅黑等，它会变成空白、方块或其他奇怪符号</dd>
+      <table>
+        <caption>常见 Unicode 编码和对应的符号</caption>
+        <thead>
+          <tr>
+            <th>Unicode</th>
+            <th>Symbol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>25bc</td>
+            <td>▼</td>
+          </tr>
+        </tbody>
+      </table>
     </dl>
     <div class="chap">插入批注</div>
     <dl>
