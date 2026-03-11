@@ -6,11 +6,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Office</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/course.css">
+  <!-- <link rel="stylesheet" href="/css/course.css"> -->
   <style>
-    .chap {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--main-color);
+    }
+
+    nav {
+      padding: 10px;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a::after {
+      content: attr(data-title);
+      order: 2;
+    }
+
+    nav a::before {
+      content: "";
+      flex: 1;
+      height: 3px;
+      background-image: url(../imgs/dot.png);
+      background-repeat: repeat-x;
+      order: 1;
+    }
+
+    h2 {
       display: flex;
       justify-content: space-between;
+      padding: 30px 10px 10px;
+      font-weight: normal;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
   </style>
 </head>
@@ -43,117 +82,112 @@
       <a target="_blank" href="./qa.html" data-title="Q&A">问与答</a>
       <a target="_blank" href="https://passport2.chaoxing.com" data-title="ChaoXing">超星学习通</a>
     </nav>
-    <div class="chap">计算机基础 <span>2学时</span></div>
-    <nav>
-      <a href="./computer.html" data-title="Overview">概述</a>
-      <a href="./com-system.html" data-title="System">系统组成</a>
-      <a href="./com-data.html" data-title="Data">信息表示</a>
-      <a href="./com-code.html" data-title="Code">编码</a>
-    </nav>
-    <div class="chap">Window10操作系统 <span>2学时</span></div>
-    <nav>
-      <a href="./com-pc.html" data-title="PC">个人计算机</a>
-      <a href="./win10.html" data-title="Win10">Window10</a>
-      <a href="./win10-file.html" data-title="FIles">文件管理</a>
-      <a href="./win10-sys.html" data-title="System">系统管理</a>
-    </nav>
-    <div class="chap">字处理 Word <span>10学时</span></div>
-    <nav>
-      <a href="./word.html" data-title="Word">字处理</a>
-      <a href="./wfile.html" data-title="File">文件</a>
-      <a href="./wdesign.html" data-title="Design">设计</a>
-      <a href="./whome.html" data-title="Home">开始</a>
-      <a href="./winsert.html" data-title="Insert">插入</a>
-      <a href="./wlayout.html" data-title="layout">布局</a>
-      <a href="./wreferences.html" data-title="Rreferences">引用</a>
-      <a href="./wmailings.html" data-title="Mailings">邮件</a>
-      <a href="./wreview.html" data-title="Review">审阅</a>
-      <a href="./wview.html" data-title="View">视图</a>
-    </nav>
-    <div class="chap">电子表格 Excel <span>10学时</span></div>
-    <nav>
-      <a href="./excel.html" data-title="Excel">电子表格</a>
-      <a href="./e-concept.html" data-title="Concept">概念</a>
-      <a href="./e-selection.html" data-title="Selection">数据选择</a>
-      <a href="./e-edit.html" data-title="Edit">数据编辑</a>
-      <a href="./e-formula.html" data-title="Formula">公式</a>
-      <a href="./e-chart.html" data-title="Chart">图表</a>
-      <a href="./e-pivot.html" data-title="Pivot">透视表</a>
-      <a href="./e-sort.html" data-title="Sort & Filter">排序和筛选</a>
-      <a href="./e-subtotal.html" data-title="Subtotal">分类汇总</a>
-      <h3>更多 More</h3>
-      <a href="./ehome.html" data-title="Home">开始</a>
-      <a href="./einsert.html" data-title="Insert">插入</a>
-      <a href="./elayout.html" data-title="layout">布局</a>
-      <a href="./edata.html" data-title="Data">数据</a>
-      <a href="./ereview.html" data-title="Review">审阅</a>
-      <a href="./eview.html" data-title="View">视图</a>
-    </nav>
-    <div class="chap">演示文档 PowerPoint <span>6学时</span></div>
-    <nav>
-      <a href="./ppt.html" data-title="PowerPoint">演示文稿</a>
-      <h3>更多 More</h3>
-      <a href="./pdesign.html" data-title="Design">设计</a>
-      <a href="./phome.html" data-title="Home">开始</a>
-      <a href="./pinsert.html" data-title="Insert">插入</a>
-      <a href="./ptransition.html" data-title="Transition">切换</a>
-      <a href="./panimations.html" data-title="Animations">动画</a>
-      <a href="./pproject.html" data-title="SlideShow">放映</a>
-      <a href="./precord.html" data-title="Record">录制</a>
-      <a href="./preview.html" data-title="Review">审阅</a>
-      <a href="./pview.html" data-title="View">视图</a>
-    </nav>
-    <div class="chap">计算机网络基础和Internet <span>2学时</span></div>
-    <nav>
-      <a href="../web/web.html" data-title="WWW">万维网</a>
-      <a href="./network.html" data-title="Network">计算机网络</a>
-      <a href="./architect.html" data-title="Architect">体系结构</a>
-      <a href="./networktech.html" data-title="Technology">局域网技术</a>
-      <a href="./networksec.html" data-title="Security">网络信息安全</a>
-      <a href="/network/chap7signature.html" data-title="Signature">数字签名</a>
-      <a href="/network/chap4ip.html" data-title="IP">IP地址</a>
-      <a href="/network/chap6dns.html" data-title="DNS">DNS</a>
-    </nav>
-    <div class="chap">练习 Drill</div>
+    <h2>一般 General</h2>
     <div class="grid">
-      <div>
-        <h3>Word</h3>
-        <a href="./quizw0.html">练习 综合练习</a>
-        <a href="./quizw1.html">练习 页码</a>
-        <a href="./quizw2.html">练习 多级列表</a>
-        <a href="./quizw3.html">练习 目录</a>
-        <a href="./mailing.html">练习 邮件</a>
-      </div>
-      <div>
-        <h3>Excel</h3>
-        <a href="./quize1.html">练习 排序筛选</a>
-        <a href="./quize3.html">练习 透视表</a>
-        <a href="./quiz-gant.html">练习 堆积图-甘特图</a>
-        <a href="./quiz-histogram.html">练习 直方图</a>
-      </div>
-      <div>
-        <h3>PowerPoint</h3>
-        <a href="./quizp0.html">练习 母版</a>
-        <a href="./quizp1.html">练习 动画</a>
-        <a href="./quizp2.html">练习 切换</a>
-        <a href="./quizp3.html">练习 放映</a>
-        <a href="./quizp4.html">练习 综合</a>
-      </div>
-      <div>
-        <h3>Other</h3>
-        <a href="../web/oa.html">大学计算机练习</a>
-        <a href="./quiz.html">计算机基础期末测试</a>
-        <!-- <a href="./quizspd0.html">练习 我的博客 - OUT</a> -->
-      </div>
+      <dl>
+        <dt>计算机基础 <span>2学时</span></dt>
+        <dd><a href="./computer.html" data-title="Overview">概述</a></dd>
+        <dd><a href="./com-system.html" data-title="System">系统组成</a></dd>
+        <dd><a href="./com-data.html" data-title="Data">信息表示</a></dd>
+        <dd><a href="./com-code.html" data-title="Code">编码</a></dd>
+      </dl>
+      <dl>
+        <dt>Window10操作系统 <span>2学时</span></dt>
+        <dd><a href="./com-pc.html" data-title="PC">个人计算机</a></dd>
+        <dd><a href="./win10.html" data-title="Win10">Window10</a></dd>
+        <dd><a href="./win10-file.html" data-title="FIles">文件管理</a></dd>
+        <dd><a href="./win10-sys.html" data-title="System">系统管理</a></dd>
+      </dl>
+      <dl>
+        <dt>计算机网络基础和Internet <span>2学时</span></dt>
+        <dd><a href="../web/web.html" data-title="WWW">万维网</a></dd>
+        <dd><a href="./network.html" data-title="Network">计算机网络</a></dd>
+        <dd><a href="./architect.html" data-title="Architect">体系结构</a></dd>
+        <dd><a href="./networktech.html" data-title="Technology">局域网技术</a></dd>
+        <dd><a href="./networksec.html" data-title="Security">网络信息安全</a></dd>
+        <dd><a href="/network/chap7signature.html" data-title="Signature">数字签名</a></dd>
+        <dd><a href="/network/chap4ip.html" data-title="IP">IP地址</a></dd>
+        <dd><a href="/network/chap6dns.html" data-title="DNS">DNS</a></dd>
+      </dl>
     </div>
-    <!-- <div class="chap">SPDT</div>
-    <dl>
-      <dd data-title="SPD"><a href="./spd.html">网页制作</a></dd>
-      <dd data-title="Algorithm"><a href="./algorithm.html">算法</a></dd>
-      <dd data-title="VBScript"><a href="./vbs.html">脚本</a></dd>
-    </dl> -->
-    <div class="chap">推荐 Links</div>
-    <div class="grid link">
+    <h2>字处理 Word <span>10学时</span></h2>
+    <div class="grid">
+      <dl>
+        <dt>内容 Contents</dt>
+        <dd><a href="./word.html">字处理 Word</a></dd>
+        <dd><a href="./wfile.html">文件 File</a></dd>
+        <dd><a href="./wdesign.html">设计 Design</a></dd>
+        <dd><a href="./whome.html">开始 Home</a></dd>
+        <dd><a href="./winsert.html">插入 Insert</a></dd>
+        <dd><a href="./wlayout.html">布局 layout</a></dd>
+        <dd><a href="./wreferences.html">引用 Rreferences</a></dd>
+        <dd><a href="./wmailings.html">邮件 Mailings</a></dd>
+        <dd><a href="./wreview.html">审阅 Review</a></dd>
+        <dd><a href="./wview.html">视图 View</a></dd>
+      </dl>
+      <dl>
+        <dt>练习 Drill</dt>
+        <dd><a href="./quizw0.html">练习 综合练习</a></dd>
+        <dd><a href="./quizw1.html">练习 多重页码</a></dd>
+        <dd><a href="./quizw2.html">练习 多级列表</a></dd>
+        <dd><a href="./quizw3.html">练习 目录</a></dd>
+        <dd><a href="./mailing.html">练习 邮件</a></dd>
+      </dl>
+    </div>
+    <h2>电子表格 Excel <span>10学时</span></h2>
+    <div class="grid">
+      <dl>
+        <dt>内容 Contents</dt>
+        <dd><a href="./excel.html">电子表格 Excel</a></dd>
+        <dd><a href="./e-concept.html">概念 Concept</a></dd>
+        <dd><a href="./e-selection.html">数据选择 Selection</a></dd>
+        <dd><a href="./e-edit.html">数据编辑 Edit</a></dd>
+        <dd><a href="./e-formula.html">公式 Formula</a></dd>
+        <dd><a href="./e-chart.html">图表 Chart</a></dd>
+        <dd><a href="./e-pivot.html">透视表 Pivot</a></dd>
+        <dd><a href="./e-sort.html">排序和筛选 Sort & Filter</a></dd>
+        <dd><a href="./e-subtotal.html">分类汇总 Subtotal</a></dd>
+        <dd><a href="./ehome.html">开始 Home</a></dd>
+        <dd><a href="./einsert.html">插入 Insert</a></dd>
+        <dd><a href="./elayout.html">布局 layout</a></dd>
+        <dd><a href="./edata.html">数据 Data</a></dd>
+        <dd><a href="./ereview.html">审阅 Review</a></dd>
+        <dd><a href="./eview.html">视图 View</a></dd>
+      </dl>
+      <dl>
+        <dt>练习 Drill</dt>
+        <dd><a href="./quize1.html">练习 排序筛选</a></dd>
+        <dd><a href="./quize3.html">练习 透视表</a></dd>
+        <dd><a href="./quiz-gant.html">练习 堆积图-甘特图</a></dd>
+        <dd><a href="./quiz-histogram.html">练习 直方图</a></dd>
+      </dl>
+    </div>
+    <h2>演示文档 PowerPoint <span>6学时</span></h2>
+    <div class="grid">
+      <dl>
+        <dt>内容 Contents</dt>
+        <dd><a href="./ppt.html">演示文稿 PowerPoint</a></dd>
+        <dd><a href="./pdesign.html">设计 Design</a></dd>
+        <dd><a href="./phome.html">开始 Home</a></dd>
+        <dd><a href="./pinsert.html">插入 Insert</a></dd>
+        <dd><a href="./ptransition.html">切换 Transition</a></dd>
+        <dd><a href="./panimations.html">动画 Animations</a></dd>
+        <dd><a href="./pproject.html">放映 SlideShow</a></dd>
+        <dd><a href="./precord.html">录制 Record</a></dd>
+        <dd><a href="./preview.html">审阅 Review</a></dd>
+        <dd><a href="./pview.html">视图 View</a></dd>
+      </dl>
+      <dl>
+        <dt>练习 Drill</dt>
+        <dd><a href="./quizp0.html">练习 母版</a></dd>
+        <dd><a href="./quizp1.html">练习 动画</a></dd>
+        <dd><a href="./quizp2.html">练习 切换</a></dd>
+        <dd><a href="./quizp3.html">练习 放映</a></dd>
+        <dd><a href="./quizp4.html">练习 综合</a></dd>
+      </dl>
+    </div>
+    <h2>推荐 Links</h2>
+    <dl class="grid">
       <a href="https://zhuanlan.zhihu.com/p/63949977">10个相见恨晚的PPT网站</a>
       <a href="https://www.iconfont.cn/">阿里字体图标</a>
       <a href="https://www.zcool.com.cn/">站酷</a>
@@ -170,7 +204,9 @@
       <a href="https://www.hellofont.cn/">字由</a>
       <a href="https://www.googlefonts.cn/">googlefonts</a>
       <a href="https://www.hellofont.com/">hellofont</a>
-    </div>
+      <a href="../web/oa.html">大学计算机练习</a>
+      <a href="./quiz.html">计算机基础期末测试</a>
+    </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>
