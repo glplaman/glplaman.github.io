@@ -1,9 +1,11 @@
 :root {
   --bg-color: #171f2b;
-  --second-bg-color: #1f2733;
   --nav-bg-color: rgba(255, 255, 255, .1);
-  --main-color: #00abf0;
-  --second-color: #363c48;
+  --main-color: #ff3838;
+  --delay: 2s;
+  --transition: 0.6s;
+  --p-m-g: 10px;
+  --z: -550px;
 }
 
 * {
@@ -13,23 +15,29 @@
   text-decoration: none;
   list-style: none;
   border: none;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
 }
 
 html {
-  font-size: 62.6%;
+  font-size: 50%;
 }
 
 body {
   font-size: 1.6rem;
-  color: #fff;
+  height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .wrap {
-  width: 100vw;
-  height: 100vh;
-  perspective: 1000px;
+  position: relative;
+  width: 800px;
+  height: 450px;
+  color: #fff;
+  perspective: 1200px;
 }
 
 .sides {
@@ -37,20 +45,16 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transform-origin: 50% 50% -50vw;
-  transform: scale(1) rotateY(0deg);
-  backface-visibility: hidden;
-  transition: 2s;
-  animation: cube-ani 5s ease-in-out backwards;
+  transition: var(--transition);
+  transform-origin: 50% 50% var(--z);
+  transform: scale(1) rotateY(0deg) translateZ(var(--z));
+  animation: cube-ani var(--delay) ease-in-out;
 }
 
 @keyframes cube-ani {
-  0% {
-    transform: scale(0) rotateY(360deg);
-  }
-
-  100% {
-    transform: scale(1) rotateY(0deg);
+  from {
+    transform-origin: 50% 50% -2000px;
+    transform: scale(0) rotateY(360deg) translateZ(-2000px);
   }
 }
 
@@ -60,96 +64,106 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg-color);
-  color: #fff;
-  padding: 0 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
-  transform-style: preserve-3d;
-  transform-origin: 50% 50% -50vw;
   backface-visibility: hidden;
+  transform: rotateY(calc(var(--deg) * 45deg)) translateZ(1000px);
 }
 
-.sides .side:nth-child(even) {
-  background-color: var(--second-bg-color);
+section {
+  width: 80%;
+  height: 80%;
+  background-color: var(--bg-color);
+  color: #fff;
+  padding: 4rem 6rem;
+  line-height: 1.5;
 }
 
-.side:nth-child(even) {
-  background-color: var(--second-bg-color);
+h1 {
+  position: fixed;
+  top: 3rem;
+  left: 0%;
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
 }
 
-.side.home {
-  transform: rotateY(0);
-}
-
-.side.work {
-  transform: rotateY(90deg);
-}
-
-.side.team {
-  transform: rotateY(180deg);
-}
-
-.side.contact {
-  transform: rotateY(270deg);
+h2 {
+  font-size: 2rem;
+  margin-bottom: var(--p-m-g);
+  border-bottom: 1px solid #fff;
 }
 
 .pages {
-  position: absolute;
+  position: fixed;
   left: 50%;
   bottom: 2rem;
+  width: 350px;
   transform: translateX(-50%);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 350px;
-  background-color: var(--nav-bg-color);
+  background-color: var(--main-color);
   border-radius: 5rem;
   animation: nav-ani 1s ease-in-out backwards;
-  animation-delay: 4s;
+  animation-delay: var(--delay);
+  transition: var(--transition);
 }
 
 @keyframes nav-ani {
-  0% {
+  from {
     opacity: 0;
   }
 
-  100% {
+  to {
     opacity: 1;
   }
 }
 
 .pages li {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 5rem;
+  height: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
-.pages li i {
-  font-size: 2rem;
+.pages li svg {
+  width: 2.6rem;
+  height: 2.6rem;
 }
 
-.pages li:hover i,
-.pages li.active i {
-  color: var(--main-color);
+.pages li:hover svg,
+.pages li.active svg {
+  fill: #fff;
 }
 
 .pages li span {
+  color: #000;
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0);
   opacity: 0;
-  transition: 0.5s;
+  transition: var(--transition);
 }
 
 .pages li:hover span {
-  top: -4rem;
+  top: -3rem;
   opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+@media screen and (max-width:768px) {
+  .wrap {
+    width: 320px;
+    height: 500px;
+  }
+
+  .side {
+    transform: rotateY(calc(var(--deg) * 45deg)) translateZ(400px);
+  }
 }
