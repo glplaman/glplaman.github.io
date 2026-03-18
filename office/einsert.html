@@ -81,9 +81,15 @@
       </figure>
       <dd>透视表本质上还是一个表，由"行 Rows"、"列 Columns"和"&Sigma;值 Values"组成，另外还多了一个"筛选 Filters"</dd>
       <dd>功能非常强大的分析工具，特别适合两个维度的分类汇总，如按月、季度、地区等</dd>
+      <dd>通过拖拽，从不同角度观察/透视数据</dd>
       <dd>抛弃函数的使用去实现目标 - "表格"</dd>
       <dd>难点在于对数据的理解、需求不明晰</dd>
       <dd>实际上处理的是原始数据 - 流水账。。。</dd>
+      <dt>图表组成</dt>
+      <dd>行区域</dd>
+      <dd>列区域</dd>
+      <dd>值区域</dd>
+      <dd>过滤器</dd>
       <dt>要求</dt>
       <dd>有标题行，且是第一行</dd>
       <dd>必须是一维表</dd>
@@ -92,12 +98,22 @@
       <dd>不能有合并单元格</dd>
       <dd>建议从超级表开始</dd>
       <dt>常用操作</dt>
+      <dd>值字段设置</dd>
+      <dd>排序</dd>
+      <dd>值汇总依据</dd>
+      <dd>值显示方式</dd>
+      <dd>组合</dd>
       <dd>命名透视表</dd>
       <dd>移动透视表</dd>
-      <dd>字段设置、字段设置</dd>
+      <dd>删除透视表：选择透视表 → 按删除键 delete 删除</dd>
       <dd>推迟布局更新：大数据量时，请开启。。。否则可能卡到你怀疑人生；但是部分功能会被暂时被限制</dd>
       <dd>手动刷新：数据源部分值变化后，默认不会自动更新，需要手动刷新；可以使用"数据透视表分析"的刷新或选项卡"数据"中的刷新</dd>
       <dd>自动刷新：设置透视表"选项" → "数据" → "每次打开文件时刷新数据"</dd>
+      <dd>字段设置、字段设置</dd>
+      <dt>一般过程</dt>
+      <dd>选择数据</dd>
+      <dd>指定图表放置位置：新工作表或现有工作表</dd>
+      <dd>透视数据</dd>
       <div class="demo">批量生成多种工作表 - 拆分工作表</div>
       <dd>将准备好的通信录名单[有名字即可]生成透视表</dd>
       <dd>将"名字"列拖动到"筛选"</dd>
@@ -106,6 +122,9 @@
         <img src="./imgs/ins12.png" alt="">
         <figcaption>拆分工作表</figcaption>
       </figure>
+      <div class="tips">
+        <p>删除空白行：全选数据 → 定位 Ctrl + G → 定位条件 → 空值 → 右键删除 → 整行</p>
+      </div>
     </dl>
     <div class="chap">图表</div>
     <dl>
@@ -157,32 +176,76 @@
           </tr>
         </tbody>
       </table>
-      <dt>柱形图</dt>
+      <dt>柱形图 Column</dt>
       <figure>
         <img src="./imgs/chart.png" alt="">
         <figcaption>柱形图</figcaption>
       </figure>
-      <dt>饼图</dt>
+      <div class="demo"><a href="https://www.bilibili.com/read/cv9359423/?opus_fallback=1">中国GDP首破100万亿，西媒绞尽脑汁唱衰...</a>
+      </div>
+      <dd>堆积柱形图 Stacked Column</dd>
       <figure>
-        <img src="./imgs/chart1.png" alt="">
-        <figcaption>饼图</figcaption>
+        <img src="./imgs/chart.png" alt="">
+        <figcaption>堆积柱形图</figcaption>
       </figure>
-      <dt>堆积图</dt>
-      <figure>
-        <img src="./imgs/chart6.png" alt="">
-        <figcaption>堆积图</figcaption>
-      </figure>
-      <dt>折线图</dt>
+      <dt>折线图 Line</dt>
+      <dd>表现趋势</dd>
+      <dd>常见操作
+        <p>坐标轴 → 最小值、最大值、单位</p>
+        <p>标记 → 标记选项</p>
+      </dd>
       <figure>
         <img src="./imgs/chart2.png" alt="">
         <figcaption>折线图</figcaption>
       </figure>
-      <dt>条形图</dt>
+      <dt>饼图 Pie</dt>
+      <dd>表现占比</dd>
+      <dd>图表元素
+        <p>图表标题</p>
+        <p>数据标签</p>
+        <p>图例</p>
+      </dd>
+      <dd>常见操作
+        <p>第一扇区起始角度：默认是 0</p>
+        <p>饼图分离：整体设置或单独指定</p>
+        <p>数据标签：显示指定标签以便强调突出</p>
+        <p>数字：格式</p>
+      </dd>
+      <figure>
+        <img src="./imgs/chart1.png" alt="">
+        <figcaption>饼图</figcaption>
+      </figure>
+      <dt>条形图 Bar</dt>
+      <dd>可以看作水平方向的柱形图</dd>
+      <dd>同样具备堆积条形图 Stacked Bar</dd>
       <figure>
         <img src="./imgs/chart3.png" alt="">
         <figcaption>条形图</figcaption>
       </figure>
-      <dt>组合图</dt>
+      <div class="demo">利用堆积条形图创建甘特图</div>
+      <dd>原始数据：事项 Events、起始时间 Start 和结束时间 End</dd>
+      <dd>增加辅助列数据持续时间 Duration：结束时间 Start - 开始时间 End</dd>
+      <dd>计算日期最小时间值和最大时间值：日期 → 数字，便于指定起始和结束</dd>
+      <dd>单位大时间，按月/30</dd>
+      <dd>单位小时间，需要开启次刻度；通常可以忽略</dd>
+      <dd>倒序</dd>
+      <dd>网格线</dd>
+      <figure>
+        <img src="./imgs/chart6.png" alt="">
+        <figcaption>甘特图</figcaption>
+      </figure>
+      <dt>直方图 Histogram</dt>
+      <dd>用于展示连续数值型变量的频率分布；如：身高、体重、成绩、温度、时间等可测量的连续值</dd>
+      <dd>只接受纯数值区域</dd>
+      <dd>分箱范围有数据决定</dd>
+      <dd>下溢箱 ≠ 起始分箱点</dd>
+      <div class="demo">成绩统计</div>
+      <div class="demo">销售统计</div>
+      <dd>按类别统计</dd>
+      <dt>组合图 Combo</dt>
+      <dd>默认2个图：柱形图和折线图</dd>
+      <dd>序列数据相差较大</dd>
+      <dd>可指定某序列为次坐标</dd>
       <figure>
         <img src="./imgs/chart4.png" alt="">
         <figcaption>组合图</figcaption>
