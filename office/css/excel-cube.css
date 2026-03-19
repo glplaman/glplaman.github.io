@@ -19,10 +19,6 @@
   font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
 }
 
-img {
-  max-width: 100%;
-}
-
 html {
   font-size: 50%;
 }
@@ -95,7 +91,7 @@ section {
   height: 100%;
   background-color: var(--bg-color);
   color: #fff;
-  padding: 4rem 6rem;
+  padding: 2rem 3rem;
   line-height: 1.5;
 }
 
@@ -186,8 +182,54 @@ h3 {
   transform: translateX(-50%) scale(1);
 }
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #fff;
+  margin-top: 1rem;
+}
+
+td {
+  border: 1px solid #fff;
+  padding: 2px 2px;
+  text-align: center;
+}
+
+table tr:first-child td {
+  padding: 6px 2px;
+}
+
+.title {
+  position: relative;
+  text-align: right;
+  overflow: hidden;
+}
+
+.title::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 150%;
+  height: 1px;
+  background-color: #fff;
+  transform-origin: right center;
+  transform: rotate(13deg);
+}
+
+.title::after {
+  content: '节';
+  position: absolute;
+  left: 4px;
+  bottom: 0;
+}
+
 @media screen and (max-width:768px) {
   :root {
     --offset-z: 500px;
+  }
+
+  .title::before {
+    transform: rotate(30deg);
   }
 }
