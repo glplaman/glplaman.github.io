@@ -211,8 +211,7 @@
         <p>无法存储</p>
       </dd>
       <dt>机内码</dt>
-      <dd>为区分计算机中混合使用的双字节汉字与单字节西文字符，将标识汉字的两个字节编码的最高位置为1，相当于在原有基础上加了80H，得到<strong>机内码</strong>，<span>不再规定低位>127</span>
-      </dd>
+      <dd>为了使 GB2312 编码不与 ASCII 冲突，将区位码（十进制转十六进制后）加上 0xA0A0，得到 <strong>机内码</strong>，确保每个字节都大于 0x7F，从而避开 ASCII 范围</dd>
       <div class="txt-center warn">机内码 = 国标码 + 8080H</div>
       <dd>机内码是计算机内部真正用来 <strong>存储</strong>、加工和处理汉字的代码</dd>
       <figure>
@@ -232,7 +231,9 @@
         <div>53H + A0H = F3H</div>
         <div>或使用 国标码 + 8080H → 机内码</div>
       </dd>
-      <div class="tips">严格来说，GB2312 编码通常指的就是机内码，而国标码是交换码</div>
+      <div class="tips">
+        <p>严格来说，GB2312 编码通常指的就是机内码，而国标码是交换码</p>
+      </div>
       <div class="demo">区位码为1601，求对应的机内码</div>
       <div>
         <p>（1601）<sub>10</sub> → （1001）<sub>16</sub></p>
