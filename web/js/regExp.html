@@ -6,76 +6,54 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>正则表达式 RegExp</title>
-  <link rel="stylesheet" href="../../css/common2025.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="">
   <base target="_blank">
 </head>
 
 <body>
-  <header>
-    <h1>正则表达式</h1>
-    <span>&commat;RegExp</span>
-  </header>
-  <section>
-    <h3>Overview</h3>
-    <ul>
-      <li>功能强大</li>
-      <li>在 / / 内定义正则表达式</li>
-      <li>更多信息，请访问 <a href="https://ihateregex.io/">i hate regex</a></li>
-      <table>
-        <caption>正则表达式元数据</caption>
-        <thead>
-          <tr>
-            <th>item</th>
-            <th>desc</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>\d</td>
-            <td>数字</td>
-          </tr>
-          <tr>
-            <td>\S</td>
-            <td>非空白字符：除了空格、制表符、换行符等空白字符以外的所有字符</td>
-          </tr>
-          <tr>
-            <td>\s</td>
-            <td>空白字符：空格、制表符\t、换行符\n、回车符\r、换页符\f、垂直制表符\v等</td>
-          </tr>
-          <tr>
-            <td>g</td>
-            <td>全局标志，表示在整个字符串中进行匹配，而不是在找到第一个匹配项后停止</td>
-          </tr>
-          <tr>
-            <td>*</td>
-            <td>0个或多个</td>
-          </tr>
-          <tr>
-            <td>+</td>
-            <td>1个或多个</td>
-          </tr>
-          <tr>
-            <td>^</td>
-            <td>首/开始</td>
-          </tr>
-          <tr>
-            <td>$</td>
-            <td>尾/结束</td>
-          </tr>
-          <tr>
-            <td>{}</td>
-            <td>重复次数</td>
-          </tr>
-          <tr>
-            <td>()</td>
-            <td>分组；使用$和数字表示第几个分组</td>
-          </tr>
-        </tbody>
-      </table>
-    </ul>
-    <h3>match</h3>
-    <ul>
-      <li>查找匹配的串并输出结果</li>
+  <div class="w">
+    <header>
+      <h1>正则表达式</h1>
+      <span>&commat;RegExp</span>
+    </header>
+    <dl>
+      <dt>Overview</dt>
+      <dd>功能强大</dd>
+      <dd>在 / / 内定义正则表达式</dd>
+      <dd>更多信息，请访问 <a href="https://ihateregex.io/">i hate regex</a></dd>
+      <dt>\d</dt>
+      <dd>数字</dd>
+      <dt>\S</dt>
+      <dd>非空白字符：除了空格、制表符、换行符等空白字符以外的所有字符</dd>
+      <dt>\s</dt>
+      <dd>空白字符：空格、制表符\t、换行符\n、回车符\r、换页符\f、垂直制表符\v等</dd>
+      <dt>g</dt>
+      <dd>全局标志，表示在整个字符串中进行匹配，而不是在找到第一个匹配项后停止</dd>
+      <dt>$</dt>
+      <dd>尾/结束</dd>
+      <dt>+</dt>
+      <dd>1个或多个</dd>
+      <dt>*</dt>
+      <dd>0个或多个</dd>
+      <dt>{}</dt>
+      <dd>量词 uantifier</dd>
+      <dd>精确指定前面的字符（或组合）需要重复出现的次数</dd>
+      <dd>{n}：匹配 n 次；精确匹配</dd>
+      <dd>{n,}：至少匹配 n 次，无上限</dd>
+      <dd>{n,m}：匹配 n 到 m 次</dd>
+      <dt>^</dt>
+      <dd>出现在正则表达式的最前面，且不在方括号 [] 里时，代表行的开始</dd>
+      <dd>出现在方括号 [] 内部，并且是第一个字符时，代表取反/非/不是 Not</dd>
+      <dt>()</dt>
+      <dd>捕获分组</dd>
+      <dd>() 圈起来的部分，会被暂时捕获/存起来；使用$和数字表示第几个分组</dd>
+      <dd>在替换时，可以使用 $1、$2 引用这些分组</dd>
+    </dl>
+    <h2>应用</h2>
+    <dl>
+      <dt>match</dt>
+      <dd>查找匹配的串并输出结果</dd>
       <pre>
 > let re=/\d+/g;
 undefined
@@ -83,52 +61,52 @@ undefined
 /\d+/g
 > console.log('123 234 456'.match(re))
 [ '123', '234', '456' ]</pre>
-    </ul>
-    <h3>replace</h3>
-    <ul>
-      <li>替换匹配的串</li>
-    </ul>
-    <div class="demo"> 隐藏手机中间4位</div>
-    <ul>
-      <li>隐藏前：52188881314</li>
-      <li>隐藏后：521****1314</li>
+      <dt>replace</dt>
+      <dd>替换匹配的串</dd>
+      <div class="demo"> 隐藏手机中间4位</div>
+      <dd>隐藏前：52188881314</dd>
+      <dd>隐藏后：521****1314</dd>
       <pre>
 let cell = '52188881314';
 let reg = /^(\d{3})\d{4}(\d{4})$/
 let res = 'cell'.replace(reg, '$1****$2')</pre>
-    </ul>
-    <div class="demo"> DD打车只显示手机后4位</div>
-    <ul>
-      <li>隐藏前：52188881314</li>
-      <li>隐藏后：*******1314</li>
+      <div class="demo"> DD打车只显示手机后4位</div>
+      <dd>隐藏前：52188881314</dd>
+      <dd>隐藏后：*******1314</dd>
       <pre>
 let cell = '52188881314'
 let reg = /^\d{7}(\d{4})$/
 let res = cell.replace(reg, '*******$1')</pre>
-      </li>
-    </ul>
-    <div class="demo"> 移除空格</div>
-    <ul>
-      <li>移除串前面的所有空格</li>
+      <div class="demo"> 移除空格</div>
+      <dd>移除串前面的所有空格</dd>
       <pre>str = str.replace(/^\s+/, '');</pre>
-      <li>移除串后面的所有空格</li>
+      <dd>移除串后面的所有空格</dd>
       <pre>str = str.replace(/\s+$/, '');</pre>
-      <li>移除串前面、后面的所有空格 - 分俩次处理即可</li>
-      <li>为什么使用 + 而不使用 *<span class="iconfont icon-help"></span></li>
-    </ul>
-    <div class="demo"> 编辑结构 - 将每个非空白字符都套上1个&lt;span&gt;</div>
-    <ul>
+      <dd>移除串前面、后面的所有空格 - 分俩次处理即可</dd>
+      <dd>为什么使用 + 而不使用 *<span class="iconfont icon-help"></span></dd>
+      <div class="demo"> 编辑结构 - 将每个非空白字符都套上1个&lt;span&gt;</div>
       <pre>
 let msg = 'hi,there.'
 let res = msg.replace(/\S/g, '&lt;span&gt;$&&lt;/span&gt;')</pre>
-      <li>$&：一个特殊的替换模式，用于表示整个匹配的子字符串</li>
-    </ul>
-    <div class="demo"> 编辑结构 - 瑞幸咖啡(高新万达店) 处理为 高新万达店</div>
-  </section>
-  <h2>Form</h2>
-  <section>
-    <ul>
-      <li>&lt;form&gt;自带校验属性 pattern；比事件处理中的校验优先级高；如果同时存在，事件处理的校验无效</li>
+      <dd>$&：一个特殊的替换模式，用于表示整个匹配的子字符串</dd>
+      <div class="demo">将所有 dd 中的 data-title 属性移动到 a 中</div>
+      <dd>移动前</dd>
+      <pre>&lt;dd data-title="RollABall">&lt;a href="./index.html">吃掉你&lt;/a>&lt;/dd></pre>
+      <dd>移动后</dd>
+      <pre>&lt;dd>&lt;a href="./index.html" data-title="RollABall">吃掉你&lt;/a>&lt;/dd></pre>
+      <dd>思路
+        <p>捕获 dd 中所有 data-title 的值到第一分组</p>
+        <p>捕获 a 的所有内容到第2分组</p>
+      </dd>
+      <dd>使用的查找正则表达式为</dd>
+      <pre>&lt;dd\s+data-title="([^"]*)"\s*>&lt;a\s+([^>]*)></pre>
+      <dd>替换的正则表达式为</dd>
+      <pre>&lt;dd>&lt;a $2 data-title="$1"></pre>
+      <div class="demo"> 编辑结构 - 瑞幸咖啡(高新万达店) 处理为 高新万达店</div>
+    </dl>
+    <h2>Form</h2>
+    <dl>
+      <dd>&lt;form&gt;自带校验属性 pattern；比事件处理中的校验优先级高；如果同时存在，事件处理的校验无效</dd>
       <pre>
 &lt;form @submit.prevent="submit"&gt;
   &lt;input type="text" v-model="user.name" placeholder="6位数字" :pattern="reg" title="请输入6位数字"&gt;
@@ -152,9 +130,9 @@ const submit = () => {
   errorMsg.value = '';
   console.log('提交成功:', value);
 };</pre>
-    </ul>
-  </section>
-  <div id="footer"></div>
+    </dl>
+    <div id="footer"></div>
+  </div>
   <script src="/utils/custom/footer.js"></script>
 </body>
 
