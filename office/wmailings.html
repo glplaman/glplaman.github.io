@@ -18,49 +18,97 @@
       <dt>内容 Contents</dt>
       <dd>邮件 Mailings</dd>
     </dl>
-    <div class="chap">邮件 Mailings</div>
+    <div class="chap">基本使用 Basic</div>
     <dl>
       <dd>综合使用"开始邮件合并"和"编写和插入域"完成邮件的批量编辑</dd>
-      <dd>将一个 Word 文档与一个 Excel 数据源结合起来，快速生成一系列内容相同而收件人不同的输出文档的过程。相同的内容来自主文档，变化的内容来自数据源。</dd>
-      <dd>利用"规则"对数据进行区别操作，如根据性别调整称呼；或者过滤掉某些数据：信用低于3000的客户不在邀请范围等等</dd>
+      <dd>将一个 Word 文档与一个 Excel 数据源结合起来，利用特定规则操作数据，快速生成一系列格式相同、内容不同的文档</dd>
+      <dd>相格式由 Word 决定；内容/数据来自 Excel</dd>
       <figure>
-        <img src="./imgs/rules0.png" alt="">
+        <img src="./imgs/mail0.png" alt="">
+        <figcaption>邮件</figcaption>
+      </figure>
+      <dd>操作需要
+        <p>一个 带有占位符/域的 Word 文档</p>
+        <p>一个 带有数据的 Excel 文档</p>
+      </dd>
+      <dd>输出：
+        <p>一个使用数据替代了占位符/域的 Word 文档</p>
+      </dd>
+      <dd>常见应用：
+        <p>邀请函</p>
+        <p>成绩单</p>
+        <p>信封</p>
+        <p>工资条</p>
+        <p>标签</p>
+      </dd>
+      <div class="demo">邮邀请函</div>
+      <ol>
+        <li>打开个人工作目录</li>
+        <li>创建名字为"邮件"的文件夹</li>
+        <li>点击下载数据文件 <a href="./data/工作通讯录.xlsx" download>工作通讯录.xlsx
+            <span class="iconfont icon-filedownload"></span></a></li>
+        <li>点击下载模板文件 <a href="./data/会议邀请函.docx" download>会议邀请函.docx
+            <span class="iconfont icon-filedownload"></span></a></li>
+        <li>将 2 个文档剪切到"邮件"文件夹</li>
+        <li>打开会议邀请函，后续操作都在"邮件"选项卡</li>
+        <li>"邮件" → "开始邮件合并" → "信笺"（可略，默认是信笺）</li>
+        <figure>
+          <img src="./imgs/mail2.png" alt="">
+          <figcaption>开始邮件合并</figcaption>
+        </figure>
+        <li>"选择收件人" → "使用现有列表(E)…"，在弹出的"选取数据源"对话框中选取下载的工作通信录文件并指定其中的"普通信笺"工作表，最后确定</li>
+        <figure>
+          <img src="./imgs/mail1.png" alt="">
+          <figcaption>选取数据源</figcaption>
+        </figure>
+        <li>插入名称：鼠标移动到称呼处的 * 处，删除 *，选择"编写和插入域"分组 → "插入合并域"，选择"姓名"，插入位置出现占位符/域&lt;&lt;姓名&gt;&gt;</li>
+        <li>插入单位：用同样的方法，插入"单位"</li>
+        <figure>
+          <img src="./imgs/mail3.png" alt="">
+          <figcaption>插入合并域</figcaption>
+        </figure>
+        <li>选择"预览结果"，单击前后箭头查看记录，确认文档中的数据是否有误</li>
+        <figure>
+          <img src="./imgs/mail4.png" alt="">
+          <figcaption>预览结果</figcaption>
+        </figure>
+        <li>点击"完成"分组 → "完成并合并" → "编辑单个文档…"，在"合并到新文档"对话框中，选中"全部"并确定，系统便自动合并记录生成一个新的文档</li>
+        <figure>
+          <img src="./imgs/mail5.png" alt="">
+          <figcaption>完成</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/mail6.png" alt="">
+          <figcaption>合并全部记录</figcaption>
+        </figure>
+        <li>删除新文档中多余的文字，如公司，保存到"邮件"文件夹，命名为邮件合并</li>
+        <li>关闭所有文件，检查"邮件"文件夹，应该有 3 个文档</li>
+      </ol>
+      <div class="demo">利用"规则"指定称呼</div>
+      <dd>创新打开 Word 文档并指定 Excel 数据源</dd>
+      <dd>首先插入"姓名"</dd>
+      <dd>定位光标在"姓名"后面，选择"规则"的"如果...那么...否则(I)"；如果性别是男，就指定为先生，否则为女士</p>
+      </dd>
+      <figure>
+        <img src="./imgs/mail8.png" alt="">
+        <figcaption>规则</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/mail7.png" alt="">
         <figcaption>使用规则"如果...那么...否则"加入称呼</figcaption>
       </figure>
-      <figure>
-        <img src="./imgs/rules1.png" alt="">
-        <figcaption>使用规则"跳过记录条件"过滤掉信用小于80的记录</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/rules2.png" alt="">
-        <figcaption>使用规则"跳过记录条件"过滤掉信用为空的记录</figcaption>
-      </figure>
-      <div class="demo">邮邀请函</div>
-      <dd>点击下载 <a
-          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/工作通讯录.xlsx">工作通讯录.xlsx
-          <span class="iconfont icon-filedownload"></span></a>、<a
-          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/会议邀请函.docx">会议邀请函.docx
-          <span class="iconfont icon-filedownload"></span></a>
-      </dd>
-      <dd class="number">
-        <div>打开会议邀请函，"邮件" → "开始邮件合并" → "信笺"</div>
-        <div>点击"选择收件人"选项，在下拉列表中选择"使用现有列表…"，在弹出的"选取数据源"对话框中选取下载的工作通信录文件并指定"普通信笺"工作表</div>
-        <div>在邀请函相应的位置，如称呼处，"编写和插入域" → "插入合并域"，选择工作通信录中相应的字段</div>
-        <div>利用"预览结果"检查是否有误</div>
-        <div>点击"完成并合并" → "编辑单个文档…" → 在"合并到新文档"对话框的"合并记录"中，选中"全部"并确定，系统便自动合并生成新文档</div>
-      </dd>
-      <div class="demo">团学邀请学生家长参加年度迎新晚会，男家长显示为先生，女家长显示为女士</div>
-      <div class="demo">英语等级考试中心给考生发放CET-4考核成绩通知，通过显示为pass</div>
+      <div class="demo">英语等级考试中心给考生发放 CET-4 考核成绩通知，通过显示为pass</div>
       <div class="demo">教秘给上计算机应用基础的老师发送机房就绪通知</div>
       <div class="demo">财务给在职的员工发送工资条</div>
     </dl>
-    <div class="chap">高级使用 - 图片</div>
+    <div class="chap">高级使用 Advanced</div>
     <dl>
+      <dt>使用图片</dt>
       <dd>需要配合文档部件中的域来实现，并使用绝对路径或相对路径拼接处完整的图片路径</dd>
       <dt>环境介绍</dt>
       <dd>准备图片：图片最好放在一个文件夹内</dd>
-      <dd>准备数据源文件：Excel文件；仅仅给出图片的文字名，如gl.png，没有给出路径，需要后面修改域代码完成拼接</dd>
-      <dd>准备邮件文件：Word文件，并编辑好文案</dd>
+      <dd>准备数据源文件：Excel 文件；仅仅给出图片的文字名，如 gl.png，没有给出路径，需要后面修改域代码完成拼接</dd>
+      <dd>准备邮件文件：Word 文件，并编辑好文案</dd>
       <dd>注意：以上文件位置不做要求，尽量放在一起</dd>
       <dt>使用步骤</dt>
       <dd>打开邮件文件，定位光标，插入"文档部件" → "域"，选择包含图片的域，并指定其路径；系统对外部的操作会给出警告信息，确认即可</dd>
@@ -72,11 +120,11 @@
         <img src="./imgs/pic1.png" alt="">
         <caption>系统提示</caption>
       </figure>
-      <dd>按Alt + F9切换到域代码编辑状态，显示为：{INCLUDETEXT "E:\\OA\\imgs" \* MERGEFORMAT }</dd>
-      <dd>将光标定位在路径最后面imgs处，切换回"邮件"，插入图片域，此时的图片对应的域代码为：{INCLUDETEXT "E:\\OA\\imgs\\{MERGEFIELD 头像}" \* MERGEFORMAT }
+      <dd>按 Alt + F9 切换到域代码编辑状态，显示为：{INCLUDETEXT "E:\\OA\\imgs" \* MERGEFORMAT }</dd>
+      <dd>将光标定位在路径最后面 imgs 处，切换回"邮件"，插入图片域，此时的图片对应的域代码为：{INCLUDETEXT "E:\\OA\\imgs\\{MERGEFIELD 头像}" \* MERGEFORMAT }
       </dd>
-      <dd>按Alt + F9，退出域代码编辑状态，按F9刷新，检查图片的加载情况</dd>
-      <dd>后续的完成合并同前；如果图片没有更新，请按F9</dd>
+      <dd>按 Alt + F9，退出域代码编辑状态，按 F9 刷新，检查图片的加载情况</dd>
+      <dd>后续的完成合并同前；如果图片没有更新，请按 F9</dd>
       <dd>保存</dd>
       <table>
         <caption>常见域的格式调整</caption>
