@@ -43,7 +43,7 @@
       <dd>详细设计阶段最常用的工具</dd>
       <dd>H 图把系统拆分成一个个小模块，IPO 图告诉程序员每个模块具体该设计及实现</dd>
       <div>1. 输入 Input</div>
-      <dd>模块需要什么数据</dd>
+      <dd>模块需要什么数据、用户请求、原材料</dd>
       <div>2. 处理 Process</div>
       <dd>模块怎么处理数据</dd>
       <div>3. 输出 Output</div>
@@ -53,8 +53,11 @@
         <figcaption>IPO 图</figcaption>
       </figure>
       <dt>HIPO 图</dt>
+      <dd>Hierarchy Plus Input/Processing/Output</dd>
       <dd>层级图和输入处理输出图</dd>
-      <dd>H 图 + IPO 图；层级图 + 输入处理输出图</dd>
+      <dd>美国IBM公司70年代发展起来的表示软件系统结构的工具</dd>
+      <dd>既可以描述软件总的模块层次结构--H图(层次图)，又可以描述每个模块输入/输出数据、处理功能及模块调用的详细情况--IPO图</dd>
+      <dd>HIPO 图以模块分解的层次性以及模块内部输入、处理、输出三大基本部分为基础建立的</dd>
       <figure>
         <img src="./imgs/dt7.png" alt="">
         <figcaption>HIPO 图</figcaption>
@@ -62,37 +65,50 @@
     </dl>
     <h2>软件结构图 Structure Chart</h2>
     <dl>
-      <dd>描述一个软件系统由哪些模块组成，结构图不仅描述调用关系，还描述传递的信息和调用方式</dd>
+      <dd><a href="https://www.geeksforgeeks.org/software-engineering/software-engineering-structure-charts/">Structure
+          Charts - Software Engineering</a> 描述一个软件系统由哪些模块组成</dd>
+      <dd>不仅描述调用关系，还描述传递的信息和调用方式</dd>
       <dd>用来把一个复杂的系统拆解成子系统，子系统再拆解成模块</dd>
+      <dd>从上到下、从左到右分析</dd>
       <dd>它强调的是“分解”，而不是“交互”</dd>
-      <dt>模块</dt>
-      <dd>使用方框表示</dd>
-      <dd>使用动词+名词的命名方法</dd>
-      <dd>三种类型：控制模块、子模块和库模块</dd>
-      <dt>关系</dt>
-      <dd>模块之间的调用关系</dd>
-      <dd>线段或单向箭头</dd>
-      <dd>条件调用：父模块根据条件，选择性地调用子模块/if-else</dd>
+      <dt>1. 模块 Module</dt>
+      <dd>每个模块代表系统中的过程或任务</dd>
+      <dd>每个模块对外表现为一个黑盒</dd>
+      <dd>使用矩形 Rectangle 表示</dd>
+      <dd>命名方法：动词+名词</dd>
+      <dd>三种类型：
+        <p>控制模块：使用箭头指向子模块</p>
+        <p>子模块：子模块是另一个模块的部分</p>
+        <p>库模块：可重用且可以从任何模块调用</p>
+      </dd>
+      <dt>2 条件调用 Conditional Call</dt>
+      <dd>父模块根据条件，选择性 Selection 地调用子模块/if-else</dd>
+      <dd>使用钻石 Diamond 表示</dd>
       <figure>
-        <img src="./imgs/dt1.jpeg" alt="">
+        <img src="./imgs/dt1.png" alt="">
         <figcaption>条件调用</figcaption>
       </figure>
-      <dd>循环调用：控制模块根据条件，重复地调用子模块/while/do-while</dd>
+      <dt>3 循环调用 Repetitive call</dt>
+      <dd>父模块控制模块根据条件，重复地调用子模块/while/do-while</dd>
+      <dd>使用曲线箭头 Curved arrow 表示</dd>
       <figure>
-        <img src="./imgs/dt2.jpeg" alt="">
+        <img src="./imgs/dt2.png" alt="">
         <figcaption>循环调用</figcaption>
       </figure>
-      <dt>数据</dt>
-      <dd>模块之间传递的消息/数据</dd>
-      <dd>带注释内容的箭头</dd>
-      <dd>数据流：空心圆</dd>
+      <dt>4. 数据流 Data Flow</dt>
+      <dd>模块之间的数据流</dd>
+      <dd>它用一个带有空心圆点的有向箭头表示</dd>
+      <dd>可以使用注释内容说明</dd>
       <figure>
-        <img src="./imgs/dt3.jpeg" alt="">
+        <img src="./imgs/dt3.png" alt="">
         <figcaption>数据流</figcaption>
       </figure>
-      <dd>控制流：实心源</dd>
+      <dd>5. 控制流 Control Flow</dd>
+      <dd>模块之间的控制流程</dd>
+      <dd>它由一个带有末端实心圆的指向箭头表示</dd>
+      <dd>可以使用注释内容说明</dd>
       <figure>
-        <img src="./imgs/dt4.jpeg" alt="">
+        <img src="./imgs/dt4.png" alt="">
         <figcaption>控制流</figcaption>
       </figure>
     </dl>
