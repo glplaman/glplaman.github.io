@@ -211,7 +211,7 @@
             .then(res => res.json())
             .then(res => {
               console.log('res', res);
-              rank.value = { info: res.info, cont: res.cont };
+              rank.value = { info: res.info, cont: res.cont.sort((a, b) => b.ucredit - a.ucredit) };
             }).catch(err => {
               console.log('err', err);
               rank.value = { info: {}, cont: [] };

@@ -17,31 +17,42 @@
       <span>Tools</span>
     </header>
     <dl>
+      <div class="tips">
+        <p>H 图：聚焦系统；强调层级划分</p>
+        <p>IPO 图：聚焦模块内部的功能定义</p>
+        <p>HIPO 图：聚焦系统和模块；强调的是功能的分解</p>
+        <p>SC 图：强调模块之间的接口设计</p>
+      </div>
       <dt>H 图</dt>
-      <dd>Hierarchy Chart</dd>
-      <dd>也叫 层级图、层次图</dd>
-      <dd>适合描绘软件的层次结构</dd>
+      <dd>层次图 Hierarchy Chart；也叫 层级图</dd>
+      <dd>核心目的是展示层级结构（Hierarchy），而不是流程，所不需要箭头指示</dd>
       <dd>整个结构由模块和调用关系组成
         <p>模块：使用矩形表示</p>
-        <p>调用关系：模块之间的连线</p>
+        <p>调用关系：模块之间的连线使用无向线；使用上下位置来体现，而不是靠“箭头”</p>
       </dd>
+      <dd>不体现模块的调用关系和数据流、控制流，而由 IPO 体现</dd>
+      <dd>支持模块编号，增强可追踪性，但不体现调用顺序</dd>
+      <div class="tips">
+        <p>知道：谁调用谁</p>
+        <p>不知道：传了什么数据；内部干了什么</p>
+      </div>
       <figure>
         <img src="./imgs/dt5.png" alt="">
         <figcaption>公司人员组织H 图</figcaption>
       </figure>
-      <dd>不体现模块的调用关系和数据流、控制流，而由 IPO 体现</dd>
       <div class="demo">使用 PPT 绘制层次图</div>
       <figure>
         <img src="./imgs/dt0.png" alt="">
         <figcaption>H 图</figcaption>
       </figure>
-      <dt>IPO</dt>
-      <dd>输入处理输出图</dd>
+      <dt>IPO 图</dt>
+      <dd>输入处理输出图 Input Process Output diagram</dd>
       <dd>更多信息，请访问 <a
           href="https://blog.polarispixels.com/understanding-the-input-process-output-ipo-model-the-simplest-way-to-think-about-systems/">IPO</a>
       </dd>
       <dd>详细设计阶段最常用的工具</dd>
-      <dd>H 图把系统拆分成一个个小模块，IPO 图告诉程序员每个模块具体该设计及实现</dd>
+      <dd>H 图把系统按层次拆分，不体现层级的细节；IPO 图告诉程序员每个模块具体该设计及实现</dd>
+      <dd>直观地展示了数据是怎么进来的、经过了什么处理、最后怎么出去的，所以它能清楚地体现数据流和控制流</dd>
       <div>1. 输入 Input</div>
       <dd>模块需要什么数据、用户请求、原材料</dd>
       <div>2. 处理 Process</div>
@@ -53,15 +64,74 @@
         <figcaption>IPO 图</figcaption>
       </figure>
       <dt>HIPO 图</dt>
-      <dd>Hierarchy Plus Input/Processing/Output</dd>
-      <dd>层级图和输入处理输出图</dd>
+      <dd>层级图和输入处理输出图 Hierarchy Plus Input/Processing/Output diagram</dd>
       <dd>美国IBM公司70年代发展起来的表示软件系统结构的工具</dd>
-      <dd>既可以描述软件总的模块层次结构--H图(层次图)，又可以描述每个模块输入/输出数据、处理功能及模块调用的详细情况--IPO图</dd>
+      <dd>以分层的方式将功能分解为子功能；层次结构--H图(层次图)</dd>
+      <dd>描述了系统执行的功能；每个模块输入/输出数据、处理功能及模块调用的详细情况--IPO图</dd>
       <dd>HIPO 图以模块分解的层次性以及模块内部输入、处理、输出三大基本部分为基础建立的</dd>
+      <dd>通常需要：一张树形图 + 一堆表格</dd>
       <figure>
         <img src="./imgs/dt7.png" alt="">
         <figcaption>HIPO 图</figcaption>
       </figure>
+      <table class="line3">
+        <caption>Module 1 Login</caption>
+        <thead>
+          <tr>
+            <td>Input</td>
+            <td>Process</td>
+            <td>Output</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 用户输入的账号</td>
+            <td>1. 检查账号格式是否正确（非空、长度）</td>
+            <td>1. 验证结果（成功/失败）</td>
+          </tr>
+          <tr>
+            <td>2. 用户输入的密码</td>
+            <td>2. 从数据库中读取该账号对应的正确密码</td>
+            <td>2. 错误提示信息（如果有）。</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>3. 调用 Module 1.1，将“用户密码”和“正确密码”传给它进行比对</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>4. 接收 Module 1.1 返回的比对结果</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>5. 如果比对成功，记录登录日志；如果失败，生成错误信息</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="line3">
+        <caption>Module 1.1 Verify</caption>
+        <thead>
+          <tr>
+            <td>Input</td>
+            <td>Process</td>
+            <td>Output</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 字符串 A（用户输入的密码）</td>
+            <td>1. 比较字符串 A 和 字符串 B 是否完全一致</td>
+            <td>1. 布尔值结果（True/False）</td>
+          </tr>
+          <tr>
+            <td>2. 字符串 B（数据库中的密码）</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </dl>
     <h2>软件结构图 Structure Chart</h2>
     <dl>
