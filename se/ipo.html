@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>输入处理输出图 IPO</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>输入处理输出图</h1>
+      <span>IPO</span>
+    </header>
+    <dl>
+      <div class="tips">
+        <p>H 图：聚焦系统；强调层级划分</p>
+        <p>IPO 图：聚焦模块内部的功能定义</p>
+      </div>
+      <dd>详细设计阶段最常用的工具</dd>
+      <dd>H 图把系统按层次拆分，不体现层级的细节</dd>
+      <dd><a
+          href="https://blog.polarispixels.com/understanding-the-input-process-output-ipo-model-the-simplest-way-to-think-about-systems/">IPO</a>
+        图告诉程序员每个模块具体该设计及实现</dd>
+      <dd>用来说明每个模块的输入 Input、处理 Process 和输出 Output</dd>
+      <dd>直观地展示了数据是怎么进来的、经过了什么处理、最后怎么出去的，所以它能清楚地体现数据流和控制流</dd>
+      <dd>消除分析和设计之间的鸿沟</dd>
+      <dt>输入 Input</dt>
+      <dd>模块需要什么数据、用户请求、原材料</dd>
+      <dt>处理 Process</dt>
+      <dd>模块怎么处理数据</dd>
+      <dt>输出 Output</dt>
+      <dd>处理完产生什么结果</dd>
+      <figure>
+        <img src="./imgs/dt6.png" alt="">
+        <figcaption>IPO 图</figcaption>
+      </figure>
+      <div class="demo">提交订单时，系统计算最终应付金额</div>
+      <div>1. 输入 (Input)</div>
+      <dd>商品列表（包含商品ID、购买数量）</dd>
+      <dd>用户选择的优惠券信息</dd>
+      <dd>配送地址</dd>
+      <div>2. 处理 (Process)</div>
+      <dd>根据商品ID查询每个商品的单价</dd>
+      <dd>计算商品小计总额（单价 × 数量）</dd>
+      <dd>根据优惠券规则，计算并应用折扣金额</dd>
+      <dd>根据配送地址，计算配送费用</dd>
+      <dd>汇总所有费用，得出订单总金额</dd>
+      <div>3. 输出 (Output)</div>
+      <dd>订单最终总金额</dd>
+      <dd>费用明细（商品总价、优惠金额、运费）</dd>
+      <dd>（如果优惠券无效）返回无效优惠提示</dd>
+      <div class="demo">计算员工薪资</div>
+      <div>1. 输入 (Input)</div>
+      <dd>员工本月工时</dd>
+      <dd>员工的时薪</dd>
+      <dd>适用的税率</dd>
+      <div>2. 处理 (Process)</div>
+      <dd>计算总薪资：总薪资 = 工时 × 时薪</dd>
+      <dd>计算应缴税额：税额 = 总薪资 × 税率</dd>
+      <dd>计算净薪资：净薪资 = 总薪资 - 税额</dd>
+      <div>3. 输出 (Output)</div>
+      <dd>员工的净薪资（实发工资）</dd>
+      <dd>扣税详情</dd>
+      <dd>输入处理输出图 Input Process Output diagram</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

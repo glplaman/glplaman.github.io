@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>层级图和输入处理输出图 HIPO 图</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>层级图和输入处理输出图</h1>
+      <span>HIPO 图</span>
+    </header>
+    <dl>
+      <div class="tips">
+        <p>H 图：聚焦系统；强调层级划分</p>
+        <p>IPO 图：聚焦模块内部的功能定义</p>
+        <p>HIPO 图：聚焦系统和模块；强调的是功能的分解</p>
+      </div>
+      <dd>层级图和输入处理输出图 Hierarchy Plus Input/Processing/Output diagram</dd>
+      <dd>美国IBM公司70年代发展起来的表示软件系统结构的工具</dd>
+      <dd>以分层的方式将功能分解为子功能；层次结构--H图(层次图)</dd>
+      <dd>描述了系统执行的功能；每个模块输入/输出数据、处理功能及模块调用的详细情况--IPO图</dd>
+      <dd>HIPO 图以模块分解的层次性以及模块内部输入、处理、输出三大基本部分为基础建立的</dd>
+      <dd>通常需要：一张树形图 + 一堆表格</dd>
+      <div class="demo">医疗费管理系统的 HIPO 图</div>
+      <figure>
+        <img src="./imgs/dt10.png" alt="">
+        <figcaption>医疗费管理系统的 HIPO 图</figcaption>
+      </figure>
+      <div class="demo">登陆模块</div>
+      <figure>
+        <img src="./imgs/dt7.png" alt="">
+        <figcaption>登陆模块 HIPO 图</figcaption>
+      </figure>
+      <table class="line3">
+        <caption>Module 1 Login</caption>
+        <thead>
+          <tr>
+            <th>Input</th>
+            <th>Process</th>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 用户输入的账号</td>
+            <td>1. 检查账号格式是否正确（非空、长度）</td>
+            <td>1. 验证结果（成功/失败）</td>
+          </tr>
+          <tr>
+            <td>2. 用户输入的密码</td>
+            <td>2. 从数据库中读取该账号对应的正确密码</td>
+            <td>2. 错误提示信息（如果有）。</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>3. 调用 Module 1.1，将“用户密码”和“正确密码”传给它进行比对</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>4. 接收 Module 1.1 返回的比对结果</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>5. 如果比对成功，记录登录日志；如果失败，生成错误信息</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="line3">
+        <caption>Module 1.1 Verify</caption>
+        <thead>
+          <tr>
+            <th>Input</th>
+            <th>Process</th>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 字符串 A（用户输入的密码）</td>
+            <td>1. 比较字符串 A 和 字符串 B 是否完全一致</td>
+            <td>1. 布尔值结果（True/False）</td>
+          </tr>
+          <tr>
+            <td>2. 字符串 B（数据库中的密码）</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

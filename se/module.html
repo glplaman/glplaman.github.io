@@ -120,6 +120,7 @@
         <img src="./imgs/c0.png" alt="">
         <figcaption>功能内聚 Functional Cohesion</figcaption>
       </figure>
+      <dd>n内聚程度最高</dd>
       <dd>完成一个单一功能，各个部分协同工作，缺一不可</dd>
       <dt>顺序内聚 Sequential Cohesion</dt>
       <figure>
@@ -128,9 +129,7 @@
       </figure>
       <dd>顺序执行，强调输出和输入之间的关系</dd>
       <dd>通常一个处理元素的输出数据作为下一个处理元素的输入数据</dd>
-      <dd>场景：
-        <p>流水线作业</p>
-      </dd>
+      <div class="demo">流水线作业</div>
       <dt>通信内聚 Communicational Cohesion</dt>
       <figure>
         <img src="./imgs/c2.png" alt="">
@@ -139,12 +138,12 @@
       <dd>所有处理元素集中在一个数据结构的区域上</dd>
       <dd>模块内的元素通过共享数据进行交流和协作，彼此依赖于共享的数据或信息</dd>
       <dd>要求模块内的元素在完成任务时通过通信实现协作</dd>
-      <dd>场景：
-        <p>一个用户管理模块，包含了添加用户、删除用户、更新用户信息等函数，它们通过共享的用户数据进行交流和协作</p>
-        <p>一个图形绘制模块 CircleDrawer。它包含 calculateArea() 和 calculatePerimeter()</p>
-        两个函数。这两个函数虽然做的事不一样（一个算面积，一个算周长），但它们都必须依赖同一个输入数据——圆的半径。因为操作的是同一份数据，所以它们被放在同一个模块里
-        <p>Vue的用户路由文件：用户的注册、登陆、修改密码等等</p>
-      </dd>
+      <div class="demo">财报报表</div>
+      <dd>根据当月的流水，分别产生该月上旬、中旬、下旬的统计报表以及本月总的统计报表</dd>
+      <div class="demo">一个用户管理模块，包含了添加用户、删除用户、更新用户信息等函数，它们通过共享的用户数据进行交流和协作</div>
+      <div class="demo">一个图形绘制模块 CircleDrawer。它包含 calculateArea() 和 calculatePerimeter()</div>
+      <dd>两个函数。这两个函数虽然做的事不一样（一个算面积，一个算周长），但它们都必须依赖同一个输入数据——圆的半径。因为操作的是同一份数据，所以它们被放在同一个模块里</dd>
+      <div class="demo">Vue的用户路由文件：用户的注册、登陆、修改密码等等</div>
       <pre>
 const fs = require('fs');
 const express = require('express')
@@ -210,8 +209,8 @@ switch (flag) {
         <img src="./imgs/c6.png" alt="">
         <figcaption>偶然内聚 Coincidental Cohesion</figcaption>
       </figure>
-      <dd>模块内的元素之间没有明确的功能联系，仅仅是因为某种偶然的原因如巧合或方便而被组合在一起</dd>
       <dd>最低级别的内聚，通常会导致代码难以维护和理解</dd>
+      <dd>模块内的元素之间没有明确的功能联系，仅仅是因为某种偶然的原因如巧合或方便而被组合在一起</dd>
       <dd>形成原因：
         <p>缺乏设计规划、为了图省事；如把所有“暂时用得上”的函数都塞进一个叫 Utils 的类里</p>
         <p>代码重构不彻底导致</p>
@@ -222,6 +221,35 @@ switch (flag) {
         <p>一个模块中包含了各种无关的函数，这些函数之间没有共享的数据或交互行为，它们只是被放在同一个模块中（库函数模块）</p>
       </dd>
       <dd>解决方案：遵循单一职责原则是避免偶然内聚的有效方法</dd>
+    </dl>
+    <h2>模块化设计原则</h2>
+    <dl>
+      <dt>尽力提高模块的独立性</dt>
+      <dd>易于开发</dd>
+      <dd>便于测试和维护</dd>
+      <dt>注意模块的可靠性、通用性、可维护性和简单性</dt>
+      <dd>可靠性：无差错</dd>
+      <dd>通用性：通用化，适用范围广</dd>
+      <dd>可维护性：易于修改</dd>
+      <dd>简单性：降低复杂性，便于设计和使用</dd>
+      <dt>大小适中</dt>
+      <dd>规模不易过大</dd>
+      <dd>代码实现控制到 1 页内，易于阅读和理解</dd>
+      <dt>深度、宽度和扇出和扇入要适当</dt>
+      <dd>深度 Height：模块层次</dd>
+      <dd>宽度 Width：同一层模块的最大数</dd>
+      <dd>扇出 Fan-out：一个模块可调用的模块数；通常情况下，顶层扇出大，中间层扇出小；建议扇出控制在 7±2 以内，最好是 3-5</dd>
+      <dd>扇入 Fan-in：一个模块倍多少上级模块调用；通常情况下</dd>
+      <dt>模块接口简单、清晰</dt>
+      <div class="demo">模块化设计</div>
+      <figure>
+        <img src="./imgs/c7.png" alt="">
+        <figcaption>模块化设计</figcaption>
+      </figure>
+      <dd>该结构的深度为 4</dd>
+      <dd>该结构的宽度为 3</dd>
+      <dd>模块 A 的扇出为 3</dd>
+      <dd>模块 G 的扇入为 2</dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

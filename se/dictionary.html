@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据字典 Data Dictionary</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>数据字典</h1>
+      <span>Data Dictionary</span>
+    </header>
+    <dl>
+      <dd>数据的信息集合</dd>
+      <dd>对数据流图中所有元素定义的集合
+        <p>数据流条目</p>
+        <p>数据元素/数据项条目</p>
+        <p>数据存储条目</p>
+        <p>加工/处理条目</p>
+      </dd>
+      <dt>符号</dt>
+      <dd>定义 =
+        <p>定义的起始符号</p>
+        <p>表示等价关系，即左边的数据项由右边的成分构成</p>
+      </dd>
+      <div class="demo">机票 = 姓名 + 日期 + ... 表示“机票”这个数据结构的定义就在等号右边</div>
+      <dd>组成 +
+        <p>必须项</p>
+        <p>数据项由多个部分按顺序组合而成</p>
+      </dd>
+      <div class="demo">机票 = 姓名 + 日期 + 航班号 + 起点 + 终点 + 费用</div>
+      <dd>多选一 []
+        <p>多选一：从多个选项中选择一个；互斥</p>
+        <p>用于描述互斥的数据项或枚举类型</p>
+      </dd>
+      <div class="demo">机票 = 姓名 + 日期 + 航班号 + 起点 + 终点 + 费用 + [信用卡 | 支付宝 | 微信 | 现金] + [成人 | 儿童 | 婴儿]</div>
+      <dd>可选 ()
+        <p>可选；可有可无；强调的是有还是没有</p>
+        <p>括号内的数据项是可选的，即可以出现，也可以不出现</p>
+        <p>用于描述非必须填写的字段</p>
+      </dd>
+      <div class="demo">机票 = 姓名 + 日期 + 航班号 + 起点 + 终点 + 费用 + (优惠券) + (延误险)</div>
+      <dd>重复 {}
+        <p>表示循环或重复；强调的是次数</p>
+        <p>花括号内的数据项可以重复出现； 0 次、1 次或多次</p>
+        <p>用于描述列表或数组类型的数据</p>
+        <p>有时会指定上下边界，如 3{机票}10 表示至少3张，至多10张</p>
+      </dd>
+      <div class="demo">机票 = 姓名 + 日期 + 航班号 + 起点 + 终点 + 费用 + {附加服务费}</div>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

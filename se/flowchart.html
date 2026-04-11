@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>流程图 Flowchart</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>流程图</h1>
+      <span>Flowchart</span>
+    </header>
+    <dl>
+      <div class="tips">
+        <p>流程图讲的是“怎么做”（过程）</p>
+        <p>结构图讲的是“由什么组成”（架构）</p>
+      </div>
+      <dd>使用最悠久、最广泛的方法</dd>
+      <dt>分类 Type</dt>
+      <table>
+        <caption>分类 Type</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>数据流程图<br>Data Flow Diagram</td>
+            <td>系统中数据的流动、处理和存储情况</td>
+          </tr>
+          <tr>
+            <td>程序流程图<br>Program Flowchart</td>
+            <td>最经典的流程图，用于详细描述具体程序或算法的执行逻辑<br>使用标准的图形符号（如矩形框代表处理、菱形框代表判断）来展示代码执行的先后顺序、分支判断和循环结构<br>是程序员编写代码前的详细设计蓝图
+            </td>
+          </tr>
+          <tr>
+            <td>系统流程图<br>System Flowchart</td>
+            <td>用于描绘整个物理系统的概貌<br>展示了系统中各个物理部件（如硬盘、打印机、人工操作、程序模块等）之间的数据流向和控制关系<br>侧重于表现系统的物理模型，即数据在硬件和软件之间是如何流转的</td>
+          </tr>
+          <tr>
+            <td>程序网络图<br>Program Network Chart</td>
+            <td>用于描述程序之间的调用关系和依赖关系<br>不关注程序内部的具体逻辑<br>而是关注系统中各个程序文件（或模块）是如何相互关联、相互调用或按什么顺序执行的<br>类似于软件的架构视图</td>
+          </tr>
+          <tr>
+            <td>系统资源图<br>System Resource Chart</td>
+            <td>用于描述系统运行所需的资源分配和配置情况<br>展示了计算机硬件资源（如CPU、内存、外设）以及软件资源是如何被分配、使用和管理，以支持系统的正常运行</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>Diagram：侧重于结构、状态和关系；面向数据流</p>
+        <p>Flowchart：侧重于过程、动作和顺序；面向过程</p>
+      </div>
+      <dt>符号 Symbol</dt>
+      <dd>更多符号，请参考 PPT 中的符号</dd>
+      <figure>
+        <img src="./imgs/fc0.png" alt="">
+        <figcaption>符号 Symbol</figcaption>
+      </figure>
+      <dt>使用约定 Rules</dt>
+      <dd>约定一：符号的用途是用图形来标识它所表示的功能，而不考虑符号内的内容</dd>
+      <dd>约定二：应对图中各符号均匀地分配空间，连线应保持合理长度，尽量少用长线</dd>
+      <dd>约定三：在符号内列出说明性文字时，不要改变符号的角度和形状，尽可能统一各种符号的大小</dd>
+      <dd>
+        约定四：应把理解某符号功能所需的最少量的说明性文字置于符号内。它们应按从左到右和自上而下的方式来书写，与流向无关。若说明性文字太多，可使用一个注解符（）。如果使用注解符会干扰或破坏图形流程，应将正文写在另外一页上，并注明引用符号
+      </dd>
+      <dd>约定五：符号标识符是赋予某个符号的标识符，其作用是便于其他文件引用该符号。符号标识符要写在符号的左上角</dd>
+      <dd>
+        约定六：符号描述符用于交叉引用、表示一个符号的特定用途，或进一步理解某个图形符号的功能。符号描述符要写在符号的右上角。在系统流程图中，一个描述数据媒体的符号在很多情况下既可表示输出媒体，又可表示输入媒体。表示输出媒体的符号的流程图说明性文字要写在符号的右上角；表示输入媒体的符号的流程图说明性文字要写在符号的右下角
+      </dd>
+      <dd>约定七：分支符号以及多分支符号的每个出口应加标识符，以反映其逻辑通路</dd>
+      <dt>常见结构 Statement</dt>
+      <div>1. 顺序结构</div>
+      <figure>
+        <img src="./imgs/fc1.png" alt="">
+        <figcaption>顺序结构</figcaption>
+      </figure>
+      <pre>
+let age = 18;
+let flag = 1;</pre>
+      <div>2. 条件结构；又叫分支结构</div>
+      <div>2.1 双分支/单分支</div>
+      <figure>
+        <img src="./imgs/fc2.png" alt="">
+        <figcaption>IF-ELSE-THEN</figcaption>
+      </figure>
+      <pre>
+let age = 18;
+if (age >= 18) {
+  console.log('可以投票');
+} else {
+  console.log('不可以投票');
+}</pre>
+      <div>2.2 多分支</div>
+      <figure>
+        <img src="./imgs/fc3.png" alt="">
+        <figcaption>SWITCH-CASE</figcaption>
+      </figure>
+      <pre>
+let flag = 1;
+switch (flag) {
+  case 1:
+    console.log('及格');
+    break;
+  case 2:
+    console.log('中');
+    break;
+  case 3:
+    console.log('良');
+    break;
+  case 4:
+    console.log('优秀');
+    break;
+  default:
+    console.log('不及格');
+}</pre>
+      <div>3. 循环结构</div>
+      <div>3.1 WHILE-DO；先判断再执行</div>
+      <figure>
+        <img src="./imgs/fc4.png" alt="">
+        <figcaption>WHILE-DO</figcaption>
+      </figure>
+      <pre>
+let num = 1;
+while (num &lt;= 10) {
+  console.log(num);
+  num++;
+}</pre>
+      <div>3.2 DO-WHILE；先执行再判断</div>
+      <figure>
+        <img src="./imgs/fc5.png" alt="">
+        <figcaption>DO-WHILE</figcaption>
+      </figure>
+      <pre>
+let num = 1;
+do {
+  console.log(num);
+  num++;
+} while (num &lt;= 10);</pre>
+      <table>
+        <caption>DO-WHILE vs WHILE-DO</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th>WHILE-DO</th>
+            <th>DO-WHILE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>判断时机</td>
+            <td>先判断条件，再决定是否执行</td>
+            <td>先执行一次，再判断是否结束</td>
+          </tr>
+          <tr>
+            <td>执行次数</td>
+            <td>可能一次都不执行（0次或多次）</td>
+            <td>至少执行一次（1次或多次）</td>
+          </tr>
+          <tr>
+            <td>适用场景</td>
+            <td>适用于不确定是否需要进入循环的情况</td>
+            <td>适用于必须先做一步操作才能判断的情况</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
