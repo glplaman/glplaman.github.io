@@ -36,19 +36,19 @@
       </dd>
       <div>3. 联系 Relationships</div>
       <dd>数据对象的关系/实体间的联系</dd>
-      <dd>用菱形表示，使用动词；联系以适当的含义命名，名字写在菱形框中，用无向连线将参加联系的实体矩形框分别与菱形框相连，并在连线上标明联系的类型，即1—1、1—n或n—n</dd>
+      <dd>用菱形表示，使用动词；联系以适当的含义命名，名字写在菱形框中，用无向连线将参加联系的实体矩形框分别与菱形框相连，并在连线上标明联系的类型，即 1—1、1—N 或 M—N</dd>
       <div class="demo">示例</div>
       <figure>
-        <img src="./imgs/ft3.png" alt="">
+        <img src="./imgs/er0.png" alt="">
         <figcaption>1:1</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/ft4.png" alt="">
-        <figcaption>1:n</figcaption>
+        <img src="./imgs/er1.png" alt="">
+        <figcaption>1:M</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/ft5.png" alt="">
-        <figcaption>n:n</figcaption>
+        <img src="./imgs/er2.png" alt="">
+        <figcaption>M:N</figcaption>
       </figure>
       <dt>绘制步骤</dt>
       <dd>找出所有的实体</dd>
@@ -83,12 +83,12 @@
             <td>被合并表的主键不变</td>
           </tr>
           <tr>
-            <td>一对多 1:n</td>
+            <td>一对多 1:N</td>
             <td>合并到“多”方表</td>
             <td>多方表的主键不变</td>
           </tr>
           <tr>
-            <td>多对多 m:n</td>
+            <td>多对多 M:N</td>
             <td>必须创建一个新表</td>
             <td>两端实体主键的组合</td>
           </tr>
@@ -96,7 +96,7 @@
       </table>
       <div class="demo">1:1</div>
       <figure>
-        <img src="./imgs/ft6.png" alt="">
+        <img src="./imgs/er3.png" alt="">
         <figcaption>1:1</figcaption>
       </figure>
       <dd>规则：比较灵活，可以转换为一个独立的新表，也可以合并到任意一端实体对应的表中</dd>
@@ -115,13 +115,13 @@
         <p>优先选择归并方案，减少表的数量，提高查询性能</p>
         <p>除非有特殊理由，否则不选独立方案</p>
       </div>
-      <div class="demo">1:n</div>
+      <div class="demo">1:N</div>
       <figure>
-        <img src="./imgs/ft7.png" alt="">
-        <figcaption>1:n</figcaption>
+        <img src="./imgs/er4.png" alt="">
+        <figcaption>1:N</figcaption>
       </figure>
       <dd>规则：通常不创建新表，而是将联系“合并”到“多”方实体对应的表中；只能归并到多端</dd>
-      <dd>合并方法：在“n”方表中，增加一个外键，这个外键是“1”方实体的主键。同时，关系本身的属性（如果有）也一并加入“n”方表</dd>
+      <dd>合并方法：在“N”方表中，增加一个外键，这个外键是“1”方实体的主键。同时，关系本身的属性（如果有）也一并加入“N”方表</dd>
       <div>方案1：独立关系</div>
       <dd>实体 A → 1个关系</dd>
       <dd>实体 B → 1个关系</dd>
@@ -129,12 +129,12 @@
       <div>方案2：归并关系</div>
       <dd>实体 A → 1个关系</dd>
       <dd>实体 B 和关系 R → 1个关系</dd>
-      <div class="demo">n:n</div>
+      <div class="demo">M:N</div>
       <figure>
-        <img src="./imgs/ft8.png" alt="">
-        <figcaption>n:n</figcaption>
+        <img src="./imgs/er5.png" alt="">
+        <figcaption>M:N</figcaption>
       </figure>
-      <dd>都是 n 端，那归并到哪个呢？所以干脆都不归并，自己独立</dd>
+      <dd>都是多端，那归并到哪个呢？所以干脆都不归并，自己独立</dd>
       <dd>规则：必须转换为一个独立的新关系模式；增加新表</dd>
       <dd>新表的构成：
         <p>属性：包含两端实体的主键，以及联系本身的属性（如果有的话）</p>

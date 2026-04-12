@@ -5,33 +5,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Module</title>
-  <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
-  <base target="_blank">
 </head>
 
 <body>
-  <div class="w">
+  <label for="cb" id="ham" class="ham">
+    <div class="ham-line"></div>
+    <span>Menu</span>
+  </label>
+  <input type="checkbox" id="cb" class="cb" hidden>
+  <aside>
+    <nav>
+      <a href="#overview">概述 Overview</a>
+      <a href="#feature">特点 Feature</a>
+      <a href="#module">模块独立性 Module</a>
+      <a href="#couple">耦合 Couple</a>
+      <div>
+        <a href="#cont">内容耦合 Content</a>
+        <a href="#comm">公共耦合 Common</a>
+        <a href="#external">外部耦合 External</a>
+        <a href="#control">控制耦合 Control</a>
+        <a href="#stamp">标记耦合 Stamp</a>
+        <a href="#data">数据耦合 Data</a>
+        <a href="#no">非直接耦合 No</a>
+      </div>
+      <a href="#cohesion">内聚 cohesion</a>
+      <div>
+        <a href="#function">功能内聚 Functional </a>
+        <a href="#sequential">顺序内聚 Sequential</a>
+        <a href="#communicational">通信内聚 Communicational</a>
+        <a href="#procedural">过程内聚 Procedural</a>
+        <a href="#temporal">时间内聚 Temporal Cohesion</a>
+        <a href="#logical">逻辑内聚 Logical </a>
+        <a href="#coincidental">偶然内聚 Coincidental</a>
+      </div>
+      <a href="#rule">原则 rule</a>
+    </nav>
+  </aside>
+  <div class="main">
     <header>
       <h1>模块化</h1>
       <span>Module</span>
     </header>
-    <dl>
-      <dd>将一个大的软件系统划分为多个模块的过程</dd>
-      <dd>每个模块完成一个简单功能</dd>
-      <dt>优点</dt>
-      <dd>减少复杂性：降低问题复杂度，更容易开发和测试</dd>
-      <dd>提高软件的可靠性：质量得到提升，提升可靠性</dd>
-      <dd>有助于组织管理：结构清晰、便于管理</dd>
-      <dd>有助于信息隐蔽：彼此独立</dd>
-      <dt>模块独立性</dt>
-      <dd>模块化并不是越细越好</dd>
-      <dd>由2个定性标准度量
-        <p>耦合：衡量模块之间互相依赖/链接的紧密程度</p>
-        <p>内聚：衡量一个模块内部各个元素之间彼此结合的紧密程度</p>
-      </dd>
-    </dl>
-    <h2>耦合 Coupling</h2>
+    <h2 id="overview">概述 Overview</h2>
+    <ul>
+      <li>将一个大的软件系统划分为多个模块的过程</li>
+      <li>每个模块完成一个简单功能</li>
+    </ul>
+    <h2 id="feature">特点 Feature</h2>
+    <ul>
+      <li>减少复杂性：降低问题复杂度，更容易开发和测试</li>
+      <li>提高软件的可靠性：质量得到提升，提升可靠性</li>
+      <li>有助于组织管理：结构清晰、便于管理</li>
+      <li>有助于信息隐蔽：彼此独立</li>
+    </ul>
+    <h2 id="module">模块独立性</h2>
+    <ul>
+      <li>模块化并不是越细越好</li>
+      <li>由2个定性标准度量
+        <ol>
+          <li>耦合：衡量模块之间互相依赖/链接的紧密程度</li>
+          <li>内聚：衡量一个模块内部各个元素之间彼此结合的紧密程度</li>
+        </ol>
+      </li>
+    </ul>
+    <h2 id="couple">耦合 Coupling</h2>
     <dl>
       <dd>衡量模块彼此之间互相依赖/链接的紧密程度</dd>
       <dd>希望越低越好/松耦合，彼此独立</dd>
@@ -45,14 +83,14 @@
         <p>完全不用内容耦合</p>
       </div>
       <dd>根据耦合度 <strong>从高到低</strong>，分为：</dd>
-      <dt>内容耦合 Content Coupling</dt>
+      <h3 id="cont">内容耦合 Content Coupling</h3>
       <dd>一个模块直接访问另一个模块的内部数据</dd>
       <dd>一个模块不通过正常入口转到另一个模块的内部</dd>
       <dd>两个模块有一部分程序代码重叠</dd>
       <dd>一个模块有多个入口</dd>
       <dd>内容耦合极易出现程序错误，大多高级语言在设计时已经禁止出现内容耦合</dd>
       <dd>强盗逻辑”；不讲规矩，直接抢夺</dd>
-      <dt>公共耦合 Common Coupling</dt>
+      <h3 id="comm">公共耦合 Common Coupling</h3>
       <dd>多个模块共同使用一个公共数据环境，如全局数据 Global Data</dd>
       <dd>一个模块改了数据，可能影响所有其他模块，风险较高</dd>
       <dd>复杂度随着模块数量的增加显著增加</dd>
@@ -63,14 +101,14 @@
       </dd>
       <dd>避免的核心原则：不要让大家直接去碰那个“公共环境”</dd>
       <div class="demo">大家直接去仓库搬货（直接连数据库），仓库布局一变大家都迷路；现在大家找库管员（DAO 层）拿货，仓库怎么变，领货的人不需要知道</div>
-      <dt>外部耦合 External Coupling</dt>
+      <h3 id="external">外部耦合 External Coupling</h3>
       <dd>多个模块都依赖于某个外部环境的特定格式、协议或接口。包括文件格式、通信协议、硬件接口、数据库的特定查询语句等</dd>
       <dd>风险点：在于对外部标准的依赖。如果外部环境变了（比如协议升级了、文件格式变了），所有依赖它的模块都要改</dd>
       <div class="demo">C 语言中都访问被说明为 extern 类型的外部变量的各个模块</div>
       <div class="demo">大家都必须用同一个型号的插头才能插进墙上的插座。如果插座标准改了（外部环境变了），所有人的插头都得重做</div>
       公共耦合：关注的是“读写带来的连锁反应”；数据污染
       外部耦合：关注的是“对外部环境的硬性依赖”；环境绑定
-      <dt>控制耦合 Control Coupling</dt>
+      <h3 id="control">控制耦合 Control Coupling</h3>
       <dd>模块之间传递的信息中包含用于控制模块内部逻辑的信息</dd>
       <dd>一个模块通过传递开关、标志位等控制信息，来直接控制另一个模块的执行逻辑</dd>
       <dd>调用者传进来的参数里包含了一个开关或指令，被调用的模块必须根据这个指令来决定自己到底要执行哪段逻辑</dd>
@@ -82,7 +120,7 @@
       </dd>
       <div class="demo">JavaScript 中的 switch-case 语句如何避免控制耦合？</div>
       <dd>核心思想：将“判断逻辑”与“执行逻辑”分离，用数据驱动代替流程控制</dd>
-      <dt>标记耦合 Stamp Coupling</dt>
+      <h3 id="stamp">标记耦合 Stamp Coupling</h3>
       <dd>也叫特征耦合</dd>
       <dd>整个复杂的数据结构作为参数传递时，被调用的模块只需要使用其中一部分元素</dd>
       <dd>通俗来讲，传递的参数包含多种数据，模块只用了其中一部分，并没有全部使用</dd>
@@ -91,60 +129,59 @@
       <div class="demo">首页加载</div>
       <dd>全部信息加载</dd>
       <dd>部分信息加载</dd>
-      <dt>数据耦合 Data Coupling</dt>
+      <h3 id="data">数据耦合 Data Coupling</h3>
       <dd>模块之间只通过参数交换/传递简单数据/基本数据类型</dd>
       <dd>传递的是独立的、不可分割的值</dd>
       <dd>可以是多个简单数据</dd>
       <dd>如果传递完整的数据结构，则模块之间就共享了“数据结构定义”；一旦这个结构体增加或减少了一个字段，所有调用它的模块可能都需要重新编译或修改</dd>
-      <dt>非直接耦合 No Coupling</dt>
+      <h3 id="no">非直接耦合 No Coupling</h3>
       <dd>两模块间无直接关系</dd>
       <dd>完全独立</dd>
       <dd>它们之间的联系完全是通过主模块的控制和调用来实现</dd>
     </dl>
-    <h2>内聚 Cohesion</h2>
-    <dl>
-      <dd>衡量一个模块内部各个元素之间彼此结合的紧密程度</dd>
-      <dd>内聚度越高，紧密程度越高</dd>
-      <dd>希望越高越好，没有冗余部分、紧密团结，为了一个目标：模块功能</dd>
-      <dd>理想情况下，希望模块具有高内聚和低耦合，即模块内元素之间的功能联系紧密，同时与其他模块之间的依赖关系较弱。有助于提高代码的可维护性、重用性和扩展性</dd>
-      <dd>内聚类型并不是绝对的，一个模块可能同时具有多种内聚类型的特点，但通常会有一种主导</dd>
-      <div class="tips">
-        设计原则：
-        <p>力求做到高内聚</p>
-        <p>尽量少用中内聚</p>
-        <p>不用低内聚</p>
-      </div>
-      <dd>根据内聚度 <strong>从高到低</strong>，分为：</dd>
-      <dt>功能内聚 Functional Cohesion</dt>
-      <figure>
-        <img src="./imgs/c0.png" alt="">
-        <figcaption>功能内聚 Functional Cohesion</figcaption>
-      </figure>
-      <dd>n内聚程度最高</dd>
-      <dd>完成一个单一功能，各个部分协同工作，缺一不可</dd>
-      <dt>顺序内聚 Sequential Cohesion</dt>
-      <figure>
-        <img src="./imgs/c1.png" alt="">
-        <figcaption>顺序内聚 Sequential Cohesion</figcaption>
-      </figure>
-      <dd>顺序执行，强调输出和输入之间的关系</dd>
-      <dd>通常一个处理元素的输出数据作为下一个处理元素的输入数据</dd>
-      <div class="demo">流水线作业</div>
-      <dt>通信内聚 Communicational Cohesion</dt>
-      <figure>
-        <img src="./imgs/c2.png" alt="">
-        <figcaption>通信内聚 Communicational Cohesion</figcaption>
-      </figure>
-      <dd>所有处理元素集中在一个数据结构的区域上</dd>
-      <dd>模块内的元素通过共享数据进行交流和协作，彼此依赖于共享的数据或信息</dd>
-      <dd>要求模块内的元素在完成任务时通过通信实现协作</dd>
-      <div class="demo">财报报表</div>
-      <dd>根据当月的流水，分别产生该月上旬、中旬、下旬的统计报表以及本月总的统计报表</dd>
-      <div class="demo">一个用户管理模块，包含了添加用户、删除用户、更新用户信息等函数，它们通过共享的用户数据进行交流和协作</div>
-      <div class="demo">一个图形绘制模块 CircleDrawer。它包含 calculateArea() 和 calculatePerimeter()</div>
-      <dd>两个函数。这两个函数虽然做的事不一样（一个算面积，一个算周长），但它们都必须依赖同一个输入数据——圆的半径。因为操作的是同一份数据，所以它们被放在同一个模块里</dd>
-      <div class="demo">Vue的用户路由文件：用户的注册、登陆、修改密码等等</div>
-      <pre>
+    <h2 id="cohesion">内聚 Cohesion</h2>
+    <dd>衡量一个模块内部各个元素之间彼此结合的紧密程度</dd>
+    <dd>内聚度越高，紧密程度越高</dd>
+    <dd>希望越高越好，没有冗余部分、紧密团结，为了一个目标：模块功能</dd>
+    <dd>理想情况下，希望模块具有高内聚和低耦合，即模块内元素之间的功能联系紧密，同时与其他模块之间的依赖关系较弱。有助于提高代码的可维护性、重用性和扩展性</dd>
+    <dd>内聚类型并不是绝对的，一个模块可能同时具有多种内聚类型的特点，但通常会有一种主导</dd>
+    <div class="tips">
+      设计原则：
+      <p>力求做到高内聚</p>
+      <p>尽量少用中内聚</p>
+      <p>不用低内聚</p>
+    </div>
+    <dd>根据内聚度 <strong>从高到低</strong>，分为：</dd>
+    <h3 id="functional">功能内聚 Functional Cohesion</h3>
+    <figure>
+      <img src="./imgs/c0.png" alt="">
+      <figcaption>功能内聚 Functional Cohesion</figcaption>
+    </figure>
+    <dd>内聚程度最高</dd>
+    <dd>完成一个单一功能，各个部分协同工作，缺一不可</dd>
+    <h3 id="sequential">顺序内聚 Sequential Cohesion</h3>
+    <figure>
+      <img src="./imgs/c1.png" alt="">
+      <figcaption>顺序内聚 Sequential Cohesion</figcaption>
+    </figure>
+    <dd>顺序执行，强调输出和输入之间的关系</dd>
+    <dd>通常一个处理元素的输出数据作为下一个处理元素的输入数据</dd>
+    <div class="demo">流水线作业</div>
+    <h3 id="communicational">通信内聚 Communicational Cohesion</h3>
+    <figure>
+      <img src="./imgs/c2.png" alt="">
+      <figcaption>通信内聚 Communicational Cohesion</figcaption>
+    </figure>
+    <dd>所有处理元素集中在一个数据结构的区域上</dd>
+    <dd>模块内的元素通过共享数据进行交流和协作，彼此依赖于共享的数据或信息</dd>
+    <dd>要求模块内的元素在完成任务时通过通信实现协作</dd>
+    <div class="demo">财报报表</div>
+    <dd>根据当月的流水，分别产生该月上旬、中旬、下旬的统计报表以及本月总的统计报表</dd>
+    <div class="demo">一个用户管理模块，包含了添加用户、删除用户、更新用户信息等函数，它们通过共享的用户数据进行交流和协作</div>
+    <div class="demo">一个图形绘制模块 CircleDrawer。它包含 calculateArea() 和 calculatePerimeter()</div>
+    <dd>两个函数。这两个函数虽然做的事不一样（一个算面积，一个算周长），但它们都必须依赖同一个输入数据——圆的半径。因为操作的是同一份数据，所以它们被放在同一个模块里</dd>
+    <div class="demo">Vue的用户路由文件：用户的注册、登陆、修改密码等等</div>
+    <pre>
 const fs = require('fs');
 const express = require('express')
 const router = express.Router()
@@ -154,45 +191,45 @@ router.get('/login', (req, res) => {})
 router.post('/register', (req, res) => {})
 router.post('/modify', (req, res) => {})
 module.exports = router</pre>
-      <dt>过程内聚 Procedural Cohesion</dt>
-      <figure>
-        <img src="./imgs/c3.png" alt="">
-        <figcaption>过程内聚 Procedural Cohesion</figcaption>
-      </figure>
-      <dd>模块内的元素按照某种执行顺序相关联，共同完成一项任务或处理一种情况</dd>
-      <dd>要求模块内的元素按照特定的过程顺序执行</dd>
-      <dd>场景：
-        <p>文件处理模块 FileProcessor。它包含三个函数：第一步 openFile()，第二步 readHeader()，第三步 parseContent()。调用者必须严格按照 1->2->3
-          的顺序调用这些函数，否则程序就会报错。它们是因为“执行流程的先后顺序”被捆绑在一起的</p>
-        <p>一个排序模块，包含选择排序、冒泡排序、插入排序等函数，它们按照不同的排序算法的过程顺序执行</p>
-      </dd>
-      <dt>时间内聚 Temporal Cohesion</dt>
-      <figure>
-        <img src="./imgs/c4.png" alt="">
-        <figcaption>时间内聚 Temporal Cohesion</figcaption>
-      </figure>
-      <dd>瞬时内聚</dd>
-      <dd>通常指模块内部的功能之间没有任何关系，只是因为要在同一时间执行而被强行凑在一起</dd>
-      <dd>场景：
-        <p>执行一系列与时间相关的操作。如初始化；这些操作之间没有数据流转关系，唯一的共同点就是它们都必须在系统启动的那一瞬间被执行</p>
-      </dd>
-      <dt>逻辑内聚 Logical Cohesion</dt>
-      <figure>
-        <img src="./imgs/c5.png" alt="">
-        <figcaption>逻辑内聚 Logical Cohesion</figcaption>
-      </figure>
-      <dd>模块内的元素按照某种逻辑关系相关联，实际上彼此相互独立/分类打包</dd>
-      <dd>互斥性：每次调用，模块通常只执行其中一个功能，而不是全部/不要把所有的鸡蛋放在一个篮子</dd>
-      <dd>缺点：
-        <p>看起来好像复用性很高，因为一个模块干了所有“输入”相关的事</p>
-        <p>低效：模块必须包含所有可能功能的代码，即使你只需要其中一个小功能，也必须加载整个模块</p>
-      </dd>
-      <dd>场景：
-        <p>一个处理订单的模块，包含创建订单、查询订单、修改订单等函数，逻辑上都与订单处理相关</p>
-        <p>瑞士军刀：好多工具的集合体</p>
-        <p>小白的最爱：某个业务相关的逻辑全部放在一个模块中</p>
-      </dd>
-      <pre>
+    <h3 id="procedural">过程内聚 Procedural Cohesion</h3>
+    <figure>
+      <img src="./imgs/c3.png" alt="">
+      <figcaption>过程内聚 Procedural Cohesion</figcaption>
+    </figure>
+    <dd>模块内的元素按照某种执行顺序相关联，共同完成一项任务或处理一种情况</dd>
+    <dd>要求模块内的元素按照特定的过程顺序执行</dd>
+    <dd>场景：
+      <p>文件处理模块 FileProcessor。它包含三个函数：第一步 openFile()，第二步 readHeader()，第三步 parseContent()。调用者必须严格按照 1->2->3
+        的顺序调用这些函数，否则程序就会报错。它们是因为“执行流程的先后顺序”被捆绑在一起的</p>
+      <p>一个排序模块，包含选择排序、冒泡排序、插入排序等函数，它们按照不同的排序算法的过程顺序执行</p>
+    </dd>
+    <h3 id="temporal">时间内聚 Temporal Cohesion</h3>
+    <figure>
+      <img src="./imgs/c4.png" alt="">
+      <figcaption>时间内聚 Temporal Cohesion</figcaption>
+    </figure>
+    <dd>也叫瞬时内聚</dd>
+    <dd>通常指模块内部的功能之间没有任何关系，只是因为要在同一时间执行而被强行凑在一起</dd>
+    <dd>场景：
+      <p>执行一系列与时间相关的操作。如初始化；这些操作之间没有数据流转关系，唯一的共同点就是它们都必须在系统启动的那一瞬间被执行</p>
+    </dd>
+    <h3 id="logical">逻辑内聚 Logical Cohesion</h3>
+    <figure>
+      <img src="./imgs/c5.png" alt="">
+      <figcaption>逻辑内聚 Logical Cohesion</figcaption>
+    </figure>
+    <dd>模块内的元素按照某种逻辑关系相关联，实际上彼此相互独立/分类打包</dd>
+    <dd>互斥性：每次调用，模块通常只执行其中一个功能，而不是全部/不要把所有的鸡蛋放在一个篮子</dd>
+    <dd>缺点：
+      <p>看起来好像复用性很高，因为一个模块干了所有“输入”相关的事</p>
+      <p>低效：模块必须包含所有可能功能的代码，即使你只需要其中一个小功能，也必须加载整个模块</p>
+    </dd>
+    <dd>场景：
+      <p>一个处理订单的模块，包含创建订单、查询订单、修改订单等函数，逻辑上都与订单处理相关</p>
+      <p>瑞士军刀：好多工具的集合体</p>
+      <p>小白的最爱：某个业务相关的逻辑全部放在一个模块中</p>
+    </dd>
+    <pre>
 switch (flag) {
   case 条件1:
     break;
@@ -204,43 +241,46 @@ switch (flag) {
   default:
     break;
 }</pre>
-      <dt>偶然内聚 Coincidental Cohesion</dt>
-      <figure>
-        <img src="./imgs/c6.png" alt="">
-        <figcaption>偶然内聚 Coincidental Cohesion</figcaption>
-      </figure>
-      <dd>最低级别的内聚，通常会导致代码难以维护和理解</dd>
-      <dd>模块内的元素之间没有明确的功能联系，仅仅是因为某种偶然的原因如巧合或方便而被组合在一起</dd>
-      <dd>形成原因：
-        <p>缺乏设计规划、为了图省事；如把所有“暂时用得上”的函数都塞进一个叫 Utils 的类里</p>
-        <p>代码重构不彻底导致</p>
-        <p>历史遗留问题</p>
-        <p>临时逻辑</p>
-      </dd>
-      <dd>场景：
-        <p>一个模块中包含了各种无关的函数，这些函数之间没有共享的数据或交互行为，它们只是被放在同一个模块中（库函数模块）</p>
-      </dd>
-      <dd>解决方案：遵循单一职责原则是避免偶然内聚的有效方法</dd>
-    </dl>
-    <h2>模块化设计原则</h2>
-    <dl>
-      <dt>尽力提高模块的独立性</dt>
-      <dd>易于开发</dd>
-      <dd>便于测试和维护</dd>
-      <dt>注意模块的可靠性、通用性、可维护性和简单性</dt>
-      <dd>可靠性：无差错</dd>
-      <dd>通用性：通用化，适用范围广</dd>
-      <dd>可维护性：易于修改</dd>
-      <dd>简单性：降低复杂性，便于设计和使用</dd>
-      <dt>大小适中</dt>
-      <dd>规模不易过大</dd>
-      <dd>代码实现控制到 1 页内，易于阅读和理解</dd>
-      <dt>深度、宽度和扇出和扇入要适当</dt>
-      <dd>深度 Height：模块层次</dd>
-      <dd>宽度 Width：同一层模块的最大数</dd>
-      <dd>扇出 Fan-out：一个模块可调用的模块数；通常情况下，顶层扇出大，中间层扇出小；建议扇出控制在 7±2 以内，最好是 3-5</dd>
-      <dd>扇入 Fan-in：一个模块倍多少上级模块调用；通常情况下</dd>
-      <dt>模块接口简单、清晰</dt>
+    <h3 id="coincidental">偶然内聚 Coincidental Cohesion</h3>
+    <figure>
+      <img src="./imgs/c6.png" alt="">
+      <figcaption>偶然内聚 Coincidental Cohesion</figcaption>
+    </figure>
+    <dd>最低级别的内聚，通常会导致代码难以维护和理解</dd>
+    <dd>模块内的元素之间没有明确的功能联系，仅仅是因为某种偶然的原因如巧合或方便而被组合在一起</dd>
+    <dd>形成原因：
+      <p>缺乏设计规划、为了图省事；如把所有“暂时用得上”的函数都塞进一个叫 Utils 的类里</p>
+      <p>代码重构不彻底导致</p>
+      <p>历史遗留问题</p>
+      <p>临时逻辑</p>
+    </dd>
+    <dd>场景：
+      <p>一个模块中包含了各种无关的函数，这些函数之间没有共享的数据或交互行为，它们只是被放在同一个模块中（库函数模块）</p>
+    </dd>
+    <dd>解决方案：遵循单一职责原则是避免偶然内聚的有效方法</dd>
+    <h2 id="rule">模块化设计原则</h2>
+    <ol>
+      <li>尽力提高模块的独立性
+        <p>易于开发</p>
+        <p>便于测试和维护</p>
+      </li>
+      <li>注意模块的可靠性、通用性、可维护性和简单性
+        <p>可靠性：无差错</p>
+        <p>通用性：通用化，适用范围广</p>
+        <p>可维护性：易于修改</p>
+        <p>简单性：降低复杂性，便于设计和使用</p>
+      </li>
+      <li>大小适中
+        <p>规模不易过大</p>
+        <p>代码实现控制到 1 页内，易于阅读和理解</p>
+      </li>
+      <li>深度、宽度和扇出和扇入要适当
+        <p>深度 Height：模块层次</p>
+        <p>宽度 Width：同一层模块的最大数</p>
+        <p>扇出 Fan-out：一个模块可调用的模块数；通常情况下，顶层扇出大，中间层扇出小；建议扇出控制在 7±2 以内，最好是 3-5</p>
+        <p>扇入 Fan-in：一个模块倍多少上级模块调用；通常情况下</p>
+      </li>
+      <li>模块接口简单、清晰</li>
       <div class="demo">模块化设计</div>
       <figure>
         <img src="./imgs/c7.png" alt="">
@@ -250,10 +290,28 @@ switch (flag) {
       <dd>该结构的宽度为 3</dd>
       <dd>模块 A 的扇出为 3</dd>
       <dd>模块 G 的扇入为 2</dd>
-    </dl>
+    </ol>
     <div id="footer"></div>
-    <script src="/utils/custom/footer.js"></script>
   </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let checkbox = document.getElementById('cb');
+      let links = document.querySelectorAll('aside a');
+
+      links.forEach((link) => {
+        link.addEventListener('click', () => {
+          links.forEach((link) => {
+            link.classList.remove('active');
+          });
+          link.classList.add('active');
+          if (checkbox.checked) {
+            checkbox.checked = false;
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

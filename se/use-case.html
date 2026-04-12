@@ -41,38 +41,59 @@
       <dd>参与者和用例之间的驱动和反馈关系</dd>
       <dd>实线 solid line：参与者和用例之间</dd>
       <dd>虚线 dashed line：用例之间</dd>
-      <div>1. 关联关系 Association</div>
+      <div class="mt2">1. 关联关系 Association</div>
       <dd>表示参与者和用例的关系</dd>
-      <dd>线型：实线实心箭头，指向用例</dd>
-      <dd>通常用无箭头的实线表示关联，因为交互往往是双向的</dd>
+      <dd>线型：无箭头实线</dd>
       <figure>
-        <img src="./imgs/ft0.png" alt="">
+        <img src="./imgs/uc0.png" alt="">
         <figcaption>关联关系</figcaption>
       </figure>
-      <div>2. 包含关系 Include</div>
+      <div class="mt2">2. 包含关系 Include</div>
       <dd>表示用例之间的关系；必然要使用到</dd>
       <dd>逻辑：A 发生的时候，B 一定发生。B 是 A 的一部分，抽离了 B，A 就不完整了</dd>
-      <dd>取款时，打印凭条不是必须的</dd>
       <dd>方向：从 基础用例/主流程 → 包含用例</dd>
-      <dd>线型：虚线</dd>
+      <dd>线型：带箭头虚线</dd>
       <figure>
-        <img src="./imgs/ft1.png" alt="">
+        <img src="./imgs/uc1.png" alt="">
         <figcaption>包含关系 Include</figcaption>
       </figure>
-      <div>3. 拓展关系 Extend</div>
-      <dd>表示用例之间的关系</dd>
-      <dd>业务延申，非必须</dd>
+      <div class="demo">取款必须先验证密码，那么验证密码就是取款的包含关系</div>
+      <div class="mt2">3. 拓展关系 Extend</div>
+      <dd>表示用例之间的关系；业务延申，非必须</dd>
       <dd>逻辑：A 发生的时候，B 不一定发生。B 只是在特定条件下给 A 增加一点额外功能。抽离了 B，A 依然能独立跑通</dd>
       <dd>方向：从扩展用例 → 基础用例/主流程</dd>
-      <dd>线型：虚线</dd>
+      <dd>线型：带箭头虚线</dd>
       <figure>
-        <img src="./imgs/ft2.png" alt="">
+        <img src="./imgs/uc2.png" alt="">
         <figcaption>拓展关系 Extend</figcaption>
       </figure>
-      <div>4. 泛化关系 Generalization</div>
+      <div class="demo">取款时，打印凭条不是必须的</div>
+      <div class="mt2">4. 泛化关系 Generalization</div>
       <dd>也称归纳；继承</dd>
-      <dd>实线空心箭头</dd>
+      <dd>子用例继承父用例的行为和含义，并可以进行重写或特化</dd>
+      <dd>用例可以泛化：行为的复用/继承</dd>
+      <dd>参与者也可以：角色的复用/继承；子参与者是父参与者的一种</dd>
+      <dd>线型：实线空心三角箭头</dd>
       <dd>方向：子类 → 父类</dd>
+      <figure>
+        <img src="./imgs/uc3.png" alt="">
+        <figcaption>泛化关系 Generalization</figcaption>
+      </figure>
+      <div class="demo">用例泛化 Use Case Generalization</div>
+      <dd>用户完成订单需要进行支付</dd>
+      <dd>支付的方式有很多种，比如“微信支付”、“支付宝支付”、“银行卡支付”等</dd>
+      <dd>父用例（泛化用例）： 支付</dd>
+      <dd>子用例（特化用例）： 微信支付、支付宝支付</dd>
+      <figure>
+        <img src="./imgs/uc5.png" alt="">
+        <figcaption>泛化关系 Generalization</figcaption>
+      </figure>
+      <div class="demo">参与者泛化 Actor Generalization</div>
+      <dd>普通用户和 VIP 用户</dd>
+      <figure>
+        <img src="./imgs/uc4.png" alt="">
+        <figcaption>参与者泛化 Actor Generalization</figcaption>
+      </figure>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
