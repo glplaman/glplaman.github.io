@@ -1,4 +1,5 @@
  :root {
+   --main-color: #4bc2ce;
    --header-h: 240px;
    --aside-padding-left: 2rem;
    --aside-w: 300px;
@@ -7,7 +8,7 @@
    --bg-color: #fff;
    --tips-color: 26, 195, 136;
    --txt-color: #111;
-   --p-m-g: 12px;
+   --p-m-g: 1rem;
  }
 
  * {
@@ -26,24 +27,45 @@
 
  body {
    font-size: 1.6rem;
+   background-color: #f7f7f7;
    line-height: 2;
  }
 
- aside {
-   position: fixed;
-   left: 0;
-   top: 0;
-   padding: 1rem 2rem;
-   padding-left: var(--aside-padding-left);
+ body::-webkit-scrollbar {
+   width: 8px;
+ }
+
+ body::-webkit-scrollbar-thumb {
+   background-image: linear-gradient(var(--main-color, #333), var(--blue-color, #2980b9));
+   border-radius: 4px;
+ }
+
+ /* layout start */
+ .container {
+   display: flex;
+   align-items: flex-start;
+   width: 100%;
+   max-width: 1280px;
    background-color: #fff;
-   min-height: 100vh;
+   margin: 0 auto;
  }
 
- aside nav {
-   width: var(--nav-w);
-   line-height: 1.8;
+ aside {
+   position: sticky;
+   top: 0;
+   flex-shrink: 0;
  }
 
+ nav {
+   padding: var(--p-m-g, 16px);
+ }
+
+ .main {
+   flex: 1;
+   width: 100%;
+ }
+
+ /* layout end */
  aside nav a {
    display: block;
    text-decoration: none;
@@ -57,11 +79,6 @@
 
  aside nav div a {
    padding-left: 2em;
- }
-
- .main {
-   padding-left: calc(var(--aside-w) + var(--aside-padding-left) + 1rem);
-   margin-right: var(--aside-padding-left);
  }
 
  header {
@@ -100,6 +117,10 @@
 
  h3::before {
    content: counter(sn-1)'. ' counter(sn-2)'. ';
+ }
+
+ section {
+   padding: var(--p-m-g);
  }
 
  ul {
@@ -195,25 +216,21 @@
      scroll-padding-top: var(--pos);
    }
 
-   aside {
-     transform: translateX(-100%);
-     width: 100%;
-     height: 10vh;
-     top: var(--pos);
-     transition: .5s;
+   html:has(aside.active) {
+     overflow: hidden;
    }
 
-   header {
-     display: none;
+   .container {
+     flex-direction: column;
    }
 
    .ham {
-     display: flex;
-     align-items: center;
-     gap: 6px;
      position: fixed;
      left: 0;
      top: 0;
+     display: flex;
+     align-items: center;
+     gap: 6px;
      width: 100%;
      height: var(--pos);
      line-height: var(--pos);
@@ -249,23 +266,16 @@
      background-color: #000;
    }
 
-   html:has(.cb:checked) {
-     overflow: hidden;
+   aside {
+     position: fixed;
+     transform: translateX(-100%);
+     width: 100%;
+     top: var(--pos);
+     background-color: #fff;
+     transition: .5s;
    }
 
-   .cb:checked+aside {
+   aside.active {
      transform: translateX(0);
-   }
-
-   .main {
-     padding: 1rem;
-     margin: 0;
-   }
- }
-
-
- @media screen and (min-width:1280px) {
-   :root {
-     --aside-padding-left: 100px;
    }
  }
