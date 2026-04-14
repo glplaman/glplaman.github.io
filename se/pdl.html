@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>过程设计语言 PDL</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>过程设计语言</h1>
+      <span>PDL</span>
+    </header>
+    <dl>
+      <dd>Process Design Language，也称伪码</dd>
+      <dd>是一种混杂语言，混合使用叙述性说明和某种结构化程序设计语言的语法形式</dd>
+      <dd>关键字应有固定语法，提供结构化的控制结构和数据说明，并在控制结构的头尾都加关键字，体现模块化的特点
+        <p>BEGIN-END</p>
+        <p>If-EndIf</p>
+        <p>While-EndWhile</p>
+        <p>Case-EndCase</p>
+      </dd>
+      <dd>用自然语言叙述系统处理功能</dd>
+      <dd>具有说明各种数据结构的手段</dd>
+      <dd>描述模块定义和调用以及模块接口模式</dd>
+      <dt>优点</dt>
+      <dd>与具体使用哪种编程语言无关，但能方便地转换为程序员所选择的任意一种编程语言</dd>
+      <dd>有清晰的缩进和层级，体现代码的块结构</dd>
+      <dd>转换的难易程度有所区别</dd>
+      <dt>缺点</dt>
+      <dd>描述算法不如图形工具那样形象直观，在描述复杂条件组合及对应处理之间的关系时不如判定表那样清晰</dd>
+      <div class="demo">用 PDL 计算某校各种不同职称教师的课时津贴费</div>
+      <pre>
+BEGIN 计算教师津贴
+
+    // 1. 初始化变量
+    津贴金额 = 0
+
+    // 2. 判断职称和性质（对应判定表的列）
+    IF 教师性质 IS "专职" THEN
+        IF 职称 IS "教授" THEN
+            津贴金额 = 200
+        ELSE IF 职称 IS "副教授" THEN
+            津贴金额 = 150
+        ELSE IF 职称 IS "讲师" THEN
+            津贴金额 = 100
+        ELSE
+            津贴金额 = 80  // 默认为助教
+        END IF
+    ELSE
+        // 对应兼职或其他情况
+        IF 职称 IS "教授" THEN
+            津贴金额 = 250
+        ELSE
+            津贴金额 = 0 // 其他情况
+        END IF
+    END IF
+
+    // 3. 判断附加条件（教资）
+    IF 是否有教资 IS TRUE THEN
+        津贴金额 = 津贴金额 + 50
+    END IF
+
+    // 4. 输出结果
+    PRINT "该教师应发津贴：", 津贴金额
+
+END 计算教师津贴</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

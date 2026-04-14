@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>面向数据结构的设计 Jackson</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+  <style>
+    table {
+      max-width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>面向数据结构的设计</h1>
+      <span>Jackson</span>
+    </header>
+    <dl>
+      <dt>面向数据结构的设计方法</dt>
+      <dd>是按输入、输出以及计算机内部存储信息的数据结构进行软件结构设计的，把对数据结构的描述变换为对软件结构的描述</dd>
+      <dd>首先：需要分析确定数据结构</dd>
+      <dd>其次：用适当的工具清晰地描述数据结构</dd>
+      <dd>最终：得出对程序处理过程的描述</dd>
+      <dd>方法有两种：
+        <p>Jackson 方法</p>
+        <p>Warnier 方法</p>
+      </dd>
+      <dt>Jackson 方法</dt>
+      <dd>采用图形工具 Jackson 图</dd>
+      <dd>既可以表示数据结构也可以表示程序结构</dd>
+      <dd>特别适合设计企事业管理类的数据处理系统</dd>
+      <dt>符号</dt>
+      <div>1. 顺序结构的数据</div>
+      <dd>由一个或多个元素组成，每个元素依次出现一次</dd>
+      <dd>图1 表示数据 A 由 B、C、D三个元素顺序组成</dd>
+      <figure>
+        <img src="./imgs/jackson0.png" alt="">
+        <figcaption>顺序结构的数据</figcaption>
+      </figure>
+      <div>2. 选择结构的数据</div>
+      <dd>包含两个或多个元素；每次使用该数据时，按一定的条件从这些元素中选择一个</dd>
+      <dd>符号 ° 表示从中选择一个</dd>
+      <dd>图2 表示数据 A 根据条件由 B 或 C 中选择一个</dd>
+      <figure>
+        <img src="./imgs/jackson1.png" alt="">
+        <figcaption>选择结构的数据</figcaption>
+      </figure>
+      <div>3. 重复结构的数据</div>
+      <dd>根据条件由数据元素出现零次或多次组成</dd>
+      <dd>符号 * 表示重复</dd>
+      <dd>图3 表示数据 A 由 B 出现零次或多次组成</dd>
+      <figure>
+        <img src="./imgs/jackson2.png" alt="">
+        <figcaption>重复结构的数据</figcaption>
+      </figure>
+      <dt>特点</dt>
+      <dd>能对结构进行自顶向下分解，可以清晰地表示层次结构</dd>
+      <dd>结构易读、形象、直观</dd>
+      <dd>既可表示数据结构，也可表示程序结构</dd>
+      <dt>步骤</dt>
+      <ol>
+        <li>分析并确定输入数据和输出数据的逻辑结构</li>
+        <li>找出输入数据结构和输出数据结构中有对应关系的数据单元</li>
+        <li>从描述数据结构的 Jackson 图导出描述程序结构的 Jackson 图</li>
+        <li>列出所有的操作和条件，并把它们分配到程序结构图中去</li>
+      </ol>
+      <div class="demo">用 Jackson 方法对学生成绩管理系统进行结构设计</div>
+      <dd>某校的学生成绩管理系统</dd>
+      <dd>学生入学时，输入学生基本信息，如班级、学号、姓名，课程（考试/考查）等</dd>
+      <dd>每门课程的单科成绩是由各位任课教师按班内学生学号的顺序，依次输入每位学生的平时成绩和考试成绩</dd>
+      <table class="zebra">
+        <caption>成绩输入表</caption>
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>平时成绩</th>
+            <th>考试成绩</th>
+            <th>总评</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>xxxx</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>yyyy</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>zzzz</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>然后由计算机计算每位学生的单科成绩总评分</dd>
+      <dd>班级单科成绩汇总时，要统计该班该科目成绩各分数段的人数及比例</dd>
+      <table class="zebra">
+        <caption>单科成绩汇总表</caption>
+        <thead>
+          <tr>
+            <th>分数段</th>
+            <th>人数</th>
+            <th>百分比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>90+</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>80-89</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>70-79</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>60-69</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>60-</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>各科成绩都输入后，就可输出学生个人成绩单和班级学生各科成绩汇总表</dd>
+      <table class="zebra">
+        <caption>学生个人成绩单</caption>
+        <thead>
+          <tr>
+            <td>学号</td>
+            <td>xxxx</td>
+            <td>姓名</td>
+            <td>yyyy</td>
+            <td>系</td>
+            <td>zzzz</td>
+          </tr>
+          <tr>
+            <th>序号</th>
+            <th>课程名</th>
+            <th>平时成绩</th>
+            <th>考试成绩</th>
+            <th>总评</th>
+            <th>考查/考试</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="zebra">
+        <caption>各科成绩汇总表</caption>
+        <thead>
+          <tr>
+            <td>系</td>
+            <td>xxxx</td>
+            <td>班级</td>
+            <td>yyyy</td>
+          </tr>
+          <tr>
+            <th>序号</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>软件工程</th>
+            <th>前端开发</th>
+            <th>数据结构</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>根据以上输入数据和所需的输出表格，可写出输入数据结构、输出数据结构及程序结构的 Jackson 图，步骤如下</dd>
+      <ol>
+        <li>输入数据结构的 Jackson 图，如图4 所示</li>
+        <figure>
+          <img src="./imgs/jackson3.png" alt="">
+          <figcaption>输入数据结构</figcaption>
+        </figure>
+        <li>输出数据结构的 Jackson 图，如图5 所示</li>
+        <figure>
+          <img src="./imgs/jackson4.png" alt="">
+          <figcaption>输出数据结构</figcaption>
+        </figure>
+        <li>根据输入、输出数据结构的 Jackson 图用双向箭头画出对应关系图，如图6 所示</li>
+        <figure>
+          <img src="./imgs/jackson5.png" alt="">
+          <figcaption>输入、输出数据结构</figcaption>
+        </figure>
+        <li>从输入、输出数据结构关系导出程序结构 Jackson 图</li>
+        <li>列出所有操作和条件，并把它们分配到程序结构图的适当位置</li>
+        <figure>
+          <img src="./imgs/jackson6.png" alt="">
+          <figcaption>学生成绩管理系统 Jackson 图</figcaption>
+        </figure>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
