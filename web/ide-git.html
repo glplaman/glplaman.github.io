@@ -58,12 +58,14 @@
       <span class="iconfont icon-menu ham" id="ham"></span>
       <div class="nav" id="nav">
         <a href="#" style="--delay:0" class="nav-item">Overview</a>
-        <a href="#" style="--delay:1" class="nav-item">Workflow</a>
-        <a href="#" style="--delay:2" class="nav-item">Command</a>
-        <a href="#" style="--delay:3" class="nav-item">Repository</a>
-        <a href="#" style="--delay:4" class="nav-item">Branch</a>
-        <a href="#" style="--delay:5" class="nav-item">Tag</a>
-        <a href="#" style="--delay:6" class="nav-item">Fork</a>
+        <a href="#" style="--delay:1" class="nav-item">Config</a>
+        <a href="#" style="--delay:2" class="nav-item">Workflow</a>
+        <a href="#" style="--delay:3" class="nav-item">Command</a>
+        <a href="#" style="--delay:4" class="nav-item">Repository</a>
+        <a href="#" style="--delay:5" class="nav-item">Branch</a>
+        <a href="#" style="--delay:6" class="nav-item">Tag</a>
+        <a href="#" style="--delay:7" class="nav-item">Fork</a>
+        <a href="#" style="--delay:8" class="nav-item">CMD</a>
       </div>
     </nav>
     <dl class="nav-cont">
@@ -73,47 +75,65 @@
       <dd>如果没有仓库，请先创建仓库：<a href="https://github.com/">Github</a> 或 <a href="https://gitee.com/">Gitee</a></dd>
       <div class="tips">
         <div>-x：简化命令参数</div>
-        <div>--x：完整命令参数</div>
+        <div>--yyyy：完整命令参数</div>
       </div>
       <dt>下载和安装 Download & Installment</dt>
       <dd>打开 Git 官网 <a href="https://git-scm.com/" class="link">https://git-scm.com/</a>，选择对应的操作系统和版本，点击下载并安装</dd>
-      <dt>查看 Git 版本</dt>
+      <dt>查看版本 View</dt>
       <dd>右键点击桌面空白处，选择 Git Bash Here，打开终端窗口，输入以下命令</dd>
       <dd>Git Bash 就是一个迷你型的 Linux 系统哦</dd>
       <pre>$ git -v</pre>
       <pre>$ git --version</pre>
-      <dt>配置 Config</dt>
+    </dl>
+    <h2>配置 Config</h2>
+    <dl class="nav-cont">
+      <dd>配置级别
+        <p>系统级别的配置：--system</p>
+        <p>全局级别的配置：--global；建议</p>
+        <p>项目本地的配置：--local；默认</p>
+      </dd>
+      <dt>基本配置</dt>
+      <dd>用户名和邮箱</dd>
       <dd>使用户名和邮箱将 Git 和用户[自己的代码仓库，如 Github ]关联起来</dd>
-      <dd>用户名和邮箱仅仅作为签名，以区分提交的用户，和仓库账号没有关系
+      <dd>用户名和邮箱仅仅作为签名，以区分提交的用户，和仓库账号没有关系；无论你使用GitHub 仓库、Gitee 仓库，还是任何其他 Git 服务提供商的仓库
         <p>仅用于提交记录，不涉及登录或权限</p>
         <p>没有关联，无法提交 commit</p>
       </dd>
-      <dd>--system：系统级别的配置</dd>
-      <dd>--global：全局级别的配置；建议</dd>
-      <dd>--local：项目本地的配置；默认</dd>
       <pre>
 $ git config --global user.email 1942194789@qq.com
 $ git config --global user.name glpla</pre>
-      <dd>配置默认分支名：历史原因，默认分支名为 master，多与奴隶 slave 配对使用，涉嫌歧视</dd>
-      <pre>git config --global init.defaultBranch &lt;name&gt;</pre>
-      <dd>现多更改为 main dev等</dd>
-      <pre>git config --global init.defaultBranch main</pre>
-      <dd>查看 Git 配置</dd>
+      <dt>其它配置</dt>
+      <dd>不带参数就是查看；带参数就是配置</dd>
       <pre>
-cnplaman@LAPTOP-QL08LD1S MINGW64 ~/Desktop
+# 查看所有配置
+$ git config --list
+
+# 查看用户名
 $ git config  user.name
 cnplaman
-
-cnplaman@LAPTOP-QL08LD1S MINGW64 ~/Desktop
+      
+# 查看邮件
 $ git config  user.email
-1942194789@qq.com</pre>
-      <dd>查看/配置缓冲区大小</dd>
-      <pre>git config http.postBuffer</pre>
-      <pre>git config http.postBuffer 524288000</pre>
-      <dd>查看所有命令</dd>
-      <pre>$ git -h</pre>
-      <dd>查看特定命令，如 remote</dd>
-      <pre>$ git remote -h</pre>
+1942194789@qq.com
+
+# 查看缓冲区大小
+git config http.postBuffer
+
+# 配置缓冲区大小
+git config http.postBuffer 524288000
+
+# 配置默认分支名：历史原因，默认分支名为 master，多与奴隶 slave 配对使用，涉嫌歧视
+git config --global init.defaultBranch &lt;name&gt;
+
+# 现多更改为 main dev等
+git config --global init.defaultBranch main</pre>
+      <dt>查看命令</dt>
+      <pre>
+#查看所有命令
+$ git -h
+
+# 查看特定命令，如 remote
+$ git remote -h</pre>
       <div class="demo"> 仓库管理初体验</div>
       <dd>创建仓库时，系统会提示使用 Git 管理仓库的基本过程</dd>
       <dd>以下操作在某个项目目录；如果没有实际项目，则创建一个空白文件夹，并在其中创建一个内容任意的 .txt 文件作为项目内容</dd>
@@ -140,7 +160,7 @@ $ git push</pre>
     <dl class="nav-cont">
       <figure>
         <img src="./imgs/git.jpg" alt="">
-        <figcaption>Git工作流</figcaption>
+        <figcaption>Git 工作流</figcaption>
       </figure>
       <dt>工作区 workspace</dt>
       <dd>存放项目文件的地方，通常就是你的项目工作目录</dd>
@@ -148,12 +168,30 @@ $ git push</pre>
       <dd>临时存放文件便于调整</dd>
       <dd>使用 <strong>add</strong> 可以将文件从工作区放到暂存区
         <p>不包括被忽略的文件</p>
-        <p>单个文件体积大小不要超过50MB</p>
+        <p>单个文件体积大小不要超过 50MB</p>
       </dd>
-      <dd>点 . 表示所有文件</dd>
-      <pre>$ git add .</pre>
-      <dd>也可以指定具体文件</dd>
-      <pre>$ git add demo.txt</pre>
+      <pre>
+# 点 . 表示所有文件
+$ git add .
+
+# 也可以指定具体文件
+$ git add &lt;filename&gt;</pre>
+      <dd>撤销提交</dd>
+      <div>情况1：只想取消暂存，但保留文件修改（最常用） 将文件从暂存区移回工作区，修改内容不变</div>
+      <pre>
+# 取消指定文件的暂存
+git restore --staged &lt;filename&gt;
+
+# 或者使用旧版命令（依然有效）
+git reset HEAD &lt;filename&gt;
+
+# 取消所有文件的暂存
+git restore --staged .</pre>
+      <div>情况2：不仅取消暂存，还要丢弃修改；将文件恢复到上一次 commit 的状态，未保存的修改会丢失</div>
+      <pre>
+git restore &lt;filename&gt;
+# 或者
+git checkout -- &lt;filename&gt;</pre>
       <dt>本地仓库区 local repository</dt>
       <dd>版本区，真正的管理</dd>
       <dd>文件只有放到了版本区才可以进行真正意义上的管理</dd>
@@ -161,6 +199,18 @@ $ git push</pre>
       <dd>提交时，请使用 -m 说明本次提交的基本情况； m 表示 message</dd>
       <dd>每次提交都有一个 commitId 记录；根据这个记录，可以实现更多操作，如查看、撤销</dd>
       <pre>$ git commit -m ""</pre>
+      <dd>撤销提交</dd>
+      <div>情况1：保留代码，保留暂存；不需要重新 add</div>
+      <pre>
+# 撤销最近1次
+git reset --soft HEAD^
+
+# 撤销2次
+git reset --soft HEAD~2</pre>
+      <div>情况2：保留代码，取消暂存；需要重新 add</div>
+      <pre>git reset HEAD~2</pre>
+      <div>情况3：删除代码；谨慎使用</div>
+      <pre>git reset --hard HEAD^</pre>
       <dt>远程仓库区 remote repository</dt>
       <dd>线上仓库，如GitHub、Gitee</dd>
       <dd>使用 <strong>push</strong> 将本地分支的提交推送到远程仓库对应的分支
@@ -176,7 +226,11 @@ $ git push</pre>
       <pre>$ git push</pre>
       <dd>如果没有配置，使用 -u/--set-upstream 设置一个追踪关系 upstream relationship / 自动关联</dd>
       <pre>$ git push -u &lt;name&gt; &lt;branch_name&gt;</pre>
-      <dd>从版本区也可以切换回去工作区，使用 git reset --hard命令</dd>
+      <dd>安全撤销：不会删除历史，而是生成一个新的提交来抵消之前的修改</dd>
+      <pre>git revert CommitID</pre>
+      <dd>覆盖撤销：先在本地用 git reset (如场景2) 回退到指定版本，然后强制推送到远程；谨慎使用；通常用于个人分支或紧急情况</dd>
+      <pre>git reset</pre>
+      <pre>git push -f</pre>
     </dl>
     <h2>常见命令 Command</h2>
     <dl class="nav-cont">
@@ -550,6 +604,58 @@ e318093 init</pre>
       <div>修改后，通过 PR - Pull Request，去覆盖或更新原来仓库；当然需要确认，这就是开源共享</div>
       <div>复刻出来的仓库不包括标签，其它都是一样的</div>
       <div>复刻出来的内容经过修改后，可能和原来的仓库大相径庭，所以叫分叉</div>
+    </dl>
+    <h2>CMD</h2>
+    <dl class="nav-cont">
+      <dd>Git 就是一个微型 Linux 系统</dd>
+      <dd>支持常见的 Linux 命令</dd>
+      <table>
+        <caption>常见 Git 命令</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>touch</td>
+            <td>创建文件</td>
+          </tr>
+          <tr>
+            <td>cat</td>
+            <td>查看文件</td>
+          </tr>
+          <tr>
+            <td>vim</td>
+            <td>文本编辑查看</td>
+          </tr>
+          <tr>
+            <td>i</td>
+            <td>前字符前插入</td>
+          </tr>
+          <tr>
+            <td>o</td>
+            <td>当前行下方新开一行并进入插入模式；最常用的追加方式</td>
+          </tr>
+          <tr>
+            <td>O</td>
+            <td>当前行上方新开一行并进入插入模式</td>
+          </tr>
+          <tr>
+            <td>ESC</td>
+            <td>退出插入模式</td>
+          </tr>
+          <tr>
+            <td>:wq</td>
+            <td>保存退出</td>
+          </tr>
+          <tr>
+            <td>:q!</td>
+            <td>不保存退出</td>
+          </tr>
+        </tbody>
+      </table>
     </dl>
     <h2>Homework</h2>
     <dl>
