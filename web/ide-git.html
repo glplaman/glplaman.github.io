@@ -154,6 +154,10 @@ $ git push</pre>
       <pre>$ git add .</pre>
       <dd>也可以指定具体文件</dd>
       <pre>$ git add demo.txt</pre>
+      <dd>撤销提交</dd>
+      <pre>git restore --staged .</pre>
+      <dd>撤销提交 - 兼容旧版本</dd>
+      <pre>git reset HEAD .</pre>
       <dt>本地仓库区 local repository</dt>
       <dd>版本区，真正的管理</dd>
       <dd>文件只有放到了版本区才可以进行真正意义上的管理</dd>
@@ -161,6 +165,15 @@ $ git push</pre>
       <dd>提交时，请使用 -m 说明本次提交的基本情况； m 表示 message</dd>
       <dd>每次提交都有一个 commitId 记录；根据这个记录，可以实现更多操作，如查看、撤销</dd>
       <pre>$ git commit -m ""</pre>
+      <dd>撤销提交，保留代码，保留暂存；不需要重新 add</dd>
+      <dd>撤销最近1次</dd>
+      <pre>git reset --soft HEAD^</pre>
+      <dd>撤销2次</dd>
+      <pre>git reset --soft HEAD~2</pre>
+      <dd>撤销提交，保留代码，取消暂存；需要重新 add</dd>
+      <pre>git reset HEAD~2</pre>
+      <dd>撤销提交，删除代码；谨慎使用</dd>
+      <pre>git reset --hard HEAD^</pre>
       <dt>远程仓库区 remote repository</dt>
       <dd>线上仓库，如GitHub、Gitee</dd>
       <dd>使用 <strong>push</strong> 将本地分支的提交推送到远程仓库对应的分支
@@ -176,7 +189,11 @@ $ git push</pre>
       <pre>$ git push</pre>
       <dd>如果没有配置，使用 -u/--set-upstream 设置一个追踪关系 upstream relationship / 自动关联</dd>
       <pre>$ git push -u &lt;name&gt; &lt;branch_name&gt;</pre>
-      <dd>从版本区也可以切换回去工作区，使用 git reset --hard命令</dd>
+      <dd>安全撤销：不会删除历史，而是生成一个新的提交来抵消之前的修改</dd>
+      <pre>git revert CommitID</pre>
+      <dd>覆盖撤销：先在本地用 git reset (如场景2) 回退到指定版本，然后强制推送到远程；谨慎使用；通常用于个人分支或紧急情况</dd>
+      <pre>git reset</pre>
+      <pre>git push -f</pre>
     </dl>
     <h2>常见命令 Command</h2>
     <dl class="nav-cont">
