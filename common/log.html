@@ -12,6 +12,106 @@
   <div class="w">
     <h2>更新日志 Log</h2>
     <dl>
+      <dt>2026-05-01</dt>
+      <dd>冲突解决</dd>
+      <pre>
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io ((1cf3cc4...))
+$ git branch
+* (HEAD detached from 75c502d)
+main
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io ((1cf3cc4...))
+$ git remote -v
+origin git@github.com:glplaman/glplaman.github.io.git (fetch)
+origin git@github.com:glplaman/glplaman.github.io.git (push)
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io ((1cf3cc4...))
+$ git push origin main
+Everything up-to-date
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io ((1cf3cc4...))
+$ git checkout main
+Warning: you are leaving 2 commits behind, not connected to
+any of your branches:
+
+1cf3cc4 index reduce course
+5b069e0 ppt
+
+If you want to keep them by creating a new branch, this may be a good time
+to do so with:
+
+git branch &lt;new-branch-name&gt; 1cf3cc4
+
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git branch temp ^C
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git branch temp 1cf3cc4
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git branch
+* main
+temp
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git checkout temp
+Switched to branch 'temp'
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (temp)
+$ git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git merge temp
+CONFLICT (modify/delete): office/file/计算机应用基础教案.pdf deleted in temp and modified in HEAD. Version HEAD of
+office/file/计算机应用基础教案.pdf left in tree.
+warning: Cannot merge binary files: spm/file/PPT/软件项目管理dark.pptx (HEAD vs. temp)
+Auto-merging spm/file/PPT/软件项目管理dark.pptx
+CONFLICT (content): Merge conflict in spm/file/PPT/软件项目管理dark.pptx
+warning: Cannot merge binary files: utils/file/paper.xlsx (HEAD vs. temp)
+Auto-merging utils/file/paper.xlsx
+CONFLICT (content): Merge conflict in utils/file/paper.xlsx
+Automatic merge failed; fix conflicts and then commit the result.
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main|MERGING)
+$ ^C
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main|MERGING)
+$ git checkout temp -- "spm/file/PPT/软件项目管理dark.pptx"
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main|MERGING)
+$ git checkout temp -- "utils/file/paper.xlsx"
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main|MERGING)
+$ git rm "office/file/计算机应用基础教案.pdf"
+rm 'office/file/计算机应用基础教案.pdf'
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main|MERGING)
+$ git add .
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main|MERGING)
+$ git commit -m 'meiging temp'
+[main e78863d] meiging temp
+
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git push origin main
+Enumerating objects: 94, done.
+Counting objects: 100% (79/79), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (40/40), done.
+Writing objects: 100% (40/40), 5.28 MiB | 742.00 KiB/s, done.
+Total 40 (delta 34), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (34/34), completed with 27 local objects.
+To github.com:glplaman/glplaman.github.io.git
+9588825..e78863d main -> main
+huawei@LAPTOP-E61J88MK MINGW64 /d/glplaman.github.io (main)
+$ git branch -d temp
+Deleted branch temp (was 1cf3cc4).
+</pre>
       <dt>2026-01-29</dt>
       <dd>SPM</dd>
       <dd>Office</dd>
