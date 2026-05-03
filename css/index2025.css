@@ -10,7 +10,6 @@
 
 body,
 header,
-section,
 div,
 span,
 a,
@@ -34,7 +33,6 @@ html {
 }
 
 body {
-  min-height: 100vh;
   background-color: var(--bg-color);
   color: var(--txt-color);
   font-size: 1.6rem;
@@ -77,14 +75,10 @@ svg {
   fill: #ee7585;
 }
 
-header,
-section {
+.w {
   width: 100%;
   max-width: 1190px;
   margin: 0 auto;
-  background-color: #fff;
-  padding: var(--p-m-g);
-  overflow: hidden;
 }
 
 header {
@@ -97,15 +91,6 @@ header {
   /* background-image: url(/imgs/1213b.jpg); */
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
-}
-
-.container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--p-m-g);
-  margin-top: calc(4*var(--p-m-g));
-  margin-bottom: calc(4*var(--p-m-g));
 }
 
 .info {
@@ -182,32 +167,22 @@ header {
   filter: drop-shadow(0 0 0.4rem #fff);
 }
 
-footer {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-top: calc(2*var(--p-m-g));
-}
-
-footer a {
-  display: inline-flex;
-  align-items: center;
-}
-
-.nav {
+.container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background-color: #999;
-  border: 1px solid #999;
-  margin-top: calc(4*var(--p-m-g));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--p-m-g);
+  background-color: #fff;
+  padding: 2rem;
+  line-height: 2;
 }
 
 .nav-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #fff;
   padding: 2rem;
+  border-radius: var(--p-m-g);
+  transition: 0.4s;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .nav-item h2 {
@@ -225,12 +200,31 @@ footer a {
   top: 0;
   color: var(--main-color);
   white-space: nowrap;
-  transition: 0.4s;
+  transition: 1s;
   overflow: hidden;
+}
+
+.nav-item:hover {
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .nav-item:hover h2::after {
   width: 100%;
+}
+
+.card {
+  padding: 2rem;
+}
+
+footer {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: calc(2*var(--p-m-g));
+}
+
+footer a {
+  display: inline-flex;
+  align-items: center;
 }
 
 @media screen and (max-width:768px) {
@@ -239,10 +233,6 @@ footer a {
     height: 100svh;
     /* background-image: url(/utils/festival/811.png); */
     /* background-image: url(/imgs/1213s.jpg); */
-  }
-
-  .nav {
-    grid-template-columns: repeat(1, 1fr);
   }
 }
 
