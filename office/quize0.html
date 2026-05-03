@@ -20,14 +20,17 @@
           href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/学生成绩.xlsx">学生成绩
           <span class="iconfont icon-filedownload"></span></a>
       </dd>
-      <dt>目的</dt>
-      <dd>常见公式的使用</dd>
-      <dt>步骤</dt>
-      <dd>考生个数、考勤率 - COUNT|COUNTA</dd>
-      <dd>平均成绩 - AVERAGE</dd>
-      <dd>平均成绩最高分 - MAX、最低分 - MIN</dd>
-      <dd>两级成绩判定：及格60+、不及格</dd>
+      <dt>成绩处理</dt>
+      <dd>考生个数、考勤率：COUNT|COUNTA</dd>
+      <dd>平均成绩：AVERAGE</dd>
+      <dd>平均成绩： 最高分 MAX、最低分MIN</dd>
+      <dd>两级成绩判定：如果成绩大于等于 60，显示及格；否则显示不及格</dd>
       <dd>五级成绩判定：优秀：90+；良好：80+；中：70+；及格：60+；不及格：60-</dd>
+      <dd>五级成绩判定：优秀：90+；良好：80+；中：70+；及格：60+；不及格：60-</dd>
+      <dd>学生平均成绩排名：RANK</dd>
+      <dd>使用条件格式按照成绩档次等显示不同背景</dd>
+      <dd>高亮显示前3名同学</dd>
+      <dd>统计每个成绩档次的学生个数</dd>
       <dd>统计五级成绩评定中，不同档次的人数 - FREQUENCY</dd>
       <table>
         <caption>成绩分布</caption>
@@ -62,17 +65,17 @@
       </table>
       <dd>高亮显示前3名同学 - 条件格式</dd>
       <dd>其他格式自行设置</dd>
-    </dl>
-    <div class="chap">拓展练习</div>
-    <dl>
-      <dt>查询学生成绩 VLOOKUP</dt>
-      <dd>根据学号查询对应的信息；精确查找 FALSE</dd>
-      <dd>分别在当前表和新表实现查询学生的功能；如果在当前工作表，功能实现后，应该隐藏数据区域；如果在新工作表，应该隐藏数据表</dd>
-      <dt>排名 RANK</dt>
-      <dd>根据学生的平均成绩排名 - 绝对引用 F4</dd>
-      <dt>错误处理 IFERROR</dt>
-      <dd>如果输入异常，不符合学号格式，应给出提示：= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 2),"查无此人")</dd>
-      <dd>如果没有输入，应保持空白：= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 3), "")</dd>
+      <dt>成绩查询学生</dt>
+      <dd>根据学号查询成绩；精确查找 FALSE</dd>
+      <dd>分别在当前表和新表实现查询学生的功能</dd>
+      <dd>如果在当前工作表，功能实现后，应该隐藏数据区域</dd>
+      <dd>如果在新工作表，应该隐藏数据表</dd>
+      <dt>改进</dt>
+      <dd>在计算中引入错误处理</dd>
+      <dd>如果输入异常，不符合学号格式，应给出提示</dd>
+      <pre>= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 2),"查无此人")</pre>
+      <dd>如果没有输入，应保持空白</dd>
+      <pre>= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 3), "")</pre>
       <dd>也可以使用数据验证功能</dd>
     </dl>
     <div id="footer"></div>

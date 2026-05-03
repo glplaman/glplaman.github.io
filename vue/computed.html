@@ -221,12 +221,12 @@ const imgsUrl = computed(() => {
     <dd>
       <div>结构中直接使用数据；逻辑应该加带使用.value</div>
       <div>方案1：传统方案 - 直接拼接样式</div>
-      <pre>&lt;div class="line" :style="{ transform: `translateX(${ind * 100}px)` }"&gt;&lt;/div&gt;</pre>
+      <pre>&lt;div  :style="{ transform: `translateX(${ind * 100}px)` }"&gt;&lt;/div&gt;</pre>
       <div>方案2：使用对象和计算属性 - 部分</div>
-      <pre>&lt;div class="line" :style="`transform: translateX(${dis}px)`"&gt;&lt;/div&gt;</pre>
+      <pre>&lt;div  :style="`transform: translateX(${dis}px)`"&gt;&lt;/div&gt;</pre>
       <pre>const dis = computed(() => ind.value * 100)</pre>
       <div>方案33：使用对象和计算属性 - 全部</div>
-      <pre>&lt;div class="line" :style="{ transform: trans }"&gt;&lt;/div&gt;</pre>
+      <pre>&lt;div  :style="{ transform: trans }"&gt;&lt;/div&gt;</pre>
       <pre>const dis = computed(() => `translateX(${ind.value * 100}px)`)</pre>
       <div>方案4：使用 <a href="./style.html#val">CSS 内联变量</a>，可以直接在样式中应用 - 推荐</div>
     </dd>

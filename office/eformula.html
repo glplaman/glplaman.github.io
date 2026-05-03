@@ -17,8 +17,8 @@
     <h3>Formula</h3>
     <dl>
       <dt>基本使用</dt>
-      <dd>选择某个空单元格显示计算结果，输入 <strong>=</strong>，激活计算功能</dd>
-      <dd>除了手动计算还可以使用公式</dd>
+      <dd>选择某个空单元格显示计算结果，输入 <strong>=</strong>，激活公式计算功能</dd>
+      <dd>除了手动计算还可以使用函数</dd>
       <dd>输入函数开始几个字母，系统会出现可能的函数列表</dd>
       <dd>使用 <strong>↑、↓</strong> 预览函数，注意阅读函数的基本使用信息</dd>
       <dd>使用 <strong>TAB</strong> 选择函数，函数会出现顶部的公式栏；根据函数要求，指定参数，或者单击、或者拖动</dd>
@@ -30,93 +30,366 @@
         <img src="./imgs/form.png" alt="">
         <figcaption>公式栏</figcaption>
       </figure>
+      <dt>常见运算符</dt>
+      <table>
+        <caption>运算符</caption>
+        <thead>
+          <tr>
+            <th>type</th>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>文本运算符</td>
+            <td>&</td>
+            <td>连接文本</td>
+          </tr>
+          <tr>
+            <td rowspan="4">算术运算符</td>
+            <td>+</td>
+            <td>加</td>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>减</td>
+          </tr>
+          <tr>
+            <td>*</td>
+            <td>乘</td>
+          </tr>
+          <tr>
+            <td>/</td>
+            <td>除</td>
+          </tr>
+          <tr>
+            <td rowspan="6">比较/关系运算符</td>
+            <td>=</td>
+            <td>等于</td>
+          </tr>
+          <tr>
+            <td>&lt;&gt;</td>
+            <td>不等于</td>
+          </tr>
+          <tr>
+            <td>&lt;</td>
+            <td>小于</td>
+          </tr>
+          <tr>
+            <td>&lt;=</td>
+            <td>小于等于</td>
+          </tr>
+          <tr>
+            <td>&gt;</td>
+            <td>大于</td>
+          </tr>
+          <tr>
+            <td>&gt;=</td>
+            <td>大于等于</td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>
+=78&lt;62 //FALSE
+=78&gt;62 //TRUE
+      </pre>
     </dl>
     <div class="chap">Common Formula</div>
     <dl>
       <dd>先选择数据再使用公式</dd>
-      <dt>sum(number1,number2,...)</dt>
-      <dd>求和</dd>
-      <dd>通常使用范围选择数据</dd>
-      <pre>=SUM(M1:M6)</pre>
-      <dd>快捷键：<strong>ALT + =</strong>，快速求和；在数据的下方生成结果</dd>
-      <dt>sumif(range, criteria)</dt>
-      <dd>根据条件求和</dd>
-      <pre>=SUMIF(M1:M7,">80")</pre>
-      <dt>average</dt>
-      <dd>求平均</dd>
-      <pre>=AVERAGE(M1:M8)</pre>
-      <dt>max</dt>
-      <dd>求最大数值</dd>
-      <pre>=MAX(M1:M7)</pre>
-      <dt>min</dt>
-      <dd>求最小数值</dd>
-      <pre>=MIN(M1:M7)</pre>
-      <dt>random</dt>
-      <dd>0-1的随机数；小数</dd>
-      <pre>= RAND()</pre>
-      <dt>randombetween</dt>
-      <dd>指定区间的随机数；整数</dd>
-      <pre>= RANDBETWEEN(10, 20)</pre>
-      <dt>round</dt>
-      <dd>按指定的位数对数值进行四舍五入</dd>
-      <dd>需要指定保留几位小数，0为仅取整数</dd>
-      <pre>= ROUND(4.567, 0) // 5</pre>
-      <pre>= ROUND(4.567, 1) // 4.6</pre>
-      <pre>= ROUND(4.567, 2) // 4.57</pre>
+      <dt>统计函数</dt>
+      <table>
+        <caption>统计函数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>sum(number1,number2,...)</td>
+            <td>求和；通常使用范围选择数据
+              <br>快捷键：<strong>ALT + =</strong>，快速求和；在数据的下方生成结果
+            </td>
+          </tr>
+          <tr>
+            <td>average</td>
+            <td>求平均</td>
+          </tr>
+          <tr>
+            <td>count</td>
+            <td>统计区域中包含数字的单元格个数</td>
+          </tr>
+          <tr>
+            <td>counta</td>
+            <td>统计区域中非空单元格的个数；多用来统计文本</td>
+          </tr>
+          <tr>
+            <td>countif</td>
+            <td>计算区域中满足给定条件的单元格数目</td>
+          </tr>
+          <tr>
+            <td>countifs</td>
+            <td>统计一组满足给定条件/多条件的单元格数目；适合区间统计</td>
+          </tr>
+          <tr>
+            <td>max</td>
+            <td>求最大数值</td>
+          </tr>
+          <tr>
+            <td>min</td>
+            <td>求最小数值</td>
+          </tr>
+          <tr>
+            <td>rand</td>
+            <td>0-1的随机数；小数</td>
+          </tr>
+          <tr>
+            <td>randbetween</td>
+            <td>指定区间的随机数；整数</td>
+          </tr>
+          <tr>
+            <td>round</td>
+            <td>按指定的位数对数值进行四舍五入<br>需要指定保留几位小数，0为仅取整数</td>
+          </tr>
+          <tr>
+            <td>rank</td>
+            <td>排名：返回某数字在一列数字中相对于其它数字的大小排名<br>区域应该是绝对引用</td>
+          </tr>
+        </tbody>
+      </table>
       <dt>if</dt>
       <dd>条件判断</dd>
       <dd>适合单条件判定或两条件判定</dd>
       <dd>也可以多级嵌套；多级条件推荐使用IFS</dd>
       <dd>注意括号要匹配，不要丢失</dd>
-      <div>成绩大于等于60，为及格，否则不及格；这里采用固定值</div>
-      <pre>= IF(U112 >= 60, "及格", "不及格")</pre>
-      <div>如果达标，显示通过，否则给出差额；这里绝对引用某个单元格的值</div>
-      <pre>= IF(M2 > $M$11,"pass", $M$11-M2)</pre>
-      <div>依次判定分数，嵌套较多，不建议使用</div>
-      <pre>= IF(A2 >= 90, "A", (IF(A2 >= 80, "B", (IF(A2 >= 60, "C", "D")))))</pre>
+      <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-if-function/">IF Function</a></dd>
+      <pre>
+# 两级制：成绩大于等于60，为及格，否则不及格
+=IF(U112 >= 60, "及格", "不及格")
+
+# 如果达标，显示通过，否则给出差额；这里绝对引用某个单元格的值
+=IF(M2 > $M$11,"pass", $M$11-M2)
+
+# 五级制：依次判定分数，嵌套较多，不建议使用
+=IF(F3>=90,"A",IF(F3>=80,"B",IF(F3>=70,"C",IF(F3>=60,"D","F"))))</pre>
+      <dt>sumif(range, criteria, [sum_range])</dt>
+      <dd>根据条件 criteria 求和；如果省略求和区域 sum_range，将使用前面指定的区域 range</dd>
+      <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-sumif-function/">SUMIF Function</a></dd>
+      <dd>可以通过引用指定条件</dd>
+      <div class="demo">求水果类的营业额</div>
+      <pre>=SUMIF(B2:B13,"水果",D2:D13)</pre>
+      <div class="demo">进阶版：求水果和蔬菜的营业额</div>
+      <dd>第1步：使用数组方法{}，分别求和各自的和</dd>
+      <dd>第2步：结果求和</dd>
+      <pre>=SUM(SUMIF(B2:B13,{"水果","蔬菜"},D2:D13))</pre>
+      <div class="demo">进阶版：分别求不同类型的营业额</div>
+      <dd>使用数据验证</dd>
+      <div class="demo">求2026年5月1日后的营业额</div>
+      <dd>方案1：直接使用日期</dd>
+      <pre>=SUMIF(C2:C13,">2026/5/1",D2:D13)</pre>
+      <dd>方案2：使用引用；注意条件的拼接 &</dd>
+      <pre>=SUMIF(C2:C13,">"&I8,D2:D13)</pre>
+      <dd>方案3：日期转换后再计算；适用于数据格式不规范的情况</dd>
+      <div class="tips">日期是特殊的数据格式。使用前姚确保格式正确，不要和字符串混淆</div>
       <dt>ifs</dt>
-      <dd>多分支判断，返回与第一个true条件匹配的值</dd>
-      <dd>范围要全覆盖，否则会提示值无效；默认值应指定测试条件为TRUE</dd>
-      <dd>有效：= IFS(A2 >= 90, "A", A2 >= 80, "B", A2 >= 60, "C", TRUE, "D")</dd>
-      <dd>有效：= IFS(U112 > 90, "A", U112 > 80, "B", U112 >= "60", "C", U112&lt;60, "D")</dd>
-      <dd>无效：= IFS(U112 > 90, "A", U112 > 80, "B", U112 &lt; 60, "D")</dd>
-      <dt>iferror</dt>
-      <dd>如果公式执行错误，给出相应的提示，如文字提示或弹窗提示</dd>
-      <dt>count</dt>
-      <dd>统计区域中包含数字的单元格个数</dd>
-      <dt>counta</dt>
-      <dd>统计区域中非空单元格的个数；多用来统计文本</dd>
-      <dt>countif</dt>
-      <dd>计算区域中满足给定条件的单元格数目</dd>
-      <pre>= COUNTIF(H2:H16, ">=60")：大于等于60，即及格的人数</pre>
-      <pre>= COUNTIF(B2:B18,"李*")</pre>
-      <dt>countifs</dt>
-      <dd>统计一组满足给定条件/多条件的单元格数目</dd>
-      <dd>适合区间统计</dd>
-      <pre>= COUNTIFS(L2:L9, ">=70", L2:L9, "&lt;80")：大于等于70小于80的人数</pre>
-      <dt>rank</dt>
-      <dd>排名：返回某数字在一列数字中相对于其它数字的大小排名</dd>
-      <dd>区域应该是绝对引用</dd>
-      <pre>= RANK(H2, $H$2:$H$16)</pre>
-      <dt>len</dt>
-      <dd>文本字符的个数|长度</dd>
-      <pre>=LEN(M1) // hi,there. → 9</pre>
-      <dt>left(text,n)</dt>
-      <dd>从一个文本字符串的第一个字符|左边开始，返回指定个数的字符</dd>
-      <pre>=LEFT(M1,5) // hi,there. → hi,th</pre>
-      <dt>right(text,n)</dt>
-      <pre>=RIGHT(M1,5) // hi,there. → here.</pre>
-      <dd>从一个文本字符串的最后一个字符|右边开始，返回指定个数的字符</dd>
-      <dt>mid(text,start,n)</dt>
-      <dd>从文本字符串中指定的起始位置起，返回指定长度的字符；位置是第一个，就是LFET函数；位置是最后一个，就是RIGHT函数</dd>
-      <pre>=MID(M1,2,3) // hi,there. → i,t</pre>
-      <dt>vlookup</dt>
-      <dd>查找：先垂直方向|行找到关键字，再水平方向找到需要的目标|列</dd>
-      <dd>查找空间table通常使用绝对地址</dd>
-      <dd>可以模糊匹配TRUE或精确匹配FALSE；默认是模糊匹配</dd>
-      <dd>模糊匹配：如果没有匹配的关键字，就根据关键字的升序排序空间，模糊匹配；匹配不到会先#N/A；如成绩档次</dd>
+      <dd>多分支/条件判断，返回与第一个 true 条件匹配的值</dd>
+      <dd>范围要全覆盖，否则会提示值无效</dd>
+      <dd>如果有默认值，请使用 TRUE 指定</dd>
+      <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-ifs-function/">IFS Function</a></dd>
+      <pre>
+# 有效
+= IFS(A2 >= 90, "A", A2 >= 80, "B", A2 >= 70, "C", A2 >= 60, "D", TRUE, "F")
+
+# 有效
+= IFS(U112 > 90, "A", U112 > 80, "B", U112 >= "60", "C", U112&lt;60, "D")
+
+# 无效
+= IFS(U112 > 90, "A", U112 > 80, "B", U112 &lt; 60, "D")</pre>
+      <dd>其它例子</dd>
+      <pre>
+= COUNTIF(H2:H16, ">=60")：大于等于60，即及格的人数
+= COUNTIF(B2:B18,"李*")
+= COUNTIFS(L2:L9, ">=70", L2:L9, "&lt;80")：大于等于70小于80的人数
+= RANDBETWEEN(10, 20)
+= ROUND(4.567, 0) // 5
+= ROUND(4.567, 1) // 4.6
+= ROUND(4.567, 2) // 4.57
+= RANK(H2, $H$2:$H$16)</pre>
+      <dt>文本函数</dt>
+      <table>
+        <caption>文本函数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>len</td>
+            <td>文本字符的个数|长度</td>
+          </tr>
+          <tr>
+            <td>left(text,n)</td>
+            <td>从文本字符串的第一个字符|左边开始，返回指定个数的字符</td>
+          </tr>
+          <tr>
+            <td>right(text,n)</td>
+            <td>从文本字符串的最后一个字符|右边开始，返回指定个数的字符</td>
+          </tr>
+          <tr>
+            <td>mid(text,start,n)</td>
+            <td>从文本字符串中指定的起始位置起，返回指定长度的字符；<br>特别的，位置是第一个，就是LFET函数；位置是最后一个，就是RIGHT函数</td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>
+=LEN(M1) // hi,there. → 9
+=LEFT(M1,5) // hi,there. → hi,th
+=RIGHT(M1,5) // hi,there. → here.
+=MID(M1,2,3) // hi,there. → i,t</pre>
+      <dt>日期函数</dt>
+      <table>
+        <caption>日期函数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DATE(year,month,day)</td>
+            <td>日期</td>
+          </tr>
+          <tr>
+            <td>YEAR(year)</td>
+            <td>年</td>
+          </tr>
+          <tr>
+            <td>MONTH(year)</td>
+            <td>月</td>
+          </tr>
+          <tr>
+            <td>DAY(year)</td>
+            <td>日</td>
+          </tr>
+          <tr>
+            <td>TIME(hour,minutes,second)</td>
+            <td>时间；时:分:秒</td>
+          </tr>
+          <tr>
+            <td>HOUR(time)</td>
+            <td>小时</td>
+          </tr>
+          <tr>
+            <td>MINUTE(time)</td>
+            <td>分钟</td>
+          </tr>
+          <tr>
+            <td>SECOND(time)</td>
+            <td>秒</td>
+          </tr>
+          <tr>
+            <td>TODAY()</td>
+            <td>当前日期</td>
+          </tr>
+          <tr>
+            <td>NOW()</td>
+            <td>当前日期和时间</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>逻辑运算函数</dt>
+      <table>
+        <caption>逻辑运算函数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AND</td>
+            <td>与</td>
+          </tr>
+          <tr>
+            <td>OR</td>
+            <td>或</td>
+          </tr>
+          <tr>
+            <td>NOT</td>
+            <td>非</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>类型函数</dt>
+      <table>
+        <caption>类型函数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ISBLANK</td>
+            <td>是空白</td>
+          </tr>
+          <tr>
+            <td>ISTEXT</td>
+            <td>是文本</td>
+          </tr>
+          <tr>
+            <td>ISNUMBER</td>
+            <td>是数字</td>
+          </tr>
+          <tr>
+            <td>ISLOGICAL</td>
+            <td>是布尔</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>错误处理函数</dt>
+      <table>
+        <caption>错误处理函数</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>iserror</td>
+            <td>检测一个值是否错误；返回 True 或 FALSE；默认是模糊匹配<br>仅判断</td>
+          </tr>
+          <tr>
+            <td>iferror</td>
+            <td>检测一个表达式/公式执行是否错误；正确返回，结果；否则返回指定的值<br>加强版；更好用</td>
+          </tr>
+        </tbody>
+      </table>
+      <pre>
+# 如果可以除，就除
+=IFERROR(P20/Q20,"")
+=IF(ISERR(P20/Q20),"",P20/Q20)</pre>
+      <dt>vlookup(lookup_value, table_array,col_index_num,[range_lookup])</dt>
+      <dd>The VLOOKUP function looks for a given value in the leftmost column of a given table and then returns a value
+        in the same row from a specified column.</dd>
+      <dd>查找：先在最左边垂直方向|行找到关键字 lookup_value，再水平方向找到目标|列索引 col_index_num 对应的值</dd>
+      <dd>查找区域 table 通常使用绝对地址</dd>
+      <dd>列索引 col_index_num 为正整数</dd>
+      <dd>查找结果 range_lookup：模糊匹配 TRUE 或精确匹配 FALSE；默认是模糊匹配</dd>
+      <dd>模糊匹配：如果没有匹配的关键字，就根据关键字的升序排序空间，模糊匹配；匹配不到会先 #N/A；如成绩档次</dd>
       <dd>精确匹配，通常配合其他错误函数一起使用</dd>
       <dd>获取多个目标数据时，需要手动修改列数</dd>
+      <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-vlookup-function/">VLOOKUP Function</a></dd>
       <dd>学号对应的信息行中的平均成绩</dd>
       <pre>= VLOOKUP($K$1,$A$1:$E$10,4,FALSE)</pre>
       <dt>text</dt>
@@ -147,6 +420,9 @@
       <dd>每个边界值表示的当前段的最大值</dd>
       <dt>timeValue</dt>
       <dd>将标准的文本格式的时间(使用单引号开头的时间字符串)转换为对应的时间值</dd>
+      <dt>重复执行函数</dt>
+      <dd>在 Excel 中，公式外面加上 {}，意味着告诉 Excel：“不要只算一个结果，要帮我算一组结果！”</dd>
+      <dd>注意：不能手动输入，必须按 Ctrl + Shift + Enter 生成</dd>
       <div class="demo">学生成绩划分</div>
       <table>
         <caption>学生成绩划分</caption>
@@ -184,32 +460,13 @@
         <div>输入公式，= FREQUENCY(A2:A16, D2:D5)：分别指定数据列和区间列</div>
         <div>按 CTRL + SHIFT + ENTER； <span class="warn">不要直接回车；不要拖动填充</span></div>
       </dd>
-    </dl>
-    <div class="chap">Drill</div>
-    <dl>
-      <dd>资料下载 <a
-          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/学生成绩.xlsx"
-          title="点击下载">学生成绩 </a></dd>
-      <dt>案例1：处理学生成绩</dt>
-      <dd>考生个数、考勤率 - COUNT|COUNTA</dd>
-      <dd>平均成绩 - AVERAGE</dd>
-      <dd>平均成绩最高分 - MAX</dd>
-      <dd>最低分 - MIN</dd>
-      <dd>两级成绩判定 - IF：如果成绩大于等于60，显示及格；否则显示不及格</dd>
-      <dd>五级成绩判定：优秀：90+；良好：80+；中：70+；及格：60+；不及格：60-</dd>
-      <dd>学生平均成绩排名 - RANK</dd>
-      <dd>统计五级成绩评定中，不同档次的人数 - FREQUENCY</dd>
-      <dd>使用条件格式按照成绩档次等显示不同背景</dd>
-      <dd>高亮显示前3名同学</dd>
-      <dd>统计每个成绩档次的学生个数</dd>
-      <dt>案例2：查询学生成绩</dt>
-      <dd>分别在当前表和新表实现查询学生的功能：如果在当前表，功能实现后，应该隐藏数据区域；如果在新表，应该隐藏数据表</dd>
-      <dd>根据学号查询对应的信息</dd>
-      <dd>查询表格式自定义</dd>
-      <dt>案例3：优化查询学生成绩</dt>
-      <dd>如果输入异常，不符合学号格式，应给出提示</dd>
-      <dd>使用 IFERROR() 或数据验证功能</dd>
-      <pre>= IFERROR ( VLOOKUP ( $K$1, $A$1:$E$10, 2),"查无此人")</pre>
+      <div class="demo">求各个同学成绩的和</div>
+      <dd>一般方法；单个计算，然后双击或向下拖动填充柄</dd>
+      <ol>
+        <li>选择所有结果列</li>
+        <li>输入公式，使用简单相加的方法，分别选择对应的列相加</li>
+        <li>最后按 Ctrl + Shift + Enter 自动计算并填充</li>
+      </ol>
     </dl>
     <div id="footer"></div>
   </div>
