@@ -270,18 +270,117 @@
         <img src="./imgs/chart3.png" alt="">
         <figcaption>条形图</figcaption>
       </figure>
-      <div class="demo">利用堆积条形图创建 <a href="./quiz-gant.html">甘特图 Gantt</a>、<a
-          href="https://www.bilibili.com/video/BV1oQdtB2EMK/?spm_id_from=333.1387.0.0">Bilibili Gantt</a></div>
+      <div class="demo">利用堆积条形图创建甘特图 Gantt</div>
+      <dd>更多实现，请访问 <a href="https://www.bilibili.com/video/BV1oQdtB2EMK/?spm_id_from=333.1387.0.0">Bilibili Gantt</a>
+      </dd>
       <figure>
         <img src="./imgs/chart6.png" alt="">
         <figcaption>甘特图</figcaption>
       </figure>
+      <table>
+        <caption>参考数据</caption>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Start</th>
+            <th>Duration</th>
+            <th>End</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initial</td>
+            <td>2026-1-26</td>
+            <td></td>
+            <td>2026-1-29</td>
+          </tr>
+          <tr>
+            <td>Planning</td>
+            <td>2026-1-28</td>
+            <td></td>
+            <td>2026-1-31</td>
+          </tr>
+          <tr>
+            <td>UI</td>
+            <td>2026-2-1</td>
+            <td></td>
+            <td>2026-2-6</td>
+          </tr>
+          <tr>
+            <td>Developement</td>
+            <td>2026-2-1</td>
+            <td></td>
+            <td>2026-2-15</td>
+          </tr>
+          <tr>
+            <td>Test</td>
+            <td>2026-2-16</td>
+            <td></td>
+            <td>2026-2-28</td>
+          </tr>
+          <tr>
+            <td>Delivery</td>
+            <td>2026-2-28</td>
+            <td></td>
+            <td>2026-3-8</td>
+          </tr>
+        </tbody>
+      </table>
+      <ol>
+        <li>准备数据：阶段 Phase、起始时间 Start 和结束时间 End</li>
+        <li>在 Start 和 End 之间，增加辅助列数据持续时间 Duration：Start - End</li>
+        <li>定位在数据区/全部数据，插入条形图 → 堆积条形图</li>
+        <li>选择数据 → 删除 End 数据部分；或者直接在图中选择 End 的条目并删除</li>
+        <li>单击左侧垂直轴，在"坐标轴"选项中，选择逆序类别</li>
+        <li>计算日期最小时间值和最大时间值：日期 → 数字</li>
+        <li>选择水平轴，根据换算的数值，调整坐标轴最小值和最大值</li>
+        <li>单位大时间为30，即按30天计算</li>
+        <li>单击条形图的前面数据条部分，设置为白色或透明色，只显示持续时间对应的数据条</li>
+        <li>其它格式调整</li>
+      </ol>
       <dt>直方图 Histogram</dt>
       <dd>用于展示连续数值型变量的频率分布；如：身高、体重、成绩、温度、时间等可测量的连续值</dd>
+      <dd>应用
+        <p>质量管控：用于监控生产过程是否稳定，数据分布是否符合规格要求</p>
+        <p>数据分析：在探索性数据分析中，它是第一步，用于了解数据的整体情况和潜在问题</p>
+        <p>绩效评估：分析员工绩效得分、客户满意度等数据的分布</p>
+        <p>科学研究：处理实验数据，分析测量结果的分布规律</p>
+        <p>金融分析：分析投资回报率、风险等的分布</p>
+      </dd>
       <dd>只接受纯数值区域</dd>
       <dd>分箱范围有数据决定</dd>
-      <dd>下溢箱 ≠ 起始分箱点</dd>
-      <div class="demo">成绩统计</div>
+      <dd>下溢箱 ≠ 起始分箱点；而是把所有小于该数值的数据，扔进一个单独的分箱</dd>
+      <dd>样本空间通常比较大，如不少于50个，才具备统计意义</dd>
+      <dd>x坐标：箱的宽带、箱的组数、区间、组</dd>
+      <dd>y坐标：频点、频数、边界</dd>
+      <div class="demo"><a
+          href="https://view.officeapps.live.com/op/view.aspx?src=https://glplaman.github.io/office/data/学生成绩.xlsx">学生高考成绩分布
+        </a></div>
+      <ol>
+        <li>选择所有分数</li>
+        <li>插入直方图</li>
+        <li>显示数据标签 → 外</li>
+        <li>选择 x 轴，按 Ctrl + 1，打开坐标轴格式对话框</li>
+        <li>设置箱宽度为 10</li>
+        <li>指定下溢 70</li>
+        <li>修改标题为成绩分布</li>
+        <figure>
+          <img src="./imgs/chart9.png" alt="">
+          <figcaption>学生高考成绩分布</figcaption>
+        </figure>
+        <div class="demo">障眼法</div>
+        <dd>在第一个数据列下放增加一个小于60的数据</dd>
+        <dd>指定下溢 60</dd>
+        <dd>隐藏该数据条</dd>
+        <dd>隐藏该数据标签</dd>
+        <figure>
+          <img src="./imgs/chart10.png" alt="">
+          <figcaption>学生高考成绩分布</figcaption>
+        </figure>
+      </ol>
+      <div class="demo">身高分布</div>
+      <div class="demo">捐款分布</div>
+      <div class="demo">每日利润</div>
       <div class="demo">销售统计</div>
       <dd>按类别统计</dd>
       <dt>组合图 Combo</dt>

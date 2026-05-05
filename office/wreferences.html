@@ -44,10 +44,10 @@
         <div class="img-toc"></div>
         <figcaption>目录</figcaption>
       </figure>
+      <dt>目录</dt>
       <dd>需要标题样式|大纲级别支持，这是创建目录的前提</dd>
       <dd>可以插入系统内置的目录，也可以自定义目录</dd>
       <dd>在自定义目录中，可以"修改"目录，操作同"样式"的修改</dd>
-      <dd>还可以为文档中的图、表生成目录，请查看后续的"题注" → "插入表目录"一节</dd>
       <dd>文档内容变化后，需要"更新域"以保持目录页的页码引用和正文保持一致性</dd>
       <figure>
         <img src="./imgs/ind.png" alt="">
@@ -59,7 +59,24 @@
       </figure>
       <div class="tips">
         <div>最后提交文档时，记得更新目录对应的的域</div>
+        <div>在"修改"中设置目录样式；不是在样式库中设置</div>
       </div>
+      <dt>插入表目录</dt>
+      <dd>还可以为文档中的图、表生成目录，请查看后续的"题注" → "插入表目录"一节</dd>
+      <dd>先插入题注再交叉引用</dd>
+      <dd>参考文献已经单独成页，不需要再创建对应的目录</dd>
+      <figure>
+        <img src="./imgs/ref3.png" alt="">
+        <figcaption>插入表目录</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ref6.png" alt="">
+        <figcaption>图片目录</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ref7.png" alt="">
+        <figcaption>表格目录</figcaption>
+      </figure>
     </dl>
     <div class="chap">题注 Captions</div>
     <dl>
@@ -68,49 +85,29 @@
         <figcaption>题注</figcaption>
       </figure>
       <dd>为图片、图表、表格、公式等添加编号以便被引用</dd>
+      <dd>每插入一个题注，序号会自动加1</dd>
+      <dd>图的题注：默认在图的下方</dd>
+      <dd>表的题注：默认在表的上方</dd>
       <dt>插入题注</dt>
       <dd>题注插入后，系统会生成一个默认的"题注"样式；先设置好格式再更新到默认样式</dd>
-      <dd>默认只有图、表和公式 3 个标签</dd>
-      <dd>可以定制标签；可以删除标签</dd>
-      <dd>可以指定编号类别</dd>
-      <dd>"从题注中排除标签"：只保留序号</dd>
-      <dd>每插入一个题注，序号会自动加1</dd>
-      <dd>"自动插入题注"，对表格比较友好；图片需要特别处理才可以</dd>
-      <dd>图的题注：默认在图的下方</dd>
+      <dd>默认只有图表、表格和公式 3 个标签</dd>
       <figure>
         <img src="./imgs/ref0.png" alt="">
-        <figcaption>图的题注</figcaption>
+        <figcaption>题注</figcaption>
       </figure>
-      <dd>表的题注：默认在表的上方</dd>
-      <figure>
-        <img src="./imgs/ref1.png" alt="">
-        <figcaption>表的题注</figcaption>
-      </figure>
+      <dd>可以定制标签；可以删除标签</dd>
+      <dd>可以指定编号类别</dd>
       <dd>可以"包含章节号"；如果章节是中文，可以从节开始，如图1.1，否则会出现图一.1这种奇怪的编号</dd>
-      <dd>"包含章节号"需要多级列表支持</dd>
+      <dd>"从题注中排除标签"：只保留序号</dd>
+      <dd>"自动插入题注"：对表格比较友好；图片需要特别处理才可以</dd>
+      <dd>"包含章节号"：需要多级列表支持</dd>
       <figure>
         <img src="./imgs/ref2.png" alt="">
         <figcaption>包含章节号的题注</figcaption>
       </figure>
-      <dt>插入表目录</dt>
-      <dd>为文档的图、表等生成目录</dd>
-      <dd>先插入题注再交叉引用</dd>
-      <figure>
-        <img src="./imgs/ref3.png" alt="">
-        <figcaption>插入表目录</figcaption>
-      </figure>
-      <div class="tips">在"修改"中设置目录样式；不是在样式库中设置</div>
-      <figure>
-        <img src="./imgs/ref6.png" alt="">
-        <figcaption>插入图目录</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/ref7.png" alt="">
-        <figcaption>插入表目录</figcaption>
-      </figure>
       <dt>交叉引用</dt>
-      <dd>引用文档中的特定位置，如标题、图表、表格等，常见于正文中对参考文献的引用，引用的标记多为编号</dd>
-      <dd>当引用内容发生变化时，通过"更新域"可以动态刷新；通常是全选再更新</dd>
+      <dd>在文档中引用参考文献、图表、表格或公式等</dd>
+      <dd>当引用内容发生变化时，通过"更新域"可以动态刷新；通常全选再更新</dd>
       <dd>删除部分引用后，全选文档，右键选择"更新域"或按 F9 刷新，保持引用的连贯性</dd>
       <figure>
         <img src="./imgs/ref4.png" alt="">
@@ -124,18 +121,81 @@
     </dl>
     <div class="chap">练习 Drill</div>
     <dl>
-      <div class="demo"><a href="./quizw-toc.html">目录</a></div>
-      <dd>样式要求
-        <p>具备大纲级别</p>
-        <p>多级列表编号且定制编号</p>
+      <div class="demo">目录</div>
+      <dd>前期准备
+        <p>创建多级列表并关联标题样式</p>
+        <p>按照要求修改标题样式</p>
       </dd>
-      <div class="demo"><a href="./quizw-ref.html">参考文献</a></div>
+      <dt>基本步骤</dt>
       <ol>
-        <li>准备参考文献</li>
-        <li>自动编号、定制格式[1]、[2]...</li>
-        <li>插入交叉引用</li>
-        <li>调整格式</li>
+        <li>打开之前创建的个人文档</li>
+        <li>在正文前插入"分节符"，使其新起一节</li>
+        <li>在关键词后："引用" → "目录" → "自动目录1"</li>
+        <li>根据需要修改目录样式 TOC1、TOC2和TOC3</li>
       </ol>
+      <div class="demo">引用参考文献</div>
+      <dd>创建：基本过程：定位 → 选择 → 插入</dd>
+      <dd>第一部分：插入交叉引用</dd>
+      <ol>
+        <li>准备若干参考文献</li>
+        <li>自动编号，定制格式为[1]、[2]...</li>
+        <li>将光标定位在正文某处，不需要选择文本对象，单击"插入交叉引用"，如下图所示</li>
+        <li>引用类型：编号项</li>
+        <li>引用内容：段落编号</li>
+        <li>选择参考文献第一个编号项，单击"插入"，光标处出现对应编号项</li>
+        <li>移动光标到正文其它位置，选择相应的编号项，单击"插入"</li>
+        <li>重复至完成</li>
+        <li>关闭对话框</li>
+        <figure>
+          <img src="./imgs/ref4.png" alt="">
+          <figcaption>插入交叉引用</figcaption>
+        </figure>
+      </ol>
+      <dd>第二部分：调整交叉引用引用格式</dd>
+      <dd>利用查找替换调整引用的样式为上标</dd>
+      <ol>
+        <li>按 Ctrl + H 打开"查找替换"</li>
+        <li>光标定位到查找内容：选择"特殊格式" → "任意数字"，然后符号 ^# 前面分别加上[]</li>
+        <li>光标定位到替换内容：设置字体格式为上标；完成其它更多样式设置</li>
+        <li>单击"全部替换"</li>
+      </ol>
+      <div class="tips">
+        <p>如果参考文献超过 10，要额外多进行一次替换</p>
+        <p>也可以使用通配符实现：\[[0-9]{1,}\]</p>
+      </div>
+      <figure>
+        <img src="./imgs/home14.png" alt="">
+        <figcaption>查找替换</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/home4.png" alt="">
+        <figcaption>调整字体和上标</figcaption>
+      </figure>
+      <div class="demo">创建图目录</div>
+      <dd>先为图片插入题注，然后在正文中使用交叉引用，最后生成图目录</dd>
+      <ol>
+        <li>准备文档，插入若干张图片</li>
+        <li>选择某张图片，在下方插入题注，默认标签是"图表"</li>
+        <li>新建标签为"Fig"，如下图</li>
+        <figure>
+          <img src="./imgs/ref1.png" alt="">
+          <figcaption>图片题注</figcaption>
+        </figure>
+        <li>重复至所有的图片都插入题注；题注编号会主动调整，只需要插入即可</li>
+        <li>定位在需要引用图片的位置，插入"交叉引用"</li>
+        <li>引用类型：选择刚才创建的 Fig</li>
+        <li>引用内容：仅标签和编号</li>
+        <figure>
+          <img src="./imgs/ref8.png" alt="">
+          <figcaption>插入图片的交叉引用</figcaption>
+        </figure>
+        <li>根据要求调整交叉引用的格式</li>
+        <li>定位在文档结束部分需要引用的地方，插入"表目录"</li>
+        <li>根据要求调整表目录的格式</li>
+      </ol>
+      <div class="demo">创建表目录</div>
+      <dd>操作同图片</dd>
+      <dd>先为表格添加题注，再插入交叉引用，最后插入表目录</dd>
     </dl>
     <div id="footer"></div>
   </div>
