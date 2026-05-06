@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    table {
+      max-width: 600px;
+    }
+  </style>
 </head>
 
 <body>
@@ -109,58 +114,58 @@
         </thead>
         <tbody>
           <tr>
-            <td>sum(number1,number2,...)</td>
+            <td>SUM(number1,number2,...)</td>
             <td>求和；通常使用范围选择数据
               <br>快捷键：<strong>ALT + =</strong>，快速求和；在数据的下方生成结果
             </td>
           </tr>
           <tr>
-            <td>average</td>
+            <td>AVERAGE</td>
             <td>求平均</td>
           </tr>
           <tr>
-            <td>count</td>
+            <td>COUNT</td>
             <td>统计区域中包含数字的单元格个数</td>
           </tr>
           <tr>
-            <td>counta</td>
+            <td>COUNTA</td>
             <td>统计区域中非空单元格的个数；多用来统计文本</td>
           </tr>
           <tr>
-            <td>countif</td>
+            <td>COUNTIF</td>
             <td>计算区域中满足给定条件的单元格数目</td>
           </tr>
           <tr>
-            <td>countifs</td>
+            <td>COUNTIFS</td>
             <td>统计一组满足给定条件/多条件的单元格数目；适合区间统计</td>
           </tr>
           <tr>
-            <td>max</td>
+            <td>MAX</td>
             <td>求最大数值</td>
           </tr>
           <tr>
-            <td>min</td>
+            <td>MIN</td>
             <td>求最小数值</td>
           </tr>
           <tr>
-            <td>rand</td>
+            <td>RAND</td>
             <td>0-1的随机数；小数</td>
           </tr>
           <tr>
-            <td>randbetween</td>
+            <td>RANDBETWEEN</td>
             <td>指定区间的随机数；整数</td>
           </tr>
           <tr>
-            <td>round</td>
+            <td>ROUND</td>
             <td>按指定的位数对数值进行四舍五入<br>需要指定保留几位小数，0为仅取整数</td>
           </tr>
           <tr>
-            <td>rank</td>
+            <td>RANK</td>
             <td>排名：返回某数字在一列数字中相对于其它数字的大小排名<br>区域应该是绝对引用</td>
           </tr>
         </tbody>
       </table>
-      <dt>if</dt>
+      <dt>IF</dt>
       <dd>条件判断</dd>
       <dd>适合单条件判定或两条件判定</dd>
       <dd>也可以多级嵌套；多级条件推荐使用IFS</dd>
@@ -175,7 +180,7 @@
 
 # 五级制：依次判定分数，嵌套较多，不建议使用
 =IF(F3>=90,"A",IF(F3>=80,"B",IF(F3>=70,"C",IF(F3>=60,"D","F"))))</pre>
-      <dt>sumif(range, criteria, [sum_range])</dt>
+      <dt>SUMIF(range, criteria, [sum_range])</dt>
       <dd>根据条件 criteria 求和；如果省略求和区域 sum_range，将使用前面指定的区域 range</dd>
       <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-sumif-function/">SUMIF Function</a></dd>
       <dd>可以通过引用指定条件</dd>
@@ -194,7 +199,7 @@
       <pre>=SUMIF(C2:C13,">"&I8,D2:D13)</pre>
       <dd>方案3：日期转换后再计算；适用于数据格式不规范的情况</dd>
       <div class="tips">日期是特殊的数据格式。使用前姚确保格式正确，不要和字符串混淆</div>
-      <dt>ifs</dt>
+      <dt>IFS</dt>
       <dd>多分支/条件判断，返回与第一个 true 条件匹配的值</dd>
       <dd>范围要全覆盖，否则会提示值无效</dd>
       <dd>如果有默认值，请使用 TRUE 指定</dd>
@@ -229,19 +234,19 @@
         </thead>
         <tbody>
           <tr>
-            <td>len</td>
+            <td>LEN</td>
             <td>文本字符的个数|长度</td>
           </tr>
           <tr>
-            <td>left(text,n)</td>
+            <td>LEFT(text,n)</td>
             <td>从文本字符串的第一个字符|左边开始，返回指定个数的字符</td>
           </tr>
           <tr>
-            <td>right(text,n)</td>
+            <td>RIGHT(text,n)</td>
             <td>从文本字符串的最后一个字符|右边开始，返回指定个数的字符</td>
           </tr>
           <tr>
-            <td>mid(text,start,n)</td>
+            <td>MID(text,start,n)</td>
             <td>从文本字符串中指定的起始位置起，返回指定长度的字符；<br>特别的，位置是第一个，就是LFET函数；位置是最后一个，就是RIGHT函数</td>
           </tr>
         </tbody>
@@ -366,11 +371,11 @@
         </thead>
         <tbody>
           <tr>
-            <td>iserror</td>
+            <td>ISEEROR</td>
             <td>检测一个值是否错误；返回 True 或 FALSE；默认是模糊匹配<br>仅判断</td>
           </tr>
           <tr>
-            <td>iferror</td>
+            <td>IFERROR</td>
             <td>检测一个表达式/公式执行是否错误；正确返回，结果；否则返回指定的值<br>加强版；更好用</td>
           </tr>
         </tbody>
@@ -379,7 +384,10 @@
 # 如果可以除，就除
 =IFERROR(P20/Q20,"")
 =IF(ISERR(P20/Q20),"",P20/Q20)</pre>
-      <dt>vlookup(lookup_value, table_array,col_index_num,[range_lookup])</dt>
+      <dt>COLUMN(reference)</dt>
+      <dd>返回引用的列号</dd>
+      <dd>如果没有指定引用，则返回当前单元格的列号</dd>
+      <dt>VLOOKUP(lookup_value, table_array,col_index_num,[range_lookup])</dt>
       <dd>The VLOOKUP function looks for a given value in the leftmost column of a given table and then returns a value
         in the same row from a specified column.</dd>
       <dd>查找：先在最左边垂直方向|行找到关键字 lookup_value，再水平方向找到目标|列索引 col_index_num 对应的值</dd>
@@ -392,7 +400,7 @@
       <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-vlookup-function/">VLOOKUP Function</a></dd>
       <dd>学号对应的信息行中的平均成绩</dd>
       <pre>= VLOOKUP($K$1,$A$1:$E$10,4,FALSE)</pre>
-      <dt>text</dt>
+      <dt>TEXT</dt>
       <dd>根据指定的数字格式将数值转换成文本</dd>
       <dd>格式串通常以 0：普通数字、YYYY：年；MM：月；DD：日；AAAA：星期</dd>
       <dd>在 text 前加 -- 可以将结果转换为数字。前提是结果可以转换为数字</dd>
@@ -406,7 +414,7 @@
 = TEXT(B4, "AAAA") // 2023/11/12 → 星期日
 = TEXT(B6, "0.0") // 4.567 → 4.6
 = TEXT(B6, "0.00") // 4.567 → 4.57</pre>
-      <dt>ttest</dt>
+      <dt>TTEST</dt>
       <dd>统计分析函数 t-检验函数</dd>
       <dd>= TTEST(array1, array2, tail, type)</dd>
       <dd class="tips">
@@ -414,12 +422,12 @@
         <div>框选数据，常见的统计信息会显示在底部状态栏</div>
         <div>有单元格更新时，随机函数random和randombetween会自动重新计算</div>
       </dd>
-      <dt>frequency</dt>
+      <dt>FREQUENCY</dt>
       <dd>统计一组数据在某个区间的分布；区间通常以本地表的形式给出</dd>
       <dd>区间不一定升序或降序</dd>
       <dd>n个边界值将区间分为n+个段</dd>
       <dd>每个边界值表示的当前段的最大值</dd>
-      <dt>timeValue</dt>
+      <dt>TIMEVALUE</dt>
       <dd>将标准的文本格式的时间(使用单引号开头的时间字符串)转换为对应的时间值</dd>
       <dt>重复执行函数</dt>
       <dd>在 Excel 中，公式外面加上 {}，意味着告诉 Excel：“不要只算一个结果，要帮我算一组结果！”</dd>
@@ -451,10 +459,16 @@
       <dd>高亮显示前3名同学 - 条件格式</dd>
       <dd>其他格式自行设置</dd>
       <dt>成绩查询</dt>
-      <dd>使用 vlookup 根据学号查询成绩；精确查找 FALSE</dd>
+      <dd>使用 vlookup 根据关键字学号查询成绩；精确查找 FALSE</dd>
+      <dd>结果列的位置/索引固定</dd>
+      <pre>=VLOOKUP(A6,$A$2:$F$18,4,0)</pre>
       <dd>分别在当前表和新表实现查询学生的功能</dd>
       <dd>如果在当前工作表，功能实现后，应该隐藏数据区域</dd>
       <dd>如果在新工作表，应该隐藏数据表</dd>
+      <dt>查询多个数据</dt>
+      <dd>锁定查找关键字值的列</dd>
+      <dd>更改结果列的索引</dd>
+      <pre>=VLOOKUP($A6,$A$2:$F$18,COLUMN(B6),0)</pre>
       <dt>改进</dt>
       <dd>在计算中引入错误处理</dd>
       <dd>如果输入异常，不符合学号格式，应给出提示</dd>
@@ -497,6 +511,15 @@
       <dd>全部选择结果区域</dd>
       <dd>输入公式，= FREQUENCY(A2:A16, D2:D5)：分别指定数据列和区间列</dd>
       <dd>按 CTRL + SHIFT + ENTER； <span class="warn">不要直接回车；不要拖动填充</span></dd> -->
+      <div class="demo">隐藏公式</div>
+      <ol>
+        <li>计算执行完毕</li>
+        <li>CTRL + A，全选所有单元格</li>
+        <li>CTRL + 1，打开"设置单元格格式"对话框，切换到"保护"标签页，取消"保护"</li>
+        <li>选择需要隐藏的单元格，即：采用公式计算的单元格</li>
+        <li>再次按 CTRL + 1，打开"设置单元格格式"对话框，切换到"保护"标签页，勾选"保护"、勾选"隐藏"</li>
+        <li>"审阅" → "保护" → "保护工作表"，设置访问密码</li>
+      </ol>
     </dl>
     <div id="footer"></div>
   </div>
