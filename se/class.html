@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类图 Class Diagram</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+  <style>
+    .class-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .img {
+      background-image: url(imgs/class0.png);
+      height: 30px;
+      background-repeat: no-repeat;
+      width: 210px;
+      background-position: 0 calc(30px*var(--i));
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>类图</h1>
+      <span>Class Diagram</span>
+    </header>
+    <dl>
+      <dd>展示的是一组对象、接口，协助及其之间的关系</dd>
+      <dd>是设计阶段的产物</dd>
+      <dd>系统的静态图|静态结构</dd>
+      <dd>类的内部结构</dd>
+      <dd>类和类之间的关系</dd>
+      <dd>类的功能
+        <p>实体类：永久存在，名词</p>
+        <p>边界类：交互，对话框、窗口、二维码，名词</p>
+        <p>控制类：执行逻辑，业务逻辑，动词</p>
+      </dd>
+      <dt>要素</dt>
+      <dd>类名</dd>
+      <dd>属性</dd>
+      <dd>操作</dd>
+      <dt>修饰符</dt>
+      <dd>私有 private：-</dd>
+      <dd>公开 public：+</dd>
+      <dd>保护 protected：#</dd>
+      <dd>类与类之间的六种核心关系，从强到弱分别是：</dd>
+      <dt>泛化 Generalization</dt>
+      <dd>类的继承关系</dd>
+      <dd>类A继承了类B</dd>
+      <dd>使用关键字 extends 继承一个类</dd>
+      <figure>
+        <div class="class-wrap">
+          <span>A</span>
+          <div class="img img-g" style="--i:0"></div>
+          <span>B</span>
+        </div>
+        <figcaption>泛化 Generalization</figcaption>
+      </figure>
+      <pre>
+public class Person{
+    private String name;
+    private Integer age;
+    private String address;
+}
+
+public class Student extends Person{
+}
+
+public class Teacher extends Person{
+}</pre>
+      <figure>
+        <img src="./imgs/cd0.png" alt="">
+        <figcaption>泛化-继承</figcaption>
+      </figure>
+      <dt>实现 Realization</dt>
+      <dd>类和接口的关系</dd>
+      <dd>类A实现了接口B</dd>
+      <dd>一个类可以实现多个接口</dd>
+      <dd>使用关键字 implements 声明一个接口</dd>
+      <figure>
+        <div class="class-wrap"><span>A</span>
+          <div class="img img-r" style="--i:-1"></div>
+          <span>B</span>
+        </div>
+        <figcaption>实现 Realization</figcaption>
+      </figure>
+      <pre>
+public interface USB{
+    void connect();
+}
+
+public class Mouse implements USB{
+    private void connect(){
+    }
+}
+
+public class Keyboard implements USB{
+    private void connect(){
+    }
+}</pre>
+      <figure>
+        <img src="./imgs/cd1.png" alt="">
+        <figcaption>实现</figcaption>
+      </figure>
+      <dt>组合 Composition</dt>
+      <dd>整体和部分的关系</dd>
+      <dd>类A包含类B</dd>
+      <dd>一旦整体不存在，部分也就不存在|部分不能脱离整体而单独存在</dd>
+      <dd>生命周期有制约关系</dd>
+      <dd>部分随着整体创建而创建，随着整体消亡而消亡</dd>
+      <figure>
+        <div class="class-wrap"><span>A</span>
+          <div class="img img-c" style="--i:-2"></div>
+          <span>B</span>
+        </div>
+        <figcaption>组合 Composition</figcaption>
+      </figure>
+      <pre>
+public class Product{
+    private String name;
+    private Integer sn;
+}
+
+public class OrderItem{
+    private Integer nums;
+    private double price;
+    private Product product;
+}
+
+public class Order{
+    private List&lt;OrderItem&gt; item;
+}</pre>
+      <figure>
+        <img src="./imgs/cd4.png" alt="">
+        <figcaption>组合</figcaption>
+      </figure>
+      <dt>聚合 Aggregation</dt>
+      <dd>整体和部分的关系</dd>
+      <dd>类A聚合了类B；一个类作为另外一个类的成员对象|属性；包含多个成员对象；将多个部分聚合到一起</dd>
+      <dd>但是部分可以脱离整体而独立存在</dd>
+      <figure>
+        <div class="class-wrap"><span>A</span>
+          <div class="img img-a" style="--i:-3"></div>
+          <span>B</span>
+        </div>
+        <figcaption>聚合 Aggregation</figcaption>
+      </figure>
+      <pre>
+public class University{
+    private List&lt;Teacher&gt; teacher;
+}
+
+public class Teacher{
+    private String name;
+    private String dep;
+}</pre>
+      <figure>
+        <img src="./imgs/cd3.png" alt="">
+        <figcaption>聚合</figcaption>
+      </figure>
+      <pre>
+public class Car{
+    private Engine engine;
+    private List&lt;tyre&gt; tyres;
+}
+
+public class Engine{
+    private String fac;
+    private Integer sn;
+}
+
+public class Tyre{
+    private String fac;
+    private Integer sn;
+    private String color;
+}</pre>
+      <dt>关联 Association</dt>
+      <dd>拥有关系</dd>
+      <figure>
+        <div class="class-wrap"><span>A</span>
+          <div class="img img-s" style="--i:-4"></div>
+          <span>B</span>
+        </div>
+        <figcaption>关联 Association</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/cd2.png" alt="">
+        <figcaption>关联</figcaption>
+      </figure>
+      <dt>依赖 Dependency</dt>
+      <dd>类的使用关系</dd>
+      <dd>类A使用了类B或作为局部变量，或作为方法的参数；即：类B作为类A的方法的参数或局部变量存在</dd>
+      <dd>这个使用是临时的、偶然的、弱关系</dd>
+      <dd>尽量不要使用双向依赖，耦性太强</dd>
+      <figure>
+        <div class="class-wrap"><span>A</span>
+          <div class="img img-d" style="--i:-5"></div>
+          <span>B</span>
+        </div>
+        <figcaption>依赖 Dependency</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/cd5.png" alt="">
+        <figcaption>依赖</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -26,6 +26,7 @@
       <div>3. 确定系统的参与者 Actor</div>
       <div>4. 确定系统的用例 Case</div>
       <dt>参与者 Actor</dt>
+      <dd>名词</dd>
       <dd>与系统发生交互的人员或其它系统、设备</dd>
       <dd>使用系统</dd>
       <dd>从系统获取信息</dd>
@@ -34,6 +35,7 @@
       <dd>使用小人表示</dd>
       <dt>用例 Use Case</dt>
       <dd>核心</dd>
+      <dd>动名词</dd>
       <dd>一个系统包括多个用例</dd>
       <dd>每个用例是系统向外提供的一个完整服务或功能</dd>
       <dd>使用椭圆表示</dd>
@@ -41,25 +43,28 @@
       <dd>参与者和用例之间的驱动和反馈关系</dd>
       <dd>实线 solid line：参与者和用例之间</dd>
       <dd>虚线 dashed line：用例之间</dd>
-      <div class="mt2">1. 关联关系 Association</div>
+      <div>1. 关联关系 Association</div>
       <dd>表示参与者和用例的关系</dd>
       <dd>线型：无箭头实线</dd>
       <figure>
         <img src="./imgs/uc0.png" alt="">
         <figcaption>关联关系</figcaption>
       </figure>
-      <div class="mt2">2. 包含关系 Include</div>
-      <dd>表示用例之间的关系；必然要使用到</dd>
+      <div>2. 包含关系 Include</div>
+      <dd>表示用例之间的关系：基本用例 Base Use Case和包含用例 Include Use Case的关系</dd>
+      <dd>必然要使用到</dd>
       <dd>逻辑：A 发生的时候，B 一定发生。B 是 A 的一部分，抽离了 B，A 就不完整了</dd>
       <dd>方向：从 基础用例/主流程 → 包含用例</dd>
-      <dd>线型：带箭头虚线</dd>
+      <dd>线型：带箭头虚线 dashed line with an arrow</dd>
       <figure>
         <img src="./imgs/uc1.png" alt="">
         <figcaption>包含关系 Include</figcaption>
       </figure>
       <div class="demo">取款必须先验证密码，那么验证密码就是取款的包含关系</div>
-      <div class="mt2">3. 拓展关系 Extend</div>
-      <dd>表示用例之间的关系；业务延申，非必须</dd>
+      <div class="demo">课程学习和权限：每次学习都必须检查权限</div>
+      <div>3. 拓展关系 Extend</div>
+      <dd>表示用例之间的关系：基本用例 Base Use Case执行时，扩展用例 Extend Use Case 有时会执行，有时不执行</dd>
+      <dd>业务延申，非必须</dd>
       <dd>逻辑：A 发生的时候，B 不一定发生。B 只是在特定条件下给 A 增加一点额外功能。抽离了 B，A 依然能独立跑通</dd>
       <dd>方向：从扩展用例 → 基础用例/主流程</dd>
       <dd>线型：带箭头虚线</dd>
@@ -68,11 +73,13 @@
         <figcaption>拓展关系 Extend</figcaption>
       </figure>
       <div class="demo">取款时，打印凭条不是必须的</div>
-      <div class="mt2">4. 泛化关系 Generalization</div>
+      <div class="demo">课程学习和充值：每次学习不一定都要充币</div>
+      <div>4. 泛化关系 Generalization</div>
+      <dd>表示通用用例General Use Case和Specialized Use Case特殊用例的关系，也是被继承|Parent和继承Children的关系</dd>
       <dd>也称归纳；继承</dd>
       <dd>子用例继承父用例的行为和含义，并可以进行重写或特化</dd>
-      <dd>用例可以泛化：行为的复用/继承</dd>
-      <dd>参与者也可以：角色的复用/继承；子参与者是父参与者的一种</dd>
+      <dd>用例泛化：行为的复用/继承；</dd>
+      <dd>参与者可以：角色的复用/继承；子参与者是父参与者的一种</dd>
       <dd>线型：实线空心三角箭头</dd>
       <dd>方向：子类 → 父类</dd>
       <figure>
@@ -93,6 +100,11 @@
       <figure>
         <img src="./imgs/uc4.png" alt="">
         <figcaption>参与者泛化 Actor Generalization</figcaption>
+      </figure>
+      <div class="demo">综合运用</div>
+      <figure>
+        <img src="./imgs/uml1.png" alt="">
+        <figcaption>UML实例</figcaption>
       </figure>
     </dl>
     <div id="footer"></div>
