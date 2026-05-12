@@ -308,6 +308,14 @@
           </tr>
         </tbody>
       </table>
+      <div class="demo">计算机身份证年龄</div>
+      <ol>
+        <li>选择某个空白单元格</li>
+        <li>先输入英文符号'</li>
+        <li>再输入18位身份证号码</li>
+        <li>选择某个空白单元格作为结果，输入以下公式</li>
+        <pre>=YEAR(NOW())-MID(A1,7,4)</pre>
+      </ol>
       <dt>逻辑运算函数</dt>
       <table>
         <caption>逻辑运算函数</caption>
@@ -398,8 +406,22 @@
       <dd>精确匹配，通常配合其他错误函数一起使用</dd>
       <dd>获取多个目标数据时，需要手动修改列数</dd>
       <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-vlookup-function/">VLOOKUP Function</a></dd>
-      <dd>学号对应的信息行中的平均成绩</dd>
-      <pre>= VLOOKUP($K$1,$A$1:$E$10,4,FALSE)</pre>
+      <div class="demo">基本使用：单个值查询；查询学号对应的的平均成绩</div>
+      <dd>数据中
+        <p>学号必须是第1列</p>
+        <p>平均成绩在第4列</p>
+      </dd>
+      <pre>= VLOOKUP(K1,A1:E10,4,FALSE)</pre>
+      <div class="demo">进阶使用：多个值查询；使用 COLUMN 动态指定结果列</div>
+      <dd>注意列索引之间的偏移</dd>
+      <dd>如果数据和范围以及计算结果都从第1列开始，则直接使用</dd>
+      <pre>=VLOOKUP($A4,$A$2:$H$18,COLUMN(),0)</pre>
+      <dd>如果计算结果不是从第1列开始，要减去单元格的偏移；计算结果放在第 11 列；从第 2 列开始查询</dd>
+      <pre>=VLOOKUP($A14,$A$2:$H$17,COLUMN()-9,0)</pre>
+      <div class="demo">高级使用：<a
+          href="https://www.bilibili.com/video/BV1Ya5K61Emz/?spm_id_from=333.1387.homepage.video_card.click">跨表多值查询</a>
+      </div>
+      <pre>=VLOOKUP($A2,学生成绩!$B$2:$H$18,COLUMN(学生成绩!C1)-1,0)</pre>
       <dt>TEXT</dt>
       <dd>根据指定的数字格式将数值转换成文本</dd>
       <dd>格式串通常以 0：普通数字、YYYY：年；MM：月；DD：日；AAAA：星期</dd>
