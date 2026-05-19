@@ -405,26 +405,30 @@
       <dd>The VLOOKUP function looks for a given value in the leftmost column of a given table and then returns a value
         in the same row from a specified column.</dd>
       <dd>查找：先在最左边垂直方向|行找到关键字 lookup_value，再水平方向找到目标|列索引 col_index_num 对应的值</dd>
-      <dd>查找区域 table 通常使用绝对地址</dd>
-      <dd>列索引 col_index_num 为正整数</dd>
+      <dd>查找关键字 lookup_value：必须位于查找区域第一列</dd>
+      <dd>查找区域 table：由关键字和结果值组成；通常使用绝对地址</dd>
+      <dd>列索引 col_index_num：正整数，第1列为1，第2列为2，以此类推</dd>
       <dd>查找结果 range_lookup：模糊匹配 TRUE 或精确匹配 FALSE；默认是模糊匹配</dd>
       <dd>模糊匹配：如果没有匹配的关键字，就根据关键字的升序排序空间，模糊匹配；匹配不到会先 #N/A；如成绩档次</dd>
       <dd>精确匹配，通常配合其他错误函数一起使用</dd>
       <dd>获取多个目标数据时，需要手动修改列数</dd>
       <dd>更多案例，请访问 <a href="https://www.exceldemy.com/excel-vlookup-function/">VLOOKUP Function</a></dd>
-      <div class="demo">基本使用：单个值查询；查询学号对应的的平均成绩</div>
-      <dd>数据中
-        <p>学号必须是第1列</p>
-        <p>平均成绩在第4列</p>
-      </dd>
+      <div class="demo">用法1：单值查询</div>
+      <dd>根据查询学号对应的的平均成绩</dd>
+      <dd>学号在第 1 列</dd>
+      <dd>平均成绩在第 4 列</dd>
+      <dd>各个值都是固定的/静态的</dd>
+      <dd>公式可以写在任何位置</dd>
       <pre>= VLOOKUP(K1,A1:E10,4,FALSE)</pre>
-      <div class="demo">进阶使用：多个值查询；使用 COLUMN 动态指定结果列</div>
+      <div class="demo">用法2：<a
+          href="https://www.bilibili.com/video/BV184LB6AEJD/?spm_id_from=333.1387.homepage.video_card.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">BiliBili-多个值查询</a>；使用
+        COLUMN() 动态指定结果列</div>
       <dd>注意列索引之间的偏移</dd>
       <dd>如果数据和范围以及计算结果都从第1列开始，则直接使用</dd>
       <pre>=VLOOKUP($A4,$A$2:$H$18,COLUMN(),0)</pre>
       <dd>如果计算结果不是从第1列开始，要减去单元格的偏移；计算结果放在第 11 列；从第 2 列开始查询</dd>
       <pre>=VLOOKUP($A14,$A$2:$H$17,COLUMN()-9,0)</pre>
-      <div class="demo">高级使用：<a
+      <div class="demo">用法3：<a
           href="https://www.bilibili.com/video/BV1Ya5K61Emz/?spm_id_from=333.1387.homepage.video_card.click">BiliBili-跨表多值查询</a>
       </div>
       <pre>=VLOOKUP($A2,学生成绩!$B$2:$H$18,COLUMN(学生成绩!C1)-1,0)</pre>
