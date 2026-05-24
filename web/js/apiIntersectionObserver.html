@@ -92,6 +92,19 @@ function cb(entries) {
         <p>根边距；如提前 100px 触发</p>
         <pre>rootMargin: '100px'</pre>
       </dd>
+      <div class="demo">页面滚动时，改变顶部导航样式</div>
+      <dd>仅仅触发一次</dd>
+      <dd>不需要使用滚动监听的持续监听</dd>
+      <pre>
+const header = document.getElementsByTagName('header')[0]
+console.log(header);
+
+const div = document.createElement('div')
+header.before(div)
+const ob = new IntersectionObserver(entry => {
+  header.classList.toggle('sticky', !entry[0].isIntersecting)
+})
+ob.observe(div)</pre>
     </dl>
     <div id="footer"></div>
   </div>

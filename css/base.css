@@ -1,58 +1,106 @@
-.box {
-    text-align: center;
-    color: #a8e073;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 12rem;
-    border: 1rem solid #a8e073;
+@charset "utf-8";
+
+:root {
+    --main-color: #4bc2ce;
+    --warn-color: #f25e44;
+    --pre-color: #dcdcaa;
+    --bg-color: #fff;
+    --txt-color: #111;
+    --w: 1024px;
+    --p-m-g: 12px;
 }
 
-ol {
-    padding-left: 1rem;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", Arial, Helvetica, sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.warn {
-    color: #a52a2a;
-    font-weight: 700;
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
 }
 
-ul li {
-    text-transform: capitalize;
+body {
+    font-size: 1.6rem;
+    background-color: #f0f0f0;
+    color: var(--txt-color);
+    text-align: justify;
+    counter-reset: tbl-sn img-sn;
 }
 
-#nav {
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(var(--main-color, #333), var(--blue-color));
+    border-radius: 4px;
+}
+
+header {
+    position: sticky;
+    top: 0;
     display: flex;
-    width: 80%;
-    max-width: 80vw;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-content: flex-end;
+    transition: 400ms ease-in-out;
+    padding: var(--p-m-g);
+    height: 20vh;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: var(--main-color);
+    color: var(--bg-color);
+    z-index: 99;
+}
+
+header.sticky {
+    background-color: var(--main-color);
+    color: var(--bg-color);
+}
+
+main {
+    padding: 0 var(--p-m-g);
+    line-height: 2;
+}
+
+strong,
+.warn {
+    color: var(--warn-color);
+}
+
+.w {
+    width: 100%;
+    max-width: var(--w);
     margin: 0 auto;
+    background-color: var(--bg-color);
+
 }
 
-#nav>li:hover {
-    background-color: #f40;
+.demo::before {
+    content: '[示例]';
+    color: var(--warn-color);
 }
 
-#nav>li {
-    margin: 0 1rem;
+pre {
+    color: var(--pre-color);
+    padding: var(--p-m-g);
+    background-color: var(--txt-color);
+    border-radius: 6px;
+    font-family: "Inconsolata", "Courier New", Courier;
+    overflow: auto;
+    margin: var(--p-m-g) auto;
 }
 
-.item1~li {
-    color: #078;
+pre::-webkit-scrollbar {
+    height: 4px;
+    background-color: #fff;
 }
 
-.item3+.item4 {
-    color: #4f0;
-}
-
-.sub-nav li:nth-child(2) {
-    text-decoration: underline;
-}
-
-.sub-nav>li:hover {
-    text-shadow: 0 0 .4rem rgb(255, 68, 0);
-}
-
-@media screen and (max-width:768px) {
-    .nav>li {
-        margin: 0 .4rem;
-    }
+pre::-webkit-scrollbar-thumb {
+    background-color: var(--pre-color);
 }

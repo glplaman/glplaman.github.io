@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API BroadcastChannel</title>
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>BroadcastChannel</h1>
+      <span>2026-05-24</span>
+    </header>
+    <main>
+      <p>同域标签页之间的通信/频道广播</p>
+      <p>通信的标签页 <strong>都</strong> 声明 BroadcastChannel</p>
+      <p>一个发送消息；另外一个接受消息</p>
+      <div class="demo"></div>
+      <p>标签A：发送信息；这里使用按钮的单击事件触发</p>
+      <pre>
+const channel = new BroadcastChannel('my_channel');
+let btn = document.getElementById('btn')
+btn.addEventListener('click', fn)
+function fn() {
+  channel.postMessage({ text: '你好，标签B，我是标签A！' });
+}</pre>
+      <p>标签B：接受信息；这里使用 Console 查看</p>
+      <pre>
+const channel = new BroadcastChannel('my_channel');
+channel.onmessage = function (event) {
+  console.log('收到消息：', event.data);
+};</pre>
+    </main>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
