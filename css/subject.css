@@ -1,142 +1,21 @@
-@import url(./fonts_Michroma.css);
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-dt {
-  line-height: 3;
-  margin-top: 3rem;
-}
-
-dd {
+.item {
   display: flex;
   align-items: center;
 }
 
-dd::after {
+.item::before {
   content: attr(data-title);
   order: 2;
 }
 
-dd::before {
+.item::after {
   content: '';
   flex: 1;
   height: 3px;
-  background: url(/imgs/dot.png) repeat-x;
-  order: 1;
-}
-
-header::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 200%;
-  height: 6px;
-  background-image: linear-gradient(to right, var(--yellow-color) 0%, var(--green-color) 50%, var(--yellow-color) 100%);
-  animation: roll 5s linear infinite alternate;
-}
-
-@keyframes roll {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.svg {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  width: 5rem;
-  height: 5rem;
-}
-
-.container {
-  position: relative;
-  max-width: var(--w);
-  width: 100%;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-color: #fff;
-}
-
-.col3 {
-  columns: 30rem 3;
-  margin: var(--p-m-g) auto;
-}
-
-.grid3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--p-m-g);
-  margin: var(--p-m-g) auto;
-}
-
-.cont-wrap {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.chap {
-  color: #fff;
-  background-color: var(--main-color);
-  padding: 4rem 1rem 1rem;
-  text-transform: capitalize;
-  font-size: 1.8rem;
-  font-family: "Michroma";
-}
-
-.item {
-  display: block;
-  padding-inline: 1rem;
+  background-image: url(/imgs/dot.png);
+  background-repeat: repeat-x;
 }
 
 .item:hover {
   color: var(--main-color);
-}
-
-.help {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 2rem;
-  margin-top: 4rem;
-  line-height: 1.5;
-  font-size: 1.4rem;
-  border-top: 1px solid var(--main-color);
-  border-bottom: 1px solid var(--main-color);
-}
-
-.help a:hover {
-  color: var(--main-color);
-}
-
-.help::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -3px;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 5px;
-  background-color: var(--main-color);
-}
-
-.help::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -3px;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 5px;
-  background-color: var(--main-color);
-}
-
-@media screen and (max-width: 768px) {
-  :root {
-    --header-h: 12rem;
-  }
 }
