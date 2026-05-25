@@ -18,45 +18,66 @@
     <h3>Observer</h3>
     <dl>
       <dt>概述</dt>
-      <dd>包括：观察者和观察目标</dd>
-      <dd>一个目标可以有很多观察者与之关联</dd>
+      <dd>是一种订阅-发布的机制</dd>
+      <dd>角色：
+        <p>观察者 Observer</p>
+        <p>被观察者/目标 Subject</p>
+      </dd>
+      <dd>通常一个目标和很多观察者关联 - 一对多的联动需求</dd>
       <dd>一旦目标状态发生变化，将通知所有观察者，观察者据此做出响应</dd>
-      <dd>与订阅-发布模式比较类似</dd>
-      <dd>无法细分管控</dd>
-      <dt>应用</dt>
-      <dd>面包屑导航</dd>
+      <dd>如：用户（观察者）关注了某个公众号（目标），一旦公众号发布了新文章（状态改变），所有关注它的用户都会自动收到通知</dd>
       <dt>参考代码</dt>
+      <dd>目标 Subject：负责维护观察者列表，并提供添加、删除和通知观察者的方法</dd>
       <pre>
 class Subject {
   constructor() {
     this.observers = []
   }
+
   add(obj) {
-    this.observers.push(obj)
+    this.observers.push(obj);
+    console.log('新增了一个观察者');
   }
+
   remove(obj) {
     this.observers = this.observers.filter(item => item != obj)
   }
-  notify() {
-    this.observers.forEach(item => item.update())
-  }
-}
 
+  notify(msg) {
+    this.observers.forEach(item => item.update(msg))
+  }
+}</pre>
+      <dd>观察者：负责定义收到通知后的更新行为</dd>
+      <pre>
 class Observer {
   constructor(name) {
     this.name = name
   }
-  update() {
-    console.log(this.name + ' updated');
+  update(msg) {
+    console.log(this.name + 'get' + msg);
   }
 }</pre>
+      <dd>运用</dd>
       <pre>
 let ob1 = new Observer('gl')
 let ob2 = new Observer('sh')
 let sub = new Subject()
+//订阅
 sub.add(ob1)
 sub.add(ob2)
-sub.notify()</pre>
+//发布
+sub.notify('hi')</pre>
+      <div class="demo">下单之后。。。</div>
+      <ul>
+        <li>扣减库存</li>
+        <li>发送短信/邮件通知用户</li>
+        <li>增加用户的积分</li>
+        <li>通知物流系统准备发货</li>
+        <li>更新大数据推荐系统（用户买了这个，可能喜欢那个）</li>
+        <li>扩展性： 如果以后要加一个“赠送优惠券”的功能，只需要增加一个新的观察者监听 order_paid 事件即可，完全不需要修改订单服务的代码（符合开闭原则）</li>
+      </ul>
+      <div class="demo">商品降价/到货通知（前端与后端交互）</div>
+      <dd>用户浏览一个商品，发现缺货或者太贵，点击了“到货通知”或“降价提醒”按钮</dd>
       <dt>面包屑导航</dt>
       <dd>无序列表实现</dd>
       <dd>DOM获取</dd>
@@ -98,6 +119,15 @@ news.addEventListener('click', (e) => {
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
+    <script src="./js/oberser.js"></script>
+    <script>
+      let ob1 = new Observer('gl')
+      let ob2 = new Observer('sh')
+      let sub = new Subject()
+      sub.add(ob1)
+      sub.add(ob2)
+      sub.notify('hi')
+    </script>
   </div>
 </body>
 
