@@ -29,6 +29,10 @@ a {
     color: inherit;
 }
 
+a:hover {
+    color: var(--main-color);
+}
+
 html {
     font-size: 62.5%;
     scroll-behavior: smooth;
@@ -40,6 +44,7 @@ body {
     background-color: #f0f0f0;
     color: var(--txt-color);
     text-align: justify;
+    line-height: 2;
     counter-reset: tbl-sn img-sn;
 }
 
@@ -68,9 +73,9 @@ header {
     color: var(--bg-color);
 }
 
-section {
-    padding: 0 var(--p-m-g);
-    line-height: 2;
+section,
+.p1 {
+    padding: var(--p-m-g);
 }
 
 figure {
@@ -157,11 +162,67 @@ strong,
     background-color: var(--bg-color);
 }
 
+.main-nav {
+    position: sticky;
+    top: 0;
+    height: var(--nav-h);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--p-m-g);
+    align-items: center;
+    padding: 0 var(--p-m-g);
+    z-index: 99;
+    background-color: #fff;
+}
+
+.nav-item {
+    color: inherit;
+    text-decoration: none;
+    text-transform: capitalize;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-item:hover {
+    color: var(--main-color);
+}
+
+.nav-item.active {
+    border-color: var(--main-color);
+}
+
 .chap {
     padding: 6rem 1rem 1rem;
     background-color: var(--main-color);
     color: #fff;
     font-size: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    padding: var(--p-m-g);
+}
+
+.grid a {
+    display: block;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.item::before {
+    content: attr(data-title);
+    order: 2;
+}
+
+.item::after {
+    content: '';
+    flex: 1;
+    height: 3px;
+    background-image: url(/imgs/dot.png);
+    background-repeat: repeat-x;
 }
 
 .tips {
