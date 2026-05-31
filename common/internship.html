@@ -18,6 +18,42 @@
         break-after: page;
       }
     }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      max-width: 600px;
+      gap: 1rem;
+      margin: 0 auto;
+    }
+
+    .bar::after {
+      content: attr(data-credit);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .bar .user {
+      flex-basis: 60px;
+      text-align-last: justify;
+    }
+
+    .bar .per {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      border: 1px solid var(--main-color);
+      padding: 2px;
+      border-radius: 30px;
+    }
+
+    .bar .per::before {
+      content: '';
+      width: calc(var(--credit) /100*100%);
+      height: 18px;
+      border-radius: 30px;
+      background-color: var(--main-color);
+    }
   </style>
 </head>
 
@@ -25,14 +61,53 @@
   <div class="w">
     <header></header>
     <dl>
-      <dt>代办 Todo</dt>
-      <ul>
-        <li>注册校友邦账号并绑定学籍</li>
-        <li>校外实习承诺书：打印；手写签名；扫描上传；纸质留存</li>
-        <li>知情同意书：打印；手写签名；扫描上传；纸质留存</li>
-        <!-- <li>安全责任书：打印；手写签名；扫描上传；纸质留存</li> -->
-      </ul>
+      <figure>
+        <div class="bar" style="--credit:6" data-credit="6">
+          <span class="user">吴旭洋</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" style="--credit:4" data-credit="4">
+          <span class="user">胡俊伟</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" style="--credit:9" data-credit="9">
+          <span class="user">蔡梓威</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" data-credit="6" style="--credit:6">
+          <span class="user">罗航</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" data-credit="2" style="--credit:2">
+          <span class="user">肖航</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" data-credit="5" style="--credit:5">
+          <span class="user">钟正扬</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" data-credit="4" style="--credit:4">
+          <span class="user">黄钧笙</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" data-credit="4" style="--credit:4">
+          <span class="user">郑智聪</span>
+          <div class="per"></div>
+        </div>
+        <div class="bar" data-credit="3" style="--credit:3">
+          <span class="user">林庆</span>
+          <div class="per"></div>
+        </div>
+        <figcaption>积分榜</figcaption>
+      </figure>
       <dt>指导过程</dt>
+      <ul>
+        <li>例会 +2/次</li>
+        <li>家长知情回执：打印；手写签名；扫描上传；纸质留存 +2</li>
+        <li>校外实习承诺书：打印；手写签名；扫描上传；纸质留存 +2</li>
+        <li>注册校友邦账号并绑定学籍 +2</li>
+      </ul>
+      <dt>相关材料</dt>
       <dd><a href="./intern/计算机工程学院张树彬教师校外教学指导会议记录.docx">指导会议记录</a></dd>
       <dd><a href="./intern/1.校外承诺书及家长回执端口--（27届）学生校外实习承诺书（模板+例子）.docx">承诺书和回执模板</a></dd>
       <dd><a href="./intern/实习见面会/5.教函字〔2026〕39 号 关于落实2027届学生校外实习准备阶段核心工作任务的通知.pdf">实习通知</a></dd>
@@ -432,19 +507,6 @@
           </tr>
         </tbody>
       </table>
-      <dt>指导教师</dt>
-      <ol>
-        <li>院级管理员将校内指导老师信息导进校友邦</li>
-        <li>查看承诺书及回执（手写签字）</li>
-        <li>报名审核</li>
-        <li>查看知情同意书</li>
-        <li>审核三方协议</li>
-        <li>查看学生签到统计</li>
-        <li>周志批阅</li>
-        <li>提醒学生实习评价</li>
-        <li>报告批阅</li>
-        <li>实习成绩鉴定</li>
-      </ol>
       <dt>实习学生</dt>
       <ol>
         <li>注册账号，学籍认证</li>
@@ -457,6 +519,19 @@
         <li>提交实习评价</li>
         <li>提交实习报告书（电脑端）</li>
         <li>成绩鉴定表</li>
+      </ol>
+      <dt>指导教师</dt>
+      <ol>
+        <li>院级管理员将校内指导老师信息导进校友邦</li>
+        <li>查看承诺书及回执（手写签字）</li>
+        <li>报名审核</li>
+        <li>查看知情同意书</li>
+        <li>审核三方协议</li>
+        <li>查看学生签到统计</li>
+        <li>周志批阅</li>
+        <li>提醒学生实习评价</li>
+        <li>报告批阅</li>
+        <li>实习成绩鉴定</li>
       </ol>
     </dl>
     <div id="footer"></div>
