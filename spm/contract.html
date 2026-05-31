@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>软件项目合同计划 Contract</title>
-  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
   <style>
     table {
       text-align: center;
@@ -14,6 +14,19 @@
     table tr td:last-child {
       text-align: left;
     }
+
+    .spacer {
+      width: max-content;
+      border-top: 1px solid var(--main-color);
+      border-bottom: 1px solid var(--main-color);
+      margin: 4rem auto;
+    }
+
+    .spacer::before,
+    .spacer::after {
+      content: '\2756';
+      color: var(--main-color)
+    }
   </style>
   <base target="_blank">
 </head>
@@ -21,19 +34,38 @@
 <body>
   <div class="w">
     <header>
-      <h1>软件项目合同计划</h1>
-      <span>Contract</span>
+      <h1>软件项目管理</h1>
+      <span>SPM</span>
     </header>
-    <dl>
-      <dt>概念 Concept</dt>
-      <dd>合同是具有法律效力的协议</dd>
-      <dd>双方自愿达成的协议</dd>
-      <dd>签订者具有相应的法律能力</dd>
-      <dd>有充分的签约理由</dd>
-      <dd>具有合法的目的</dd>
-    </dl>
-    <h2>合同类型 Category</h2>
-    <dl>
+    <div class="main-nav">
+      <h1 class="logo">Contract<sup>&commat;</sup></h1>
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <nav class="nav" id="nav">
+        <a href="#" style="--delay:0" class="nav-item">Overview</a>
+        <a href="#" style="--delay:1" class="nav-item">Category</a>
+        <a href="#" style="--delay:2" class="nav-item">Planing</a>
+        <a href="#" style="--delay:3" class="nav-item">Agile</a>
+        <a href="#" style="--delay:4" class="nav-item">Drill</a>
+      </nav>
+    </div>
+    <section class="nav-cont">
+      <h2>1. 概述 Overview</h2>
+      <h3>1.1 概念 Concepts</h3>
+      <div>合同是具有法律效力的协议</div>
+      <div>双方自愿达成的协议</div>
+      <div>签订者具有相应的法律能力</div>
+      <div>有充分的签约理由</div>
+      <div>具有合法的目的</div>
+      <h3>1.2 术语 items</h3>
+      <div>成本 Cost</div>
+      <div>费用 Fee</div>
+      <div>目标成本 Target Cost：双方预估的完成项目所需的合理成本，也称初始成本、预计成本</div>
+      <div>目标利润 Target Fee：双方预估的完成项目所需的额外成本/费用</div>
+      <div>价格上限 Ceiling Price：买方最高止损线</div>
+      <div>分享比例 Share Ratio：风险共担比例。通常格式为买方/卖方</div>
+    </section>
+    <section class="nav-cont">
+      <h2>2. 合同类型 Category</h2>
       <figure>
         <img src="./img/c0.png" alt="">
         <figcaption>合同类型</figcaption>
@@ -42,41 +74,81 @@
         <img src="./img/c1.png" alt="">
         <figcaption>合同风险</figcaption>
       </figure>
-      <dd>按照付款方式划分</dd>
-      <dd>关键词：成本 Cost、费用 Fee</dd>
-      <dt>总价合同</dt>
-      <dd>为既定产品、服务或成果的采购设定一个总价</dd>
-      <dd>应在已明确定义需求，且不会出现重大范围变更的情况下使用</dd>
-      <dd>小：工程量不大、风险不大或完全可控</dd>
-      <dd>短：工期短；工期越长，不稳定因素越多</dd>
-      <dd>精：精确计算、技术不复杂</dd>
-      <dd>甲方应提供详细、全面的图纸和各项说明</dd>
-      <dd>乙方承担风险</dd>
-      <div>1. FFP</div>
-      <dd>固定总价(Firm Fixed Price)</dd>
-      <div class="demo">合同价格：100万</div>
-      <dd>情况1：实际成本80万，则总价=100万</dd>
-      <dd>情况2：实际成本150万，则总价100万</dd>
-      <div>2. FPI</div>
-      <dd>固定价格加奖励费(Fixed Price Plus Incentive Fee)</dd>
-      <div class="demo">目标成本：100万；价格上限：110万；卖方利润：10万；分享比例：70/30</div>
-      <dd>情况1：实际成本80万，则总价=80+10+20*30%=96万</dd>
-      <dd>情况2：实际成本150万，则总价110万</dd>
-      <div>3. FPEPA</div>
-      <dd>总价加经济价格调整</dd>
-      <dt>成本补偿合同 Cost-Reimbursable Contract</dt>
-      <dd>向卖方支付为完成工作而发生的全部合法实际成本，<strong>外加 Plus</strong> 一笔费用作为卖方的利润</dd>
-      <dd>所有的实际成本都是实报实销；至于外加的一部分根据实际情况调整</dd>
-      <dd>适用于：工作范围预计会在合同执行期间发生重大变更</dd>
-      <dd>快：需要立即开展</dd>
-      <dd>急：项目内容未确定；特殊项目如自然灾害，有时候需要不惜成本的去不断推进完成</dd>
-      <dd>大：风险大</dd>
-      <dd>甲方：承担实际费用和风险；须投入大量精力去审计乙方的账单，监督其工作效率</dd>
-      <div>1. CPFF</div>
-      <dd>成本加固定费用（Cost Plus Fixed Fee）</dd>
-      <dd>利润是固定的，不管花多少钱，利润不变</dd>
+      <div class="spacer">按照付款方式划分</div>
+      <h3>2.1 总价合同</h3>
+      <div>为既定产品、服务或成果的采购设定一个总价</div>
+      <div>应在已明确定义需求，且不会出现重大范围变更的情况下使用</div>
+      <div>小：工程量不大、风险不大或完全可控</div>
+      <div>短：工期短；工期越长，不稳定因素越多</div>
+      <div>精：精确计算、技术不复杂</div>
+      <div>甲方应提供详细、全面的图纸和各项说明</div>
+      <div>乙方承担风险</div>
+      <h4>2.1.1. FFP - Firm Fixed Price</h4>
+      <div>固定总价；一口价</div>
+      <div>买卖双方在合同中约定一个完成项目工作的固定总价。除非项目的工作范围 Scope 发生变更，否则这个价格不允许改变</div>
+      <div>适用场景：项目需求非常明确、工作范围清晰且不太可能发生重大变更的项目</div>
+      <div class="demo">采用FFP：合同价格：100万</div>
+      <div>情况1：实际成本80万，则总价=100万</div>
+      <div>情况2：实际成本150万，则总价100万</div>
+      <h4>2.1.2. FPI - Fixed Price Plus Incentive Fee</h4>
+      <div>固定价格加奖励费</div>
+      <div>在固定总价的基础上，增加了一定的灵活性和财务激励机制</div>
+      <div>如果卖方的实际绩效（如成本、进度、技术性能等）达到或超越了预定目标，卖方可以获得额外的奖金；如果绩效不达标，利润则会相应减少</div>
+      <div>适用场景：项目范围相对明确，但买方希望通过财务奖励来激励卖方提高绩效、控制成本或加快进度的项目</div>
+      <div class="demo">采用FPI：目标成本：100万；价格上限：110万；卖方利润：10万；分享比例：70/30</div>
+      <div>情况1：实际成本80万，节省20万，则总价=80+10+20*30%=96万；没有超过110万，成交</div>
+      <div>情况2：实际成本150万，超过110万，则成交110万；亏损由卖方承担</div>
+      <h4>2.1.3. FPEPA - Fixed Price with Economic Price Adjustment</h4>
+      <div>总价加经济价格调整</div>
+      <div>特殊的总价合同，主要用于应对长期的经济环境变化</div>
+      <div>合同的基础是总价，但包含特殊条款，允许根据预先确定的经济条件变化（如通货膨胀、特定原材料的价格涨跌、汇率变动等）对最终合同价格进行调整</div>
+      <div>通过价格调整机制，买卖双方共同规避了长期的外部经济风险。这能保护卖方免受不可控的物价飞涨影响，也能让买方在物价下跌时受益，从而维持长期的合作关系</div>
+      <div>适用场景：履约周期跨越数年时间的长期项目，或者涉及不同货币支付的跨国项目</div>
       <table>
-        <caption>成本加固定费用合同（金额单位：万元）</caption>
+        <caption>总价合同</caption>
+        <thead>
+          <tr>
+            <th>合同类型</th>
+            <th>价格灵活</th>
+            <th>风险承担方</th>
+            <th>核心特性</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>FFP</td>
+            <td>固定不变</td>
+            <td>卖方承担最大风险</td>
+            <td>一口价，除非范围变更；否则不调价</td>
+          </tr>
+          <tr>
+            <td>FPI/FPIF</td>
+            <td>有上限</td>
+            <td>双方共担（有封顶）</td>
+            <td>设定激励指标和最高限价，多劳多得</td>
+          </tr>
+          <tr>
+            <td>FPEPA</td>
+            <td>随经济调整</td>
+            <td>双方共担经济风险</td>
+            <td>应对通胀、长周期或跨货币支付的长期合同</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>2.2 成本补偿合同 Cost-Reimbursable Contract</h3>
+      <div>向卖方支付为完成工作而发生的全部合法实际成本，<strong>外加 Plus</strong> 一笔费用作为卖方的利润</div>
+      <div>所有的实际成本都是实报实销；至于外加的一部分根据实际情况调整</div>
+      <div>适用于：工作范围预计会在合同执行期间发生重大变更</div>
+      <div>快：需要立即开展</div>
+      <div>急：项目内容未确定；特殊项目如自然灾害，有时候需要不惜成本的去不断推进完成</div>
+      <div>大：风险大</div>
+      <div>甲方：承担实际费用和风险；须投入大量精力去审计乙方的账单，监督其工作效率</div>
+      <h4>2.2.1. CPFF - Cost Plus Fixed Fee</h4>
+      <div>成本加<strong>固定</strong>费用</div>
+      <div>无论实际成本是多少，卖方的利润（Fee）是锁定的，不会随成本的增加或减少而改变（除非项目范围发生变更）</div>
+      <div>实报实销</div>
+      <table>
+        <caption>CPFF 成本加固定费用合同（金额单位：万元）</caption>
         <thead>
           <tr>
             <th rowspan="2">项目</th>
@@ -127,21 +199,19 @@
           </tr>
         </tbody>
       </table>
-      <div class="demo">CPFF</div>
-      <dd>初始预计成本 = 10万</dd>
-      <dd>固定费用为初始成本的15%，即 1.5万</dd>
-      <dd>则：合同金额 = 11.5万</dd>
-      <dd>如果：实际成本增至20万；则合同金额 = 21.5万</dd>
-      <div>2. CPIF</div>
-      <dd>成本加激励费用（ Cost Plus Incentive Fee）</dd>
-      <dd>当成本超支或节约时，买方与卖方之间的 <strong>分担</strong> 超支部分或 <strong>分享</strong> 节约部分</dd>
-      <dd>超支时，卖方得到的款项：</dd>
+      <div class="demo">采用CPFF：目标成本 = 10万；固定费用为目标成本的15%，即 1.5万</div>
+      <div>则：合同金额 = 11.5万</div>
+      <div>如果：实际成本增至20万，利润仍然为1.5万，则合同金额 = 21.5万</div>
+      <h4>2.2.2. CPIF - Cost Plus Incentive Fee</h4>
+      <div>成本加激励费用</div>
+      <div>当成本超支或节约时，买方与卖方之间的 <strong>分担</strong> 超支部分或 <strong>分享</strong> 节约部分</div>
+      <div>稍微激励乙方省钱</div>
+      <div>超支时，卖方得到的款项：</div>
       <div class="txt-center warn">目标成本 + 目标费用 + 买方应承担的超支</div>
-      <dd>节约时，卖方得到的款项：</dd>
+      <div>节约时，卖方得到的款项：</div>
       <div class="txt-center warn">目标成本 + 目标费用 - 买方应享受的节约</div>
-      <dd>稍微激励乙方省钱</dd>
       <table>
-        <caption>成本加激励费用合同（金额单位：万元）</caption>
+        <caption>CPIF 成本加激励费用合同（金额单位：万元）</caption>
         <thead>
           <tr>
             <th rowspan="2">项目</th>
@@ -192,115 +262,119 @@
           </tr>
         </tbody>
       </table>
-      <div class="demo">预计成本 10 万；利润 1 万；激励分配比为 80/20</div>
-      <dd>情况1：实际成本10万；按照预计成本完成，则合同金额 = 11万</dd>
-      <dd>情况2：实际成本8万；节约2万；买方享有80%，1.6万，卖方享有20%，0.4万</dd>
-      <dd>则合同金额 = 8+1+2*20% = 9.4万</dd>
+      <div class="demo">采用CPIF：目标成本 10 万；目标利润 1 万；激励分配比为 80/20</div>
+      <div>情况1：实际成本 10 万；按照目标成本完成，则合同金额 = 11 万</div>
+      <div>情况2：实际成本 8 万；节约 2 万；买方享有80%，1.6 万，卖方享有20%，0.4 万</div>
+      <div>则合同金额 = 10 + 1 - 2*80% = 9.4 万</div>
+      <div>或：8 + 1 + 2*20% = 9.4 万</div>
       <div class="tips">
-        <p>将节约的2万成本的20%拿出来作为奖励给卖方</p>
-        <p>买方/甲方：原本预算11万（10万成本+1万利润），现在只花了 9.4万，省了1.6万</p>
-        <p>卖方/乙方：虽然成本降低了，但因为效率高，原本只能赚1万，现在赚了 1.4万（1万基础利润 + 0.4万奖金）</p>
+        <p>将节约的 2 万成本的20%拿出来作为奖励给卖方</p>
+        <p>买方/甲方：原本预算 11 万（10 万成本 + 1 万利润），现在只花了 9.4 万，省了 1.6 万</p>
+        <p>卖方/乙方：虽然成本降低了，但因为效率高，原本只能赚 1 万，现在赚了 1.4 万（1 万基础利润 + 0.4 万奖金）</p>
         <p>共同分享：双赢</p>
       </div>
-      <dd>情况3：实际成本12万；超支2万；买方分担80%，1.6万，卖方分担20%，0.4万</dd>
-      <dd>则合同金额 = 12+1-2*20% = 12.6万</dd>
-      <dd>或：10+1+2*80%=12.6万</dd>
+      <div>情况3：实际成本 12 万；超支 2 万；买方分担80%，1.6 万，卖方分担20%，0.4 万</div>
+      <div>则合同金额 = 10 + 1 + 2*80% = 12.6 万</div>
+      <div>或：12 + 1 - 2*20% = 12.6 万</div>
       <div class="tips">
-        <p>买方/甲方：本来要支付10+1，因为超支，额外多支付支付1.6</p>
-        <p>卖方/乙方：本来要利润是1万，因为超支，要从利润中扣除分担的0.4</p>
+        <p>买方/甲方：本来要支付 10 + 1，因为超支，额外多支付支付 1.6</p>
+        <p>卖方/乙方：本来要利润是 1 万，因为超支，要从利润中扣除分担的 0.4</p>
         <p>共同承担</p>
       </div>
       <!-- <p>付钱买东西的是买方，收钱卖东西的是卖方</p> -->
-      <div>3. CPAF</div>
-      <dd>成本加奖励费用（Cost Plus Award Fee）</dd>
-      <dd><strong>主观</strong> 利润；甲方判断决定是否支付奖励费用</dd>
-      <div class="demo">预计成本10万</div>
-      <dd>情况1：没有奖励，则支付总价=10万</dd>
-      <dd>情况2：奖励3万；则支付总价=13万</dd>
-      <dt>工料合同</dt>
-      <dd>工时和材料</dd>
-      <dd>成本补偿合同和总价合同特点的混合型合同</dd>
-      <dd>必须为每一个单位的工作量付出一定的报酬</dd>
-      <dd>范围比较宽，混合型合同</dd>
+      <h4>2.2.3. CPAF - Cost Plus Award Fee</h4>
+      <div>成本加奖励费用</div>
+      <div><strong>主观</strong> 利润；甲方判断决定是否支付奖励费用</div>
+      <div class="demo">采用CPAF：预计成本10万</div>
+      <div>情况1：没有奖励，则支付总价=10万</div>
+      <div>情况2：奖励3万；则支付总价=13万</div>
+      <h3>2.3 工料合同</h3>
+      <div>工时和材料</div>
+      <div>成本补偿合同和总价合同特点的混合型合同</div>
+      <div>必须为每一个单位的工作量付出一定的报酬</div>
+      <div>范围比较宽，混合型合同</div>
       <ul>
         <li>工程师单价:130美元/工时</li>
         <li>产品单价:1500元/功能点</li>
       </ul>
       <div class="demo">建筑施工的半包/全包</div>
-      <dd>包工：确定工期</dd>
-      <dd>包料：确定物流规格</dd>
-      <div class="demo">项目要求尽快开展工作，但是项目涉及的某些经济技术指标尚未确定，该项目最好签订（ ）。</div>
-      <dd>A. 总价合同</dd>
-      <dd>B. 成本补偿合同</dd>
-      <dd>C. 工料合同</dd>
-      <dd>D. 采购单合同</dd>
-      <!-- <p>B</p> -->
-      <dd>按照范围划为</dd>
+      <div>包工：确定工期</div>
+      <div>包料：确定物流规格</div>
+      <div class="spacer">按照范围划为</div>
       <dt>总承包合同</dt>
-      <dd>定义与特点： 发包方将整个工程项目（如设计、采购、施工等全过程或其中几个阶段）全部发包给一个总承包商</dd>
-      <dd>优势： 责任主体单一，协调工作量小，有利于发挥大承包商的综合管理和技术优势</dd>
-      <dd>适用场景： 大型复杂项目，业主管理能力相对较弱或希望简化管理流程时</dd>
+      <div>定义与特点： 发包方将整个工程项目（如设计、采购、施工等全过程或其中几个阶段）全部发包给一个总承包商</div>
+      <div>优势： 责任主体单一，协调工作量小，有利于发挥大承包商的综合管理和技术优势</div>
+      <div>适用场景： 大型复杂项目，业主管理能力相对较弱或希望简化管理流程时</div>
       <dt>单项承包合同（也称平行发包）</dt>
-      <dd>定义与特点： 发包方将工程项目分解为若干个独立的单项工程或专业工程，分别发包给不同的承包商。每个承包商直接与发包方签订合同</dd>
-      <dd>优势： 有利于吸引更多承包商参与竞争（对应上一题选项C的描述），有利于质量控制（相互制约），设计和施工可以搭接以缩短工期</dd>
-      <dd>劣势： 合同数量多，业主的协调管理工作量极大</dd>
+      <div>定义与特点： 发包方将工程项目分解为若干个独立的单项工程或专业工程，分别发包给不同的承包商。每个承包商直接与发包方签订合同</div>
+      <div>优势： 有利于吸引更多承包商参与竞争（对应上一题选项C的描述），有利于质量控制（相互制约），设计和施工可以搭接以缩短工期</div>
+      <div>劣势： 合同数量多，业主的协调管理工作量极大</div>
       <dt>分包合同</dt>
-      <dd>定义与特点： 这是基于总承包合同或单项承包合同衍生出来的。总承包商或主承包商将其承包工程中的部分非主体、非关键性工作，发包给具有相应资质的其他承包商完成</dd>
-      <dd>关键点： 分包商通常不与业主直接发生合同关系，而是对总承包商负责</dd>
+      <div>定义与特点： 这是基于总承包合同或单项承包合同衍生出来的。总承包商或主承包商将其承包工程中的部分非主体、非关键性工作，发包给具有相应资质的其他承包商完成</div>
+      <div>关键点： 分包商通常不与业主直接发生合同关系，而是对总承包商负责</div>
       <div class="tips">
         <p>分包和转包</p>
         <p>根据相关规定，禁止分包单位将其承包的工程再分包（即严禁二次分包）</p>
       </div>
       <div class="demo">师资外聘</div>
-    </dl>
-    <h2>合同计划</h2>
-    <dl>
-      <dd>明确如何进行委托、委托什么项目、何时进行、费用如何等</dd>
-      <dd>选择需要的合同类型，采用的招标方式、合同形式等</dd>
-      <dd>输出：招标书或者类似招标书的形式体现的</dd>
-    </dl>
-    <h2>敏捷项目合同</h2>
-    <dl>
+    </section>
+    <section class="nav-cont">
+      <h2>3. 合同计划 Planing</h2>
+      <div>明确如何进行委托、委托什么项目、何时进行、费用如何等</div>
+      <div>选择需要的合同类型，采用的招标方式、合同形式等</div>
+      <div>输出：招标书或者类似招标书的形式体现的</div>
+    </section>
+    <section class="nav-cont">
+      <h2>4. 敏捷项目合同 Agile</h2>
       <div class="tips">
         <p>客户协作高于合同协商</p>
         <p>Customer collaboration over contract negotiation</p>
-        <p class="quote">-敏捷宣言</p>
+        <p class="txt-right">-敏捷宣言</p>
       </div>
-      <dd>多层次结构</dd>
-      <dd>强调价值交付</dd>
-      <dd>总价增量</dd>
-      <dd>固定的时间和材料</dd>
-      <dd>累进的时间和材料</dd>
-      <dd>提取取消方案</dd>
-      <dd>动态范围方案</dd>
-      <dd>团队扩充</dd>
-      <dd>支持全方位供应商</dd>
-    </dl>
-    <h2>练习 Drill</h2>
-    <dl>
-      <div class="demo">预计成本 = 10万, 固定费用 = 1.5万，如果实际成本 = 30万，则支付总价为（）万。</div>
-      <dd>A：33</dd>
-      <dd>B：31.5</dd>
-      <dd>C：11.5</dd>
-      <dd>D：30</dd>
+      <ul>
+        <li>多层次结构</li>
+        <li>强调价值交付</li>
+        <li>总价增量</li>
+        <li>固定的时间和材料</li>
+        <li>累进的时间和材料</li>
+        <li>提取取消方案</li>
+        <li>动态范围方案</li>
+        <li>团队扩充</li>
+        <li>支持全方位供应商</li>
+      </ul>
+    </section>
+    <div class="chap nav-cont">练习 Drill</div>
+    <section>
+      <div class="demo">项目要求尽快开展工作，但是项目涉及的某些经济技术指标尚未确定，该项目最好签订（ ）。</div>
+      <div>A. 总价合同</div>
+      <div>B. 成本补偿合同</div>
+      <div>C. 工料合同</div>
+      <div>D. 采购单合同</div>
       <!-- <p>B</p> -->
       <div class="demo">关于合同类型的描述，不正确的是（ ）。</div>
-      <dd>A. 总承包合同有利于技术力量较强，经验丰富的大承包商发挥专业优势</dd>
-      <dd>B. 分包合同中的工程可以进行二次分包且必须经过发包人同意</dd>
-      <dd>C. 单项工程承包方式有利于吸引较多的承包人参与投标竞争</dd>
-      <dd>D. 总价合同适用于工程量不太大且能精确计算，风险不大的项目</dd>
+      <div>A. 总承包合同有利于技术力量较强，经验丰富的大承包商发挥专业优势</div>
+      <div>B. 分包合同中的工程可以进行二次分包且必须经过发包人同意</div>
+      <div>C. 单项工程承包方式有利于吸引较多的承包人参与投标竞争</div>
+      <div>D. 总价合同适用于工程量不太大且能精确计算，风险不大的项目</div>
+      <!-- <p>B</p> -->
+      <div class="demo">预计成本 = 10万, 固定费用 = 1.5万，如果实际成本 = 30万，则支付总价为（）万。</div>
+      <div>A：33</div>
+      <div>B：31.5</div>
+      <div>C：11.5</div>
+      <div>D：30</div>
       <!-- <p>B</p> -->
       <div class="demo">
         签订成本加激励费用合同时，目标成本90万元，目标费用2万元，分摊比例为60/40（节余时买方分享60%，卖方分享40%；超支时买方承担60%，卖方承担40%），实际成本100万元，求买方最终支付金额。</div>
-      <dd>A. 108万元</dd>
-      <dd>B. 96万元</dd>
-      <dd>C. 98万元</dd>
-      <dd>D.102万元</dd>
+      <div>A. 108万元</div>
+      <div>B. 96万元</div>
+      <div>C. 98万元</div>
+      <div>D.102万元</div>
       <!-- <P>C</P> -->
-    </dl>
+    </section>
     <div id="footer" class="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>
+  <script src="/utils//custom/ham2026.js"></script>
 </body>
 
 </html>
