@@ -14,6 +14,8 @@ class Subject {
 
   notify(msg) {
     this.observers.forEach(item => item.update(msg))
+    console.log(msg, 'msg');
+
   }
 }
 
@@ -22,7 +24,4 @@ class Observer {
     // this.name = name;
     this.update = updateFn;
   }
-  // update(msg) {
-  //   console.log(this.name + ' get ' + msg);
-  // }
 }

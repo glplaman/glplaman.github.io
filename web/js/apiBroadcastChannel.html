@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API BroadcastChannel</title>
-  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/reset.css">
 </head>
 
 <body>
@@ -14,12 +14,13 @@
       <h1>BroadcastChannel</h1>
       <span>2026-05-24</span>
     </header>
-    <main>
-      <p>同域标签页之间的通信/频道广播</p>
-      <p>通信的标签页 <strong>都</strong> 声明 BroadcastChannel</p>
-      <p>一个发送消息；另外一个接受消息</p>
-      <div class="demo"></div>
-      <p>标签A：发送信息；这里使用按钮的单击事件触发</p>
+    <dl>
+      <dd>同域标签页之间的通信/频道广播</dd>
+      <dd>通信的标签页 <strong>都</strong> 声明 <a
+          href="https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel">BroadcastChannel</a></dd>
+      <dd>一个发送消息；另外一个接受消息</dd>
+      <div class="demo">示例</div>
+      <dd>标签A：发送信息；这里使用按钮的单击事件触发</dd>
       <pre>
 const channel = new BroadcastChannel('my_channel');
 let btn = document.getElementById('btn')
@@ -27,13 +28,19 @@ btn.addEventListener('click', fn)
 function fn() {
   channel.postMessage({ text: '你好，标签B，我是标签A！' });
 }</pre>
-      <p>标签B：接受信息；这里使用 Console 查看</p>
+      <dd>标签B：使用 onmessage 接受信息；这里使用 Console 查看</dd>
       <pre>
 const channel = new BroadcastChannel('my_channel');
 channel.onmessage = function (event) {
   console.log('收到消息：', event.data);
 };</pre>
-    </main>
+      <dd>或者使用事件侦听</dd>
+      <pre>
+channel.addEventListener('message', (e) => {
+      console.log('收到消息：', event.data);
+    })
+</pre>
+    </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>

@@ -36,7 +36,6 @@ class Subject {
 
   add(obj) {
     this.observers.push(obj);
-    console.log('新增了一个观察者');
   }
 
   remove(obj) {
@@ -67,6 +66,63 @@ sub.add(ob1)
 sub.add(ob2)
 //发布
 sub.notify('hi')</pre>
+      <div class="demo">聊天室</div>
+      <dd>发布者：构造函数初始化观察者空列表；添加观察者、移除观察者和发布通知</dd>
+      <pre>
+class Subject {
+  constructor() {
+    this.observers = []
+  }
+
+  addObserver(obj) {
+    this.observers.push(obj);
+  }
+
+  removeObserver(obj) {
+    this.observers = this.observers.filter(item => item != obj)
+  }
+
+  notify(msg) {
+    this.observers.forEach(item => item.update(msg))
+  }
+}</pre>
+      <dd>观察者：构造函数接受一个函数，定义自己的业务逻辑</dd>
+      <pre>
+class Observer {
+  constructor(updateFn) {
+    this.update = updateFn;
+  }
+}</pre>
+      <dd>运用</dd>
+      <pre>
+const btn = document.getElementById('btnAdd');
+const display = document.getElementById('displayCount');
+const log = document.getElementById('logInfo');
+
+let count = 0;
+
+const eventBus = new Subject();
+
+// A subscribe：构造观察者A，指定A的业务逻辑，展示消息
+const observerA = new Observer((data) => {
+  display.innerText = data;
+  console.log(data);
+});
+eventBus.addObserver(observerA);
+
+// B subscribe：构造观察者B，指定B的业务逻辑，统计消息
+const observerB = new Observer((data) => {
+  log.innerText = `日志：数量刚刚变成了 ${data}，时间是 ${new Date().toLocaleTimeString()}`;
+  console.log(data);
+});
+eventBus.addObserver(observerB);
+
+// publish
+btn.addEventListener('click', () => {
+  count++;
+  // 通知事件中心，事件中心会自动通知 A 和 B
+  eventBus.notify(count);
+});</pre>
       <div class="demo">下单之后。。。</div>
       <ul>
         <li>扣减库存</li>
@@ -107,7 +163,8 @@ class Observer {
   update(str) {
     this.el.innerHTML = str
   }
-}
+}</pre>
+      <pre>
 let sub = new Subject()
 let obj = new Observer('#bread')
 sub.add(obj)
@@ -119,15 +176,6 @@ news.addEventListener('click', (e) => {
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-    <script src="./js/oberser.js"></script>
-    <script>
-      let ob1 = new Observer('gl')
-      let ob2 = new Observer('sh')
-      let sub = new Subject()
-      sub.add(ob1)
-      sub.add(ob2)
-      sub.notify('hi')
-    </script>
   </div>
 </body>
 
