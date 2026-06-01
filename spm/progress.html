@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>软件项目进度计划 Progress</title>
-  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/base.css">
   <base target="_blank">
 </head>
 
@@ -15,7 +15,27 @@
       <h1>软件项目进度计划</h1>
       <span>Progress</span>
     </header>
-    <dl>
+    <section>
+      <h2>1. 网络图</h2>
+      <dd>展示逻辑关系/依赖关系</dd>
+      <h3>1.1 PDM - Precedence Diagramming Method</h3>
+      <dd>也叫<strong>单代号</strong>网络图、优先图法、节点法</dd>
+      <dd>节点：活动/任务，基本单元</dd>
+      <dd>箭头：活动之间的依赖关系</dd>
+      <dd>关系：紧后/前置和紧后/后续</dd>
+      <figure>
+        <img src="./img/pdm0.png" alt="">
+        <figcaption>PDM</figcaption>
+      </figure>
+      <h3>1.2 ADM - Arrow Diagramming Method</h3>
+      <dd>也叫<strong>双代号</strong>网络图、箭线法、活动箭线图 AoA - Active On the Arrow</dd>
+      <dd>节点和箭线都要编号</dd>
+      <dd>可以使用虚拟活动 Dummy Activity 表示依赖关系；虚拟活动不消耗工期</dd>
+      <figure>
+        <img src="./img/adm0.png" alt="">
+        <figcaption>ADM</figcaption>
+      </figure>
+      <h2>2. 燃尽图 Burn-Down</h2>
       <div class="demo"><a
           href="https://www.bilibili.com/video/BV1tRdhBGEoy/?vd_source=fe13480e1099e18e9d5f4e25467df4df">BiliBli-燃尽图
           Burn-Down</a></div>
@@ -23,6 +43,7 @@
         <img src="../office/imgs/chart7.png" alt="">
         <figcaption>燃尽图 Burn-Down</figcaption>
       </figure>
+      <h2>3. 燃起图 Burn-Up</h2>
       <div class="demo"><a
           href="https://www.bilibili.com/video/BV1xjdhBMEo1/?spm_id_from=333.1387.homepage.video_card.click">BiliBli-燃起图
           Burn-Up</a></div>
@@ -30,12 +51,101 @@
         <img src="../office/imgs/chart8.png" alt="">
         <figcaption>燃起图 Burn-Up</figcaption>
       </figure>
+      <h2>4. 甘特图 Gantt</h2>
       <div class="demo"><a href="https://www.bilibili.com/video/BV1oQdtB2EMK/?spm_id_from=333.1387.0.0">Bilibili-甘特图
           Gantt</a></div>
       <figure>
         <img src="../office/imgs/chart6.png" alt="">
         <figcaption>甘特图</figcaption>
       </figure>
+    </section>
+    <div class="chap">练习 Drill</div>
+    <section>
+      <div class="demo">将PDM改画为ADM</div>
+      <figure>
+        <img src="./img/adm2.png" alt="">
+        <figcaption>PDM</figcaption>
+      </figure>
+      <dd>参考效果</dd>
+      <figure>
+        <img src="./img/adm1.png" alt="">
+        <figcaption>ADM</figcaption>
+      </figure>
+      <div class="demo">对一个任务进行进度估算时；A 是乐观者，估计用 6 天完成；B 是悲观者，估计用 24
+        天完成；C是有经验者，认为最有可能用12天完成。这个任务的历时估算介于10天到16天的概率是多少？
+      </div>
+      <dd>E =(O + 4m + P)/6 = (6 + 4*12 + 24)/6 = 13</dd>
+      <dd>δ =(P - O)/6 = (24 - 6)/6 = 3</dd>
+      <dd>根据统计学中的正态分布规律（68-95-99.7法则）：</dd>
+      <dd>±1 个标准差范围内的概率约为 68.3%</dd>
+      <dd>±2 个标准差范围内的概率约为 95.5%</dd>
+      <dd>±3 个标准差范围内的概率约为 99.7%</dd>
+      <dd>下限：E - δ = 13 – 3 = 10</dd>
+      <dd>上限：E + δ = 13 + 3 = 16</dd>
+      <dd>所以 [10, 16] 概率的为 68.3%</dd>
+      <div class="demo">根据下面的图表，采取PERT估算，求项目在14.57天内完成的概率</div>
+      <figure>
+        <img src="./img/adm3.png" alt="">
+        <figcaption>项目ADM</figcaption>
+      </figure>
+      <table style="max-width: 550px;">
+        <tr>
+          <td></td>
+          <td>O</td>
+          <td>M</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>任务1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>任务2</td>
+          <td>4</td>
+          <td>6</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>任务3</td>
+          <td>3</td>
+          <td>4</td>
+          <td>6</td>
+        </tr>
+      </table>
+      <dd>根据三点估算 (O + 4M + P)/6，各任务对应的历时估计/期望工期 E 分别为</dd>
+      <dd>任务1 E<sub>1</sub> = (2 + 4×3 + 6)/6 = 3.33</dd>
+      <dd>任务2 E<sub>2</sub> = (4 + 4×6 + 8)/6 = 6</dd>
+      <dd>任务3 E<sub>3</sub> = (3 + 4×4 + 6)/6 = 4.17</dd>
+      <dd>则：项目 E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3</sub> = 13.5</dd>
+      <dd>各任务对应的标准差和方差为</dd>
+      <table style="max-width: 550px;">
+        <tr>
+          <td></td>
+          <td>标准差 δ</td>
+          <td>方差 δ<sup>2</sup></td>
+        </tr>
+        <tr>
+          <td>任务1</td>
+          <td>4/6</td>
+          <td>16/36</td>
+        </tr>
+        <tr>
+          <td>任务2</td>
+          <td>4/6</td>
+          <td>16/36</td>
+        </tr>
+        <tr>
+          <td>任务3</td>
+          <td>3/6</td>
+          <td>9/36</td>
+        </tr>
+      </table>
+      <dd>总方差为 δ<sup>2</sup> = 16/36 + 16/36 + 9/36 =41/36 ≈1.1388</dd>
+      <dd>标准差为 δ = (1.1388)<sup>1/2</sup> = 1.07</dd>
+      <dd>14.57 = PERT + δ = 13.5 + 1.07</dd>
+      <dd>根据统计学中的正态分布规律（68-95-99.7法则）：14.57天内完成的概率为68.3%</dd>
       <div class="demo">采用Gantt图表示软件项目进度安排，下列说法中正确的是（）。</div>
       <div>A. 能够反映多个任务之间的复杂关系</div>
       <div>B. 能够直观表示任务之间相互依赖制约关系</div>
@@ -48,7 +158,8 @@
       <div>C. PERT图</div>
       <div>D. HIPO图</div>
       <!-- <div>A、C</div> -->
-    </dl>
+
+    </section>
     <div id="footer" class="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>
