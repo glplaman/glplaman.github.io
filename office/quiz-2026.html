@@ -1,0 +1,1867 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>计算机基础刷题</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-soft: #f1f5f9;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #dbe4ef;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --success: #15803d;
+      --success-soft: #dcfce7;
+      --danger: #dc2626;
+      --danger-soft: #fee2e2;
+      --warning: #b45309;
+      --warning-soft: #fef3c7;
+      --shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .skip-link {
+      position: absolute;
+      left: 16px;
+      top: -48px;
+      z-index: 20;
+      padding: 10px 14px;
+      color: #ffffff;
+      background: var(--primary);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: top 180ms ease;
+    }
+
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    .app-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 32px;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 0 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      line-height: 1.25;
+    }
+
+    .header-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .metric-pill {
+      min-height: 36px;
+      padding: 7px 12px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+      white-space: nowrap;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .main-column,
+    .side-column {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mode-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .mode-tab,
+    .action-btn,
+    .option-btn,
+    .jump-btn,
+    .link-btn {
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .mode-tab {
+      min-height: 44px;
+      padding: 8px 14px;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      font-weight: 700;
+      transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .mode-tab[aria-selected="true"] {
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      border-color: #bfdbfe;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .stat-item {
+      min-height: 72px;
+      padding: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .stat-label {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 0.8125rem;
+    }
+
+    .stat-value {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .quiz-panel,
+    .side-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-panel {
+      padding: 22px;
+    }
+
+    .question-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.9375rem;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      height: 8px;
+      overflow: hidden;
+      background: var(--surface-soft);
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .progress-fill {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--primary);
+      border-radius: inherit;
+      transition: width 220ms ease;
+    }
+
+    .question-title {
+      min-height: 80px;
+      margin: 0 0 18px;
+      font-size: 1.25rem;
+      line-height: 1.65;
+    }
+
+    .options-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      align-items: center;
+      min-height: 56px;
+      width: 100%;
+      padding: 10px 12px;
+      color: var(--text);
+      text-align: left;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .option-btn:hover {
+      border-color: #93c5fd;
+      background: #f8fbff;
+    }
+
+    .option-btn:active {
+      transform: scale(0.99);
+    }
+
+    .option-key {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .option-btn.is-selected {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .option-btn.is-correct {
+      border-color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .option-btn.is-correct .option-key {
+      color: #ffffff;
+      background: var(--success);
+    }
+
+    .option-btn.is-wrong {
+      border-color: var(--danger);
+      background: var(--danger-soft);
+    }
+
+    .option-btn.is-wrong .option-key {
+      color: #ffffff;
+      background: var(--danger);
+    }
+
+    .feedback {
+      min-height: 48px;
+      margin-top: 14px;
+      padding: 11px 12px;
+      color: var(--muted);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .feedback.good {
+      color: #14532d;
+      background: var(--success-soft);
+      border-color: #86efac;
+    }
+
+    .feedback.bad {
+      color: #7f1d1d;
+      background: var(--danger-soft);
+      border-color: #fca5a5;
+    }
+
+    .feedback.warn {
+      color: #78350f;
+      background: var(--warning-soft);
+      border-color: #fcd34d;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .action-btn,
+    .link-btn {
+      min-height: 44px;
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-weight: 800;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .action-btn {
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid var(--border);
+    }
+
+    .action-btn.primary {
+      color: #ffffff;
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .action-btn.danger {
+      color: #991b1b;
+      background: #ffffff;
+      border-color: #fecaca;
+    }
+
+    .action-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      background: #eff6ff;
+    }
+
+    .action-btn.primary:hover:not(:disabled) {
+      color: #ffffff;
+      background: var(--primary-dark);
+    }
+
+    .action-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+    }
+
+    .side-panel {
+      padding: 16px;
+    }
+
+    .side-panel h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .mode-note,
+    .score-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.9375rem;
+    }
+
+    .jump-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .jump-btn {
+      min-height: 44px;
+      color: var(--text);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-weight: 800;
+    }
+
+    .jump-btn.is-current {
+      color: #ffffff;
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .jump-btn.is-correct:not(.is-current) {
+      color: var(--success);
+      border-color: #86efac;
+      background: var(--success-soft);
+    }
+
+    .jump-btn.is-wrong:not(.is-current) {
+      color: var(--danger);
+      border-color: #fca5a5;
+      background: var(--danger-soft);
+    }
+
+    .jump-btn.is-review:not(.is-current) {
+      color: var(--warning);
+      border-color: #fcd34d;
+      background: var(--warning-soft);
+    }
+
+    .jump-btn.is-wrong:not(.is-current) {
+      color: var(--danger);
+      border-color: #fca5a5;
+      background: var(--danger-soft);
+    }
+
+    .review-box,
+    .exam-box {
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .review-box {
+      margin-bottom: 14px;
+    }
+
+    .link-btn {
+      width: 100%;
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      border: 1px solid #bfdbfe;
+    }
+
+    .empty-state {
+      min-height: 220px;
+      display: grid;
+      place-items: center;
+      padding: 24px 12px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+      font-size: 1.125rem;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(37, 99, 235, 0.35);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 920px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .side-column {
+        order: -1;
+      }
+
+      .jump-grid {
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .app-shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 12px;
+      }
+
+      .app-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .header-metrics {
+        justify-content: flex-start;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stats-grid .stat-item:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .quiz-panel {
+        padding: 16px;
+      }
+
+      .question-title {
+        min-height: 96px;
+        font-size: 1.125rem;
+      }
+
+      .actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .actions .primary {
+        grid-column: 1 / -1;
+      }
+
+      .jump-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到题目</a>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">离线刷题工具</p>
+        <h1>计算机基础选择题</h1>
+      </div>
+      <div class="header-metrics" aria-label="练习概览">
+        <span class="metric-pill" id="topProgress">进度 0/50</span>
+        <span class="metric-pill" id="topAccuracy">正确率 0%</span>
+      </div>
+    </header>
+
+    <main class="workspace" id="main">
+      <section class="main-column" aria-label="刷题区域">
+        <div class="mode-tabs" role="tablist" aria-label="练习模式">
+          <button class="mode-tab" type="button" role="tab" data-mode="sequence">顺序练习</button>
+          <button class="mode-tab" type="button" role="tab" data-mode="quick">刷题模式</button>
+          <button class="mode-tab" type="button" role="tab" data-mode="random">随机练习</button>
+          <button class="mode-tab" type="button" role="tab" data-mode="wrong">错题重练</button>
+          <button class="mode-tab" type="button" role="tab" data-mode="ebbinghaus">艾宾浩斯复习</button>
+          <button class="mode-tab" type="button" role="tab" data-mode="exam">模拟考试</button>
+        </div>
+
+        <div class="stats-grid" aria-label="学习统计">
+          <div class="stat-item">
+            <p class="stat-label">已完成</p>
+            <p class="stat-value" id="statDone">0</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-label">正确题数</p>
+            <p class="stat-value" id="statCorrect">0</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-label">错题数</p>
+            <p class="stat-value" id="statWrong">0</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-label">正确率</p>
+            <p class="stat-value" id="statAccuracy">0%</p>
+          </div>
+          <div class="stat-item">
+            <p class="stat-label">最后得分</p>
+            <p class="stat-value" id="statScore">--</p>
+          </div>
+        </div>
+
+        <article class="quiz-panel" aria-live="polite">
+          <div id="quizContent">
+            <div class="question-head">
+              <span id="modeLabel">顺序练习</span>
+              <span id="questionCounter">第 1 / 50 题</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <span class="progress-fill" id="progressFill"></span>
+            </div>
+            <h2 class="question-title" id="questionText"></h2>
+            <div class="options-list" id="optionsList" role="radiogroup" aria-label="选择答案"></div>
+            <div class="feedback" id="feedback">请选择一个答案，然后点击“提交答案”。</div>
+          </div>
+          <div class="actions" aria-label="题目操作">
+            <button class="action-btn" type="button" id="prevBtn">上一题</button>
+            <button class="action-btn" type="button" id="nextBtn">下一题</button>
+            <button class="action-btn primary" type="button" id="submitBtn">提交答案</button>
+            <button class="action-btn" type="button" id="revealBtn">查看答案</button>
+            <button class="action-btn danger" type="button" id="resetBtn">重置进度</button>
+          </div>
+        </article>
+      </section>
+
+      <aside class="side-column" aria-label="题目导航与考试结果">
+        <section class="side-panel">
+          <h2>题目导航</h2>
+          <p class="mode-note" id="modeNote">当前显示全部 50 题。</p>
+          <div class="jump-grid" id="jumpGrid"></div>
+          <div class="review-box">
+            <h2>艾宾浩斯复习</h2>
+            <p class="score-note" id="reviewNote">答错题会进入复习队列。</p>
+            <button class="link-btn" type="button" id="reviewBtn">打开复习</button>
+          </div>
+          <div class="exam-box">
+            <h2>模拟考试</h2>
+            <p class="score-note" id="examNote">进入模拟考试后完成 50 题，系统会自动计算成绩。</p>
+            <button class="link-btn" type="button" id="newExamBtn">重新考试</button>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script type="application/json" id="question-data">[
+  {
+    "id": 1,
+    "text": "Office办公软件是一种________。",
+    "answer": "A",
+    "options": {
+      "A": "应用软件",
+      "B": "工具软件",
+      "C": "免费软件",
+      "D": "系统软件"
+    }
+  },
+  {
+    "id": 2,
+    "text": "下列说法错误的是________。",
+    "answer": "C",
+    "options": {
+      "A": "内存储器可与硬盘等外部存储器交换的数据",
+      "B": "内存储器用于暂时存放CPU中的运算数据",
+      "C": "内存储器一般断电后仍然能保存数据",
+      "D": "可以在一个电脑中使用多个内存条"
+    }
+  },
+  {
+    "id": 3,
+    "text": "在组成计算机的主要功能部件中，负责解释执行计算机指令以及处理数据运算的是________。",
+    "answer": "B",
+    "options": {
+      "A": "内存储器",
+      "B": "CPU",
+      "C": "外存储器",
+      "D": "输入设备"
+    }
+  },
+  {
+    "id": 4,
+    "text": "下列不属于智能可穿戴设备的是________。",
+    "answer": "C",
+    "options": {
+      "A": "高科技织物",
+      "B": "智能手环",
+      "C": "智能手机",
+      "D": "智能眼镜"
+    }
+  },
+  {
+    "id": 5,
+    "text": "个人电脑简称PC机，它属于________。",
+    "answer": "C",
+    "options": {
+      "A": "巨型计算机",
+      "B": "大型计算机",
+      "C": "微型计算机",
+      "D": "小型计算机"
+    }
+  },
+  {
+    "id": 6,
+    "text": "下列关于世界上第一台电子计算机ENIAC的叙述中，错误的是________。",
+    "answer": "C",
+    "options": {
+      "A": "主要采用的电子元件是电子管",
+      "B": "1946年诞生于美国",
+      "C": "使用高级语言进行程序设计",
+      "D": "体积庞大，重量达30吨"
+    }
+  },
+  {
+    "id": 7,
+    "text": "以下哪种文件格式属于声音文件的格式________。",
+    "answer": "B",
+    "options": {
+      "A": ".f4v",
+      "B": ".wav",
+      "C": ".gif",
+      "D": ".png"
+    }
+  },
+  {
+    "id": 8,
+    "text": "以下哪种文件格式属于视频文件的格式________。",
+    "answer": "A",
+    "options": {
+      "A": ".mp4",
+      "B": ".wav",
+      "C": ".mp3",
+      "D": ".png"
+    }
+  },
+  {
+    "id": 9,
+    "text": "计算思维概念哪一年被提出________。",
+    "answer": "A",
+    "options": {
+      "A": "2006",
+      "B": "2005",
+      "C": "2008",
+      "D": "2007"
+    }
+  },
+  {
+    "id": 10,
+    "text": "2转化为二进制如何表示________。",
+    "answer": "C",
+    "options": {
+      "A": "12",
+      "B": "11",
+      "C": "10",
+      "D": "11"
+    }
+  },
+  {
+    "id": 11,
+    "text": "十进制整数69转换成二进制数的结果是________。",
+    "answer": "A",
+    "options": {
+      "A": "1001001",
+      "B": "1010001",
+      "C": "1000101",
+      "D": "1000011"
+    }
+  },
+  {
+    "id": 12,
+    "text": "以下关于IP地址和Internet域名关系的说法中正确的是________。",
+    "answer": "D",
+    "options": {
+      "A": "一个IP地址只能对应一个域名",
+      "B": "IP地址和域名没有关系",
+      "C": "多个IP地址可以对应一个域名",
+      "D": "一个IP地址可以对应多个域名"
+    }
+  },
+  {
+    "id": 13,
+    "text": "在网络应用中，光纤属于一种________。",
+    "answer": "A",
+    "options": {
+      "A": "传输介质",
+      "B": "数据总线",
+      "C": "网络协议",
+      "D": "控制总线"
+    }
+  },
+  {
+    "id": 14,
+    "text": "李克强总理在政府工作报告中首次提出“互联网+”行动计划的会议是________。",
+    "answer": "A",
+    "options": {
+      "A": "十二届全国人大三次会议",
+      "B": "十一届全国人大二次会议",
+      "C": "十一届全国人大三次会议",
+      "D": "十二届全国人大二次会议"
+    }
+  },
+  {
+    "id": 15,
+    "text": "当前社会中，最为突出的大数据环境是________。",
+    "answer": "C",
+    "options": {
+      "A": "物联网",
+      "B": "自然资源",
+      "C": "互联网",
+      "D": "综合国力"
+    }
+  },
+  {
+    "id": 16,
+    "text": "多媒体技术未来发展的方向是________。",
+    "answer": "B",
+    "options": {
+      "A": "易化",
+      "B": "易化、高分辨率化、高速度化、智能化",
+      "C": "易化、高分辨率化",
+      "D": "易化、高分辨率化、高速度化"
+    }
+  },
+  {
+    "id": 17,
+    "text": "以下________属于错误的十六进制数。",
+    "answer": "B",
+    "options": {
+      "A": "F6",
+      "B": "K6",
+      "C": "16",
+      "D": "A6"
+    }
+  },
+  {
+    "id": 18,
+    "text": "主频是PC中________的时钟频率。",
+    "answer": "C",
+    "options": {
+      "A": "内存",
+      "B": "缓存",
+      "C": "CPU",
+      "D": "硬盘"
+    }
+  },
+  {
+    "id": 19,
+    "text": "为解决特定问题而设计的指令序列称为________。",
+    "answer": "D",
+    "options": {
+      "A": "指令",
+      "B": "清单",
+      "C": "序列",
+      "D": "程序"
+    }
+  },
+  {
+    "id": 20,
+    "text": "计算机的主要特点是：存储容量大、________、适用范围广、通用性强。",
+    "answer": "A",
+    "options": {
+      "A": "速度快、精度高",
+      "B": "速度慢、精度低",
+      "C": "速度快、精度低",
+      "D": "速度慢、精度高"
+    }
+  },
+  {
+    "id": 21,
+    "text": "________不属于第三方支付模式。",
+    "answer": "D",
+    "options": {
+      "A": "支付宝",
+      "B": "微信支付",
+      "C": "余额宝",
+      "D": "网银"
+    }
+  },
+  {
+    "id": 22,
+    "text": "________不属于人工智能应用领域。",
+    "answer": "C",
+    "options": {
+      "A": "人脸识别",
+      "B": "智能搜索引擎",
+      "C": "3D打印",
+      "D": "自动驾驶"
+    }
+  },
+  {
+    "id": 23,
+    "text": "在云计算服务中，“向用户提供虚拟的操作系统”属于________。",
+    "answer": "D",
+    "options": {
+      "A": "PaaS",
+      "B": "SaaS",
+      "C": "FaaS",
+      "D": "IaaS"
+    }
+  },
+  {
+    "id": 24,
+    "text": "Windows是一个多任务操作系统，多任务指的是________。",
+    "answer": "D",
+    "options": {
+      "A": "Windows可提供给多个用户使用",
+      "B": "Windows必须运行多个不同类型的应用程序",
+      "C": "Windows可同时管理多种资源",
+      "D": "Windows可同时运行多个应用程序"
+    }
+  },
+  {
+    "id": 25,
+    "text": "________属于国产软件。",
+    "answer": "A",
+    "options": {
+      "A": "WPS",
+      "B": "Word",
+      "C": "Windows",
+      "D": "记事本"
+    }
+  },
+  {
+    "id": 26,
+    "text": "计算机网络最大的优点是________。",
+    "answer": "A",
+    "options": {
+      "A": "资源共享",
+      "B": "提高效率",
+      "C": "加快计算",
+      "D": "增大容量"
+    }
+  },
+  {
+    "id": 27,
+    "text": "________是第二代计算机。",
+    "answer": "A",
+    "options": {
+      "A": "晶体管计算机",
+      "B": "大规模和超大规模集成电路计算机",
+      "C": "集成电路计算机",
+      "D": "电子管计算机"
+    }
+  },
+  {
+    "id": 28,
+    "text": "人类第一台电子计算机是________。",
+    "answer": "A",
+    "options": {
+      "A": "ENIAC",
+      "B": "天河二号",
+      "C": "中国太湖之光",
+      "D": "AlphaGo"
+    }
+  },
+  {
+    "id": 29,
+    "text": "远场零售以________为代表。",
+    "answer": "A",
+    "options": {
+      "A": "电商",
+      "B": "商场",
+      "C": "自动售货机",
+      "D": "便利店"
+    }
+  },
+  {
+    "id": 30,
+    "text": "在Word2016中，【Backspace】键可以删除________。",
+    "answer": "D",
+    "options": {
+      "A": "文档第一个字符",
+      "B": "文档最后一个字符",
+      "C": "光标后一个字符",
+      "D": "光标前一个字符"
+    }
+  },
+  {
+    "id": 31,
+    "text": "存储一个16×16点阵的汉字字形码需要________个字节。",
+    "answer": "C",
+    "options": {
+      "A": "16",
+      "B": "128",
+      "C": "32",
+      "D": "256"
+    }
+  },
+  {
+    "id": 32,
+    "text": "TCP协议是________。",
+    "answer": "D",
+    "options": {
+      "A": "网际互连协议",
+      "B": "用户数据报协议",
+      "C": "文件传输协议",
+      "D": "传输控制协议"
+    }
+  },
+  {
+    "id": 33,
+    "text": "如果屏幕分辨率是1024×768，其显示器横向上有________。",
+    "answer": "C",
+    "options": {
+      "A": "1024厘米",
+      "B": "768个像素",
+      "C": "1024个像素",
+      "D": "768厘米"
+    }
+  },
+  {
+    "id": 34,
+    "text": "在计算机的性能指标中，字长是指________。",
+    "answer": "B",
+    "options": {
+      "A": "存储系统的容量",
+      "B": "计算机运算部件一次能够处理的二进制数据位数",
+      "C": "计算机运行速度",
+      "D": "计算机上网速度"
+    }
+  },
+  {
+    "id": 35,
+    "text": "第六代计算机是指________。",
+    "answer": "C",
+    "options": {
+      "A": "智能手机",
+      "B": "个人计算机",
+      "C": "生物计算机",
+      "D": "平板电脑"
+    }
+  },
+  {
+    "id": 36,
+    "text": "目前，全世界已有的基于________技术加密货币已超过1800种。",
+    "answer": "A",
+    "options": {
+      "A": "区块链",
+      "B": "物联网",
+      "C": "人工智能",
+      "D": "大数据"
+    }
+  },
+  {
+    "id": 37,
+    "text": "从技术层面而言，人工智能技术发展可分为3个阶段：计算智能、感知智能和________。",
+    "answer": "B",
+    "options": {
+      "A": "跳舞机器人",
+      "B": "认知智能",
+      "C": "工业机器人",
+      "D": "高级智能"
+    }
+  },
+  {
+    "id": 38,
+    "text": "在表示存储容量时，1GB表示2的________次方个字节。",
+    "answer": "B",
+    "options": {
+      "A": "20",
+      "B": "30",
+      "C": "10",
+      "D": "40"
+    }
+  },
+  {
+    "id": 39,
+    "text": "Word2016属于________。",
+    "answer": "C",
+    "options": {
+      "A": "系统软件",
+      "B": "编译软件",
+      "C": "应用软件",
+      "D": "数据库软件"
+    }
+  },
+  {
+    "id": 40,
+    "text": "第一代移动通信的特点是________。",
+    "answer": "C",
+    "options": {
+      "A": "业务量小",
+      "B": "速度低",
+      "C": "所有选项都是",
+      "D": "质量差、安全性差、没有加密"
+    }
+  },
+  {
+    "id": 41,
+    "text": "现在量子信息包括量子计算、________、量子测量三大技术领域。",
+    "answer": "C",
+    "options": {
+      "A": "量子纠缠",
+      "B": "所有选项都是",
+      "C": "量子通信",
+      "D": "量子碰撞"
+    }
+  },
+  {
+    "id": 42,
+    "text": "《中华人民共和国网络安全法》从________起正式实施。",
+    "answer": "C",
+    "options": {
+      "A": "2018年10月1日",
+      "B": "2016年5月17日",
+      "C": "2017年6月1日",
+      "D": "2019年11月11日"
+    }
+  },
+  {
+    "id": 43,
+    "text": "采用电子管的计算机是________。",
+    "answer": "D",
+    "options": {
+      "A": "第三代计算机",
+      "B": "第四代计算机",
+      "C": "第二代计算机",
+      "D": "第一代计算机"
+    }
+  },
+  {
+    "id": 44,
+    "text": "量子系统的特性不包括________。",
+    "answer": "B",
+    "options": {
+      "A": "量子纠缠",
+      "B": "量子碰撞",
+      "C": "量子并行",
+      "D": "量子不可克隆"
+    }
+  },
+  {
+    "id": 45,
+    "text": "就目前的技术而言，要称为大数据，存储数据至少要达到________级别。",
+    "answer": "B",
+    "options": {
+      "A": "MB",
+      "B": "TB",
+      "C": "GB",
+      "D": "KB"
+    }
+  },
+  {
+    "id": 46,
+    "text": "在Word2016中，________。",
+    "answer": "C",
+    "options": {
+      "A": "一个节只能包含一个字符",
+      "B": "一个节只能包含一段",
+      "C": "一个节可包含一页或多页",
+      "D": "一个节只能包含一页"
+    }
+  },
+  {
+    "id": 47,
+    "text": "二进制数100，转换为十进制数是________。",
+    "answer": "A",
+    "options": {
+      "A": "4",
+      "B": "2",
+      "C": "6",
+      "D": "8"
+    }
+  },
+  {
+    "id": 48,
+    "text": "HTTPS是________。",
+    "answer": "B",
+    "options": {
+      "A": "文件传输协议",
+      "B": "安全版超文本传输协议",
+      "C": "超文本传输协议",
+      "D": "简单邮件传输协议"
+    }
+  },
+  {
+    "id": 49,
+    "text": "如果屏幕分辨率是1024×768，显示器纵向上有________。",
+    "answer": "D",
+    "options": {
+      "A": "1024厘米",
+      "B": "768厘米",
+      "C": "1024个像素",
+      "D": "768个像素"
+    }
+  },
+  {
+    "id": 50,
+    "text": "计算机的应用领域主要有________、科学计算、信息处理、过程控制、计算机辅助工程、家庭生活。",
+    "answer": "A",
+    "options": {
+      "A": "所有选项都是",
+      "B": "人工智能",
+      "C": "网络应用",
+      "D": "辅助教学"
+    }
+  }
+]</script>
+  <script>
+    const QUESTIONS = JSON.parse(document.getElementById("question-data").textContent);
+    const STORAGE_KEY = "computer-basics-quiz-state-v1";
+    const questionMap = new Map(QUESTIONS.map((question) => [question.id, question]));
+    const allIds = QUESTIONS.map((question) => question.id);
+    const modes = {
+      sequence: "顺序练习",
+      quick: "刷题模式",
+      random: "随机练习",
+      wrong: "错题重练",
+      ebbinghaus: "艾宾浩斯复习",
+      exam: "模拟考试",
+    };
+    const instantModes = new Set(["quick", "ebbinghaus"]);
+    const reviewIntervals = [
+      0,
+      5 * 60 * 1000,
+      30 * 60 * 1000,
+      12 * 60 * 60 * 1000,
+      24 * 60 * 60 * 1000,
+      2 * 24 * 60 * 60 * 1000,
+      4 * 24 * 60 * 60 * 1000,
+      7 * 24 * 60 * 60 * 1000,
+    ];
+
+    const elements = {
+      topProgress: document.getElementById("topProgress"),
+      topAccuracy: document.getElementById("topAccuracy"),
+      statDone: document.getElementById("statDone"),
+      statCorrect: document.getElementById("statCorrect"),
+      statWrong: document.getElementById("statWrong"),
+      statAccuracy: document.getElementById("statAccuracy"),
+      statScore: document.getElementById("statScore"),
+      modeLabel: document.getElementById("modeLabel"),
+      questionCounter: document.getElementById("questionCounter"),
+      progressFill: document.getElementById("progressFill"),
+      questionText: document.getElementById("questionText"),
+      optionsList: document.getElementById("optionsList"),
+      feedback: document.getElementById("feedback"),
+      quizContent: document.getElementById("quizContent"),
+      prevBtn: document.getElementById("prevBtn"),
+      nextBtn: document.getElementById("nextBtn"),
+      submitBtn: document.getElementById("submitBtn"),
+      revealBtn: document.getElementById("revealBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      jumpGrid: document.getElementById("jumpGrid"),
+      modeNote: document.getElementById("modeNote"),
+      reviewNote: document.getElementById("reviewNote"),
+      reviewBtn: document.getElementById("reviewBtn"),
+      examNote: document.getElementById("examNote"),
+      newExamBtn: document.getElementById("newExamBtn"),
+      modeTabs: Array.from(document.querySelectorAll(".mode-tab")),
+    };
+
+    function createDefaultState() {
+      return {
+        mode: "sequence",
+        current: { sequence: 0, quick: 0, random: 0, wrong: 0, ebbinghaus: 0, exam: 0 },
+        randomOrder: [],
+        selected: {},
+        records: {},
+        wrongIds: [],
+        memory: {},
+        revealAnswer: false,
+        lastScore: null,
+        exam: {
+          order: [...allIds],
+          selected: {},
+          records: {},
+          finished: false,
+          score: null,
+          startedAt: null,
+          finishedAt: null,
+        },
+      };
+    }
+
+    function normalizeState(raw) {
+      const base = createDefaultState();
+      const state = { ...base, ...(raw || {}) };
+      state.current = { ...base.current, ...(raw && raw.current ? raw.current : {}) };
+      state.selected = raw && raw.selected && typeof raw.selected === "object" ? raw.selected : {};
+      state.records = raw && raw.records && typeof raw.records === "object" ? raw.records : {};
+      state.memory = raw && raw.memory && typeof raw.memory === "object" ? raw.memory : {};
+      state.wrongIds = Array.isArray(raw && raw.wrongIds)
+        ? raw.wrongIds.map(Number).filter((id) => questionMap.has(id))
+        : [];
+      state.randomOrder = Array.isArray(raw && raw.randomOrder)
+        ? raw.randomOrder.map(Number).filter((id) => questionMap.has(id))
+        : [];
+      state.exam = { ...base.exam, ...(raw && raw.exam ? raw.exam : {}) };
+      state.exam.selected = state.exam.selected && typeof state.exam.selected === "object" ? state.exam.selected : {};
+      state.exam.records = state.exam.records && typeof state.exam.records === "object" ? state.exam.records : {};
+      state.exam.order = Array.isArray(state.exam.order)
+        ? state.exam.order.map(Number).filter((id) => questionMap.has(id))
+        : [...allIds];
+      if (!modes[state.mode]) {
+        state.mode = "sequence";
+      }
+      return state;
+    }
+
+    function loadState() {
+      try {
+        return normalizeState(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+      } catch (error) {
+        return createDefaultState();
+      }
+    }
+
+    let state = loadState();
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function shuffle(values) {
+      const copy = [...values];
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+      }
+      return copy;
+    }
+
+    function ensureRandomOrder() {
+      const hasEveryQuestion = state.randomOrder.length === allIds.length
+        && allIds.every((id) => state.randomOrder.includes(id));
+      if (!hasEveryQuestion) {
+        state.randomOrder = shuffle(allIds);
+      }
+    }
+
+    function ensureExamOrder() {
+      const hasEveryQuestion = state.exam.order.length === allIds.length
+        && allIds.every((id) => state.exam.order.includes(id));
+      if (!hasEveryQuestion) {
+        state.exam.order = [...allIds];
+      }
+    }
+
+    function getOrder(mode = state.mode) {
+      if (mode === "sequence") {
+        return [...allIds];
+      }
+      if (mode === "quick") {
+        return [...allIds];
+      }
+      if (mode === "random") {
+        ensureRandomOrder();
+        return [...state.randomOrder];
+      }
+      if (mode === "wrong") {
+        return state.wrongIds.filter((id) => questionMap.has(id));
+      }
+      if (mode === "ebbinghaus") {
+        return getEbbinghausOrder();
+      }
+      ensureExamOrder();
+      return [...state.exam.order];
+    }
+
+    function getCurrentIndex() {
+      const order = getOrder();
+      const index = Math.min(Math.max(state.current[state.mode] || 0, 0), Math.max(order.length - 1, 0));
+      state.current[state.mode] = index;
+      return index;
+    }
+
+    function getCurrentQuestion() {
+      const order = getOrder();
+      if (!order.length) {
+        return null;
+      }
+      return questionMap.get(order[getCurrentIndex()]);
+    }
+
+    function getSelected(questionId) {
+      return state.mode === "exam" ? state.exam.selected[questionId] : state.selected[questionId];
+    }
+
+    function setSelected(questionId, choice) {
+      if (state.mode === "exam" && state.exam.finished) {
+        return;
+      }
+      if (state.mode === "exam") {
+        state.exam.selected[questionId] = choice;
+      } else {
+        state.selected[questionId] = choice;
+      }
+      state.revealAnswer = false;
+      saveState();
+      if (isInstantMode()) {
+        submitAnswer();
+        return;
+      }
+      render();
+    }
+
+    function getRecord(questionId) {
+      return state.mode === "exam" ? state.exam.records[questionId] : state.records[questionId];
+    }
+
+    function isInstantMode() {
+      return instantModes.has(state.mode);
+    }
+
+    function parseTime(value) {
+      const parsed = Date.parse(value || "");
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    function getEbbinghausOrder() {
+      const now = Date.now();
+      return Object.keys(state.memory)
+        .map(Number)
+        .filter((id) => questionMap.has(id))
+        .sort((left, right) => {
+          const leftMemory = state.memory[left] || {};
+          const rightMemory = state.memory[right] || {};
+          const leftNext = parseTime(leftMemory.nextReviewAt || leftMemory.lastWrongAt);
+          const rightNext = parseTime(rightMemory.nextReviewAt || rightMemory.lastWrongAt);
+          const leftLast = parseTime(leftMemory.lastReviewedAt || leftMemory.lastWrongAt);
+          const rightLast = parseTime(rightMemory.lastReviewedAt || rightMemory.lastWrongAt);
+          const leftDue = now >= leftNext ? 1 : 0;
+          const rightDue = now >= rightNext ? 1 : 0;
+          const leftScore = leftDue * 100000
+            + (leftMemory.wrongCount || 0) * 1000
+            + Math.max(0, now - leftNext) / 180000
+            + Math.max(0, now - leftLast) / 3600000;
+          const rightScore = rightDue * 100000
+            + (rightMemory.wrongCount || 0) * 1000
+            + Math.max(0, now - rightNext) / 180000
+            + Math.max(0, now - rightLast) / 3600000;
+          return rightScore - leftScore || left - right;
+        });
+    }
+
+    function formatDelay(ms) {
+      if (ms <= 0) {
+        return "现在";
+      }
+      const minutes = Math.ceil(ms / 60000);
+      if (minutes < 60) {
+        return `${minutes} 分钟后`;
+      }
+      const hours = Math.ceil(minutes / 60);
+      if (hours < 24) {
+        return `${hours} 小时后`;
+      }
+      return `${Math.ceil(hours / 24)} 天后`;
+    }
+
+    function updateReviewMemory(questionId, isCorrect) {
+      const existing = state.memory[questionId];
+      if (isCorrect && !existing) {
+        return;
+      }
+
+      const now = new Date();
+      const nowIso = now.toISOString();
+      const next = { ...(existing || {}) };
+      next.wrongCount = next.wrongCount || 0;
+      next.correctStreak = next.correctStreak || 0;
+      next.firstWrongAt = next.firstWrongAt || nowIso;
+
+      if (isCorrect) {
+        next.correctStreak += 1;
+        const interval = reviewIntervals[Math.min(next.correctStreak, reviewIntervals.length - 1)];
+        next.nextReviewAt = new Date(now.getTime() + interval).toISOString();
+        next.lastResult = "correct";
+      } else {
+        next.wrongCount += 1;
+        next.correctStreak = 0;
+        next.lastWrongAt = nowIso;
+        next.nextReviewAt = nowIso;
+        next.lastResult = "wrong";
+      }
+
+      next.lastReviewedAt = nowIso;
+      state.memory[questionId] = next;
+    }
+
+    function getReviewHint(questionId) {
+      const memory = state.memory[questionId];
+      if (!memory) {
+        return "";
+      }
+      const delay = formatDelay(parseTime(memory.nextReviewAt) - Date.now());
+      return `错 ${memory.wrongCount || 0} 次，下次复习：${delay}`;
+    }
+
+    function updateWrongList(questionId, isCorrect) {
+      const set = new Set(state.wrongIds);
+      if (isCorrect) {
+        set.delete(questionId);
+      } else {
+        set.add(questionId);
+      }
+      state.wrongIds = [...set].sort((a, b) => a - b);
+      if (state.mode === "wrong") {
+        const order = getOrder("wrong");
+        state.current.wrong = Math.min(state.current.wrong, Math.max(order.length - 1, 0));
+      }
+    }
+
+    function submitAnswer() {
+      const question = getCurrentQuestion();
+      if (!question) {
+        return;
+      }
+      const selected = getSelected(question.id);
+      if (!selected) {
+        setFeedback("请先选择一个选项。", "warn");
+        return;
+      }
+
+      const isCorrect = selected === question.answer;
+      const record = {
+        selected,
+        correct: question.answer,
+        isCorrect,
+        answeredAt: new Date().toISOString(),
+      };
+      updateWrongList(question.id, isCorrect);
+      updateReviewMemory(question.id, isCorrect);
+      if (state.mode === "ebbinghaus") {
+        const updatedOrder = getOrder("ebbinghaus");
+        const updatedIndex = updatedOrder.indexOf(question.id);
+        state.current.ebbinghaus = updatedIndex >= 0 ? updatedIndex : Math.min(state.current.ebbinghaus, Math.max(updatedOrder.length - 1, 0));
+      }
+
+      if (state.mode === "exam") {
+        state.exam.records[question.id] = record;
+        if (Object.keys(state.exam.records).length === allIds.length) {
+          finishExam();
+        } else {
+          state.revealAnswer = false;
+        }
+      } else {
+        state.records[question.id] = record;
+        state.revealAnswer = true;
+      }
+
+      saveState();
+      render();
+    }
+
+    function finishExam() {
+      const records = Object.values(state.exam.records);
+      const correct = records.filter((record) => record.isCorrect).length;
+      state.exam.finished = true;
+      state.exam.score = correct;
+      state.exam.finishedAt = new Date().toISOString();
+      state.lastScore = correct;
+      state.revealAnswer = false;
+    }
+
+    function startNewExam() {
+      state.exam = {
+        order: [...allIds],
+        selected: {},
+        records: {},
+        finished: false,
+        score: null,
+        startedAt: new Date().toISOString(),
+        finishedAt: null,
+      };
+      state.current.exam = 0;
+      state.mode = "exam";
+      state.revealAnswer = false;
+      saveState();
+      render();
+    }
+
+    function setFeedback(message, type = "") {
+      elements.feedback.className = `feedback ${type}`.trim();
+      elements.feedback.textContent = message;
+    }
+
+    function move(delta) {
+      const order = getOrder();
+      if (!order.length) {
+        return;
+      }
+      state.current[state.mode] = Math.min(Math.max(getCurrentIndex() + delta, 0), order.length - 1);
+      state.revealAnswer = false;
+      saveState();
+      render();
+    }
+
+    function jumpTo(index) {
+      state.current[state.mode] = index;
+      state.revealAnswer = false;
+      saveState();
+      render();
+    }
+
+    function switchMode(mode) {
+      state.mode = mode;
+      state.revealAnswer = false;
+      getCurrentIndex();
+      saveState();
+      render();
+    }
+
+    function resetProgress() {
+      if (!confirm("确定要清空练习记录、考试记录和当前进度吗？错题集与艾宾浩斯复习记录会保留，题目做对后才会从错题集消失。")) {
+        return;
+      }
+      const preservedWrongIds = [...state.wrongIds];
+      const preservedMemory = { ...state.memory };
+      state = createDefaultState();
+      state.wrongIds = preservedWrongIds;
+      state.memory = preservedMemory;
+      saveState();
+      render();
+    }
+
+    function formatPercent(value, total) {
+      if (!total) {
+        return "0%";
+      }
+      return `${Math.round((value / total) * 100)}%`;
+    }
+
+    function renderStats() {
+      const records = Object.values(state.records);
+      const done = records.length;
+      const correct = records.filter((record) => record.isCorrect).length;
+      const wrong = state.wrongIds.length;
+      const accuracy = formatPercent(correct, done);
+      elements.statDone.textContent = String(done);
+      elements.statCorrect.textContent = String(correct);
+      elements.statWrong.textContent = String(wrong);
+      elements.statAccuracy.textContent = accuracy;
+      elements.statScore.textContent = state.lastScore === null ? "--" : `${state.lastScore}/50`;
+      elements.topProgress.textContent = `进度 ${done}/50`;
+      elements.topAccuracy.textContent = `正确率 ${accuracy}`;
+    }
+
+    function renderModeTabs() {
+      elements.modeTabs.forEach((button) => {
+        const active = button.dataset.mode === state.mode;
+        button.setAttribute("aria-selected", String(active));
+        button.tabIndex = active ? 0 : -1;
+      });
+    }
+
+    function renderEmptyState() {
+      const isReview = state.mode === "ebbinghaus";
+      const title = isReview ? "暂无复习题" : "暂无错题";
+      const message = isReview ? "答错的题会进入艾宾浩斯复习，并按到期时间、错误次数排序。" : "答错的题会自动进入错题重练。";
+      elements.quizContent.innerHTML = `
+        <div class="empty-state">
+          <div>
+            <strong>${title}</strong>
+            <span>${message}</span>
+          </div>
+        </div>
+      `;
+      elements.prevBtn.disabled = true;
+      elements.nextBtn.disabled = true;
+      elements.submitBtn.disabled = true;
+      elements.revealBtn.disabled = true;
+    }
+
+    function restoreQuizMarkup() {
+      if (document.getElementById("questionText")) {
+        return;
+      }
+      elements.quizContent.innerHTML = `
+        <div class="question-head">
+          <span id="modeLabel"></span>
+          <span id="questionCounter"></span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <span class="progress-fill" id="progressFill"></span>
+        </div>
+        <h2 class="question-title" id="questionText"></h2>
+        <div class="options-list" id="optionsList" role="radiogroup" aria-label="选择答案"></div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      elements.modeLabel = document.getElementById("modeLabel");
+      elements.questionCounter = document.getElementById("questionCounter");
+      elements.progressFill = document.getElementById("progressFill");
+      elements.questionText = document.getElementById("questionText");
+      elements.optionsList = document.getElementById("optionsList");
+      elements.feedback = document.getElementById("feedback");
+    }
+
+    function renderQuestion() {
+      const order = getOrder();
+      if (!order.length) {
+        renderEmptyState();
+        return;
+      }
+      restoreQuizMarkup();
+
+      const index = getCurrentIndex();
+      const question = getCurrentQuestion();
+      const selected = getSelected(question.id);
+      const record = getRecord(question.id);
+      const canReveal = state.mode !== "exam" || state.exam.finished;
+      const instant = isInstantMode();
+      const shouldShowAnswer = (Boolean(record) && state.mode !== "exam") || (state.mode === "exam" && state.exam.finished && state.revealAnswer) || state.revealAnswer;
+
+      elements.modeLabel.textContent = modes[state.mode];
+      elements.questionCounter.textContent = `第 ${index + 1} / ${order.length} 题`;
+      elements.progressFill.style.width = `${((index + 1) / order.length) * 100}%`;
+      elements.questionText.textContent = `${question.id}. ${question.text}`;
+      elements.optionsList.innerHTML = "";
+
+      Object.entries(question.options).forEach(([key, value]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option-btn";
+        button.setAttribute("role", "radio");
+        button.setAttribute("aria-checked", String(selected === key));
+        button.dataset.choice = key;
+
+        if (selected === key) {
+          button.classList.add("is-selected");
+        }
+        if (shouldShowAnswer && key === question.answer) {
+          button.classList.add("is-correct");
+        }
+        if (shouldShowAnswer && record && record.selected === key && !record.isCorrect) {
+          button.classList.add("is-wrong");
+        }
+
+        const badge = document.createElement("span");
+        badge.className = "option-key";
+        badge.textContent = key;
+        const text = document.createElement("span");
+        text.textContent = value;
+        button.append(badge, text);
+        button.addEventListener("click", () => setSelected(question.id, key));
+        elements.optionsList.appendChild(button);
+      });
+
+      if (state.mode === "exam" && !state.exam.finished) {
+        if (record) {
+          setFeedback("本题答案已记录，完成全部题目后显示成绩。", "");
+        } else {
+          setFeedback("请选择答案并点击“提交答案”，考试结束前不显示正确答案。", "");
+        }
+      } else if (record && record.isCorrect) {
+        const hint = getReviewHint(question.id);
+        setFeedback(hint ? `答对了，已从错题集移除；${hint}。` : "答对了。", "good");
+      } else if (record && !record.isCorrect) {
+        const hint = getReviewHint(question.id);
+        setFeedback(`答错了，正确答案：${question.answer}。已加入错题集和艾宾浩斯复习。${hint}。`, "bad");
+      } else if (state.revealAnswer && canReveal) {
+        setFeedback(`正确答案：${question.answer}。暂无额外解析。`, "warn");
+      } else if (instant && state.mode === "quick") {
+        setFeedback("刷题模式：点击任意选项，马上显示对错并记录错题。", "");
+      } else if (instant && state.mode === "ebbinghaus") {
+        const hint = getReviewHint(question.id);
+        setFeedback(hint ? `艾宾浩斯复习：${hint}，点击选项立即判题。` : "艾宾浩斯复习：点击选项立即判题。", "");
+      } else {
+        setFeedback("请选择一个答案，然后点击“提交答案”。", "");
+      }
+
+      elements.prevBtn.disabled = index === 0;
+      elements.nextBtn.disabled = index === order.length - 1;
+      elements.submitBtn.disabled = instant || !selected || (state.mode === "exam" && state.exam.finished);
+      elements.submitBtn.textContent = instant ? "点击选项判题" : state.mode === "exam" ? "记录答案" : "提交答案";
+      elements.revealBtn.disabled = !canReveal;
+      elements.revealBtn.textContent = state.revealAnswer ? "隐藏答案" : "查看答案";
+    }
+
+    function renderNavigator() {
+      const order = getOrder();
+      const currentIndex = getCurrentIndex();
+      elements.jumpGrid.innerHTML = "";
+      order.forEach((id, index) => {
+        const questionRecord = state.mode === "exam" ? state.exam.records[id] : state.records[id];
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "jump-btn";
+        button.textContent = String(id);
+        const reviewHint = getReviewHint(id);
+        button.setAttribute("aria-label", reviewHint ? `跳到第 ${id} 题，${reviewHint}` : `跳到第 ${id} 题`);
+        if (reviewHint && state.mode === "ebbinghaus") {
+          button.title = reviewHint;
+          button.classList.add("is-review");
+        }
+        if (index === currentIndex) {
+          button.classList.add("is-current");
+        }
+        if (questionRecord && questionRecord.isCorrect) {
+          button.classList.add("is-correct");
+        }
+        if (questionRecord && !questionRecord.isCorrect) {
+          button.classList.add("is-wrong");
+        }
+        button.addEventListener("click", () => jumpTo(index));
+        elements.jumpGrid.appendChild(button);
+      });
+
+      if (state.mode === "wrong") {
+        elements.modeNote.textContent = order.length ? `当前显示 ${order.length} 道错题。` : "暂无错题。";
+      } else if (state.mode === "quick") {
+        elements.modeNote.textContent = "刷题模式共 50 题，点击选项立即判题。";
+      } else if (state.mode === "ebbinghaus") {
+        elements.modeNote.textContent = order.length
+          ? `按到期时间、错误次数和距离上次复习时间排序，共 ${order.length} 题。`
+          : "暂无艾宾浩斯复习题。";
+      } else if (state.mode === "exam") {
+        const answered = Object.keys(state.exam.records).length;
+        elements.modeNote.textContent = `模拟考试已作答 ${answered}/50 题。`;
+      } else {
+        elements.modeNote.textContent = "当前显示全部 50 题。";
+      }
+    }
+
+    function renderExamNote() {
+      const answered = Object.keys(state.exam.records).length;
+      if (state.exam.finished) {
+        elements.examNote.textContent = `已完成，得分 ${state.exam.score}/50。`;
+      } else {
+        elements.examNote.textContent = `考试进度 ${answered}/50，完成后自动出成绩。`;
+      }
+    }
+
+    function renderReviewNote() {
+      const ids = Object.keys(state.memory).map(Number).filter((id) => questionMap.has(id));
+      const now = Date.now();
+      const due = ids.filter((id) => parseTime(state.memory[id].nextReviewAt) <= now).length;
+      elements.reviewNote.textContent = ids.length
+        ? `复习队列 ${ids.length} 题，当前到期 ${due} 题，优先错得多和间隔久的题。`
+        : "答错题会进入复习队列。";
+    }
+
+    function render() {
+      renderModeTabs();
+      renderStats();
+      renderQuestion();
+      renderNavigator();
+      renderReviewNote();
+      renderExamNote();
+    }
+
+    elements.modeTabs.forEach((button) => {
+      button.addEventListener("click", () => switchMode(button.dataset.mode));
+    });
+    elements.prevBtn.addEventListener("click", () => move(-1));
+    elements.nextBtn.addEventListener("click", () => move(1));
+    elements.submitBtn.addEventListener("click", submitAnswer);
+    elements.revealBtn.addEventListener("click", () => {
+      state.revealAnswer = !state.revealAnswer;
+      saveState();
+      render();
+    });
+    elements.resetBtn.addEventListener("click", resetProgress);
+    elements.reviewBtn.addEventListener("click", () => switchMode("ebbinghaus"));
+    elements.newExamBtn.addEventListener("click", startNewExam);
+    window.addEventListener("keydown", (event) => {
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      if (event.key === "ArrowLeft") {
+        move(-1);
+      }
+      if (event.key === "ArrowRight") {
+        move(1);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
