@@ -1253,6 +1253,14 @@
         selected: {},
         records: {},
         wrongIds: [],
+        wrongPractice: {
+          selected: {},
+          records: {},
+        },
+        reviewPractice: {
+          selected: {},
+          records: {},
+        },
         memory: {},
         revealAnswer: false,
         lastScore: null,
@@ -1274,6 +1282,14 @@
       state.current = { ...base.current, ...(raw && raw.current ? raw.current : {}) };
       state.selected = raw && raw.selected && typeof raw.selected === "object" ? raw.selected : {};
       state.records = raw && raw.records && typeof raw.records === "object" ? raw.records : {};
+      state.wrongPractice = {
+        selected: raw && raw.wrongPractice && raw.wrongPractice.selected && typeof raw.wrongPractice.selected === "object" ? raw.wrongPractice.selected : {},
+        records: raw && raw.wrongPractice && raw.wrongPractice.records && typeof raw.wrongPractice.records === "object" ? raw.wrongPractice.records : {},
+      };
+      state.reviewPractice = {
+        selected: raw && raw.reviewPractice && raw.reviewPractice.selected && typeof raw.reviewPractice.selected === "object" ? raw.reviewPractice.selected : {},
+        records: raw && raw.reviewPractice && raw.reviewPractice.records && typeof raw.reviewPractice.records === "object" ? raw.reviewPractice.records : {},
+      };
       state.memory = raw && raw.memory && typeof raw.memory === "object" ? raw.memory : {};
       state.wrongIds = Array.isArray(raw && raw.wrongIds)
         ? raw.wrongIds.map(Number).filter((id) => questionMap.has(id))
@@ -1369,7 +1385,16 @@
     }
 
     function getSelected(questionId) {
-      return state.mode === "exam" ? state.exam.selected[questionId] : state.selected[questionId];
+      if (state.mode === "exam") {
+        return state.exam.selected[questionId];
+      }
+      if (state.mode === "wrong") {
+        return state.wrongPractice.selected[questionId];
+      }
+      if (state.mode === "ebbinghaus") {
+        return state.reviewPractice.selected[questionId];
+      }
+      return state.selected[questionId];
     }
 
     function setSelected(questionId, choice) {
@@ -1378,6 +1403,10 @@
       }
       if (state.mode === "exam") {
         state.exam.selected[questionId] = choice;
+      } else if (state.mode === "wrong") {
+        state.wrongPractice.selected[questionId] = choice;
+      } else if (state.mode === "ebbinghaus") {
+        state.reviewPractice.selected[questionId] = choice;
       } else {
         state.selected[questionId] = choice;
       }
@@ -1391,7 +1420,30 @@
     }
 
     function getRecord(questionId) {
-      return state.mode === "exam" ? state.exam.records[questionId] : state.records[questionId];
+      if (state.mode === "exam") {
+        return state.exam.records[questionId];
+      }
+      if (state.mode === "wrong") {
+        return state.wrongPractice.records[questionId];
+      }
+      if (state.mode === "ebbinghaus") {
+        return state.reviewPractice.records[questionId];
+      }
+      return state.records[questionId];
+    }
+
+    function clearRetryAttempt(questionId) {
+      if (!questionId) {
+        return;
+      }
+      if (state.mode === "wrong") {
+        delete state.wrongPractice.selected[questionId];
+        delete state.wrongPractice.records[questionId];
+      }
+      if (state.mode === "ebbinghaus") {
+        delete state.reviewPractice.selected[questionId];
+        delete state.reviewPractice.records[questionId];
+      }
     }
 
     function isInstantMode() {
@@ -1522,6 +1574,12 @@
         const updatedIndex = updatedOrder.indexOf(question.id);
         state.current.ebbinghaus = updatedIndex >= 0 ? updatedIndex : Math.min(state.current.ebbinghaus, Math.max(updatedOrder.length - 1, 0));
       }
+      if (state.mode === "wrong" && isCorrect) {
+        const nextQuestion = getCurrentQuestion();
+        if (nextQuestion) {
+          clearRetryAttempt(nextQuestion.id);
+        }
+      }
 
       if (state.mode === "exam") {
         state.exam.records[question.id] = record;
@@ -1531,6 +1589,12 @@
           state.revealAnswer = false;
         }
       } else {
+        if (state.mode === "wrong") {
+          state.wrongPractice.records[question.id] = record;
+        }
+        if (state.mode === "ebbinghaus") {
+          state.reviewPractice.records[question.id] = record;
+        }
         state.records[question.id] = record;
         state.revealAnswer = true;
       }
@@ -1578,6 +1642,10 @@
       }
       state.current[state.mode] = Math.min(Math.max(getCurrentIndex() + delta, 0), order.length - 1);
       state.revealAnswer = false;
+      const question = getCurrentQuestion();
+      if (question) {
+        clearRetryAttempt(question.id);
+      }
       saveState();
       render();
     }
@@ -1585,6 +1653,10 @@
     function jumpTo(index) {
       state.current[state.mode] = index;
       state.revealAnswer = false;
+      const question = getCurrentQuestion();
+      if (question) {
+        clearRetryAttempt(question.id);
+      }
       saveState();
       render();
     }
@@ -1592,6 +1664,14 @@
     function switchMode(mode) {
       state.mode = mode;
       state.revealAnswer = false;
+      if (mode === "wrong") {
+        state.wrongPractice = { selected: {}, records: {} };
+        state.current.wrong = 0;
+      }
+      if (mode === "ebbinghaus") {
+        state.reviewPractice = { selected: {}, records: {} };
+        state.current.ebbinghaus = 0;
+      }
       getCurrentIndex();
       saveState();
       render();
@@ -1768,7 +1848,7 @@
       const currentIndex = getCurrentIndex();
       elements.jumpGrid.innerHTML = "";
       order.forEach((id, index) => {
-        const questionRecord = state.mode === "exam" ? state.exam.records[id] : state.records[id];
+        const questionRecord = getRecord(id);
         const button = document.createElement("button");
         button.type = "button";
         button.className = "jump-btn";
