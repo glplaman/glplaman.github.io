@@ -11,13 +11,14 @@
   <base target="_blank">
   <style>
     .blend-img {
-      width: 320px;
-      min-height: 180px;
+      width: 100%;
+      max-width: 400px;
+      min-height: 300px;
       background: url(./imgs/bg.jpg), url(./imgs/mask0.jpg);
       background-repeat: no-repeat;
-      background-size: cover;
       background-position: center center;
       background-blend-mode: screen;
+      margin: 0 auto;
     }
 
     .mask-bg {
@@ -42,7 +43,8 @@
     }
 
     .img0,
-    .img1 {
+    .img1,
+    .img2 {
       width: 300px;
       height: 300px;
       background-color: #eee;
@@ -57,6 +59,18 @@
 
     .img1 img {
       mix-blend-mode: darken;
+    }
+
+    .img2 {
+      background-image: url(./imgs/bg.jpg);
+      background-size: cover;
+    }
+
+    .img2 .mask {
+      width: 100%;
+      height: 100%;
+      background-color: #f1c574;
+      mix-blend-mode: overlay;
     }
   </style>
 </head>
@@ -110,11 +124,19 @@
       </table>
       <dd>原始图片、遮罩图片和合成图片</dd>
       <dd>遮罩图片请使用高对比度素材</dd>
-      <div class="grid">
+      <figure>
         <img src="./imgs/bg.jpg" alt="">
+        <figcaption>素材1</figcaption>
+      </figure>
+      <figure>
         <img src="./imgs/mask0.jpg" alt="">
+        <figcaption>素材2</figcaption>
+      </figure>
+      <figure>
         <div class="blend-img"></div>
-        <pre>
+        <figcaption>效果</figcaption>
+      </figure>
+      <pre>
 .blend-img {
     width: 320px;
     height: 180px;
@@ -126,15 +148,13 @@
     background-position: center center;
     background-blend-mode: screen;
 }</pre>
-      </div>
       <dt>mix-blend-mode</dt>
       <div>普通元素和背景图片的混合模式</div>
-      <div class="demo"> 文字背景</div>
-      <div class="grid">
-        <div class="mbm">
-          <div>mix-blend-mode</div>
-        </div>
-        <pre>
+      <div class="demo">文字背景</div>
+      <div class="mbm">
+        <div>mix-blend-mode</div>
+      </div>
+      <pre>
 .mbm {
   background-image: url(../../imgs/lg.jpg);
   background-size: cover;
@@ -147,8 +167,21 @@
   background-color: #fff;
   mix-blend-mode: screen;
 }      </pre>
+      <div class="demo">老照片</div>
+      <div>叠加模式 overlay</div>
+      <div>容器使用背景图片</div>
+      <div>子元素是一个蒙版，应用叠加模式的混合</div>
+      <div class="img2">
+        <div class="mask"></div>
       </div>
-      <div class="demo"> 移除图片背景 - 和容器背景融合</div>
+      <pre>
+.img2 .mask {
+  width: 100%;
+  height: 100%;
+  background-color: #ffa500;
+  mix-blend-mode: overlay;
+}</pre>
+      <div class="demo">移除图片背景 - 和容器背景融合</div>
       <div>1. 初始情况，图片背景和容器背景</div>
       <div class="img0">
         <img src="../imgs/chrome.jpg" alt="">
