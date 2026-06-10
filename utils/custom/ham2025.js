@@ -24,16 +24,16 @@ items.forEach((item, ind) => {
   });
 });
 
-ham.addEventListener("click", (e) => {
+ham && ham.addEventListener("click", (e) => {
   body.classList.toggle("lock");
 });
 
 const back2top = document.querySelector("#back2top");
 document.addEventListener("scroll", () => {
-  back2top.classList.toggle("active", scrollY > innerHeight / 4);
+  back2top && back2top.classList.toggle("active", scrollY > innerHeight / 4);
   nav.classList.toggle("active", scrollY > innerHeight / 4);
   setTimeout(() => {
-    back2top.classList.remove("active");
+    ack2top && back2top.classList.remove("active");
   }, 10000);
 });
 

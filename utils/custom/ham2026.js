@@ -1,9 +1,9 @@
 const body = document.body;
 const mainNav = body.querySelector(".main-nav");
-const nav = body.querySelector("#nav");
-const items = body.querySelectorAll(".nav-item");
+const nav = mainNav.querySelector("#nav");
+const items = mainNav.querySelectorAll(".nav-item");
+const ham = mainNav.querySelector("#ham");
 const navConts = body.querySelectorAll(".nav-cont");
-const ham = body.querySelector("#ham");
 
 const toggleLock = () => {
   if (body.classList.contains("lock")) {
