@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计划评审技术网络图 PERT</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1></h1>
+      <span>PERT</span>
+    </header>
+    <section>
+      <ul>
+        <li>Program Evaluation and Review Technique</li>
+        <li>简称 PERT 网络图</li>
+        <li>采用三点估算 Three-Point Estimate Technique 估算工期</li>
+      </ul>
+      <h2>单个任务</h2>
+      <div>1. 选定3个估算值：</div>
+      <ul>
+        <li>O：最小估算值，乐观 Optimistic Estimate</li>
+        <li>P：最大估算值，悲观 Pessimistic Estimate</li>
+        <li>M：最大可能估算，Most Likely Estimate</li>
+      </ul>
+      <div>2. 求期望工期 Estimate - E</div>
+      <div>实际项目中，最可能的情况（M）发生的概率通常远高于乐观（O）或悲观（P），所以赋予更高权重</div>
+      <div class="txt-center">E =(O + 4M + P)/6</div>
+      <div>3. 求标准差 Standard Deviation - δ</div>
+      <div>衡量你的估计中存在多少变动的指标</div>
+      <div>δ 越大 → 估计中存在的不确定性程度更大</div>
+      <div class="txt-center">δ =(P - O)/6</div>
+      <div>4. 根据正态分布的统计规律处理不确定工期：</div>
+      <ul>
+        <li>±1𝜎 （1个标准差）：覆盖约 68.3% 的概率</li>
+        <li>±2𝜎 （2个标准差）：覆盖约 95.5% 的概率</li>
+        <li>±3𝜎 （3个标准差）：覆盖约 99.7% 的概率</li>
+      </ul>
+      <div class="demo">若项目期望工期 30 天，标准差 2 天</div>
+      <ul>
+        <li>工期在 28 ~ 32 天之间（±1σ） ≈ 68.3%</li>
+        <li>工期 ≤ 32 天（不超过 +1σ） ≈ 84%</li>
+        <li>工期 > 32 天（超过 +1σ） ≈ 16%</li>
+      </ul>
+      <div class="demo">对一个任务进行进度估算时；A 是乐观者，估计用 6 天完成；B 是悲观者，估计用 24
+        天完成；C是有经验者，认为最有可能用12天完成。这个任务的历时估算介于10天到16天的概率是多少？
+      </div>
+      <div class="qa">
+        <p>E =(O + 4m + P)/6 = (6 + 4*12 + 24)/6 = 13</p>
+        <p>δ =(P - O)/6 = (24 - 6)/6 = 3</p>
+        <p>根据统计学中的正态分布规律（68-95-99.7法则）：</p>
+        <p>±1 个标准差范围内的概率约为 68.3%</p>
+        <p>±2 个标准差范围内的概率约为 95.5%</p>
+        <p>±3 个标准差范围内的概率约为 99.7%</p>
+        <p>下限：E - δ = 13 – 3 = 10</p>
+        <p>上限：E + δ = 13 + 3 = 16</p>
+        <p>所以 [10, 16] 概率的为 68.3%</p>
+      </div>
+      <h2>多个任务</h2>
+      <div>如果各任务工期相互独立（PERT 的基本假设）</div>
+      <div>总期望 E</div>
+      <div class="txt-center">E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3</sub> + ...</div>
+      <div>总方差 δ<sup>2</sup></div>
+      <div class="txt-center">δ<sup>2</sup> = δ<sup>2</sup><sub>1</sub> + δ<sup>2</sup><sub>2</sub> +
+        δ<sup>2</sup><sub>3</sub> + ...</div>
+      <div>总标准差 δ</div>
+      <div class="txt-center">δ = (δ<sup>2</sup><sub>1</sub> + δ<sup>2</sup><sub>2</sub> +
+        δ<sup>2</sup><sub>3</sub> + ...)<sup>1/2</sup></div>
+      <div>总标准差如果直接相加，高估了整体风险；因为正负偏差会部分相互抵消，不可能所有任务同时极端恶化</div>
+      <div class="demo">根据下面的图表，采取PERT估算，求项目在14.57天内完成的概率</div>
+      <figure>
+        <img src="./img/adm3.png" alt="">
+        <figcaption>项目ADM</figcaption>
+      </figure>
+      <table style="max-width: 550px;">
+        <caption>PERT估算</caption>
+        <tr>
+          <td></td>
+          <td>O</td>
+          <td>M</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>任务1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>任务2</td>
+          <td>4</td>
+          <td>6</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>任务3</td>
+          <td>3</td>
+          <td>4</td>
+          <td>6</td>
+        </tr>
+      </table>
+      <div class="qa">
+        <p>根据三点估算 (O + 4M + P)/6，各任务对应的历时估计/期望工期 E 分别为</p>
+        <p>任务1 E<sub>1</sub> = (2 + 4×3 + 6)/6 = 3.33</p>
+        <p>任务2 E<sub>2</sub> = (4 + 4×6 + 8)/6 = 6</p>
+        <p>任务3 E<sub>3</sub> = (3 + 4×4 + 6)/6 = 4.17</p>
+        <p>则：项目 E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3</sub> = 13.5</p>
+        <p>各任务对应的标准差和方差为</p>
+        <table style="max-width: 550px;">
+          <tr>
+            <td></td>
+            <td>标准差 δ</td>
+            <td>方差 δ<sup>2</sup></td>
+          </tr>
+          <tr>
+            <td>任务1</td>
+            <td>4/6</td>
+            <td>16/36</td>
+          </tr>
+          <tr>
+            <td>任务2</td>
+            <td>4/6</td>
+            <td>16/36</td>
+          </tr>
+          <tr>
+            <td>任务3</td>
+            <td>3/6</td>
+            <td>9/36</td>
+          </tr>
+        </table>
+        <p>总方差为 δ<sup>2</sup> = 16/36 + 16/36 + 9/36 =41/36 ≈1.1388</p>
+        <p>标准差为 δ = (1.1388)<sup>1/2</sup> = 1.07</p>
+        <p>14.57 = PERT + δ = 13.5 + 1.07</p>
+        <p>根据统计学中的正态分布规律（68-95-99.7法则）：14.57天内完成的概率为68.3%</p>
+      </div>
+    </section>
+    <div id="footer" class="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
