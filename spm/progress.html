@@ -58,6 +58,30 @@
         <img src="../office/imgs/chart6.png" alt="">
         <figcaption>甘特图</figcaption>
       </figure>
+      <h2>5. 关键路径法 CPM</h2>
+      <p>项目由多个任务组成</p>
+      <p>每个任务都有不同的时间参数</p>
+      <h3>5.1 概念</h3>
+      <ul>
+        <li>最早开始时间 ES - Earliest Start Time</li>
+        <li>最迟开始时间 LS - Latest Start Time</li>
+        <li>最早完成时间 EF - Earliest Finish Time</li>
+        <li>最迟完成时间 LF - Latest Finish Time</li>
+        <li>浮动时间 Total Float：TF = LS – ES = LF - EF</li>
+        <li>关键任务：浮动时间为 0 的任务</li>
+      </ul>
+      <figure>
+        <img src="./img/cp0.png" alt="">
+        <figcaption>任务图示</figcaption>
+      </figure>
+      <h3>5.2 关键路径</h3>
+      <ul>
+        <li>由关键任务形成</li>
+        <li>最长路径</li>
+        <li>最短工期</li>
+        <li>总浮动时间为 0</li>
+        <li>可能不止一条</li>
+      </ul>
     </section>
     <div class="chap">练习 Drill</div>
     <section>
@@ -66,23 +90,26 @@
         <img src="./img/adm2.png" alt="">
         <figcaption>PDM</figcaption>
       </figure>
-      <dd>参考效果</dd>
-      <figure>
-        <img src="./img/adm1.png" alt="">
-        <figcaption>ADM</figcaption>
-      </figure>
+      <div class="qa">参考效果
+        <figure>
+          <img src="./img/adm1.png" alt="">
+          <figcaption>ADM</figcaption>
+        </figure>
+      </div>
       <div class="demo">对一个任务进行进度估算时；A 是乐观者，估计用 6 天完成；B 是悲观者，估计用 24
         天完成；C是有经验者，认为最有可能用12天完成。这个任务的历时估算介于10天到16天的概率是多少？
       </div>
-      <dd>E =(O + 4m + P)/6 = (6 + 4*12 + 24)/6 = 13</dd>
-      <dd>δ =(P - O)/6 = (24 - 6)/6 = 3</dd>
-      <dd>根据统计学中的正态分布规律（68-95-99.7法则）：</dd>
-      <dd>±1 个标准差范围内的概率约为 68.3%</dd>
-      <dd>±2 个标准差范围内的概率约为 95.5%</dd>
-      <dd>±3 个标准差范围内的概率约为 99.7%</dd>
-      <dd>下限：E - δ = 13 – 3 = 10</dd>
-      <dd>上限：E + δ = 13 + 3 = 16</dd>
-      <dd>所以 [10, 16] 概率的为 68.3%</dd>
+      <div class="qa">
+        <p>E =(O + 4m + P)/6 = (6 + 4*12 + 24)/6 = 13</p>
+        <p>δ =(P - O)/6 = (24 - 6)/6 = 3</p>
+        <p>根据统计学中的正态分布规律（68-95-99.7法则）：</p>
+        <p>±1 个标准差范围内的概率约为 68.3%</p>
+        <p>±2 个标准差范围内的概率约为 95.5%</p>
+        <p>±3 个标准差范围内的概率约为 99.7%</p>
+        <p>下限：E - δ = 13 – 3 = 10</p>
+        <p>上限：E + δ = 13 + 3 = 16</p>
+        <p>所以 [10, 16] 概率的为 68.3%</p>
+      </div>
       <div class="demo">根据下面的图表，采取PERT估算，求项目在14.57天内完成的概率</div>
       <figure>
         <img src="./img/adm3.png" alt="">
@@ -114,38 +141,40 @@
           <td>6</td>
         </tr>
       </table>
-      <dd>根据三点估算 (O + 4M + P)/6，各任务对应的历时估计/期望工期 E 分别为</dd>
-      <dd>任务1 E<sub>1</sub> = (2 + 4×3 + 6)/6 = 3.33</dd>
-      <dd>任务2 E<sub>2</sub> = (4 + 4×6 + 8)/6 = 6</dd>
-      <dd>任务3 E<sub>3</sub> = (3 + 4×4 + 6)/6 = 4.17</dd>
-      <dd>则：项目 E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3</sub> = 13.5</dd>
-      <dd>各任务对应的标准差和方差为</dd>
-      <table style="max-width: 550px;">
-        <tr>
-          <td></td>
-          <td>标准差 δ</td>
-          <td>方差 δ<sup>2</sup></td>
-        </tr>
-        <tr>
-          <td>任务1</td>
-          <td>4/6</td>
-          <td>16/36</td>
-        </tr>
-        <tr>
-          <td>任务2</td>
-          <td>4/6</td>
-          <td>16/36</td>
-        </tr>
-        <tr>
-          <td>任务3</td>
-          <td>3/6</td>
-          <td>9/36</td>
-        </tr>
-      </table>
-      <dd>总方差为 δ<sup>2</sup> = 16/36 + 16/36 + 9/36 =41/36 ≈1.1388</dd>
-      <dd>标准差为 δ = (1.1388)<sup>1/2</sup> = 1.07</dd>
-      <dd>14.57 = PERT + δ = 13.5 + 1.07</dd>
-      <dd>根据统计学中的正态分布规律（68-95-99.7法则）：14.57天内完成的概率为68.3%</dd>
+      <div class="qa">
+        <p>根据三点估算 (O + 4M + P)/6，各任务对应的历时估计/期望工期 E 分别为</p>
+        <p>任务1 E<sub>1</sub> = (2 + 4×3 + 6)/6 = 3.33</p>
+        <p>任务2 E<sub>2</sub> = (4 + 4×6 + 8)/6 = 6</p>
+        <p>任务3 E<sub>3</sub> = (3 + 4×4 + 6)/6 = 4.17</p>
+        <p>则：项目 E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3</sub> = 13.5</p>
+        <p>各任务对应的标准差和方差为</p>
+        <table style="max-width: 550px;">
+          <tr>
+            <td></td>
+            <td>标准差 δ</td>
+            <td>方差 δ<sup>2</sup></td>
+          </tr>
+          <tr>
+            <td>任务1</td>
+            <td>4/6</td>
+            <td>16/36</td>
+          </tr>
+          <tr>
+            <td>任务2</td>
+            <td>4/6</td>
+            <td>16/36</td>
+          </tr>
+          <tr>
+            <td>任务3</td>
+            <td>3/6</td>
+            <td>9/36</td>
+          </tr>
+        </table>
+        <p>总方差为 δ<sup>2</sup> = 16/36 + 16/36 + 9/36 =41/36 ≈1.1388</p>
+        <p>标准差为 δ = (1.1388)<sup>1/2</sup> = 1.07</p>
+        <p>14.57 = PERT + δ = 13.5 + 1.07</p>
+        <p>根据统计学中的正态分布规律（68-95-99.7法则）：14.57天内完成的概率为68.3%</p>
+      </div>
       <div class="demo">采用Gantt图表示软件项目进度安排，下列说法中正确的是（）。</div>
       <div>A. 能够反映多个任务之间的复杂关系</div>
       <div>B. 能够直观表示任务之间相互依赖制约关系</div>
@@ -158,7 +187,22 @@
       <div>C. PERT图</div>
       <div>D. HIPO图</div>
       <!-- <div>A、C</div> -->
-
+      <div class="demo">已知PDM网络图，求：</div>
+      <figure>
+        <img src="./img/cp1.png" alt="">
+      </figure>
+      <ol>
+        <li>补充各任务相关时间</li>
+        <li>分别计算活动C和活动F的总浮动时间</li>
+        <!-- <p>1</p> -->
+        <!-- <p>0</p> -->
+        <li>关键路径</li>
+        <!-- <p>A → D → F → G</p> -->
+        <li>关键路径的长度</li>
+        <!-- <p>15</p> -->
+        <li>项目工期</li>
+        <!-- <p>15</p> -->
+      </ol>
     </section>
     <div id="footer" class="footer"></div>
     <script src="/utils/custom/footer.js"></script>
