@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>运算符 Operator</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="../css/page.css">
   <base target="_blank">
 </head>
 
@@ -203,7 +202,7 @@ null == null//true</pre>
           </tr>
         </tbody>
       </table>
-      <div class="demo"> &&求值</div>
+      <div class="demo">&&求值</div>
       <dd>先将运算符左边的表达式转化为 Boolean，如果为真，就返回右边的值；如果为假就返回左边的值，又称短路，碰到假就停止</dd>
       <dd>undefined、null、NaN、""、''、0、false 转化为 Boolean 后，都为 false</dd>
       <dd>运算符两侧的表达式可以是任何类型，如：根据某个条件，指向相应的动作</dd>
@@ -216,7 +215,7 @@ res = 0 && 2 && 12 && 23;//0</pre>
       <dd>限制或指定某个操作</dd>
       <pre>1 && console.log('hi');//执行打印输出</pre>
       <pre>0 && fn();//不执行函数</pre>
-      <div class="demo"> ||求值</div>
+      <div class="demo">||求值</div>
       <dd>执行过程和逻辑与相反。碰到真就返回；因为任何类型和真或都为真，也称断路</dd>
       <pre>
 res = 1 || 2;//1
@@ -234,21 +233,25 @@ div.addEventListener('click', (e) => {
 !123//false
 !!123//true
 !!NaN//false</pre>
-      <dt>instanceof</dt>
-      <dd>检查某个变量是否是 <strong>对象</strong> 的一个实例</dd>
-      <dd>所有引用类型的值都是 Object 的实例</dd>
-      <dd>不仅可以知道某个变量是不是对象，还可以知道它是什么类型的对象：Object、Array、RegExp</dd>
-      <dd>如果检测基本类型的变量，返回 false；因为基本类型不是对象</dd>
-      <pre>
-console.log(12 instanceof Number);//false
-console.log('hi' instanceof String);//false
-console.log(true instanceof Boolean);//false
-// console.log(null instanceof Null);//warning
-// console.log(undefined instanceof Undefined);//warning
-console.log(fn instanceof Function);//true
-console.log({ name: 'hkc' } instanceof Object);//true
-console.log([1, 2] instanceof Array);//true</pre>
+
       <dt>in</dt>
+
+      <dt>条件运算符 ?:</dt>
+      <dd>Conditional (ternary) operator</dd>
+      <dd>逻辑同if-else；如果真，执行?前面的逻辑；否则执行后面的逻辑</dd>
+      <dd>更简洁、高效</dd>
+      <pre>
+12 > 18 ? 'yes' : 'no'//no
+12 &lt; 18 ? 'yes' : 'no'//yes</pre>
+      <dt>扩展运算符 ...</dt>
+      <dd>Spread syntax</dd>
+      <dd>扩展元素，如 <a href="./array.html">数组</a>、<a href="./object.html">对象</a>赋值</dd>
+      <pre>
+let arr = [1, 2, 3, 4, 5]
+let arr2 = [...arr]</pre>
+    </dl>
+    <h2>类型判断</h2>
+    <dl>
       <dt>类型运算符 typeof</dt>
       <dd>检测一个变量是基本数据类型还是引用数据类型</dd>
       <dd>是一个运算符 operator，不是函数</dd>
@@ -263,19 +266,22 @@ console.log(typeof undefined);//undefined
 console.log(typeof fn);//function
 console.log(typeof { name: 'hkc' });//object
 console.log(typeof [1, 2]);//object</pre>
-      <dt>条件运算符 ?:</dt>
-      <dd>Conditional (ternary) operator</dd>
-      <dd>逻辑同if-else；如果真，执行?前面的逻辑；否则执行后面的逻辑</dd>
-      <dd>更简洁、高效</dd>
+      <dd>判断是否为空 null</dd>
+      <pre>var_name === null</pre>
+      <dt>实例运算符 instanceof</dt>
+      <dd>检查某个变量是否是 <strong>对象</strong> 的一个实例</dd>
+      <dd>所有引用类型的值都是 Object 的实例</dd>
+      <dd>不仅可以知道某个变量是不是对象，还可以知道它是什么类型的对象：Object、Array、RegExp</dd>
+      <dd>如果检测基本类型的变量，返回 false；因为基本类型不是对象</dd>
       <pre>
-12 > 18 ? 'yes' : 'no'//no
-12 &lt; 18 ? 'yes' : 'no'//yes</pre>
-      <dt>扩展运算符 ...</dt>
-      <dd>Spread syntax</dd>
-      <dd>扩展元素，如 <a href="./array.html">数组</a>、<a href="./object.html">对象</a>赋值</dd>
-      <pre>
-let arr = [1, 2, 3, 4, 5]
-let arr2 = [...arr]</pre>
+console.log(12 instanceof Number);//false
+console.log('hi' instanceof String);//false
+console.log(true instanceof Boolean);//false
+// console.log(null instanceof Null);//warning
+// console.log(undefined instanceof Undefined);//warning
+console.log(fn instanceof Function);//true
+console.log({ name: 'hkc' } instanceof Object);//true
+console.log([1, 2] instanceof Array);//true</pre>
     </dl>
     <div id="footer"></div>
   </div>

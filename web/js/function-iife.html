@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>立即执行函数 IIFE</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="../css/page.css">
   <base target="_blank">
 </head>
 
@@ -21,23 +20,22 @@
       <dd>定义一个匿名函数并立即调用这个函数/执行</dd>
       <dd>函数仅仅执行1次；不需要多次调用函数</dd>
       <dd>创建一个独立的作用域，避免变量污染全局命名空间</dd>
-      <dd>用于：
-        <p>数据隐私</p>
-        <p>状态初始化</p>
-        <p>执行异步代码</p>
-      </dd>
-      <dd>使用普通函数</dd>
+      <dt>应用</dt>
+      <dd>数据隐私</dd>
+      <dd>状态初始化</dd>
+      <dd>执行异步代码</dd>
+      <dt>实现</dt>
+      <dd>方案1：使用普通函数；分号;：防御性编程习惯，防止与前一行代码发生语法错误，尤其是在代码被压缩（minify）或拼接时</dd>
       <pre>
 ;(function() {
   // 函数体
 })();</pre>
-      <dd>使用箭头函数</dd>
+      <dd>方案2：使用箭头函数</dd>
       <pre>
 ;(()=> {
-// 函数体
+  // 函数体
 })();</pre>
-      <div class="tips">分号;作用：防御性编程习惯，防止与前一行代码发生语法错误，尤其是在代码被压缩（minify）或拼接时</div>
-      <div class="demo"> 加载数据</div>
+      <div class="demo">加载数据</div>
       <dd>避免封装函数</dd>
       <dd>使用异步等待 async-await <a href="../../node/fetch.html">加载数据 Fetch</a>、<a
           href="https://supabase.com/">Supabase.com</a></dd>

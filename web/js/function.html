@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>函数 Function</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="../css/page.css">
   <base target="_blank">
 </head>
 
@@ -26,7 +25,10 @@
       <dt>概述 Overview</dt>
       <dd>封装需要重复执行的代码，有助于模块化开发 - 黑盒子</dd>
       <dd>可以在任何地方、任何时候调用执行</dd>
-      <dd>一等公民 First-class citizens - 可以存储在变量中；可以作为参数；可以作为返回值</dd>
+      <dd>一等公民 First-class citizens</dd>
+      <dd>可以存储在变量中</dd>
+      <dd>可以作为参数</dd>
+      <dd>可以作为返回值</dd>
       <dd>函数也是对象</dd>
       <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions">MDN -
           Functions</a>、<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">MDN -
@@ -37,10 +39,11 @@
     <h2>函数定义 Defining functions</h2>
     <dl>
       <dt>函数声明 function declaration</dt>
-      <dd>Use the function keyword, followed by a name, parameters and a body</dd>
-      <dd>一个标准的函数声明，由关键字 function 、函数名、形式参数和函数体组成</dd>
+      <dd>一个标准的函数声明，由关键字 function 、函数名、形式参数和函数体组成
+        <p>Use the function keyword, followed by a name, parameters and a body</p>
+      </dd>
       <dd>也叫命名函数、具名函数</dd>
-      <dd>可以放在任何地方 - <span class="warn">预处理 - 提升</span></dd>
+      <dd>可以放在任何地方 - <strong>预处理 - 提升</strong></dd>
       <pre>
 function 函数名 (形式参数列表) { 
   //函数逻辑实现
@@ -53,8 +56,8 @@ function 函数名 (形式参数列表) {
       <dd>函数复用时的定制/个性化特点；通过不同的参数实现类似的业务；此时的参数是形式参数 - 形参[占位符]</dd>
       <dd>函数的形参也可以是函数</dd>
       <dd>个数：根据函数功能，可以使用参数也可以不使用参数；也可以使用任意多的参数：以逗号,分隔</dd>
-      <dd>使用：函数逻辑实现过程中，通常直接使用形参，也可以使用 <span class="warn">arguments</span> 数组接受不定个数的形参，见后续内容</dd>
-      <dd>传值：所有参数传递的都是值，不可能通过引用传递参数；有不少开发人员在这一点上可能会感到困惑，因为访问变量有按值和按引用两种方式，而参数只能按值传递；可以指定参数默认值</dd>
+      <dd>使用：函数逻辑实现过程中，通常直接使用形参，也可以使用 <strong>arguments</strong> 数组接受不定个数的形参，见后续内容</dd>
+      <dd>传参：所有参数传递的都是通过值<a href="function-argument.html">传递参数</a></dd>
       <div>3. 函数体|函数逻辑</div>
       <dd>函数功能的具体实现</dd>
       <dd>通常需要借助局部变量完成</dd>
@@ -84,10 +87,10 @@ function success(res, data={}, message={},code=200) {
 }</pre>
       <dd>参数指定默认值</dd>
       <dt>函数表达式 Function Expression</dt>
-      <dd>函数没有名称，而且位于一条赋值语句右边，被赋给一个常量，又叫 <span class="warn">匿名函数</span></dd>
+      <dd>函数没有名称，而且位于一条赋值语句右边，被赋给一个常量，又叫 <strong>匿名函数</strong></dd>
       <dd>因为是赋值语句，所以最好末尾加上;</dd>
       <dd>通常作为回调函数 callback/cb 在异步编程中使用</dd>
-      <dd>必须<span class="warn">先声明后使用</span>，否则告警：Cannot access 'xxx' before initialization</dd>
+      <dd>必须<strong>先声明后使用</strong>，否则告警：Cannot access 'xxx' before initialization</dd>
       <pre>
 const sum = function (形参列表) { 
   //函数逻辑实现
@@ -149,16 +152,16 @@ console.log(dis(1, 2));//3</pre>
       <dd>返回的函数必须执行才能拿到最后的结果</dd>
       <div class="demo"> 声明一个函数，使其执行另外一个函数</div>
       <pre>
-  function cb(fn, para) {
-    return fn(para);
-  }
-  
-  function add(num) {
-    return num + 10;
-  }
-  
-  let res = cb(add, 10);
-  console.log(res);</pre>
+function cb(fn, para) {
+  return fn(para);
+}
+
+function add(num) {
+  return num + 10;
+}
+
+let res = cb(add, 10);
+console.log(res);</pre>
     </dl>
     <h2>内部属性和方法</h2>
     <dl>

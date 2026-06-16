@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>参数传递 Argument</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>参数传递</h1>
+      <span>&commat;Argument</span>
+    </header>
+    <dl>
+      <div class="tips">
+        <p>基本类型：传递的是数据的拷贝</p>
+        <p>引用类型：传递的是内存地址的拷贝</p>
+      </div>
+      <dd>无论传递的是基本类型还是引用类型，本质上都是将值的 <strong>副本</strong> 传递给函数</dd>
+      <dt>基本数据类型</dt>
+      <dd>对于数字、字符串、布尔值等，把变量的值复制一份，给到形参</dd>
+      <dd>函数内部如果修改了形参，完全不会影响外部变量</dd>
+      <dt>引用数据类型</dt>
+      <dd>变量名代表的是对象的内存地址</dd>
+      <dd>传递的是地址的副本 - 调用函数时，把这个地址的副本传给了形参</dd>
+      <dd>如果传递整个对象本身，太耗内存</dd>
+      <dd>因为都指向同一个内存地址，所以修改会影响原对象</dd>
+      <pre>
+let a = {
+  name: 'glpla',
+  age: 20
+}
+function change(o) {
+  // a 和 o 指向堆内存中的同一个对象
+  // 对 o 的操作会影响到 a
+  o.age = 10 
+  // o 重新指向其它地址；a 的指向不变
+  o = {
+    name: 'fuck',
+    age: 30
+  }
+  return o
+}
+// b 指向了 o 的地址
+let b = change(a)
+console.log(b.age);
+console.log(a.age);
+console.log('done');</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
