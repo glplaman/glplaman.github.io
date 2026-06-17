@@ -5,42 +5,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>计划评审技术网络图 PERT</title>
-  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
 </head>
 
 <body>
   <div class="w">
     <header>
-      <h1></h1>
+      <h1>计划评审技术网络图</h1>
       <span>PERT</span>
     </header>
-    <section>
-      <ul>
-        <li>Program Evaluation and Review Technique</li>
-        <li>简称 PERT 网络图</li>
-        <li>采用三点估算 Three-Point Estimate Technique 估算工期</li>
-      </ul>
-      <h2>单个任务</h2>
-      <div>1. 选定3个估算值：</div>
-      <ul>
-        <li>O：最小估算值，乐观 Optimistic Estimate</li>
-        <li>P：最大估算值，悲观 Pessimistic Estimate</li>
-        <li>M：最大可能估算，Most Likely Estimate</li>
-      </ul>
-      <div>2. 求期望工期 Estimate - E</div>
-      <div>实际项目中，最可能的情况（M）发生的概率通常远高于乐观（O）或悲观（P），所以赋予更高权重</div>
+    <dl>
+      <dd>Program Evaluation and Review Technique</dd>
+      <dd>简称 PERT 网络图</dd>
+      <dd>采用三点估算 Three-Point Estimate Technique 估算工期</dd>
+      <dt>单个任务</dt>
+      <h3>1. 选定3个估算值：</h3>
+      <dd>O：最小估算值，乐观 Optimistic Estimate</dd>
+      <dd>P：最大估算值，悲观 Pessimistic Estimate</dd>
+      <dd>M：最大可能估算，Most Likely Estimate</dd>
+      <h3>2. 求期望工期 Estimate - E</h3>
+      <dd>实际项目中，最可能的情况（M）发生的概率通常远高于乐观（O）或悲观（P），所以赋予更高权重</dd>
       <div class="txt-center">E =(O + 4M + P)/6</div>
-      <div>3. 求标准差 Standard Deviation - δ</div>
-      <div>衡量你的估计中存在多少变动的指标</div>
-      <div>δ 越大 → 估计中存在的不确定性程度更大</div>
+      <h3>3. 求标准差 Standard Deviation - δ</h3>
+      <dd>衡量你的估计中存在多少变动的指标</dd>
+      <dd>δ 越大 → 估计中存在的不确定性程度更大</dd>
       <div class="txt-center">δ =(P - O)/6</div>
-      <div>4. 根据正态分布的统计规律处理不确定工期：</div>
-      <ul>
-        <li>±1𝜎 （1个标准差）：覆盖约 68.3% 的概率</li>
-        <li>±2𝜎 （2个标准差）：覆盖约 95.5% 的概率</li>
-        <li>±3𝜎 （3个标准差）：覆盖约 99.7% 的概率</li>
-      </ul>
+      <h3>4. 根据正态分布的统计规律处理不确定工期：</h3>
+      <dd>±1𝜎 （1个标准差）：覆盖约 68.3% 的概率</dd>
+      <dd>±2𝜎 （2个标准差）：覆盖约 95.5% 的概率</dd>
+      <dd>±3𝜎 （3个标准差）：覆盖约 99.7% 的概率</dd>
       <div class="demo">若项目期望工期 30 天，标准差 2 天</div>
       <ul>
         <li>工期在 28 ~ 32 天之间（±1σ） ≈ 68.3%</li>
@@ -61,17 +55,17 @@
         <p>上限：E + δ = 13 + 3 = 16</p>
         <p>所以 [10, 16] 概率的为 68.3%</p>
       </div>
-      <h2>多个任务</h2>
-      <div>如果各任务工期相互独立（PERT 的基本假设）</div>
-      <div>总期望 E</div>
+      <dt>多个任务</dt>
+      <dd>如果各任务工期相互独立（PERT 的基本假设）</dd>
+      <dd>总期望 E</dd>
       <div class="txt-center">E = E<sub>1</sub> + E<sub>2</sub> + E<sub>3</sub> + ...</div>
-      <div>总方差 δ<sup>2</sup></div>
+      <dd>总方差 δ<sup>2</sup></dd>
       <div class="txt-center">δ<sup>2</sup> = δ<sup>2</sup><sub>1</sub> + δ<sup>2</sup><sub>2</sub> +
         δ<sup>2</sup><sub>3</sub> + ...</div>
-      <div>总标准差 δ</div>
+      <dd>总标准差 δ</dd>
       <div class="txt-center">δ = (δ<sup>2</sup><sub>1</sub> + δ<sup>2</sup><sub>2</sub> +
         δ<sup>2</sup><sub>3</sub> + ...)<sup>1/2</sup></div>
-      <div>总标准差如果直接相加，高估了整体风险；因为正负偏差会部分相互抵消，不可能所有任务同时极端恶化</div>
+      <dd>总标准差如果直接相加，高估了整体风险；因为正负偏差会部分相互抵消，不可能所有任务同时极端恶化</dd>
       <div class="demo">根据下面的图表，采取PERT估算，求项目在14.57天内完成的概率</div>
       <figure>
         <img src="./img/adm3.png" alt="">
@@ -138,7 +132,7 @@
         <p>14.57 = PERT + δ = 13.5 + 1.07</p>
         <p>根据统计学中的正态分布规律（68-95-99.7法则）：14.57天内完成的概率为68.3%</p>
       </div>
-    </section>
+    </dl>
     <div id="footer" class="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>

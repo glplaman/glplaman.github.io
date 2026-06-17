@@ -25,33 +25,7 @@
   --p-m-g: 12px;
 }
 
-html,
-body,
-ul,
-ol,
-dl,
-dt,
-dd,
-a,
-figure,
-figcaption,
-img,
-p,
-h1,
-h2,
-h3,
-h4,
-div,
-input,
-button,
-aside,
-textarea,
-header,
-section,
-nav,
-table,
-footer,
-strong {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -121,6 +95,7 @@ h2 {
 
 h3 {
   font-size: 1.6rem;
+  padding-top: 2em;
 }
 
 h4,
@@ -128,38 +103,42 @@ h4,
   font-size: 1.4rem;
 }
 
+h4 {
+  padding-top: 1em;
+}
+
 ul,
 ol {
   list-style: none;
 }
 
-ul>li::before {
+dl ul>li::before {
   content: "\25AA" ' ';
 }
 
-ul p::before {
+dl ul p::before {
   content: "- ";
 }
 
-ol>li {
+dl ol>li {
   counter-increment: list-sn;
 }
 
-ol>li::before {
+dl ol>li::before {
   content: counter(list-sn) ". ";
 }
 
-ol p::before {
+dl ol p::before {
   content: ". ";
 }
 
 dl {
-  padding: var(--p-m-g);
+  padding: 0 var(--p-m-g);
 }
 
 dt {
   font-weight: 600;
-  margin: 2rem auto 1rem;
+  padding-top: 2em;
 }
 
 dd>p::before {
@@ -274,7 +253,6 @@ button,
 textarea {
   outline: none;
   border: none;
-  border: 1px solid #ccc;
 }
 
 .w {
@@ -304,34 +282,6 @@ textarea {
   top: 0;
   box-shadow: 1px 0 40px 10px var(--shadow-color);
   z-index: -1;
-}
-
-.main-nav {
-  position: sticky;
-  top: 0;
-  height: var(--nav-h);
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--p-m-g);
-  align-items: center;
-  padding: 0 var(--p-m-g);
-  z-index: 99;
-  background-color: #fff;
-}
-
-.nav-item {
-  color: inherit;
-  text-decoration: none;
-  text-transform: capitalize;
-  border-bottom: 2px solid transparent;
-}
-
-.nav-item:hover {
-  color: var(--main-color);
-}
-
-.nav-item.active {
-  border-color: var(--main-color);
 }
 
 .flex-center {

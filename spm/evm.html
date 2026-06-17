@@ -5,26 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>挣值分析法 EVM</title>
-  <link rel="stylesheet" href="/css/base.css">
-  <style>
-    .toc>* {
-      display: flex;
-      align-items: center;
-    }
-
-    .toc>*::before {
-      content: attr(data-num);
-      order: 2;
-    }
-
-    .toc>*::after {
-      content: '';
-      height: 3px;
-      flex: 1;
-      background-image: url(/imgs/dot.png);
-      background-repeat: repeat-x;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
 </head>
 
@@ -34,46 +15,36 @@
       <h1>挣值分析法</h1>
       <span>EVM</span>
     </header>
-    <section>
-      <ul>
-        <li>Earned Value Management</li>
-        <li>是一种项目管理中常用的绩效衡量方法</li>
-        <li>通过整合项目的范围、进度、成本三个维度，帮助管理者客观地评估项目当前状态、预测未来趋势</li>
-        <li>分析目的：计划花的钱、实际花的钱、以及已经完成的工作所值的钱，这三者是否匹配？</li>
-        <li>也称已获价值分析</li>
-      </ul>
-      <h3>BAC</h3>
-      <ul>
-        <li>Budget at Completion</li>
-        <li>完工预算</li>
-        <li>项目全部计划完成时，对应的预算总金额</li>
-        <li>开始前你计划要花的总钱数</li>
-        <li>是整个项目的 <strong>总预算</strong>，是一个<strong>固定值</strong></li>
-      </ul>
-      <h3>BCWS</h3>
-      <ul>
-        <li>Budgeted Cost of Work Scheduled</li>
-        <li>计划完成工作的预算成本</li>
-        <li>到某个时间点，按计划应完成多少工作量/预算</li>
-        <li>也称计划价值 PV (Planned Value)</li>
-        <div class="txt-center">BCWS = 计划工作量*计划单价</div>
-      </ul>
-      <h3>BCWP</h3>
-      <ul>
-        <li>Budgeted Cost of Work Performed</li>
-        <li>已经完成工作的预算成本</li>
-        <li>到某个时间点，实际完成的工作量/预算</li>
-        <li>也称已获价值、挣值 EV (Earned Value)</li>
-        <div class="txt-center">BCWP = 实际工作量*计划单价</div>
-      </ul>
-      <h3>ACWP</h3>
-      <ul>
-        <li>Actual Cost of Work Performed</li>
-        <li>已经完成工作的实际成本</li>
-        <li>到某个时间点，实际已经发生的成本/花的钱</li>
-        <li>也称实际价值 AC (Actual Cost)</li>
-        <div class="txt-center">ACWP = 实际工作量*实际单价</div>
-      </ul>
+    <dl>
+      <dd>Earned Value Management</dd>
+      <dd>是一种项目管理中常用的绩效衡量方法</dd>
+      <dd>通过整合项目的范围、进度、成本三个维度，帮助管理者客观地评估项目当前状态、预测未来趋势</dd>
+      <dd>分析目的：计划花的钱、实际花的钱、以及已经完成的工作所值的钱，这三者是否匹配？</dd>
+      <dd>也称已获价值分析</dd>
+      <dt>BAC</dt>
+      <dd>Budget at Completion</dd>
+      <dd>完工预算</dd>
+      <dd>项目全部计划完成时，对应的预算总金额</dd>
+      <dd>开始前你计划要花的总钱数</dd>
+      <dd>是整个项目的 <strong>总预算</strong>，是一个<strong>固定值</strong></dd>
+      <dt>BCWS</dt>
+      <dd>Budgeted Cost of Work Scheduled</dd>
+      <dd>计划完成工作的预算成本</dd>
+      <dd>到某个时间点，按计划应完成多少工作量/预算</dd>
+      <dd>也称计划价值 PV (Planned Value)</dd>
+      <div class="txt-center">BCWS = 计划工作量*计划单价</div>
+      <dt>BCWP</dt>
+      <dd>Budgeted Cost of Work Performed</dd>
+      <dd>已经完成工作的预算成本</dd>
+      <dd>到某个时间点，实际完成的工作量/预算</dd>
+      <dd>也称已获价值、挣值 EV (Earned Value)</dd>
+      <div class="txt-center">BCWP = 实际工作量*计划单价</div>
+      <dt>ACWP</dt>
+      <dd>Actual Cost of Work Performed</dd>
+      <dd>已经完成工作的实际成本</dd>
+      <dd>到某个时间点，实际已经发生的成本/花的钱</dd>
+      <dd>也称实际价值 AC (Actual Cost)</dd>
+      <div class="txt-center">ACWP = 实际工作量*实际单价</div>
       <table>
         <caption>挣值分析</caption>
         <thead>
@@ -127,8 +98,8 @@
         </tbody>
       </table>
       <div class="demo">某工厂计划生产一批汽车，一共100台，工厂每天生产10台，10天之内完工，项目预算为100万元。项目进行到第6天时，工厂老板来查看项目执行情况发现：</div>
-      <p>前6天一共生产了40台车</p>
-      <p>实际花费50万元</p>
+      <dd>前6天一共生产了40台车</dd>
+      <dd>实际花费50万元</dd>
       <div class="qa">
         <p>AC = 50 万</p>
         <p>EV = 40*1 = 40 万</p>
@@ -144,12 +115,12 @@
         <P>CPI &lt; 1 → 目前为止，该任务超出预算</P>
       </div>
       <div class="demo">某项目计划工期为4年，预算总成本为800万元。在项目实施过程中，通过对成本的核算和有关成本与进度的记录得知：</div>
-      <p>开工后两年末实际成本发生额为200万元，所完成工作的计划预算成本额为100万元。</p>
-      <p>与项目预算成本比较可得知，当工期过半时，项目的计划成本发生预算应该为400万元。</p>
-      <p>求该项目对应的：</p>
-      <p>成本偏差CV</p>
-      <p>进度偏差SV</p>
-      <p>成本绩效指数CPI</p>
+      <dd>开工后两年末实际成本发生额为200万元，所完成工作的计划预算成本额为100万元。</dd>
+      <dd>与项目预算成本比较可得知，当工期过半时，项目的计划成本发生预算应该为400万元。</dd>
+      <dd>求该项目对应的：</dd>
+      <dd>成本偏差CV</dd>
+      <dd>进度偏差SV</dd>
+      <dd>成本绩效指数CPI</dd>
       <div class="qa">
         <p>计划4年，预算成本800万</p>
         <p>已经实施2年，预算成本BCWS = 400万</p>
@@ -165,9 +136,9 @@
       <div>C. 项目进展到计划进度的109%</div>
       <div>D. 项目超额支出9%的成本</div>
       <div class="qa">
-        <p>B</p>
+        <p>参考答案：B</p>
       </div>
-    </section>
+    </dl>
     <div id="footer" class="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>

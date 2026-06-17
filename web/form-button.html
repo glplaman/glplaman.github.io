@@ -6,7 +6,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>按钮 Button</title>
-  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
     :root {
@@ -52,35 +52,39 @@
 </head>
 
 <body>
-  <header>
-    <h1>按钮</h1>
-    <span>&lt;button&gt;</span>
-  </header>
-  <dl>
-    <dt>Introduction</dt>
-    <dd>
-      <div>. 除了可以使用 &lt;input&gt; 的特定 type 实现按钮功能外，还可以直接使用 &lt;button&gt;</div>
-      <div>. 更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button">MDN -
-          &lt;button&gt;</a></div>
+  <div class="w">
+    <header>
+      <h1>按钮</h1>
+      <span>&lt;button&gt;</span>
+    </header>
+    <dl>
+      <dt>Introduction</dt>
+      <dd>除了可以使用 &lt;input&gt; 的特定 type 实现按钮功能外，还可以直接使用 &lt;button&gt;</dd>
+      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button">MDN -
+          &lt;button&gt;</a></dd>
       <pre>&lt;button type=""&gt;button text&lt;/button&gt;</pre>
       <table>
         <caption>按钮类型</caption>
-        <tr>
-          <th>类别</th>
-          <th>说明</th>
-        </tr>
-        <tr>
-          <td>submit</td>
-          <td>提交表单数据 form data 到服务器 server；默认类型</td>
-        </tr>
-        <tr>
-          <td>reset</td>
-          <td>清除表单数据；表单重置</td>
-        </tr>
-        <tr>
-          <td>button</td>
-          <td>无默认行为，仅仅是一个按钮；用于添加用户自定义事件</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>submit</td>
+            <td>提交表单数据 form data 到服务器 server；默认类型</td>
+          </tr>
+          <tr>
+            <td>reset</td>
+            <td>清除表单数据；表单重置</td>
+          </tr>
+          <tr>
+            <td>button</td>
+            <td>无默认行为，仅仅是一个按钮；用于添加用户自定义事件</td>
+          </tr>
+        </tbody>
       </table>
       <pre>
 &lt;form action="" method="get" name="demo" onsubmit='return false'&gt;
@@ -89,12 +93,10 @@
   &lt;button type="submit"&gt;button text&lt;/button&gt;
   &lt;button type="reset"&gt;button text&lt;/button&gt;
 &lt;/form&gt;</pre>
-    </dd>
-    <dt>Initialization</dt>
-    <dd>
-      <div>. 默认情况下，按钮并没有显著的鼠标交互提示</div>
-      <div>. 实际开发请以需求为准</div>
-      <div>. 通常初始化如下</div>
+      <dt>Initialization</dt>
+      <dd>默认情况下，按钮并没有显著的鼠标交互提示</dd>
+      <dd>实际开发请以需求为准</dd>
+      <dd>通常初始化如下</dd>
       <pre>
 button {
   border: none;
@@ -104,13 +106,11 @@ button {
   color: inherit;
   cursor: pointer;
 }</pre>
-    </dd>
-    <dt>Usage</dt>
-    <dd class="sn">
-      <p>. 一个作品内，按钮的样式应该统一</p>
-      <p>. 通常先指定<span class="warn">公共/基类</span>样式，再指定<span class="warn">专有</span>样式</p>
-      <p>. 更多样式，请访问 <a href="https://simurai.com/archive/buttons/">BonBon</a>、<a href="./demo/btns.html">按钮设计</a></p>
-      <div>公共样式</div>
+      <dt>Usage</dt>
+      <dd>一个作品内，按钮的样式应该统一</dd>
+      <dd>通常先指定<span class="warn">公共/基类</span>样式，再指定<span class="warn">专有</span>样式</dd>
+      <dd>更多样式，请访问 <a href="https://simurai.com/archive/buttons/">BonBon</a>、<a href="./demo/btns.html">按钮设计</a></dd>
+      <dd>公共样式</dd>
       <pre>
 // 公共静态样式
 button {
@@ -126,10 +126,8 @@ button {
 button:hover {
   background-position: right center;
 }      </pre>
-      <div>专有样式：不同部分的按钮，分配不同的类，每个类使用不同的设计即可</div>
-    </dd>
-    <dd>[<span class="iconfont icon-keyboard"></span>] 按钮设计</dd>
-    <dd class="sn">
+      <dd>专有样式：不同部分的按钮，分配不同的类，每个类使用不同的设计即可</dd>
+      <div class="demo">按钮设计</div>
       <div>使用背景颜色区分；简单颜色、渐变颜色</div>
       <pre>
 .normal-btn {
@@ -151,26 +149,27 @@ button:hover {
 .close-btn {
   background-image: linear-gradient(90deg, #f39c12, #e74c3c);
 }</pre>
-      <p class="txt-center">
+      <div class="txt-center">
         <button class="more-btn" type="button">red</button>
         <button class="form-btn" type="button">blue</button>
         <button class="close-btn" type="button">dark</button>
-      </p>
-      <div>使用透明度 opacity</div>
-      <div>使用 <a href="./variable.html">变量 - variable</a></div>
-      <div>使用 <a href="./filter.html">滤镜 - filter</a></div>
-      <div>使用 <a href="./transition.html">过渡动画 transition</a></div>
-    </dd>
-  </dl>
-  <div class="chap">Summary & Homework</div>
-  <dl>
-    <dt>Summary</dt>
-    <dd>. &lt;button&gt; 的使用</dd>
-    <dd>. &lt;button&gt; 样式的设计</dd>
-    <dd>. 初步使用渐变背景</dd>
-    <dt>Homework</dt>
-    <dd>. 使用 &lt;button&gt; 元素完善个人网站的留言板或信息采集表的设计</dd>
-  </dl>
+      </div>
+      <dd>使用透明度 opacity</dd>
+      <dd>使用 <a href="./variable.html">变量 - variable</a></dd>
+      <dd>使用 <a href="./filter.html">滤镜 - filter</a></dd>
+      <dd>使用 <a href="./transition.html">过渡动画 transition</a></dd>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <dd>&lt;button&gt; 的使用</dd>
+      <dd>&lt;button&gt; 样式的设计</dd>
+      <dd>初步使用渐变背景</dd>
+      <dt>Homework</dt>
+      <dd>使用 &lt;button&gt; 元素完善个人网站的留言板或信息采集表的设计</dd>
+    </dl>
+  </div>
+  <div id="footer"></div>
   <a class="back2top" id="back2top" target="_self" href="#">
     <svg t="1733899399303" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
       p-id="31526" width="32" height="32">
@@ -179,7 +178,6 @@ button:hover {
         fill="#ffffff" p-id="31527"></path>
     </svg>
   </a>
-  <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>
   <script src="/utils/custom/back2top.js"></script>
 </body>
