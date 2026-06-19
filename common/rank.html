@@ -6,25 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>积分榜 Rank</title>
   <link rel="stylesheet" href="/css/rank.css">
-  <script src="//at.alicdn.com/t/c/font_4240947_umh5d220s7n.js"></script>
 </head>
 
 <body>
   <div class="container" id="app">
     <header>
-      <div :class="{loading:isLoading}"></div>
-      <div class="logo">
-        <svg class="icon icon-logo">
-          <use xlink:href="#icon-icon-medal-1st"></use>
-        </svg>
-        <span class="logo-title">积分榜</span>
-      </div>
+      <span class="iconfont icon-icon-medal-1st"></span>
+      <span class="logo-title">积分榜</span>
       <div class="ham" @click="toggleMenu">
-        <svg class="icon">
-          <use xlink:href="#icon-thlist"></use>
-        </svg>
+        <span class="iconfont icon-thlist"></span>
       </div>
-
       <div class="nav-wrap" :class="{active:isShow}">
         <nav class="nav" v-for="(item, index) in navs" :key="item.ind">
           <div class="nav-item" :class="{'active':ind==item.ind && isSubShow}" @click="toggleSubMenu(index)">
@@ -42,31 +33,19 @@
     <div class="main">
       <div class="main-cont" v-if="rank.cont.length">
         <div class="item" v-for="(item,ind) in rank.cont" :key="item.id" :title="item.ucredit">
-          <div class="sn">{{item.usn}}</div>
-          <svg class="icon icon-avatar">
-            <use :xlink:href=`#icon-avatar${getInd(ind)}`></use>
-          </svg>
-          <span class='name' :data-remarke="item.remark">{{item.uname}}</span>
+          <span class='name' :data-remarke="item.remark">{{item.usn}} {{item.uname}}</span>
           <div class="star">
-            <svg class="icon icon-star" v-for="star in item.ucredit">
-              <use xlink:href="#icon-star"></use>
-            </svg>
+            <span class="iconfont icon-zuqiu" v-for="star in item.ucredit"> </span>
           </div>
         </div>
       </div>
       <div v-else>No Records</div>
     </div>
-    <svg class="icon icon-pos">
-      <use xlink:href="#icon-a-guzhang"></use>
-    </svg>
-
     <footer>
-      <h4>
-        <p>{{rank.info.grade}}级{{rank.info.major}}{{rank.info.class}}班</p>
-        <p>{{rank.info.course}}</p>
-        <p v-if="rank.info.base">基准分：+{{rank.info.base}}</p>
-      </h4>
-      <h5>All Rights Reserved &copy; By Cnplaman 2022-2025</h5>
+      <p>{{rank.info.grade}}级{{rank.info.major}}{{rank.info.class}}班</p>
+      <p>{{rank.info.course}}</p>
+      <p v-if="rank.info.base">基准分：+{{rank.info.base}}</p>
+      <p>All Rights Reserved &copy; By Cnplaman 2022-2025</p>
     </footer>
   </div>
   <script type="module">

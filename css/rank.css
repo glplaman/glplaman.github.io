@@ -1,7 +1,7 @@
+@import url(//at.alicdn.com/t/c/font_4240947_qembenvg51a.css);
+
 :root {
-  --main-color: #FDC830;
-  --item-bg: hsla(44, 98%, 59%, 5%);
-  --scroll-bar-bg: rgb(241, 139, 95);
+  --main-color: #cb0311;
   --p-m-g: 10px;
 }
 
@@ -9,17 +9,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-weight: normal;
-}
-
-
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-  color: var(--main-color);
 }
 
 html {
@@ -27,51 +16,50 @@ html {
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--p-m-g);
   font-size: 1.6rem;
-  align-items: center;
-  height: 100vh;
-  color: #efefef;
-  background-color: #000;
   font-family: 'Roboto', 'Quicksand', "微软雅黑", "Microsoft YaHei", Arial, Helvetica, sans-serif;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--p-m-g);
-  width: 100%;
-  max-width: 1024px;
-  height: 100%;
+body::-webkit-scrollbar {
+  width: 8px;
 }
 
-.loading::after {
-  content: 'Loading...';
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  background-color: rgba(0, 0, 0, 0.9);
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color), transparent);
+}
+
+.container {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 header {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
   height: 60px;
   align-self: start;
   display: flex;
   align-items: center;
   gap: var(--p-m-g);
-  background-color: #232323;
+  color: #fff;
+  background-color: var(--main-color);
+  padding: 0 var(--p-m-g);
   z-index: 1;
+}
+
+header .iconfont {
+  font-size: 2rem;
+}
+
+.logo-title {
+  margin-right: auto;
+  font-size: 2rem;
+}
+
+.main {
+  padding: var(--p-m-g);
 }
 
 .ham {
@@ -95,7 +83,7 @@ header {
 }
 
 .nav-item.active {
-  color: var(--main-color);
+  color: #ff0;
 }
 
 .sub-nav {
@@ -106,8 +94,9 @@ header {
   overflow: hidden;
   line-height: 2;
   text-align: right;
-  font-size: 1.4rem;
-  background-color: #232323;
+  font-size: 1.6rem;
+  color: #000;
+  background-color: #fff;
 }
 
 .nav-item.active+.sub-nav,
@@ -117,20 +106,12 @@ header {
 }
 
 .sub-nav-item {
-  padding: var(--p-m-g) calc(2*var(--p-m-g));
-  border-bottom: 1px solid #484848;
+  padding: 0 var(--p-m-g);
 }
 
 .sub-nav-item:hover,
 .sub-nav-item.active {
   color: var(--main-color);
-}
-
-.logo {
-  margin-right: auto;
-  color: var(--main-color);
-  font-size: 20px;
-  margin-left: var(--p-m-g);
 }
 
 .title {
@@ -141,65 +122,17 @@ header {
   line-height: 2;
 }
 
-.main {
-  flex: 1;
-  padding: var(--p-m-g);
-  overflow: auto;
-}
-
-.main-cont {
-  display: flex;
-  align-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.main::-webkit-scrollbar {
-  width: 8px;
-}
-
-.main::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(var(--main-color), transparent);
-}
-
 .icon-avatar {
   font-size: 3rem;
 }
 
-.icon-pos {
-  position: fixed;
-  bottom: 10rem;
-  right: 4rem;
-  font-size: 8rem;
-}
-
 .item {
-  width: 50%;
-  min-width: 350px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 140px 1fr;
   align-items: center;
-  gap: var(--p-m-g);
-  color: #fff;
+  gap: calc(2*var(--p-m-g));
   line-height: 2;
   margin-bottom: var(--p-m-g);
-}
-
-.item:nth-of-type(even) {
-  flex-direction: row-reverse;
-}
-
-.item:nth-of-type(even) .star {
-  text-align: right;
-}
-
-.item img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
-.item .name {
-  flex-basis: 65px;
-  text-align-last: justify;
 }
 
 .item .star {
@@ -210,9 +143,9 @@ header {
 }
 
 footer {
-  color: #eee;
   text-align: center;
   padding: 5vh 0;
+  font-size: 1.4rem;
 }
 
 @media screen and (max-width:768px) {
@@ -220,19 +153,10 @@ footer {
     display: block;
     font-size: 3rem;
     z-index: 3;
-    margin-right: var(--p-m-g);
   }
 
   .logo {
     z-index: 3;
-  }
-
-  .item:nth-of-type(even) {
-    flex-direction: unset;
-  }
-
-  .item:nth-of-type(even) .star {
-    text-align: unset;
   }
 
   .nav-wrap {
@@ -244,7 +168,8 @@ footer {
     transition: right 0.5s;
     width: 100%;
     height: 100vh;
-    background-color: #232323;
+    color: #fff;
+    background-color: #000;
     z-index: 2;
   }
 
@@ -253,25 +178,11 @@ footer {
   }
 
   .nav-item.active {
-    color: #000;
     background-color: var(--main-color);
   }
 
   .sub-nav {
     position: unset;
     width: unset;
-    background-color: #393939;
-  }
-
-  .icon-logo {
-    font-size: 4rem;
-  }
-
-  .logo-title {
-    display: none;
-  }
-
-  .sn {
-    display: none;
   }
 }
