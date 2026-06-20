@@ -15,6 +15,6 @@ navItems.forEach((item, ind) => {
   })
 })
 
-ham.addEventListener('click', () => {
+ham && ham.addEventListener('click', () => {
   nav.classList.toggle('active');
 })
