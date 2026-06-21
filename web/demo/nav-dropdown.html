@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f8f9fa;
+      font-size: 15px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      font: inherit;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      width: max-content;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 8px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 10px;
+    }
+
+    .menu-item {
+      position: relative;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .menu-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .fa-chevron-down {
+      font-size: 12px;
+      color: #999;
+      transition: .4s;
+    }
+
+    .sub-menu {
+      position: absolute;
+      left: 0;
+      top: 100%;
+      opacity: 01;
+      visibility: hidden;
+      pointer-events: none;
+      min-width: 180px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+      z-index: 9;
+    }
+
+    .sub-menu-item {
+      display: block;
+      padding: 10px 20px;
+    }
+
+    .sub-menu li:not(:last-child) .sub-menu-item {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .sub-menu-item:hover {
+      color: #f40;
+    }
+
+    p {
+      height: 30vh;
+    }
+
+    @media screen and (max-width:768px) {
+      .nav {
+        width: 100%;
+      }
+
+      .menu {
+        flex-direction: column;
+      }
+
+      .menu-item.active {
+        background-color: #e8e8e8;
+      }
+
+      .sub-menu {
+        position: initial;
+        max-height: 0;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+        overflow: hidden;
+        margin-top: 8px;
+        box-shadow: none;
+        transition: max-height 0.4s;
+      }
+
+      .menu-item.active .fa-chevron-down {
+        transform: rotate(180deg);
+      }
+
+      .menu-item.active .sub-menu {
+        max-height: 120px;
+      }
+    }
+
+    @media (hover: hover) {
+      .menu-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .menu-item:hover .menu-title .fa-chevron-down {
+        transform: rotate(180deg);
+      }
+
+
+      .menu-item:hover .sub-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <ul class="menu">
+      <li class="menu-item">
+        <span class="menu-title">
+          <span>Placeat, velit.</span>
+          <i class="fa fa-chevron-down"></i>
+        </span>
+        <ul class="sub-menu">
+          <li><a class="sub-menu-item" href="#home">home</a></li>
+          <li><a class="sub-menu-item" href="">Magnam.</a></li>
+          <li><a class="sub-menu-item" href="">Labore?</a></li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <span class="menu-title">
+          <span>Quia, voluptates?</span>
+          <i class="fa fa-chevron-down"></i>
+        </span>
+        <ul class="sub-menu">
+          <li><a class="sub-menu-item" href="#team">team</a></li>
+          <li><a class="sub-menu-item" href="">Esse.</a></li>
+          <li><a class="sub-menu-item" href="">Corporis.</a></li>
+        </ul>
+      </li>
+      <li class="menu-item">
+        <span class="menu-title">
+          <span>Provident, quasi!</span>
+          <i class="fa fa-chevron-down"></i>
+        </span>
+        <ul class="sub-menu">
+          <li><a class="sub-menu-item" href="">Sed?</a></li>
+          <li><a class="sub-menu-item" href="">Possimus!</a></li>
+          <li><a class="sub-menu-item" href="">Accusantium.</a></li>
+          <li><a class="sub-menu-item" href="#about">about</a></li>
+          <li><a class="sub-menu-item" href="">Quia.</a></li>
+        </ul>
+      </li>
+      <li><a class="sub-menu-item" href="">Possimus!</a></li>
+    </ul>
+  </nav>
+  <p class="nav-cont" id="home">Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem eveniet facere debitis
+    assumenda
+    porro. Reprehenderit tempore, praesentium ratione et inventore in ipsam quasi illum odio impedit sunt itaque vel ex.
+  </p>
+  <p class="nav-cont" id="about">Exercitationem culpa sint repellendus reprehenderit laboriosam odio cupiditate, tempora
+    quibusdam
+    ea deleniti nostrum aut eum vel, similique quaerat maiores? Veritatis odit perferendis nesciunt totam. Eligendi
+    atque veritatis ad vel ut.</p>
+  <p class="nav-cont">Cum, eaque reiciendis. Officiis sed rem ipsa similique, autem incidunt quae temporibus dolores
+    sequi fuga quibusdam quam eveniet commodi eos vel inventore cumque earum. Cum voluptates modi doloribus suscipit ad!
+  </p>
+  <p class="nav-cont" id="team">Repudiandae vero maiores aspernatur autem maxime, doloremque quis cumque rerum sed
+    voluptatibus
+    hic dignissimos. Aut ipsum neque ipsam blanditiis nemo nulla aliquid rerum eveniet. Ad perferendis amet saepe
+    similique numquam.</p>
+  <p class="nav-cont">Suscipit ab recusandae aliquam sunt. Perferendis rerum quasi corrupti. Ea, sequi at corporis
+    cupiditate dicta ducimus earum hic doloremque sunt commodi incidunt, beatae ratione impedit quos. Eos consequatur
+    laborum dolorum.</p>
+  <script>
+    const menuItems = document.querySelectorAll('.menu-item')
+
+    menuItems.forEach(item => {
+      const menuTitle = item.querySelector('.menu-title')
+      menuTitle.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          item.classList.toggle('active')
+        }
+      })
+    })
+
+    // 单击空白关闭
+    document.addEventListener('click', function (e) {
+      // 1. 只在移动端执行（屏幕宽度 < 768px）
+      if (window.innerWidth < 768) {
+
+        // 2. 检查点击的元素是否在某个 .menu-item 内部
+        const isClickInsideMenu = e.target.closest('.menu-item')
+
+        // 3. 如果点击不在任何菜单内部
+        if (!isClickInsideMenu) {
+          // 4. 遍历所有菜单项，移除它们的 active 类
+          menuItems.forEach(item => {
+            item.classList.remove('active')
+          })
+        }
+      }
+    })
+    // window resize
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) {
+        menuItems.forEach(item => {
+          item.classList.remove('active')
+        })
+      }
+    })
+  </script>
+</body>
+
+</html>
