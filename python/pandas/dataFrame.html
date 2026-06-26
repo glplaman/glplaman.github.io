@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据帧 DataFrame</title>
+  <link rel="stylesheet" href="/css/reset.css">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>DataFrame</h1>
+      <span>2026-06-24</span>
+    </header>
+    <dl>
+      <dt>Overview</dt>
+      <dd>是一种表格数据结构</dd>
+      <dd>多维数据：行 row 和列 column 组成</dd>
+      <dd>带标签</dd>
+      <div class="demo">构造数据，创建 DataFrame</div>
+      <pre>
+data={
+  'name':['alice','mike','bob','jonh','marry'],
+  'age':[18,20,15,17,19]
+}
+
+df=pd.DataFrame(data)</pre>
+      <dd>结果：每一行都有一个索引</dd>
+      <pre>
+    name  age
+0  alice   18
+1   mike   20
+2    bob   15
+3   jonh   17
+4  marry   19</pre>
+      <dd>为索引指定标签</dd>
+      <pre>df=pd.DataFrame(data,index=['classmate 1','classmate 2','classmate 3','classmate 4','classmate 5'])</pre>
+      <dd>结果</dd>
+      <pre>
+              name  age
+classmate 1  alice   18
+classmate 2   mike   20
+classmate 3    bob   15
+classmate 4   jonh   17
+classmate 5  marry   19</pre>
+      <dd>根据行标签访问数据</dd>
+      <pre>df.loc['classmate 1']</pre>
+      <dd>结果</dd>
+      <pre>
+name    alice
+age        18
+Name: classmate 1, dtype: object</pre>
+      <dd>根据行索引访问；结果同上</dd>
+      <pre>df.iloc[0]</pre>
+      <dd>增加数据列 column - 性别 gender</dd>
+      <dd>个数要一一对应</dd>
+      <pre>df['gender']=['male','male','female','male','female']</pre>
+      <dd>增加数据行 row</dd>
+      <dd>构造新 dataFrame，连接 concat 到原数据</dd>
+      <dd>索引可以稍后指定；因为其它数据指定过索引，所以新行的索引是0</dd>
+      <pre>
+r=pd.DataFrame([{'name':'ben','age':19,'gender':'male'}])
+df=pd.concat([df,r])</pre>
+      <dd>结果</dd>
+      <pre>
+              name  age  gender
+classmate 1  alice   18    male
+classmate 2   mike   20    male
+classmate 3    bob   15  female
+classmate 4   jonh   17    male
+classmate 5  marry   19  female
+0              ben   19    male</pre>
+      <dd>增加多行并指定标签</dd>
+      <pre>
+rs=pd.DataFrame([{'name':'rose','age':18,'gender':'female'},{'name':'jack','age':21,'gender':'male'}],index=['classmate 6','classmate 7'])
+df=pd.concat([df,rs])</pre>
+      <dd>结果</dd>
+      <pre>
+              name  age  gender
+classmate 1  alice   18    male
+classmate 2   mike   20    male
+classmate 3    bob   15  female
+classmate 4   jonh   17    male
+classmate 5  marry   19  female
+0              ben   19    male
+classmate 6   rose   18  female
+classmate 7   jack   21    male</pre>
+    </dl>
+  </div>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

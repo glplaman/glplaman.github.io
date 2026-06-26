@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>代码托管详情 Git Details</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="/css/page2025.css">
+  <link rel="stylesheet" href="/css/nav.css">
   <base target="_blank">
   <style>
     .grid {
@@ -52,21 +52,19 @@
 <body>
   <div class="w">
     <header></header>
-    <nav>
-      <h1>代码托管详情</h1>
-      <span>&commat;Git Details</span>
+    <nav class="nav">
+      <span class="logo">&commat;Git</span>
       <span class="iconfont icon-menu ham" id="ham"></span>
-      <div class="nav" id="nav">
-        <a href="#" style="--delay:0" class="nav-item">Overview</a>
-        <a href="#" style="--delay:1" class="nav-item">Config</a>
-        <a href="#" style="--delay:2" class="nav-item">Workflow</a>
-        <a href="#" style="--delay:3" class="nav-item">Command</a>
-        <a href="#" style="--delay:4" class="nav-item">Repository</a>
-        <a href="#" style="--delay:5" class="nav-item">Branch</a>
-        <a href="#" style="--delay:6" class="nav-item">Tag</a>
-        <a href="#" style="--delay:7" class="nav-item">Other</a>
-        <a href="#" style="--delay:8" class="nav-item">Homework</a>
-      </div>
+      <ul class="nav-menu">
+        <li><a href="#" style="--delay:0" class="nav-item">Overview</a></li>
+        <li><a href="#" style="--delay:1" class="nav-item">Config</a></li>
+        <li><a href="#" style="--delay:2" class="nav-item">Workflow</a></li>
+        <li><a href="#" style="--delay:3" class="nav-item">Command</a></li>
+        <li><a href="#" style="--delay:4" class="nav-item">Branch</a></li>
+        <li><a href="#" style="--delay:5" class="nav-item">Tag</a></li>
+        <li><a href="#" style="--delay:6" class="nav-item">Other</a></li>
+        <li><a href="#" style="--delay:7" class="nav-item">Homework</a></li>
+      </ul>
     </nav>
     <dl class="nav-cont">
       <dt>概述 Overview</dt>
@@ -140,7 +138,7 @@ $ git remote -h</pre>
     <h2>工作流 Workflow</h2>
     <dl class="nav-cont">
       <figure>
-        <img src="./imgs/git.jpg" alt="">
+        <img src="./imgs/git.png" alt="">
         <figcaption>Git 工作流</figcaption>
       </figure>
       <dt>工作区 workspace</dt>
@@ -262,13 +260,12 @@ git reset --soft HEAD~2</pre>
           </tr>
         </tbody>
       </table>
-      <dt>查看本地提交 commit history</dt>
-      <dd>显示当前分支（或指定分支/引用）上的提交记录，按时间倒序排列</dd>
+      <dt>查看本地提交 log</dt>
+      <dd>显示完整的提交信息，包括 Author、commit ID（一个 40 位的十六进制字符串）、Date等等</dd>
+      <dd>按时间倒序排列</dd>
       <dd>-n：可以指定查看的记录条数</dd>
-      <dd>--oneline：将每条记录压缩成一行查看</dd>
+      <dd>--oneline：将每条记录压缩成一行查看；显示的是缩写的 commit ID（默认 7 位）</dd>
       <dd>按 Q/q 退出</dd>
-      <dd>Author 就是配置中关联的用户名和用户邮箱</dd>
-      <dd>git log 显示的是完整的 commit ID；一个 40 位的十六进制字符串</dd>
       <pre>
 $ git log
 commit e0ac96e55219d89fc3edec31aa9998d9184dcff7 (HEAD -> main, origin/main)
@@ -283,7 +280,7 @@ Date:   Thu Jan 22 15:56:25 2026 +0800
 
     react
 ...</pre>
-      <dd>git log --oneline 显示的是缩写的 commit ID（默认 7 位）</dd>
+      <pre>$ git log --oneline</pre>
       <pre>
 $ git log --oneline -n 5
 e0ac96e (HEAD -> main, origin/main) spm removed large file
@@ -291,7 +288,6 @@ b4ae9a8 react
 1012e0f course page index
 2a280c1 final
 8805a15 final</pre>
-      <pre>$ git log --oneline</pre>
       <!-- <dt>查看远程仓库提交记录 reflog</dt>
       <dd>按 Q/q 退出</dd>
       <dd>main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</dd>
@@ -304,34 +300,50 @@ cc355cb (HEAD -> main, origin/main, origin/HEAD) HEAD@{0}: commit: web
 aae5d51 HEAD@{2}: commit: web
 065c08e HEAD@{3}: commit: fn</pre> -->
       <dt>撤销本地提交 reset</dt>
+      <dd>用于本地已经 commit 但是未 push 到远程的撤销</dd>
       <dd>主要用于移动 HEAD 指针、重置暂存区（index）和/或工作区，从而撤销提交、取消暂存或丢弃更改</dd>
       <dd>不要对已推送 pushed 的提交使用 git reset</dd>
       <table>
-        <caption>git reset</caption>
+        <caption>Git reset</caption>
         <thead>
           <tr>
-            <th>item</th>
-            <th>desc</th>
+            <th>命令</th>
+            <th>移动 HEAD</th>
+            <th>改暂存区</th>
+            <th>改工作区</th>
+            <th>危险程度</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>git reset --soft</td>
-            <td>撤销提交，保留暂存；安全</td>
+            <td>git reset --soft </td>
+            <td>是</td>
+            <td>否</td>
+            <td>否</td>
+            <td>低</td>
           </tr>
           <tr>
             <td>git reset --mixed</td>
-            <td>撤销提交，取消暂存；安全；默认</td>
+            <td>是</td>
+            <td>是</td>
+            <td>否</td>
+            <td>中</td>
           </tr>
           <tr>
             <td>git reset --hard</td>
-            <td>彻底回退；危险</td>
+            <td>是</td>
+            <td>是</td>
+            <td>是</td>
+            <td>高</td>
           </tr>
         </tbody>
       </table>
-    </dl>
-    <h2>仓库 Repository</h2>
-    <dl class="nav-cont">
+      <dt>撤销远程提交 revert</dt>
+      <dd>针对已推送到远程仓库的提交，用 revert 撤销</dd>
+      <dd>保留原来记录，并重新生成一个记录</dd>
+      <dd>可以撤销一个或多个</dd>
+      <dd>每撤销一个就会自动生成一个新的 commit</dd>
+      <dd>使用 --no-commit </dd>
       <dt>克隆仓库 clone</dt>
       <dd>将远程仓库复制到本地</dd>
       <dd>通常是第一次使用别人的仓库；后续直接拉取 pull 就可以和仓库保持一致</dd>
@@ -372,23 +384,19 @@ origin  https://github.com/glpla/glpla.github.io.git (push)</pre>
     </dl>
     <h2>分支 Branch</h2>
     <dl class="nav-cont">
-      <div class="demo"> Git 基本协作流程详解</div>
-      <ol>
-        <li>Clone the repository</li>
-        <li>Create a new branch from main or another branch</li>
-        <li>Make your changes</li>
-        <li>Push the branch to the remote repo</li>
-        <li>Open a Pull Request (PR) / Merge Request (MR)</li>
-        <li>Merge the changes</li>
-        <li>Pull the merged changes into your local main branch</li>
-        <li>Repeat from step 2</li>
-      </ol>
       <dt>说明</dt>
       <dd>通过分支实现项目的分工协作</dd>
       <dd>各分支的操作并不影响主分支；且分支的进度通常要领先于主分支</dd>
       <dd>当分支合并到主分支后，主分支的整个时间线才往前推进，各分支进度才保持一致</dd>
       <dd>默认分支如 main 总是指向最新的提交；而 HEAD 指向当前的活动分支；如果没有分支，就指向主分支 main</dd>
-      <dd>只有提交 commit 过1次后才能查看分支</dd>
+      <dd>常见分支命名约定
+        <p>main：线上稳定版本</p>
+        <p>develop：开发主线</p>
+        <p>feature/：功能分支</p>
+        <p>release/：发布准备分支</p>
+        <p>hotfix/：紧急修复分支</p>
+      </dd>
+      <div class="tips">只有提交 commit 过1次后才能查看分支</div>
       <figure>
         <img src="./imgs/branch2.jpg" alt="">
         <figcaption>无分支时，HEAD指向主分支</figcaption>
@@ -404,7 +412,6 @@ origin  https://github.com/glpla/glpla.github.io.git (push)</pre>
       <dt>查看分支</dt>
       <dd>当前分支以 * 号表示，且颜色为绿色</dd>
       <dd>只有被追踪的分支才显示 - 提交过</dd>
-      <dd>不带参数：查看本地分支</dd>
       <pre>
 $ git branch
   dev
@@ -427,14 +434,27 @@ $ git branch -v
       <dd>隔离你的开发工作，不影响主干代码</dd>
       <dd>完成分支开发后，再并入主分支</dd>
       <dd>特别适合团队协作</dd>
-      <div>1. 单独创建分支</div>
-      <pre>$ git branch branch_name</pre>
-      <div>2. 创建仓库的同时创建分支</div>
-      <pre>$ git init -b branch_name</pre>
-      <div>3. 创建并切换分支</div>
-      <pre>$ git checkout -b branch_name</pre>
-      <div>4. 从指定分支创建新分支</div>
+      <ul>
+        <li>单独创建分支，仍然停留在原来分支</li>
+        <pre>$ git branch branch_name</pre>
+        <li>创建仓库的同时创建分支</li>
+        <pre>$ git init -b branch_name</pre>
+        <li>创建并切换分支</li>
+        <pre>$ git checkout -b branch_name</pre>
+        <li>从指定分支创建新分支</li>
+      </ul>
+      <dt>切换分支 switch</dt>
+      <dd>Git 2.23+（2019年）</dd>
+      <dd>专用于分支切换与创建</dd>
+      <dd>切换</dd>
+      <dd>创建并切换</dd>
+      <pre>
+$ git switch -c dev
+Switched to a new branch 'dev'
+</pre>
       <dt>切换分支 checkout</dt>
+      <dd>Git 早期版本</dd>
+      <dd>分支切换 + 文件恢复 + detached HEAD</dd>
       <div>1. 指定要切换的分支名，切换到该分支，HEAD 指向该分支最新提交</div>
       <pre>$ git checkout branch_name</pre>
       <div>2. 撤销工作区的修改</div>
@@ -523,13 +543,33 @@ Fast-forward
       <pre>$ git branch -m branch_name_old branch_name_new</pre>
       <dd>将当前分支强制命名为main</dd>
       <pre>$ git branch -M main</pre>
-      <div class="tips">
-        <div>冲突</div>
-        <div>.主分支提交前进的同时，某一分支也提交。当主分支合并分支时，就会出现冲突</div>
-        <div>.尽量避免同时操作同一个文件</div>
-        <div>.主分支面向生成环境，应只做阶段性的合并</div>
-        <div>.日常工作应使用开发分支和团队分支、个人分支：个人分支合并到团队分支；团队分支合并到开发分支</div>
-      </div>
+      <dt>冲突</dt>
+      <dd>主分支提交前进的同时，某一分支也提交。当主分支合并分支时，就会出现冲突</dd>
+      <dd>尽量避免同时操作同一个文件</dd>
+      <dd>主分支面向生成环境，应只做阶段性的合并</dd>
+      <dd>日常工作应使用开发分支和团队分支、个人分支：个人分支合并到团队分支；团队分支合并到开发分支</dd>
+      <div class="demo">冲突</div>
+      <ol>
+        <li>在分支 main 下编辑文件 readme.md 并 add、commit</li>
+        <li>创建新分支 dev 并切换过去</li>
+        <li>在分支 dev 下编辑文件 readme.md 并 add、commit</li>
+        <li>切换回分支 main</li>
+        <li>合并 dev 分支</li>
+        <li>提示冲突</li>
+        <li>编辑 readme.md，确定内容 - 解决冲突</li>
+        <li>再次 add、commit</li>
+      </ol>
+      <div class="demo"> Git 基本协作流程</div>
+      <ol>
+        <li>Clone the repository</li>
+        <li>Create a new branch from main or another branch</li>
+        <li>Make your changes</li>
+        <li>Push the branch to the remote repo</li>
+        <li>Open a Pull Request (PR) / Merge Request (MR)</li>
+        <li>Merge the changes</li>
+        <li>Pull the merged changes into your local main branch</li>
+        <li>Repeat from step 2</li>
+      </ol>
     </dl>
     <h2>标签 Tag</h2>
     <dl class="nav-cont">
@@ -671,11 +711,8 @@ git push -u origin master</pre>
     </dl>
     <div id="footer"></div>
   </div>
-  <a class="back2top" id="back2top" href="#" target="_self">
-    <span class="iconfont icon-top"></span>
-  </a>
   <script src="/utils/custom/footer.js"></script>
-  <script src="/utils//custom/ham2025.js"></script>
+  <script src="/utils//custom/ham.js"></script>
 </body>
 
 </html>
