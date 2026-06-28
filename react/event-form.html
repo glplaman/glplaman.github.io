@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单事件 Form Event</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>表单事件</h1>
+      <span>&commat;Form Event</span>
+    </header>
+    <dl>
+      <dd>区分表单事件和表单元素事件</dd>
+      <dd>通常需要阻止表单的默认提交</dd>
+      <table>
+        <caption>表单事件</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>onSubmit</td>
+            <td>提交</td>
+          </tr>
+          <tr>
+            <td>onReset</td>
+            <td>重置</td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>表单元素事件</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>onChange</td>
+            <td>改变</td>
+          </tr>
+          <tr>
+            <td>onInput</td>
+            <td>提交</td>
+          </tr>
+          <tr>
+            <td>onFocus</td>
+            <td>获取焦点</td>
+          </tr>
+          <tr>
+            <td>onBlur</td>
+            <td>失去焦点</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">注册</div>
+      <dd>数据 uname、upass 单独处理</dd>
+      <pre>
+import { useState } from 'react';
+function Login() {
+  const [uname, setUname] = useState('');
+  const [upass, setUpass] = useState('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`'uname',${uname},'upass',${upass}`);
+  };
+  return (
+    &lt;&gt;
+      &lt;form onSubmit={handleSubmit}>
+        &lt;input
+          type="text"
+          placeholder="your name"
+          onChange={(e) => setUname(e.target.value)}
+        /&gt;
+        &lt;input
+          type="password"
+          placeholder="your pass"
+          onChange={(e) => setUpass(e.target.value)}
+        /&gt;
+        &lt;button type="submit"&gt;submit&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/&gt;
+  );
+}
+export default Login;</pre>
+      <div class="demo">个人中心页面数据维护</div>
+      <dd>整体数据在一个表单中</dd>
+      <dd>以对象呈现，如昵称、年龄、性别、生日等信息</dd>
+      <dd>数据</dd>
+      <pre>const [info, setInfo] = useState({ age: 18, gender: "male" });</pre>
+      <dd>数据提交</dd>
+      <pre>
+const handleSubmit = (e) => {
+  e.preventDefault();
+  console.log(info);
+};</pre>
+      <dd>参考结构</dd>
+      <pre>
+&lt;form onSubmit={handleSubmit}>
+  &lt;label>姓名&lt;/label>
+  &lt;input
+    type="text"
+    onChange={(e) => {
+      setUser((prev) => ({ ...prev, name: e.target.value }));
+    }}
+  />
+  ...
+  &lt;button type="submit">submit&lt;/button>
+&lt;/form></pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

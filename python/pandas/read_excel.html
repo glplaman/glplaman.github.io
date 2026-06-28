@@ -40,6 +40,35 @@ name
       <dd>head(n)：选择前3行</dd>
       <dd>tail(n)：选择后3行</dd>
     </dl>
+    <h2>Drill</h2>
+    <dl>
+      <div class="demo">处理 Excel 的一般流程</div>
+      <ol>
+        <li>读取</li>
+        <li>编辑</li>
+        <li>更新</li>
+        <li>输出</li>
+        <li>关闭</li>
+      </ol>
+      <pre>
+# 导入包
+import pandas as pd
+
+# 读取excel文件
+res=pd.read_excel('./data/sample.xlsx')
+
+# 处理某个字段并定义新字段接受结果
+res['msg']=res['test'].str.split('/').str[0].str.strip()
+
+# 创建写文件
+file=pd.ExcelWriter('./data/test.xlsx')
+
+# 将结果写入文件指定的工作表
+res['msg'].to_excel(file, sheet_name='msg')
+
+# 关闭文件
+file.close()</pre>
+    </dl>
   </div>
   <div id="footer"></div>
   <script src="/utils/custom/footer.js"></script>

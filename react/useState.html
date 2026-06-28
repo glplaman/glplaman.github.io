@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>状态 State</title>
   <link rel="stylesheet" href="/css/reset.css">
@@ -20,7 +19,7 @@
     <dl>
       <dt>Introduction</dt>
       <dd>状态</dd>
-      <dd>响应式数据</dd>
+      <dd>用来保存那些一旦改变，UI 必须跟着刷新的数据 - 响应式数据</dd>
       <dd>需要引入再使用</dd>
       <pre>import { useState } from "react";</pre>
       <dd>每个组件实例维护自己的状态，彼此互不影响</dd>
@@ -29,20 +28,22 @@
           href="https://react.dev/learn/managing-state">Managing State</a></dd>
       <dt>Syntax</dt>
       <pre>const [state,setState] = useState(initial)</pre>
-      <dd>状态：state，即数据</dd>
-      <dd>函数：function，修改数据</dd>
+      <dd>状态：state，即数据；在 React 中，State 被视为“ <strong>不可变数据</strong> ”，不能直接操作状态</dd>
+      <dd>函数：function，操作状态</dd>
       <dd>命名：原则上任意，建议 something, setSomething</dd>
       <div class="demo">示例</div>
       <dd>基本数据类型</dd>
+      <dd>以布尔为例</dd>
       <pre>
 const [show,setShow] = useState(false)
-function hansectioneClick(){
+const hansectioneClick = () => {
   setShow( true )
 }</pre>
       <dd>引用数据类型</dd>
+      <dd>以对象为例</dd>
       <pre>
 const [showState,setShowState] = useState({show: false})
-function hansectioneClick(){
+const hansectioneClick = () => {
   setShowState( {show: true} )
 }</pre>
     </dl>
