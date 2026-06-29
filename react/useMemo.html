@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>缓存 useMemo</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>缓存</h1>
+      <span>&commat;useMemo</span>
+    </header>
+    <dl>
+      <dd>在组件 <strong>渲染期间</strong> 执行，必须是纯函数</dd>
+      <dd>用于性能优化的 Hook</dd>
+      <dd>核心作用是缓存复杂计算的结果。类似于 Vue 中的 computed</dd>
+      <dd>不能执行副作用；像请求接口、修改 DOM 等操作绝对不能放在里面，应使用 useEffect</dd>
+      <pre>
+const memoizedValue = useMemo(() => {
+  // 执行耗时的计算逻辑
+  return expensiveCalculation(a, b);
+}, [a, b]); // 依赖数组</pre>
+      <dd>工作机制：只有当依赖数组（如 [a, b]）中的值发生变化时，才会重新执行计算函数。如果依赖项不变，它会直接返回上一次缓存的结果，从而跳过不必要的计算</dd>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

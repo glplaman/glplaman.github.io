@@ -16,8 +16,9 @@
       <span>&commat;useEffect</span>
     </header>
     <dl>
-      <dd>处理那些与 UI 渲染无关，但需要执行的操作。比如：发起网络请求、操作 DOM、设置定时器</dd>
-      <dd>将组件与外部系统同步</dd>
+      <dd>在组件 <strong>渲染完成</strong> 后，执行“副作用（Side Effect）”逻辑。所谓副作用，是指那些会影响组件外部世界、不受 React 控制的操作</dd>
+      <dd>处理那些与 UI 渲染无关，但需要执行的操作。比如：发起网络请求、操作 DOM、设置定时器、订阅事件</dd>
+      <dd>本质是将组件与外部系统保持同步</dd>
       <dd>只能在客户端组件调用 - Effects only run on the client. They don’t run during server rendering.</dd>
       <dd>更多信息，请访问 <a href="https://react.dev/reference/react/useEffect">useEffect()</a></dd>
       <dd>先引入</dd>
@@ -25,7 +26,14 @@
       <dd>再使用</dd>
       <pre>useEffect(setup, dependencies?)</pre>
       <dd>setup：一个函数，用于定义副作用逻辑。这个函数会在组件挂载、更新或卸载时根据依赖项的变化执行</dd>
-      <dd>dependencies：可选参数；指定依赖，仅当依赖变化时，触发同步</dd>
+      <dd>dependencies：可选参数；指定依赖，仅当依赖变化时，触发同步
+        <p>不写依赖数组：每次组件渲染后都会执行</p>
+        <p>空数组 []：仅在组件首次挂载时执行一次，适合初始化数据请求或注册事件</p>
+        <p>有依赖项 [dep1, dep2]：在首次执行后，仅当依赖项发生变化时才会重新执行</p>
+      </dd>
+      <dt>注意事项</dt>
+      <dd>避免无限循环：如果在 useEffect 内部更新了状态，且该状态又是依赖数组中的一员，会导致“状态更新 → 重新渲染 → Effect 再次执行”的死循环</dd>
+      <dd>如果仅仅是为了根据某些 state/props 的变化来转换或计算另一个 state，不应该使用 useEffect，而应该在渲染期间直接计算或使用 useMemo</dd>
       <div class="tips">
         <p>在开发环境中，React 会故意调用某些函数两次，以帮助发现潜在问题</p>
         <p>确保您的副作用函数（如 API 调用）是幂等的，即多次调用不会产生副作用</p>
@@ -43,7 +51,7 @@ useEffect(() => {
   console.log("state change");
 }, [state]);</pre>
       <div class="demo">加载数据</div>
-      <pre>const [ranks, setRanks] = useState([]);</pre>
+      <pre>const [todos, setTodos] = useState([]);</pre>
       <dd>在钩子中使用函数</dd>
       <pre>
 useEffect(() => {
@@ -54,12 +62,12 @@ useEffect(() => {
 const getRank = async () => {
   const res = await fetch("https://glplaman.github.io/utils/data/rank/202501.json");
   const data = await res.json();
-  setRanks(data);
+  setTodos(data);
 };</pre>
       <dd>在组件返回中渲染数据</dd>
       <pre>
 return (
-  &lt;div>
+  &lt;>
     &lt;ul>
       {todos.map((todo) => (
         &lt;li key={todo.id}>
@@ -67,7 +75,7 @@ return (
         &lt;/li>
       ))}
     &lt;/ul>
-  &lt;/div>
+  &lt;/>
 );</pre>
       <dd>IDE 语法检测会提示类型错误；使用泛型并指定类型</dd>
       <pre>
@@ -97,7 +105,7 @@ export default async function Demo() {
     &lt;/div>
   );
 }     </pre>
-      <div class="demo">监听状态变化</div>
+      <!-- <div class="demo">监听状态变化</div>
       <dd>count 变化时，触发同步</dd>
       <pre>
 import { useEffect, useState } from "react";
@@ -105,13 +113,13 @@ export default function Demo() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     console.log("useEffect count", count);
-  }, []);
+  }, [count]);
   return (
     &lt;div>
       &lt;button onClick={() => setCount(count + 1)}>count: {count}&lt;/button>
     &lt;/div>
   );
-}</pre>
+}</pre> -->
     </dl>
     <div id="footer"></div>
   </div>
