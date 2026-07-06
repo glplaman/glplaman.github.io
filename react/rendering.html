@@ -70,6 +70,23 @@ const getAge = age > 18 ? "成年" : "未成年";</pre>
       <dd>先判断数据是否符合要求再使用；代码更健壮</dd>
       <dd>如数据是否存在？数组长度是否为空？</dd>
       <pre>show && &lt;p&gt;hi,there.&lt;/p&gt;</pre>
+      <dt>Best Practice 最佳编码体验</dt>
+      <pre>
+// 1. 加载中...
+if (loading) return &lt;p&gt;加载中...&lt;/p&gt;;
+
+// 2. 出错了...
+if (error) return &lt;p&gt;获取失败: {error}&lt;/p&gt;;
+
+// 3. 正常展示
+return (
+    &lt;&gt;
+       &lt;p&gt;你的结构&lt;/p&gt; 
+    &lt;/&gt;
+);</pre>
+      <dd>分开写（Early Return）更适合逻辑控制</dd>
+      <dd>避免嵌套地狱：一旦状态变多（比如加上“空数据 Empty State”、“权限不足”等），三元运算符 ? : 会层层嵌套，代码变得极难阅读</dd>
+      <dd>优化 DOM 结构：为了包裹这些条件判断，通常需要最外层套一个容器，这有时会影响 CSS 布局</dd>
     </dl>
     <h2>Rendering lists</h2>
     <dl>

@@ -36,9 +36,9 @@
         <pre>
 &lt;input type="file" name="" id="" multiple accept=""&gt;</pre>
       </dd>
-      <dd>file：作为文件选择，input类型应指定为file</dd>
-      <dd>multiple：默认选择单个文件；多选时应指定multiple</dd>
-      <dd>accept：是选择文件的类型，类型之间使用,分割，也可以使用通配符*</dd>
+      <dd>file：作为文件选择，input 类型应指定为 file</dd>
+      <dd>multiple：默认选择单个文件；多选时应指定 multiple</dd>
+      <dd>accept：是选择文件的类型，类型之间使用逗号 , 分割，也可以使用通配符 *</dd>
       <table>
         <thead>
           <tr>
@@ -69,6 +69,25 @@
           </tr>
         </tbody>
       </table>
+      <div class="demo">查看文件选择结果</div>
+      <dd>选择的文件保存在目标对象的数组中 target.files</dd>
+      <dd>如果单选，数组长度为 0 </dd>
+      <dd>如果多选，数组长度为实际文件个数</dd>
+      <div>方案1：内联事件</div>
+      <dd>只能使用 event 作为形参</dd>
+      <pre>&lt;input type="file" onchange="selFile(event)" accept="image/*"&gt;</pre>
+      <dd>逻辑中，可以使用任何参数代表形参</dd>
+      <pre>
+const selFile = (e) => {
+  console.log(e.target.files);
+}</pre>
+      <div>方案2：事件侦听</div>
+      <pre>&lt;input type="file" accept="image/*" ide="file"&gt;</pre>
+      <pre>
+const file = document.getElementById('file')
+  file.addEventListener('change', e => {
+    console.log(e.target.files);
+})</pre>
     </dl>
     <h2>事件 FileReader</h2>
     <dl class="nav-cont">
