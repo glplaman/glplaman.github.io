@@ -25,10 +25,15 @@
         <li>选择最新版本 7.0.1</li>
         <li>复制样式标签到 html</li>
         <pre>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" /&gt;</pre>
-        <li>在结构中使用 &lt;i&gt; 并指定类名</li>
+        <li>在结构中使用 &lt;i&gt; 并指定类名；前向兼容，保留了 fa 这个传统类并指定图标名 fa-home <i class="fa fa-home"></i></li>
         <pre>&lt;i class="fa fa-home"&gt;&lt;/i&gt;</pre>
-        <li>效果：<i class="fa fa-home"></i></li>
+        <li>按照新规范使用 <i class="fa-solid fa-home"></i></li>
+        <pre>&lt;i class="fa-solid fa-home"&gt;&lt;/i&gt;</pre>
       </ol>
+      <div class="tips">
+        <p>免费的图标比较重，有点丑。。。</p>
+        <p>避免使用 fa 前缀：这是 v4 时代的遗留写法，在 v7 中虽能运行，但可能被未来版本废弃</p>
+      </div>
       <dt>概述</dt>
       <dd>相比阿里字体图标 Iconfont，FontAwesome 功能更强大；但是字体图标的管理不如 Iconfont</dd>
       <dd>可以指定动画、旋转、颜色和尺寸，还可以下载为 SVG 格式使用，相当给力</dd>
@@ -37,16 +42,19 @@
         <p>多个家族系列：Classic、Sharp 和 Brands。。。</p>
         <p>多个样式：Solid, Regular, Light。。。</p>
       </dd>
-      <dd>普通用户可以免费使用 Classic 系列的 部分样式和 Brands 系列的brands 样式</dd>
+      <dd>普通用户可以免费使用 Classic 系列的 部分样式和 Brands 系列的 brands 样式</dd>
       <dd>其它仅限 Pro 用户使用</dd>
       <dd>更多使用细节，请访问 <a href="https://fontawesome.com/">Fontawesome</a>、<a
           href="https://docs.fontawesome.com/web/style/styling">Styling with Font Awesome</a>、<a
           href="https://fontawesome.dashgame.com/">Fontawesome4.7</a></dd>
       <dt>样式使用格式约定</dt>
+      <dd>分别指定以 fa- 开头的样式类 style class 和图标名类 icon name class</dd>
       <dd>使用 &lt;i&gt; 或 &lt;span&gt; 作为字体容器</dd>
-      <dd>分别指定以 fa- 开头的样式类 style class和图标名类 icon name class</dd>
-      <dd>低版本的 fa 类，仍然保留</dd>
       <pre>fa-family fa-style fa-icon-name</pre>
+      <dd>fa-solid 默认为 fa-classic，可以略去 fa-classic</dd>
+      <dd>官网 solid 类型图标，显示为 classic-solid</dd>
+      <dd>当你写 fa-solid 时，系统会自动将其解析为 fa-classic fa-solid</dd>
+      <dd>这种设计是为了向后兼容和简化开发——绝大多数用户使用的都是 Classic 系列，因此无需每次都显式声明 fa-classic</dd>
       <div class="demo">初体验；新版本，新语法</div>
       <i class="fa-classic fa-solid fa-home"></i>
       <pre>&lt;i class="fa-classic fa-solid fa-home"&gt;&lt;/i&gt;</pre>
