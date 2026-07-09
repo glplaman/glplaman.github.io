@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>传输控制 Transmission Control</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
     header {
@@ -32,10 +32,9 @@
     </dl>
     <h2>连接建立 Three-Way Handshake</h2>
     <dl>
-      <dd>TCP 连接的建立采用客户服务器 C/S 方式
-        <p>主动发起连接建立的应用进程叫做客户 C - Client</p>
-        <p>被动等待连接建立的应用进程叫做服务器 S - Server</p>
-      </dd>
+      <dd>TCP 连接的建立采用客户服务器 C/S 方式</dd>
+      <dd>主动发起连接建立的应用进程叫做客户 C - Client</dd>
+      <dd>被动等待连接建立的应用进程叫做服务器 S - Server</dd>
       <dt>关注 Focus</dt>
       <dd>要使每一方能够确知对方的存在</dd>
       <dd>要允许双方协商一些参数（如最大窗口值、是否使用窗口扩大选项和时间戳选项以及服务质量等）</dd>
@@ -72,7 +71,7 @@
       <dd>S 收到连接请求报文段后，如同意，则发回确认，进入 SYN_RCVD 状态</dd>
       <dd>同步位 SYN = 1，确认位 ACK = 1，确认号 ack = x + 1，序号 seq = y</dd>
       <dd>消耗一个序号</dd>
-      <dd>不能携带数据</dd>
+      <dd>仍然不能携带数据</dd>
       <dt>3. 第三次握手 ACK</dt>
       <dd>C 收到此报文段后向 S 给出确认，进入 ESTABLISHED 状态</dd>
       <dd>确认位 ACK = 1，确认号 ack = y + 1</dd>
@@ -94,10 +93,10 @@
     <h2>四次挥手 Four-Way Handshake</h2>
     <dl>
       <dd>TCP 连接释放过程比较复杂</dd>
-      <dd>因为支持全双工通信，双方必须都通信完毕才可以释放连接</dd>
+      <dd>因为支持全双工通信，双方必须都要确认通信完毕才可以释放连接</dd>
       <dd>TCP 连接释放采用四报文握手</dd>
       <dt>1. 第一次挥手</dt>
-      <dd>C 没有数据要发送；发出连接释放报文段，并停止再发送数据，主动关闭 TCP 连接</dd>
+      <dd>C 没有数据要发送；发出连接释放报文段，主动关闭 TCP 连接</dd>
       <dd>同步位 FIN = 1，序号 seq = u</dd>
       <dd>进入 FIN_WAIT_1 状态，等待 S 的确认</dd>
       <dt>2. 第二次挥手</dt>
@@ -146,12 +145,11 @@
       <dt>Homework</dt>
       <ol>
         <li>TCP连接释放中，如果服务端 S 收到了客户端 C 的释放请求报文，自己已经没有数据要发送，则应该回复（），并进入（）状态。</li>
-        <div class="txt-indent">
-          <dd>A. FIN=1 ACK=1 ack=u+1，LAST_ACK</dd>
-          <dd>B. FIN=1 ACK=1 ack=u+1，CLOSED</dd>
-          <dd>C. ACK=1 ack=u+1，LAST_ACK</dd>
-          <dd>D. ACK=1 ack=u+1，CLOSED</dd>
-        </div>
+        <dd>A. FIN=1 ACK=1 ack=u+1，LAST_ACK</dd>
+        <dd>B. FIN=1 ACK=1 ack=u+1，CLOSED</dd>
+        <dd>C. ACK=1 ack=u+1，LAST_ACK</dd>
+        <dd>D. ACK=1 ack=u+1，CLOSED</dd>
+        <!-- <p>A</p> -->
       </ol>
     </dl>
     <div id="footer"></div>

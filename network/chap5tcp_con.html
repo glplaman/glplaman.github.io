@@ -5,17 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>拥塞控制 Congestion</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
     header {
       background-image: url(https://www.geotab.com/CMS-Media-production/Blog/NA/_2018/July/traffic_congestion/blog-traffic-congestion-hero@2x.jpg);
-    }
-
-    .bg {
-      background-color: var(--main-color);
-      color: #fff;
-      width: max-content;
     }
   </style>
 </head>
@@ -42,7 +36,7 @@
       <dd>链路容量不足</dd>
       <dd>处理机处理速率太慢</dd>
       <dd>拥塞本身会进一步加剧拥塞</dd>
-      <table class="txt-left">
+      <table>
         <caption>原因汇总</caption>
         <tr>
           <td>资源层面</td>
@@ -61,7 +55,7 @@
           <td>用户贪婪行为、恶意攻击、应用设计缺陷</td>
         </tr>
       </table>
-      <table class="txt-left">
+      <table>
         <caption>拥塞控制 vs 流量控制</caption>
         <tr>
           <td>拥塞控制</td>
@@ -83,17 +77,16 @@
       <div class="tips">
         <p>供需不平衡：供 &lt; 需</p>
       </div>
-      <dd><span class="iconfont icon-help"></span>
-        <p>增加资源</p>
-        <p>重传资源</p>
-      </dd>
+      <div class="demo">以下措施是否可以解决<span class="iconfont icon-help"></span></div>
+      <p>增加资源</p>
+      <p>重传资源</p>
       <dt>核心 Core</dt>
       <dd>吞吐量要适中
         <p>网络上的流量要少</p>
         <p>让发送方/源站根据网络状态动态调整发送速率</p>
       </dd>
       <dd>拥塞控制 <strong>很难</strong> 精准设计；只能一定程度的 <strong>缓解</strong> 拥塞 - 动态变化</dd>
-      <dd><span class="iconfont icon-help"></span>目前了解到的知识，哪些方法或措施可以减少网络上的流量</dd>
+      <div class="demo">目前了解到的知识，哪些方法或措施可以减少网络上的流量<span class="iconfont icon-help"></span></div>
       <!-- <dd>TTL</dd> -->
       <!-- <dd>WLAN</dd> -->
       <!-- <dd>组播</dd> -->
@@ -110,8 +103,12 @@
         <p>单双号通行</p>
       </dd>
       <div class="tips">
-        <p>人不能两次踏进同一条河流 - 古希腊哲学家赫拉克利特 Heraclitus</p>
-        <p>世上没有两片完全相同的叶子 - 德国哲学家莱布尼茨 Gottfried Wilhelm Leibniz</p>
+        <p>人不能两次踏进同一条河流</p>
+        <p class="txt-right">- 古希腊哲学家赫拉克利特 Heraclitus</p>
+      </div>
+      <div class="tips">
+        <p>世上没有两片完全相同的叶子</p>
+        <p class="txt-right">- 德国哲学家莱布尼茨 Gottfried Wilhelm Leibniz</p>
       </div>
       <dt>闭环控制 Closed-loop Control</dt>
       <dd>基于 <strong>反馈</strong> 环路的概念</dd>
@@ -129,14 +126,14 @@
       <div class="tips">回调函数 Callback</div>
       <dt>闭环控制措施 Method</dt>
       <div>
-        <div class="bg">方案1. 在IP/分组头部设置拥塞指示位</div>
+        <div>方案1. 在IP/分组头部设置拥塞指示位</div>
         <!-- <p>例子：显式拥塞通知 ECN, Explicit Congestion Notification</p> -->
         <p>在 IP 头部和 TCP 头部保留特定比特（如ECT、CE位）</p>
         <p>当路由器检测到拥塞（如队列过长），不丢包，而是将转发的分组中的CE（Congestion Experienced）位设为1</p>
         <p>接收方收到该分组后，在 <strong>ACK</strong> 中告知发送方网络曾拥塞</p>
         <p>发送方据此降低发送速率</p>
         <p>优点：避免丢包作为拥塞信号，提高效率；适用于支持 ECN 的端系统和网络设备</p>
-        <div class="bg">方案2. 通过丢包隐式传递拥塞信号</div>
+        <div>方案2. 通过丢包隐式传递拥塞信号</div>
         <p>传统 TCP 机制 如 Reno、Cubic</p>
         <p>路由器在缓冲区满时直接丢弃分组</p>
         <p>发送方通过 <strong>超时重传或重复ACK</strong> 推断网络拥塞</p>
@@ -162,20 +159,20 @@
           <li>如果仍然多次(3次)收到对1000的确认，就可以判断网络出现了拥塞</li>
           <li>立即进行重传 - 快重传 Fast Retransmit</li>
         </ol>
-        <div class="bg">方案3. 周期性发送探测分组（主动探测）</div>
+        <div>方案3. 周期性发送探测分组（主动探测）</div>
         <p>某些协议或应用层机制会定期发送小量探测包，如 ping、RTT 测量包</p>
         <p>通过分析 RTT 增长、丢包率上升等指标，判断是否发生拥塞</p>
         <p>例如：QUIC 协议、某些拥塞控制算法（如 BBR ）会利用带宽和 RTT 估计网络状态</p>
         <p>这种方式更主动，但可能增加额外开销</p>
       </div>
     </dl>
-    <h2>TCP的拥塞控制</h2>
+    <h2>TCP 拥塞控制</h2>
     <dl>
       <dd>TCP 采用基于 <strong>滑动窗口</strong> 进行拥塞控制，属于闭环控制方法</dd>
       <dd>TCP 发送方维持一个拥塞窗口 cwnd - Congestion Window</dd>
       <dd>拥塞窗口的大小取决于网络的拥塞程度，且动态变化</dd>
       <dd>发送端利用拥塞窗口根据网络的拥塞情况调整发送的数据量</dd>
-      <dd><span class="warn">发送窗口大小不仅取决于接收方窗口，还取决于网络的拥塞状况</span></dd>
+      <dd>发送窗口大小不仅取决于接收方窗口，还取决于网络的拥塞状况</dd>
       <div class="txt-center txt-xl">swnd = min[rwnd, cwnd]</div>
       <dt>rwnd &lt; cwnd</dt>
       <dd>接收方的接收能力限制发送窗口的最大值</dd>
@@ -201,7 +198,7 @@
         <img src="./imgs/tcp15.png" alt="">
         <figcaption>拥塞控制流程图</figcaption>
       </figure>
-      <div class="bg">阶段1. 慢开始 Slow Start</div>
+      <div>阶段1. 慢开始 Slow Start</div>
       <dd>在连接初期或超时后，快速探测网络可用带宽</dd>
       <dd>拥塞窗口 cwnd 从 1 MSS 开始</dd>
       <dd>每收到一个对新报文段的确认 ACK，cwnd 增加 1 MSS → 每轮次 RTT 翻倍，指数增长</dd>
@@ -238,7 +235,7 @@
         <img src="./imgs/tcp16.png" alt="">
         <figcaption>慢开始 - 每轮翻倍 - 累计确认</figcaption>
       </figure>
-      <div class="bg">阶段2. 拥塞避免 Congestion Avoidance</div>
+      <div>阶段2. 拥塞避免 Congestion Avoidance</div>
       <dd>触发条件：cwnd ≥ ssthresh</dd>
       <dd>cwnd 变化：每经过一个往返时间 RTT，期间不管收到多少 ACK，cwnd 都只增加 1 MSS - 线性增长
         <p>让拥塞窗口 cwnd 缓慢地增大，避免出现拥塞</p>
@@ -267,7 +264,7 @@
         <p>TCP Tahoe 的设计是强制降速，回到慢开始</p>
       </dd>
       <dd>优势：避免因单点丢包导致吞吐量骤降，提升高带宽延迟积网络性能</dd>
-      <div class="bg">阶段3. 快重传 Fast Retransmit</div>
+      <div>阶段3. 快重传 Fast Retransmit</div>
       <dd>设计目标：尽早检测并重传丢失的报文段，避免因等待重传定时器超时而造成不必要的传输延迟</dd>
       <dd>触发机制：重复确认，即连续收到三个重复的确认，就立即启动快重传，无需等待超时</dd>
       <dd>整个网络的吞吐量提高约 20%</dd>
@@ -281,7 +278,7 @@
         <img src="./imgs/tcp10.png" alt="">
         <figcaption>快重传</figcaption>
       </figure>
-      <div class="bg">阶段4. 快恢复 Fast Recovery</div>
+      <div>阶段4. 快恢复 Fast Recovery</div>
       <dd>设计目标：快重传后，避免退回到慢启动（过于保守），维持较高吞吐</dd>
       <dd>触发机制：当发送端收到连续三个重复的确认</dd>
       <dd>调整
@@ -363,23 +360,19 @@
         <li>TCP拥塞控制中。为什么超时就从慢开始阶段重新开始，而重复确认就进入快重传阶段？</li>
         <!-- 接收方收到了后续的数据包，但中间某个包丢失了，不一定是网络拥塞导致的 -->
         <li>发送方根据（）调整拥塞窗口 cwnd 的大小和 ssthresh 门限值。</li>
-        <div class="txt-indent">
-          <div>A. 收到的ACK确认报文</div>
-          <div>B. 收到的报文段 MSS 的确认</div>
-          <div>C. 发送方的窗口</div>
-          <div>D. 接收方的窗口</div>
-        </div>
+        <div>A. 收到的ACK确认报文</div>
+        <div>B. 收到的报文段 MSS 的确认</div>
+        <div>C. 发送方的窗口</div>
+        <div>D. 接收方的窗口</div>
         <!-- B -->
         <li>
           一个 TCP 连接总是以1KB的最大段长发送 TCP 段，发送方有足够多的数据要发送。当拥塞窗口为16KB时发生了超时，如果接下来的4个RTT内的 TCP
           段的传输都是成功的，那么当第4个RTT时间内发送的所有 TCP 段都得到肯定应答时，拥塞窗口大小是（）。
         </li>
-        <div class="txt-indent">
-          <div>A. 7KB</div>
-          <div>B. 8KB</div>
-          <div>C. 9KB</div>
-          <div>D. 16KB</div>
-        </div>
+        <div>A. 7KB</div>
+        <div>B. 8KB</div>
+        <div>C. 9KB</div>
+        <div>D. 16KB</div>
         <!-- C -->
         <li>为什么使用 MSS 来衡量拥塞窗口 cwnd 的大小而不是使用整个TCP报文？</li>
       </ol>
