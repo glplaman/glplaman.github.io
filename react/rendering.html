@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>渲染 Rendering</title>
+  <title>渲染数据 Rendering Data</title>
   <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
 </head>
@@ -12,31 +12,30 @@
 <body>
   <div class="w">
     <header>
-      <h1>渲染</h1>
-      <span>&commat;Rendering</span>
+      <h1>渲染数据</h1>
+      <span>&commat;Rendering Data</span>
     </header>
     <dl>
-      <dt>Arrow function</dt>
-      <dd>React 操作 js 并返回 DOM</dd>
-      <dd>使用 {}，要显式的使用 return 返回结构</dd>
-      <dd>或者直接返回结构</dd>
-      <dd>不关是结构是单行还是多行，都建议使用 ()/分组运算符 进行分组</dd>
       <dt>Introduction</dt>
-      <dd>使用 {}/插值表达式 绑定状态/响应式数据 - Curly braces</dd>
+      <dd>使用插值表达式 <strong>{}</strong> 绑定/渲染数据 - Curly braces</dd>
       <dd>可以进行简单的数据操作</dd>
       <dd>更多信息，请访问 <a href="https://react.dev/learn#displaying-data">Displaying data</a></dd>
-      <ol>
-        <li>内容绑定；msg、age 为变量</li>
-        <pre>
+      <div class="demo">内容绑定</div>
+      <dd>msg、user 为数据</dd>
+      <pre>
 &lt;div&gt;{msg}&lt;/div&gt;
 &lt;div&gt;{msg.toUpperCase()}&lt;/div&gt;</pre>
-        <pre>
-&lt;div&gt;{age}&lt;/div&gt;
-&lt;div&gt;{age > 18 ? "成年" : "未成年"}&lt;/div&gt;</pre>
-        <li>属性绑定；logo、flag 为变量</li>
-        <pre>&lt;img src={logo} alt=""&gt;</pre>
-        <pre>&lt;div className={flag ? 'active' : ''}&gt;{msg}&lt;/div&gt;</pre>
-      </ol>
+      <pre>
+&lt;div&gt;{user.name}&lt;/div&gt;
+&lt;div&gt;{user.age > 18 ? "成年" : "未成年"}&lt;/div&gt;</pre>
+      <div class="demo">属性绑定</div>
+      <dd>logo 为数据</dd>
+      <pre>&lt;img src={logo} alt=""&gt;</pre>
+      <dd>动态类；flag 为数据</dd>
+      <pre>&lt;div className={flag ? 'active' : ''}&gt;{msg}&lt;/div&gt;</pre>
+      <dd>绑定内联样式，同样使用 {}，但是样式以对象的形式呈现。所以是双 {{}}</dd>
+      <pre>&lt;div style={{fontWeight: '600'}}&gt;hi,there.&lt;/div&gt;</pre>
+      <dd>更多样式使用，请访问 <a href="./style.html">样式</a></dd>
     </dl>
     <h2>Conditional rendering</h2>
     <dl>
@@ -71,6 +70,9 @@ const getAge = age > 18 ? "成年" : "未成年";</pre>
       <dd>如数据是否存在？数组长度是否为空？</dd>
       <pre>show && &lt;p&gt;hi,there.&lt;/p&gt;</pre>
       <dt>Best Practice 最佳编码体验</dt>
+      <dd>分开写（Early Return）更适合逻辑控制</dd>
+      <dd>避免嵌套地狱：一旦状态变多（比如加上“空数据 Empty State”、“权限不足”等），三元运算符 ? : 会层层嵌套，代码变得极难阅读</dd>
+      <dd>优化 DOM 结构：为了包裹这些条件判断，通常需要最外层套一个容器，这有时会影响 CSS 布局</dd>
       <pre>
 // 1. 加载中...
 if (loading) return &lt;p&gt;加载中...&lt;/p&gt;;
@@ -84,9 +86,6 @@ return (
        &lt;p&gt;你的结构&lt;/p&gt; 
     &lt;/&gt;
 );</pre>
-      <dd>分开写（Early Return）更适合逻辑控制</dd>
-      <dd>避免嵌套地狱：一旦状态变多（比如加上“空数据 Empty State”、“权限不足”等），三元运算符 ? : 会层层嵌套，代码变得极难阅读</dd>
-      <dd>优化 DOM 结构：为了包裹这些条件判断，通常需要最外层套一个容器，这有时会影响 CSS 布局</dd>
     </dl>
     <h2>Rendering lists</h2>
     <dl>
