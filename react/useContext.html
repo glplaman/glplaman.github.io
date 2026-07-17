@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>上下文 useContext</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>上下文</h1>
+      <span>&commat;useContext</span>
+    </header>
+    <dl>
+      <dd>在 React 中，跨层级数据传递依赖于 Context API，主要涉及三个核心部分：createContext、Provider 和 useContext</dd>
+      <dd>同 Vue 相比，React 语法相对复杂</dd>
+      <dt>Steps</dt>
+      <ol>
+        <li>创建上下文：使用 createContext 创建一个 Context 对象，该对象本身不包含信息，仅作为信息的载体，并可指定一个默认值</li>
+        <li>提供数据：在组件树的上层，使用 Context.Provider 包裹子组件，将状态或数据通过 value 属性传递下去</li>
+        <pre>&lt;Context.Provider value={...}&gt;</pre>
+        <dd>或</dd>
+        <pre>&lt;Context value={...}&gt;</pre>
+        <li>读取数据：在下层任意深度的组件中，通过调用 useContext(SomeContext) Hook 来读取并订阅该上下文。当 Context 的值发生变化时，React 会自动重新渲染读取了该 Context
+          的组件</li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

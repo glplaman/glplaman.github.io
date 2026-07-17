@@ -16,31 +16,87 @@
       <span>&commat;Props</span>
     </header>
     <dl>
-      <dd>父组件以属性 Props 的形式分享/传递数据给子组件 - Sharing data between components</dd>
+      <dd>父组件以属性 Props 的形式分享/传递数据给子组件 - React components use props to communicate with each other</dd>
       <dd>子组件使用/解构使用父组件分享的数据</dd>
+      <dd>可以是普通数据，也可以是函数/方法</dd>
       <dd>anything will be ok as a props</dd>
       <dd>key: built-in props</dd>
       <dd>更多信息，请访问 <a href="https://react.dev/learn/passing-props-to-a-component">Passing Props to a Component</a></dd>
-      <dt>子组件 Greeting.tsx</dt>
-      <dd>在函数中使用 props</dd>
-      <dd>父组件分享的所有数据都在这个对象中</dd>
+      <dt>传递普通数据</dt>
+      <dd>数据只能从父组件流向子组件 - 单向数据流</dd>
+      <div>1. 子组件 Greeting.tsx</div>
+      <dd>子组件在函数中使用 props</dd>
+      <dd>子组件只接受一个参数 props - React component functions accept a single argument, a props object:</dd>
+      <dd>父组件分享的所有数据都在这个 props 对象中</dd>
+      <dd>通常从 props 中<strong>解构</strong>数据 - destructure it into individual props</dd>
+      <dd>同样可以指定<strong>默认</strong>参数 - Specifying a default value</dd>
       <pre>
 const Greeting = (props) => {
   return &lt;div&gt;hi, {props.user}&lt;/div&gt;;
 };
 export default Greeting;</pre>
-      <dd>通常从 props 中解构数据，以便更清楚的查看数据</dd>
-      <dd>可以指定默认参数</dd>
       <pre>
 const Greeting = ({ user = 'glpla' }) => {
   return &lt;div&gt;hi, {user}&lt;/div&gt;;
 };
 export default Greeting;</pre>
-      <dt>父组件</dt>
+      <div>2. 父组件</div>
       <dd>导入子组件</dd>
       <pre>import Greeting from "./components/Greeting.tsx";</pre>
       <dd>以属性 props 的形式指定属性 - 传递数据/通信</dd>
       <pre>&lt;Greeting user="glplaman"&gt;&lt;/Greeting&gt;</pre>
+      <dt>传递函数</dt>
+      <dd>父组件分享函数给子组件</dd>
+      <dd>子组件执行父组件的函数，同时也向父组件传递数据</dd>
+      <dd>父组件根据子组件的数据执行相应的动作</dd>
+      <dd>很多实际业务场景中，子组件必须通过调用父组件的函数来完成特定任务</dd>
+      <div class="demo">用户中心</div>
+      <dd>修改用户信息</dd>
+      <dd>修改操作封装为一个组件；通过执行父组件函数来更新信息</dd>
+      <dd>父组件</dd>
+      <pre>
+const [user, setUser] = useState('glpla')
+const setName = (e) => {
+  setUser(e.tars.value)
+}</pre>
+      <pre>&lt;Input fn={setName} user={user}&gt;&lt;/Input&gt;</pre>
+      <dd>子组件</dd>
+      <pre>
+const Input = ({ user, fn }) => {
+  return (
+    &lt; &gt;
+      &lt;input type="text" onChange={fn} value={user} /&gt;
+    &lt;/&gt;
+  )
+}
+
+export default Input</pre>
+      <div class="demo">搜索组件</div>
+      <dd>父组件根据子组件的关键词搜索对应的内容</dd>
+      <dd>搜索功能封装为子组件</dd>
+    </dl>
+    <h2>Children</h2>
+    <dl>
+      <dd>除了传递 Props 外，还可以以嵌套普通标签/组件的方式传递数据</dd>
+      <dd>相当于在子组件中预留了一个插槽 slot</dd>
+      <dd>这个数据被 props.children 接受</dd>
+      <dt>父组件</dt>
+      <pre>
+&lt;SayHi title='glplaman'&gt;
+  &lt;h1&gt;hi,there.&lt;/h1&gt;
+&lt;/SayHi&gt;</pre>
+      <dt>子组件</dt>
+      <pre>
+const SayHi = ({ title, children }) => {
+  return (
+    &lt;&gt;
+      &lt;p&gt;hi,{title}&lt;/p&gt;
+      {children}
+    &lt;/&gt;
+  )
+}
+
+export default SayHi</pre>
     </dl>
     <h2>Homework</h2>
     <dl>
@@ -49,6 +105,22 @@ export default Greeting;</pre>
     <div id="footer"></div>
   </div>
   <script src="/utils/custom/footer.js"></script>
+  <script>
+    const arr = [
+      { title: "React 学习指南" },
+      { title: "Vue 与 React 的区别" },
+      { title: "今天天气不错" }
+    ];
+    const keywords = "React";
+    const res = arr.filter(item => {
+      return item.title.indexOf(keywords) > -1
+    })
+    console.log(res);
+    console.log(arr[0].title.indexOf(keywords));
+    console.log(arr[1].title.indexOf(keywords));
+    console.log(arr[2].title.indexOf(keywords));
+
+  </script>
 </body>
 
 </html>

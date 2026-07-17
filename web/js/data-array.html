@@ -385,7 +385,14 @@ console.log(flag); // true     </pre>
       <div class="demo">模糊查询</div>
       <div>
         <div>根据名字是否包含指定的关键字过滤结果</div>
+        <div>使用字符串的 includes()</div>
         <pre>goods.filter(item => item.name.includes(keyword))</pre>
+        <dd>使用字符串的 indexOf()</dd>
+        <pre>goods.filter(item => item.name.indexOf(keyword)>-1)</pre>
+      </div>
+      <div class="tips">
+        <p>字符串的 indexOf() 和 includes() 是模糊查询；在一个长文本里找片段。只要包含这个关键字就算找到</p>
+        <p>数组的 indexOf() 和 includes() 是严格匹配；在一堆数据项中找完全一样的值</p>
       </div>
       <div class="demo">获取偶数</div>
       <div>

@@ -45,11 +45,25 @@
 useEffect(()=>{
   console.log("components init");  
 }, [])</pre>
-      <dd>指定依赖状态</dd>
+      <dd>指定依赖状态：仅 msg 改变时触发</dd>
       <pre>
 useEffect(() => {
-  console.log("state change");
-}, [state]);</pre>
+  console.log("msg change");
+}, [msg]);</pre>
+      <dd>指定多个依赖状态：msg 或 age 改变时触发</dd>
+      <pre>
+useEffect(() => {
+  console.log("bothd change");
+}, [msg, age]);</pre>
+      <dd>如果单独监听某些数据，可以多次使用</dd>
+      <pre>
+useEffect(() => {
+  console.log("msg change");
+}, [msg]);
+
+useEffect(() => {
+  console.log("age change");
+}, [age]);</pre>
       <div class="demo">加载数据</div>
       <pre>const [todos, setTodos] = useState([]);</pre>
       <dd>在钩子中使用函数</dd>
@@ -120,6 +134,22 @@ export default function Demo() {
     &lt;/div>
   );
 }</pre> -->
+    </dl>
+    <h2>Drill</h2>
+    <dl>
+      <div class="demo">页面就绪时，输出是什么</div>
+      <pre>
+useEffect(() => {
+  console.log('init');
+
+}, [])
+
+useEffect(() => {
+  console.log('user');
+
+}, [user])</pre>
+      <!-- <p>init</p> -->
+      <!-- <p>user</p> -->
     </dl>
     <div id="footer"></div>
   </div>
