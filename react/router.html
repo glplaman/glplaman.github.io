@@ -16,47 +16,132 @@
       <span>&commat;Router</span>
     </header>
     <dl>
-      <dt><a href="https://nextjs.org/docs/app/getting-started/route-handlers">基本路由</a></dt>
-      <dd>每个路由对应一个文件夹 - 文件夹即路由</dd>
-      <dd>路由对应的视图文件 view 必须是 page.tsx</dd>
-      <dd>路由可以嵌套</dd>
-      <div class="demo">路由示例</div>
-      <dd>
-        <p>创建文件夹 team</p>
-        <p>在 team 文件夹创建视图文件 page.tsx；组件名/函数名同文件夹名</p>
+      <dd>三种使用方式</dd>
+      <dd>路由相关的包</dd>
+      <ul>
+        <li>BrowserRouter</li>
+        <li>Routes</li>
+        <li>Route</li>
+        <li>NavLink</li>
+        <li>Link</li>
+        <li>useParams</li>
+        <li>useNavigate</li>
+        <li>useLocation</li>
+      </ul>
+      <dd>更多信息，请访问 <a href="https://reactrouter.com/">React Router</a></dd>
+      <dt>Install</dt>
+      <pre>npx create-vite@latest</pre>
+      <dt>Steps</dt>
+      <ol>
+        <li>引入浏览器路由 BrowserRouter</li>
+        <pre>import { BrowserRouter } from "react-router";</pre>
+        <li>在 App 引入路由</li>
+        <pre>import { BrowserRouter, Routes, Route, NavLink } from "react-router";</pre>
+        <li>在 &lt;BrowserRouter&gt; 中设计路由和使用路由</li>
         <pre>
-export default function Team() {
-  return &lt;div&gt;hi, team&lt;/div&gt;;
-}</pre>
-        <p>在浏览器中访问路由</p>
-        <pre>http://localhost:3000/team</pre>
-      </dd>
-      <dt>嵌套路由</dt>
-      <dd>以嵌套文件夹的形式指定</dd>
-      <dt>单独布局</dt>
-      <dd>以上为共享布局</dd>
-      <dd>每个路由可以定制自己的布局 layout.tsx</dd>
-      <dd>组件名为路由名+Layout</dd>
+&lt;BrowserRouter&gt;
+  {/* 使用路由 */}
+  {/* 设计路由 */}
+&lt;/BrowserRouter&gt;</pre>
+        <li>设计路由；使用 &lt;Routes&gt; 和 &lt;Route&gt; 设计路由；其中 /:num 为动态路由</li>
+        <pre>
+&lt;Routes&gt;
+  &lt;Route path="/:num" element={&lt;Test /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/login" element={&lt;Login /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/register" element={&lt;Register /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/rank" element={&lt;Rank /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/center" element={&lt;Center /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/message" element={&lt;Message /&gt;}&gt;&lt;/Route&gt;
+&lt;/Routes&gt;</pre>
+        <li>使用路由</li>
+        <p>可以指定查询参数 search/query、目标哈希 hash</p>
+        <p>使用 &lt;NavLink&gt; 实现 <strong>声明式</strong> 导航；需引入再使用</p>
+        <p>相比较 &lt;Link&gt;，&lt;NavLink&gt; 可以自动应用激活样式 active；需提前设计好</p>
+        <pre>
+&lt;nav&gt;
+  &lt;NavLink to='/12'&gt;Test&lt;/NavLink&gt;
+  &lt;NavLink to='/login'&gt;Login&lt;/NavLink&gt;
+  &lt;NavLink to='/register'&gt;Register&lt;/NavLink&gt;
+  &lt;NavLink to='/rank'&gt;Rank&lt;/NavLink&gt;
+  &lt;NavLink to='/center?id=1001'&gt;Center&lt;/NavLink&gt;
+  &lt;NavLink to={{
+    pathname: '/message',
+    hash: '#tar',
+    search: 'id=10'
+  }}&gt;Message&lt;/NavLink&gt;
+&lt;/nav&gt;</pre>
+        <p>使用 useNavigate 实现 <strong>编程式</strong> 导航；需引入再使用</p>
+        <pre>import { useNavigate } from "react-router"</pre>
+        <pre>const nav = useNavigate()</pre>
+        <pre>&lt;p onClick={() =&gt; nav('/center')}&gt;to Center&lt;/p&gt;</pre>
+        <p>动态路由的获取需要使用 useParams 解析；需引入再使用</p>
+        <pre>import { useParams } from "react-router"</pre>
+        <pre>let { num } = useParams()</pre>
+      </ol>
+      <div class="tips">
+        <p>React Router 7- 的版本中，使用 end 属性完全匹配；特别是存在嵌套路由的时候</p>
+      </div>
+      <div class="demo">登陆页面和注册页面</div>
+      <dd>使用 &lt;Link&gt; 实现；无需应用激活样式</dd>
+      <dd>如果没有账号，则引导去注册页面</dd>
+      <pre>&lt;div&gt;Not have an acount? &lt;Link to='/register'&gt;Register&lt;/Link&gt;&lt;/div&gt;</pre>
+      <dd>如果已有账号，则引导去登陆页面</dd>
+      <pre>&lt;div&gt;Already have an acount? &lt;Link to='/login'&gt;Login&lt;/Link&gt;&lt;/div&gt;</pre>
+      <div class="demo">设计激活样式</div>
+      <dd>使用默认类名 active</dd>
       <pre>
-export default function TeamLayout({ children }: Readonly&lt;{ children: React.ReactNode }>) {
-  return (
-    &lt;div>
-      &lt;h1>Demo&lt;/h1>
-      {children}
-    &lt;/div>
-  );
+a.active{
+  color: #f40;
 }</pre>
-      <dt><a href="https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes">动态路由</a></dt>
-      <dd>创建路由文件夹的时候，使用 [] 额外指定动态路由参数 params</dd>
-      <dd>在 IDE 中推荐使用创建文件的方式指定路由和 params</dd>
-      <dd></dd>
-      <pre>team/[id]/page.tsx</pre>
-      <dd>在 page.tsx 中使用异步-等待获取路由参数 params 并使用</dd>
+      <dd>使用三元表达式 ?: 定制类名</dd>
+      <dd>isActive 是 &lt;NavLink&gt; 组件内置的、自动注入的参数</dd>
       <pre>
-export default async function House({ params }: { params: Promise&lt;{ id: string }> }) {
-  const { id } = await params;
-  return &lt;div>hi, house {id}&lt;/div>;
-}</pre>
+&lt;NavLink 
+  to='rank' 
+  className={({ isActive }) => isActive ? 'red' : 'blue'}
+&gt;
+  Rank
+&lt;/NavLink&gt;</pre>
+      <dt>基本路径 basename</dt>
+      <dd>默认情况下，项目发布后，部署在网站根目录</dd>
+      <dd>路由设计和使用可以使用 / 或者不使用 / 都可以；前例路由使用了 /</dd>
+      <dd>如果指定了基本路径 basename，表示当前项目是网站下的一个子目录，则应使用不带 / 的相对路径；否则会被编译为网站根目录</dd>
+      <dd>需要同时在 vite.config.js 中配置 base</dd>
+      <pre>
+export default defineConfig({
+  plugins: [react()],
+  base: '/common/rank',
+})</pre>
+      <pre>
+&lt;BrowserRouter basename="/common/rank"&gt;
+  {/* 使用路由 */}
+  {/* 设计路由 */}
+&lt;/BrowserRouter&gt;</pre>
+      <dd>设计</dd>
+      <pre>
+&lt;Routes&gt;
+  &lt;Route path=":num" element={&lt;Test /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="login" element={&lt;Login /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="register" element={&lt;Register /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="rank" element={&lt;Rank /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="center" element={&lt;Center /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="message" element={&lt;Message /&gt;}&gt;&lt;/Route&gt;
+&lt;/Routes&gt;</pre>
+      <dd>使用</dd>
+      <pre>
+&lt;nav&gt;
+  &lt;NavLink to='12'&gt;Test&lt;/NavLink&gt;
+  &lt;NavLink to='login'&gt;Login&lt;/NavLink&gt;
+  &lt;NavLink to='register'&gt;Register&lt;/NavLink&gt;
+  &lt;NavLink to='rank'&gt;Rank&lt;/NavLink&gt;
+  &lt;NavLink to='center?id=1001'&gt;Center&lt;/NavLink&gt;
+  &lt;NavLink to={{
+    pathname: 'message',
+    hash: '#tar',
+    search: 'id=10'
+  }}&gt;Message&lt;/NavLink&gt;
+&lt;/nav&gt;</pre>
+      <div class="demo">如果使用基本路径，登陆页面和注册页面的导航引导是否需要去掉 / ？</div>
     </dl>
     <div id="footer"></div>
   </div>

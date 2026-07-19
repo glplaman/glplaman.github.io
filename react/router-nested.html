@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>嵌套路由 Nested</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>嵌套路由</h1>
+      <span>&commat;Nested</span>
+    </header>
+    <dl>
+      <dd>course
+        <p>front</p>
+        <p>back</p>
+      </dd>
+      <dt>Steps</dt>
+      <ol>
+        <li>通过嵌套 &lt;Route&gt; 实现子路由</li>
+        <pre>
+&lt;Route path="course" element={&lt;Course /&gt;}&gt;
+  &lt;Route path="front" element={&lt;Front /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="back" element={&lt;Back /&gt;}&gt;&lt;/Route&gt;
+&lt;/Route&gt;</pre>
+        <li>在父路由组件中使用 &lt;Outlet /&gt; 渲染/使用子路由视图</li>
+        <pre>import { Outlet } from "react-router"</pre>
+        <pre>&lt;Outlet /&gt;</pre>
+      </ol>
+      <div class="tips">
+        <p>可以使用 index 指定默认子路由；省略 path</p>
+        <p>使用 index 属性的路由，无法继续嵌套子路由</p>
+      </div>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

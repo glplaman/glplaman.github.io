@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由 Router</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>路由</h1>
+      <span>&commat;Router</span>
+    </header>
+    <dl>
+      <dt><a href="https://nextjs.org/docs/app/getting-started/route-handlers">基本路由</a></dt>
+      <dd>每个路由对应一个文件夹 - 文件夹即路由</dd>
+      <dd>路由对应的视图文件 view 必须是 page.tsx</dd>
+      <dd>路由可以嵌套</dd>
+      <div class="demo">路由示例</div>
+      <dd>
+        <p>创建文件夹 team</p>
+        <p>在 team 文件夹创建视图文件 page.tsx；组件名/函数名同文件夹名</p>
+        <pre>
+export default function Team() {
+  return &lt;div&gt;hi, team&lt;/div&gt;;
+}</pre>
+        <p>在浏览器中访问路由</p>
+        <pre>http://localhost:3000/team</pre>
+      </dd>
+      <dt>嵌套路由</dt>
+      <dd>以嵌套文件夹的形式指定</dd>
+      <dt>单独布局</dt>
+      <dd>以上为共享布局</dd>
+      <dd>每个路由可以定制自己的布局 layout.tsx</dd>
+      <dd>组件名为路由名+Layout</dd>
+      <pre>
+export default function TeamLayout({ children }: Readonly&lt;{ children: React.ReactNode }>) {
+  return (
+    &lt;div>
+      &lt;h1>Demo&lt;/h1>
+      {children}
+    &lt;/div>
+  );
+}</pre>
+      <dt><a href="https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes">动态路由</a></dt>
+      <dd>创建路由文件夹的时候，使用 [] 额外指定动态路由参数 params</dd>
+      <dd>在 IDE 中推荐使用创建文件的方式指定路由和 params</dd>
+      <dd></dd>
+      <pre>team/[id]/page.tsx</pre>
+      <dd>在 page.tsx 中使用异步-等待获取路由参数 params 并使用</dd>
+      <pre>
+export default async function House({ params }: { params: Promise&lt;{ id: string }> }) {
+  const { id } = await params;
+  return &lt;div>hi, house {id}&lt;/div>;
+}</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
