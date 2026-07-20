@@ -25,8 +25,8 @@
       <dd>函数即组件；一切皆函数</dd>
       <dd>React 操作 js 并返回 DOM；在函数中返回 html 结构</dd>
       <dd>组件函数名和组件文件名保持一致</dd>
-      <dd>组件名必须大写开头 - React component names must always start with a capital letter, while HTML tags must be lowercase
-      </dd>
+      <dd>组件名必须 <strong>大写</strong> 开头 - React component names must always start with a capital letter, while HTML tags
+        must be lowercase </dd>
       <dd>单一根节点 - shared parent</dd>
       <dd>可以是空标签 - empty &lt;&gt;...&lt;/&gt; wrapper</dd>
       <dd>为了避免自动插入分号，return 使用 ()</dd>
@@ -35,46 +35,45 @@
       <dd>使用 TypeScript 的组件后缀名为 .tsx</dd>
       <dd>更多信息，请访问 <a class="link" href="https://react.dev/learn#components">Creating and nesting components</a>、<a
           href="https://react.dev/learn/your-first-component">Your First Component</a></dd>
-      <div class="demo">使用具名函数</div>
-      <dd>使用 export default 时，不需要强制指定函数名</dd>
-      <dd>实际的 React 开发中，为了调试方便、增加可读性，强烈建议保留函数名</dd>
-      <dd>不关是结构是单行还是多行，都建议使用 ()/分组运算符 进行分组</dd>
-      <dd>声明并导出</dd>
-      <pre>
+      <div class="tips">
+        <p>为编辑器安装扩展 ES7+ React/Redux/React-Native/JS snippets</p>
+      </div>
+      <div class="demo">使用具名函数创建组件</div>
+      <ol>
+        <li>在 src 目录下创建组件目录 components</li>
+        <li>创建 helloworld 目录</li>
+        <li>创建 index.jsx 文件</li>
+        <li>输入 <strong>rfce</strong> 快速创建具名函数组件结构</li>
+        <pre>
+import React from 'react'
+
+function index() {
+  return (
+    &lt;div&gt;index&lt;/div&gt;
+  )
+}
+
+export default index</pre>
+        <li>修改函数名 index 为 HelloWorld</li>
+        <pre>
+import React from 'react'
+
 function HelloWorld() {
   return (
-    &lt;&gt;
-      &lt;div&gt;hi,there.&lt;/div&gt;
-    &lt;/&gt;
-  );
+    &lt;div&gt;HelloWorld&lt;/div&gt;
+  )
 }
+
 export default HelloWorld</pre>
-      <dd>直接导出</dd>
-      <pre>
-export default function HelloWorld() {
-  return (
-    &lt;&gt;
-      &lt;div&gt;hi,there.&lt;/div&gt;
-    &lt;/&gt;
-  );
-}</pre>
+      </ol>
       <div class="demo">使用 <a href="../web/js/function-arrow.html">箭头函数</a></div>
-      <dd>更简洁</dd>
-      <dd>使用 {}，要显式的使用 return 返回结构</dd>
-      <dd>或者直接返回结构</dd>
-      <pre>
-export default HelloWorld = () => {
-  return (
-    &lt;&gt;
-      &lt;div&gt;hi,there.&lt;/div&gt;
-    &lt;/&gt;
-  );
-}</pre>
-      <dt>使用组件</dt>
+      <dd>使用 <strong>rafce</strong> 快速创建箭头函数组件结构</dd>
+      <dd>其它操作类似</dd>
+      <div class="demo">使用组件</div>
       <dd>父组件引入并使用</dd>
       <pre>
-import HelloWorld from './components/HelloWorld.tsx';
-function App() {
+import HelloWorld from "./components/helloworld";
+const App = () => {
 
   return (
     &lt;&gt;
@@ -88,23 +87,6 @@ export default App;</pre>
         <p>react.js 中，默认都是 client component</p>
         <p>next.js 中，默认都是 server component</p>
       </div>
-    </dl>
-    <h2>Homework</h2>
-    <dl>
-      <div class="demo"> 设计版权组件</div>
-      <div class="demo"> 设计商品组件</div>
-      <dd>参考以下结构设计</dd>
-      <pre>
-import Desc from "./Desc";
-import Avatar from "./Avatar";
-export default function Card() {
-  return (
-    &lt;&gt;
-      &lt;Avatar /&gt;
-      &lt;Desc /&gt;
-    &lt;/&gt;
-  );
-}</pre>
     </dl>
     <div id="footer"></div>
   </div>
