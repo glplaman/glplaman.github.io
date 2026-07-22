@@ -17,41 +17,45 @@
     </header>
     <dl>
       <dt>概述 Overview</dt>
-      <dd>使用原生方式 onXXX 添加交互</dd>
+      <dd>使用原生方式 onXXX 添加交互，如 onClick、onChange、onSubmit、onMouseEnter</dd>
+      <dd>支持单独函数和内联函数</dd>
       <dd>不支持事件侦听</dd>
-      <dt>定义 Declaration</dt>
-      <dd>定义一个事件处理函数 - define a function</dd>
-      <dd>以属性的形式传递给结构 - pass it as a prop to the appropriate tag</dd>
-      <dd>事件处理函数通常使用 handle 作为前缀，如 handleXXX</dd>
-      <dt>函数调用 Call</dt>
-      <dd>在 React 中，花括号 {} 代表“这里开始写 JavaScript 代码”</dd>
-      <dd>函数名带上 () 就表示立即执行</dd>
-      <dd>注意区分无参和有参的情况</dd>
-      <dd>更多信息，请访问 <a href="https://react.dev/learn/responding-to-events">Responding to Events</a></dd>
-      <div class="demo">无参函数</div>
-      <dd>定义函数</dd>
-      <pre>
-const sayHi = () => {
-  console.log('hi,there.');
+      <dd>更多信息，请访问 <a class="link" href="https://react.dev/learn/responding-to-events">Responding to Events</a></dd>
+      <dt>Steps</dt>
+      <ol>
+        <li>定义函数 Define</li>
+        <p>事件处理函数通常使用 handle 作为前缀，如 handleXXX</p>
+        <pre>
+const HandleClick = () => {
+  console.log('hi');
 };</pre>
-      <dd>使用函数；传递的是一个函数的引用；单击时，触发函数执行</dd>
-      <pre>&lt;button onClick={sayHi}&gt;Click me&lt;/button&gt;</pre>
-      <dd>如果函数带上()，会立即执行</dd>
-      <pre>&lt;button onClick={sayHi()}&gt;Click me&lt;/button&gt;</pre>
+        <li>分配函数 Assign</li>
+        <p>以属性的形式传递给结构 - pass it as a special prop with on to the appropriate tag</p>
+        <p>使用函数；传递的是一个函数的引用；单击时，触发函数执行</p>
+        <pre>&lt;button onClick={HandleClick}&gt;Click me&lt;/button&gt;</pre>
+        <li>调用函数</li>
+        <p>用户单击的时候，就会触发函数执行</p>
+        <p>如果：分配函数的时候，带上 () 就表示立即执行</p>
+        <pre>&lt;button onClick={HandleClick()}&gt;Click me&lt;/button&gt;</pre>
+      </ol>
       <div class="demo">带参函数</div>
+      <dd>注意和无参函数的区别</dd>
       <dd>定义函数</dd>
       <pre>
 const deleteById = (id) => {
   console.log(id);
 };</pre>
-      <dd>调用函数</dd>
+      <dd>分配函数</dd>
       <pre>&lt;button onClick={()=>deleteById(id)}&gt;Click me&lt;/button&gt;</pre>
-      <dd>如果直接指定带参函数，会立即执行 - 因为使用了()；注意和无参函数的区别</dd>
+      <dd>如果直接指定带参函数，会立即执行 - 因为使用了()</dd>
       <pre>&lt;button onClick={deleteById(id)}&gt;Click me&lt;/button&gt;</pre>
       <div class="tips">
         <p>还可以使用函数柯里化 Currying 进一步优化</p>
       </div>
-      <div class="demo">简单逻辑，可以使用内联事件 Inline event</div>
+      <dt>内联事件 Inline event</dt>
+      <dd>简单逻辑，可以使用内联事件 Inline event</dd>
+      <pre>&lt;button onClick={() => console.log('hi')}&gt;Click me&lt;/button&gt;</pre>
+      <div class="demo">计算器加减</div>
       <dd>数据</dd>
       <pre>const [count, setCount] = useState(0);</pre>
       <dd>内联事件</dd>
@@ -60,6 +64,11 @@ const deleteById = (id) => {
 &lt;button onClick={() => setCount(count + 1)}&gt;Inc&lt;/button&gt;
 &lt;button onClick={() => setCount(count - 1)}&gt;Dec&lt;/button&gt;
 &lt;button onClick={() => setCount((prev)=>prev-1)}&gt;Dec&lt;/button&gt;</pre>
+      <dt>事件对象 e</dt>
+      <dd>事件相关的一些信息，如目标元素 target 及对应的值 value</dd>
+      <dt>事件复用</dt>
+      <dd>组件之间，为了响应不同的业务，需要区别对待</dd>
+      <dd>更多信息，请访问 <a class="link" href="./component-props.html">传递函数</a></dd>
     </dl>
     <div id="footer"></div>
   </div>

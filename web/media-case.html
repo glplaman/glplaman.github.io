@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>媒体查询案例 Cases</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>媒体查询案例</h1>
+      <span>&commat;Cases</span>
+    </header>
+    <dl>
+      <dt>样式需求</dt>
+      <div class="demo"> 设置全局字体大小</div>
+      <dd>桌面端初始化为 1rem=10px，即 62.5%</dd>
+      <dd>移动端调整为 55%</dd>
+      <dd>不需要再为 body 指定大小</dd>
+      <pre>
+html {
+  font-size: 62.5%;
+}</pre>
+      <pre>
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+}</pre>
+      <div class="demo"> 画廊</div>
+      <dd>内部样式</dd>
+      <dd>默认是大屏，>1200px，显式4列</dd>
+      <dd>&le;1200px，显式3列</dd>
+      <dd>&le;992px，显式2列</dd>
+      <dd>&le;768px，显式1列</dd>
+      <pre>
+&lt;div class="wrap"&gt;
+  &lt;img src="./imgs/1.jpg" alt=""&gt;
+  &lt;img src="./imgs/2.jpg" alt=""&gt;
+  &lt;img src="./imgs/3.jpg" alt=""&gt;
+  &lt;img src="./imgs/4.jpg" alt=""&gt;
+  &lt;img src="./imgs/5.jpg" alt=""&gt;
+  &lt;img src="./imgs/6.jpg" alt=""&gt;
+&lt;/div&gt;</pre>
+      <dd>方案1：使用 grid 实现 - 桌面优先</dd>
+      <pre>
+.wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media screen and (max-width: 1200px) {
+  .wrap {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .wrap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrap {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}</pre>
+      <dd>方案 2：使用 % 实现 - 移动优先；采用了 float，记得清除浮动</dd>
+      <pre>
+.wrap img {
+  float: left;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+@media (min-width:768px) {
+  .wrap img {
+    width: 50%;
+  }
+}
+
+@media (min-width:992px) {
+  .wrap img {
+    width: 33.3%;
+  }
+}
+
+@media (min-width:1200px) {
+  .wrap img {
+    width: 25%;
+  }
+}      </pre>
+      <dd>其它方案：请参考 grid 万能的自适应布局<a class="link" href="./layout-grid.html#grid"> gird 布局</a></dd>
+      <div class="demo"> <a class="link" href="./demo/ham0.html">汉堡菜单1</a>、<a class="link"
+          href="./demo/ham1.html">汉堡菜单2</a>、<a class="link" href="./demo/ham2.html">汉堡菜单3</a></div>
+      <dd> 主导航nav、logo、和 ham</dd>
+      <dd> 传统方式下：大尺寸下，只显示 nav 和 logo，隐藏 ham；小尺寸时，再显示 ham</dd>
+      <dd> 改进：大尺寸下，ham 的h5指定结构但是内容为空，小尺寸下才设计 ham 的具体内容，这样就不需要先隐藏再显示。适合开始弹性布局的 flex-start 和结束 flex-end</dd>
+      <dd> 如果使用 space-between 则0元素也会被分隔 [好大的坑！！！]</dd>
+      <dt>功能需求</dt>
+      <div class="demo"> 面向桌面端；移动端没有 hover；且100vh默认是包含底部操作栏</div>
+      <pre>
+@media (hover: hover) {
+  body{
+    height: 100vh;
+  }
+  a:hover {
+    color: #f40;
+  }
+}</pre>
+      <div class="demo">分页打印表格</div>
+      <dd>建议使用容器包裹表格</dd>
+      <pre>
+@media print {
+  table {
+    break-before: page;
+    break-after: page;
+  }
+}</pre>
+      <div class="demo">标签和媒体查询的使用</div>
+      <dd>小尺寸时使用普通小图；大尺寸时，使用高清大图</dd>
+      <dd>体会 &lt;picture&gt;、&lt;img&gt; 和 background-image 的特点</dd>
+      <ol>
+        <li><a class="link" href="./imgpicture.html">&lt;picture&gt;</a> - 组合标签；指定不同的备选图片以适应不同的设备；如果都不满足就使用 &lt;img&gt;
+          指定的内容</li>
+        <pre>
+&lt;picture&gt;
+  &lt;source srcset="https://picsum.photos/400/300?random=0" media="(max-width:768px)"&gt;
+  &lt;img src="https://picsum.photos/800/600?random=0" alt=""&gt;
+&lt;/picture&gt;      </pre>
+        <li><a class="link" href="">&lt;link&gt;</a> - 使用属性preload 实现<a class="link" href="./preload.html">预加载 -
+            preload</a></li>
+        <pre>
+&lt;link
+  rel="preload"
+  href="bg-image-narrow.png"
+  as="image"
+  media="(max-width: 600px)" /&gt;
+
+&lt;link
+  rel="preload"
+  href="bg-image-wide.png"
+  as="image"
+  media="(min-width: 601px)" /&gt;
+
+&lt;link rel="stylesheet" href="main.css" /&gt;</pre>
+      </ol>
+      <div class="demo">设备查询 - 打印时，隐藏不需要打印的元素或显示特定内容</div>
+      <dd>隐藏汉堡菜单</dd>
+      <pre>
+@media print {
+  .ham {
+    display: none;
+  }
+}</pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

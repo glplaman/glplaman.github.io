@@ -3,29 +3,31 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>媒体查询 Media</title>
-  <link rel="stylesheet" href="../css/common.css">
-  <base target="_blank">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/nav.css">
 </head>
 
 <body>
-  <header>
-    <h1>媒体查询</h1>
-    <span>&commat;Media</span>
-    <span class="ham"></span>
+  <div class="w">
+    <header>
+      <h1>媒体查询</h1>
+      <span>&commat;Media</span>
+      <span class="ham"></span>
+    </header>
     <nav class="nav">
-      <a href="" style="--delay:0" class="nav-item">视口</a>
-      <a href="" style="--delay:1" class="nav-item">断点</a>
-      <a href="" style="--delay:2" class="nav-item">语法</a>
-      <a href="" style="--delay:3" class="nav-item">桌面优先</a>
-      <a href="" style="--delay:4" class="nav-item">移动优先</a>
-      <a href="" style="--delay:5" class="nav-item">实现</a>
-      <a href="" style="--delay:6" class="nav-item">案例</a>
+      <h1 class="logo">Execution<sup>&commat;</sup></h1>
+      <span class="iconfont icon-menu ham" id="ham"></span>
+      <ul class="nav-menu">
+        <li><a href="#" style="--delay:0" class="nav-item">视口</a></li>
+        <li><a href="#" style="--delay:1" class="nav-item">断点</a></li>
+        <li><a href="#" style="--delay:2" class="nav-item">语法</a></li>
+        <li><a href="#" style="--delay:3" class="nav-item">桌面优先</a></li>
+        <li><a href="#" style="--delay:4" class="nav-item">移动优先</a></li>
+        <li><a href="#" style="--delay:5" class="nav-item">实现</a></li>
+      </ul>
     </nav>
-  </header>
-  <dl>
     <dl class="nav-cont">
       <dt>视口 viewpoint</dt>
       <dd>
@@ -89,8 +91,8 @@ let sh = window.screen.height;</pre>
         <pre>min-width: 320px;</pre>
       </dd>
     </dl>
-    <dl>
-      <dt class="nav-cont">断点 breakpoint</dt>
+    <dl class="nav-cont">
+      <dt>断点 breakpoint</dt>
       <dd>
         <div>利用断点 breakpoint 划分尺寸</div>
         <div>尺寸断点 breakpoint 应以实际内容为主，如根据导航条灵活指定</div>
@@ -262,7 +264,7 @@ let sh = window.screen.height;</pre>
         <div>.开发者视图中，切换设备时，改变的就是对应设备的设备宽度；不切换设备，改变的是浏览器的宽度</div>
       </dd>
     </dl>
-    <div class="chap">实现 Implementation</div>
+    <h2>实现 Implementation</h2>
     <dl class="nav-cont">
       <dd>.媒体查询的不同运用</dd>
       <dt>外部样式</dt>
@@ -339,158 +341,10 @@ body {
 &lt;/picture&gt;      </pre>
       </dd>
     </dl>
-    <div class="chap">案例 Cases</div>
-    <dl class="nav-cont">
-      <dd>[<span class="iconfont icon-keyboard"></span>] 设置全局字体大小</dd>
-      <dd>
-        <div>. 桌面端初始化为 1rem=10px，即 62.5%</div>
-        <div>. 移动端调整为55%</div>
-        <div>. 不需要再为body指定大小</div>
-        <pre>
-html {
-  font-size: 62.5%;
-}</pre>
-        <pre>
-@media screen and (max-width: 768px) {
-  html {
-    font-size: 55%;
-  }
-}</pre>
-      </dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] 画廊</dd>
-      <dd>
-        <div>.内部样式</div>
-        <div>.默认是大屏，>1200px，显式4列</div>
-        <div>.&le;1200px，显式3列</div>
-        <div>.&le;992px，显式2列</div>
-        <div>.&le;768px，显式1列</div>
-        <pre>
-&lt;div class="wrap"&gt;
-  &lt;img src="./imgs/1.jpg" alt=""&gt;
-  &lt;img src="./imgs/2.jpg" alt=""&gt;
-  &lt;img src="./imgs/3.jpg" alt=""&gt;
-  &lt;img src="./imgs/4.jpg" alt=""&gt;
-  &lt;img src="./imgs/5.jpg" alt=""&gt;
-  &lt;img src="./imgs/6.jpg" alt=""&gt;
-&lt;/div&gt;</pre>
-        <p>方案1：使用 grid 实现 - 桌面优先</p>
-        <pre>
-.wrap {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-
-@media screen and (max-width: 1200px) {
-  .wrap {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media screen and (max-width: 992px) {
-  .wrap {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .wrap {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}</pre>
-        <p>方案 2：使用%实现 - 移动优先；采用了 float，记得清除浮动</p>
-        <pre>
-.wrap img {
-  float: left;
-  width: 100%;
-  aspect-ratio: 16/9;
-}
-
-@media (min-width:768px) {
-  .wrap img {
-    width: 50%;
-  }
-}
-
-@media (min-width:992px) {
-  .wrap img {
-    width: 33.3%;
-  }
-}
-
-@media (min-width:1200px) {
-  .wrap img {
-    width: 25%;
-  }
-}      </pre>
-        <div>其它方案：请参考grid万能的自适应布局<a href="./layout-grid.html#grid"> gird布局</a></div>
-      </dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] 小尺寸时使用普通小图；大尺寸时，使用高清大图</dd>
-      <dd>体会 &lt;picture&gt;、&lt;img&gt; 和 background-image 的特点</dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] <a href="./demo/ham0.html">汉堡菜单1</a>、<a
-          href="./demo/ham1.html">汉堡菜单2</a>、<a href="./demo/ham2.html">汉堡菜单3</a></dd>
-      <dd> 主导航nav、logo、和 ham</dd>
-      <dd> 传统方式下：大尺寸下，只显示 nav 和 logo，隐藏 ham；小尺寸时，再显示 ham</dd>
-      <dd> 改进：大尺寸下，ham的h5指定结构但是内容为空，小尺寸下才设计ham的具体内容，这样就不需要先隐藏再显示。适合开始弹性布局的flex-start和结束flex-end</dd>
-      <dd> 如果使用space-between则0元素也会被分隔 [好大的坑！！！]</dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] 面向桌面端；移动端没有hover；且100vh默认是包含底部操作栏</dd>
-      <dd>
-        <pre>
-@media (hover: hover) {
-  body{
-    height: 100vh;
-  }
-  a {
-    color: #f40;
-  }
-}</pre>
-      </dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] 标签和媒体查询的使用</dd>
-      <dd class="sn">
-        <div><a href="./imgpicture.html">&lt;picture&gt;</a> - 组合标签；指定不同的备选图片以适应不同的设备；如果都不满足就使用 &lt;img&gt; 指定的内容</div>
-        <pre>
-&lt;picture&gt;
-  &lt;source srcset="https://picsum.photos/400/300?random=0" media="(max-width:768px)"&gt;
-  &lt;img src="https://picsum.photos/800/600?random=0" alt=""&gt;
-&lt;/picture&gt;      </pre>
-        <div><a href="">&lt;link&gt;</a> - 使用属性preload 实现<a href="./preload.html">预加载 - preload</a></div>
-        <pre>
-&lt;link
-  rel="preload"
-  href="bg-image-narrow.png"
-  as="image"
-  media="(max-width: 600px)" /&gt;
-&lt;link
-  rel="preload"
-  href="bg-image-wide.png"
-  as="image"
-  media="(min-width: 601px)" /&gt;
-
-&lt;link rel="stylesheet" href="main.css" /&gt;</pre>
-      </dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] 设备查询 - 打印时，隐藏不需要打印的元素或显示特定内容</dd>
-      <dd>
-        <div>隐藏汉堡菜单</div>
-        <pre>
-@media print {
-  .ham {
-    display: none;
-  }
-}</pre>
-      </dd>
-      <dd>[<span class="iconfont icon-keyboard"></span>] 分页打印表格</dd>
-      <dd>建议使用容器包裹表格</dd>
-      <pre>
-@media print {
-  table {
-  break-before: page;
-  break-after: page;
-  }
-}</pre>
-    </dl>
     <div id="footer"></div>
-    <script src="/utils/custom/footer.js"></script>
-    <script src="/utils/custom/ham2024.js"></script>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+  <script src="/utils//custom/ham.js"></script>
 </body>
 
 </html>

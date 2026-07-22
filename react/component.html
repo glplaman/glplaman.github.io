@@ -20,23 +20,42 @@
         <p>A component is a piece of the UI (user interface) that has its own logic and appearance.</p>
         <p>React components are JavaScript functions that return markup.</p>
       </div>
-      <dt>创建组件</dt>
+      <dt>概述</dt>
       <dd>React 应用由各种各样的组件构成</dd>
       <dd>函数即组件；一切皆函数</dd>
-      <dd>React 操作 js 并返回 DOM；在函数中返回 html 结构</dd>
+      <dd>React 操作 js 并返回 DOM - 在函数中返回 html 结构</dd>
+      <dd>使用 javaScript 的组件后缀名为 .jsx</dd>
+      <dd>使用 TypeScript 的组件后缀名为 .tsx</dd>
+      <dd>更多信息，请访问 <a class="link" href="https://react.dev/learn#components">Creating and nesting components</a>、<a
+          class="link" href="https://react.dev/learn/your-first-component">Your First Component</a></dd>
+      <dt>管理组件</dt>
+      <dd>在 src 目录下创建 components 目录并集中管理</dd>
+      <dd>简单逻辑组件可以直接创建</dd>
+      <dd>复杂逻辑如嵌套组件，使用同名文件夹管理，主组件使用 index 命名，便于使用；组件函数名仍然要和文件夹名保持一致</dd>
+      <dd>组件对应的样式使用 module 隔离</dd>
+      <pre>
+<span class="iconfont icon-folderopen"></span> src
+  <span class="iconfont icon-folderopen"></span> components
+    <span class="iconfont icon-folderopen"></span> HelloWorld
+      <span class="iconfont icon-react"></span> index.jsx
+      <span class="iconfont icon-jinghao"></span> HelloWorld.module.css
+      <span class="iconfont icon-react"></span> Other.jsx
+      <span class="iconfont icon-jinghao"></span> Other.module.css
+    <span class="iconfont icon-react"></span> Rank.jsx</pre>
+      <dt>创建组件</dt>
       <dd>组件函数名和组件文件名保持一致</dd>
       <dd>组件名必须 <strong>大写</strong> 开头 - React component names must always start with a capital letter, while HTML tags
         must be lowercase </dd>
       <dd>单一根节点 - shared parent</dd>
+      <dd>必须闭合</dd>
       <dd>可以是空标签 - empty &lt;&gt;...&lt;/&gt; wrapper</dd>
       <dd>为了避免自动插入分号，return 使用 ()</dd>
       <dd>如果返回只有一行代码，可以省略()；但是不建议</dd>
-      <dd>使用 javaScript 的组件后缀名为 .jsx</dd>
-      <dd>使用 TypeScript 的组件后缀名为 .tsx</dd>
-      <dd>更多信息，请访问 <a class="link" href="https://react.dev/learn#components">Creating and nesting components</a>、<a
-          href="https://react.dev/learn/your-first-component">Your First Component</a></dd>
       <div class="tips">
-        <p>为编辑器安装扩展 ES7+ React/Redux/React-Native/JS snippets</p>
+        <p>扩展 ES7+ React/Redux/React-Native/JS snippets</p>
+        <p>PascalCase：大驼峰命名；每个单词的首字母都大写，单词之间没有空格或分隔符</p>
+        <p>camelCase：小驼峰命名法；第一个单词的首字母小写，后续每个单词的首字母大写，单词之间没有空格或分隔符</p>
+        <p>snake_case：蛇形命名法；所有字母均小写，单词之间使用下划线 _ 连接</p>
       </div>
       <div class="demo">使用具名函数创建组件</div>
       <ol>
@@ -69,7 +88,7 @@ export default HelloWorld</pre>
       <div class="demo">使用 <a href="../web/js/function-arrow.html">箭头函数</a></div>
       <dd>使用 <strong>rafce</strong> 快速创建箭头函数组件结构</dd>
       <dd>其它操作类似</dd>
-      <div class="demo">使用组件</div>
+      <dt>使用组件</dt>
       <dd>父组件引入并使用</dd>
       <pre>
 import HelloWorld from "./components/helloworld";
@@ -87,6 +106,7 @@ export default App;</pre>
         <p>react.js 中，默认都是 client component</p>
         <p>next.js 中，默认都是 server component</p>
       </div>
+
     </dl>
     <div id="footer"></div>
   </div>

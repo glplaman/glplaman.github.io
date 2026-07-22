@@ -17,18 +17,10 @@
     </header>
     <dl>
       <dd>React 使用 <strong>className</strong> 取代 class 作为元素的样式类</dd>
-      <dt>静态类</dt>
-      <dd>先引入样式文件，再使用</dd>
-      <dd>注意路径</dd>
-      <div class="demo">使用静态样式类</div>
-      <dd>组件引入样式文件 demo.cs；.warn .bold 是其中的一个样式类</dd>
+      <dd>默认是全局样式：某组件引入后，会影响到其它使用样式类的组件</dd>
+      <dd>按照传统方式引入、使用</dd>
       <pre>import './demo.css';</pre>
-      <dd>组件使用样式类；单个或多个类</dd>
       <pre>&lt;div className = "warn"&gt;Notice&lt;/div&gt;</pre>
-      <pre>&lt;div className = "bold warn"&gt;Notice&lt;/div&gt;</pre>
-      <dt>动态类</dt>
-      <dd>样式类根据用户交互而变化</dd>
-      <dd>整体使用单花括号 {} 指定样式类对应的数据</dd>
       <div class="demo">导航菜单</div>
       <dd>包括基本样式和高亮样式</dd>
       <dd>菜单项选中时，应用高亮样式类 active</dd>
@@ -79,10 +71,22 @@
 
 &lt;div className={theme}&gt;hi,there&lt;/div&gt;</pre>
     </dl>
-    <h2>Style</h2>
+    <h2>CSS Module</h2>
+    <dl>
+      <dd>使用 CSS module 实现样式隔离</dd>
+      <dt>命名规则</dt>
+      <dd>组件文件</dd>
+      <pre>xxx.jsx</pre>
+      <dd>组件样式文件：使用 module 标识</dd>
+      <pre>xxx.module.css</pre>
+      <dd>在组件中引入到 styles 中再使用</dd>
+      <pre>import styles from './xxx.module.css';</pre>
+      <pre>&lt;div className={styles.warn}&gt;hi,there&lt;/div&gt;</pre>
+    </dl>
+    <h2>内联样式 Style</h2>
     <dl>
       <dd>内联样式 inline style</dd>
-      <dd>仍然使用数据绑定方式， style={}；并提供一个样式对象</dd>
+      <dd>仍然使用数据绑定方式， style={}；并提供一个样式对象 - <strong>值对</strong></dd>
       <dd>整体使用双花括号 {{}}：外层括号“进入 JS 世界”，内层括号“定义一个对象”</dd>
       <dd>对象是键值对，所以属性值必须使用引号；且复合属性不支持连字符 -；应使用小驼峰，如 fontSize</dd>
       <dt>静态样式</dt>
