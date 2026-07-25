@@ -24,7 +24,7 @@
       <dd>发送方维持一个发送窗口，位于发送窗口内的分组都可被连续发送出去，而不需要等待对方逐个确认</dd>
       <dd>发送窗口滑动：发送方每收到一个分组确认，就把发送窗口向前滑动一个分组的位置；已确认的数据被移出窗口</dd>
       <dd>累积确认 Cumulative Acknowledgment：接收方对按序到达的最后一个分组发送确认，表示：到这个分组为止的所有分组都已正确收到了</dd>
-      <dd>发送窗口大小以 byte 为单位</dd>
+      <dd>发送窗口大小以 Byte 为单位</dd>
       <dd>发送窗口大小由接收方决定：通过 TCP 报文中的 Window 字段告知发送方自己还能接收多少数据</dd>
       <figure>
         <img src="./imgs/arq5.png" alt="">
@@ -39,20 +39,20 @@
         <figcaption>发送窗口 swnd</figcaption>
       </figure>
       <dd>收到 ACK = 3，表示 1、2 已收到，等待接收 3</dd>
-      <dd>1、2移出窗口，后面的分组补进来并发出去，等待发送、确认</dd>
+      <dd>1、2 移出窗口，后面的分组补进来并发出去，等待发送、确认</dd>
       <dd>其它没有收到确认的 3、4，保留，以备超时重传</dd>
       <dd>窗口滑动到 [3, 4, 5, 6]</dd>
       <figure>
         <img src="./imgs/arq7.png" alt="">
         <figcaption>发送窗口 swnd</figcaption>
       </figure>
-      <div class="demo"> 已知发送窗口大小为 500 bytes，某主机收到的确认号为 201。如果已经发送了 300 bytes 的数据，则还可以发送多少数据？
+      <div class="demo"> 已知发送窗口大小为 500 Bytes。某主机收到的确认号为 201。如果已经发送了 300 Bytes，则还可以发送多少数据？
       </div>
-      <dd>发送了 300 bytes，对方确认了 200 bytes</dd>
-      <dd>还有 100 bytes 没有确认</dd>
+      <dd>发送了 300 Bytes，对方确认了 200 Bytes</dd>
+      <dd>还有 100 Bytes 没有确认</dd>
       <dd>确认过的数据报被移出缓存，窗口仅仅保留没有确认的数据报</dd>
-      <dd>窗口还有 100 bytes 等待确认</dd>
-      <dd>窗口大小是 500 bytes，所以还可以发送 500 - 100 = 400 bytes</dd>
+      <dd>窗口还有 100 Bytes 等待确认</dd>
+      <dd>窗口大小是 500 Bytes，所以还可以发送 500 - 100 = 400 Bytes</dd>
       <figure>
         <img src="./imgs/arq4.png" alt="">
         <figcaption>发送窗口 swnd</figcaption>

@@ -3,11 +3,9 @@
 
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>线性渐变 linear-gradient</title>
   <link rel="stylesheet" href="/css/reset.css">
-  <link rel="stylesheet" href="./css/page.css">
   <base target="_blank">
   <style>
     .basic {
@@ -89,7 +87,7 @@
 
     .l8 {
       background-image:
-        linear-gradient(#0006, transparent),
+        linear-gradient(transparent 80%, #000 0, #000),
         url(../imgs/banner.png);
       background-size: cover, cover;
     }
@@ -108,11 +106,12 @@
       <dd>可以指定色块的大小/范围和方向；可以使用 deg 或关键字，如 left、right、top、bottom</dd>
       <dd>方向：顺时针方向增加</dd>
       <dd>位置：不特别指明都是从0开始，到100%结束；这俩个位置的值 <span class="warn">可以省略</span></dd>
-      <dd>更多信息，请访问 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient">MDN -
-          linear-gradient</a></dd>
+      <dd>可以指定多个背景，以逗号 , 分隔</dd>
+      <dd>更多信息，请访问 <a class="link" href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient">MDN
+          - linear-gradient</a></dd>
       <pre>background-image: 
   linear-gradient(direction, color-stop1, color-stop2, ...);</pre>
-      <dt>示例 Demos</dt>
+      <dt>单背景</dt>
       <dd>默认从上向下；180deg，从上到下 ↓</dd>
       <div class="basic l0"></div>
       <pre>
@@ -142,19 +141,17 @@ background-image:
       <pre>
 background-image: 
   linear-gradient(90deg, #f40 50%, #fff 0);</pre>
-      <div class="demo"> 切角1</div>
       <dd>增加有色部分的占比</dd>
       <div class="basic l5"></div>
       <pre>
 background-image: 
   linear-gradient(45deg, #f40 95%, #fff 0);</pre>
-      <div class="demo"> 切角2</div>
       <dd>调整方向和颜色</dd>
       <div class="basic l6"></div>
       <pre>
 background-image: 
   linear-gradient(135deg, #fff 10%, #f40 0);</pre>
-      <div class="demo"> 切角3</div>
+      <dt>多背景</dt>
       <dd>2个背景图片叠加而成</dd>
       <dd>不重复</dd>
       <dd>左边：0 0，容器左边</dd>
@@ -180,14 +177,14 @@ background-repeat: no-repeat;</pre>
     </dl>
     <h2>案例 Cases</h2>
     <dl>
-      <div class="demo"> 斑马纹</div>
       <div class="demo"> 遮罩背景</div>
       <dd>利用透明的渐变背景和图片背景实现</dd>
       <dd>透明图层先写</dd>
+      <dd>可以用来遮盖特定方向的水印</dd>
       <div class="basic l8"></div>
       <pre>
 background-image:
-  linear-gradient(#0006, transparent),
+  linear-gradient(transparent, #000),
   url(../imgs/banner.png);
 background-size: cover;</pre>
       <div class="demo"> 卡片设计</div>
@@ -196,8 +193,6 @@ background-size: cover;</pre>
         <figcaption>卡片设计</figcaption>
       </figure>
       <div class="demo"> <a href="./demo/btns.html">按钮设计 Button</a></div>
-      <div class="demo"> <a href="./demo/table.html">表格设计 Table</a></div>
-      <dd>表格渐变边框</dd>
       <div class="demo"> 渐变文字剪切</div>
       <dd>思路1：变化渐变背景大小</dd>
       <dd>思路2：变化渐变背景位置</dd>

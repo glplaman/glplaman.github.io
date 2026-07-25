@@ -5,320 +5,339 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>传输控制协议 TCP</title>
-  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/navAside.css">
   <base target="_blank">
 </head>
 
 <body>
-  <div class="w">
-    <header>
-      <h1>传输控制协议</h1>
-      <span>&commat;TCP</span>
-    </header>
-    <dl>
-      <dt>Joke Time</dt>
-      <figure>
-        <img src="./imgs/udp0.png" alt="">
-        <figcaption>TCP Joke</figcaption>
-      </figure>
-      <dt>概述 Overview</dt>
-      <dd>TCP - Transmission Control Protocol</dd>
-      <dd>基于连接</dd>
-      <dd>点对点</dd>
-      <dd><strong>全双工通信</strong></dd>
-      <dd>可靠交付</dd>
-      <dd>面向字节流</dd>
+  <header></header>
+  <div class="container">
+    <aside>
+      <nav class="nav">
+        <h1 class="logo">传输控制协议<sup>&commat;</sup></h1>
+        <span class="iconfont icon-menu ham" id="ham"></span>
+        <ul class="nav-menu">
+          <li><a href="#" style="--delay:0" class="nav-item">概述</a></li>
+          <li><a href="#" style="--delay:1" class="nav-item">应用</a></li>
+          <li><a href="#" style="--delay:2" class="nav-item">报文</a></li>
+          <li><a href="#" style="--delay:3" class="txt-indent nav-item">源端口</a></li>
+          <li><a href="#" style="--delay:4" class="txt-indent nav-item">目标端口</a></li>
+          <li><a href="#" style="--delay:5" class="txt-indent nav-item">序号</a></li>
+          <li><a href="#" style="--delay:6" class="txt-indent nav-item">确认号</a></li>
+          <li><a href="#" style="--delay:7" class="txt-indent nav-item">确认位</a></li>
+          <li><a href="#" style="--delay:8" class="nav-item">小结</a></li>
+          <li><a href="#" style="--delay:9" class="nav-item">作业</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main>
+      <dl>
+        <dt>Joke Time</dt>
+        <figure>
+          <img src="./imgs/udp0.png" alt="">
+          <figcaption>TCP Joke</figcaption>
+        </figure>
+      </dl>
+      <h2 class="nav-cont">概述 Overview</h2>
+      <ul>
+        <li>TCP - Transmission Control Protocol</li>
+        <li>基于连接</li>
+        <li>点对点</li>
+        <li><strong>全双工通信</strong></li>
+        <li>可靠交付</li>
+        <li>面向字节流</li>
+      </ul>
       <figure>
         <img src="./imgs/tcp2.png" alt="">
         <figcaption>TCP报文传输</figcaption>
       </figure>
-      <dt>应用 Application</dt>
-      <dd>Web Browsing</dd>
-      <dd>文件传输 File Transfers</dd>
-      <dd>邮件交互 Email Exchange</dd>
-      <dd>VPN 网络 VPN Connections</dd>
-      <dd>云服务 Cloud Services</dd>
-    </dl>
-    <h2>报文 Packet</h2>
-    <dl>
-      <dd>一个 TCP 报文段分为 <strong>首部</strong> 和 <strong>数据</strong> 两部分，而 TCP 的全部功能都体现在它首部中各字段的作用</dd>
-      <dd>TCP 报文段首部的前 20 个bytes是固定的，后面有 4n bytes是根据需要而增加的选项 (n 是整数)
-        <p>TCP 首部的最小长度是 20 bytes</p>
-      </dd>
-      <dd>TCP 报文段长度 = TCP 首部长度 + 数据字段长度</dd>
-      <dd>最大报文段长度 MSS - Maximum Segment Size
-        <p>每个 TCP 报文段中的数据字段的最大长度</p>
-        <p>在 TCP 三次握手时通过选项字段协商 MSS 大小</p>
-        <p>只要缓存中存放的数据达到 MSS 字节时，就组装成一个 TCP 报文段发送出去</p>
-        <p>利用MSS提高传输效率</p>
-        <p>TCP范畴的概念</p>
-      </dd>
-      <figure>
-        <img src="./imgs/tcp5.png" alt="">
-        <figcaption>TCP 报文封装</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/tcp4.png" alt="">
-        <figcaption>TCP 报文格式</figcaption>
-      </figure>
-      <dt>源端口 Source Port</dt>
-      <dd>2 bytes</dd>
-      <dt>目标端口 Destination Port</dt>
-      <dd>2 bytes</dd>
-      <div class="demo"> TCP MSS 大小</div>
-      <dd>TCP MSS 通常设为 1460 = 1500 - 20 IP首部 - 20 TCP首部</dd>
-      <dd>实际大小由三次握手时由双方协商确定的</dd>
-      <dd>标准中规定536未默认值，是后向兼容 - 通信的最低需求；实际中很少使用</dd>
-      <figure>
-        <img src="./imgs/tcp14.png" alt="">
-        <figcaption>MTU vs MSSS</figcaption>
-      </figure>
-      <table>
-        <caption>TCP数据大小</caption>
-        <tbody>
+      <h2 class="nav-cont">应用 Application</h2>
+      <ul>
+        <li>Web Browsing</li>
+        <li>文件传输 File Transfers</li>
+        <li>邮件交互 Email Exchange</li>
+        <li>VPN 网络 VPN Connections</li>
+        <li>云服务 Cloud Services</li>
+      </ul>
+      <h2 class="nav-cont">报文 Packet</h2>
+      <dl>
+        <dd>一个 TCP 报文段分为 <strong>首部</strong> 和 <strong>数据</strong> 两部分，而 TCP 的全部功能都体现在它首部中各字段的作用</dd>
+        <dd>TCP 报文段首部的前 20 Bytes是固定的，后面有 4n Bytes是根据需要而增加的选项 (n 是整数)
+          <p>TCP 首部的最小长度是 20 Bytes</p>
+        </dd>
+        <dd>TCP 报文段长度 = TCP 首部长度 + 数据字段长度</dd>
+        <dd>最大报文段长度 MSS - Maximum Segment Size
+          <p>每个 TCP 报文段中的数据字段的最大长度</p>
+          <p>在 TCP 三次握手时通过选项字段协商 MSS 大小</p>
+          <p>只要缓存中存放的数据达到 MSS 字节时，就组装成一个 TCP 报文段发送出去</p>
+          <p>利用MSS提高传输效率</p>
+          <p>TCP范畴的概念</p>
+        </dd>
+        <figure>
+          <img src="./imgs/tcp5.png" alt="">
+          <figcaption>TCP 报文封装</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/tcp4.png" alt="">
+          <figcaption>TCP 报文格式</figcaption>
+        </figure>
+        <dt class="nav-cont">源端口 Source Port</dt>
+        <dd>2 Bytes</dd>
+        <dt class="nav-cont">目标端口 Destination Port</dt>
+        <dd>2 Bytes</dd>
+        <div class="demo"> TCP MSS 大小</div>
+        <dd>TCP MSS 通常设为 1460 = 1500 - 20 IP首部 - 20 TCP首部</dd>
+        <dd>实际大小由三次握手时由双方协商确定的</dd>
+        <dd>标准中规定536未默认值，是后向兼容 - 通信的最低需求；实际中很少使用</dd>
+        <figure>
+          <img src="./imgs/tcp14.png" alt="">
+          <figcaption>MTU vs MSSS</figcaption>
+        </figure>
+        <table>
+          <caption>TCP数据大小</caption>
+          <tbody>
+            <tr>
+              <td>Application Layer</td>
+              <td>1460</td>
+            </tr>
+            <tr>
+              <td>Transport Layer</td>
+              <td>1480 = 1460 + 20 TCP Header</td>
+            </tr>
+            <tr>
+              <td>Network Layer</td>
+              <td>1500 = 1460 + 20 TCP Header + 20 IP Header</td>
+            </tr>
+            <tr>
+              <td>Data-Link Layer</td>
+              <td>1518 = 1460 + 20 TCP Header + 20 IP Header + 6*2 MAC + 2 Type + 4 FCS</td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <caption>UDP数据大小</caption>
+          <tbody>
+            <tr>
+              <td>Application Layer</td>
+              <td>1472</td>
+            </tr>
+            <tr>
+              <td>Transport Layer</td>
+              <td>1480 = 1472 + 8 UDP Header</td>
+            </tr>
+            <tr>
+              <td>Network Layer</td>
+              <td>1500 = 1472 + 8 UDP Header + 20 IP Header</td>
+            </tr>
+            <tr>
+              <td>Data-Link Layer</td>
+              <td>1518 = 1472 + 8 UDP Header + 20 IP Header + 6*2 MAC + 2 Type + 4 FCS</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="txt-center">MSS = MTU−(IP header)−(TCP header)</div>
+        <div class="tips">
+          <p>UDP 不协商 MSS</p>
+          <p>没有连接建立过程，也不会自动限制载荷大小，完全依赖应用层控制</p>
+          <p>使用 UDP 的应用必须自己确保数据 ≤ 1472 Bytes（IPv4/以太网）</p>
+        </div>
+        <div class="demo"> 端口应用</div>
+        <dd>客户端在端口 49155 向目标主机 80 端口的应用[WEB]发起HTTP请求</dd>
+        <dd>服务端在 80 端口处理请求后，回发一个响应经过 49155 端口给客户端</dd>
+        <dt class="nav-cont">序号 Sequence Number</dt>
+        <dd>4 Bytes；32 bits</dd>
+        <dd>当前报文段中 <strong>第一个数据字节</strong> 的序列号</dd>
+        <dd>TCP 是面向字节流的协议，<strong>每一个字节</strong> 都有一个序号
+          <p>包括链路建立成功的报文和后续0窗口的探测报文都会消耗序号</p>
+        </dd>
+        <dd>增加到最大值后，重新回到 0 - 模加</dd>
+        <dd>第1个随机产生</dd>
+        <div class="demo"> 序号应用</div>
+        <dd>TCP 报文长度 MSS 为1000 Bytes；现有5000 Bytes数据；加上初始序号为1001</dd>
+        <dd>则：
+          <p>第一个 TCP 报文：1001 - 2000</p>
+          <p>第二个 TCP 报文：2001 - 3000</p>
+          <p>第三个 TCP 报文：3001 - 4000</p>
+          <p>第四个 TCP 报文：4001 - 5000</p>
+          <p>第五个 TCP 报文：5001 - 6000</p>
+        </dd>
+        <div class="demo"> 序号应用</div>
+        <dd>发送方要发送一个 1000 Bytes的数据流，初始序号为 100：
+          <p>第一个 TCP 段携带 500 Bytes，则其序号为 100</p>
+          <p>第二个 TCP 段携带剩下的 500 Bytes，则其序号为 100 + 500 = 600</p>
+        </dd>
+        <dt class="nav-cont">确认号 Acknowledgment Number</dt>
+        <dd>4 Bytes；32 bits</dd>
+        <dd>表示接收方期望收到的 <strong>下一个字节</strong> 的序号</dd>
+        <dd>表示序号 n-1 之前的数据已经收到，现在希望接收序号为 n 的数据</dd>
+        <dd>控制字段ACK为1时才有效</dd>
+        <dd>增加到最大值后，重新回到0</dd>
+        <dt>数据偏移 Data Offset</dt>
+        <dd>4 bits，以4 Bytes为单位</dd>
+        <dd>TCP 报文 <strong>首部</strong> 的长度，从而确定数据部分从哪里开</dd>
+        <dd>接收方知道从第几个字节开始是应用层数据，前面都是 TCP 头部</dd>
+        <dd>如果采用固定长度，不使用选项和填充，则为 (0101)<sub>2</sub> = 5；5*4 Bytes = 20 Bytes</dd>
+        <dt>紧急位 URG</dt>
+        <dd>1 bit 标志位 Control Bits</dd>
+        <dd>表示本报文段中包含紧急 Urgent 数据，接收方应优先处理这部分数据，而不是按正常队列顺序等待</dd>
+        <dd>配合紧急指针字段使用</dd>
+        <dd>较少使用</dd>
+        <dt class="nav-cont">确认位 ACK</dt>
+        <dd>1 bit 标志位 Control Bits</dd>
+        <dd>Acknowledgment</dd>
+        <dd>本报文段包含一个有效的确认号，用于确认已成功接收到对方的数据</dd>
+        <dd>只有当 ACK = 1 时，确认号字段才有效。当 ACK = 0 时，确认号无效</dd>
+        <dd>除了最初的 SYN 报文（建立连接的第一个包），所有后续 TCP 报文都必须将 ACK 置为 1</dd>
+        <dd>是实现 <strong>可靠传输</strong> 的核心机制之一</dd>
+        <div class="tips">
+          <p>日常使用中，确认号和控制位ACK的常见表示方法有2种</p>
+          <p>1. 使用ACK表示确认号，除非特别说明是控制位；如ACK = 101，表示希望收到101序号的字节数据；序号100之前的数据已经收讫；默认控制位为1</p>
+          <p>2. 使用大小写区分；ACK表示控制位；ack表示确认号，如下例</p>
+        </div>
+        <div class="demo"> 序号和确认号应用</div>
+        <dd>A发送序号为201开始的报文，长度是100</dd>
+        <dd>下一次发送时，A 的序号将变为 201 + 100 = 301</dd>
+        <dd>同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</dd>
+        <table>
+          <caption>A发送报文</caption>
           <tr>
-            <td>Application Layer</td>
-            <td>1460</td>
+            <td>序号</td>
+            <td>201</td>
           </tr>
           <tr>
-            <td>Transport Layer</td>
-            <td>1480 = 1460 + 20 TCP Header</td>
+            <td>数据长度</td>
+            <td>100</td>
           </tr>
           <tr>
-            <td>Network Layer</td>
-            <td>1500 = 1460 + 20 TCP Header + 20 IP Header</td>
+            <td>确认号</td>
+            <td>800</td>
           </tr>
           <tr>
-            <td>Data-Link Layer</td>
-            <td>1518 = 1460 + 20 TCP Header + 20 IP Header + 6*2 MAC + 2 Type + 4 FCS</td>
+            <td>确认位</td>
+            <td>1</td>
           </tr>
-        </tbody>
-      </table>
-      <table>
-        <caption>UDP数据大小</caption>
-        <tbody>
+        </table>
+        <dd>B发送序号为800开始的报文，长度是200</dd>
+        <dd>下一次发送时，B 的序号将变为 800 + 200 = 1000</dd>
+        <dd>同时对A发送的序号300之前的报文进行确认，并希望收到A序号301开始的报文</dd>
+        <table>
+          <caption>B回复报文</caption>
           <tr>
-            <td>Application Layer</td>
-            <td>1472</td>
-          </tr>
-          <tr>
-            <td>Transport Layer</td>
-            <td>1480 = 1472 + 8 UDP Header</td>
+            <td>序号</td>
+            <td>800</td>
           </tr>
           <tr>
-            <td>Network Layer</td>
-            <td>1500 = 1472 + 8 UDP Header + 20 IP Header</td>
+            <td>数据长度</td>
+            <td>200</td>
           </tr>
           <tr>
-            <td>Data-Link Layer</td>
-            <td>1518 = 1472 + 8 UDP Header + 20 IP Header + 6*2 MAC + 2 Type + 4 FCS</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="txt-center">MSS = MTU−(IP header)−(TCP header)</div>
-      <div class="tips">
-        <p>UDP 不协商 MSS</p>
-        <p>没有连接建立过程，也不会自动限制载荷大小，完全依赖应用层控制</p>
-        <p>使用 UDP 的应用必须自己确保数据 ≤ 1472 bytes（IPv4/以太网）</p>
-      </div>
-      <div class="demo"> 端口应用</div>
-      <dd>客户端在端口49155向目标主机80端口的应用[WEB]发起HTTP请求</dd>
-      <dd>服务端在80端口处理请求后，回发一个响应经过49155端口给客户端</dd>
-      <dt>序号 Sequence Number</dt>
-      <dd>4byte；32 bit</dd>
-      <dd>当前报文段中 <strong>第一个数据字节</strong> 的序列号</dd>
-      <dd>TCP 是面向字节流的协议，<strong>每一个字节</strong> 都有一个序号
-        <p>包括链路建立成功的报文和后续0窗口的探测报文都会消耗序号</p>
-      </dd>
-      <dd>增加到最大值后，重新回到0 - 模加</dd>
-      <dd>第1个随机产生</dd>
-      <div class="demo"> 序号应用</div>
-      <dd>TCP 报文长度 MSS 为1000 bytes；现有5000 bytes数据；加上初始序号为1001</dd>
-      <dd>则：
-        <p>第一个 TCP 报文：1001 - 2000</p>
-        <p>第二个 TCP 报文：2001 - 3000</p>
-        <p>第三个 TCP 报文：3001 - 4000</p>
-        <p>第四个 TCP 报文：4001 - 5000</p>
-        <p>第五个 TCP 报文：5001 - 6000</p>
-      </dd>
-      <div class="demo"> 序号应用</div>
-      <dd>发送方要发送一个 1000 bytes的数据流，初始序号为 100：
-        <p>第一个 TCP 段携带 500 bytes，则其序号为 100</p>
-        <p>第二个 TCP 段携带剩下的 500 bytes，则其序号为 100 + 500 = 600</p>
-      </dd>
-      <dt>确认号 Acknowledgment Number</dt>
-      <dd>4 bytes；32bit</dd>
-      <dd>表示接收方期望收到的 <strong>下一个字节</strong> 的序号</dd>
-      <dd>表示序号 n-1 之前的数据已经收到，现在希望接收序号为 n 的数据</dd>
-      <dd>控制字段ACK为1时才有效</dd>
-      <dd>增加到最大值后，重新回到0</dd>
-      <dt>数据偏移 Data Offset</dt>
-      <dd>4bit，以4bytes为单位</dd>
-      <dd>TCP 报文 <strong>首部</strong> 的长度，从而确定数据部分从哪里开</dd>
-      <dd>接收方知道从第几个字节开始是应用层数据，前面都是 TCP 头部</dd>
-      <dd>如果采用固定长度，不使用选项和填充，则为 (0101)<sub>2</sub> = 5；5*4 bytes = 20 bytes</dd>
-      <dt>紧急位 URG</dt>
-      <dd>1bit 标志位 Control Bits</dd>
-      <dd>表示本报文段中包含紧急 Urgent 数据，接收方应优先处理这部分数据，而不是按正常队列顺序等待</dd>
-      <dd>配合紧急指针字段使用</dd>
-      <dd>较少使用</dd>
-      <dt>确认位 ACK</dt>
-      <dd>1bit 标志位 Control Bits</dd>
-      <dd>Acknowledgment</dd>
-      <dd>本报文段包含一个有效的确认号，用于确认已成功接收到对方的数据</dd>
-      <dd>只有当 ACK = 1 时，确认号字段才有效。当 ACK = 0 时，确认号无效</dd>
-      <dd>除了最初的 SYN 报文（建立连接的第一个包），所有后续 TCP 报文都必须将 ACK 置为 1</dd>
-      <dd>是实现 <strong>可靠传输</strong> 的核心机制之一</dd>
-      <div class="tips">
-        <p>日常使用中，确认号和控制位ACK的常见表示方法有2种</p>
-        <p>1. 使用ACK表示确认号，除非特别说明是控制位；如ACK = 101，表示希望收到101序号的字节数据；序号100之前的数据已经收讫；默认控制位为1</p>
-        <p>2. 使用大小写区分；ACK表示控制位；ack表示确认号，如下例</p>
-      </div>
-      <div class="demo"> 序号和确认号应用</div>
-      <dd>A发送序号为201开始的报文，长度是100</dd>
-      <dd>下一次发送时，A 的序号将变为 201 + 100 = 301</dd>
-      <dd>同时对B发送的序号800之前的报文进行确认，并希望收到B序号800开始的报文</dd>
-      <table>
-        <caption>A发送报文</caption>
-        <tr>
-          <td>序号</td>
-          <td>201</td>
-        </tr>
-        <tr>
-          <td>数据长度</td>
-          <td>100</td>
-        </tr>
-        <tr>
-          <td>确认号</td>
-          <td>800</td>
-        </tr>
-        <tr>
-          <td>确认位</td>
-          <td>1</td>
-        </tr>
-      </table>
-      <dd>B发送序号为800开始的报文，长度是200</dd>
-      <dd>下一次发送时，B 的序号将变为 800 + 200 = 1000</dd>
-      <dd>同时对A发送的序号300之前的报文进行确认，并希望收到A序号301开始的报文</dd>
-      <table>
-        <caption>B回复报文</caption>
-        <tr>
-          <td>序号</td>
-          <td>800</td>
-        </tr>
-        <tr>
-          <td>数据长度</td>
-          <td>200</td>
-        </tr>
-        <tr>
-          <td>确认号</td>
-          <td>301</td>
-        </tr>
-        <tr>
-          <td>确认位</td>
-          <td>1</td>
-        </tr>
-      </table>
-      <dd>
-        这是一个典型的 <strong>全双工通信</strong> 场景：
-        <p>A 向 B 发送 100 字节数据（序号 201~300），同时确认 B 的数据（确认号 800）</p>
-        <p>B 向 A 发送 200 字节数据（序号 800~999），同时确认 A 的数据（确认号 301）</p>
-      </dd>
-      <dd> 如果 A 没有收到 B 的响应，启动超时重传机制，重新发送序号为 201 的报文。 直到收到对 301 的确认为止</dd>
-      <div class="demo"> 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200 bytes，则主机A给主机B的响应报文中（）。</div>
-      <div>A: ACK = 0；ack = 701</div>
-      <div>B: ACK = 1；ack = 701</div>
-      <div>C: ACK = 0；ack = 700</div>
-      <div>D: ACK = 1；ack = 700</div>
-      <!-- B -->
-      <dt>立即位 PSH</dt>
-      <dd>1 bit 标志位 Control Bits</dd>
-      <dd>推送 Push 操作</dd>
-      <dd>TCP 默认会缓冲数据以提高效率，但某些应用（如交互式命令行）希望数据立即被处理</dd>
-      <dd>提示接收方不要缓存，应立即将本报文段中的数据交付给上层应用程序</dd>
-      <dd>实际效果：现代操作系统通常忽略 PSH 标志，或将其视为普通数据，但发送方可设置它来建议“尽快上送”</dd>
-      <dt>重置位 RST</dt>
-      <dd>1 bit 标志位 Control Bits</dd>
-      <dd>重置连接 - 强制关闭连接或拒绝非法报文</dd>
-      <dd>常见错误场景：
-        <p>收到不属于任何现有连接的报文（如端口未开放）</p>
-        <p>应用程序崩溃，TCP 发送 RST 终止连接</p>
-        <p>检测到严重错误（如序号严重错乱）</p>
-      </dd>
-      <dd>RST 报文不需要确认，收到即断开</dd>
-      <dd>收到 RST 通常意味着连接异常终止（非正常四次挥手）</dd>
-      <dt>同步位 SYN</dt>
-      <dd>1 bit 标志位 Control Bits</dd>
-      <dd>同步序号，用于建立连接</dd>
-      <dd>在三次握手过程中，SYN 用来协商初始序号</dd>
-      <dd>SYN = 1 表示这是一个连接请求或连接接受报文</dd>
-      <dd>SYN = 1，ACK = 0 时，表明这是一个连接请求报文段 - 连接未建立</dd>
-      <dd>SYN = 1，ACK = 1 时，表明这是一个连接接受报文段 - 连接建立；ACK 必须为1</dd>
-      <dd>SYN 报文本身不携带应用数据，但占用一个序号（seq 值 +1）</dd>
-      <dt>终止位 FIN</dt>
-      <dd>1 bit 标志位 Control Bits</dd>
-      <dd>用来释放一个连接</dd>
-      <dd>发送方已完成数据发送，请求关闭连接</dd>
-      <dd>用于四次挥手 - 连接释放</dd>
-      <dd>FIN = 1 表明此报文段的发送端的数据已发送完毕，并要求释放运输连接
-        <p>表示“我不会再发数据了”，但还可以接收数据（半关闭状态）</p>
-      </dd>
-      <dd>对方收到 FIN 后需回复 ACK，并在自己也无数据发送时发送自己的 FIN</dd>
-      <dd>正常关闭连接必须通过 FIN，而 RST 是异常关闭</dd>
-      <table>
-        <caption>控制位使用</caption>
-        <tbody>
-          <tr>
-            <td>ACK</td>
-            <td>多</td>
+            <td>确认号</td>
+            <td>301</td>
           </tr>
           <tr>
-            <td>SYN</td>
-            <td>多</td>
+            <td>确认位</td>
+            <td>1</td>
           </tr>
-          <tr>
-            <td>FIN</td>
-            <td>多</td>
-          </tr>
-          <tr>
-            <td>RST</td>
-            <td>异常时</td>
-          </tr>
-          <tr>
-            <td>PSH</td>
-            <td>偶尔</td>
-          </tr>
-          <tr>
-            <td>URG</td>
-            <td>很少</td>
-          </tr>
-        </tbody>
-      </table>
-      <dt>窗口 Window</dt>
-      <dd>16 bits</dd>
-      <dd>指定数据发送方的发送能力，同时也表示了自己的接收能力</dd>
-      <dd>以字节为单位</dd>
-      <dd>最大窗口大小 2<sup>16</sup> = 2<sup>6</sup>2<sup>10</sup> = 64 KB</dd>
-      <dd>明确指出了现在允许对方发送的数据量
-        <p>这种根据接收方的接收能力来控制发送方的发送能力 - <strong>流量控制</strong></p>
-      </dd>
-      <dd>窗口值经常在动态变化</dd>
-      <div class="tips">注意区分发送窗口和接收窗口的相对性</div>
-      <dt>校验和 CheckSum</dt>
-      <dd>同UDP一样，采用伪首部来辅助校验</dd>
-      <dd>使用的 IP 协议号为6，代表 TCP</dd>
-      <dt>紧急指针 Urgent Pointer</dt>
-      <dd>2 bytes</dd>
-      <dd>在 URG = 1时，指出本报文段中的紧急数据的字节数（紧急数据结束后就是普通数据），指出了紧急数据的末尾在报文段中的位置</dd>
-      <dt>选项 Options</dt>
-      <dd>长度可变，最长可达 40 bytes</dd>
-      <dd>使用较少</dd>
-      <dt>填充 Padding</dt>
-      <dd>使整个 TCP 首部长度是 4 bytes 的整数倍</dd>
-    </dl>
-    <h2>Summary & Homework</h2>
-    <dl>
-      <dt>Summary</dt>
+        </table>
+        <dd>
+          这是一个典型的 <strong>全双工通信</strong> 场景：
+          <p>A 向 B 发送 100 Bytes 数据（序号 201~300），同时确认 B 的数据（确认号 800）</p>
+          <p>B 向 A 发送 200 Bytes 数据（序号 800~999），同时确认 A 的数据（确认号 301）</p>
+        </dd>
+        <dd> 如果 A 没有收到 B 的响应，启动超时重传机制，重新发送序号为 201 的报文。 直到收到对 301 的确认为止</dd>
+        <div class="demo"> 主机A收到主机B发过来的TCP报文，序号为501，数据长度为200 Bytes，则主机A给主机B的响应报文中（）。</div>
+        <div>A: ACK = 0；ack = 701</div>
+        <div>B: ACK = 1；ack = 701</div>
+        <div>C: ACK = 0；ack = 700</div>
+        <div>D: ACK = 1；ack = 700</div>
+        <!-- B -->
+        <dt>立即位 PSH</dt>
+        <dd>1 bit 标志位 Control Bits</dd>
+        <dd>推送 Push 操作</dd>
+        <dd>TCP 默认会缓冲数据以提高效率，但某些应用（如交互式命令行）希望数据立即被处理</dd>
+        <dd>提示接收方不要缓存，应立即将本报文段中的数据交付给上层应用程序</dd>
+        <dd>实际效果：现代操作系统通常忽略 PSH 标志，或将其视为普通数据，但发送方可设置它来建议“尽快上送”</dd>
+        <dt>重置位 RST</dt>
+        <dd>1 bit 标志位 Control Bits</dd>
+        <dd>重置连接 - 强制关闭连接或拒绝非法报文</dd>
+        <dd>常见错误场景：
+          <p>收到不属于任何现有连接的报文（如端口未开放）</p>
+          <p>应用程序崩溃，TCP 发送 RST 终止连接</p>
+          <p>检测到严重错误（如序号严重错乱）</p>
+        </dd>
+        <dd>RST 报文不需要确认，收到即断开</dd>
+        <dd>收到 RST 通常意味着连接异常终止（非正常四次挥手）</dd>
+        <dt>同步位 SYN</dt>
+        <dd>1 bit 标志位 Control Bits</dd>
+        <dd>同步序号，用于建立连接</dd>
+        <dd>在三次握手过程中，SYN 用来协商初始序号</dd>
+        <dd>SYN = 1 表示这是一个连接请求或连接接受报文</dd>
+        <dd>SYN = 1，ACK = 0 时，表明这是一个连接请求报文段 - 连接未建立</dd>
+        <dd>SYN = 1，ACK = 1 时，表明这是一个连接接受报文段 - 连接建立；ACK 必须为1</dd>
+        <dd>SYN 报文本身不携带应用数据，但占用一个序号（seq 值 +1）</dd>
+        <dt>终止位 FIN</dt>
+        <dd>1 bit 标志位 Control Bits</dd>
+        <dd>用来释放一个连接</dd>
+        <dd>发送方已完成数据发送，请求关闭连接</dd>
+        <dd>用于四次挥手 - 连接释放</dd>
+        <dd>FIN = 1 表明此报文段的发送端的数据已发送完毕，并要求释放运输连接
+          <p>表示“我不会再发数据了”，但还可以接收数据（半关闭状态）</p>
+        </dd>
+        <dd>对方收到 FIN 后需回复 ACK，并在自己也无数据发送时发送自己的 FIN</dd>
+        <dd>正常关闭连接必须通过 FIN，而 RST 是异常关闭</dd>
+        <table>
+          <caption>控制位使用</caption>
+          <tbody>
+            <tr>
+              <td>ACK</td>
+              <td>多</td>
+            </tr>
+            <tr>
+              <td>SYN</td>
+              <td>多</td>
+            </tr>
+            <tr>
+              <td>FIN</td>
+              <td>多</td>
+            </tr>
+            <tr>
+              <td>RST</td>
+              <td>异常时</td>
+            </tr>
+            <tr>
+              <td>PSH</td>
+              <td>偶尔</td>
+            </tr>
+            <tr>
+              <td>URG</td>
+              <td>很少</td>
+            </tr>
+          </tbody>
+        </table>
+        <dt>窗口 Window</dt>
+        <dd>16 bits</dd>
+        <dd>指定数据发送方的发送能力，同时也表示了自己的接收能力</dd>
+        <dd>以字节为单位</dd>
+        <dd>最大窗口大小 2<sup>16</sup> = 2<sup>6</sup>2<sup>10</sup> = 64 KB</dd>
+        <dd>明确指出了现在允许对方发送的数据量
+          <p>这种根据接收方的接收能力来控制发送方的发送能力 - <strong>流量控制</strong></p>
+        </dd>
+        <dd>窗口值经常在动态变化</dd>
+        <div class="tips">注意区分发送窗口和接收窗口的相对性</div>
+        <dt>校验和 CheckSum</dt>
+        <dd>同UDP一样，采用伪首部来辅助校验</dd>
+        <dd>使用的 IP 协议号为 6，代表 TCP</dd>
+        <dt>紧急指针 Urgent Pointer</dt>
+        <dd>2 Bytes</dd>
+        <dd>在 URG = 1 时，指出本报文段中的紧急数据的字节数（紧急数据结束后就是普通数据），指出了紧急数据的末尾在报文段中的位置</dd>
+        <dt>选项 Options</dt>
+        <dd>长度可变，最长可达 40 Bytes</dd>
+        <dd>使用较少</dd>
+        <dt>填充 Padding</dt>
+        <dd>使整个 TCP 首部长度是 4 Bytes 的整数倍</dd>
+      </dl>
+      <h2 class="nav-cont">小结 Summary</h2>
       <ol>
         <li>TCP的特点</li>
         <li>TCP的报文格式</li>
@@ -350,23 +369,20 @@
           </tr>
         </tbody>
       </table>
-      <dt>Homework</dt>
+      <h2 class="nav-cont">作业 Homework</h2>
       <ol>
         <li>为什么OSPF不使用TCP或者UDP？</li>
         <!-- TCP 是纯点对点、面向连接的协议，不支持组播 -->
         <!-- UDP 是无连接的，不可靠 -->
-      </ol>
-      <dt>Reading</dt>
-      <ol>
-        <li><a
+        <li>Extending Reading：<a
             href="https://www.bilibili.com/video/BV14GyGY8ENw?spm_id_from=333.788.videopod.sections&vd_source=fe13480e1099e18e9d5f4e25467df4df">MTU和MSS
-            <span class="iconfont icon-videocam"></span></a>
-        </li>
+            <span class="iconfont icon-videocam"></span></a></li>
       </ol>
-    </dl>
-    <div id="footer"></div>
+      <div id="footer"></div>
+    </main>
   </div>
   <script src="/utils/custom/footer.js"></script>
+  <script src="/utils//custom/ham.js"></script>
 </body>
 
 </html>

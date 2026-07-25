@@ -1,155 +1,259 @@
-.w {
-    width: 1100px;
-    margin: 20px auto;
+@charset "utf-8";
+@import url(//at.alicdn.com/t/c/font_5035820_j1h3n83dhng.css);
+
+:root {
+  --main-color: #4bc2ce;
+  --header-color: #4bc2ce;
+  --second-color: #34ace0;
+  --third-color: #ff7b00;
+  --warn-color: #f25e44;
+  --blue-color: #34ace0;
+  --pink-color: #c5237a;
+  --pink-light-color: #fccfe9;
+  --orange-color: #ff7b00;
+  --yellow-color: #f1c40f;
+  --green-color: #00f260;
+  --pre-color: #dcdcaa;
+  --bg-color: #fff;
+  --txt-color: #111;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --tips-color: #edf8db;
+  --tips-bold-color: #1ac388;
+  --paper: #f5f5dc;
+  --w: 1024px;
+  --header-h: 240px;
+  --nav-h: 80px;
+  --p-m-g: 12px;
 }
 
-.red {
-    color: #f40;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Alibaba PuHuiTi", "Source Han Serif", "Source Han Sans", "PingFang SC", "Microsoft YaHei", "微软雅黑", "SimSun", Arial, Helvetica, sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.spacer {
-    margin: 0 14px;
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: var(--bg-color);
+  color: var(--txt-color);
+  text-align: justify;
+  counter-reset: tbl-sn img-sn;
+  min-height: 100vh;
+  line-height: 2;
+  font-weight: 300;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(var(--main-color, #333), transparent);
+  border-radius: 4px;
 }
 
 header {
-    position: relative;
-    display: flex;
-    color: #999;
-    background-color: #f3f4f5;
-    height: 30px;
-    line-height: 30px;
-    font-size: 12px;
-    /* 提升层级：避免下拉菜单被下方内容覆盖 */
-    z-index: 1;
+  height: var(--header-h);
+  background-image: linear-gradient(var(--main-color), var(--blue-color));
 }
 
-header>ul {
-    display: flex;
-    margin-left: auto;
+a {
+  color: var(--warn-color);
+  font: inherit;
+  text-decoration: none;
 }
 
-header>ul>li:last-child {
-    margin-right: 14px;
+h1 {
+  font-size: 2rem;
+  line-height: var(--nav-h);
+  text-align: center;
 }
 
-header .reg {
-    margin-left: 10px;
+h2 {
+  font-size: 2rem;
+  padding-top: 3rem;
 }
 
-header .item:hover {
-    color: #f40;
+h3 {
+  font-size: 1.6rem;
 }
 
-.mine {
-    position: relative;
+main {
+  padding: 0 var(--p-m-g);
 }
 
-.mine .inner-nav {
-    display: none;
+ul,
+ol {
+  list-style: none;
 }
 
-/* 提高了优先级，使得a在hover时箭头保持color */
-
-.item>span {
-    font-size: 12px;
-    color: #999;
+dl ul>li::before {
+  content: ". ";
 }
 
-.link {
-    box-sizing: content-box;
-    display: inline-block;
-    height: 100%;
-    position: relative;
-    padding: 0 10px;
-    border: 1px solid transparent;
-    /* 提升层级 */
-    z-index: 2;
+ol>li {
+  counter-increment: list-sn;
 }
 
-.inner-nav {
-    position: absolute;
-    left: 0;
-    top: 30px;
-    width: 200px;
-    padding: 10px;
-    background: rgb(255, 255, 255);
-    border: 1px solid #ccc;
-    /* 降低层级 */
-    z-index: 0;
+ol>li::before {
+  content: counter(list-sn) ". ";
 }
 
-.mine:hover .link {
-    background-color: #fff;
-    /* 白色边框和白色背景融合 */
-    border-color: #ccc;
-    border-bottom-color: #fff;
+dt {
+  font-weight: 600;
+  padding-top: 3rem;
 }
 
-.mine:hover .inner-nav {
-    display: block;
+img {
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.inner-nav a:hover {
-    color: #f40;
+figure {
+  margin: 6rem auto;
+  text-align: center;
+  counter-increment: img-sn;
 }
 
-/* nav */
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+figcaption {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-top: 2rem;
 }
 
-.logo-box {
-    width: 140px;
+figcaption::before {
+  content: "图" counter(img-sn) " ";
 }
 
-.sql {
-    display: flex;
-    border: 2px solid #f40;
+table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
+  counter-increment: tbl-sn;
+  border: 2px solid var(--table-color, #000);
+  margin: 4rem auto;
+  font-family: 'Times New Roman', Times, serif;
 }
 
-.ipt {
-    width: 260px;
-    height: 40px;
-    padding: 0 10px;
+caption {
+  text-align: center;
+  font-size: 1.4rem;
 }
 
-.btn {
-    width: 80px;
-    height: 40px;
-    background: #f40;
-    color: #fff;
+caption::before {
+  content: "表" counter(tbl-sn) " ";
 }
 
-.cart {
-    position: relative;
-    width: 160px;
-    height: 40px;
-    background-color: #fff;
-    border: 1px solid #f4f4f4;
-    color: #f40;
+th {
+  text-transform: capitalize;
 }
 
-.cart span {
-    padding-right: 20px;
+th,
+td {
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 1px solid var(--table-color, #000);
 }
 
-.cart em {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
-    font-size: 12px;
-    top: -5px;
-    right: 80px;
-    color: #fff;
-    background: #f40;
-    border-radius: 50%;
-    text-align: center;
+pre {
+  color: var(--pre-color);
+  padding: var(--p-m-g);
+  background-color: var(--txt-color);
+  border-radius: 6px;
+  font-family: "Inconsolata", "Courier New", Courier;
+  line-height: 1.5;
+  font-size: 1.8rem;
+  margin: var(--p-m-g) auto;
+  overflow: auto;
 }
 
-.cart:hover {
-    border-color: #f40;
+pre::-webkit-scrollbar {
+  height: 4px;
+  background-color: #fff;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background-color: var(--pre-color);
+}
+
+iframe {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+sub,
+sup {
+  font-size: 12px;
+}
+
+strong,
+.warn {
+  color: var(--warn-color);
+}
+
+.iconfont {
+  color: var(--warn-color);
+  font-size: 2rem;
+}
+
+.link::after {
+  content: '\ed0b';
+  font-family: 'iconfont';
+}
+
+.demo {
+  margin-top: 2rem;
+}
+
+.demo::before {
+  content: '[' "\ebc8" ']';
+  font-family: 'iconfont';
+  color: var(--warn-color);
+  font-size: 18px;
+}
+
+.tips {
+  background-color: var(--tips-color);
+  padding: var(--p-m-g);
+  border-left: 4px solid var(--tips-bold-color);
+  margin: 4rem auto;
+}
+
+.txt-center {
+  text-align: center;
+  font-weight: 400;
+  font-size: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.txt-indent {
+  text-indent: 1em;
+}
+
+@media (hover:hover) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --header-h: 160px;
+  }
+
+  h2,
+  dt {
+    padding-top: var(--nav-h);
+  }
 }

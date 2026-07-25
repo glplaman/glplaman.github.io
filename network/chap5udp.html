@@ -5,229 +5,252 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>用户数据报 UDP</title>
-  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/navAside.css">
   <base target="_blank">
 </head>
 
 <body>
-  <div class="w">
-    <header>
-      <h1>用户数据报</h1>
-      <span>&commat;UDP</span>
-    </header>
-    <dl>
-      <dt>Joke Time</dt>
-      <dd>来一碗牛肉面</dd>
-      <dd>不要跟它讲秘密</dd>
-      <dd>不要跟它吵架</dd>
-      <dd>尽力而为（Best Effort），其余随缘</dd>
-      <dd>I know this great UDP joke but you might not get it.</dd>
-      <figure>
-        <img src="./imgs/udp0.png" alt="">
-        <figcaption>UDP Joke</figcaption>
-      </figure>
-      <dt>概述 Overview</dt>
-      <dd>用户数据报 UDP - User Datagram Protocol</dd>
-      <dd>无连接 connectionless
-        <p>不需要建立连接</p>
-        <p>也不维护连接状态</p>
-      </dd>
-      <dd>不可靠 unreliable
-        <p>不重传</p>
-        <p>不确认</p>
-        <p>不排序</p>
-        <p>没有流量控制</p>
-        <p>没有拥塞控制</p>
-        <p>不保证交付 Does not guarantee delivery</p>
-        <p>存在丢包</p>
-        <p>最大努力交付 Best effort delivery</p>
-      </dd>
-      <dd>不分段 segmenting</dd>
-      <dd>不重组 reassembling</dd>
-      <dd>不实现序列号 sequence numbers</dd>
-      <dd>首部开销小：最少8个字节，仅包括首部</dd>
-      <dd>支持单播、组播、多播</dd>
-      <div class="tips">
-        <p>简单方便；不可靠</p>
-        <p>U·D·P = Ultra Delightful Prankster - 超可爱捣蛋鬼</p>
-        <p>不可靠 &ne; 不能用</p>
-      </div>
-      <dt>常见应用 Application</dt>
-      <dd>DNS - Domain Name System，域名系统</dd>
-      <dd>DHCP - Dynamic Host Configuration Protocol，动态主机配置协议</dd>
-      <dd>SNMP - Simple Network Management Protocol，简单网络管理协议</dd>
-      <dd>TFTP - Trivial File Transfer Protocol，简单文件传输协议</dd>
-      <dd>NFS - Network File System，网络文件系统；早期版本</dd>
-      <dd>VoIP - Voice over IP及实时音视频通信</dd>
-      <dd>物联网 - ioT</dd>
-      <dd>流媒体 - Streaming Media</dd>
-      <dd>多播/组播应用 - Multicast</dd>
-      <dd>游戏通信 - Online Gaming</dd>
-    </dl>
-    <h2>UDP 数据报 Datagram</h2>
-    <dl>
-      <dd>UDP 是面向报文 Message 的协议，一次发送一个完整的报文</dd>
-      <dd>UDP 将应用层的报文 Message/Data 加上 UDP 首部 Header后形成 UDP datagram</dd>
-      <dd>首部固定 8byte - 开销小</dd>
-      <figure>
-        <img src="./imgs/udp2.png" alt="">
-        <figcaption>UDP 数据报封装</figcaption>
-      </figure>
-      <table style="width: max-content;" class="txt-center">
-        <caption>UDP 报文组成</caption>
-        <tr>
-          <td>2 Bytes</td>
-          <td>2 Bytes</td>
-          <td>2 Bytes</td>
-          <td>2 Bytes</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>源端口</td>
-          <td>目标端口</td>
-          <td>长度</td>
-          <td>校验和</td>
-          <td>数据</td>
-        </tr>
-        <tr>
-          <td colspan="4">Header</td>
-          <td>Data</td>
-        </tr>
-      </table>
-      <dt>源端口 Source Port</dt>
-      <dd>2 Bytes</dd>
-      <dd>在需要对方回信时选用。不需要时可用全 0</dd>
-      <dt>目的端口 Destination Port</dt>
-      <dd>2 Bytes</dd>
-      <dd>终点交付报文时必须使用</dd>
-      <dt>长度 Length</dt>
-      <dd>2 Bytes</dd>
-      <dd>UDP 用户数据报的长度，包括首部和数据</dd>
-      <dd>最小值是 8（仅有首部）</dd>
-      <div class="demo"> 图示所示 UDP 数据报中，数据部分是多少字节？</div>
-      <figure>
-        <img src="./imgs/rip3.png" alt="">
-        <figcaption>UDP 报文</figcaption>
-      </figure>
-      <dd>数据报的长度是 0x0020 → (0020)<sub>16</sub> = 32 bytes</dd>
-      <dd>数据报的首部是 8 bytes</dd>
-      <dd>所以数据报的数据部分：32 - 8 = 24 bytes</dd>
-      <dt>检验和 CheckSum</dt>
-      <dd>2 Bytes</dd>
-      <dd>检测 UDP 用户数据报在传输中是否有错。有错就丢弃</dd>
-      <dd>伪首部：源IP地址、目标IP地址、IP协议号17、UDP长度和填充</dd>
-      <dd>校验内容：伪首部 + UDP首部 + UDP数据</dd>
-      <!-- IP 层的目标：确保“分组路由正确” -->
-      <figure>
-        <img src="./imgs/udp4.png" alt="">
-        <figcaption>校验和 Check Sum</figcaption>
-      </figure>
-      <dd>发送方
-        <p>填上伪首部：不是真正发送的数据，仅用于 UDP 检验和的计算</p>
-        <p>全0填充校验和字段；全0填充数据部分</p>
-        <p>伪首部+首部+数据三部分采用二进制反码求和</p>
-        <p>求和结果填入校验和字段并发送UDP报文</p>
-        <p>注意：最高进位必须加进去</p>
-      </dd>
-      <dd>接收方
-        <p>填上伪首部</p>
-        <p>伪首部+首部+数据三部分采用二进制反码求和</p>
-        <p>结果全为1则无差错；否则丢弃</p>
-      </dd>
-      <div class="demo"> 主机 153.19.8.104 在端口1087向主机 171.3.14.11 所在端口13的进程通信，求校验和的计算</div>
-      <dd>数据准备</dd>
-      <dd>红色数字部分：伪首部保留字段，必须为 0</dd>
-      <dd>绿色数字部分：校验和预填充，求得结果后再回填</dd>
-      <dd>蓝色数字部分：0bit 填充，保证总长度为偶数字节，以便 16 位求和</dd>
-      <table style="width: max-content;">
-        <caption>校验和数据准备</caption>
-        <tbody>
+  <header></header>
+  <div class="container">
+    <aside>
+      <nav class="nav">
+        <h1 class="logo">用户数据报 UDP<sup>&commat;</sup></h1>
+        <span class="iconfont icon-menu ham" id="ham"></span>
+        <ul class="nav-menu">
+          <li><a href="#" style="--delay:0" class="nav-item">概述</a></li>
+          <li><a href="#" style="--delay:1" class="nav-item">应用</a></li>
+          <li><a href="#" style="--delay:2" class="nav-item">报文</a></li>
+          <li><a href="#" style="--delay:3" class="txt-indent nav-item">源端口</a></li>
+          <li><a href="#" style="--delay:4" class="txt-indent nav-item">目标端口</a></li>
+          <li><a href="#" style="--delay:5" class="txt-indent nav-item">长度</a></li>
+          <li><a href="#" style="--delay:6" class="nav-item">工作模式</a></li>
+          <li><a href="#" style="--delay:7" class="txt-indent nav-item">一对多</a></li>
+          <li><a href="#" style="--delay:8" class="txt-indent nav-item">多对多</a></li>
+          <li><a href="#" style="--delay:9" class="nav-item">小结</a></li>
+          <li><a href="#" style="--delay:10" class="nav-item">作业</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main>
+      <dl>
+        <dt>Joke Time</dt>
+        <dd>来一碗牛肉面</dd>
+        <dd>不要跟它讲秘密</dd>
+        <dd>不要跟它吵架</dd>
+        <dd>尽力而为（Best Effort），其余随缘</dd>
+        <dd>I know this great UDP joke but you might not get it.</dd>
+        <figure>
+          <img src="./imgs/udp0.png" alt="">
+          <figcaption>UDP Joke</figcaption>
+        </figure>
+      </dl>
+      <h2 class="nav-cont">概述 Overview</h2>
+      <dl>
+        <dd>用户数据报 UDP - User Datagram Protocol</dd>
+        <dd>无连接 connectionless
+          <p>不需要建立连接</p>
+          <p>也不维护连接状态</p>
+        </dd>
+        <dd>不可靠 unreliable
+          <p>不重传</p>
+          <p>不确认</p>
+          <p>不排序</p>
+          <p>没有流量控制</p>
+          <p>没有拥塞控制</p>
+          <p>不保证交付 Does not guarantee delivery</p>
+          <p>存在丢包</p>
+          <p>最大努力交付 Best effort delivery</p>
+        </dd>
+        <dd>不分段 segmenting</dd>
+        <dd>不重组 reassembling</dd>
+        <dd>不实现序列号 sequence numbers</dd>
+        <dd>首部开销小：最少 8 Bytes，仅包括首部</dd>
+        <dd>支持单播、组播、多播</dd>
+        <div class="tips">
+          <p>简单方便；不可靠</p>
+          <p>U·D·P = Ultra Delightful Prankster - 超可爱捣蛋鬼</p>
+          <p>不可靠 &ne; 不能用</p>
+        </div>
+      </dl>
+      <dt class="nav-cont">应用 Application</dt>
+      <ul>
+        <li>DNS - Domain Name System，域名系统</li>
+        <li>DHCP - Dynamic Host Configuration Protocol，动态主机配置协议</li>
+        <li>SNMP - Simple Network Management Protocol，简单网络管理协议</li>
+        <li>TFTP - Trivial File Transfer Protocol，简单文件传输协议</li>
+        <li>NFS - Network File System，网络文件系统；早期版本</li>
+        <li>VoIP - Voice over IP及实时音视频通信</li>
+        <li>物联网 - ioT</li>
+        <li>流媒体 - Streaming Media</li>
+        <li>多播/组播应用 - Multicast</li>
+        <li>游戏通信 - Online Gaming</li>
+      </ul>
+      <h2 class="nav-cont">报文 Packet</h2>
+      <dl>
+        <dd>UDP 是面向报文 Message 的协议，一次发送一个完整的报文</dd>
+        <dd>UDP 将应用层的报文 Message/Data 加上 UDP 首部 Header 后形成 UDP datagram</dd>
+        <dd>首部固定 8 Bytes - 开销小</dd>
+        <figure>
+          <img src="./imgs/udp2.png" alt="">
+          <figcaption>UDP 数据报封装</figcaption>
+        </figure>
+        <table style="width: max-content;" class="txt-center">
+          <caption>UDP 报文组成</caption>
           <tr>
-            <td colspan="4">153.19.8.104</td>
+            <td>2 Bytes</td>
+            <td>2 Bytes</td>
+            <td>2 Bytes</td>
+            <td>2 Bytes</td>
+            <td></td>
           </tr>
           <tr>
-            <td colspan="4">171.3.14.11</td>
+            <td>源端口</td>
+            <td>目标端口</td>
+            <td>长度</td>
+            <td>校验和</td>
+            <td>数据</td>
           </tr>
           <tr>
-            <td style="color: #f40;">00000000</td>
-            <td>17</td>
-            <td colspan="2">15 = 8+7</td>
+            <td colspan="4">Header</td>
+            <td>Data</td>
           </tr>
-          <tr>
-            <td colspan="2">1087</td>
-            <td colspan="2">13</td>
-          </tr>
-          <tr>
-            <td colspan="2">15 = 8+7</td>
-            <td colspan="2" style="color: #008000;">00000000 00000000</td>
-          </tr>
-          <tr>
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-          </tr>
-          <tr>
-            <td>data</td>
-            <td>data</td>
-            <td>data</td>
-            <td style="color: #00f;">00000000</td>
-          </tr>
-        </tbody>
-      </table>
-      <dd>以2个字节为单位计算</dd>
-      <figure>
-        <img src="./imgs/udp5.png" alt="">
-        <figcaption>校验和 CheckSum 的计算</figcaption>
-      </figure>
-      <dt>报文大小</dt>
-      <dd>若报文太长，IP 层在传送时可能要进行分片，形成多个 IP 分组 Packets</dd>
-      <dd>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</dd>
-      <dd>受网络层 1500 bytes的 MTU 限制，建议应用层报文大小 ≤ 1472 bytes，避免分片</dd>
-    </dl>
-    <h2>工作模式 Mode</h2>
-    <dl>
-      <dt>一对多通信 P2MP</dt>
-      <dd>一个源端口 → 多个目的端
-        <p>单播 Unicast- 循环发送</p>
-        <p>广播 Broadcast - 向所有主机发送</p>
-        <p>组播 Multicast - 推荐；高效</p>
-      </dd>
-      <dd>所有数据包都从同一个源 IP + 源端口发出</dd>
-      <dd>接收方看到的源地址一致，便于回信</dd>
-      <dd>典型应用
-        <p>RIP组播</p>
-        <p>Web 浏览器访问多个服务</p>
-        <p>视频直播推流</p>
-        <p>广播通知系统</p>
+        </table>
+        <dt class="nav-cont">源端口 Source Port</dt>
+        <dd>2 Bytes</dd>
+        <dd>在需要对方回信时选用。不需要时可用全 0</dd>
+        <dt class="nav-cont">目的端口 Destination Port</dt>
+        <dd>2 Bytes</dd>
+        <dd>终点交付报文时必须使用</dd>
+        <dt class="nav-cont">长度 Length</dt>
+        <dd>2 Bytes</dd>
+        <dd>UDP 用户数据报的长度，包括首部和数据</dd>
+        <dd>最小值是 8（仅有首部）</dd>
+        <div class="demo"> 图示所示 UDP 数据报中，数据部分是多少字节？</div>
+        <figure>
+          <img src="./imgs/rip3.png" alt="">
+          <figcaption>UDP 报文</figcaption>
+        </figure>
+        <dd>数据报的长度是 0x0020 → (0020)<sub>16</sub> = 32 Bytes</dd>
+        <dd>数据报的首部是 8 Bytes</dd>
+        <dd>所以数据报的数据部分：32 - 8 = 24 Bytes</dd>
+        <dt>检验和 CheckSum</dt>
+        <dd>2 Bytes</dd>
+        <dd>检测 UDP 用户数据报在传输中是否有错。有错就丢弃</dd>
+        <dd>伪首部：源IP地址、目标IP地址、IP协议号17、UDP长度和填充</dd>
+        <dd>校验内容：伪首部 + UDP首部 + UDP数据</dd>
+        <!-- IP 层的目标：确保“分组路由正确” -->
+        <figure>
+          <img src="./imgs/udp4.png" alt="">
+          <figcaption>校验和 Check Sum</figcaption>
+        </figure>
+        <dd>发送方</dd>
+        <ul>
+          <li>填上伪首部：不是真正发送的数据，仅用于 UDP 检验和的计算</li>
+          <li>全0填充校验和字段；全0填充数据部分</li>
+          <li>伪首部+首部+数据三部分采用二进制反码求和</li>
+          <li>求和结果填入校验和字段并发送UDP报文</li>
+          <li>注意：最高进位必须加进去</li>
+        </ul>
+        <dd>接收方</dd>
+        <ul>
+          <li>填上伪首部</li>
+          <li>伪首部 + 首部 + 数据三部分采用二进制反码求和</li>
+          <li>结果全为 1 则无差错；否则丢弃</li>
+        </ul>
+        <div class="demo"> 主机 153.19.8.104 在端口 1087 向主机 171.3.14.11 所在端口 13 的进程通信，求校验和的计算</div>
+        <dd>数据准备</dd>
+        <ul>
+          <li>红色数字部分：伪首部保留字段，必须为 0</li>
+          <li>绿色数字部分：校验和预填充，求得结果后再回填</li>
+          <li>蓝色数字部分：0 bit 填充，保证总长度为偶数字节，以便按 16 位求和</li>
+        </ul>
+        <table style="width: max-content;">
+          <caption>校验和数据准备</caption>
+          <tbody>
+            <tr>
+              <td colspan="4">153.19.8.104</td>
+            </tr>
+            <tr>
+              <td colspan="4">171.3.14.11</td>
+            </tr>
+            <tr>
+              <td style="color: #f40;">00000000</td>
+              <td>17</td>
+              <td colspan="2">15 = 8+7</td>
+            </tr>
+            <tr>
+              <td colspan="2">1087</td>
+              <td colspan="2">13</td>
+            </tr>
+            <tr>
+              <td colspan="2">15 = 8+7</td>
+              <td colspan="2" style="color: #008000;">00000000 00000000</td>
+            </tr>
+            <tr>
+              <td>data</td>
+              <td>data</td>
+              <td>data</td>
+              <td>data</td>
+            </tr>
+            <tr>
+              <td>data</td>
+              <td>data</td>
+              <td>data</td>
+              <td style="color: #00f;">00000000</td>
+            </tr>
+          </tbody>
+        </table>
+        <dd>以 2 Bytes 为单位计算</dd>
+        <figure>
+          <img src="./imgs/udp5.png" alt="">
+          <figcaption>校验和 CheckSum 的计算</figcaption>
+        </figure>
+        <dt>报文大小</dt>
+        <dd>若报文太长，IP 层在传送时可能要进行分片，形成多个 IP 分组 Packets</dd>
+        <dd>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</dd>
+        <dd>受网络层 1500 Bytes 的 MTU 限制，建议应用层报文大小 ≤ 1472 Bytes，避免分片</dd>
+      </dl>
+      <h2 class="nav-cont">工作模式 Mode</h2>
+      <dl>
+        <dt class="nav-cont">一对多通信 P2MP</dt>
+        <dd>一个源端口 → 多个目的端
+          <p>单播 Unicast- 循环发送</p>
+          <p>广播 Broadcast - 向所有主机发送</p>
+          <p>组播 Multicast - 推荐；高效</p>
+        </dd>
+        <dd>所有数据包都从同一个源 IP + 源端口发出</dd>
+        <dd>接收方看到的源地址一致，便于回信</dd>
+        <dt>典型应用</dt>
+        <dd>RIP组播</dd>
+        <dd>Web 浏览器访问多个服务</dd>
+        <dd>视频直播推流</dd>
+        <dd>广播通知系统</dd>
         <figure>
           <img src="./imgs/udp3.png" alt="">
           <figcaption>一对多通信</figcaption>
         </figure>
-      </dd>
-      <dt>多对一通信 MP2P</dt>
-      <dd>多个源端口 → 一个目的端口</dd>
-      <dd>多个客户端各自创建 UDP socket（可能使用不同源端口），向同一个服务器 IP:Port 发送数据</dd>
-      <dd>典型应用
-        <p>多人聊天室/即时通讯</p>
-        <p>文件上传服务</p>
-        <p>在线游戏服务器</p>
-        <p>物联网设备上报数据</p>
+        <dt class="nav-cont">多对一通信 MP2P</dt>
+        <dd>多个源端口 → 一个目的端口</dd>
+        <dd>多个客户端各自创建 UDP socket（可能使用不同源端口），向同一个服务器 IP:Port 发送数据</dd>
+        <dd>典型应用</dd>
+        <dd>多人聊天室/即时通讯</dd>
+        <dd>文件上传服务</dd>
+        <dd>在线游戏服务器</dd>
+        <dd>物联网设备上报数据</dd>
         <figure>
           <img src="./imgs/udp1.png" alt="">
           <figcaption>多对一通信</figcaption>
         </figure>
-      </dd>
-    </dl>
-    <h2>Summary & Homework</h2>
-    <dl>
-      <dt>Summary</dt>
+
+      </dl>
+      <h2 class="nav-cont">小结 Summary</h2>
       <ol>
         <li>UDP 特点</li>
         <li>UDP 报文格式</li>
         <li>UDP 应用</li>
       </ol>
-      <dt>Homework</dt>
+      <h2 class="nav-cont">作业 Homework</h2>
       <ol>
         <li>翻译
           <p>Source Port：an optional field, when meaningful, it indicates the port
@@ -242,18 +265,17 @@
             data, padded with zero octets at the end (if necessary) to make a
             multiple of two octets.</p>
         </li>
-      </ol>
-      <dt>Extending Reading</dt>
-      <ol>
-        <li><a href="https://networkencyclopedia.com/user-datagram-protocol-udp/">User Datagram Protocol (UDP) <span
+        <li>Extending Reading：<a href="https://networkencyclopedia.com/user-datagram-protocol-udp/">User Datagram
+            Protocol (UDP) <span class="iconfont icon-share"></span></a></li>
+        <li>Extending Reading：<a href="https://networkencyclopedia.com/multiplexing/">Multiplexing <span
               class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/multiplexing/">Multiplexing <span
+        <li>Extending Reading：<a href="https://www.rfc-editor.org/rfc/rfc768">RFC 768 <span
               class="iconfont icon-share"></span></a></li>
-        <li><a href="https://www.rfc-editor.org/rfc/rfc768">RFC 768 <span class="iconfont icon-share"></span></a></li>
       </ol>
-    </dl>
-    <div id="footer"></div>
+      <div id="footer"></div>
+    </main>
     <script src="/utils/custom/footer.js"></script>
+    <script src="/utils//custom/ham.js"></script>
   </div>
 </body>
 

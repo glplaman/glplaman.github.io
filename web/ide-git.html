@@ -18,11 +18,12 @@
     </header>
     <dl>
       <dt>概述 Overview</dt>
-      <dd>分布式版本控制系统，即管理代码仓库的工具</dd>
-      <dd>常见的仓库：<a href="https://github.com/">Github</a> 或 <a href="https://gitee.com/">Gitee</a></dd>
-      <dd>更多 Git 应用，请访问 <a href="ide-git-details.html">Git Details</a></dd>
+      <dd><a class="link" href="https://git-scm.com/">Git</a> 是分布式版本控制系统，即管理代码仓库的工具</dd>
+      <dd>常见的仓库：<a class="link" href="https://github.com/">Github</a> 或 <a class="link"
+          href="https://gitee.com/">Gitee</a></dd>
+      <dd>更多 Git 应用，请访问 <a class="link" href="ide-git-details.html">Git Details</a></dd>
       <dt>下载和安装 Download & Installment</dt>
-      <dd>打开 <a href="https://git-scm.com/">Git 官网</a>，选择对应的操作系统和版本，点击下载并安装</dd>
+      <dd>打开 Git 官网，选择对应的操作系统和版本，点击下载并安装</dd>
       <dd>选择 vs code 为默认编辑器</dd>
       <dd>使用 main 覆盖默认分支</dd>
       <dt>查看版本 View</dt>
@@ -110,6 +111,17 @@ de89d7e v1</pre>
       <div class="tips">
         <p>A..B 表示：从 A 之后到 B 之间的所有提交</p>
       </div>
+      <div class="demo">临时排除某些文件</div>
+      <pre>git add -- ':!*.pptx'</pre>
+      <pre>git add --all -- ':exclude(*.pptx)'</pre>
+      <div class="demo">永久排除某些文件</div>
+      <dd>编辑 .gitignore，添加对应的文件类型</dd>
+      <pre>*.pptx</pre>
+      <dd>如果如果这些 .pptx 文件之前已经被 Git 追踪过（即之前已经执行过 git add 或 git commit）</dd>
+      <dd>先从 Git 的缓存中移除</dd>
+      <pre>git rm --cached *.pptx</pre>
+      <dd>再重新添加</dd>
+      <pre>git add .</pre>
     </dl>
     <div id="footer"></div>
   </div>
