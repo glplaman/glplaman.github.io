@@ -20,64 +20,70 @@
       <dd>路由相关的包</dd>
       <ul>
         <li>BrowserRouter</li>
-        <li>Routes</li>
-        <li>Route</li>
-        <li>NavLink</li>
-        <li>Link</li>
-        <li>useParams</li>
-        <li>useNavigate</li>
-        <li>useLocation</li>
+        <li><a class="link" href="https://reactrouter.com/api/components/Routes">Routes</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/components/Route">Route</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/components/NavLink">NavLink</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/components/Link">Link</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/hooks/useParams">useParams</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/hooks/useNavigate">useNavigate</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/hooks/useLocation">useLocation</a></li>
       </ul>
-      <dd>更多信息，请访问 <a href="https://reactrouter.com/">React Router</a></dd>
+      <dd>更多信息，请访问 <a class="link" href="https://reactrouter.com/">React Router</a></dd>
       <dt>Install</dt>
-      <pre>npx create-vite@latest</pre>
+      <pre>npm i react-router</pre>
       <dt>Steps</dt>
       <ol>
-        <li>引入浏览器路由 BrowserRouter</li>
-        <pre>import { BrowserRouter } from "react-router";</pre>
-        <li>在 App 引入路由</li>
+        <li>在 App.jsx 引入路由</li>
         <pre>import { BrowserRouter, Routes, Route, NavLink } from "react-router";</pre>
-        <li>在 &lt;BrowserRouter&gt; 中设计路由和使用路由</li>
+        <li>在 &lt;BrowserRouter&gt; 中设计路由</li>
+        <p>&lt;BrowserRouter&gt; 是 React Router 提供的路由根容器</p>
+        <p>应该放置在应用组件树的最高层级</p>
         <pre>
 &lt;BrowserRouter&gt;
-  {/* 使用路由 */}
   {/* 设计路由 */}
+  {/* 使用路由 */}
 &lt;/BrowserRouter&gt;</pre>
-        <li>设计路由；使用 &lt;Routes&gt; 和 &lt;Route&gt; 设计路由；其中 /:num 为动态路由</li>
+        <li>设计路由</li>
+        <p>使用 &lt;Routes&gt; 和 &lt;Route&gt; 设计路由；其中 /:num 为动态路由</p>
+        <p>对应的组件要导入</p>
         <pre>
 &lt;Routes&gt;
-  &lt;Route path="/:num" element={&lt;Test /&gt;}&gt;&lt;/Route&gt;
-  &lt;Route path="/login" element={&lt;Login /&gt;}&gt;&lt;/Route&gt;
-  &lt;Route path="/register" element={&lt;Register /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/" element={&lt;Home /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/work" element={&lt;Work /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/team/:num" element={&lt;Team /&gt;}&gt;&lt;/Route&gt;
   &lt;Route path="/rank" element={&lt;Rank /&gt;}&gt;&lt;/Route&gt;
-  &lt;Route path="/center" element={&lt;Center /&gt;}&gt;&lt;/Route&gt;
-  &lt;Route path="/message" element={&lt;Message /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="/register" element={&lt;Register /&gt;}&gt;&lt;/Route&gt;
 &lt;/Routes&gt;</pre>
         <li>使用路由</li>
         <p>可以指定查询参数 search/query、目标哈希 hash</p>
-        <p>使用 &lt;NavLink&gt; 实现 <strong>声明式</strong> 导航；需引入再使用</p>
+        <p>使用 &lt;NavLink&gt; 或 &lt;Link&gt; 实现 <strong>声明式</strong> 导航；需引入再使用</p>
         <p>相比较 &lt;Link&gt;，&lt;NavLink&gt; 可以自动应用激活样式 active；需提前设计好</p>
+        <p>可以封装为组件</p>
         <pre>
 &lt;nav&gt;
-  &lt;NavLink to='/12'&gt;Test&lt;/NavLink&gt;
-  &lt;NavLink to='/login'&gt;Login&lt;/NavLink&gt;
-  &lt;NavLink to='/register'&gt;Register&lt;/NavLink&gt;
+  &lt;NavLink to='/'&gt;Home&lt;/NavLink&gt;
+  &lt;NavLink to='/work?id=1001'&gt;Work&lt;/NavLink&gt;
+  &lt;NavLink to='/team/101'&gt;Team&lt;/NavLink&gt;
   &lt;NavLink to='/rank'&gt;Rank&lt;/NavLink&gt;
-  &lt;NavLink to='/center?id=1001'&gt;Center&lt;/NavLink&gt;
+  &lt;NavLink to='/register'&gt;Register&lt;/NavLink&gt;
   &lt;NavLink to={{
     pathname: '/message',
     hash: '#tar',
     search: 'id=10'
   }}&gt;Message&lt;/NavLink&gt;
 &lt;/nav&gt;</pre>
-        <p>使用 useNavigate 实现 <strong>编程式</strong> 导航；需引入再使用</p>
-        <pre>import { useNavigate } from "react-router"</pre>
-        <pre>const nav = useNavigate()</pre>
-        <pre>&lt;p onClick={() =&gt; nav('/center')}&gt;to Center&lt;/p&gt;</pre>
-        <p>动态路由的获取需要使用 useParams 解析；需引入再使用</p>
-        <pre>import { useParams } from "react-router"</pre>
-        <pre>let { num } = useParams()</pre>
       </ol>
+      <dt>useNavigate</dt>
+      <dd>使用 useNavigate 实现 <strong>编程式</strong> 导航</dd>
+      <dd>需引入再使用</dd>
+      <pre>import { useNavigate } from "react-router"</pre>
+      <pre>const nav = useNavigate()</pre>
+      <pre>&lt;p onClick={() =&gt; nav('/center')}&gt;to Center&lt;/p&gt;</pre>
+      <dt>useParams</dt>
+      <dd>使用 useParams 解析/获取动态路由参数</dd>
+      <dd>需引入再使用</dd>
+      <pre>import { useParams } from "react-router"</pre>
+      <pre>let { num } = useParams()</pre>
       <div class="tips">
         <p>React Router 7- 的版本中，使用 end 属性完全匹配；特别是存在嵌套路由的时候</p>
       </div>

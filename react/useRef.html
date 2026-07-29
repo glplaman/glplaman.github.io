@@ -45,66 +45,66 @@
       <dd>在父组件中访问子组件实例</dd>
       <dd>以便在父组件中调用子组件 <strong>暴露</strong> 的方法或属性</dd>
       <dd>父组件中创建 ref，并将其作为 prop 传递给子组件</dd>
+      <div class="demo">引用普通组件</div>
+      <dd>子组件不需要引入 useRef：因为并没有创建新的 ref，它只是把父组件给它的这个引用，原封不动地交给了它内部的元素</dd>
+      <pre>
+const UseRefChild = ({ ref }) => {
+  return (
+    &lt;&gt;
+      &lt;input type="text" ref={ref} /&gt;
+    &lt;/&gt;
+  )
+}
+
+export default UseRefChild</pre>
+      <dd>父组件正常引入、创建并分配 ref</dd>
+      <pre>
+import { useRef } from "react"
+import UseRefChild from "./UseRefChild"
+
+const UseRefSuper = () => {
+  const ipt = useRef()
+  const tmp = useRef()
+  const handleIpt = () => {
+    console.log(ipt.current);
+    console.log(tmp.current.value);
+  }
+  return (
+    &lt;div&gt;
+      &lt;input type="text" ref={ipt} onChange={handleIpt} /&gt;
+      &lt;UseRefChild ref={tmp}&gt;&lt;/UseRefChild&gt;
+    &lt;/div&gt;
+  )
+}
+
+export default UseRefSuper</pre>
       <div class="demo">引用组件内部的函数组件</div>
       <dd>这里定义的2个 ref：ipt 用于普通元素；tmp 用于内部的函数组件</dd>
       <pre>
 import { useRef } from "react"
 // 函数组件
 const Test = (props) => {
-return (
-  // 指定 ref 属性！！！
-  &lt;div ref={props.ref}&gt;test&lt;/div&gt;
-)
+  return (
+    // 指定 ref 属性！！！
+    &lt;div ref={props.ref}&gt;test&lt;/div&gt;
+  )
 }
-const UseRef = () => {
-const ipt = useRef()
-const tmp = useRef()
-const handleIpt = () => {
-  console.log(ipt.current);
-  console.log(tmp.current);
-}
-return (
-  &lt;&gt;
-    &lt;input type="text" ref={ipt} onChange={handleIpt} /&gt;
-    &lt;Test ref={tmp}&gt;&lt;/Test&gt;
-  &lt;/&gt;
-)
-}
-
-export default UseRef</pre>
-      <div class="demo">引用普通组件</div>
-      <dd>子组件不需要引入 useRef：因为并没有创建新的 Ref，它只是把父组件给它的这个引用，原封不动地交给了它内部的元素</dd>
-      <pre>
-const Test = ({ ref }) => {
-return (
-  &lt;&gt;
-    &lt;input type="text" ref={ref} /&gt;
-  &lt;/&gt;
-)
+const UseRefCom = () => {
+  const ipt = useRef()
+  const tmp = useRef()
+  const handleIpt = () => {
+    console.log(ipt.current);
+    console.log(tmp.current);
+  }
+  return (
+    &lt;&gt;
+      &lt;input type="text" ref={ipt} onChange={handleIpt} /&gt;
+      &lt;Test ref={tmp}&gt;&lt;/Test&gt;
+    &lt;/&gt;
+  )
 }
 
-export default Test</pre>
-      <dd>父组件正常引入、创建并分配 ref</dd>
-      <pre>
-import { useRef } from "react"
-import Test from "./Test"
-
-const UseRef = () => {
-const ipt = useRef()
-const tmp = useRef()
-const handleIpt = () => {
-  console.log(ipt.current);
-  console.log(tmp.current.value);
-}
-return (
-  &lt;div&gt;
-    &lt;input type="text" ref={ipt} onChange={handleIpt} /&gt;
-    &lt;Test ref={tmp}&gt;&lt;/Test&gt;
-  &lt;/div&gt;
-)
-}
-
-export default UseRef</pre>
+export default UseRefCom</pre>
     </dl>
     <div id="footer"></div>
   </div>

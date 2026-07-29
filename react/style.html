@@ -16,24 +16,70 @@
       <span>&commat;Style</span>
     </header>
     <dl>
+      <dt>文件组织</dt>
+      <dd>建议在 asserts 目录使用专门的文件夹集中存放</dd>
+      <pre><code><span class="iconfont icon-folderopen"></span>assets
+  <span class="iconfont icon-folderopen"></span> styles
+    <span class="iconfont icon-jinghao"></span> reset.css
+    <span class="iconfont icon-jinghao"></span> form.css</code></pre>
+      <dt>引入并使用</dt>
       <dd>React 使用 <strong>className</strong> 取代 class 作为元素的样式类</dd>
       <dd>默认是全局样式：某组件引入后，会影响到其它使用样式类的组件</dd>
-      <dd>按照传统方式引入、使用</dd>
-      <pre>import './demo.css';</pre>
-      <pre>&lt;div className = "warn"&gt;Notice&lt;/div&gt;</pre>
+      <pre><code>import './reset.css';</code></pre>
+      <pre><code>&lt;div className = "warn"&gt;Notice&lt;/div&gt;</code></pre>
       <div class="demo">导航菜单</div>
       <dd>包括基本样式和高亮样式</dd>
       <dd>菜单项选中时，应用高亮样式类 active</dd>
       <dd>ind 是响应式数据，表示当前选择的菜单项</dd>
       <dd>使用三元表达式 ?:</dd>
-      <pre>
-&lt;div className={ind == 0 ? "active" : ""}&gt;home&lt;/div&gt;
+      <pre><code>&lt;div className={ind == 0 ? "active" : ""}&gt;home&lt;/div&gt;
 &lt;div className={ind == 1 ? "active" : ""}&gt;work&lt;/div&gt;
 &lt;div className={ind == 2 ? "active" : ""}&gt;team&lt;/div&gt;
-&lt;div className={ind == 3 ? "active" : ""}&gt;about&lt;/div&gt;</pre>
+&lt;div className={ind == 3 ? "active" : ""}&gt;about&lt;/div&gt;</code></pre>
       <dd>多个类的情况下，使用 <strong>模板字符串</strong></dd>
-      <dd>整体使用嵌套双花括号 {{}}</dd>
-      <pre>&lt;div className={`link ${ind == 3 ? "active" : ""}`}&gt;about&lt;/div&gt;</pre>
+      <dd>所以：整体使用嵌套双花括号 {{}}</dd>
+      <pre><code>&lt;div className={`link ${ind == 3 ? "active" : ""}`}&gt;about&lt;/div&gt;</code></pre>
+    </dl>
+    <h2>CSS Module</h2>
+    <dl>
+      <dd>使用 CSS module 实现样式隔离</dd>
+      <dd>作用域仅限当前组件</dd>
+      <dt>文件组织</dt>
+      <pre><code><span class="iconfont icon-folderopen"></span>src
+  <span class="iconfont icon-folderopen"></span> components
+    <span class="iconfont icon-folderopen"></span> HelloWorld
+      <span class="iconfont icon-react"></span> index.jsx
+      <span class="iconfont icon-jinghao"></span> HelloWorld.module.css
+      <span class="iconfont icon-react"></span> Other.jsx
+      <span class="iconfont icon-jinghao"></span> Other.module.css
+    <span class="iconfont icon-react"></span> Rank.jsx</code></pre>
+      <dt>命名规则</dt>
+      <dd>组件文件</dd>
+      <pre><code>xxx.jsx</code></pre>
+      <dd>组件样式文件：使用 module 标识</dd>
+      <pre><code>xxx.module.css</code></pre>
+      <dd>在组件中引入到 styles 中再使用</dd>
+      <pre><code>import styles from './xxx.module.css';</code></pre>
+      <pre><code>&lt;div className={styles.warn}&gt;hi,there&lt;/div&gt;</code></pre>
+      <dd>如果类名是蛇形命名 snake_case，使用数组形式</dd>
+      <pre><code>&lt;div className={styles['menu-item']}&gt;hi,there&lt;/div&gt;</code></pre>
+    </dl>
+    <h2>内联样式 Inline Style</h2>
+    <dl>
+      <dd>仍然使用数据绑定方式， style={}；并提供一个样式对象 - <strong>值对</strong></dd>
+      <dd>整体使用双花括号 {{}}：外层括号“进入 JS 世界”，内层括号“定义一个对象”</dd>
+      <dd>对象是键值对，所以属性值必须使用引号；且复合属性不支持连字符 -；应使用小驼峰，如 fontSize</dd>
+      <dt>静态样式</dt>
+      <pre><code>&lt;div style={{fontWeight: '600'}}&gt;hi,there.&lt;/div&gt;</code></pre>
+      <pre><code>&lt;div style={{color: '#f40'}}&gt;hi,there.&lt;/div&gt;</code></pre>
+      <pre><code>&lt;div style={{borderBottom: '1px solid #f40'}}&gt;hi,there.&lt;/div&gt;</code></pre>
+      <dt>动态样式</dt>
+      <dd>其中，m 是响应式数据</dd>
+      <pre><code>&lt;div style={{margin: m + 'px'}}&gt;hi,there.&lt;/div&gt;</code></pre>
+      <pre><code>&lt;div style={{fontSize: m + 'px'}}&gt;hi,there.&lt;/div&gt;</code></pre>
+    </dl>
+    <h2>练习 Drill</h2>
+    <dl>
       <div class="demo">使用动态类 - 表单验证</div>
       <dd>使用 &lt;input&gt; 的 text</dd>
       <dd>密码长度不够，以告警类 warn，如红色字体提示</dd>
@@ -70,33 +116,7 @@
 &lt;/select&gt;
 
 &lt;div className={theme}&gt;hi,there&lt;/div&gt;</pre>
-    </dl>
-    <h2>CSS Module</h2>
-    <dl>
-      <dd>使用 CSS module 实现样式隔离</dd>
-      <dt>命名规则</dt>
-      <dd>组件文件</dd>
-      <pre>xxx.jsx</pre>
-      <dd>组件样式文件：使用 module 标识</dd>
-      <pre>xxx.module.css</pre>
-      <dd>在组件中引入到 styles 中再使用</dd>
-      <pre>import styles from './xxx.module.css';</pre>
-      <pre>&lt;div className={styles.warn}&gt;hi,there&lt;/div&gt;</pre>
-    </dl>
-    <h2>内联样式 Style</h2>
-    <dl>
-      <dd>内联样式 inline style</dd>
-      <dd>仍然使用数据绑定方式， style={}；并提供一个样式对象 - <strong>值对</strong></dd>
-      <dd>整体使用双花括号 {{}}：外层括号“进入 JS 世界”，内层括号“定义一个对象”</dd>
-      <dd>对象是键值对，所以属性值必须使用引号；且复合属性不支持连字符 -；应使用小驼峰，如 fontSize</dd>
-      <dt>静态样式</dt>
-      <pre>&lt;div style={{fontWeight: '600'}}&gt;hi,there.&lt;/div&gt;</pre>
-      <pre>&lt;div style={{color: '#f40'}}&gt;hi,there.&lt;/div&gt;</pre>
-      <pre>&lt;div style={{borderBottom: '1px solid #f40'}}&gt;hi,there.&lt;/div&gt;</pre>
-      <dt>动态样式</dt>
-      <dd>其中，m 是响应式数据</dd>
-      <pre>&lt;div style={{margin: m + 'px'}}&gt;hi,there.&lt;/div&gt;</pre>
-      <pre>&lt;div style={{fontSize: m + 'px'}}&gt;hi,there.&lt;/div&gt;</pre>
+      <div class="demo">根据实际需求，调整上述案例为 CSS Module 方式</div>
     </dl>
     <div id="footer"></div>
   </div>

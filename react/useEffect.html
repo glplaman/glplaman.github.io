@@ -119,21 +119,13 @@ export default async function Demo() {
     &lt;/div>
   );
 }     </pre>
-      <!-- <div class="demo">监听状态变化</div>
-      <dd>count 变化时，触发同步</dd>
+      <div class="demo">单击列表加载对应的数据</div>
+      <dd>每次单击列表项时，修改 course，进而触发数据加载</dd>
+      <dd>不需要显式的执行加载函数 getRank</dd>
       <pre>
-import { useEffect, useState } from "react";
-export default function Demo() {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    console.log("useEffect count", count);
-  }, [count]);
-  return (
-    &lt;div>
-      &lt;button onClick={() => setCount(count + 1)}>count: {count}&lt;/button>
-    &lt;/div>
-  );
-}</pre> -->
+useEffect(() => {
+  getRank(course);
+}, [course]);</pre>
     </dl>
     <h2>Drill</h2>
     <dl>

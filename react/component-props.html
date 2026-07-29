@@ -45,11 +45,34 @@ export default Greeting;</pre>
       <pre>import Greeting from "./components/Greeting.tsx";</pre>
       <dd>以属性 props 的形式指定属性 - 传递数据/通信</dd>
       <pre>&lt;Greeting user="glplaman"&gt;&lt;/Greeting&gt;</pre>
+      <div class="demo">样式传递</div>
+      <dd>父组件传递样式给子组件</dd>
+      <dd>避免样式重复定义</dd>
+      <pre><code>&lt;RankItem className={styles.item} item={item}&gt;&lt;/RankItem&gt;</code></pre>
+      <dd>子组件</dd>
+      <pre><code>const RankItem = ({ item, className }) => {
+  return (
+    &lt;li className={className}&gt;
+      &lt;span&gt;{item.usn}&lt;/span&gt;
+    &lt;/li&gt;
+  )
+}
+
+export default RankItem</code></pre>
       <dt>传递函数</dt>
       <dd>父组件分享函数给子组件</dd>
       <dd>子组件执行父组件的函数，同时也向父组件传递数据</dd>
       <dd>父组件根据子组件的数据执行相应的动作</dd>
       <dd>很多实际业务场景中，子组件必须通过调用父组件的函数来完成特定任务</dd>
+      <div class="demo">导航菜单</div>
+      <dd>把导航组件化，独立出去</dd>
+      <dd>导航组件需要的列表数据和执行的函数都有父组件提供</dd>
+      <pre><code>&lt;RankNav courses={courses} fn={handClick}&gt;&lt;/RankNav&gt;</code></pre>
+      <div class="demo">搜索组件</div>
+      <dd>父组件根据子组件的关键词搜索对应的内容</dd>
+      <dd>搜索功能封装为子组件</dd>
+      <div class="demo">购物车组件</div>
+      <dd>商品项组件的增加/减少数量、删除商品等操作都反馈给父组件</dd>
       <div class="demo">用户中心</div>
       <dd>修改用户信息</dd>
       <dd>修改操作封装为一个组件；通过执行父组件函数来更新信息</dd>
@@ -71,9 +94,6 @@ const Input = ({ user, fn }) => {
 }
 
 export default Input</pre>
-      <div class="demo">搜索组件</div>
-      <dd>父组件根据子组件的关键词搜索对应的内容</dd>
-      <dd>搜索功能封装为子组件</dd>
     </dl>
     <h2>Children</h2>
     <dl>
@@ -81,11 +101,14 @@ export default Input</pre>
       <dd>相当于在子组件中预留了一个插槽 slot</dd>
       <dd>这个数据被 props.children 接受</dd>
       <dt>父组件</dt>
+      <dd>插入 DOM</dd>
       <pre>
 &lt;SayHi title='glplaman'&gt;
   &lt;h1&gt;hi,there.&lt;/h1&gt;
 &lt;/SayHi&gt;</pre>
       <dt>子组件</dt>
+      <dd>使用 children</dd>
+      <dd>可以多次使用</dd>
       <pre>
 const SayHi = ({ title, children }) => {
   return (

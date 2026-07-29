@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由布局 Layout</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>路由布局</h1>
+      <span>&commat;Layout</span>
+    </header>
+    <dl>
+      <dt>Overview</dt>
+      <dd>布局组件 Layout Component 是一种共享 UI（如 Header、Footer、Sidebar）与页面内容解耦的优雅方案</dd>
+      <dd>可以为不同路由组分配不同布局（如“带导航的主应用布局” vs “无导航的登录页布局”）</dd>
+      <dd>避免在每个页面重复编写相同的 UI 结构</dd>
+      <dd>保持路由配置的声明性和可维护性</dd>
+      <dt>&lt;Outlet /&gt;</dt>
+      <dd>通过 &lt;Outlet /&gt; 占位符实现子路由内容的动态渲染</dd>
+      <dd>如果布局组件中没有 &lt;Outlet /&gt;，子路由内容将无法渲染</dd>
+      <div class="demo">页面路由</div>
+      <dd>Home、Work、Team、Rank：需要导航</dd>
+      <dd>Contact：不需要导航</dd>
+      <ol>
+        <li>布局组件</li>
+        <p>Outlet 和各组件需要导入</p>
+        <p>该布局中包括：头部 Header、主导航 MainNav、子路由占位符&lt;Outlet /&gt; 和底部 Footer</p>
+        <p>子路由共享：头部 Header、主导航 MainNav 和底部 Footer</p>
+        <p>主导航 MainNav 由 &lt;NavLink /&gt; 或 &lt;Link /&gt; 实现（略）</p>
+        <pre><code>&lt;&gt;
+  &lt;Header /&gt;
+  &lt;MainNav /&gt;
+  &lt;main&gt;
+    &lt;Outlet /&gt;
+  &lt;/main&gt;
+  &lt;Footer /&gt;
+&lt;/&gt;</code></pre>
+        <li>路由设计</li>
+        <pre><code>&lt;BrowserRouter&gt;
+  &lt;Routes&gt;
+    &lt;Route element={&lt;Layout /&gt;}&gt;
+      &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+      &lt;Route path="/work" element={&lt;Work /&gt;} /&gt;
+      &lt;Route path="/team" element={&lt;Team /&gt;} /&gt;
+      &lt;Route path="/rank" element={&lt;Rank /&gt;} /&gt;
+    &lt;/Route&gt;
+    &lt;Route path="/contact" element={&lt;Contact /&gt;} /&gt;
+  &lt;/Routes&gt;
+&lt;/BrowserRouter&gt;</code></pre>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
