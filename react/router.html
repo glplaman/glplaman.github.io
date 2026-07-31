@@ -19,12 +19,13 @@
       <dd>三种使用方式</dd>
       <dd>路由相关的包</dd>
       <ul>
-        <li>BrowserRouter</li>
+        <li><a class="link" href="https://reactrouter.com/api/declarative-routers/BrowserRouter">BrowserRouter</a></li>
         <li><a class="link" href="https://reactrouter.com/api/components/Routes">Routes</a></li>
         <li><a class="link" href="https://reactrouter.com/api/components/Route">Route</a></li>
         <li><a class="link" href="https://reactrouter.com/api/components/NavLink">NavLink</a></li>
         <li><a class="link" href="https://reactrouter.com/api/components/Link">Link</a></li>
         <li><a class="link" href="https://reactrouter.com/api/hooks/useParams">useParams</a></li>
+        <li><a class="link" href="https://reactrouter.com/api/hooks/useSearchParams">useSearchParams</a></li>
         <li><a class="link" href="https://reactrouter.com/api/hooks/useNavigate">useNavigate</a></li>
         <li><a class="link" href="https://reactrouter.com/api/hooks/useLocation">useLocation</a></li>
       </ul>
@@ -35,7 +36,7 @@
       <ol>
         <li>在 App.jsx 引入路由</li>
         <pre>import { BrowserRouter, Routes, Route, NavLink } from "react-router";</pre>
-        <li>在 &lt;BrowserRouter&gt; 中设计路由</li>
+        <li>在 &lt;BrowserRouter&gt; 中设计/声明路由</li>
         <p>&lt;BrowserRouter&gt; 是 React Router 提供的路由根容器</p>
         <p>应该放置在应用组件树的最高层级</p>
         <pre>
@@ -68,33 +69,34 @@
   &lt;NavLink to='/register'&gt;Register&lt;/NavLink&gt;
   &lt;NavLink to={{
     pathname: '/message',
-    hash: '#tar',
     search: 'id=10'
+    hash: '#tar',
   }}&gt;Message&lt;/NavLink&gt;
 &lt;/nav&gt;</pre>
       </ol>
-      <dt>useNavigate</dt>
-      <dd>使用 useNavigate 实现 <strong>编程式</strong> 导航</dd>
-      <dd>需引入再使用</dd>
-      <pre>import { useNavigate } from "react-router"</pre>
-      <pre>const nav = useNavigate()</pre>
-      <pre>&lt;p onClick={() =&gt; nav('/center')}&gt;to Center&lt;/p&gt;</pre>
-      <dt>useParams</dt>
-      <dd>使用 useParams 解析/获取动态路由参数</dd>
-      <dd>需引入再使用</dd>
-      <pre>import { useParams } from "react-router"</pre>
-      <pre>let { num } = useParams()</pre>
       <div class="tips">
-        <p>React Router 7- 的版本中，使用 end 属性完全匹配；特别是存在嵌套路由的时候</p>
+        <p>pathname：根据路由情况使用；绝对路由，使用 /；相对路由，不使用 /，如嵌套路由多使用相对路由</p>
+        <p>search：会自动拼接 ?</p>
+        <p>hash：始终手动加 #；且不会自动跳转，需手动处理</p>
       </div>
+      <div class="demo">全局布局/共享布局</div>
+      <dd>所有页面都共享头部 Header 和底部 Footer</dd>
+      <dd>在路由设计外面添加 头部 Header 和底部 Footer</dd>
+      <dd>如果部分页面需要共享 UI，部分页面不需要，则需要 <a href="./router-layout.html">布局组件</a> 实现</dd>
+      <pre><code>&lt;BrowserRouter&gt;
+  &lt;Header&gt;
+  {/* 设计路由 */}
+  {/* 使用路由 */}
+  &lt;Footer&gt;
+&lt;/BrowserRouter&gt;</code></pre>
       <div class="demo">登陆页面和注册页面</div>
-      <dd>使用 &lt;Link&gt; 实现；无需应用激活样式</dd>
       <dd>如果没有账号，则引导去注册页面</dd>
       <pre>&lt;div&gt;Not have an acount? &lt;Link to='/register'&gt;Register&lt;/Link&gt;&lt;/div&gt;</pre>
       <dd>如果已有账号，则引导去登陆页面</dd>
       <pre>&lt;div&gt;Already have an acount? &lt;Link to='/login'&gt;Login&lt;/Link&gt;&lt;/div&gt;</pre>
-      <div class="demo">设计激活样式</div>
-      <dd>使用默认类名 active</dd>
+      <dt>active</dt>
+      <dd>使用 &lt;NavLink&gt; 导航时会自动添加激活样式类</dd>
+      <dd>默认类名是 active</dd>
       <pre>
 a.active{
   color: #f40;
@@ -108,6 +110,9 @@ a.active{
 &gt;
   Rank
 &lt;/NavLink&gt;</pre>
+      <dd>直接使用 &lt;a&gt;，会污染其它 &lt;a&gt;</dd>
+      <dd>建议同时使用全局样式和 module 样式，以便和其它 &lt;a&gt; 区分</dd>
+      <pre><code>&lt;NavLink className={`nav-item ${styles['nav-item']}`} to='/about'>test&lt;/NavLink></code></pre>
       <dt>基本路径 basename</dt>
       <dd>默认情况下，项目发布后，部署在网站根目录</dd>
       <dd>路由设计和使用可以使用 / 或者不使用 / 都可以；前例路由使用了 /</dd>

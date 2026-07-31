@@ -54,6 +54,30 @@
   &lt;/Routes&gt;
 &lt;/BrowserRouter&gt;</code></pre>
       </ol>
+      <div class="demo">如果 Rank 需要头部 Header、底部 Footer，但是不需要主导航 MainNav。如何实现？</div>
+      <dd>新增加一个布局组件 LayoutRank</dd>
+      <pre><code>&lt;&gt;
+  &lt;Header /&gt;
+  &lt;main&gt;
+    &lt;Outlet /&gt;
+  &lt;/main&gt;
+  &lt;Footer /&gt;
+&lt;/&gt;</code></pre>
+      <dd>在路由设计中为 Rank 指定该布局组件</dd>
+      <pre><code>&lt;BrowserRouter&gt;
+  &lt;Routes&gt;
+    &lt;Route element={&lt;Layout /&gt;}&gt;
+      &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+      &lt;Route path="/work" element={&lt;Work /&gt;} /&gt;
+      &lt;Route path="/team" element={&lt;Team /&gt;} /&gt;
+      &lt;Route path="/rank" element={&lt;Rank /&gt;} /&gt;
+    &lt;/Route&gt;
+    &lt;Route element={&lt;LayoutRank /&gt;}&gt;
+      &lt;Route path="/rank" element={&lt;Rank /&gt;} /&gt;
+    &lt;/Route&gt;
+    &lt;Route path="/contact" element={&lt;Contact /&gt;} /&gt;
+  &lt;/Routes&gt;
+&lt;/BrowserRouter&gt;</code></pre>
     </dl>
     <div id="footer"></div>
   </div>

@@ -16,6 +16,8 @@
       <span>&commat;Nested</span>
     </header>
     <dl>
+      <dd>布局组件就是嵌套路由的应用</dd>
+      <dt>Requirement</dt>
       <dd>course
         <p>front</p>
         <p>back</p>
@@ -28,14 +30,30 @@
   &lt;Route path="front" element={&lt;Front /&gt;}&gt;&lt;/Route&gt;
   &lt;Route path="back" element={&lt;Back /&gt;}&gt;&lt;/Route&gt;
 &lt;/Route&gt;</pre>
-        <li>在父路由组件中使用 &lt;Outlet /&gt; 渲染/使用子路由视图</li>
+        <li>在父路由组件 Course 中使用 &lt;Outlet /&gt; 作为占位符，渲染/使用子路由视图</li>
         <pre>import { Outlet } from "react-router"</pre>
-        <pre>&lt;Outlet /&gt;</pre>
+        <pre>
+// course header
+// course content
+&lt;Outlet /&gt;
+// course footer</pre>
       </ol>
-      <div class="tips">
-        <p>可以使用 index 指定默认子路由；省略 path</p>
-        <p>使用 index 属性的路由，无法继续嵌套子路由</p>
-      </div>
+      <dt>index</dt>
+      <dd>可以使用 index 指定默认子路由（Index Route）；省略 path</dd>
+      <dd>使用 index 属性的路由，无法继续嵌套子路由</dd>
+      <pre>
+&lt;Route path="course" element={&lt;Course /&gt;}&gt;
+  &lt;Route index element={&lt;Front /&gt;}&gt;&lt;/Route&gt;
+  &lt;Route path="back" element={&lt;Back /&gt;}&gt;&lt;/Route&gt;
+&lt;/Route&gt;</pre>
+      <dd>使用默认子路由时，应该保持为空</dd>
+      <pre>
+&lt;NavLink to=''>Front-end&lt;/NavLink>
+&lt;NavLink to='back'>Back-end&lt;/NavLink></pre>
+      <dd>不要写 to='front'：因为没有定义这个路由</dd>
+      <dt>end</dt>
+      <dd>使用 end 属性，以精确匹配路由，便于应用特定样式，如激活</dd>
+      <dd>多应用于子路由，特别是默认路由</dd>
     </dl>
     <div id="footer"></div>
   </div>

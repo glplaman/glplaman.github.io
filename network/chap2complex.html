@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>信道复用技术 Multiplexing</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
 </head>
 
@@ -88,34 +88,15 @@
       <dd>抗干扰性比较好</dd>
       <dd>早期用于3G通信</dd>
       <dd>最早起源于第二次世界大战期间；早期多用于军事通信</dd>
-      <dd>
-        <span>1989年</span>
-        <span>高通公司将改技术用于商业手机网络</span>
-      </dd>
-      <dd>
-        <span>1993年</span>
-        <span>美国批准第一个CDMA标准IS95为2G标准</span>
-      </dd>
-      <dd>
-        <span>1994年</span>
-        <span>香港建成世界上第一个CDMA商用网络</span>
-      </dd>
-      <dd>
-        <span>2000年</span>
-        <span>中国联通与高通签署协议，CDMA进入中国大陆</span>
-      </dd>
-      <dd>
-        <span>2001年</span>
-        <span>CDMA手机开始大规模销售</span>
-      </dd>
-      <dd>
-        <span>2007年</span>
-        <span>澳大利亚第一个关闭了CDMA网络</span>
-      </dd>
-      <dd>
-        <span>2018年</span>
-        <span>中国电信宣布逐步关闭CDMA网络</span>
-      </dd>
+      <ol>
+        <li>1989年 高通公司将改技术用于商业手机网络</li>
+        <li>1993年 美国批准第一个CDMA标准IS95为2G标准</li>
+        <li>1994年 香港建成世界上第一个CDMA商用网络</li>
+        <li>2000年 中国联通与高通签署协议，CDMA进入中国大陆</li>
+        <li>2001年 CDMA手机开始大规模销售</li>
+        <li>2007年 澳大利亚第一个关闭了CDMA网络</li>
+        <li>2018年 中国电信宣布逐步关闭CDMA网络</li>
+      </ol>
 
       <figure>
         <img src="./imgs/p8.png" alt="">
@@ -125,7 +106,7 @@
     <h2>CDMA</h2>
     <dl>
       <dt>扩频通信</dt>
-      <dd>基站的每一个bit都被转换成m个bit，所以基站发送数据的速率提高到原来的m倍，相应的，所用带宽也提高到原来的m倍。因此，被称为扩频通信</dd>
+      <dd>基站的每一个bit都被转换成m个bit，所以基站发送数据的速率提高到原来的m倍，相应的，所用带宽也提高到原来的 m 倍 - 扩频通信</dd>
       <dd>直接序列扩频 DSSS-Direct Sequence Spread Spectrum</dd>
       <dd>跳频扩频 FHSS-Frequency Hopping Spread Spectrum</dd>
       <figure>
@@ -133,55 +114,70 @@
         <figcaption>扩频</figcaption>
       </figure>
       <dt>用户识别</dt>
-      <dd>用户分配一个唯一的m bit长度的彼此正交的码片序列-伪随机码，实现了不同用户互不干扰的在同一时间上共享信道</dd>
-      <dd>发送1时，发送自己的码片</dd>
-      <dd>发送0时，发送自己码片的反码</dd>
-      <dd>按照国际惯例，1为+1，0为-1，所以用户的码片为（-1 -1 -1 +1 +1 -1 +1 +1 ）</dd>
+      <dd>用户分配一个唯一的m bit长度的彼此 <strong>正交</strong> 的码片序列-伪随机码，实现了不同用户互不干扰的在同一时间上共享信道</dd>
+      <dd>发送 1 时，发送自己的码片</dd>
+      <dd>发送 0 时，发送自己码片的反码</dd>
+      <dd>按照国际惯例，1为+1，0为-1，所以用户码片为（-1 -1 -1 +1 +1 -1 +1 +1 ）</dd>
       <dt>正交向量</dt>
-      <dd>如果向量S和向量T的规格化内积 inner product 为0，则说明向量S和向量T是正交的</dd>
+      <dd>用户码片可以使用向量表示</dd>
+      <dd>如果向量 S 和向量 T 的规格化内积 inner product 为 0，则说明向量S 和向量 T 是正交的</dd>
       <figure>
         <img src="./imgs/p10.png" alt="">
       </figure>
-      <dd>任何一个向量S和它自己的规格化内积都为1</dd>
+      <dd>任何一个向量 S 和它自己的规格化内积都为 1</dd>
       <figure>
         <img src="./imgs/p11.png" alt="">
       </figure>
-      <dd>任何一个向量S和它反码的规格化内积都为-1</dd>
+      <dd>任何一个向量 S 和它反码的规格化内积都为 -1</dd>
       <figure>
         <img src="./imgs/p12.png" alt="">
       </figure>
+      <div class="tips">向量规格化内积的值只能是：-1、0、1</div>
       <div class="demo"> 已知向量S为（-1-1-1+1+1-1+1+1），向量T为（-1-1+1-1+1+1+1-1），判断两者是否正交</div>
-      <dd>二者的规格化内积为0，所以向量S和向量T是正交的</dd>
+      <dd>答：</dd>
+      <dd>二者的规格化内积为 0，所以向量S和向量T是正交的</dd>
       <figure>
         <img src="./imgs/p13.png" alt="">
       </figure>
-      <dd>请自行验证两个向量和自身及自身反码的规格化内积分别是多少</dd>
+      <dd>请自行验证两个向量和自身及自身反码的规格化内积分别是多少</dd><br>
       <div class="demo"> 4个站进行CDMA通信，其码片序列分别是：
-        A：（-1-1-1+1+1-1+1+1） B：（-1-1+1-1+1+1+1-1）
-        C：（-1+1-1+1+1+1-1-1） D：（-1+1-1-1-1-1+1-1）
-        如果收到的码片序列是（-1+1-3+1-1-3+1+1），问：哪个站发送数据了？发送的数据是什么？
+        <br>A：（-1-1-1+1+1-1+1+1） <br>B：（-1-1+1-1+1+1+1-1）
+        <br>C：（-1+1-1+1+1+1-1-1） <br>D：（-1+1-1-1-1-1+1-1）
+        <br>如果收到的码片序列 S 是（-1+1-3+1-1-3+1+1），问：哪个站发送数据了？发送的数据是什么？
       </div>
-      <dd>通信的每个基站都知道其他基站的码片序列</dd>
-      <dd>如果S站要接收T站的数据，用T站的码片序列分别和收到的信号进行规格化内积运算；由于基站的码片序列分别正交，所以内积后，其他站的信号被过滤（为0），只留下T站的信号 - 用户识别</dd>
-      <dd>如果T站发1，则规格化内积为+1</dd>
-      <dd>如果T站发0，则规格化内积为-1</dd>
-      <dd>如果T站不发数据，则规格化内积为0</dd>
-      <!-- <dd>AD发了1；B发了0；C没有发数据</dd> -->
+      <dd>答：</dd>
+      <dd>通信的每个基站都知道其他基站的码片序列 - 通信的前提</dd>
+      <dd>接收端收到的总码片序列 S 是所有发送站信号的线性叠加</dd>
+      <dd>如果 S 站要判断是否接收目标站 X 站的数据，需分别计算接收序列 S 与目标站 X 的规格化内积</dd>
+      <dd>如果为 +1，则 X 站发 1</dd>
+      <dd>如果为 -1，则 X 站发 0</dd>
+      <dd>如果为 0，则 X 站不发数据</dd>
+      <dd>&because; S X A = +1</dd>
+      <dd>&therefore; A 发 1</dd>
+      <dd>&because; S X B = -1</dd>
+      <dd>&therefore; B 发 0</dd>
+      <dd>&because; S X C = 0</dd>
+      <dd>&therefore; C 没有发数据</dd>
+      <dd>&because; S X D = +1</dd>
+      <dd>&therefore; D 发 1</dd>
     </dl>
     <dl>
       <dt>Reading</dt>
-      <dd><a href="https://networkencyclopedia.com/multiplexing/">Multiplexing</a></dd>
-      <dd><a href="https://networkencyclopedia.com/frequency-division-multiple-access-fdma/">Frequency
-          Division Multiple Access (FDMA)</dd>
-      <dd><a href="https://networkencyclopedia.com/code-division-multiple-access-cdma/#google_vignette">Code Division
-          Multiple Access (CDMA)</dd>
-      <dd><a href="https://networkencyclopedia.com/global-system-for-mobile-communications-gsm/">Global
-          System for Mobile Communications (GSM)</dd>
-      <dd><a href="https://networkencyclopedia.com/time-division-multiple-access-tdma/">TDMA - 5G</a></dd>
-      <dd><a href="https://networkencyclopedia.com/simplex-communication/">Simplex Communication</a></dd>
-      <dd><a href="https://networkencyclopedia.com/duplex/">Duplex Communication</a></dd>
-      <dd><a href="https://networkencyclopedia.com/full-duplex/">Full-Duplex: A Guide to Uninterrupted
-          Communication </dd>
+      <ol>
+        <li><a class="link" href="https://networkencyclopedia.com/multiplexing/">Multiplexing</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/frequency-division-multiple-access-fdma/">Frequency
+            Division Multiple Access (FDMA)</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/code-division-multiple-access-cdma/">Code Division
+            Multiple Access (CDMA)</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/global-system-for-mobile-communications-gsm/">Global
+            System for Mobile Communications (GSM)</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/time-division-multiple-access-tdma/">TDMA - 5G</a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/simplex-communication/">Simplex Communication</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/duplex/">Duplex Communication</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/full-duplex/">Full-Duplex: A Guide to Uninterrupted
+            Communication </a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

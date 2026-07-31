@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由样式 active</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>路由样式</h1>
+      <span>&commat;active</span>
+    </header>
+    <dl>
+      <dt>Overview</dt>
+      <dd>使用 &lt;NavLink&gt; 导航时会自动添加激活样式类</dd>
+      <dd>默认类名是 active</dd>
+      <pre>
+a.active{
+  color: #f40;
+}</pre>
+      <dd>使用三元表达式 ?: 定制类名</dd>
+      <dd>isActive 是 &lt;NavLink&gt; 组件内置的、自动注入的参数</dd>
+      <pre>
+&lt;NavLink 
+  to='rank' 
+  className={({ isActive }) => isActive ? 'red' : 'blue'}
+&gt;
+  Rank
+&lt;/NavLink&gt;</pre>
+      <dd>直接使用 &lt;a&gt;，会污染其它 &lt;a&gt;</dd>
+      <dd>建议同时使用全局样式和 module 样式，以便和其它 &lt;a&gt; 区分</dd>
+      <pre><code>&lt;NavLink 
+  className={`nav-item ${styles['nav-item']}`} 
+  to='/about'>test&lt;/NavLink></code></pre>
+      <div class="demo">使用函数混合样式</div>
+      <dd>使用全局样式 nav-item</dd>
+      <dd>定制 module 激活样式 active</dd>
+      <dd>在函数返回中指定：始终保留 nav-item；激活时，使用 module 样式 active</dd>
+      <pre><code>&lt;NavLink 
+  className={({ isActive }) => `nav-item ${isActive ? styles.active : ''}`} 
+  to='/about'>test&lt;/NavLink></code></pre>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

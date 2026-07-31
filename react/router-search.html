@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>查询路由 useSearchParams</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>查询路由</h1>
+      <span>&commat;useSearchParams</span>
+    </header>
+    <dl>
+      <dt>Overview</dt>
+      <dd>查询路由使用?和值对拼接</dd>
+      <dd>查询路由无需事先定义；可以直接使用</dd>
+      <pre><code>&lt;NavLink to='test?id=1010'>test&lt;/NavLink></code></pre>
+      <dd>引入并使用</dd>
+      <pre><code>import { useSearchParams } from "react-router"</code></pre>
+      <dd>使用 useSearchParams 解析/获取查询路由 search 参数</dd>
+      <dd>调用 Hook，返回一个数组（类似 useState）</dd>
+      <pre><code>const [params, setParams] = useSearchParams()</code></pre>
+      <pre><code>id = params.get('id')</code></pre>
+      <dd>searchParams 本质上是一个 URLSearchParams 对象，常用的方法有：
+        <p>get(key): 获取指定 key 的值（字符串）。如果 key 有多个值，只返回第一个</p>
+        <p>getAll(key): 获取指定 key 的所有值（数组），适用于 ?tag=js&tag=react 这种情况</p>
+        <p>has(key): 判断是否存在某个 key，返回布尔值</p>
+        <p>entries(): 遍历所有参数</p>
+      </dd>
+      <div class="demo">什么场景需要使用 setParams() 修改查询路由参数？</div>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
