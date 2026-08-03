@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>填充 Padding</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>填充</h1>
+      <span>&commat;Padding</span>
+    </header>
+    <dl>
+      <dd>为保障透明传输，根据通信方式，可采用：
+        <p>字节填充：面向字节的半双工通信模式的<strong>异步</strong> 传输</p>
+        <p>0bit填充：面向比特的全双工通信模式<strong>同步</strong> 传输链路</p>
+      </dd>
+      <dt>字节填充 Padding</dt>
+      <dd>使用转义符号 0x7D（0111 1101）进行字节填充</dd>
+      <dd>通过开始和结束比特保证传输</dd>
+      <div class="tips">有的资料将字节解释为字符，称异步的传输单位是字符</div>
+      <figure>
+        <img src="./imgs/da.png" alt="">
+        <figcaption>Asynchronous transmission</figcaption>
+      </figure>
+      <dd>情况1：出现帧定界符 0x7E，将其转变为2个字节：0x7D 和 0x5E</dd>
+      <dd class="txt-center">
+        <span>0x7E</span>
+        <span>→</span>
+        <span>0x7D</span>
+        <span>0x5E</span>
+      </dd>
+      <dd>情况2：出现转义字符 0x7D，将其转变为2个字节：0x7D 和 0x5D</dd>
+      <dd class="txt-center">
+        <span>0x7D</span>
+        <span>→</span>
+        <span>0x7D</span>
+        <span>0x5D</span>
+      </dd>
+      <dd>情况3：其它 ASCII控制字符（&lt;0x20），在其前面加上 0x7D，同时 +20 调整该字符的编码</dd>
+      <dd class="txt-center">
+        <span>0x03</span>
+        <span>→</span>
+        <span>0x7D</span>
+        <span>0x23</span>
+      </dd>
+      <dt>0bit填充 Padding</dt>
+      <dd>使用0比特进行填充</dd>
+      <dd>需要时钟信号保持同步</dd>
+      <dd>传输不间断</dd>
+      <dd>发端：每发现连续5个1，就填充1个0</dd>
+      <dd>收端：每发现连续5个1，就删除其后面的0</dd>
+      <dd>填充前</dd>
+      <dd class="txt-indent">
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>0</span>
+        <span>1</span>
+        <span></span>
+      </dd>
+      <dd>填充后</dd>
+      <dd class="txt-indent">
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span class="warn">0</span>
+        <span>1</span>
+        <span>0</span>
+        <span>0</span>
+        <span>1</span>
+      </dd>
+      <div class="tips">比特被分组为块，也有资料称同步传输的单位是帧</div>
+      <figure>
+        <img src="./imgs/ds.png" alt="">
+        <figcaption>Synchronous transmission</figcaption>
+      </figure>
+      <div class="demo">p112-3-09 一个PPP帧的数据部分是 7D 5E FE 27 7D 5D 7D 5D 65 7D
+        5E。真正的数据是什么？</div>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>还原填充字节</p>
+        <p>7D 5E → 7E</p>
+        <p>7D 5D → 7D</p>
+        <p>7D 5D → 7D</p>
+        <p>7D 5E → 7E</p>
+        <p>最后数据：7E FE 27 7D 7D 7E</p>
+      </div>
+      <div class="demo">p112-3-10 PPP协议使用同步传输传送比特
+        0110111111111100，经过0比特填充后，变成什么比特串？如收到的PPP帧的数据部分是 0001110111110111110110，删除发送端插入的0比特变成什么比特串？</div>
+      <dd>答：</dd>
+      <dd>1. 发送端：每发5个1，插入1个0</dd>
+      <div>填充前</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>0</span>
+      </div>
+      <div>填充后</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span class="warn">0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span class="warn">0</span>
+        <span>0</span>
+        <span>0</span>
+      </div>
+      <div>2. 接收端：每收5个1，就删除后面的0</div>
+      <div>接收到的填充数据</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>0</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+      <div>去除填充后的还原数据</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>0</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>PPP的特点</li>
+        <li>透明传输的措施和特点</li>
+        <li>PPP协议的状态</li>
+      </ol>
+      <dt>Homework</dt>
+      <ol>
+        <li>PPP帧实现透明传输的措施有（）和（）。</li>
+      </ol>
+      <dt>Reading</dt>
+      <ol>
+        <li><a class="link"
+            href="https://www.geeksforgeeks.org/computer-networks/point-to-point-protocol-ppp-frame-format/">Point-to-Point
+            Protocol (PPP) Frame Format</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/point-to-point-protocol-ppp/">Point-to-Point Protocol
+            (PPP)</a>
+        </li>
+        <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc1661.html">RFC 1661 </a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/transmission-modes-in-data-transmission/">Transmission
+            Modes in
+            Data Transmission</a>
+        </li>
+        <li><a class="link" href="https://gcore.com/learning/data-transmission-guide-everything-you-need-to-know">What
+            is data
+            transmission | Everything you need to know about it</a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/asynchronous-transmission/">Asynchronous
+            Transmission</a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/synchronous-transmission/">Synchronous
+            Transmission</a>
+        </li>
+        <li><a class="link" href="https://animalia-life.club/qa/pictures/point-to-point-network">Point To Point
+            Network</a>
+        </li>
+        <li><a class="link" href="https://www.geeksforgeeks.org/computer-networks/ppp-full-form/">PPP Full Form</a>
+        </li>
+        <li><a class="link"
+            href="https://www.bilibili.com/video/BV1HD4y1B7UH/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">深入浅出计算机网络
+            - 3.3 点对点协议PPP</a>
+        </li>
+        <li><a class="link" href="https://blog.csdn.net/qingwangheni/article/details/135395231">PPP & PPPoE & L2TP &
+            PPTP 一文全介绍 <span class="iconfont icon-videocam"></span></a>
+        </li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>载波监听多点接入/冲突检测 CSMA/CD</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+  <style>
+    .csma {
+      width: 600px;
+      height: 50px;
+      background-image: url(./imgs/csma1.png);
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0 auto;
+    }
+
+    .p1 {
+      background-position: 0 -90px;
+    }
+
+    .p2 {
+      background-position: 0 -186px;
+    }
+
+    .p3 {
+      background-position: 0 -280px;
+    }
+
+    .p4 {
+      background-position: 0 -375px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>载波监听多点接入/冲突检测</h1>
+      <span>&commat;CSMA/CD</span>
+    </header>
+    <img src="./imgs/linkLayer1/幻灯片25.JPG" alt="">
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd>CSMA/CD - Carrier Sense Multiple Access/Collision Detect</dd>
+      <dd>载波监听多点接入/冲突检测</dd>
+      <dd>使用于半双工通信网络 - 不能同时发送数据</dd>
+      <dd>多点接入
+        <p>多个用户可以接入</p>
+        <p>随机接入</p>
+      </dd>
+      <dd>载波监听
+        <p>发前和发中，<strong>始终</strong>监听载波电压变化</p>
+        <p>避免发生冲突</p>
+      </dd>
+      <dd>冲突检测
+        <p>也称碰撞检测</p>
+        <p>停发</p>
+        <p>随机再发</p>
+      </dd>
+      <dt>时延 Delay</dt>
+      <dd>数据的发送和处理等环节不是一蹴而就的，都需要时间</dd>
+      <dd>因此带来的时延对信道的影响非常关键</dd>
+      <table>
+        <caption>时延 Delay</caption>
+        <tbody>
+          <tr>
+            <td>发送时延</td>
+            <td>数据发送需要的时间</td>
+          </tr>
+          <tr>
+            <td>传播时延</td>
+            <td>数据传输到对端需要的时间</td>
+          </tr>
+          <tr>
+            <td>排队时延</td>
+            <td>数据缓冲等待处理的时间</td>
+          </tr>
+          <tr>
+            <td>处理时延</td>
+            <td>处理数据需要的时间</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>数据传播到对端的时间 – 端到端时延 τ</p>
+        <p>往返时间 2τ</p>
+      </div>
+      <div class="demo"> 电磁波在 1Km 的电缆中的传播时延是 5μs。</div>
+      <div class="txt-indent">
+        <p>A、B相距 1Km</p>
+        <p>使用同轴电缆链接</p>
+      </div>
+      <dt>过程 Procedure</dt>
+      <dd>先听再发、边听边发
+        <p>主机发送数据时，为了避免冲突，必须要监听总线上的电压变化</p>
+        <p>发完了，就不听了</p>
+        <p><span class="iconfont icon-help"></span>如果没有检测到电压变化，是不是就以为着没有用户使用信道，不会发生碰撞？</p>
+      </dd>
+      <dd>冲突停止、延迟再发
+        <p>如果达到一定阈值的时，就可以判断有站在发生数据，应向总线上发一串阻塞信号，用以通知总线上通信的对方站点（强化阻塞）</p>
+        <p>同时停止发送数据，等待信道空闲时再次发送</p>
+        <p>最多经过2倍端到端时延2τ就可以确定是否有碰撞发生，即：如果发送完数据后，经过 2τ 还没有检测到碰撞，就可以认为数据发送成功</p>
+        <p>2τ 也叫<strong>争用期</strong>、<strong>冲突窗口</strong>、<strong>碰撞窗口</strong></p>
+      </dd>
+      <dt>碰撞分析 Analyze</dt>
+      <dd>假设端到端的时延为 τ</dd>
+      <dd>A发送数据后，经过 τ 才能传到对端的B</dd>
+      <dd>A发前侦听信道空闲，开始发送数据</dd>
+      <div class="csma p0"></div>
+      <dd>在A发送的数据到达B前，B侦听信道也为空闲，B也开始发送数据</dd>
+      <div class="csma p1"></div>
+      <dd>双方在信道上的数据必然会在某个时刻发生碰撞</dd>
+      <dd>在碰撞信号传输到对端之前，AB都不知道发生了碰撞</dd>
+      <div class="csma p2"></div>
+      <dd>碰撞信号到达B</dd>
+      <dd>B检测到碰撞，立即停止发送数据</dd>
+      <div class="csma p3"></div>
+      <dd>碰撞信号到达A</dd>
+      <dd>A检测到碰撞，立即停止发送数据</dd>
+      <div class="csma p4"></div>
+      <dd>A经过2τ，才知道发生了碰撞</dd>
+      <dd>结论：</dd>
+      <dd>用户发送数据后，<strong>最多</strong>经过<strong>2倍的端到端时延 2τ</strong> 就知道是否发送了碰撞</dd>
+      <dd>发送方必须在发送过程中<strong>持续监听/发送</strong>至少 2τ，才可能检测到最晚发生的碰撞</dd>
+      <dd>用户必须能够在发送完整个帧之前，就应该检测到是否发生了冲突</dd>
+      <dd>帧的发送时间 ≥ 2τ 是 CSMA/CD 正常工作的前提条件</dd>
+      <dt>最短帧长 Minimum length</dt>
+      <dd>最大网络跨度：早期 <strong>以太网标准（10BASE5）</strong> 规定，网络两端最远距离为 2500m</dd>
+      <dd>最多中继器数：允许使用4个中继器来扩展网络 - 物理层拓展网络</dd>
+      <dd>信号传播速度：铜缆中大约为 2×10<sup>8</sup> m/s</dd>
+      <dd>往返时延 RTT - Round-Trip Time：经过详细计算，考虑电缆长度、中继器延迟等，信号从一端传到另一端再返回的最长时间被确定为 51.2μs</dd>
+      <dd>端到端时延必须小于争用期的一半：51.2μs/2 = 25.6μs</dd>
+      <dd>&therefore; 最小帧长 = 数据速率 × 争用期
+        <br>= 数据速率 × 发送时间
+        <br>= 10 × 10<sup>6</sup> bps × 51.2 × 10<sup>-6</sup> s
+        <br>= 512 bits
+        <br>= 64 Bytes
+      </dd>
+      <dd>帧长不足应通过填充实现</dd>
+      <dd>避免数据帧太短导致发送时间不足引起误判</dd>
+      <dd>抛去帧的地址、校验和类型这些开销，数据部分至少46 Bytes</dd>
+      <table>
+        <caption>最短帧</caption>
+        <tbody>
+          <tr>
+            <td>Destination MAC</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>Source MAC</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Data</td>
+            <td>>=46</td>
+          </tr>
+          <tr>
+            <td>FCS</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo"> 短帧引起的误判 - 发完只需1.5τ。</div>
+      <div class="txt-indent">核心：在碰撞信号返回到A时，A已经发完了，不再监听信道，所以不知道发生了碰撞</div>
+      <table>
+        <caption>短帧引起的误判</caption>
+        <tr>
+          <td>t=0</td>
+          <td>A开始发送数据</td>
+        </tr>
+        <tr>
+          <td>t=t'</td>
+          <td>B检测为空；发送数据；发送碰撞</td>
+        </tr>
+        <tr>
+          <td>t=τ</td>
+          <td>碰撞信号向A传播</td>
+        </tr>
+        <tr>
+          <td>t=1.5τ</td>
+          <td>A发完数据；停止监听</td>
+        </tr>
+        <tr>
+          <td>t=2τ</td>
+          <td>碰撞信号到达A；但A无法知道</td>
+        </tr>
+      </table>
+      <div class="tips">
+        高速以太网（如千兆及以上）通常采用全双工交换式连接，不再使用 CSMA/CD，因此该机制主要用于早期共享介质网络
+      </div>
+      <div class="demo"> p113-3-20 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbps。信号在网络上的传播速率为
+        200000
+        km/s。求能够使用此协议的最短帧长。</div>
+      <div class="txt-indent">
+        <p>τ = 1Km / 200000 Km/s = 5*10<sup>-6</sup>s = 5μs</p>
+        <p>2τ = 10μs</p>
+        <p>最短帧长 = 2τ* 1Gbps = 10*10<sup>-6</sup>s*1*10<sup>9</sup>bps=10*10<sup>3</sup>bits</p>
+        <p>= 10000 bits</p>
+        <p>= 10000/8 Bytes</p>
+        <p>= 1250 Bytes</p>
+      </div>
+    </dl>
+    <h2>重传时机 Wait</h2>
+    <dl>
+      <dd>发送检测到碰撞会立即停止发送</dd>
+      <dd>随机等待一定时间后再择机发送</dd>
+      <dt>措施 Solution</dt>
+      <dd>采用截断二进制指数退避实现
+        <p>Truncated Binary Exponential Backoff</p>
+      </dd>
+      <dd>每个发生冲突的用户随机分配一个退避时间</dd>
+      <dd>获得最小退避时间的站优先发送</dd>
+      <dt>约定 Convention</dt>
+      <dd>基本退避时间 2τ</dd>
+      <dd>使用bit作为争用期的单位
+        <p>争用期是 512bits；表示争用期为发送 512bits 的时间 - 比特时间</p>
+      </dd>
+      <dd><strong>退后重传时间 = r * 争用期</strong>
+        <p>r 从整数集合 [0, 1, 2, ..., 2<sup>k</sup>-1] 中随机获取</p>
+        <p>k 由重传次数获取 k = min[重传次数， 10]</p>
+      </dd>
+      <div class="demo">退避时间计算示例</div>
+      <div class="txt-indent">
+        <div>第<strong>1</strong>次重传：
+          <p>k = min[1， 10] = 1</p>
+          <p>r = [0， 2<sup>1</sup>-1] = [0, 1]</p>
+        </div>
+        <div>第<strong>2</strong>次重传：
+          <p>k = min[2， 10] = 2</p>
+          <p>r = [0， 2<sup>2</sup>-1] = [0, 1, 2, 3]</p>
+        </div>
+        <div>第<strong>3</strong>次重传：
+          <p>k = min[3， 10] = 3</p>
+          <p>r = [0， 2<sup>3</sup>-1] = [0, 1, 2, 3, 4, 5, 6, 7]</p>
+        </div>
+        <div>超过<strong>10</strong>后，k = 10</div>
+      </div>
+      <dt>比特时间 Bit Time</dt>
+      <dd>发送一个比特所需的时间</dd>
+      <dd>与数据传输速率密切相关</dd>
+      <dd>是衡量信号变化速度的基本时间单位</dd>
+      <dd>常用于网络和通信中描述帧的持续时间、冲突检测窗口等</dd>
+      <dd>数据速率为 1 Mbps，则每个比特时间为 1 μs</dd>
+      <dd>数据速率是 1 Gbps，则每个比特时间为 1 ns</dd>
+      <div class="demo"> p113-3-22 假定在使用 CSMA/CD 协议的 10 Mbps
+        以太网中，某个站在发送数据时检测到碰撞，执行退避算法时选择随机数
+        r=100。试问这个站需要等待多长时间后才能再次发送数据？如果是 100 比特时间，以太网能运行吗？</div>
+      <div class="txt-indent">
+        <p>对于 10Mbps 的以太网，争用期 2τ = 512bits/10Mbps = 51.2μs</p>
+        <p>退避时间为 r*2τ = 100 * 51.2μs = 5.12ms</p>
+        <p>如果是100比特时间，则实际退避时间为：100bits/10Mbps = 10μs &lt; 51.2μs → 以太网无法运行</p>
+      </div>
+      <dt>帧的最小间隔时间</dt>
+      <dd>96比特时间</dd>
+      <dd>使得接收方处理数据以便做好接受下一帧的准备</dd>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ul>
+        <li>局域网</li>
+        <li>载波侦听多点接入/冲突检测</li>
+        <li>端到端时延 τ</li>
+        <li>争用期 2τ</li>
+        <li>比特时间</li>
+        <li>退后重传时间 r*2τ</li>
+        <li>最短帧长</li>
+        <li>帧的最小间隔时间</li>
+      </ul>
+      <dt>Homework</dt>
+      <ol>
+        <li>发前监听信道为空闲，则发送数据不会产生冲突（）。</li>
+        <li>帧长小于64字节的帧都是无效帧（）。</li>
+        <li>发送数据时，如果检测到碰撞，应立即停止发送；直到信道空闲时才可以再次发送数据（）。</li>
+        <li>翻译
+          <p>When a device wants to transmit a frame, it checks to see if the segment is free. If the segment is not
+            free, the device waits a random amount of time before retransmitting. If the network segment is free and two
+            devices send frames at the same time, their signals collide. When the collision is detected, they both stop
+            and wait a random amount of time before retransmitting.</p>
+        </li>
+      </ol>
+      <dt>Reading</dt>
+      <!-- <li><a href=""></a></li> -->
+      <ol>
+        <li><a class="link" href="https://networkencyclopedia.com/carrier-signal/">Carrier Signal
+          </a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/local-area-network-lan/">Local Area Network (LAN)<span
+              class="iconfont icon-share"></span></a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/wide-area-network-wan/">Wide Area Network (WAN):
+            Bridging Distances
+            in the Digital World
+          </a></li>
+        <li><a class="link" href="https://www.networkacademy.io/ccna/ethernet/collision-domains">Collision Domains
+          </a></li>
+        <li><a class="link"
+            href="https://networklessons.com/cisco/ccna-routing-switching-icnd1-100-105/collision-domains">Collision
+            Domains
+          </a></li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

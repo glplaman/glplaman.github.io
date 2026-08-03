@@ -4,17 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>点对点协议 PPP</title>
+  <title>点对点信道 PPP</title>
   <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
-    .txt-center {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
     .bg {
       background-color: #ff4c00;
       color: #fff;
@@ -27,7 +20,7 @@
 <body>
   <div class="w">
     <header>
-      <h1>点对点协议</h1>
+      <h1>点对点信道</h1>
       <span>&commat;PPP</span>
     </header>
     <dl>
@@ -39,8 +32,8 @@
         <p>PPP</p>
         <p>PPPoE - PPP over Ethernet</p>
       </dd>
-      <dd>广域网WAN之间的专有链路</dd>
-      <dd>VPN之间的通信链路</dd>
+      <dd>广域网 WAN 之间的专有链路</dd>
+      <dd>虚拟私有网络 VPN 之间的通信链路</dd>
       <figure>
         <img src="./imgs/ppp1.png" alt="">
         <figcaption>接入互联网</figcaption>
@@ -52,7 +45,7 @@
       <div class="tips">RADIUS - Remote Authentication Dial In User Service</div>
       <dt>协议特点 Feature</dt>
       <dd>简单
-        <p>发的帧经过CRC校验正确，则接受；反之丢弃</p>
+        <p>发的帧经过 CRC 校验，正确，则接受；反之丢弃</p>
         <p>不需要纠错：由传输层实现</p>
         <p>不需要流量控制：由传输层实现</p>
         <p>不需要帧序号</p>
@@ -60,7 +53,7 @@
         <p>仅支持全双工链路，不支持单工和半双工链路</p>
       </dd>
       <dd>封装成帧
-        <p>便于从比特流中找到帧的开发和结束</p>
+        <p>便于从比特流中找到帧的开始和结束</p>
       </dd>
       <dd>透明
         <p>发什么传什么</p>
@@ -77,238 +70,51 @@
         <p>最大传输单元 MTU - 数据部分</p>
         <p>网络地址协商</p>
         <p>数据压缩协商</p>
-        <p>多应用于广域网 WAN</p>
       </dd>
       <dt>协议组成 Components </dt>
       <dd>封帧</dd>
       <dd>链路控制协议 LCP
-        <p>LCP-link control protocol</p>
+        <p>LCP - Link Control Protocol</p>
         <p>链路的建立配置和测试</p>
       </dd>
       <dd>网络控制协议 NCP
-        <p>network control protocol</p>
+        <p>NCP - Network Control Protocol</p>
       </dd>
-      <dt>帧格式 Format</dt>
+    </dl>
+    <h2>帧格式 Format</h2>
+    <dl>
+      <dd>头部 Header</dd>
+      <dd>数据 Data</dd>
+      <dd>尾部 Tail</dd>
       <figure>
         <img src="./imgs/ppp0.png" alt="">
         <figcaption>帧格式</fi>
       </figure>
-      <dd>F字段：
-        <p>7E；0111 1110</p>
-        <p>标记一个PPP帧的开始和结束</p>
-        <P>PPP帧界定符</P>
-      </dd>
-      <dd>A字段：
-        <p>FF；11111111</p>
-        <p>没有指定；不携带信息</p>
-      </dd>
-      <dd>C字段：
-        <p>03；0000 0011</p>
-        <p>没有指定；不携带信息</p>
-      </dd>
-      <dd>协议字段：数据部分向上交付给哪个协议处理
+      <dt>字段 F</dt>
+      <dd>大小：1 Byte</dd>
+      <dd>值：7E；0111 1110</dd>
+      <dd>说明：PPP帧界定符；标记一个PPP帧的开始和结束</dd>
+      <dt>字段 A</dt>
+      <dd>大小：1 Byte</dd>
+      <dd>值：FF；11111111</dd>
+      <dd>说明：没有指定；不携带信息</dd>
+      <dt>字段 C</dt>
+      <dd>大小：1 Byte</dd>
+      <dd>值：03；0000 0011</dd>
+      <dd>说明：没有指定；不携带信息</dd>
+      <dt>协议字段 Protocol</dt>
+      <dd>大小：1 Byte</dd>
+      <dd>值：
         <p>0x0021 IP数据报</p>
         <p>0xC021 链路控制协议</p>
         <p>0x8021 网络层控制数据</p>
       </dd>
-      <dd>FCS：
-        <p>Frame Check Sequence</p>
-        <p>帧校验序列</p>
-        <p>包括：地址字段、控制字段、协议字段以及信息/数据字段</p>
-      </dd>
-      <dt>字节填充 Padding</dt>
-      <dd>使用转义符号 0x7D（0111 1101）进行字节填充，以保障透明传输</dd>
-      <dd>适用于面向字节 <strong>异步</strong> 传输链路</dd>
-      <dd>通过开始和结束比特保证传输</dd>
-      <dd>半双工通信模式</dd>
-      <div class="tips">有的资料将字节解释为字符，称异步的传输单位是字符</div>
-      <figure>
-        <img src="./imgs/da.png" alt="">
-        <figcaption>Asynchronous transmission</figcaption>
-      </figure>
-      <dd>情况1：出现帧定界符 0x7E，将其转变为2个字节：0x7D 和 0x5E</dd>
-      <table>
-        <tr>
-          <td>0x7E</td>
-          <td>→</td>
-          <td>0x7D</td>
-          <td>0x5E</td>
-        </tr>
-      </table>
-      <dd>情况2：出现转义字符 0x7D，将其转变为2个字节：0x7D 和 0x5D</dd>
-      <table>
-        <tr>
-          <td>0x7D</td>
-          <td>→</td>
-          <td>0x7D</td>
-          <td>0x5D</td>
-        </tr>
-      </table>
-      <dd>情况3：其它 ASCII控制字符（&lt;0x20），在其前面加上 0x7D，同时调整该字符的编码</dd>
-      <table>
-        <tr>
-          <td>0x03</td>
-          <td>→</td>
-          <td>0x7D</td>
-          <td>0x23</td>
-        </tr>
-      </table>
-      <dt>0bit填充 Padding</dt>
-      <dd>使用0比特进行填充，以保障透明传输</dd>
-      <dd>适用于面向比特的 <strong>同步</strong> 传输链路</dd>
-      <dd>需要时钟信号保持同步</dd>
-      <dd>传输不间断</dd>
-      <dd>全双工通信模式</dd>
-      <div class="tips">比特被分组为块，所以也有的资料称同步传输的单位是帧</div>
-      <figure>
-        <img src="./imgs/ds.png" alt="">
-        <figcaption>Synchronous transmission</figcaption>
-      </figure>
-      <dd>发端：每发现连续5个1，就填充1个0</dd>
-      <dd>收端：每发现连续5个1，就删除其后面的0</dd>
-      <table>
-        <caption>0bit填充</caption>
-        <tr>
-          <td></td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>0</td>
-          <td>1</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Padding</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td class="warn">0</td>
-          <td>1</td>
-          <td>0</td>
-          <td>0</td>
-          <td>1</td>
-        </tr>
-      </table>
-      <div class="demo">p112-3-09 一个PPP帧的数据部分是 7D 5E FE 27 7D 5D 7D 5D 65 7D
-        5E。真正的数据是什么？</div>
-      <div class="txt-indent">
-        <p>还原填充字节</p>
-        <p>7D 5E → 7E</p>
-        <p>7D 5D → 7D</p>
-        <p>7D 5D → 7D</p>
-        <p>7D 5E → 7E</p>
-        <p>最后数据：7E FE 27 7D 7D 7E</p>
-      </div>
-      <div class="demo">p112-3-10 PPP协议使用同步传输传送比特
-        0110111111111100，经过0比特填充后，变成什么比特串？如收到的PPP帧的数据部分是 0001110111110111110110，删除发送端插入的0比特变成什么比特串？</div>
-      <div class="txt-indent">发送端：每个5个1，插入1个0</div>
-      <table>
-        <tr>
-          <td></td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>0</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Padding</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td class="warn">0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td class="warn">0</td>
-          <td>0</td>
-          <td>0</td>
-        </tr>
-      </table>
-      <div class="txt-indent">接收端：删除每5个1后的0</div>
-      <table>
-        <tr>
-          <td>Padding</td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>0</td>
-          <td>0</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>0</td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
+      <dd>说明：数据部分向上交付给哪个协议处理</dd>
+      <dt>数据部分 Data</dt>
+      <dd>说明：大小不超过 1500 Bytes</dd>
+      <dt>帧校验序列 FCS</dt>
+      <dd>大小：2 Bytes</dd>
+      <dd>说明：地址字段、控制字段、协议字段以及信息/数据字段</dd>
     </dl>
     <h2>状态 State</h2>
     <dl>
@@ -422,47 +228,6 @@
       <dd>On transmission, the Information field MAY be padded with an arbitrary number of octets up to the MRU. It is
         the
         responsibility of each protocol to distinguish padding octets from real information.</dd>
-    </dl>
-    <h2>Summary & Homework</h2>
-    <dl>
-      <dt>Summary</dt>
-      <ol>
-        <li>PPP的特点</li>
-        <li>透明传输的措施和特点</li>
-        <li>PPP协议的状态</li>
-      </ol>
-      <dt>Homework</dt>
-      <ol>
-        <li>PPP帧实现透明传输的措施有（）和（）。</li>
-      </ol>
-      <dt>Reading</dt>
-      <dd><a
-          href="https://www.geeksforgeeks.org/computer-networks/point-to-point-protocol-ppp-frame-format/">Point-to-Point
-          Protocol (PPP) Frame Format</a></dd>
-      <dd><a href="https://networkencyclopedia.com/point-to-point-protocol-ppp/">Point-to-Point Protocol (PPP)</a></dd>
-      <dd><a href="https://www.rfc-editor.org/rfc/rfc1661.html">RFC 1661 </a>
-      </dd>
-      <dd><a href="https://networkencyclopedia.com/transmission-modes-in-data-transmission/">Transmission Modes in
-          Data Transmission</a>
-      </dd>
-      <dd><a href="https://gcore.com/learning/data-transmission-guide-everything-you-need-to-know">What is data
-          transmission | Everything you need to know about it</a>
-      </dd>
-      <dd><a href="https://networkencyclopedia.com/asynchronous-transmission/">Asynchronous Transmission</a>
-      </dd>
-      <dd><a href="https://networkencyclopedia.com/synchronous-transmission/">Synchronous Transmission</a>
-      </dd>
-      <dd><a href="https://animalia-life.club/qa/pictures/point-to-point-network">Point To Point Network</a>
-      </dd>
-      <dd><a href="https://www.geeksforgeeks.org/computer-networks/ppp-full-form/">PPP Full Form</a>
-      </dd>
-      <dd><a
-          href="https://www.bilibili.com/video/BV1HD4y1B7UH/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">深入浅出计算机网络
-          - 3.3 点对点协议PPP</a>
-      </dd>
-      <dd><a href="https://blog.csdn.net/qingwangheni/article/details/135395231">PPP & PPPoE & L2TP & PPTP 一文全介绍 <span
-            class="iconfont icon-videocam"></span></a>
-      </dd>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

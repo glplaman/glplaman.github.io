@@ -20,7 +20,7 @@
         <p>共享式交换机已淘汰</p>
         <p>如无特别说明，交换机都是指交换式集线器 - <strong>以太网交换机</strong></p>
       </div>
-      <dt>概述</dt>
+      <dt>概述 Overview</dt>
       <dd>交换机是工作在OSI模型第二层 - 数据链路层；也叫 L2 Switch</dd>
       <dd>多端口
         <p>每个端口都与一个主机或另外一个交换机直接相连</p>
@@ -30,36 +30,43 @@
       <dd>全双工通信</dd>
       <dd>具备缓存功能</dd>
       <dd>信道利用率提高</dd>
-      <dt>工作原理</dt>
+      <dt>工作原理 Principal</dt>
       <dd>能够根据MAC地址进行数据帧的转发决策</dd>
-      <dd>交换机内部维护着一张MAC地址表，通过学习网络上各个设备的MAC地址及其对应的端口来转发数据帧</dd>
+      <dd>交换机内部维护着一张 <strong>MAC地址表</strong>，通过学习网络上各个设备的MAC地址及其对应的端口来转发数据帧</dd>
       <dd>当交换机收到一个数据帧时，它会检查帧中的目的MAC地址，并将数据帧转发至正确的端口</dd>
       <dd>交换机提供独立的冲突域，每个端口都是一个单独的冲突域，减少了数据包冲突的可能性</dd>
     </dl>
     <h2>分类 Classification</h2>
     <dl>
-      <dt>按交换方式</dt>
+      <dt>按交换方式 Mode</dt>
       <dd>存储转发 store and forward
-        <p>接收/缓存完整的数据帧，校验（CRC）、过滤碎片，最后转发。转发是由专门的ASIC交换芯片实现</p>
+        <p>接收/缓存完整的数据帧，校验（CRC）、过滤碎片，最后转发</p>
+        <p>转发是由专门的ASIC交换芯片实现</p>
         <p>优点：提供差错校验和速率不一致的非对称交换</p>
         <p>缺点：时延长</p>
       </dd>
       <dd>直通式 cut-through
-        <p>不做缓存。不做校验，收到即转发，可能有坏帧；和存储转发的特点刚好相反</p>
+        <p>不做缓存</p>
+        <p>不做校验，收到即转发，可能有坏帧</p>
+        <p>和存储转发的特点刚好相反</p>
       </dd>
       <dd>碎片过滤式 fragment free
-        <p>融合了以上2种优势。转发前先检验数据帧的长度是否够64个字节；如果大于或等于就转发；如果不够，就作为碎片丢弃；（以太网帧 >= 64字节）</p>
-        <p>目前硬件的转发速度够快，基本可以忽略时延的影响。路由通常由软件实现</p>
+        <p>融合了以上2种优势</p>
+        <p>转发前先检验数据帧的长度是否够64个字节；如果大于或等于就转发；如果不够，就作为碎片丢弃；（以太网帧 >= 64字节）</p>
+        <p>目前硬件的转发速度够快，基本可以忽略时延的影响</p>
+        <!-- <p>路由通常由软件实现</p> -->
       </dd>
-      <dt>交换协议</dt>
+      <dt>交换协议 Protocal</dt>
       <dd>二层交换机
-        <p>链路层交换；如无特别说明，默认都是指二层交换机</p>
+        <p>链路层交换</p>
+        <p>如无特别说明，默认都是指二层交换机</p>
       </dd>
       <dd>三层交换机
-        <p>集成了路由功能；路由器默认都是三层</p>
+        <p>集成了路由功能</p>
+        <p>路由器默认都是三层</p>
       </dd>
       <dd>多层交换机</dd>
-      <dt>按交换结构</dt>
+      <dt>按交换结构 Structure</dt>
       <dd>固定端口交换机
         <p>接入交换机一般都是固定端口的交换机</p>
         <p>通常有24口、48口</p>
@@ -67,7 +74,7 @@
         <p>48口：48个电（接电脑或终端或用户）的下行端口；还有4个光的上行端口</p>
       </dd>
       <dd>可扩展端口交换机</dd>
-      <dt>按部署层次/架构</dt>
+      <dt>按部署层次/架构 Deployment</dt>
       <dd>核心交换机
         <p>三层架构：接入交换机 → 汇聚交换机 → 核心交换机 → 出口</p>
         <p>通常是3层交换机 - 具备路由功能</p>
@@ -96,19 +103,20 @@
         <p>SFP28: 支持 25 Gbps 速率</p>
       </dd>
       <dt>传输模式 Transmission Mode</dt>
-      <dd>半双工
-        <p>较少应用</p>
-      </dd>
       <dd>全双工
         <p>更常见</p>
       </dd>
+      <dd>半双工
+        <p>较少应用</p>
+      </dd>
       <dt>交换容量 Switching Capacity</dt>
       <dd>交换机背板总线所能提供的最大数据吞吐能力，单位通常是 Gbps 或 Tbps</dd>
-      <dd>端口数*端口速率*2 - 全双工通信，每个端口可以同时收发</dd>
+      <dd>全双工通信，每个端口可以同时收发</dd>
+      <div class="txt-center">交换容量 = 端口数 * 端口速率 * 2</div>
       <div class="demo"> 交换机容量</div>
       <div class="txt-indent">
-        <div>48个千兆电+4个千兆光的交换机容量
-          <p>= ( 48*1G+4*1G )*2</p>
+        <div>48个千兆电 + 4个千兆光的交换机容量
+          <p>= ( 48*1G + 4*1G )*2</p>
           <p>= 104Gbps</p>
         </div>
       </div>
@@ -129,286 +137,6 @@
         <p>= 1000 Mbps / (84 × 8) bit</p>
         <p>≈ 1488095 pps ≈ 1.488 Mpps</p>
       </div>
-    </dl>
-    <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
-    <dl>
-      <dd>交换机通过维护一个MAC地址表/转发表来实现链路层数据帧的通信</dd>
-      <dd>交换机通过学习数据帧的源MAC地址来建立MAC地址表 - 基于源MAC帧</dd>
-      <dt>MAC table</dt>
-      <dd>内容：
-        <p>进入交换机的数据帧的源地址和进入的端口号，所在Vlan及有效时间</p>
-        <p>哪个端口 port 连着谁 MAC</p>
-        <p>谁 MAC 从哪个端口进来</p>
-      </dd>
-      <dd>容量
-        <p>MAC表条目的大小</p>
-        <p>1K、2k、4k</p>
-      </dd>
-      <table>
-        <caption>交换机的MAC地址表</caption>
-        <tbody>
-          <tr>
-            <td>MAC</td>
-            <td>Port</td>
-            <td>Timer</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-        </tbody>
-      </table>
-      <figure>
-        <img src="./imgs/l2.png" alt="">
-        <figcaption>CLI 查看交换机的MAC表</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/l3.png" alt="">
-        <figcaption>监视工具查看交换机的MAC表</figcaption>
-      </figure>
-      <dt>Procedure</dt>
-      <div>1. 登记 Registration</div>
-      <dd>查找表中是否有与接收帧的源MAC地址匹配的项目：
-        <p>如果有，则更新</p>
-        <p>如果没有，则增加</p>
-      </dd>
-      <div>2. 转发 Forwarding</div>
-      <dd>是否是广播帧：
-        <p>如果是，全端口转发</p>
-        <p>如果不是，则查找表中是否有与接收帧的目的MAC地址匹配的项目：</p>
-        <p>- 如果没有，则泛洪flooding到其他所有端口上</p>
-        <p>- 如果有，则比较进入的端口与登记的端口：</p>
-        <p>- - 如果不同，则按照登记的端口转发 forwarding</p>
-        <p>- - 如果相同，表明是同一侧的主机，不需要转发，丢弃 disregarding /过滤 filtering 该帧</p>
-      </dd>
-      <div class="demo"> MAC的通信情况</div>
-      <figure>
-        <img src="./imgs/l13.png" alt="">
-        <figcaption>维护过程</figcaption>
-      </figure>
-      <ol>
-        <li>A → D
-          <P>查找交换表，存在</P>
-          <p>按登记端口转发 forwarding；这是最期望的高效转发</p>
-          <p>单播</p>
-          <p>同时登记 A → 1</p>
-        </li>
-        <table>
-          <caption>交换机的MAC地址表</caption>
-          <tbody>
-            <tr>
-              <td>MAC</td>
-              <td>Port</td>
-              <td>Timer</td>
-            </tr>
-            <tr>
-              <td>D</td>
-              <td>4</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>A</td>
-              <td>1</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <li>A → B
-          <P>查找交换表，没有</P>
-          <p>全端口泛洪 flooding 转发；为了确保帧能到达目标</p>
-          <p>广播</p>
-          <p>如果收到回复，则学习了对方的位置；登记 B → 2</p>
-        </li>
-        <table>
-          <caption>交换机的MAC地址表</caption>
-          <tbody>
-            <tr>
-              <td>MAC</td>
-              <td>Port</td>
-              <td>Timer</td>
-            </tr>
-            <tr>
-              <td>D</td>
-              <td>4</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>A</td>
-              <td>1</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>B</td>
-              <td>2</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-        <li>E → A
-          <p>过滤 filtering</p>
-          <p>最不希望的转发</p>
-        </li>
-      </ol>
-      <div class="demo"> p114-3-30
-        某学院的以太网交换机有三个端口分别和学院三个系的以太网相连，另外三个端口分别和电子邮件服务器、万维网服务器以及一个连接互联网的路由器相连。图中的 A、B 和 C 都是 100-Mbit/s
-        以太网交换机。假定所有的链路的速率都是 100 Mbit/s，并且图中的 9 台主机中的任何一台都可以向任何一台服务器或主机通信。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
-      <div class="txt-indent">
-        <p>总吞吐量 = 9台主机的吞吐量 + 2台服务器的吞吐量</p>
-        <p>= 900 Mbit/s + 200 Mbit/s</p>
-        <p>= 1100 Mbit/s</p>
-      </div>
-      <div class="demo"> p114-3-31假定图 上例中的所有链路的速率仍然为 100 Mbit/s，但三个系的以太网交换机都换成 100
-        Mbit/s
-        的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
-      <div class="txt-indent">
-        <p>如果把三台交换机换成集线器，由于集线器是总线型，同一集线器下同一时刻只能一台设备发送数据</p>
-        <p>所以图中9台主机其实只有三台在发送，吞吐量是300M，两个服务器吞吐量是200M，所以吞吐总量是500M</p>
-      </div>
-      <div class="demo"> p114-3-33 初始交换表为空</div>
-      <figure>
-        <img src="./imgs/lan0.png" alt="">
-        <figcaption>拓扑</figcaption>
-      </figure>
-      <table>
-        <caption>交换表</caption>
-        <thead>
-          <tr>
-            <th>通信方向</th>
-            <th>MAC地址表</th>
-            <th>转发端口</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>A → D</td>
-            <td>A 1</td>
-            <td>2 3 4 5 6</td>
-          </tr>
-          <tr>
-            <td>D → A</td>
-            <td>A 1
-              <br>D 4
-            </td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>E → A</td>
-            <td>A 1
-              <br>D 4
-              <br>E 5
-            </td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>A → E</td>
-            <td>A 1
-              <br>D 4
-              <br>E 5
-            </td>
-            <td>5</td>
-          </tr>
-        </tbody>
-      </table>
-    </dl>
-    <h2>常用命令 Command</h2>
-    <dl>
-      <dd>查看交换机的MAC表</dd>
-      <pre>show mac-address-table</pre>
-      <dd>清除交换机的MAC表 - 特权模式</dd>
-      <pre>Switch#clear mac-address-table</pre>
-      <!-- <img src="./imgs/linkLayer2/幻灯片7.JPG" alt=""> -->
-      <!-- <img src="./imgs/linkLayer2/幻灯片8.JPG" alt=""> -->
-      <!-- <img src="./imgs/linkLayer2/幻灯片9.JPG" alt=""> -->
-    </dl>
-    <h2>Security</h2>
-    <dl>
-      <dt>MAC Flapping</dt>
-      <dd>如果同一个MAC地址频繁在不同端口间“出现”，MAC表会不断更新，可能表明存在环路或攻击</dd>
-      <dd>交换机通常会告警或启用STP（生成树协议）来防止环路
-        <p>选举根桥</p>
-        <p>确定根端口</p>
-        <p>选举指定端口</p>
-        <p>阻塞冗余端口这</p>
-      </dd>
-      <figure>
-        <img src="./imgs/span.png" alt="">
-        <figcaption>生成树协议</figcaption>
-      </figure>
-      <dt>MAC Flooding</dt>
-      <dd>攻击者发送大量伪造源MAC地址的帧，填满交换机的MAC表，导致交换机退化为“集线器”模式，对所有流量进行泛洪，从而进行嗅探攻击</dd>
-      <dd>频繁泛洪会导致网络拥塞</dd>
-    </dl>
-    <h2>实操 Drill</h2>
-    <dl>
-      <dt>创建局域网 <a href="./pt/lan.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a></dt>
-      <dd>使用交换机在链路层拓展网络</dd>
-      <ol>
-        <li>搭建拓扑</li>
-        <li>配置各主机IP</li>
-        <li>利用 ping 测试各主机之间链路是否连通</li>
-        <li>分阶段多次查看各交换机的MAC表
-          <p>交换机之间会自动学习 - 链路由红色转为绿色</p>
-          <p>主机之间只有通信的情况下，交换机才会学习</p>
-        </li>
-      </ol>
-      <figure>
-        <img src="./imgs/lan1.png" alt="">
-        <figcaption>拓扑</figcaption>
-      </figure>
-    </dl>
-    <h2>Homework</h2>
-    <dl>
-      <dt>Homework</dt>
-      <ol>
-        <li class="alpha">以太网交换机转发决策时使用的PDU地址是（ ）
-          <div>目的物理地址</div>
-          <div>目的IP地址</div>
-          <div>源物理地址</div>
-          <div>源IP地址</div>
-        </li>
-        <li>选择学校组织结构中某一个或几个分系统，利用交换机和PC模拟搭建局域网
-          <p>部门之间如何互不影响的通信？</p>
-          <p>学校规模达到一定阶段后，如何更好的组织网络？</p>
-        </li>
-        <li>使用脑图或其它工具，画出交换机自学习的流程图</li>
-        <li>用熟悉的算法设计一个数据结构，实现MAC表的维护过程
-          <p>get( MacList, f.srcMac ) ? update( MacList, f.srcMac ) : add( MacList, f.srcMac )</p>
-          <pre>
-// 参考数据结构
-Typedef struct{
-    int desMac;
-    int srcMac;
-    int inPort;
-    int outport;
-} Frame</pre>
-        </li>
-        <li>翻译
-          <p>LAN switches completely resolve the problem with collisions. They operate at layer 2 of the OSI model,
-            meaning that they look at the ethernet header and trailer. Their main advantage is that all their ports can
-            operate in full-duplex, meaning they can simultaneously transmit and receive frames on any given port at any
-            given time. Because of this, the media access algorithm for collision detection (CSMA/CD) is no longer
-            required and is disabled by default. Another big advantage of switches is that they forward frames based on
-            MAC addresses, so any given frame doesn't need to be sent to all ports as hubs do. </p>
-        </li>
-      </ol>
-      <dt>Reading</dt>
-      <ol>
-        <li> <a href="https://networkencyclopedia.com/ethernet-switch/">Ethernet Switch <span
-              class="iconfont icon-share"></span></a></li>
-        <li> <a href="http://units.folder101.com/cisco/sem1/Notes/ch8-switching/switching.htm">Ethernet Switch <span
-              class="iconfont icon-share"></span></a></li>
-        <li> <a href="https://networkencyclopedia.com/layer-2-switch">Layer 2 Switch <span
-              class="iconfont icon-share"></span></a></li>
-        <li> <a
-            href="https://www.bilibili.com/video/BV1S64y1e7bj/?spm_id_from=333.1387.favlist.content.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">Telnet远程登陆交换机
-            <span class="iconfont icon-videocam"></span></a></li>
-      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
