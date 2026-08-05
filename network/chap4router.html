@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路由器 Router</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+  <style>
+    header {
+      background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/09/interprocess-communication-IPC.webp);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>路由器</h1>
+      <span>&commat;Router</span>
+    </header>
+    <dl>
+      <img src="./imgs/router2.png" alt="">
+      <dd>三层设备；实现不同类型网络之间的互联；对应的PDU是IP数据报/分组IP packet</dd>
+      <dd>多输入/多输出端口：从某个输入端口收到分组后，根据路由协议，按照分组目标IP，从某个输出端口转发给下一个路由器；重复直至分组到达目的网络</dd>
+      <dd>使用路由器，真正实现了网际互连</dd>
+      <figure>
+        <img src="./imgs/n0.png" alt="">
+        <img src="./imgs/n11.png" alt="">
+        <figcaption>网际互连</figcaption>
+      </figure>
+      <div class="tips">
+        <p>物理层：Repeater / Hub</p>
+        <p>链路层：Switch / Bridge</p>
+        <p>运输层+：Gateway</p>
+      </div>
+      <dt>逻辑结构 Logical</dt>
+      <dd>路由选择部分
+        <p>根据路由协议，通过定期和相邻路由器交换路由信息来维护路由表</p>
+        <p>由软件实现</p>
+        <p>侧重点：如何设计最优？<span class="iconfont icon-help"></span></p>
+      </dd>
+      <dd>分组转发部分
+        <p>根据路由表进行转发</p>
+        <p>通常使用硬件实现</p>
+        <p>由于线速 line speed 和处理速率的不匹配，导致的数据溢出、分组丢失、通信时延</p>
+        <p>侧重点：如何搜索最优？<span class="iconfont icon-help"></span></p>
+      </dd>
+      <figure>
+        <img src="./imgs/n1.png" alt="">
+        <figcaption>路由器逻辑结构</figcaption>
+      </figure>
+      <dt>路由表 Router Table</dt>
+      <dd>路由表中的每一个条目 Entry 代表一条路由信息，指导路由器如何转发数据包。其包含三个主要部分：</dd>
+      <ol>
+        <li>网络地址 Network：
+          <p>IP地址和子网掩码，采用CIDR记法；如 128.1.2.192/26</p>
+        </li>
+        <li>转发端口 Port：
+          <p>指明数据包应该从路由器的哪个物理或逻辑接口发送出去；如0、1、3</p>
+        </li>
+        <li>下一跳IP地址 Next Hop IP：
+          <p>如果目标网络不是直接连接在本路由器的端口上，那么数据包需要先发送到另一个路由器（即“下一跳”）</p>
+          <p>这个字段就是那个“下一跳”路由器的IP地址</p>
+          <p>如果目标网络是直连的（如前两行所示），则此字段为“–”，表示数据包可以直接交付，无需经过其他路由器</p>
+        </li>
+      </ol>
+      <table style="max-width: 450px;">
+        <caption>路由表</caption>
+        <thead>
+          <tr>
+            <th>network</th>
+            <th>port</th>
+            <th>next hop ip</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>128.1.2.192/26</td>
+            <td>1</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>128.1.2.128/26</td>
+            <td>2</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>128.1.3.64/26</td>
+            <td>3</td>
+            <td>192.168.3.2</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>128.1.2.192/26 通过端口1直接连接，可以直接交付</dd>
+      <dd>128.1.2.128/26 通过端口2直接连接，可以直接交付</dd>
+      <dd>128.1.3.64/26 需要通过端口3转发，并且必须发送到IP地址为 192.168.3.2 的下一个路由器</dd>
+      <dt>路由分类 Type</dt>
+      <dd>静态路由 Static Route
+        <p>手动配置</p>
+        <p>默认路由；特殊的静态路由</p>
+      </dd>
+      <dd>动态路由 DYnamic Route
+        <p>由动态路由协议（如 OSPF、RIP、BGP）自动获取</p>
+      </dd>
+      <dd>直连路由 Directly Connected Route
+        <p>路由器与其直连网络之间的路由条目</p>
+      </dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

@@ -23,19 +23,28 @@
     <dl>
       <img src="../imgs/network/network layer 1/幻灯片2.JPG" alt="">
       <div class="tips">
-        <p>发起ARP → 获取MAC → 封帧 → 转发</p>
+        <p>发起 ARP → 获取 MAC → 封帧 → 转发</p>
       </div>
-      <dd>地址解析协议 ARP – Address Resolution Protocol
-        <p>将 IP 地址解析为以太网 MAC 地址</p>
-      </dd>
+      <dt>概述 Overview</dt>
+      <dd>地址解析协议 ARP – Address Resolution Protocol</dd>
+      <dd>将 IP 地址解析为以太网 MAC 地址</dd>
       <dd>设备通过 ARP 解析到目的 MAC 地址后，将会在自己的 ARP 表中增加 IP 地址到 MAC 地址的映射条目 Entry，用于后续到目的地报文的转发</dd>
       <dd>ARP条目分为动态ARP和静态ARP</dd>
-      <dd>动态ARP：由ARP协议通过ARP报文自动生成和维护；可以被老化；可以被新的ARP报文更新；可以被静态ARP覆盖。当到达老化时间、接口down时将被删除</dd>
-      <dd>静态ARP：可以限制和指定IP地址的设备通信时只使用指定的MAC地址，此时攻击报文无法修改此条目的IP地址和MAC地址的映射关系，从而保护了本设备和指定设备间的正常通信</dd>
-      <dd>一般情况下，ARP 动态执行并自动寻求 IP 地址到以太网 MAC 地址的解析，无需管理员介入</dd>
+      <dd>动态ARP：
+        <p>由ARP协议通过ARP报文自动生成和维护</p>
+        <p>可以被老化</p>
+        <p>可以被新的ARP报文更新</p>
+        <p>可以被静态ARP覆盖</p>
+        <p>当到达老化时间、接口down时将被删除</p>
+        <p>一般情况下，ARP 动态执行并自动寻求 IP 地址到以太网 MAC 地址的解析，无需管理员介入</p>
+      </dd>
+      <dd>静态ARP：
+        <p>安全起见，为避免解析过程被劫持或篡改，可以限制和指定IP地址的设备通信时只使用指定的MAC地址</p>
+        <p>攻击报文无法修改此条目的IP地址和MAC地址的映射关系，从而保护了本设备和指定设备间的正常通信</p>
+      </dd>
       <dt>协议栈需求 Stack</dt>
-      <dd>路由：根据Idd地址找到目标主机所在网络</dd>
-      <dd>封帧：根据MAC地址找到目标主机</dd>
+      <dd>路由：根据 IP 地址找到目标主机所在网络</dd>
+      <dd>封帧：根据 MAC 地址找到目标主机</dd>
       <figure>
         <img src="./imgs/arp0.png" alt="">
         <figcaption>ARP协议栈</figcaption>
@@ -51,31 +60,31 @@
         <img src="./imgs/arp1.png" alt="">
         <figcaption>PC1 发起对 PC3 的 ARP 请求</figcaption>
       </figure>
-      <dd>PC1知道PC3的IP地址，但不知道PC3的MAC地址；自身的ARP表找不到PC3的MAC地址，因此不能封帧交付</dd>
-      <dd>PC1先缓存消息，然后以 <strong>广播</strong>
-        的形式发起ARP请求：我的IP地址是192.168.0.1，MAC地址是00D0.5857.5331，我找IP地址是192.168.0.3的主机的MAC地址。收到请回答！</dd>
-      <dd>除PC1外，其它主机都会收到这个广播帧</dd>
-      <dd>PC2和PC4分析后发现，广播要找的目标不是自己，丢弃该帧</dd>
-      <dd>PC3分析后，发现是询问自己的：
-        <p>以 <strong>单播</strong> 的形式给PC1回一个ARP响应：我是你找的192.168.0.3，我的MAC地址为0030.A313.6DA4</p>
-        <p>同时将PC1的IP地址和MAC地址保存到自己的ARP表中</p>
+      <dd>PC1 知道 PC3 的 IP 地址，但不知道 PC3 的 MAC 地址；自身的 ARP 表找不到 PC3 的 MAC 地址，因此不能封帧交付</dd>
+      <dd>PC1 先缓存消息，然后以 <strong>广播</strong>
+        的形式发起 ARP 请求：我的 IP 地址是 192.168.0.1，MAC地址是 00D0.5857.5331，我找 IP 地址是 192.168.0.3 的主机的 MAC 地址。收到请回答！</dd>
+      <dd>除 PC1 外，其它主机都会收到这个广播帧</dd>
+      <dd>PC2 和 PC4 分析后发现，广播要找的目标不是自己，丢弃该帧</dd>
+      <dd>PC3 分析后，发现是询问自己的：
+        <p>以 <strong>单播</strong> 的形式给 PC1 回一个 ARP 响应：我是你找的 192.168.0.3，我的 MAC 地址为 0030.A313.6DA4</p>
+        <p>同时将 PC1 的 IP 地址和 MAC 地址保存到自己的 ARP 表中，以备后续使用</p>
       </dd>
-      <dd>PC1收到ARP响应
-        <p>更新自己的ARP表</p>
+      <dd>PC1 收到 ARP 响应
+        <p>更新自己的 ARP 表</p>
         <p>封帧之前缓存的消息并发送</p>
       </dd>
       <dt>特点 Features</dt>
-      <dd>IP地址与MAC地址并没有一一对应的关系，且不是永久不变的</dd>
+      <dd>IP 地址与 MAC 地址并没有一一对应的关系，且不是永久不变的</dd>
       <dd>动态更新：设备重启，网卡更换等</dd>
       <dd>有生存周期：超过生存周期的条目将被删除</dd>
-      <dd>每次ARP协议使用某个条目，该条目的生存周期都要重新计时</dd>
-      <dd>ARP协议不出网</dd>
+      <dd>每次 ARP 协议使用某个条目，该条目的生存周期都要重新计时</dd>
+      <dd>ARP 协议不出网</dd>
     </dl>
     <h2>安全 Security</h2>
     <dl>
       <dt>设计缺陷 Flaws</dt>
       <dd>不校验包</dd>
-      <dd>即使没有发送ARP请求，也会处理收到的ARP响应</dd>
+      <dd>即使没有发送 ARP 请求，也会处理收到的 ARP 响应</dd>
       <figure style="max-width: 600px;">
         <img src="./imgs/arp-spoofing.gif" alt="">
         <figcaption>ARP欺骗</figcaption>
@@ -95,21 +104,16 @@
       <dd>ARP Spoofing Detection Software ARP欺骗监测软件</dd>
       <dd>...</dd>
     </dl>
-    <h2>命令 Command</h2>
+    <h2>实操 Drill</h2>
     <dl>
-      <dt>查看 View</dt>
-      <dd>查看arp缓存条目</dd>
+      <dt>命令 Command</dt>
+      <div>1. 查看arp缓存条目</div>
       <pre>arp -a</pre>
-      <dt>删除 Delete</dt>
-      <dd>删除arp缓存条目</dd>
+      <div>2. 删除arp缓存条目</div>
       <pre>arp -d [IP]</pre>
-      <dt>添加 Static</dt>
-      <dd>为指定主机添加一条静态条目</dd>
+      <div>3. 为指定主机添加一条静态条目</div>
       <pre>arp -s IP MAC</pre>
-    </dl>
-    <h2>实操</h2>
-    <dl>
-      <div class="demo"> 实操1 网内ARP</div>
+      <div class="demo"> 实操1 网内 ARP</div>
       <figure>
         <img src="./imgs/arp2.png" alt="">
         <figcaption>网内ARP拓扑</figcaption>
@@ -181,7 +185,7 @@
           <td>FastEthernet0</td>
         </tr>
       </table>
-      <div class="demo"> 实操2 跨网ARP</div>
+      <div class="demo"> 实操2 跨网 ARP</div>
       <figure>
         <img src="./imgs/l14.png" alt="">
         <figcaption>跨网ARP 拓扑</figcaption>
@@ -201,7 +205,7 @@
         <figcaption>逐段转发</figcaption>
       </figure>
       <div class="tips">逐段转发</div>
-      <div class="demo"> 实操3 多网段ARP</div>
+      <div class="demo"> 实操3 多网段 ARP</div>
       <figure>
         <img src="./imgs/ipmac0.png" alt="">
         <figcaption>逐段转发</figcaption>
@@ -214,37 +218,29 @@
     <dl>
       <dt>Summary</dt>
       <ol>
-        <li>ARP的作用</li>
-        <li>ARP的解析过程</li>
-        <li>ARP的特点</li>
+        <li>ARP 的作用</li>
+        <li>ARP 的解析过程</li>
+        <li>ARP 的特点</li>
       </ol>
       <dt>Homework</dt>
       <ol>
         <li>独立完成实操1、实操2网络拓扑的搭建和配置</li>
-        <li>根据各主机ARP表，认真分析通信过程中每一个阶段的PDU内容</li>
-        <li>进一步熟悉PT的使用</li>
-        <li>进一步完善整理PT常用命令</li>
+        <li>根据各主机 ARP 表，认真分析通信过程中每一个阶段的 PDU 内容</li>
+        <li>进一步熟悉 PT 的使用</li>
+        <li>进一步完善整理 PT 常用命令</li>
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://www.rfc-editor.org/rfc/rfc826.html">RFC 826 <span class="iconfont icon-share"></span></a>
+        <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc826.html">RFC 826</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/address-resolution-protocol-arp/">ARP Protocol: The
+            Backbone of Network Communication </a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/arp-command/#google_vignette">Arp Command</a></li>
+        <li><a class="link"
+            href="https://www.bilibili.com/video/BV1oW411o7ZJ/?spm_id_from=888.80997.embed_other.whitelist&t=4.871547&bvid=BV1oW411o7ZJ">ARP</a>
         </li>
-        <li><a href="https://networkencyclopedia.com/address-resolution-protocol-arp/">ARP Protocol: The Backbone of
-            Network Communication <span class="iconfont icon-share"></span>
-          </a></li>
-        <li><a href="https://networkencyclopedia.com/arp-command/#google_vignette">Arp Command <span
-              class="iconfont icon-share"></span>
-          </a></li>
-        <li> <a
-            href="https://www.bilibili.com/video/BV1oW411o7ZJ/?spm_id_from=888.80997.embed_other.whitelist&t=4.871547&bvid=BV1oW411o7ZJ">ARP<span
-              class="iconfont icon-videocam"></span></a>
-        </li>
-        <li> <a href="https://www.networkacademy.io/ccna/ethernet/arp-security">ARP Security<span
-              class="iconfont icon-videocam"></span></a>
-        </li>
-        <li> <a href="https://www.geeksforgeeks.org/ethical-hacking/what-is-arp-spoofing-attack/">What is ARP Spoofing
-            Attack?<span class="iconfont icon-videocam"></span></a>
-        </li>
+        <li><a class="link" href="https://www.networkacademy.io/ccna/ethernet/arp-security">ARP Security</a></li>
+        <li><a class="link" href="https://www.geeksforgeeks.org/ethical-hacking/what-is-arp-spoofing-attack/">What is
+            ARP Spoofing Attack?</a></li>
       </ol>
     </dl>
     <div id="footer"></div>

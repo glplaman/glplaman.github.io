@@ -15,21 +15,17 @@
 </head>
 
 <body>
-  <section class="w">
+  <div class="w">
     <header>
       <h1>子网划分</h1>
       <span>&commat;Subneting</span>
     </header>
     <dl>
       <img src="./imgs/subnet.png" alt="">
-      <dd>从 <strong>主机号</strong> 中拿出若干位充当子网号</dd>
-      <dd>为了标识子网，引入了子网掩码 Subnet Mask</dd>
-      <dt>子网掩码 Subnet Mask</dt>
-      <dd>将IP地址划分为 网络号 Network ID 和 主机号 Host ID</dd>
-      <dd>子网掩码长度也是32bit：使用连续的1表示网络号和子网号；使用连续的0表示主机号</dd>
+      <dd>从 <strong>主机号</strong> 中拿出若干位充当 <strong>子网号</strong></dd>
       <dd>IP地址从原来的2级结构变为3级结构</dd>
       <table>
-        <caption>进行了子网划分的IP地址结构</caption>
+        <caption>进行了子网划分的 IP 地址结构</caption>
         <tbody>
           <tr>
             <th>Network ID</th>
@@ -37,12 +33,15 @@
             <th>Host ID</th>
           </tr>
           <tr>
-            <td>n bit</td>
-            <td>m bit</td>
-            <td>(32-m-n) bit</td>
+            <td>n bits</td>
+            <td>m bits</td>
+            <td>(32-m-n) bits</td>
           </tr>
         </tbody>
       </table>
+      <dt>子网掩码 Subnet Mask</dt>
+      <dd>为了标识子网，引入了子网掩码 Subnet Mask</dd>
+      <dd>子网掩码长度 32bits：使用连续的 1 表示网络号和子网号；使用连续的 0 表示主机号</dd>
       <table>
         <caption>默认子网掩码</caption>
         <tbody>
@@ -60,34 +59,34 @@
           </tr>
         </tbody>
       </table>
-      <div class="tips">子网掩码 = 地址掩码 = 掩码</div>
-      <dt>子网计算 Subnet Calculations</dt>
-      <dd>网络地址 Network Address
-        <p>IP地址和子网掩码 <strong>相与</strong>，就可以得出IP地址所在子网的网络地址</p>
-        <p>标识一个子网本身的地址</p>
-        <p>主机部分 host bits 全为 0</p>
-        <p>子网中最低位的IP地址</p>
-        <p>不能分配给主机使用</p>
-      </dd>
-      <dd>广播地址 Broadcast Address
-        <p>一个特殊的 IP 地址，用于将数据包发送给同一子网中的所有主机</p>
-        <p>网络部分与子网相同</p>
-        <p>主机部分全为1</p>
-        <p>子网中最高位的IP地址</p>
-        <p>不能分配给主机使用</p>
-      </dd>
-      <dd>主机地址范围 Range of Hosts
-        <p>网络地址和广播地址之间的IP地址</p>
-        <p>可以分配给主机使用</p>
-      </dd>
-      <div class="demo">
-        已知某个网络的IPv4地址为218.75.230.0，使用子网掩码255.255.255.128进行子网划分，请给出划分的细节。
-      </div>
-      <dd>哪类IP地址：确定默认的网络号或主机号</dd>
-      <dd>根据子网掩码确定借用了几位主机号</dd>
-      <dd>根据子网号的长度确定可以划分的子网数量</dd>
-      <dd>确定每个子网可供分配的地址数量</dd>
-      <dd>其它细节：网络地址、最小主机地址、最大主机地址、广播地址</dd>
+      <div class="tips">通常不作区分：子网掩码 = 地址掩码 = 掩码</div>
+    </dl>
+    <h2>子网计算 Subnet Calculations</h2>
+    <dl>
+      <dd>核心：三类/个关键地址</dd>
+      <dt>网络地址 Network Address</dt>
+      <dd>标识一个子网本身的地址</dd>
+      <dd>主机部分 host bits 全为 0</dd>
+      <dd>子网中最低位的IP地址</dd>
+      <dd>不能分配给主机使用</dd>
+      <div class="txt-center">IP地址 & 子网掩码 = 网络地址</div>
+      <dt>广播地址 Broadcast Address</dt>
+      <dd>用于将数据包发送给同一子网中的所有主机</dd>
+      <dd>网络部分与子网相同</dd>
+      <dd>主机部分 host bits 全为1</dd>
+      <dd>子网中最高位的IP地址</dd>
+      <dd>不能分配给主机使用</dd>
+      <dt>主机地址 Range of Hosts</dt>
+      <dd>分配给主机使用</dd>
+      <dd>网络地址和广播地址之间的IP地址</dd>
+      <div class="demo">已知某个网络的IPv4地址为 218.75.230.0，使用子网掩码 255.255.255.128 进行子网划分，请给出划分的细节。</div>
+      <dd>答：</dd>
+      <dd>1. IP地址类别 <br>
+        → 默认掩码</dd>
+      <dd>2. 子网掩码 → 借用了几位主机号充当子网 <br>
+        → 确定子网数量<br>
+        → 确定每个子网的IP地址数量<br>
+        → 网络地址、最小主机地址、最大主机地址、广播地址</dd>
       <table>
         <caption>C类地址划分细节</caption>
         <tbody>
@@ -101,15 +100,6 @@
             <td>0000 0000</td>
           </tr>
           <tr>
-            <td rowspan="2">子网掩码</td>
-            <td>255.255.255</td>
-            <td>128</td>
-          </tr>
-          <tr>
-            <td>255.255.255</td>
-            <td><span class="warn txt-bold">1</span>000 0000</td>
-          </tr>
-          <tr>
             <td rowspan="2">默认子网掩码</td>
             <td>255.255.255</td>
             <td>0</td>
@@ -118,64 +108,73 @@
             <td>255.255.255</td>
             <td>0000 0000</td>
           </tr>
+          <tr>
+            <td rowspan="2">子网掩码</td>
+            <td>255.255.255</td>
+            <td>128</td>
+          </tr>
+          <tr>
+            <td>255.255.255</td>
+            <td><span class="warn txt-bold">1</span>000 0000</td>
+          </tr>
         </tbody>
       </table>
-      <dd>从主机位借了 1 位划分子网</dd>
-      <dd>可以划分为 0 号子网和 1 号子网</dd>
+      <dd>从主机位借了 <strong>1</strong> 位划分子网</dd>
+      <dd>可以划分为 <strong>0</strong> 号子网和 <strong>1</strong> 号子网</dd>
       <table>
         <caption>子网划分细节</caption>
         <tbody>
           <tr>
             <td rowspan="5">0号子网</td>
-            <td>网络地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">0</span><span style="color: #008000;">000 0000</span></td>
+            <td>网络地址</td>
           </tr>
           <tr>
-            <td>最小主机地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">0</span>000 0001</td>
+            <td>最小主机地址</td>
           </tr>
           <tr>
-            <td>其它地址</td>
             <td>218.75.230</td>
             <td>...</td>
+            <td>其它主机地址</td>
           </tr>
           <tr>
-            <td>最大主机地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">0</span>111 1110</td>
+            <td>最大主机地址</td>
           </tr>
           <tr>
-            <td>广播地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">0</span><span style="color: #008000;">111 1111</span></td>
+            <td>广播地址</td>
           </tr>
           <tr>
             <td rowspan="5">1号子网</td>
-            <td>网络地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">1</span><span style="color: #008000;">000 0000</span></td>
+            <td>网络地址</td>
           </tr>
           <tr>
-            <td>最小主机地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">1</span>000 0001</td>
+            <td>最小主机地址</td>
           </tr>
           <tr>
-            <td>其它地址</td>
             <td>218.75.230</td>
             <td>...</td>
+            <td>其它主机地址</td>
           </tr>
           <tr>
-            <td>最大主机地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">1</span>111 1110</td>
+            <td>最大主机地址</td>
           </tr>
           <tr>
-            <td>广播地址</td>
             <td>218.75.230</td>
             <td><span class="warn txt-bold">1</span><span style="color: #008000;">111 1111</span></td>
+            <td>广播地址</td>
           </tr>
         </tbody>
       </table>
@@ -183,31 +182,36 @@
       <dd>网络号：24位</dd>
       <dd>子网号：1位，可以划分的子网数量为2个，0号子网、1号子网</dd>
       <dd>主机号：8 - 1 = 7位，每个子网共有IP地址：2<sup>7</sup>，可供分配的主机IP地址：2<sup>7</sup>-2个</dd>
-      <dd>借助子网划分工具验证结果 <a href="https://www.calculator.net/">Subnet Calculator <span
-            class="iconfont icon-share"></span></a>
+      <dd>借助子网划分工具验证结果 <a class="link" href="https://www.calculator.net/">Subnet Calculator</a>
       </dd>
-      <div class="demo">已知某台设备的IP地址是 177.189.120.25,
-        其子网掩码为255.224.0.0，请问这台设备的主机号是多少？网络前缀是多少？子网内第一个可用IP地址是多少？网络地址是多少？子网内第一个可用IP地址是多少
+      <div class="demo">已知某台设备的IP地址是 177.189.120.25，求：<br>
+        1. 其子网掩码为 255.224.0.0，请问<br>
+        2. 这台设备的主机号是多少？<br>
+        3. 网络前缀是多少？<br>
+        4. 子网内第一个可用IP地址是多少？<br>
+        5. 网络地址是多少？<br>
+        6. 子网内第一个可用IP地址是多少
       </div>
+      <dd>答：</dd>
       <dd>IP地址：10110001.10111101.01111000.00011001</dd>
       <dd>子网掩码：11111111.11100000.00000000.00000000</dd>
+      <dd>IP所在的网络地址：IP地址 & 子网掩码 = 177.189.120.25 & 255.224.0.0 = 177.160.0.0</dd>
       <dd>网络前缀11位</dd>
       <dd>主机号（11位掩码部分取0）：00000000 00011101 01111000 00011001 → 0.29.120.25</dd>
-      <dd>IP所在的网络地址：177.189.120.25 & 255.224.0.0 = 177.160.0.0</dd>
       <!-- 189=128+32+16+8+4+1  → 1011 1101 -->
       <!-- 224=128+64+32 → 1110 0000 -->
-      <dd>第一个可以IP地址：177.160.0.1</dd>
+      <dd>第一个可用IP地址：网络地址 + 1 = 177.160.0.1</dd>
       <div class="demo">
-        某企业需要建设企业内部网络，现在需要你为该企业规划IP地址分配方案，需要将原198.28.32.0/24网段划分为均等的4个子网，分配给企业的4个部门使用，请写出划分子网后的子网掩码、4个子网各自的网络地址和广播地址。
+        某企业需要建设企业内部网络，现在需要你为该企业规划IP地址分配方案，需要将原 198.28.32.0/24 网段划分为均等的4个子网，分配给企业的4个部门使用，请写出划分子网后的子网掩码、4个子网各自的网络地址和广播地址。
       </div>
+      <dd>198.28.32.0/24 是一个 C类 地址/</dd>
+      <dd>198.28.32.0/24 对应的IP地址块，共有地址 198.28.32.0 - 198.28.32.255 共256个地址</dd>
+      <dd>平均分给4个部门。每个部门IP地址数量为 256/4 = 64个</dd>
+      <dd>需要向主机位借用6位，所以掩码是 32 - 6 = 26位</dd>
+      <dd>另外一个角度：4个子网，需要向主机位借2位，所以是 24 + 2 = 26</dd>
+      <dd>从地址块中依次分割即可</dd>
+      <div>部门1</div>
       <ul>
-        <li>198.28.32.0/24对应的IP地址块</li>
-        <li>198.28.32.0 - 198.28.32.255 共256个地址</li>
-        <li>平均分给4个部门。每个部门IP地址数量为 256/4=64</li>
-        <li>主机位需要6位即可，所以掩码是 32 - 6 = 26位</li>
-        <li>另：4个子网，需要向主机位借2位，所以是 24 + 2 = 26</li>
-        <li>从地址块中依次分割即可</li>
-        <div>部门1</div>
         <p>198.28.32.0 - 网络地址</p>
         <p>198.28.32.1 - 最小主机地址</p>
         <p>198.28.32.62 - 最大主机地址</p>
@@ -249,13 +253,12 @@
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/subnet-mask/">Subnet Mask <span
-              class="iconfont icon-share"></span></a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/subnet-mask/">Subnet Mask</a></li>
       </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
-  </section>
+  </div>
 </body>
 
 </html>

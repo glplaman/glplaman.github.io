@@ -22,18 +22,18 @@
     </header>
     <dl>
       <img src="./imgs/packet.png" alt="">
-      <dt>基本组成 Contents</dt>
+      <dt>基本组成 Component</dt>
       <dd>IP数据报由首部 header 和数据 data 两部分组成</dd>
-      <dd>首部：包括：20byte的固定部分和可选部分；最大不超过60byte</dd>
-      <dd>数据部分：可选；长度可变；超过最大传输单元MTU需要分片</dd>
+      <dd>首部：包括：20 Bytes 的固定部分和可选部分；最大不超过60 Bytes</dd>
+      <dd>数据部分：可选；长度可变；超过最大传输单元 MTU，则需要分片</dd>
       <table>
         <caption>IP数据报格式</caption>
         <thead>
           <tr>
-            <th>4bit</th>
-            <th>4bit</th>
-            <th>8bit</th>
-            <th colspan="2">16bit</th>
+            <th>4 bits</th>
+            <th>4 bits</th>
+            <th>8 bits</th>
+            <th colspan="2">16 bits</th>
           </tr>
         </thead>
         <tbody>
@@ -72,40 +72,40 @@
         <figcaption>PT中的IP数据报</figcaption>
       </figure>
       <dt>版本 Version</dt>
-      <dd>4bit</dd>
+      <dd>4 bits</dd>
       <dd>0100，表示IP v4</dd>
       <dt>首部长度 Internet Header Length</dt>
-      <dd>4bit；以 <strong>4byte</strong> 为单位</dd>
-      <dd>最小值为0101，则最短首部长度：5*4 = 20byte</dd>
-      <dd>最大值为1111，则最大首部长度：(2<sup>4</sup>-1)*4 = 60byte</dd>
+      <dd>4 bits；以 <strong>4 Bytes</strong> 为单位</dd>
+      <dd>最小值为0101，则最短首部长度：5*4 = 20 Bytes</dd>
+      <dd>最大值为1111，则最大首部长度：(2<sup>4</sup>-1)*4 = 60 Bytes</dd>
       <dt>总长度 Total Length</dt>
-      <dd>16bit；以 <strong>byte</strong> 为单位</dd>
+      <dd>16 bits；以 <strong>Bytes</strong> 为单位</dd>
       <dd>首部和数据部分总和</dd>
-      <dd>最大数值为1111 1111 1111 1111，最大长度为2<sup>16</sup>-1=65535byte</dd>
-      <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500byte；长度超过MTU就必须分片，单独封帧再传输</dd>
+      <dd>最大数值为1111 1111 1111 1111，最大长度为2<sup>16</sup>-1=65535 Bytes</dd>
+      <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500 Bytes；长度超过MTU就必须分片，单独封帧再传输</dd>
       <dt>标识 Identification、标记 Flags、片偏移部分 Fragment Offset</dt>
       <dd>这3个字段用于IP数据报分片</dd>
       <dd>Identification：
-        <p>16bit - 65536</p>
+        <p>16 bits - 65536</p>
         <p>需要分片的时候，由发送方设置的一个标识</p>
         <p>接收方根据这个值组装分片，还原IP数据报</p>
         <p>同一个数据报的不同分片应具有相同的标识</p>
         <p>每产生一个数据报这个值就模加1，充当计算器的功能</p>
         <pre>(ID + 1) % 65536</pre>
       </dd>
-      <dd>Flags：3bit，包括：MF + DF + 保留位0
+      <dd>Flags：3 bits，包括：MF + DF + 保留位0
         <p>MF：More Fragment；1：还有分片；0：没有分片</p>
         <p>DF：Don’t Fragment；1：不允许分片；0：允许分片</p>
       </dd>
-      <dd>Fragment Offset：13bit，以 <strong>8byte</strong> 为单位，指出分片数据报的数据部分在 <strong>原</strong> 数据报中的偏移部分；必须为整数</dd>
+      <dd>Fragment Offset：13 bits，以 <strong>8 Bytes</strong> 为单位，指出分片数据报的数据部分在 <strong>原</strong> 数据报中的偏移部分；必须为整数</dd>
       <dt>生存时间 Time to Live</dt>
-      <dd>8bit，以秒s为单位</dd>
+      <dd>8 bits，以秒s为单位</dd>
       <dd>最大生存时间是255s</dd>
       <dd>早期代表时间；现在表示可通过的路由数/跳数</dd>
       <dd>每次转发 <strong>前</strong> 先减1；如果结果为0就丢弃，不转发</dd>
       <dd>防止IP数据报在网络中无限制的兜圈子</dd>
       <dt>协议 Protocol</dt>
-      <dd>8bit</dd>
+      <dd>8 bits</dd>
       <dd>它指明 IP 层之上的协议类型；如ICMP、TCP、UDP、OSPF等</dd>
       <dd>当一台主机或路由器收到一个 IP 数据包时，需要知道：它的数据部分/有效载荷/payload 交给上层的谁处理</dd>
       <dd>接收端的 IP 模块根据该字段的值，将数据交给对应的上层协议模块处理</dd>
@@ -149,39 +149,42 @@
         </tbody>
       </table>
       <dt>首部校验和 Header Checksum</dt>
-      <dd>16bit</dd>
+      <dd>16 bits</dd>
       <dd>只校验首部：用来校验数据传输过程中，首部是否出现差错</dd>
       <dd>每经过一个路由器，都要重新计算</dd>
-      <dd>为加快转发速度，IPv6中不再计算</dd>
+      <dd>为加快转发速度，IPv6 中不再计算</dd>
       <dd>计算过程
         <p>初始化：将首部校验和字段设置为0!!!</p>
-        <p>头部分割：将IP首部每16bit分为一组；20个byte的首部最终被分成10组；每组2个byte/16bit</p>
+        <p>头部分割：将IP首部每16 bits 分为一组；20 Bytes 的首部最终被分成10组；每组2 Bytes/16 bits</p>
         <p>累计求和：所有分组累计求和，即每次用前面的累积和去加后面的分组；如果求和结果产生进位，则将进位加到最低位，如 0x10001 → 0x0002</p>
         <p>结果取反：对最终结果求反码，即得到校验和</p>
         <p>字段回填：将计算结果填入首部校验和字段</p>
       </dd>
       <dd>接收端验证过程
-        <p>将收到的IP数据报首部同样按16位分组</p>
+        <p>将收到的IP数据报首部同样按 16 bits 分组</p>
         <p>对所有分组（包括校验和字段）进行二进制反码求和</p>
         <p>如果结果全为1（即0xFFFF），则校验通过，数据未出错</p>
         <p>如果结果不全为1，则数据在传输过程中出现错误；被丢弃</p>
       </dd>
       <dt>源地址 Source Address</dt>
-      <dd>发送方/源主机IP地址；32bit</dd>
+      <dd>发送方/源主机IP地址；32 bits</dd>
       <dt>目标地址 Destination Address</dt>
-      <dd>接收方/目标主机IP地址；32bit</dd>
+      <dd>接收方/目标主机IP地址；32 bits</dd>
     </dl>
     <h2>案例 Cases</h2>
     <dl>
-      <div class="demo"> 已经某IP报首部字段THL为0101，总长度字段TL为0000 0011 1111 1100，求数据部分字段DATA的长度
+      <div class="demo"> 已经某IP报首部字段 THL 为 0101，总长度字段 TL 为 0000 0011 1111 1100，求数据部分字段 DATA 的长度
       </div>
-      <dd>首部长度为(0101)<sub>2</sub>*4 = 5*4 = 20 byte</dd>
-      <dd>总长度为(0000 0011 1111 1100)<sub>2</sub> = 1020 byte</dd>
-      <dd>故：数据部分长度为：总长度-首部长度 = 1020 - 20 = 1000 byte</dd>
-      <div class="demo"> 已知采用固定长度首部的数据报，数据部分位3800byte，如何分片？（分片不超过1420byte）。</div>
-      <dd>数据报长度 = 首部 + 数据 = 20 + 3800 = 3820byte</dd>
-      <dd>分片后不能超过1420byte，所以每片的数据部分为最大为1400byte</dd>
-      <dd>假设标识ID为12345</dd>
+      <dd>答：</dd>
+      <dd>首部值：(0101)<sub>2</sub> = 5</dd>
+      <dd>首部长度：5*4 = 20 Bytes</dd>
+      <dd>总长度：(0000 0011 1111 1100)<sub>2</sub> = 1020 Bytes</dd>
+      <dd>&therefore; 数据部分长度：总长度-首部长度 = 1020 - 20 = 1000 Bytes</dd>
+      <div class="demo"> 已知采用固定长度首部的数据报，数据部分为 3800 Bytes，如何分片？（分片不超过 1420 Bytes）。</div>
+      <dd>答：</dd>
+      <dd>每个分片 = 首部 + 数据</dd>
+      <dd>分片后不能超过 1420 Bytes，所以每片的数据部分最大：1420 Bytes - 20Bytes = 1400 Bytes</dd>
+      <dd>假设标识ID为 12345</dd>
       <table>
         <caption>IP数据报的分片</caption>
         <thead>
@@ -195,14 +198,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>原始数据报</td>
-            <td>20+3800</td>
-            <td>12345</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
           <tr>
             <td>分片1</td>
             <td>20+1400</td>
@@ -229,7 +224,8 @@
           </tr>
         </tbody>
       </table>
-      <div class="demo"> 采用固定首部的某IP数据报长度为1500B，目标网络的MTU是800B，求分片数量和偏移。</div>
+      <div class="demo"> 采用固定首部的某IP数据报长度为 1500B，目标网络的 MTU 是 800B，求分片数量和偏移。</div>
+      <dd>答：</dd>
       <table>
         <caption>原始数据报</caption>
         <thead>
@@ -245,9 +241,11 @@
           </tr>
         </tbody>
       </table>
-      <dd>偏移量不是整数；分片方案失败</dd>
+      <div>方案1：按最大长度 (800B - 20B) = 780B 分片</div>
+      <dd>第2分片的偏移量不是整数</dd>
+      <dd>分片方案失败</dd>
       <table>
-        <caption>原始方案</caption>
+        <caption>方案1</caption>
         <thead>
           <tr>
             <th></th>
@@ -268,10 +266,11 @@
           </tr>
         </tbody>
       </table>
-      <dd>调整分片长度，不超过800且能被8整除即可；所以分片方案不唯一</dd>
+      <dd>方案2：调整分片长度，不超过800且能被8整除即可；所以分片方案不唯一</dd>
       <dd>取8的整倍数，即：[780/8]*8=776B</dd>
+      <dd>方案可行</dd>
       <table>
-        <caption>最终方案</caption>
+        <caption>方案2</caption>
         <thead>
           <tr>
             <th></th>
@@ -292,11 +291,12 @@
           </tr>
         </tbody>
       </table>
-      <div class="tips">根据分片的数据长度去找8的整倍数byte</div>
+      <div class="tips">根据分片的数据长度去找8的整倍数</div>
       <div class="demo"> 某IP首部数据以16进制表示为 4500 003C 0000 4000 4011 0000 C0A8 0001 C0A8
         00C7，求其首部校验和。</div>
+      <dd>答：</dd>
       <ul>
-        <li>给出的首部数据已经是16进制了</li>
+        <li>给出的首部数据已经是16进制</li>
         <li>首部校验和已经初始为 0000：第6个分组</li>
         <li>累计求和
           <div class="txt-indent">
@@ -323,36 +323,30 @@
     <dl>
       <dt>Summary</dt>
       <ol>
-        <li>IP数据报的格式和常见字段含义</li>
+        <li>IP数据报格式</li>
+        <li>IP数据报常见字段含义</li>
       </ol>
       <dt>Homework</dt>
       <ol>
         <li>IP数据报由首部和数据2部分组成（）。</li>
-        <li>IP数据报中，首部长度是 20 byte（）。</li>
-        <li>IP数据报中，首部的固定部分长度是 20 byte（）。</li>
+        <li>IP数据报中，首部长度是 20 Bytes（）。</li>
+        <li>IP数据报中，首部的固定部分长度是 20 Bytes（）。</li>
         <li>某IP数据报中，TTL为1，说明该数据报还可以经路由器转发1次（）。</li>
-        <li>某IP数据报首部字段为0111，则首部长度是（）byte。</li>
-        <div class="alpha">
-          <div>7 byte</div>
-          <div>20 byte</div>
-          <div>28 byte</div>
-          <div>60 byte</div>
-        </div>
+        <li>某IP数据报首部字段为0111，则首部长度是（）Bytes。</li>
+        <div>A：7 Bytes</div>
+        <div>B：20 Bytes</div>
+        <div>C：28 Bytes</div>
+        <div>D：60 Bytes</div>
         <li>图1中，IP数据报使用的通信协议是（）。</li>
-        <div class="alpha">
-          <div>ICMP</div>
-          <div>IGMP</div>
-          <div>TCP</div>
-          <div>UDP</div>
-        </div>
+        <div>A：ICMP</div>
+        <div>B：IGMP</div>
+        <div>C：TCP</div>
+        <div>D：UDP</div>
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/time-to-live-ttl/">Time to Live (TTL) <span
-              class="iconfont icon-share"></span></a>
-        </li>
-        <li><a href="https://www.rfc-editor.org/rfc/rfc791.html">RFC791 <span class="iconfont icon-share"></span></a>
-        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/time-to-live-ttl/">Time to Live (TTL)</a></li>
+        <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc791.html">RFC791</a></li>
       </ol>
     </dl>
     <div id="footer"></div>

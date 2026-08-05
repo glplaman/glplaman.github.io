@@ -42,8 +42,10 @@
       <span>&commat;Forwarding</span>
     </header>
     <dl>
-      <dd>分组的转发是基于分组首部中的目的地址 - <strong>基于终点</strong> 的转发</dd>
+      <dt>引言 Introduction</dt>
       <dd>IP数据报的转发需要借助网络层设备路由器 Router 实现</dd>
+      <dd>转发是基于分组首部中的目的IP地址 - <strong>基于终点</strong> 的转发</dd>
+      <dd>转发的依据是路由表（直连路由、静态路由和动态路由）</dd>
       <dd>重点关注3张表
         <p>ARP表</p>
         <p>MAC表</p>
@@ -53,55 +55,7 @@
         <img src="./imgs/l17.png" alt="">
         <figcaption>逐段转发</figcaption>
       </figure>
-    </dl>
-    <h2>路由器 Router</h2>
-    <dl>
-      <img src="./imgs/router2.png" alt="">
-      <dd>三层设备；实现不同类型网络之间的互联；对应的PDU是IP数据报/分组IP packet</dd>
-      <dd>转发的依据是路由表（直连路由、静态路由和动态路由）</dd>
-      <dd>多输入/多输出端口：从某个输入端口收到分组后，根据路由协议，按照分组目标IP，从某个输出端口转发给下一个路由器；重复直至分组到达目的网络</dd>
-      <dd>使用路由器，真正实现了网际互连</dd>
-      <figure>
-        <img src="./imgs/n0.png" alt="">
-        <img src="./imgs/n11.png" alt="">
-        <figcaption>网际互连</figcaption>
-      </figure>
-      <div class="tips">
-        <p>物理层：Repeater / Hub</p>
-        <p>链路层：Switch / Bridge</p>
-        <p>运输层+：Gateway</p>
-      </div>
-      <dt>逻辑结构 Logical</dt>
-      <dd>路由选择部分
-        <p>根据路由协议，通过定期和相邻路由器交换路由信息来维护路由表</p>
-        <p>由软件实现</p>
-        <p>侧重点：如何设计最优？<span class="iconfont icon-help"></span></p>
-      </dd>
-      <dd>分组转发部分
-        <p>根据路由表进行转发</p>
-        <p>通常使用硬件实现</p>
-        <p>由于线速 line speed 和处理速率的不匹配，导致的数据溢出、分组丢失、通信时延</p>
-        <p>侧重点：如何搜索最优？<span class="iconfont icon-help"></span></p>
-      </dd>
-      <figure>
-        <img src="./imgs/n1.png" alt="">
-        <figcaption>路由器逻辑结构</figcaption>
-      </figure>
-      <dt>路由表 Router Table</dt>
-      <dd>路由表中的每一个条目 Entry 代表一条路由信息，指导路由器如何转发数据包。其包含三个主要部分：</dd>
-      <ol>
-        <li>网络地址 Network：
-          <p>IP地址和子网掩码，采用CIDR记法；如 128.1.2.192/26</p>
-        </li>
-        <li>转发端口 Port：
-          <p>指明数据包应该从路由器的哪个物理或逻辑接口发送出去；如0、1、3</p>
-        </li>
-        <li>下一跳IP地址 Next Hop IP：
-          <p>如果目标网络不是直接连接在本路由器的端口上，那么数据包需要先发送到另一个路由器（即“下一跳”）</p>
-          <p>这个字段就是那个“下一跳”路由器的IP地址</p>
-          <p>如果目标网络是直连的（如前两行所示），则此字段为“–”，表示数据包可以直接交付，无需经过其他路由器</p>
-        </li>
-      </ol>
+      <dt>转发过程 Procedure</dt>
       <table style="max-width: 450px;">
         <caption>路由表</caption>
         <thead>
@@ -129,20 +83,16 @@
           </tr>
         </tbody>
       </table>
-      <dd>128.1.2.192/26 通过端口1直接连接，可以直接交付</dd>
-      <dd>128.1.2.128/26 通过端口2直接连接，可以直接交付</dd>
-      <dd>128.1.3.64/26 需要通过端口3转发，并且必须发送到IP地址为 192.168.3.2 的下一个路由器</dd>
-      <dt>转发过程 Procedure</dt>
       <dd>当路由器收到一个 <strong>待转发</strong> 的数据包时，会按照以下步骤进行处理：</dd>
       <ol>
         <li>判断是否为本地交付：
-          <p>路由器首先将数据包的目的IP地址与自己所连接网络的地址掩码进行“与”（AND）运算</p>
+          <p>路由器首先将数据包的目的IP地址与自己所连接网络的地址掩码与 AND 运算</p>
           <p>如果计算出的网络地址与自己的某个直连网络地址相同，说明目标主机就在同一个网络内，路由器可以直接将数据包交付给目标主机（直接交付）</p>
           <p>如果不同，则说明目标主机在远程网络，需要将数据包转发给网关路由器</p>
         </li>
         <li>查找路由表（最长前缀匹配）：
           <p>网关路由器会 <strong>逐行遍历</strong> 检查路由表中的每一条记录</p>
-          <p>对于每一条记录，它会将数据包的目的IP地址与该记录中“网络地址”所对应的子网掩码进行“与”（AND）运算</p>
+          <p>对于每一条记录，它会将数据包的目的IP地址与该记录中“网络地址”所对应的地址掩码与 AND 运算</p>
           <p>如果运算结果与该记录的“网络地址”相同，则认为该记录是匹配的</p>
         </li>
         <li>选择最佳匹配并转发：
@@ -156,13 +106,13 @@
         <li>处理无匹配情况：
           <p>如果逐行遍历完整个路由表都没有找到任何匹配的记录，又可以分为2种情况：</p>
           <p>设置了默认路由 0.0.0.0/0，则选择默认路由转发</p>
-          <p>没有设置默认路由：丢弃该数据包，并通常会向源主机发送一个“目的网络不可达”的ICMP错误报告</p>
+          <p>没有设置默认路由：丢弃该数据包，并通常会向源主机发送一个“目的网络不可达”的 ICMP 错误报告</p>
         </li>
       </ol>
       <div class="demo"> 完整过程 Workflow</div>
       <dd><span class="bg">主机发送</span>（通信发起方主机）</dd>
       <ol>
-        <li>将目的IP地址和当前网络的地址掩码相与
+        <li>将目的IP地址和当前网络的地址掩码与 AND 运算
           <p>如果相等，在同一个网，直接交付给主机</p>
           <p>否则，应间接交付给默认网关路由器</p>
         </li>
@@ -182,7 +132,7 @@
       <dd><span class="bg">路由器转发</span></dd>
       <ol>
         <li>收到分组</li>
-        <li>判断目的IP地址是否在本网：当前网络的地址掩码 & 目的IP地址
+        <li>判断目的IP地址是否在本网：目的IP地址与当前网络的地址掩码与 AND 运算
           <p>如果和本网的网络地址/网络前缀相等，则直接交付</p>
           <p>如果不等，则交付给本网默认网关路由器，由其完成后续任务</p>
         </li>
@@ -455,10 +405,8 @@ Router(config-if)#no shutdown</pre>
         <li>直连路由是指路由器接口所直接连接的网络。当主机与路由器的某个接口处于同一网段时，该路由器会自动生成到达此网络的直连路由，无需手动配置，即可实现与该主机的通信（ ）。</li>
         <li>在IP数据包的转发过程中，如果目标IP地址与路由表中某个路由条目的网络地址匹配，路由器就会立即从该条目对应的出接口转发出去（）。</li>
         <li>为了加快转发速度，现在的路由器通常都采用（）进行转发。</li>
-        <div class="alpha">
-          <div>硬件</div>
-          <div>软件</div>
-        </div>
+        <div>A：硬件</div>
+        <div>B：软件</div>
         <li>翻译
           <p>A default gateway in IP networking is a crucial component that allows devices on one network to communicate
             with devices on another network. </p>
@@ -472,12 +420,10 @@ Router(config-if)#no shutdown</pre>
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/router/">Router
-            <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/routing/">Routing (in TCP/IP Networks)
-            <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/gateway/">Gateway in Networking: All You Need to Know
-            <span class="iconfont icon-share"></span></a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/router/">Router</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/routing/">Routing (in TCP/IP Networks)</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/gateway/">Gateway in Networking: All You Need to
+            Know</a></li>
       </ol>
     </dl>
     <div id="footer"></div>

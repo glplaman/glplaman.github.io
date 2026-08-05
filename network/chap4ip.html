@@ -22,20 +22,43 @@
     </header>
     <dl>
       <dt>预热 Warm-up</dt>
-      <dd>查看自己的IP
-        <p>使用系统设置：Win + i，打开"网络和Internet"</p>
-        <p>使用CMD命令行工具：Win + r，输入cmd回车，打开控制台|小黑屋，输入ipconfig并回车</p>
-      </dd>
+      <div class="demo">查看自己的IP</div>
+      <dd>方案1：使用系统设置：Win + i，打开"网络和Internet"</dd>
+      <dd>方案2：使用 CMD 命令行工具：Win + r，输入 cmd 回车，打开控制台|小黑屋，输入 ipconfig 并回车</dd>
       <dt>概述 Overview</dt>
-      <dd>每个互联网节点Node分配一个全世界范围内唯一的标识符 - unique</dd>
-      <dd>长度32bit，由1、0组成</dd>
+      <dd>每个互联网节点 Node 分配一个全世界范围内唯一的标识符 - Unique</dd>
+      <dd>长度 32 bits，由1、0组成</dd>
       <dd>为方便使用，通常使用<span class="warn">点分十进制</span>记法 - in dotted-decimal notation</dd>
-      <dd>每8个bit一组；共4组</dd>
-      <dd>采用两级结构：<span class="warn">网络号、主机号</span></dd>
-      <dd>两个唯一
-        <p>网络号在整个互联网中唯一</p>
-        <p>主机号在所连接的网络中唯一</p>
-      </dd>
+      <dd></dd>
+      <div class="demo">点分十进制表示法</div>
+      <dd>分段：每 8 bits 一组；共 4 组</dd>
+      <dd>十进制：每段从二进制转换为十进制</dd>
+      <table>
+        <caption>点分十进制表示法</caption>
+        <tbody>
+          <tr>
+            <td>IP</td>
+            <td colspan="4">10000000000010110000001100011111</td>
+          </tr>
+          <tr>
+            <td>分段</td>
+            <td>10000000</td>
+            <td>00001011</td>
+            <td>00000011</td>
+            <td>00011111</td>
+          </tr>
+          <tr>
+            <td>十进制</td>
+            <td>128</td>
+            <td>11</td>
+            <td>3</td>
+            <td>31</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>IP 采用两级结构：<span class="warn">网络号、主机号</span></dd>
+      <dd>网络号在整个互联网中唯一</dd>
+      <dd>主机号在所连接的网络中唯一</dd>
       <figure>
         <img src="https://networkencyclopedia.com/wp-content/uploads/2019/09/Ip-address-ipv4.png" alt="">
         <figcaption>IP in dotted-decimal notation</figcaption>
@@ -48,79 +71,13 @@
             <th>主机号 host ID</th>
           </tr>
           <tr>
-            <td>n bit</td>
-            <td>(32-n)bit</td>
-          </tr>
-        </tbody>
-      </table>
-      <table>
-        <caption>点分十进制表示法</caption>
-        <tbody>
-          <tr>
-            <th colspan="4">IP地址</th>
-          </tr>
-          <tr>
-            <td colspan="4">10000000000010110000001100011111</td>
-          </tr>
-          <tr>
-            <td colspan="4">分段</td>
-          </tr>
-          <tr>
-            <td>10000000</td>
-            <td>00001011</td>
-            <td>00000011</td>
-            <td>00011111</td>
-          </tr>
-          <tr>
-            <td colspan="4">点分十进制</td>
-          </tr>
-          <tr>
-            <td>128</td>
-            <td>11</td>
-            <td>3</td>
-            <td>31</td>
+            <td>n bits</td>
+            <td>(32-n) bits</td>
           </tr>
         </tbody>
       </table>
       <dt>分类的IP地址 Classes</dt>
-      <dd>根据固定的网络号前缀区分为</dd>
-      <table>
-        <caption>IP Address Classes</caption>
-        <thead>
-          <tr>
-            <th><strong>Class</strong></th>
-            <th><strong>Possible First Octet</strong></th>
-            <th><strong>Used For</strong></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>A</td>
-            <td>1–126</td>
-            <td>Very large networks</td>
-          </tr>
-          <tr>
-            <td>B</td>
-            <td>128–191</td>
-            <td>Medium to large networks</td>
-          </tr>
-          <tr>
-            <td>C</td>
-            <td>192–223</td>
-            <td>Small networks</td>
-          </tr>
-          <tr>
-            <td>D</td>
-            <td>224–239</td>
-            <td>Multicasting</td>
-          </tr>
-          <tr>
-            <td>E</td>
-            <td>240–255</td>
-            <td>Reserved (experimental)</td>
-          </tr>
-        </tbody>
-      </table>
+      <dd>根据固定的网络号前缀区分为 A、B、C、D、E共5大类；见下表</dd>
       <table>
         <caption>分类IP地址细节</caption>
         <tr>
@@ -160,6 +117,45 @@
           <td colspan="4">保留</td>
         </tr>
       </table>
+      <dd>每个分类的应用定位各不相同；见下表</dd>
+      <table>
+        <caption>IP Address Classes</caption>
+        <thead>
+          <tr>
+            <th><strong>Class</strong></th>
+            <th><strong>Possible First Octet</strong></th>
+            <th><strong>Used For</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>1–126</td>
+            <td>Very large networks</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>128–191</td>
+            <td>Medium to large networks</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>192–223</td>
+            <td>Small networks</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>224–239</td>
+            <td>Multicasting</td>
+          </tr>
+          <tr>
+            <td>E</td>
+            <td>240–255</td>
+            <td>Reserved (experimental)</td>
+          </tr>
+        </tbody>
+      </table>
+      <dd>每个分类的地址范围；见下表</dd>
       <table>
         <caption>地址范围</caption>
         <thead>
@@ -191,46 +187,52 @@
           </tr>
         </tbody>
       </table>
-      <dd>[<span class="iconfont icon-help"></span>] 为什么A类的网络数量要-2？</dd>
+      <dt>网络地址 Network Address</dt>
+      <dd>主机号全为 0 的地址</dd>
+      <dd>不能分配给用户主机使用</dd>
+      <dt>广播地址 Broadcast Address</dt>
+      <dd>主机号全为 1 的地址</dd>
+      <dd>不能分配给用户主机使用</dd>
+      <div class="demo">第一个A类网</div>
       <table>
         <caption>第一个A类网</caption>
         <tr>
-          <th>IP地址</th>
-          <th>说明</th>
           <th>网路地址x</th>
           <th colspan="3">主机地址y</th>
+          <th>IP地址</th>
+          <th>说明</th>
         </tr>
         <tr>
-          <td>1.0.0.0</td>
-          <td>网络地址</td>
           <td>0000 0001</td>
           <td class="warn">0000 0000</td>
           <td class="warn">0000 0000</td>
           <td class="warn">0000 0000</td>
+          <td>1.0.0.0</td>
+          <td>主机位全0；网络地址</td>
         </tr>
         <tr>
-          <td>1.0.0.1</td>
-          <td>最小主机地址</td>
           <td>0000 0001</td>
           <td>0000 0000</td>
           <td>0000 0000</td>
           <td>0000 000<span class="warn">1</span></td>
+          <td>1.0.0.1</td>
+          <td>最小主机地址</td>
         </tr>
         <tr>
-          <td>1.255.255.254</td>
-          <td>最大主机地址</td>
           <td>0000 0001</td>
           <td>1111 1111</td>
           <td>1111 1111</td>
           <td>1111 1110</td>
+          <td>1.255.255.254</td>
+          <td>最大主机地址</td>
         </tr>
         <tr>
-          <td>1.255.255.255</td>
-          <td>广播地址</td>
           <td>0000 0001</td>
           <td class="warn">1111 1111</td>
           <td class="warn">1111 1111</td>
           <td class="warn">1111 1111</td>
+          <td>1.255.255.255</td>
+          <td>主机位全1；广播地址</td>
         </tr>
       </table>
       <dt>有效IP地址 Valid </dt>
@@ -240,8 +242,47 @@
         <li>网络号和主机号不能都是0 - The network ID and host ID cannot both be 0.</li>
         <li>对给定网络，网络号必须唯一 - The host ID must be unique for a given network ID.</li>
       </ul>
+      <dt>公网IP地址 Public Address</dt>
+      <dd>在互联网上标识和定位一个设置</dd>
+      <dd>通常需付费或由ISP提供</dd>
+      <dt>私网IP地址 Private Address</dt>
+      <dd>在私有网络上标识和定位一个设置，如局域网</dd>
+      <dd>必须通过网络地址转换 NAT 才能访问公网</dd>
+      <table>
+        <caption>私网IP地址</caption>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>IP</th>
+            <th>CIDR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>10.0.0.0 - 10.255.255.255</td>
+            <td>10.0.0.0/8</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>172.16.0.0 - 172.31.255.255</td>
+            <td>172.16.0.0/12</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>192.168.0.0 - 192.168.255.255</td>
+            <td>192.168.0.0/16</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>保留IP地址块 Reserved Address</dt>
+      <dd>不能用于普通公网主机分配的特殊 IP 地址或地址段</dd>
+      <dd>回环地址：127.0.0.0/8</dd>
+      <dd>广播地址：255.255.255.255</dd>
+      <dd>默认网络：0.0.0.0/8</dd>
+      <dd>多播地址：224.0.0.0 – 239.255.255.255</dd>
       <dt>环回地址 loopback</dt>
-      <dd>它表示本机自己</dd>
+      <dd>表示本机自己</dd>
       <dd>多用于本地调试，如测试网络栈是否正常</dd>
       <table>
         <caption>环回地址 loopback</caption>
@@ -268,33 +309,6 @@
       <div class="tips">
         ::-1 → 0000:0000:0000:0000:0000:0000:0000:0001
       </div>
-      <dt>基本概念 Concept</dt>
-      <dd>网络地址 Network Address
-        <p>主机号全为 0 的地址</p>
-        <p>不能分配给用户主机使用</p>
-      </dd>
-      <dd>广播地址 Broadcast Address
-        <p>主机号全为 1 的地址</p>
-        <p>不能分配给用户主机使用</p>
-      </dd>
-      <dd>公网IP地址 Public Address
-        <p>在互联网上标识和定位一个设置</p>
-        <P>通常需付费或由ISP提供</P>
-      </dd>
-      <dd>私网IP地址 Private Address
-        <p>在私有网络上标识和定位一个设置，如局域网</p>
-        <P>必须通过网络地址转换 NAT 才能访问公网</P>
-        <p>10.0.0.0 - 10.255.255.255 (10.0.0.0/8)</p>
-        <p>172.16.0.0 - 172.31.255.255 (172.16.0.0/12)</p>
-        <p>192.168.0.0 - 192.168.255.255 (192.168.0.0/16)</p>
-      </dd>
-      <dd>保留IP地址块 Reserved Address
-        <p>不能用于普通公网主机分配的特殊 IP 地址或地址段</p>
-        <p>回环地址：127.0.0.0/8</p>
-        <p>广播地址：255.255.255.255</p>
-        <p>默认网络：0.0.0.0/8</p>
-        <p>多播地址：224.0.0.0 – 239.255.255.255</p>
-      </dd>
       <dt>局限 Limitations</dt>
       <dd>浪费严重 - 不够用</dd>
       <dd>利用率低 - 空闲</dd>
@@ -319,18 +333,19 @@
       <div class="demo"> IP地址可以分为（）和（）两部分。</div>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/internet-protocol-ip/">Internet Protocol (IP)
+        <li><a class="link" href="https://networkencyclopedia.com/internet-protocol-ip/">Internet Protocol (IP)
             <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/ipv4/">IPv4 <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/history-of-ipv6/">History of IPv6 and Its Key Features <span
+        <li><a class="link" href="https://networkencyclopedia.com/ipv4/">IPv4 <span
               class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/ip-address/#google_vignette">IP Address <span
+        <li><a class="link" href="https://networkencyclopedia.com/history-of-ipv6/">History of IPv6 and Its Key Features
+            <span class="iconfont icon-share"></span></a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/ip-address/#google_vignette">IP Address <span
               class="iconfont icon-share"></span></a></li>
-        <li><a
+        <li><a class="link"
             href="https://networkencyclopedia.com/difference-between-a-public-ip-address-and-a-private-ip-address/">Difference
             Between a Public IP Address and a Private IP Address
             <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://www.ip138.com/">IP地址归属地查询 <span class="iconfont icon-share"></span></a></li>
+        <li><a class="link" href="https://www.ip138.com/">IP地址归属地查询 <span class="iconfont icon-share"></span></a></li>
       </ol>
     </dl>
     <div id="footer"></div>
