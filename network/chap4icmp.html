@@ -11,6 +11,20 @@
     header {
       background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/08/intermediary-device-in-computer-networking.webp);
     }
+
+    table {
+      border: none;
+    }
+
+    th {
+      border: none;
+      font-weight: normal;
+    }
+
+    tr th p {
+      display: flex;
+      justify-content: space-between;
+    }
   </style>
 </head>
 
@@ -22,23 +36,34 @@
     </header>
     <dl>
       <dd>ICMP - Internet Control Message Protocol</dd>
-      <dd>网络通信中不可或缺的信使</dd>
+      <dd>整个网际协议 IP 的一个组成部分</dd>
       <dd>虽然它不传输用户数据，但为网络的正常运行、故障排查和性能优化提供了关键支持</dd>
+      <dd>是网络通信中不可或缺的信使</dd>
       <dd>是很多网络诊断工具的<strong>基础</strong></dd>
-      <dd>ICMP 报文加上 IP 首部构成 IP 数据报 - 整个网际协议 IP 的一个组成部分</dd>
+      <dd>ICMP不提供可靠传输机制，无确认、重传机制</dd>
+      <dd>某些ICMP报文（如Ping）可能被防火墙过滤，以防止探测攻击</dd>
+      <dd>ICMP 报文加上 IP 首部构成 IP 数据报</dd>
       <dd>协议号 Protocol 为 1</dd>
       <figure>
         <img src="./imgs/icmp3.png" alt="">
         <figcaption>ICMP</figcaption>
       </figure>
-      <dt>报文格式 Format</dt>
+    </dl>
+    <h2>报文格式 Format</h2>
+    <dl>
       <table>
         <caption>ICMP格式</caption>
         <thead>
           <tr>
-            <th>8bit</th>
-            <th>8bit</th>
-            <th>16bit</th>
+            <th>
+              <p><span>0</span><span>7</span></p>
+            </th>
+            <th>
+              <p><span>8</span><span>15</span></p>
+            </th>
+            <th>
+              <p><span>16</span><span>31</span></p>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -56,7 +81,9 @@
           </tr>
         </tbody>
       </table>
-      <dd>类型 Type（8bit）：报文的功能；差错报告报文和询问报文
+      <dt>类型 Type</dt>
+      <dd>8 bits</dd>
+      <dd>报文的功能；差错报告报文和询问报文
         <p>0：回显应答 Echo Reply</p>
         <p>3：终点不可达 unreachable → 通知源点</p>
         <p>5：重定向 Redirect → 通知源点</p>
@@ -64,7 +91,9 @@
         <p>11：路由超时 Time Exceeded → 丢弃并通知源点</p>
         <p>12：参数错误 Parameter Problem → 丢弃并通知源点</p>
       </dd>
-      <dd>代码 Code（8bit）：是对Type的补充说明，提供更具体的错误或状态信息</dd>
+      <dt>代码 Code</dt>
+      <dd>8 bits</dd>
+      <dd>对Type的补充说明，提供更具体的错误或状态信息</dd>
       <dd>Type = 3（Destination Unreachable）时，Code可以是：
         <p>0：网络不可达</p>
         <p>1：主机不可达</p>
@@ -72,36 +101,40 @@
         <p>3：端口不可达</p>
         <p>4：需要分片，但是设置为禁止分片 DF=1</p>
       </dd>
-      <dd>校验和 CHECKSUM（16bit）
+      <dt>校验和 CHECKSUM</dt>
+      <dd>16 bits</dd>
+      <dd>
         <p>用于检测ICMP报文在传输过程中是否发生错误</p>
         <p>计算方式：对整个ICMP报文（包括头部和数据）进行反码求和（One's Complement Sum）</p>
         <p>发送方计算并填入，接收方重新计算验证</p>
         <p>若校验失败，丢弃该报文</p>
       </dd>
-      <dd>标识 ID（16bit）
+      <dt>标识 ID</dt>
+      <dd>16 bits</dd>
+      <dd>
         <p>用于标识一个特定的进程或会话</p>
         <p>在Echo Request/Reply中，发送方设置ID，接收方原样返回</p>
         <p>通常由应用程序设定（如ping程序使用进程ID或随机数）</p>
         <p>有助于区分来自不同应用的ICMP报文</p>
         <p>若用户同时运行两个ping命令，ID可帮助区分它们的响应</p>
       </dd>
-      <dd>SEQ NUMBER（16bit）
-        <p>序列号，用于跟踪连续的Echo请求</p>
+      <dt>序列号 SEQ NUMBER</dt>
+      <dd>16 bits</dd>
+      <dd>
+        <p>用于跟踪连续的Echo请求</p>
         <p>每次发送新的Echo Request时，序列号递增 - 模加1</p>
         <p>接收方返回相同的序号，便于确认是否收到所有包</p>
         <p>帮助检测丢包或乱序</p>
         <p>Ping的4个探测，ID相同；SEQ递增</p>
+        <p>并非所有ICMP报文都有ID和SEQ NUMBER，仅Echo类报文有</p>
       </dd>
-      <dd>Data（可变长度）
+      <dt>数据 Data</dt>
+      <dd>可变长度</dd>
+      <dd>
         <p>携带实际的数据内容</p>
         <p>对于Echo Request/Reply，通常是任意数据（如时间戳、填充字节等），用于测试往返延迟</p>
         <p>对于其他ICMP报文（如Destination Unreachable），Data部分可能包含引发错误的原始IP报文的头部（最多64byte）</p>
       </dd>
-      <div class="tips">
-        <p>并非所有ICMP报文都有ID和SEQ NUMBER，仅Echo类报文有</p>
-        <p>ICMP不提供可靠传输机制，无确认、重传机制</p>
-        <p>某些ICMP报文（如Ping）可能被防火墙过滤，以防止探测攻击</p>
-      </div>
       <figure>
         <img src="./imgs/icmp4.png" alt="">
         <figcaption>IP封装</figcaption>
@@ -119,8 +152,10 @@
         <figcaption>超时</figcaption>
       </figure>
       <dt>典型应用 Application</dt>
-      <dd><a href="./com_ping.html">ping <span class="iconfont icon-share"></span></a></dd>
-      <dd><a href="./com_tracert.html">trancert <span class="iconfont icon-share"></span></a></dd>
+      <ul>
+        <li><a class="link" href="./com_ping.html">ping</a></li>
+        <li><a class="link" href="./com_tracert.html">trancert</a></li>
+      </ul>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -177,14 +212,12 @@
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/internet-control-message-protocol-icmp/">Internet Control Message
-            Protocol (ICMP) <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://zhuanlan.zhihu.com/p/506381909">当网络工程师用Ping时，Ping在偷摸做啥事儿？ <span
-              class="iconfont icon-share"></span></a></li>
-        <li><a href="https://zhuanlan.zhihu.com/p/610915963">关于Ping命令的七种用法 <span class="iconfont icon-share"></span></a>
-        </li>
-        <li><a href="https://zhuanlan.zhihu.com/p/451177161">ping、arp、tracert、route这四大命令的详细用法，用途很广 <span
-              class="iconfont icon-share"></span></a>
+        <li><a class="link" href="https://networkencyclopedia.com/internet-control-message-protocol-icmp/">Internet
+            Control Message
+            Protocol (ICMP)</a></li>
+        <li><a class="link" href="https://zhuanlan.zhihu.com/p/506381909">当网络工程师用Ping时，Ping在偷摸做啥事儿？</a></li>
+        <li><a class="link" href="https://zhuanlan.zhihu.com/p/610915963">关于Ping命令的七种用法</a></li>
+        <li><a class="link" href="https://zhuanlan.zhihu.com/p/451177161">ping、arp、tracert、route这四大命令的详细用法，用途很广</a>
         </li>
       </ol>
     </dl>

@@ -9,10 +9,7 @@
   <base target="_blank">
   <style>
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--p-m-g);
-      max-width: 550px;
+      max-width: 650px;
       margin: 0 auto;
     }
 
@@ -38,17 +35,52 @@
     <dl>
       <img src="./imgs/rip.png" alt="">
       <dt>概述 Overview</dt>
-      <dd>RIP-Routing Information Protocol</dd>
-      <dd>路由信息协议，属于内部网关路由协议IGP</dd>
+      <dd>RIP - Routing Information Protocol</dd>
+      <dd>路由信息协议，属于内部网关路由协议 IGP</dd>
       <dd>每个路由器维护一组从它自己到其它每一个目的网络的距离向量记录
         <p><strong>基于距离矢量</strong> DV - Distance Vector</p>
-        <p>使用跳数Hop count作为度量Metric到目标网络的距离，即：路由器到目标网络所经过的路由器个数</p>
+        <p>使用跳数 Hop count 作为度量 Metric 到目标网络的距离，即：路由器到目标网络所经过的路由器个数</p>
+        <p>路由器到直连网络的距离为 1</p>
+        <p>每经过一个网络，跳数 +1</p>
+        <p>最大距离 15</p>
+        <p>16 表示不可达</p>
       </dd>
-      <dd>当前版本为RIP2</dd>
+      <dd>当前版本为 RIP2；使用组播地址：224.0.0.9</dd>
+      <dt>特点 Feature</dt>
+      <div class="grid">
+        <div class="item-wrap">
+          <div class="item-pic"><img src="./imgs/icon0.png" alt=""></div>
+          <div class="item-title">简单 Simple
+            <br>易于理解和部署
+            <br>距离越短，路由质量越高
+          </div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="./imgs/icon1.png" alt=""></div>
+          <div class="item-title">小型 Mini
+            <br>最大距离支持15跳
+            <br>适合小型网络
+          </div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="./imgs/icon3.png" alt=""></div>
+          <div class="item-title">动态 Dynamic
+            <br>通过3个定时器动态维护路由
+          </div>
+        </div>
+        <div class="item-wrap">
+          <div class="item-pic"><img src="./imgs/icon2.png" alt=""></div>
+          <div class="item-title">均衡 Balance
+            <br>具备负载均衡
+            <br>当路由等价时，轮流使用路由
+          </div>
+        </div>
+      </div>
       <dt>基本过程 Procedure</dt>
-      <dd>路由器启动后，首先将所有直连网络添加到自己的路由表中 - 非协议动作</dd>
-      <dd>然后使用<strong>UDP</strong>协议，端口520，每隔<span class="warn">30s</span>，以<span
-          class="warn">广播/组播</span>RIP报文的方式，与<span class="warn">相邻</span>路由器交换<span class="warn">全部</span>路由信息 -
+      <dd>路由器启动后：</dd>
+      <dd>首先将所有直连网络添加到自己的路由表中 - 非协议动作</dd>
+      <dd>然后使用<strong>UDP</strong>协议，端口520，每隔<strong>30s</strong>，以<strong>广播/组播</strong> RIP
+        报文的方式，与<strong>相邻</strong>路由器交换<strong>全部</strong>路由信息 -
         分布式路由选择协议
         <p>相邻 - Who</p>
         <p>全部 - What</p>
@@ -58,20 +90,16 @@
         <img src="./imgs/rip13.png" alt="">
         <figcaption>RIP UDP</figcaption>
       </figure>
-      <div class="tips">RIP2使用组播地址：224.0.0.9</div>
-      <dd>路由器到直连网络的距离为1</dd>
-      <dd>每经过一个网络，跳数+1</dd>
-      <dd>最大距离15</dd>
-      <dd>16表示不可达</dd>
-      <div>[ <span class="iconfont icon-keyboard"></span> ] 基于距离的RIP路由表</div>
-      <dd>路由器R1的RIP路由表如下表所示</dd>
-      <dd>请分别给出路由器R2、路由器R3的RIP路由表</dd>
+
+      <div class="demo">基于距离的 RIP 路由表</div>
+      <dd>路由器 R1 的 RIP 路由表如下表所示</dd>
+      <dd>请分别给出路由器 R2、路由器 R3的 RIP 路由表</dd>
       <figure>
         <img src="./imgs/rip1.png" alt="">
-        <figcaption>路由器1的RIP跳数count</figcaption>
+        <figcaption>路由器R1的 RIP 跳数 count</figcaption>
       </figure>
       <table>
-        <caption>R1的RIP路由</caption>
+        <caption>R1 的 RIP路由</caption>
         <tr>
           <td>目标网络</td>
           <td>距离</td>
@@ -98,6 +126,7 @@
           <td>R2</td>
         </tr>
       </table>
+      <dd>答：请在表格中填写</dd>
       <form id="sub-form">
         <table>
           <caption>R2的RIP路由</caption>
@@ -157,51 +186,6 @@
         </table>
       </form>
       <!-- <div><button id="sub-btn">提交 Submit</button></div> -->
-      <dt>定时器 Timer</dt>
-      <dd>更新定时器 Update timer
-        <p>路由器每隔<strong>30s</strong> 向邻居周期性广播/组播自己的完整路由表</p>
-        <p>保证路由信息在网络中持续传播，维持路由表同步</p>
-      </dd>
-      <dd>失效定时器 Invalid timer
-        <p>如果某条路由在 <strong>180s</strong> 秒内未收到更新，则将其标记为无效（不可达），metric 设为 16</p>
-        <p>路由被标记为无效后，继续保留在路由表中一段时间，并持续向邻居通告</p>
-        <p>确保全网所有路由器都收到“该路由已失效”的通知，防止路由黑洞或环路</p>
-      </dd>
-      <dd>删除定时器 Garbage-collection timer
-        <p>被标记为不可达的路由保留 <strong>120s</strong>，之后被彻底删除</p>
-        <p>Cisco 默认实现为总 240 秒，即无效后保留 60 秒</p>
-      </dd>
-      <figure>
-        <img src="./imgs/rip12.png" alt="">
-        <figcaption>定时器</figcaption>
-      </figure>
-      <dt>特点 Feature</dt>
-      <div class="grid">
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon0.png" alt=""></div>
-          <div class="item-title">简单 Simple
-            <br>易于理解和部署；距离越短，路由质量越高
-          </div>
-        </div>
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon1.png" alt=""></div>
-          <div class="item-title">小型 Mini
-            <br>最大距离支持15跳，适合小型网络
-          </div>
-        </div>
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon3.png" alt=""></div>
-          <div class="item-title">动态 Dynamic
-            <br>通过3个定时器动态维护路由
-          </div>
-        </div>
-        <div class="item-wrap">
-          <div class="item-pic"><img src="./imgs/icon2.png" alt=""></div>
-          <div class="item-title">均衡 Balance
-            <br>具备负载均衡；当路由等价时，轮流使用路由
-          </div>
-        </div>
-      </div>
       <dt>更新规则 Rules</dt>
       <dd class="warn">先改造交换/收到的路由信息再维护自己的路由信息</dd>
       <div>1. 改造收到的路由信息</div>
@@ -222,68 +206,67 @@
         <p>新条目大于当前条目，不做处理 - 新条目劣势</p>
       </dd>
       <figure>
-        <img src="../imgs/network/rip/slider13.jpg" alt="">
+        <img src="./imgs/rip0.png" alt="">
         <figcaption>RIP路由更新规则</figcaption>
       </figure>
       <div class="tips">原路由信息包括各计时器均保留</div>
-      <div>[ <span class="iconfont icon-keyboard"></span> ] 已知路由器 R<sub>6</sub> 。现在收到相邻路由器 R<sub>4</sub>
+      <div class="demo">已知路由器 R<sub>6</sub> 。现在收到相邻路由器 R<sub>4</sub>
         发来的路由更新信息，请更新路由器 R<sub>6</sub> 的路由表。</div>
-      <div class="txt-indent">
+      <table>
+        <caption>路由器R<sub>6</sub>路由信息</caption>
+        <thead>
+          <tr>
+            <th>目的网络</th>
+            <th>距离</th>
+            <th>下一跳路由器</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Net2</td>
+            <td>3</td>
+            <td>R<sub>4</sub></td>
+          </tr>
+          <tr>
+            <td>Net3</td>
+            <td>4</td>
+            <td>R<sub>5</sub></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <caption>路由器R<sub>4</sub>路由信息</caption>
+        <thead>
+          <tr>
+            <th>目的网络</th>
+            <th>距离</th>
+            <th>下一跳路由器</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Net1</td>
+            <td>3</td>
+            <td>R<sub>1</sub></td>
+          </tr>
+          <tr>
+            <td>Net2</td>
+            <td>4</td>
+            <td>R<sub>2</sub></td>
+          </tr>
+          <tr>
+            <td>Net3</td>
+            <td>1</td>
+            <td>直接交付</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>答：
+        <div>1. 改造路由器R<sub>4</sub>的信息</div>
+        <dd>目标都为R<sub>4</sub></dd>
+        <dd>跳数都+1</dd>
         <table>
-          <caption>路由器R<sub>6</sub></caption>
-          <thead>
-            <tr>
-              <th>目的网络</th>
-              <th>距离</th>
-              <th>下一跳路由器</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Net2</td>
-              <td>3</td>
-              <td>R<sub>4</sub></td>
-            </tr>
-            <tr>
-              <td>Net3</td>
-              <td>4</td>
-              <td>R<sub>5</sub></td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <caption>路由器R<sub>4</sub></caption>
-          <thead>
-            <tr>
-              <th>目的网络</th>
-              <th>距离</th>
-              <th>下一跳路由器</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Net1</td>
-              <td>3</td>
-              <td>R<sub>1</sub></td>
-            </tr>
-            <tr>
-              <td>Net2</td>
-              <td>4</td>
-              <td>R<sub>2</sub></td>
-            </tr>
-            <tr>
-              <td>Net3</td>
-              <td>1</td>
-              <td>直接交付</td>
-            </tr>
-          </tbody>
-        </table>
-        <dd>改造路由器R<sub>4</sub>的信息
-          <p>目标都为R<sub>4</sub></p>
-          <p>跳数都+1</p>
-        </dd>
-        <table>
-          <caption>改造后的路由信息</caption>
+          <caption>改造后路由器R<sub>4</sub>的路由信息</caption>
           <thead>
             <tr>
               <th>目的网络</th>
@@ -309,7 +292,9 @@
             </tr>
           </tbody>
         </table>
-        <dd>第一个条目 Net1：没有，添加</dd>
+        <div>2. 检查R<sub>4</sub>第一个条目 Net1</div>
+        <dd>R<sub>6</sub>没有</dd>
+        <dd>添加到R<sub>6</sub></dd>
         <table>
           <tr>
             <td>Net1</td>
@@ -317,7 +302,9 @@
             <td>R<sub>4</sub></td>
           </tr>
         </table>
-        <dd>第二个条目 Net2：都经过R<sub>4</sub>转发，之前需要3跳，现在需要5跳，说明网络发生了变化，应更新</dd>
+        <div>3. 检查R<sub>4</sub>第二个条目 Net2</div>
+        <dd>都经过R<sub>4</sub>转发，之前R<sub>6</sub>需要3跳，现在R<sub>4</sub>需要5跳</dd>
+        <dd>说明网络发生了变化，应更新为 5</dd>
         <table>
           <tr>
             <td>Net2</td>
@@ -325,7 +312,9 @@
             <td>R<sub>4</sub></td>
           </tr>
         </table>
-        <dd>第三个条目 Net3：之前需要4跳；现在只需要2跳；应更新</dd>
+        <div>4. 检查R<sub>4</sub>第三个条目 Net3</div>
+        <dd>之前R<sub>6</sub>需要4跳；现在R<sub>4</sub>只需要2跳</dd>
+        <dd>应更新为 2</dd>
         <table>
           <tr>
             <td>Net3</td>
@@ -335,7 +324,7 @@
         </table>
         <dd>最终路由器R<sub>6</sub>路由表为</dd>
         <table>
-          <caption>路由器R<sub>6</sub></caption>
+          <caption>路由器R<sub>6</sub>路由信息</caption>
           <thead>
             <tr>
               <th>目的网络</th>
@@ -366,74 +355,74 @@
           </tbody>
         </table>
       </div>
-      <div>[ <span class="iconfont icon-keyboard"></span> ] 已知路由器D的路由表；路由器C的路由表；分析：经过C的路由交换后，D的路由表信息</div>
-      <div class="txt-indent">
-        <table>
-          <caption>路由器D</caption>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-          </tr>
-          <tr>
-            <td>N1</td>
-            <td>7</td>
-            <td>A</td>
-          </tr>
-          <tr>
-            <td>N2</td>
-            <td>2</td>
-            <td>C</td>
-          </tr>
-          <tr>
-            <td>N6</td>
-            <td>8</td>
-            <td>F</td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>4</td>
-            <td>E</td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>4</td>
-            <td>F</td>
-          </tr>
-        </table>
-        <table>
-          <caption>路由器C</caption>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-          </tr>
-          <tr>
-            <td>N2</td>
-            <td>4</td>
-            <td>??</td>
-          </tr>
-          <tr>
-            <td>N3</td>
-            <td>8</td>
-            <td>??</td>
-          </tr>
-          <tr>
-            <td>N6</td>
-            <td>4</td>
-            <td>??</td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>3</td>
-            <td>??</td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>5</td>
-            <td>??</td>
-          </tr>
-        </table>
+      <div class="demo">已知路由器D的路由表；路由器C的路由表；分析：经过C的路由交换后，D的路由表信息</div>
+      <table>
+        <caption>路由器D</caption>
+        <tr>
+          <td>目标网络</td>
+          <td>距离</td>
+          <td>下一跳</td>
+        </tr>
+        <tr>
+          <td>N1</td>
+          <td>7</td>
+          <td>A</td>
+        </tr>
+        <tr>
+          <td>N2</td>
+          <td>2</td>
+          <td>C</td>
+        </tr>
+        <tr>
+          <td>N6</td>
+          <td>8</td>
+          <td>F</td>
+        </tr>
+        <tr>
+          <td>N8</td>
+          <td>4</td>
+          <td>E</td>
+        </tr>
+        <tr>
+          <td>N9</td>
+          <td>4</td>
+          <td>F</td>
+        </tr>
+      </table>
+      <table>
+        <caption>路由器C</caption>
+        <tr>
+          <td>目标网络</td>
+          <td>距离</td>
+          <td>下一跳</td>
+        </tr>
+        <tr>
+          <td>N2</td>
+          <td>4</td>
+          <td>??</td>
+        </tr>
+        <tr>
+          <td>N3</td>
+          <td>8</td>
+          <td>??</td>
+        </tr>
+        <tr>
+          <td>N6</td>
+          <td>4</td>
+          <td>??</td>
+        </tr>
+        <tr>
+          <td>N8</td>
+          <td>3</td>
+          <td>??</td>
+        </tr>
+        <tr>
+          <td>N9</td>
+          <td>5</td>
+          <td>??</td>
+        </tr>
+      </table>
+      <div>答：
         <dd>路由器D收到C发送的RIP广播报文，并进行改造：所有的距离+1；且下一跳路由都是C</dd>
         <table>
           <caption>改造后的路由信息</caption>
@@ -678,15 +667,34 @@
           </tr>
         </table>
       </div>
-      <dt>特点二 Feature</dt>
-      <dd>好消息传的快
-        <p>指网络拓扑变得更好，比如新链路建立、新网络可达、或到达某个网络的路径变短了</p>
-        <p>总是选择距离最短的路径</p>
+      <dt>定时器 Timer</dt>
+      <dd>更新定时器 Update timer
+        <p>路由器每隔<strong>30s</strong> 向邻居周期性广播/组播自己的完整路由表</p>
+        <p>保证路由信息在网络中持续传播，维持路由表同步</p>
       </dd>
-      <dd>坏消息传的慢 - 慢收敛
-        <p>指网络拓扑变差，比如链路断开、网络不可达、或到达某个网络的路径变长了</p>
-        <p><strong>可能</strong> 基于邻居的过时信息产生错误路由，导致错误信息在邻居间循环，距离不断增加直到达到16跳的上限</p>
+      <dd>失效定时器 Invalid timer
+        <p>如果某条路由在 <strong>180s</strong> 秒内未收到更新，则将其标记为无效（不可达），metric 设为 16</p>
+        <p>路由被标记为无效后，继续保留在路由表中一段时间，并持续向邻居通告</p>
+        <p>确保全网所有路由器都收到“该路由已失效”的通知，防止路由黑洞或环路</p>
       </dd>
+      <dd>删除定时器 Garbage-collection timer
+        <p>被标记为不可达的路由保留 <strong>120s</strong>，之后被彻底删除</p>
+        <p>Cisco 默认实现为总 240 秒，即无效后保留 60 秒</p>
+      </dd>
+      <figure>
+        <img src="./imgs/rip12.png" alt="">
+        <figcaption>定时器</figcaption>
+      </figure>
+    </dl>
+    <h2>路由特点 Feature</h2>
+    <dl>
+      <dt>好消息传的快</dt>
+      <dd>指网络拓扑变得更好，比如新链路建立、新网络可达、或到达某个网络的路径变短了</dd>
+      <dd>总是选择距离最短的路径</dd>
+      <dt>坏消息传的慢</dt>
+      <dd>慢收敛</dd>
+      <dd>指网络拓扑变差，比如链路断开、网络不可达、或到达某个网络的路径变长了</dd>
+      <dd><strong>可能</strong> 基于邻居的过时信息产生错误路由，导致错误信息在邻居间循环，距离不断增加直到达到16跳的上限</dd>
       <figure>
         <img src="./imgs/rip7.png" alt="">
         <figcaption>路由正常</figcaption>
@@ -769,7 +777,7 @@ Known via "rip", distance 120, metric 1
     </dl>
     <h2>实操 Drill</h2>
     <dl>
-      <div>[ <span class="iconfont icon-keyboard"></span> ] RIP基本应用 <a href="./pt/rip.pkt" download>点击下载PT文件
+      <div class="demo">RIP基本应用 <a href="./pt/rip.pkt" download>点击下载PT文件
           <span class="iconfont icon-filedownload"></span></a></div>
       <ol>
         <li>网络规划；拓扑如下
@@ -947,16 +955,15 @@ R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/routing-information-protocol-rip/">Routing Information
-            Protocol (RIP) <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://www.rfc-editor.org/rfc/rfc2453.html">RFC 2453 <span class="iconfont icon-share"></span></a>
-        </li>
-        <li><a
+        <li><a class="link" href="https://networkencyclopedia.com/routing-information-protocol-rip/">Routing Information
+            Protocol (RIP)</a></li>
+        <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc2453.html">RFC 2453</a> </li>
+        <li><a class="link"
             href="https://www.bilibili.com/video/BV1yt411q77j/?spm_id_from=888.80997.embed_other.whitelist&t=7.457416&bvid=BV1yt411q77j">RIP仿真实验
-            <span class="iconfont icon-videocam"></span></a></li>
-        <li><a
+          </a></li>
+        <li><a class="link"
             href="https://www.bilibili.com/video/BV1YA411P7tm/?spm_id_from=888.80997.embed_other.whitelist&t=4.346817&bvid=BV1YA411P7tm">视频解读
-            <span class="iconfont icon-videocam"></span></a></a>
+          </a></a>
         </li>
       </ol>
     </dl>
