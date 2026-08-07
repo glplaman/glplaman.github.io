@@ -20,7 +20,8 @@
         <img src="./imgs/dns4.png" alt="">
         <figcaption>mindmap</figcaption>
       </figure>
-      <dt>DNS - Domain Name System</dt>
+      <dt>概述 Overview</dt>
+      <dd>DNS - Domain Name System</dd>
       <dd>名称服务器：负责将域名解析为对应的IP地址
         <P>翻译官</P>
         <P>通信录</P>
@@ -43,7 +44,7 @@
         <img src="./imgs/dns9.png" alt="">
         <figcaption>DNS</figcaption>
       </figure>
-      <dd>基本过程如下</dd>
+      <dt>详细过程 Details</dt>
       <ol>
         <li>查看浏览器本地缓存</li>
         <figure>
@@ -75,6 +76,228 @@
         互联网的名字空间是按照机构的组织来划分的，与物理的网络无关，与 IP 地址中的“子网”也没有关系
       </div>
     </dl>
+    <h2>域名 Domain Name</h2>
+    <dl>
+      <dd>域名是互联网上用于唯一标识主机或网络服务的层次化逻辑名称</dd>
+      <dd>它是 IP 地址的人性化替代，便于用户记忆和使用（如 www.hualixy.edu.cn 代替 113.108.xx.xx）</dd>
+      <dd>域名属于逻辑标识，不反映物理位置或网络拓扑</dd>
+      <dd>域名层级是从右往左数：根域名、顶级域名、二级域名、三级域名</dd>
+      <dd>每级域名可以有自己的子域名 subdomain</dd>
+      <dd>由标号 (label) 序列组成，各标号之间用点（.）隔开，各标号分别代表不同级别的域名</dd>
+      <dd>每个标号不超过63字符；整个域名（含分隔点）不超过 253 字节</dd>
+      <dd>标号不区分大小写</dd>
+      <dd>总长度不超过255个字符</dd>
+      <div class="txt-xl txt-center">三级域名 · 二级域名 · 顶级域名 .</div>
+      <dt>域名的作用 Value</dt>
+      <dd>定位服务：通过 DNS 解析为 IP 地址，实现对服务器的访问</dd>
+      <dd>组织标识：体现机构属性（如 .edu 表示教育，.gov 表示政府）</dd>
+      <dd>服务划分：通过子域名区分 Web、邮件、数据库等不同功能</dd>
+      <dd>品牌建设：作为机构在互联网上的身份标识</dd>
+      <figure>
+        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20251003115622033440/root.webp" alt="">
+        <figcaption>分层的域名</figcaption>
+      </figure>
+      <dt>根域名 Root Domain</dt>
+      <dd>域名系统的最顶层，用一个空标签（null label）表示</dd>
+      <dd>在 DNS 协议中以 .（点）结尾标识</dd>
+      <dd>系统为用户做了兼容，域名末尾的 <span class="warn">根域名 .</span> 一般不需要输入</dd>
+      <pre>baidu.com</pre>
+      <dd>DNS 解析为</dd>
+      <pre>baidu.com.</pre>
+      <dd>所有域名最终都归属到根</dd>
+      <dd>根由全球 13 组根服务器（实际为任播集群）维护</dd>
+      <dt>顶级域名 TLD - Top Lever Domain</dt>
+      <dd>顶级域名是根域名下的第一级，分为以下几类</dd>
+      <p>1. 通用顶级域名 gTLD - Generic TLD</p>
+      <dd>面向全球开放注册（部分有限制）</dd>
+      <dd>由 ICANN 统一协调管理</dd>
+      <table>
+        <caption>通用顶级域名 gTLD</caption>
+        <thead>
+          <tr>
+            <th>代码</th>
+            <th>含义</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>.com</td>
+            <td>公司</td>
+          </tr>
+          <tr>
+            <td>.net</td>
+            <td>网络服务机构</td>
+          </tr>
+          <tr>
+            <td>.org</td>
+            <td>非盈利机构</td>
+          </tr>
+          <tr>
+            <td>.gov</td>
+            <td>政府部门</td>
+          </tr>
+          <tr>
+            <td>.mil</td>
+            <td>军事部门</td>
+          </tr>
+          <tr>
+            <td>.edu</td>
+            <td>教育机构</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>2. 国家顶级域名 nTLD - nation TLD</p>
+      <dd>由各国或地区互联网管理机构负责运营</dd>
+      <table>
+        <caption>国家顶级域名 nTLD</caption>
+        <thead>
+          <tr>
+            <th>代码</th>
+            <th>国家</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>.cn</td>
+            <td>中国</td>
+          </tr>
+          <tr>
+            <td>.us</td>
+            <td>美国</td>
+          </tr>
+          <tr>
+            <td>.uk</td>
+            <td>英国</td>
+          </tr>
+          <tr>
+            <td>.jp</td>
+            <td>日本</td>
+          </tr>
+          <tr>
+            <td>.de</td>
+            <td>德国</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>3. 基础结构域名</p>
+      <dd>顶级域名只有一个，即arpa，用于反向域名解析，因此又称反向域名</dd>
+      <dd>不面向公众注册，仅由 IETF 和 DNS 系统内部使用</dd>
+      <dt>二级域名 SLD - Second-Level Domain</dt>
+      <dd>二级域名位于顶级域名之下，其命名规则由各国或 TLD 管理机构自行制定</dd>
+      <dd>我国域名中心 <a href="https://www.cnnic.net.cn/">CNNIC - China Internet Network Information Center</a> </dd>
+      <div>1. 类别域名</div>
+      <dd>以中国 .cn 为例</dd>
+      <table>
+        <caption>类别域名</caption>
+        <thead>
+          <tr>
+            <th>代码</th>
+            <th>适用</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>.ac.cn</td>
+            <td>科研机构</td>
+          </tr>
+          <tr>
+            <td>.com.cn</td>
+            <td>工商金融企业</td>
+          </tr>
+          <tr>
+            <td>.net.cn</td>
+            <td>网络服务机构ISP</td>
+          </tr>
+          <tr>
+            <td>.org.cn</td>
+            <td>非盈利机构</td>
+          </tr>
+          <tr>
+            <td>.gov.cn</td>
+            <td>政府部门</td>
+          </tr>
+          <tr>
+            <td>.mil.cn</td>
+            <td>军事部门</td>
+          </tr>
+          <tr>
+            <td>.edu.cn</td>
+            <td>教育机构</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>2. 行政区域名</div>
+      <dd>采用两位拼音缩写，覆盖省、自治区、直辖市、特别行政区</dd>
+
+      <table>
+        <caption>行政区域名</caption>
+        <thead>
+          <tr>
+            <th>代码</th>
+            <th>地区</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>.bj.cn</td>
+            <td>北京</td>
+          </tr>
+          <tr>
+            <td>.js.cn</td>
+            <td>江苏</td>
+          </tr>
+          <tr>
+            <td>.sh.cn</td>
+            <td>上海</td>
+          </tr>
+          <tr>
+            <td>.gd.cn</td>
+            <td>广东</td>
+          </tr>
+          <tr>
+            <td>.hk.cn</td>
+            <td>香港</td>
+          </tr>
+          <tr>
+            <td>.tw.cn</td>
+            <td>台湾</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">域名层次</div>
+      <dd>大树小站 glplaman.github.io</dd>
+      <dd>华立学院 www.hualixy.edu.cn</dd>
+      <table>
+        <caption>域名层次</caption>
+        <thead>
+          <tr>
+            <th>三级域名</th>
+            <th>二级域名</th>
+            <th>顶级域名</th>
+            <th>根域名</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>glplaman</td>
+            <td>github</td>
+            <td>io</td>
+            <td>.</td>
+          </tr>
+          <tr>
+            <td>huali</td>
+            <td>edu</td>
+            <td>cn</td>
+            <td>.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>www 只是一个历史遗留的约定俗成的子域名，最初用于标识万维网服务 WWW - World Wide Web</p>
+        <p>现在很多网站已经不再强制使用 www，比如你可以直接访问 https://baidu.com 而不是 www.baidu.com</p>
+        <p>如果确定层级，应根据它在具体域名中的层级位置</p>
+      </div>
+    </dl>
     <h2>域名服务器 Server</h2>
     <dl>
       <!-- <dd>在域名的每一层都会有一个域名服务器 DNS Server</dd>
@@ -89,7 +312,7 @@
         <p>内地约有 30–35 个，覆盖北京、上海、广州、杭州、武汉、西安等多个城市</p>
       </dd>
       <dd>知道所有顶级域名服务器的域名和对应的IP地址</dd>
-      <dd>它 <span class="warn">不直接解析</span> IP地址，而是告诉对方应该找哪个顶级域名服务器</dd>
+      <dd><span class="warn">不直接解析</span> IP地址，而是告诉对方应该找哪个顶级域名服务器</dd>
       <table>
         <caption>根域名服务器</caption>
         <thead>
@@ -199,230 +422,6 @@
         <p>根服务器 → 返回 TLD 服务器地址</p>
         <p>TLD 服务器 → 返回权威服务器地址</p>
         <p>权威服务器 → 返回最终 IP</p>
-      </div>
-    </dl>
-    <h2>域名 Domain Name</h2>
-    <dl>
-      <dd>域名是互联网上用于唯一标识主机或网络服务的层次化逻辑名称</dd>
-      <dd>它是 IP 地址的人性化替代，便于用户记忆和使用（如 www.hualixy.edu.cn 代替 113.108.xx.xx）</dd>
-      <dd>域名属于逻辑标识，不反映物理位置或网络拓扑</dd>
-      <dd>域名层级是从右往左数：根域名、顶级域名、二级域名、三级域名</dd>
-      <dd>每级域名可以有自己的子域名 subdomain</dd>
-      <dd>由标号 (label) 序列组成，各标号之间用点（.）隔开，各标号分别代表不同级别的域名</dd>
-      <dd>每个标号不超过63字符；整个域名（含分隔点）不超过 253 字节</dd>
-      <dd>标号不区分大小写</dd>
-      <dd>总长度不超过255个字符</dd>
-      <div class="txt-xl txt-center">三级域名 · 二级域名 · 顶级域名 .</div>
-      <dt>域名的作用 Value</dt>
-      <dd>定位服务：通过 DNS 解析为 IP 地址，实现对服务器的访问</dd>
-      <dd>组织标识：体现机构属性（如 .edu 表示教育，.gov 表示政府）</dd>
-      <dd>服务划分：通过子域名区分 Web、邮件、数据库等不同功能</dd>
-      <dd>品牌建设：作为机构在互联网上的身份标识</dd>
-      <figure>
-        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20251003115622033440/root.webp" alt="">
-        <figcaption>分层的域名</figcaption>
-      </figure>
-      <dt>根域名 Root Domain</dt>
-      <dd>域名系统的最顶层，用一个空标签（null label）表示</dd>
-      <dd>在 DNS 协议中以 .（点）结尾标识</dd>
-      <dd>系统为用户做了兼容，域名末尾的 <span class="warn">根域名.</span> 一般不需要输入</dd>
-      <pre>baidu.com</pre>
-      <dd>DNS 解析为</dd>
-      <pre>baidu.com.</pre>
-      <dd>所有域名最终都归属到根</dd>
-      <dd>根由全球 13 组根服务器（实际为任播集群）维护</dd>
-      <dt>顶级域名 TLD - Top Lever Domain</dt>
-      <dd>顶级域名是根域名下的第一级，分为以下几类</dd>
-      <p>1. 通用顶级域名 gTLD - Generic TLD</p>
-      <dd>面向全球开放注册（部分有限制）</dd>
-      <dd>由 ICANN 统一协调管理</dd>
-      <table>
-        <caption>通用顶级域名 gTLD</caption>
-        <thead>
-          <tr>
-            <th>代码</th>
-            <th>含义</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>.com</td>
-            <td>公司</td>
-          </tr>
-          <tr>
-            <td>.net</td>
-            <td>网络服务机构</td>
-          </tr>
-          <tr>
-            <td>.org</td>
-            <td>非盈利机构</td>
-          </tr>
-          <tr>
-            <td>.gov</td>
-            <td>政府部门</td>
-          </tr>
-          <tr>
-            <td>.mil</td>
-            <td>军事部门</td>
-          </tr>
-          <tr>
-            <td>.edu</td>
-            <td>教育机构</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>2. 国家顶级域名 nTLD - nation TLD</p>
-      <dd>由各国或地区互联网管理机构负责运营</dd>
-      <table>
-        <caption>国家顶级域名 nTLD</caption>
-        <thead>
-          <tr>
-            <th>代码</th>
-            <th>国家</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>.cn</td>
-            <td>中国</td>
-          </tr>
-          <tr>
-            <td>.us</td>
-            <td>美国</td>
-          </tr>
-          <tr>
-            <td>.uk</td>
-            <td>英国</td>
-          </tr>
-          <tr>
-            <td>.jp</td>
-            <td>日本</td>
-          </tr>
-          <tr>
-            <td>.de</td>
-            <td>德国</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>3. 基础结构域名</p>
-      <dd>顶级域名只有一个，即arpa，用于反向域名解析，因此又称反向域名</dd>
-      <dd>不面向公众注册，仅由 IETF 和 DNS 系统内部使用</dd>
-      <dt>二级域名 SLD - Second-Level Domain</dt>
-      <dd>二级域名位于顶级域名之下，其命名规则由各国或 TLD 管理机构自行制定</dd>
-      <dd>我国域名中心 <a href="https://www.cnnic.net.cn/">CNNIC <span class="iconfont icon-share"></span></a> - China
-        Internet Network Information
-        Center</dd>
-      <p>1. 类别域名</p>
-      <dd>以中国 .cn 为例</dd>
-      <table>
-        <caption>类别域名</caption>
-        <thead>
-          <tr>
-            <th>代码</th>
-            <th>适用</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>.ac.cn</td>
-            <td>科研机构</td>
-          </tr>
-          <tr>
-            <td>.com.cn</td>
-            <td>工商金融企业</td>
-          </tr>
-          <tr>
-            <td>.net.cn</td>
-            <td>网络服务机构ISP</td>
-          </tr>
-          <tr>
-            <td>.org.cn</td>
-            <td>非盈利机构</td>
-          </tr>
-          <tr>
-            <td>.gov.cn</td>
-            <td>政府部门</td>
-          </tr>
-          <tr>
-            <td>.mil.cn</td>
-            <td>军事部门</td>
-          </tr>
-          <tr>
-            <td>.edu.cn</td>
-            <td>教育机构</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>2. 行政区域名</p>
-      <dd>采用两位拼音缩写，覆盖省、自治区、直辖市、特别行政区</dd>
-
-      <table>
-        <caption>行政区域名</caption>
-        <thead>
-          <tr>
-            <th>代码</th>
-            <th>地区</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>.bj.cn</td>
-            <td>北京</td>
-          </tr>
-          <tr>
-            <td>.js.cn</td>
-            <td>江苏</td>
-          </tr>
-          <tr>
-            <td>.sh.cn</td>
-            <td>上海</td>
-          </tr>
-          <tr>
-            <td>.gd.cn</td>
-            <td>广东</td>
-          </tr>
-          <tr>
-            <td>.hk.cn</td>
-            <td>香港</td>
-          </tr>
-          <tr>
-            <td>.tw.cn</td>
-            <td>台湾</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="demo"> 域名层次</div>
-      <dd>大树小站 glplaman.github.io</dd>
-      <dd>华立学院 www.hualixy.edu.cn</dd>
-      <table>
-        <caption>域名层次</caption>
-        <thead>
-          <tr>
-            <th>三级域名</th>
-            <th>二级域名</th>
-            <th>顶级域名</th>
-            <th>根域名</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>glplaman</td>
-            <td>github</td>
-            <td>io</td>
-            <td>.</td>
-          </tr>
-          <tr>
-            <td>huali</td>
-            <td>edu</td>
-            <td>cn</td>
-            <td>.</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="tips">
-        <p>www 只是一个历史遗留的约定俗成的子域名，最初用于标识万维网服务 WWW - World Wide Web</p>
-        <p>现在很多网站已经不再强制使用 www，比如你可以直接访问 https://baidu.com 而不是 www.baidu.com</p>
-        <p>如果确定层级，应根据它在具体域名中的层级位置</p>
       </div>
     </dl>
     <h2>域名解析 Resolution</h2>
@@ -559,40 +558,41 @@
         <li>DNS 查询过程中，本地域名服务器通常使用递归查询方式向根域名服务器发起请求。（）</li>
         <!-- x -->
         <li>有关域名服务器，说法错误的是（）。</li>
-        <div class="alpha">
-          <div>可分为：根域名服务器、顶级域名服务器、权限域名服务器和本地域名服务器</div>
-          <div>根域名服务器并不解析域名，而是把待查域名对应的顶级域名服务器的IP地址作为结果返回</div>
-          <div>除根域名服务器外，其它域名服务器均能返回待查域名对应的IP地址</div>
-          <div>本地域名服务器的IP地址应该直接配置在需要解析域名的主机中</div>
-        </div>
+        <div>A：可分为：根域名服务器、顶级域名服务器、权限域名服务器和本地域名服务器</div>
+        <div>B：根域名服务器并不解析域名，而是把待查域名对应的顶级域名服务器的IP地址作为结果返回</div>
+        <div>C：除根域名服务器外，其它域名服务器均能返回待查域名对应的IP地址</div>
+        <div>D：本地域名服务器的IP地址应该直接配置在需要解析域名的主机中</div>
         <!-- 顶级域名服务器除外 -->
-        <li>在 DNS 系统中，负责管理顶级域名（如 .com、.cn）的服务器是（）。
-          <div class="alpha">
-            <div>根域名服务器</div>
-            <div>顶级域名服务器（TLD）</div>
-            <div>权威域名服务器</div>
-            <div>本地域名服务器</div>
-          </div>
-        </li>
+        <li>在 DNS 系统中，负责管理顶级域名（如 .com、.cn）的服务器是（）。</li>
+        <div>A：根域名服务器</div>
+        <div>B：顶级域名服务器（TLD）</div>
+        <div>C：权威域名服务器</div>
+        <div>D：本地域名服务器</div>
         <!-- B -->
-        <li>当用户在浏览器中输入 www.example.com 时，首先被查询的 DNS 服务器通常是（）。
-          <div class="alpha">
-            <div>根域名服务器</div>
-            <div>.com 顶级域名服务器</div>
-            <div>用户配置的本地域名服务器</div>
-            <div>example.com 的权威域名服务器</div>
-          </div>
-        </li>
+        <li>当用户在浏览器中输入 www.example.com 时，首先被查询的 DNS 服务器通常是（）。</li>
+        <div>A：根域名服务器</div>
+        <div>B：.com 顶级域名服务器</div>
+        <div>C：用户配置的本地域名服务器</div>
+        <div>D：example.com 的权威域名服务器</div>
         <!-- C -->
-        <li>DNS 查询中，迭代查询的特点是（）。
-          <div class="alpha">
-            <div>服务器必须返回最终答案，否则继续代为查询</div>
-            <div>服务器若不知道答案，会返回一个“知道该去问谁”的服务器地址</div>
-            <div>客户端直接向根服务器发起查询</div>
-            <div>所有查询都通过 TCP 完成</div>
-          </div>
-        </li>
+        <li>DNS 查询中，迭代查询的特点是（）。</li>
+        <div>A：服务器必须返回最终答案，否则继续代为查询</div>
+        <div>B：服务器若不知道答案，会返回一个“知道该去问谁”的服务器地址</div>
+        <div>C：客户端直接向根服务器发起查询</div>
+        <div>D：所有查询都通过 TCP 完成</div>
         <!-- B -->
+        <li>假设所有域名服务器均采用递归查询方式进行域名解析。当某台主机访问规范域名为www.abc.xyz.com的网站时，由某台域名服务器完成解析，则可能发出DNS查询的最少和最多次数分别是（）。</li>
+        <div>A：0、3 </div>
+        <div>B：1、3 </div>
+        <div>C：0、4</div>
+        <div>D：1、4 </div>
+        <!-- C：本地缓存如果有，不需要查询；向根/、向com、向xyz.com、向abc.xyz.com -->
+        <li>如果本地域名服务器没有缓存，采用递归方式解析某台主机域名时，用户主机、本地域名服务器发送的域名请求消息数为（）。</li>
+        <div>A：一条、一条</div>
+        <div>B：一条、多条</div>
+        <div>C：多条、一条</div>
+        <div>D：多条、多条</div>
+        <!-- A：递归只需请求1次就可以拿到结果 -->
         <li>翻译
           <p>DNS is a hierarchical and distributed naming system that translates domain names into IP addresses. When
             you type a domain name like "www.geeksforgeeks.org" into your browser, DNS ensures that the request reaches
@@ -621,8 +621,7 @@
           <p>Final Response: The DNS resolver sends the IP address to your computer, allowing it to connect to the
             website’s server and load the page.</p>
         </li>
-        <li>
-          翻译
+        <li>翻译
           <p>Root DNS Servers: These are the highest-level DNS servers and know where to find the TLD servers. They are
             crucial for directing DNS queries to the correct locations.
           </p>
@@ -631,35 +630,18 @@
           <p>Authoritative DNS Servers: These are the servers that store the actual DNS records for domain names. They
             are responsible for providing the correct IP addresses that allow users to reach websites.</p>
         </li>
-        <li>假设所有域名服务器均采用递归查询方式进行域名解析。当某台主机访问规范域名为www.abc.xyz.com的网站时，由某台域名服务器完成解析，则可能发出DNS查询的最少和最多次数分别是（）。</li>
-        <div class="alpha">
-          <div>0、3 </div>
-          <div>1、3 </div>
-          <div>0、4</div>
-          <div>1、4 </div>
-        </div>
-        <!-- C：本地缓存如果有，不需要查询；向根/、向com、向xyz.com、向abc.xyz.com -->
-        <li>如果本地域名服务器没有缓存，采用递归方式解析某台主机域名时，用户主机、本地域名服务器发送的域名请求消息数为（）。
-        </li>
-        <div class="alpha">
-          <div>一条、一条</div>
-          <div>一条、多条</div>
-          <div>多条、一条</div>
-          <div>多条、多条</div>
-        </div>
-        <!-- A：递归只需请求1次就可以拿到结果 -->
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://networkencyclopedia.com/dns-server/">DNS Server <span
-              class="iconfont icon-share"></span></a></li>
-        <li><a href="https://narodev.com/2019/04/11/understanding-the-dns-process-how-website-is-found/">DNS
-            <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://dnschecker.org/">CHECK DNS PROPAGATION <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://zhuanlan.zhihu.com/p/436199902">通俗易懂，了解什么是DNS及查询过程？ <span
-              class="iconfont icon-share"></span></a></li>
-        <li><a href="https://www.geeksforgeeks.org/ethical-hacking/what-is-recursive-dns/">What is Recursive DNS? <span
-              class="iconfont icon-share"></span></a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/dns-server/">DNS Server </a></li>
+        <li><a class="link"
+            href="https://narodev.com/2019/04/11/understanding-the-dns-process-how-website-is-found/">DNS
+          </a></li>
+        <li><a class="link" href="https://dnschecker.org/">CHECK DNS PROPAGATION </a></li>
+        <li><a class="link" href="https://zhuanlan.zhihu.com/p/436199902">通俗易懂，了解什么是DNS及查询过程？ </a></li>
+        <li><a class="link" href="https://www.geeksforgeeks.org/ethical-hacking/what-is-recursive-dns/">What is
+            Recursive DNS? </a>
+        </li>
       </ol>
     </dl>
     <div id="footer"></div>
