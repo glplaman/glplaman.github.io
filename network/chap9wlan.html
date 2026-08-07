@@ -41,38 +41,40 @@
         <img src="./imgs/wlan0.png" alt="">
         <figcaption>Architecture</figcaption>
       </figure>
-      <dt>基本服务集 BSS</dt>
-      <dd>Basic Service Set</dd>
+      <dt>移动站 MS(Mobile Station)</dt>
+      <dd>连接到 WLAN 的终端设备，如笔记本电脑、手机等</dd>
+      <dd>移动站 A 漫游到位置 A1 时，选择和信号较强的一个 AP 联系。当漫游到位置 A2 时，就只能和 AP2 联系</dd>
+      <dd>移动站只要能够和其中一个 AP 联系上，就可以一直保持与另一个移动站 B 的通信</dd>
+      <div class="tips">
+        <p>终端设备 Endpoint 是更广泛的概念，不是 IEEE 802.11 协议的标准术语</p>
+        <p>部分资料使用 MP(Mobile Point) 指代 MS</p>
+      </div>
+      <dt>接入点 AP(Access Point)</dt>
+      <dd>也称 WAP(Wireless Access Point)</dd>
+      <dd>每个 AP 负责管理其所在 BSS 内的 MS 设备</dd>
+      <dd>每个 AP 分配一个唯一的 48 位 MAC 地址，名称是基本服务集标识符 BSSID</dd>
+      <dd>每个 AP 分配一个通信信道</dd>
+      <dt>基本服务集 BSS(Basic Service Set)</dt>
       <dd>无线局域网的最小构件</dd>
-      <dd>BSS 包括一个接入点 AP(Access Point) 和若干个移动站 MP(Mobile Point)</dd>
+      <dd>BSS 包括一个接入点 AP 和若干个移动站 MP</dd>
       <dd>BSS 所覆盖的地理范围叫做一个基本服务区 BSA(Basic Service Area)</dd>
       <dd>BSS 的服务范围是由 AP 所发射的电磁波的辐射范围确定的</dd>
       <dd>使用标识符 SSID(Service Set Identifier)区分不同的 BSS</dd>
-      <dd>SSID 是一个字符串，最多 32 字节</dd>
+      <dd>SSID 是一个字符串，最多 32 Bytes</dd>
       <dd>无线客户端通过 SSID 来识别并连接到特定的无线网络 - 你家 Wi-Fi 名称 “Home_WiFi_5G” 就是一个 SSID</dd>
-      <dd>同一物理区域内的多个 AP 可以广播相同的 SSID，形成一个逻辑上的统一网络（即 ESS）</dd>
       <dd>每个 BSS 都有一个 SSID，但多个 BSS 可以共享同一个 SSID</dd>
+      <dd>同一物理区域内的多个 AP 可以广播相同的 SSID，形成一个逻辑上的统一网络（即 ESS）</dd>
       <div class="tips">Ad Hoc 网络中采用独立基本服务集 IBSS</div>
-      <dt>分配系统 Distribution system</dt>
-      <dd>是连接多个 AP 的有线网络基础设施（例如交换机、路由器等）</dd>
-      <dd>实现 BSS 之间的通信与数据转发</dd>
       <dt>扩展服务集 ESS(Extended Service Set)</dt>
       <dd>多个 BSS 通过有线或无线方式连接在一起，构成一个更大的逻辑网络，称为 ESS</dd>
       <dd>用户可以在不同 BSS 之间漫游，而不会中断连接</dd>
       <dd>ESS 还可为无线用户提供到 802.x 局域网（非802.11无线局域网）的接入。通过门户 (Portal) 设备实现。门户相当于一个网桥</dd>
       <dd>使用扩展服务集标识符 ESSID 区分不同的 ESS</dd>
       <dd>ESSID 不是一个独立的技术参数，而是对“用于 ESS 的 SSID”的一种习惯性称呼</dd>
-      <dt>AP(Access Point)</dt>
-      <dd>也称 WAP(Wireless Access Point)</dd>
-      <dd>每个 AP 负责管理其所在 BSS 内的 MP 设备</dd>
-      <dd>每个 AP 分配一个唯一的 48 位 MAC 地址，名称是基本服务集标识符 BSSID</dd>
-      <dd>每个 AP 分配一个通信信道</dd>
-      <dt>Mobile Station (MS)</dt>
-      <dd>连接到 WLAN 的终端设备，如笔记本电脑、手机等</dd>
-      <dd>移动站 A 漫游到位置 A1 时，选择和信号较强的一个 AP 联系。当漫游到位置 A2 时，就只能和 AP2 联系</dd>
-      <dd>移动站只要能够和其中一个 AP 联系上，就可以一直保持与另一个移动站 B 的通信</dd>
-      <div class="tips">终端设备 Endpoint是更广泛的概念，不是 IEEE 802.11协议的标准术语</div>
-      <div class="demo"> 配置解析</div>
+      <dt>分配系统 Distribution system</dt>
+      <dd>是连接多个 AP 的有线网络基础设施（例如交换机、路由器等）</dd>
+      <dd>实现 BSS 之间的通信与数据转发</dd>
+      <div class="demo">配置解析</div>
       <dd>假设某商场部署了 10 个 AP，全部配置如下：
         <p>SSID = “Mall_Free_WiFi”</p>
         <p>相同的加密方式（如 WPA2-Enterprise）</p>
@@ -89,9 +91,9 @@
     <h2>核心功能 Core</h2>
     <dl>
       <dt>关联 Association</dt>
-      <dd>一个移动站若要加入到一个 BSS，就必须先与某个 AP 建立关联</dd>
-      <dd>建立关联：表示这个移动站加入了选定的 AP 所属的子网，并和这个 AP 之间创建了一个虚拟线路</dd>
-      <dd>只有关联的 AP 才能向这个移动站发送数据帧，而这个移动站也只有通过关联的 AP 才能向其他站点发送数据帧</dd>
+      <dd>一个 MS 若要加入到一个 BSS，就必须先与某个 AP 建立关联</dd>
+      <dd>建立关联：表示这个 MS 加入了选定的 AP 所属的子网，并和这个 AP 之间创建了一个虚拟线路</dd>
+      <dd>只有关联的 AP 才能向这个 MS 发送数据帧，而这个 MS 也只有通过关联的 AP 才能向其他站点发送数据帧</dd>
       <dt>安全 Security</dt>
       <dd>用户在和附近的接入点 AP 建立关联时，一般还要键入用户密码</dd>
       <dd>初期加密方案：有线等效的保密 WEP (Wired Equivalent Privacy)</dd>
@@ -110,14 +112,15 @@
         <p>推迟接入（Defer Access）</p>
         <p>退避机制（Backoff）</p>
       </dd>
-      <dd>基本过程
-        <p>侦听信道 → 因为别人可能在发</p>
-        <p>等待 DIFS → 让高优先级帧（如 ACK）插队</p>
-        <p>随机退避 → 避免和别人“撞车”</p>
-        <p>RTS/CTS/NAV → 告诉别人“别争了，我在用”</p>
-        <p>ACK 超时重传 → 争用失败后的恢复</p>
-      </dd>
-      <div class="demo"> 完整过程</div>
+      <dd>基本过程</dd>
+      <ol>
+        <li>侦听信道 → 因为别人可能在发</li>
+        <li>等待 DIFS → 让高优先级帧（如 ACK）插队</li>
+        <li>随机退避 → 避免和别人“撞车”</li>
+        <li>RTS/CTS/NAV → 告诉别人“别争了，我在用”</li>
+        <li>ACK 超时重传 → 争用失败后的恢复</li>
+      </ol>
+      <div class="demo">完整过程</div>
       <div>1. 预约（信道预约 + RTS/CTS 可选）</div>
       <dd>目的：提前“占住”信道，减少冲突（尤其应对隐藏终端问题）</dd>
       <dd>基本方式：
@@ -150,6 +153,7 @@
       </dd>
       <div class="tips">预约 + 退避 + ACK 确认</div>
     </dl>
+    <h2>Homework & Reading</h2>
     <dl>
       <dt>Homework</dt>
       <ol>
@@ -162,12 +166,14 @@
       </ol>
       <dt>Reading</dt>
       <ol>
-        <li><a href="https://www.cisco.com/site/us/en/learn/topics/networking/what-is-a-wireless-lan.html">What is a
-            wireless LAN? <span class="iconfont icon-share"></span></a> </li>
-        <li><a href="https://userpages.umbc.edu/~dgorin1/451/wlan/wlan.htm">Wireless LANs
-            <span class="iconfont icon-share"></span></a> </li>
-        <li><a href="https://www.how2shout.com/what-is/what-is-the-difference-between-wlan-and-wifi.html">What is the
-            difference between WLAN and WIFI? <span class="iconfont icon-share"></span></a> </li>
+        <li><a class="link"
+            href="https://www.cisco.com/site/us/en/learn/topics/networking/what-is-a-wireless-lan.html">What is a
+            wireless LAN? </a> </li>
+        <li><a class="link" href="https://userpages.umbc.edu/~dgorin1/451/wlan/wlan.htm">Wireless LANs
+          </a> </li>
+        <li><a class="link"
+            href="https://www.how2shout.com/what-is/what-is-the-difference-between-wlan-and-wifi.html">What is the
+            difference between WLAN and WIFI? </a> </li>
       </ol>
     </dl>
     <div id="footer"></div>
