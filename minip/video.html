@@ -33,10 +33,12 @@
     <span>&lt;video&gt;</span>
   </header>
   <section>
-    <h3>简介 Introduction</h3>
+    <h3>概述 Overview</h3>
     <ul>
-      <li>同HTML的&lt;video&gt;</li>
-      <li>展示视频的容器组件；行内块元素 inline-block，可以设置宽度、高度</li>
+      <li>同HTML5的&lt;video&gt;</li>
+      <li>展示视频的容器组件</li>
+      <li>行内块元素 inline-block，可以设置宽度、高度</li>
+      <pre>&lt;video src=""/&gt;</pre>
       <li>默认宽度 300px、高度 225px</li>
       <li>支持的格式：mp4、mov、m4v、avi、webm等</li>
       <li>除了常规属性外，还可以指定画中画、广告等特有属性</li>
@@ -45,33 +47,6 @@
       <li>更多信息，请访问 <a href="https://developers.weixin.qq.com/miniprogram/dev/component/video.html">&lt;video&gt;</a>
       </li>
     </ul>
-    <table>
-      <caption>常见分辨率比例</caption>
-      <thead>
-        <tr>
-          <th>item</th>
-          <th>desc</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>16/9</td>
-          <td>1280*720 <br>1920*1080</td>
-        </tr>
-        <tr>
-          <td>4/3</td>
-          <td>1280*960 <br>960*720 <br>300*225</td>
-        </tr>
-        <tr>
-          <td>9/16</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>3/4</td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
     <table>
       <caption>一般属性</caption>
       <thead>
@@ -115,6 +90,33 @@
         </tr>
       </tbody>
     </table>
+    <table>
+      <caption>常见分辨率比例</caption>
+      <thead>
+        <tr>
+          <th>item</th>
+          <th>desc</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>16/9</td>
+          <td>1280*720 <br>1920*1080</td>
+        </tr>
+        <tr>
+          <td>4/3</td>
+          <td>1280*960 <br>960*720 <br>300*225</td>
+        </tr>
+        <tr>
+          <td>9/16</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3/4</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
     <div class="demo"> 视频大小1280*720；默认视频标签大小300*225，即4/3的比例；因此：</div>
     <ul>
       <li>高度匹配：可以显示960*720的视频，但是视频容器宽度不够，原视频宽度1280；完整显示视频的高度，但是容器宽度不够</li>
@@ -141,7 +143,7 @@ video {
       <div>一般都是默认使用即可，无须特别处理：看到的视频都是包含 contain 模式，存在黑边</div>
       <div>建议指定宽高，并应用 cover 模式；去除黑边 - 自带高级感</div>
     </div>
-    <h3>焦点</h3>
+    <h3>焦点 Focus</h3>
     <ul>
       <li>自动播放 autoplay</li>
       <li>HTML中，大多数浏览器，特别是谷歌浏览器，不允许没有用户任何行为的情况下自动播放视频：必须是用户显式的操作视频进行播放</li>
@@ -151,17 +153,17 @@ video {
       <li>视微信小程序版本而定</li>
       <pre>[渲染层网络层错误] Failed to load media &lt;URL&gt;</pre>
     </ul>
-    <div class="demo"> 在线视频的使用</div>
-    <div>
-      <div>. 受小程序大小2M的限制，大多数多媒体资源，如图片、视频、音频等不能本地使用，只能在线获取</div>
-    </div>
+    <h3>在线使用 Online</h3>
+    <ul>
+      <li>受小程序大小2M的限制，大多数多媒体资源，如图片、视频、音频等只能在线获取，不建议存放本地使用</li>
+    </ul>
     <div>方案1：自建资源服务器，将本地视频放在指定目录，开启服务；详情请参考 <a href="../backend/static.html">静态资源服务器</a></div>
     <pre>&lt;video src="http://1237.0.0.1:3000/video/sea.mp4" muted autoplay/&gt;</pre>
     <div>方案2：外网在线资源；容易死链；如：<a href="https://shipin520.com/">潮点视频</a></div>
     <ul>
       <li>点击上方链接打开网站，或使用谷歌浏览器，在上方地址栏输入地址 https://shipin520.com，打开网站</li>
       <li>在视频库中预览喜欢的视频</li>
-      <li>按F12打开开发者工具，拾取元素拾取工具单击视频</li>
+      <li>按 F12 打开开发者工具，使用拾取工具 <span class="iconfont icon-pointer"></span> 单击视频</li>
       <li>在结构面板中，看到视频对应的各种信息</li>
       <li>找到 src 属性，双击并复制视频路径到小程序中，记得加上网络协议 https</li>
       <pre>&lt;video src="https://video.shipin520.com/videos/77/08/15/a_6PPqEeFnxHvK1586770815.mp4" muted autoplay/&gt;</pre>

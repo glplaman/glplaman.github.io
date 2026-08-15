@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>列表渲染 List</title>
+  <link rel="stylesheet" href="../css/common2025.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header>
+    <h1>列表渲染</h1>
+    <span>&commat;List</span>
+  </header>
+  <section>
+    <h3>概述 Overview</h3>
+    <ul>
+      <li>以绑定属性的方式使用 wx:for 循环数组或对象</li>
+      <li>默认情况下，使用 <strong>item</strong> 表示迭代的当前数据项，使用 <strong>index</strong> 表示当前数据项的索引</li>
+      <li>多重循环下，系统可以自动识别 index 和 item 的作用域</li>
+      <li>也可以使用 wx:for-index 和 wx:for-item 重新指定索引和当前项，适合多重循环</li>
+      <li>更多信息，请访问 <a
+          href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/#%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93">列表渲染
+          wx:for</a></li>
+    </ul>
+    <h3>wx:key</h3>
+    <ul>
+      <li>为保证渲染效率和数据的唯一性，应总是使用 wx:key</li>
+      <li>以字符串形式提供，代表 wx:for 循环的数组中 item 的某个属性 property</li>
+      <li>编写时，<strong>直接</strong>写这个属性的名字（如 id）就可以，不需要展开写成 item.id 的形式</li>
+      <li>不需要使用插值表达式 {{}}</li>
+      <li>建议
+        <p>使用数据项的 id - 每个数据项需要携带 id 字段属性</p>
+        <p>为数据创建时间戳 - now()</p>
+      </li>
+      <li>不建议
+        <p>使用数据项的序号 index</p>
+        <p>使用数据项 item</p>
+      </li>
+    </ul>
+    <h3>数组列表渲染</h3>
+    <ul>
+      <li>测试数据</li>
+      <pre>
+obj:[
+  {id:0, name:'gl', year:1995},
+  {id:1, name:'sh', year:2005},
+  {id:2, name:'nj', year:2008}
+],
+arr: [1, 2, 3, 4, 5]</pre>
+      <li>数字 - 循环9次，多用于测试；使用 index 作为 key</li>
+      <pre>&lt;view wx:for="{{9}}" wx:key="index"&gt; {{item}} &lt;/view&gt;</pre>
+      <li>简单数组 - 循环5次；使用 item 作为 key</li>
+      <pre>&lt;view wx:for="{{obj}}" wx:key="item"&gt; {{item.name}}- {{item.year}} &lt;/view&gt;</pre>
+      <li>对象数组 - 循环3次</li>
+      <pre>&lt;view wx:for="{{arr}}" wx:key="id"&gt; {{item}} &lt;/view&gt;</pre>
+    </ul>
+    <div class="demo"> 多重循环 - 9*9乘法表</div>
+    <ul>
+      <li>样式自定</li>
+      <li>为了更加直观的观察效果，配置页面 pageOrientation 为横板 landscape</li>
+      <pre>
+&lt;view  class="item" wx:for="{{arr}}" wx:key="index" wx:for-item='i'&gt;
+  &lt;text wx:for="{{i+1}}" wx:key="index" wx:for-item='j'&gt;
+    &lt;text class="item" wx:if="{{j&gt;0}}"&gt;{{j}} * {{i}} = {{i*j}} &lt;/text&gt;
+  &lt;/text&gt;
+&lt;/view&gt;</pre>
+      <figure>
+        <img src="./imgs/99.png" alt="">
+        <figcaption>9*9 乘法表</figcaption>
+      </figure>
+    </ul>
+    <h3>对象列表渲染</h3>
+    <ul>
+      <li>index 相当于 key；item 相当于 value - 也可以自定义为 key-value 形式</li>
+      <pre>obj:{id:100,name:'glpla',gender:'male'}</pre>
+      <pre>
+&lt;block wx:for="{{obj}}" wx:key="index"&gt;
+  &lt;view&gt;{{index}}&lt;/view&gt;
+  &lt;view&gt;{{item}}&lt;/view&gt;
+&lt;/block&gt;</pre>
+    </ul>
+    <h3>wx:for vs wx:if</h3>
+    <ul>
+      <li>有别于 Vue，小程序中俩者可以一起使用</li>
+      <li>wx:for 的优先级高于 wx:if</li>
+      <li>这意味着先执行循环，然后对每个循环项进行条件判断</li>
+      <li>只有满足条件的项才会被渲染</li>
+      <li>只渲染前3条数据
+        <p>错误 - 不支持基本操作</p>
+        <pre>&lt;view wx:for="{{arr.slice(0,3)}}" wx:key="index"&gt;{{item}}&lt;/view&gt;</pre>
+        <p>正确</p>
+        <pre>&lt;view wx:for="{{arr}}" wx:key="index" wx:if="{{index&lt;3}}"&gt;{{item}}&lt;/view&gt;</pre>
+      </li>
+      <li>建议：使用无语义化的模板标签 &lt;block&gt;作为容器，用来分隔多层逻辑或控制一组组件的渲染</li>
+      <pre>
+&lt;block wx:for="{{arr}}" wx:key="index"&gt;
+  &lt;view wx:if="{{index&lt;3}}"&gt;{{item}}&lt;/view&gt;
+&lt;/block&gt;</pre>
+    </ul>
+  </section>
+  <div id="footer"></div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

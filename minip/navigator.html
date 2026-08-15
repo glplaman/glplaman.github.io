@@ -16,10 +16,11 @@
     <span>&lt;navigator&gt;</span>
   </header>
   <section>
-    <h3>简介 Introduction</h3>
+    <h3>概述 Overview</h3>
     <ul>
       <li>相当于HTML5的 &lt;a&gt;</li>
       <li>页面之间的导航/链接</li>
+      <pre>&lt;navigator url=""&gt;xxxx&lt;/navigator&gt;</pre>
       <li>跳转到普通页面</li>
       <li>跳转到标签页</li>
       <li>跳转到外部小程序</li>
@@ -44,7 +45,8 @@
       </tr>
       <tr>
         <td>url</td>
-        <td>跳转链接|地址；相对地址或绝对地址 <br>层级较深，建议使用根路径 /pages</td>
+        <td>跳转链接|地址；相对地址或绝对地址 <br>层级较深，建议使用根路径 /pages <br>必须是完整的相对路径，需要包含文件夹名和文件名 <br>即使你使用了 index 作为文件名，也不能省略这个 index
+        </td>
       </tr>
       <tr>
         <td>open-type</td>
@@ -73,9 +75,9 @@
     </table>
     <h3>无参导航</h3>
     <ul>
-      <li>跳转到小程序内部普通页面 - 仅指定 url</li>
+      <li>跳转到小程序内部普通页面 - 仅指定 url；使用相对路径</li>
       <pre>&lt;navigator url="../test/test"&gt;To Page Test&lt;/navigator&gt;</pre>
-      <li>页面层级比较深，可以使用根路径，从 /pages 开始</li>
+      <li>页面层级比较深，可以使用绝对路径/根路径，从 /pages 开始</li>
       <pre>&lt;navigator url="/pages/test/test"&gt;To Page Test&lt;/navigator&gt;</pre>
       <li>跳转到外部小程序 - 指定 app-id 和 target</li>
       <pre>&lt;navigator app-id="wx91d27dbf599dff74" target="miniProgram"&gt;To JD&lt;/navigator&gt;</pre>
@@ -86,7 +88,7 @@
     </ul>
     <h3>带参导航</h3>
     <ol>
-      <li>拼接参数 - 在路径 url 后面以值对 key-value 的形式拼接参数</li>
+      <li>拼接参数 - 在路径 url 后面以值对 key-value 的形式拼接参数/查询参数</li>
       <p>参数和 url 之间使用 ? 连接</p>
       <p>多个参数以 & 分隔</p>
       <p>静态数据 - url?name=value&...</p>
@@ -105,31 +107,40 @@ onLoad(options) {
       <div>请尽量使用调试器的"预览"体验完整功能</div>
       <div>模拟器底部状态栏，默认显示"页面路径"，也可以切换到"页面参数"观察页面之间的参数传递情况</div>
     </div>
-  </section>
-  <section>
-    <div class="demo"> 使用声明式导航，完成个人小程序各页面之间的导航</div>
+    <h3>样式属性 hover-class</h3>
     <ul>
-      <li>使用 &lt;navigator&gt;，修改个人中心静态页面，采用列表渲染定制导航；根据不同的导航项，动态设置目标页的导航标题 </li>
-      <li>该案例也适合客户、产品详情页，如：使用一个页面展示不同的商品内容</li>
-      <li>个人中心页 wxml - 某个导航节点示例，其它略</li>
-      <pre>
-&lt;navigator url="../team/team" class="item"&gt;
-    &lt;text class="iconfont icon-like icon"&gt;&lt;/text&gt;
-    &lt;text&gt;团队&lt;/text&gt;
-&lt;/navigator&gt;</pre>
-      <li>移除点击状态：为 &lt;navigator&gt; 指定 hover-class 为 none，无效，修改 <span class="warn">默认的导航类</span></li>
-      <li>默认样式：带背景色，降低透明度</li>
+      <li>&lt;navigator&gt;自带默认的点击态效果</li>
+      <li>默认样式类 .navigator-hover 带背景色，降低透明度</li>
       <pre>
 .navigator-hover {
   background-color: rgba(0, 0, 0, 0.1);
   opacity: 0.7;
 }</pre>
-      <li>修改为：移除背景色；不改变透明度</li>
+      <li>修改默认点击样式</li>
       <pre>
 .navigator-hover {
   background-color: rgba(0, 0, 0, 0.0);
   opacity: 1;
 }</pre>
+      <li>自定义点击样式</li>
+      <pre>&lt;navigator url="" hover-class="custom-nav-hover"&gt;xxxx&lt;/navigator&gt;</pre>
+      <pre>
+.custom-nav-hover {
+  background-color: #e0e0e0;
+  color: #000;
+}</pre>
+      <li>如果不需要任何点击反馈，取消默认的点击态效果，将 hover-class 设置为 "none"</li>
+      <pre>&lt;navigator url="" hover-class="none"&gt;xxxx&lt;/navigator&gt;</pre>
+    </ul>
+  </section>
+  <h2>Homework</h2>
+  <section>
+    <div class="demo"> 使用声明式导航，完成个人小程序各页面之间的导航</div>
+    <ul>
+      <li>使用 &lt;navigator&gt;，修改个人中心静态页面，采用列表渲染定制导航</li>
+      <li>该案例也适合客户、产品详情页，如：使用一个页面展示不同的商品内容</li>
+      <li>根据不同的导航项，动态设置目标页的导航标题</li>
+      <li>设计点击状态</li>
     </ul>
   </section>
   <div id="footer"></div>
