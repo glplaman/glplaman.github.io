@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>性能 Performance</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+  <style>
+    .grid>div {
+      padding: var(--p-m-g);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>性能</h1>
+      <span>&commat;Performance</span>
+    </header>
+    <dl>
+      <dt>内容 Contents</dt>
+      <dd>速率 Rate</dd>
+      <dd>带宽 Bandwidth</dd>
+      <dd>吞吐量 Throughput</dd>
+      <dd>延迟 Delay</dd>
+      <dd>延迟带宽积 Delay</dd>
+      <dd>往返时间 RTT</dd>
+      <dd>利用率 Utilization</dd>
+    </dl>
+    <dl>
+      <dt>速率 Rate</dt>
+      <dd>表示单位时间内传输的数据量</dd>
+      <dd>数据传输的 <strong>额定</strong> 速度</dd>
+      <dd>单位：比特每秒；bps、bit/s</dd>
+      <figure>
+        <img src="./imgs/p18.jpg" alt="速率 Rate">
+        <figcaption>速率 Rate</figcaption>
+      </figure>
+      <dt>带宽 Bandwidth</dt>
+      <dd>网络连接的 <strong>最大</strong> 数据传输能力</dd>
+      <dd>单位：比特每秒；bps、bit/s</dd>
+      <figure>
+        <img src="./imgs/p19.jpg" alt="带宽 Bandwidth">
+        <figcaption>带宽 Bandwidth</figcaption>
+      </figure>
+      <dt>吞吐量 Throughput</dt>
+      <dd><strong>实际</strong> 通过网络传输的数据量</dd>
+      <dd>单位：比特每秒；bps、bit/s</dd>
+      <div class="tips">
+        <p>速率</p>
+        <p>1Kbit/s=1×10<sup>3</sup>bit/s</p>
+        <p>1Mbit/s=1×10<sup>6</sup>bit/s</p>
+        <p>1Gbit/s=1×10<sup>9</sup>bit/s</p>
+      </div>
+      <div class="tips">
+        <p>容量</p>
+        <p>1B=8 bits</p>
+        <p>1KB=2<sup>10</sup> Bytes=1024 Bytes</p>
+        <p>1MB=2<sup>20</sup> Bytes=1024×1024 Bytes=1024 KB</p>
+        <p>1GB=2<sup>30</sup> Bytes=1024×1024×1024 Bytes=1024 MB</p>
+      </div>
+      <dt>延迟 Delay</dt>
+      <dd>数据从发送端传输到接收端所需的时间</dd>
+      <dd>也称为延迟或迟延 latency</dd>
+      <dd>单位：秒 s</dd>
+      <dd>包括 4 个部分</dd>
+      <figure>
+        <img src="./imgs/P22.png" alt="延迟 Delay">
+        <figcaption>延迟 Delay</figcaption>
+      </figure>
+      <div>1. 发送时延</div>
+      <dd>也称为传输时延</dd>
+      <dd>是主机或路由器发送数据帧所需要的时间：从发送数据帧的第一个比特算起，到该帧的最后一个比特发送完毕所需的时间</dd>
+      <dd>发送时延发生在机器内部的发送器中，与传输信道的长度（或信号传送的距离）没有任何关系</dd>
+      <figure>
+        <img src="./imgs/p20.png" alt="发送时延">
+        <figcaption>发送时延</figcaption>
+      </figure>
+      <div>2. 传播时延</div>
+      <dd>是电磁波在信道中传播一定的距离需要花费的时间</dd>
+      <dd>传播时延则发生在机器外部的传输信道媒体上，而与信号的发送速率无关</dd>
+      <dd>信号传送的距离越远，传播时延就越大</dd>
+      <figure>
+        <img src="./imgs/p21.png" alt="传播时延">
+        <figcaption>传播时延</figcaption>
+      </figure>
+      <table>
+        <caption>电磁波在不同媒介中的传播速率</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>自由空间/光速</td>
+            <td>3.0×10<sup>5</sup> Km/s</td>
+          </tr>
+          <tr>
+            <td>铜线电缆</td>
+            <td>2.3×10<sup>5</sup> Km/s</td>
+          </tr>
+          <tr>
+            <td>光纤</td>
+            <td>2.0×10<sup>5</sup> Km/s</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>3. 排队时延</div>
+      <dd>分组在路由器输入输出队列中排队等待处理和转发所经历的时延</dd>
+      <dd>排队时延的长短往往取决于网络中当时的通信量</dd>
+      <dd>当网络的通信量很大时会发生队列溢出，使分组丢失，这相当于排队时延为无穷大</dd>
+      <div>4. 处理时延</div>
+      <dd>主机或路由器在收到分组时，为处理分组（例如分析首部、提取数据、差错检验或查找路由）所花费的时间</dd>
+      <div class="tips">
+        <p>一般说来，小时延的网络要优于大时延的网络</p>
+        <p>在某些情况下，一个低速率、小时延的网络很可能要优于一个高速率但大时延的网络</p>
+        <p>总时延中，哪一种时延占主导地位，必须具体情况具体分析</p>
+      </div>
+      <div class="demo">判断题：在高速链路（或高带宽链路）上，比特会传送得更快些。</div>
+      <!-- <div>对于高速网络链路，我们提高的仅仅是数据的发送速率，而不是比特在链路上的传播速率</div> -->
+      <!-- <div>提高数据的发送速率只是减小了数据的发送时延</div> -->
+      <div class="demo">结点 A 要将一个数据块通过 1000 Km 的光纤链路发送给结点
+        B。假设忽略处理时延和排队时延。请分别计算下列情况时的总时延，并验证“数据的发送速率越高，其传送的总时延就越小”的说法是否正确。
+        <br>（1）数据块大小为 100 MB，信道带宽为 1 Mbit/s
+        <br>（2）数据块大小为 100 MB，信道带宽为 100 Mbit/s
+        <br>（3）数据块大小为 1 B，信道带宽为 1 Mbit/s
+        <br>（4）数据块大小为 1 B，信道带宽为 1 Gbit/s
+      </div>
+      <div>答：</div>
+      <div>
+        <p>传播时延 = 1000 Km / 2.0 × 105 Km/s = 5 ms</p>
+        <p>（1）发送时延 = 100 × 2<sup>20</sup> × 8 bit ÷ 10<sup>6</sup> bit/s= 838.9 s</p>
+        <p>总时延 = 838.9 s+ 0.005 s≈ 838.9 s</p>
+        <p>（2）发送时延 = 100 × 2<sup>20</sup> × 8 bit÷ 10<sup>8</sup> bit/s= 8.389 s</p>
+        <p>总时延 = 8.389 s+ 0.005 s= 8.394 s。缩小到（1）的近 1/100</p>
+        <p>（3）发送时延 = 1 × 8 bit÷ 10<sup>6</sup> bit/s= 8 × 10<sup>-6</sup> s = 8 μs</p>
+        <p>总时延 = 0.008 ms+ 5 ms= 5.008 ms</p>
+        <p>（4）发送时延 = 1 × 8 bit÷ 10<sup>9</sup> bit/s= 8 × 10<sup>-9</sup> s = 0.008 μs</p>
+        <p>总时延 = 0.000008 ms+ 5 ms= 5.000008 ms。与（3）相比没有明显减小</p>
+      </div>
+      <dt>延迟带宽积 Delay</dt>
+      <dd>延迟带宽积是指网络中传播延迟与带宽的乘积，表示在传播路径上可以容纳的数据量</dd>
+      <dd>又称以比特为单位的链路长度</dd>
+      <dd>管道中的比特数表示：从发送端发出但尚未到达接收端的比特数；滞留在信道中的数据</dd>
+      <dd>只有管道都充满比特时，链路才得到了充分利用</dd>
+      <figure>
+        <img src="./imgs/p23.png" alt="延迟带宽积 Delay">
+        <figcaption>延迟带宽积 Delay</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/p24.png" alt="示意图">
+        <figcaption>示意图</figcaption>
+      </figure>
+      <dt>往返时间 RTT</dt>
+      <dd>Round-Trip Time</dd>
+      <dd>往返时间是指数据从发送端到接收端再返回发送端所需的时间</dd>
+      <dd>表示从发送方 A 发送完数据，到发送方 A 收到来自接收方 B 的确认总共经历的时间</dd>
+      <dd>不包括发送方节点 A 的发送时延和收到数据后的排队时延和处理时延</dd>
+      <figure>
+        <img src="./imgs/p25.png" alt="往返时间 RTT">
+        <img src="./imgs/p26.png" alt="往返时间 RTT">
+        <figcaption>往返时间 RTT</figcaption>
+      </figure>
+      <div class="demo">结点 A 要将一个 100 MB 数据以 100 Mbit/s 的速率发送给结点 B。B 正确收完该数据后，就立即向 A 发送确认。假定 A 只有在收到 B 的确认信息后，才能继续向 B
+        发送数据，且确认信息很短。计算 A 向 B 发送数据的有效数据率。</div>
+      <figure>
+        <img src="./imgs/p27.png" alt="数据的有效数据率">
+        <figcaption>数据的有效数据率</figcaption>
+      </figure>
+      <div>答：</div>
+      <div>
+        <p>有效速率消耗的时间包括实际的发送时间和等待发送的时间</p>
+        <p>发送时延 = 数据长度/发送速率 = 100×2<sup>20</sup> × 8 ÷ (100×10<sup>6</sup>) ≈ 8.39 s</p>
+        <p>有效数据率 = 数据长度/(发送时延 + RTT) = 100×2<sup>20</sup> × 8 ÷ (8.39 + 2) ≈ 80.7 Mbit/s</p>
+      </div>
+      <dd><strong>补充说明</strong>
+        <p>在互联网中，往返时间还包括各中间结点的处理时延、排队时延以及转发数据时的发送时延</p>
+        <p>当使用卫星通信时，往返时间 RTT 相对较长，此时，RTT 是很重要的一个性能指标</p>
+      </dd>
+      <figure>
+        <img src="./imgs/p28.png" alt="多节点RTT">
+        <figcaption>多节点RTT</figcaption>
+      </figure>
+      <dt>利用率 Utilization</dt>
+      <dd>利用率是指网络资源被实际使用的比例</dd>
+      <dd>根据排队论，当某信道的利用率增大时，引起的时延会迅速增加</dd>
+      <div class="grid">
+        <div class="bg-gray">
+          <p class="txt-bold warn">1. 信道利用率</p>
+          <p>Channel Utilization</p>
+          <p>某信道有百分之几的时间是被利用的（即有数据通过）完全空闲的信道的利用率是零</p>
+        </div>
+        <div class="bg-gray">
+          <p class="txt-bold warn">2. 网络利用率</p>
+          <p>Network Utilization</p>
+          <p>全网络的信道利用率的加权平均值</p>
+        </div>
+      </div>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

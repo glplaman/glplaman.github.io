@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算机网络 Network</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/diagram.css">
+  <base target="_blank">
+  <style>
+    header {
+      background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/12/http-keep-alives.webp);
+    }
+
+    .grid {
+      margin: 50px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>计算机网络</h1>
+      <span>&commat;Network</span>
+    </header>
+    <dl>
+      <dt>概念 Conception</dt>
+      <dd>计算机网络主要是由一些通用的、可编程的硬件互连而成的，而这些硬件并非专门用来实现某一特定目的（例如，传送数据或视频信号）。</dd>
+      <dd>这些可编程的硬件能够用来传送多种不同类型的数据，并能支持广泛的和日益增长的应用。</dd>
+      <dt>组成 Elements</dt>
+      <dd>由若干节点(Node)和连接这些节点的链路(Link)组成</dd>
+      <dd>用于数据通信和资源共享</dd>
+      <dd>节点可以是计算机、集线器、交换机或路由器等</dd>
+      <figure>
+        <img src="./imgs/n16.png" alt="组成 Components">
+        <figcaption>组成 Components</figcaption>
+      </figure>
+      <dt>网络的网络 Network of networks</dt>
+      <dd>多个网络通过路由器相互连接，构成覆盖范围更大的计算机网络</dd>
+      <figure>
+        <img src="./imgs/n17.png" alt="网络的网络 Network of networks">
+        <figcaption>网络的网络 Network of networks</figcaption>
+      </figure>
+      <dt>功能划分 Function</dt>
+      <div>1. 边缘部分 Edge</div>
+      <dd>由所有连接在互联网上的主机组成</dd>
+      <dd>这些主机又称为 <strong>端系统 End system</strong></dd>
+      <dd>由用户直接使用</dd>
+      <dd>用来进行通信和资源共享</dd>
+      <dd>端系统在功能上可能有很大差别</dd>
+      <dd>端系统的拥有者：可以是个人、单位、或某个 ISP</dd>
+      <div>2. 核心部分 Core</div>
+      <dd>是互联网中最复杂的部分</dd>
+      <dd>向网络边缘中的主机提供连通性，使任何一台主机都能够向其他主机通信</dd>
+      <dd>在网络核心部分起特殊作用的是 <strong>路由器 Router</strong></dd>
+      <dd>路由器是实现分组交换 (Packet Switching) 的关键构件</dd>
+      <dd>其任务是转发收到的分组，是网络核心部分最重要的功能</dd>
+    </dl>
+    <h2>主机通信方式 Mode</h2>
+    <dl>
+      <dd>主机 A 的某个进程和主机 B 上的另一个进程进行通信</dd>
+      <dt>客户/服务器方式 C/S</dt>
+      <dd>Client / Server 方式</dd>
+      <dd>所描述的是进程之间服务和被服务的关系</dd>
+      <dd>C是服务的请求方，S是服务的提供方</dd>
+      <dd>通信可以是双向的，客户和服务器都可发送和接收数据</dd>
+      <dd>客户程序
+        <p>被用户调用后运行，需主动向远地服务器发起通信（请求服务 - Request）</p>
+        <p>必须知道服务器程序的地址</p>
+        <p>不需要特殊的硬件和很复杂的操作系统</p>
+      </dd>
+      <dd>服务器程序
+        <p>专门用来提供某种服务的程序，可同时处理多个客户请求（响应服务 - Response）</p>
+        <p>一直不断地运行着，被动地等待并接受来自各地的客户的通信请求</p>
+        <p>不需要知道客户程序的地址</p>
+        <p>一般需要强大的硬件和高级的操作系统支持</p>
+      </dd>
+      <figure>
+        <img src="./imgs/m0.png" alt="C/S">
+        <figcaption>C/S</figcaption>
+      </figure>
+      <div class="tips">
+        <p>浏览器/服务器方式 B/S</p>
+        <p>Browser/Server</p>
+        <p>用户借助浏览器和服务器通信，无需下载庞大的客户端</p>
+        <p>又称廋 C/S</p>
+      </div>
+      <dt>对等方式 P2P</dt>
+      <dd>Peer to Peer 方式</dd>
+      <dd>两台主机在通信时不区分服务请求方和服务提供方</dd>
+      <dd>只要都运行了 P2P 软件，就可以进行平等的、对等连接通信</dd>
+      <dd>对等连接方式从本质上看仍然是使用客户服务器方式，只是对等连接中的每一个主机既是客户又是服务器</dd>
+      <figure>
+        <img src="./imgs/m1.png" alt="P2P">
+        <figcaption>P2P</figcaption>
+      </figure>
+    </dl>
+    <h2>交换方式 Switch</h2>
+    <dl>
+      <dt>电路交换 Circuit Switching</dt>
+      <dd>适用：电话网络</dd>
+      <dd>通信链路数量与用户/电话机数量的平方（N2）成正比
+        <p>N(N –1)/2</p>
+        <p>5 部电话机两两直接相连，需 10 对电线</p>
+      </dd>
+      <figure>
+        <img src="./imgs/m2.png" alt="电路交换 Circuit Switching">
+        <figcaption>电路交换 Circuit Switching</figcaption>
+      </figure>
+      <dd>三个阶段：</dd>
+      <ol>
+        <li>建立连接：建立一条专用的物理通路（占用通信资源）</li>
+        <li>通话：主叫和被叫双方互相通电话（一直占用通信资源）</li>
+        <li>释放连接：释放刚才使用的专用的物理通路（归还通信资源）</li>
+      </ol>
+      <dd>特点：
+        <p>资源独占：通话的两个用户始终占用端到端的通信资源</p>
+        <p>资源利用率很低：计算机数据具有突发性，这导致在传送数据时，真正用来传送数据的时间往往不到 10%，甚至不到 1%；通信线路资源在绝大部分时间里都是空闲的</p>
+      </dd>
+      <dt>报文交换 Message Switching</dt>
+      <dd>在 20 世纪 40 年代，电报通信就采用了基于存储转发原理的报文交换</dd>
+      <dd>全报文 Message 存储转发</dd>
+      <dd>现在报文交换已经很少使用</dd>
+      <dd>优点
+        <p>通信前无需建立连接</p>
+        <p>数据以报文为单位被交换节点间存储转发，通信线路可以灵活分配</p>
+        <p>在通信时间内，两个用户无需独占一整条物理线路。相比于电路交换，线路利用率高</p>
+        <p>交换节点支持差错控制（通过校验技术）</p>
+      </dd>
+      <dd>缺点：
+        <p>报文不定长，不方便存储转发管理</p>
+        <p>长报文的存储转发时间开销大、缓存开销大</p>
+        <p>长报文容易出错，重传代价高</p>
+      </dd>
+      <dd>适用：电报网络</dd>
+      <dt>分组交换 Packet Switching</dt>
+      <dd>适用：计算机网络</dd>
+      <div class="tips">
+        <p>若要连续传送大量的数据，且其传送时间远大于连接建立时间，则电路交换的传输速率较快</p>
+        <p>报文交换和分组交换不需要预先分配传输带宽，在传送突发数据时可提高整个网络的信道利用率</p>
+        <p>由于一个分组的长度往往远小于整个报文的长度，因此分组交换比报文交换的时延小，同时也具有更好的灵活性</p>
+      </div>
+      <dt>Reading</dt>
+      <ul>
+        <li><a class="link" href="https://www.nsf.gov/impacts/internet">Internet</a></li>
+        <li><a class="link" href="https://nsf.net/about">NSFNET</a></li>
+      </ul>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>

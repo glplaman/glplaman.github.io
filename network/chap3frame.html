@@ -48,6 +48,7 @@
       <div>1. 前导码 Preamble</div>
       <dd>7 Bytes</dd>
       <dd>0xAA AA AA AA AA AA AA</dd>
+      <dd>用来 <strong>同步和定位</strong> 帧开始</dd>
       <dd>用于物理层接收端的时钟同步。接收机通过检测这个规律的信号，调整自己的采样时钟，使其与发送方同步</dd>
       <dd>是帧接收的第一步，不包含在实际数据长度内</dd>
       <div>2. 帧起始定界符 SFD(Start Frame Delimiter)</div>
@@ -58,7 +59,14 @@
       <div>3. 帧间隔 IFG(Inter-Frame Gap)</div>
       <dd>12 Bytes</dd>
       <dd>帧和帧之间的间隔</dd>
+      <dd>紧跟在当前帧的 FCS 之后，下一个帧的 Preamble 之前</dd>
+      <dd>它不属于帧本身，但却是连续发包时的必要间隔</dd>
+      <dd>体现在物理介质上（即线路上传输完一个帧后，空闲 12 Bytes时间再传下一个）</dd>
       <dd>因为帧之间有传输间隙，所以不需要帧结束的界定</dd>
+      <div class="tips">
+        <p>接收方一旦检测到线路空闲超过 96 bits 时间，就认为当前帧结束，不需要像 PPP 那样专门在尾部加一个 7E 字节</p>
+        <p>以太网靠"开头同步（Preamble + SFD）+ 尾部空闲（IFG）"来界定帧，而不靠尾部标志</p>
+      </div>
     </dl>
     <h2>以太网帧 Frame</h2>
     <dl>
@@ -97,6 +105,8 @@
       <dd>上层使用的协议
         <p>IPv4: 0x0800</p>
         <p>ARP: 0x0806</p>
+        <p>IPv6 0x86DD</p>
+        <p>MPLS 0x8847/0x8848</p>
       </dd>
       <dd>决定了 Data 部分如何被解析</dd>
       <dt>Data</dt>
@@ -150,6 +160,41 @@
     <dl>
       <dt>Summary</dt>
       <dd>以太网的帧结构</dd>
+      <table>
+        <caption>PPP vs Etherne</caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th>PPP Frame</th>
+            <th>Etherne Frame</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>典型场景</td>
+          <td>拨号上网、广域网点对点</td>
+          <td>局域网、Wi-Fi、宽带</td>
+        </tr>
+        <tr>
+          <td>头部标志</td>
+          <td>有 7E 标志位</td>
+          <td>无，直接用前导码同步</td>
+        </tr>
+        <tr>
+          <td>地址字段</td>
+          <td>固定 FF（广播），点对点无意义</td>
+          <td>目的 MAC + 源MAC（6+6 Bytes）</td>
+        </tr>
+        <tr>
+          <td>尾部</td>
+          <td>FCS + 7E 结束标志</td>
+          <td>仅 FCS</td>
+        </tr>
+        <tr>
+          <td>数据长度</td>
+          <td>≤ 1500 Bytes</td>
+          <td>46 ~ 1500 Bytes</td>
+        </tr>
+      </table>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://networkencyclopedia.com/mac-address/">MAC Address <span

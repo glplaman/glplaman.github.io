@@ -63,8 +63,11 @@
         </div>
         <figcaption>第一层</figcaption>
       </figure>
-      <img src="./imgs/physicalLayer/幻灯片1.JPG" alt="">
-      <img src="./imgs/physicalLayer/幻灯片2.JPG" alt="">
+      <dt>任务 Mission</dt>
+      <dd>提供物理媒质</dd>
+      <dd>传输比特流</dd>
+      <dd>利用物理介质为网络节点建立、管理和释放链接</dd>
+      <dd>为数据链路层提供数据传输服务；将数据链路层帧中的每个比特传输到对端</dd>
       <dt>协议 Protocol</dt>
       <dd>机械特性
         <p>连接线/器的形状、尺寸、引脚数和排列等</p>
@@ -104,6 +107,19 @@
       <dd>香农公式 Shannon Theory</dd>
       <div class="txt-bg-grad">R<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
       <div class="tips">log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</div>
+      <div class="demo">P70/2-08 假定要用 3 kHz 带宽的电话信道传送 64 kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
+      </div>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>根据香农公式，有：64 Kbps = 3 Khz * log<sub>2</sub>(1+S/N)</p>
+        <p>等式变换后。有：S/N = 2<sup>64/3</sup> - 1</p>
+        <P>= 2<sup>(63 + 1)/3</sup> - 1</P>
+        <P>= 2<sup>(21 + 1/3)</sup> - 1</P>
+        <P>= 2<sup>21</sup>*2<sup>1/3</sup> - 1</P>
+        <p>≈ 2,642,244.94</p>
+        <p>相应的分贝 = 10 * log<sub>10</sub>(2,642,244.94)</p>
+        <p>= 64.22 dB</p>
+      </div>
     </dl>
     <h2>物理层设备 Device</h2>
     <dl>
@@ -126,22 +142,11 @@
       <dt>Homework</dt>
       <div class="demo">P70/2-07 假定某信道受奈氏准则限制的最高码元速率为 20000 码元/秒。如果采用振幅调制，把码元的振幅划分为 16 个不同等级来传送，那么可以获得多高的数据率 (bit/s)？
       </div>
+      <dd>答：</dd>
       <div class="txt-indent">
-        <p>16个等级的振幅可以使用4bit来表示：2<sup>4</sup> = 16</p>
-        <p>每个码元为4bit</p>
+        <p>16个等级的振幅可以使用 4 bits 来表示：2<sup>4</sup> = 16</p>
+        <p>每个码元为 4 bits</p>
         <p>最高速率为 20000 码元/秒 = 80000 bit/s</p>
-      </div>
-      <div class="demo">P70/2-08 假定要用 3 kHz 带宽的电话信道传送 64 kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
-      </div>
-      <div class="txt-indent">
-        <p>根据香农公式，有：64 Kbps = 3 Khz * log<sub>2</sub>(1+S/N)</p>
-        <p>等式变换后。有：S/N = 2<sup>64/3</sup> - 1</p>
-        <P>= 2<sup>(63 + 1)/3</sup> - 1</P>
-        <P>= 2<sup>(21 + 1/3)</sup> - 1</P>
-        <P>= 2<sup>21</sup>*2<sup>1/3</sup> - 1</P>
-        <p>≈ 2,642,244.94</p>
-        <p>相应的分贝 = 10 * log<sub>10</sub>(2,642,244.94)</p>
-        <p>= 64.22 dB</p>
       </div>
       <dt>Reading</dt>
       <ol>

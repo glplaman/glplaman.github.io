@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>体系结构 Architect</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>体系结构</h1>
+      <span>&commat;Architect</span>
+    </header>
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd>计算机网络体系结构是指计算机网络层次结构模型和各层协议的集合；也称为协议集或 协议栈</dd>
+      <dd>计算机网络采用 <strong>层次化</strong> 设计方法，把通信过程划分为多个层次，并为每个层次设计一个单独的协议，这些协议通过分层结构进行组织</dd>
+      <dd>每层通过特定的协议完成一种功能；多层叠加完成整个信息的发送和接收过程</dd>
+      <dd>最著名的网络体系结构是OSI参考模型和TCP/IP协议</dd>
+      <dt>分层原则 Rules</dt>
+      <dd>各层之间是相互独立的</dd>
+      <dd>每一层需要有足够的灵活性</dd>
+      <dd>各层之间完全解耦</dd>
+      <dt>分层优点 Features</dt>
+      <dd>高层不需要知道低层是如何实现的，只需要知道低层所提供的服务，以及本层向上提供的服务，各层独立性强</dd>
+      <dd>当任何一层发生变化时，只要层间接口不发生变化，那么这种变化就不会影响到其他的层，适应性强</dd>
+      <dd>整个系统分解为若干易于处理的部分，这种结构使得一个庞大而又复杂的系统实现和维护起来更容易</dd>
+      <dd>每层的功能与所提供的服务都有精确的定义和说明，有利于促进标准化</dd>
+    </dl>
+    <h2>开放系统互连参考模型 OSI/RM</h2>
+    <dl>
+      <figure>
+        <img src="./imgs/ar0.png" alt="OSI/RM">
+        <figcaption>OSI/RM</figcaption>
+      </figure>
+      <dd>Open System Interconnection Reference Model</dd>
+      <dd>定义网络互联的 7 层框架</dd>
+      <dd>实现系统间的互联性、互操作性和可移植性</dd>
+      <dd>开放：遵循OSI标准的任何系统之间均可通信</dd>
+      <dd>系统：各系统中与互联有关的部分</dd>
+      <dt>设计缺陷</dt>
+      <dd>过于理想化，无法实现 </dd>
+      <dd>先于网络产生，不符合网络实际发展 </dd>
+      <dd>每一层之间划分过于绝对，复杂，过度追求完美 </dd>
+    </dl>
+    <h2>TCP/IP 四层协议体系结构</h2>
+    <dl>
+      <figure>
+        <img src="./imgs/ar1.png" alt="TCP/IP 4层">
+        <figcaption>TCP/IP 4层</figcaption>
+      </figure>
+      <dd>TCP/IP 四层模型是现代互联网的核心协议栈，它因注重实用而将功能相近的层次合并</dd>
+      <dd>TCP/IP 四层模型是互联网实际运行的“事实标准”</dd>
+      <dd>互联网就是基于TCP/IP协议栈运行的</dd>
+      <dt>应用层 Application Layer</dt>
+      <dd>直接为用户提供网络服务，例如网页浏览（HTTP）、文件传输（FTP）和域名解析（DNS）</dd>
+      <dd>负责生成需要传输的用户数据</dd>
+      <dt>运输层 Transportation Layer</dt>
+      <dd>负责为两台主机上的应用程序提供端到端的通信服务</dd>
+      <dd>主要包含 TCP（可靠传输，保证数据完整到达）和 UDP（不可靠但效率高，用于实时音视频）两种协议</dd>
+      <dt>网际层 Network Layer</dt>
+      <dd>核心层：也叫互联网络层，核心是 IP 协议</dd>
+      <dd>主要作用是路由寻址，即在复杂的网络中找到一条通往目标主机的最佳路径</dd>
+      <dt>网络接口层 Network Interface Layer</dt>
+      <dd>TCP/IP 模型中最底层</dd>
+      <dd>负责将数据帧通过物理网络（如以太网、Wi-Fi）发送出去</dd>
+      <dd>并未定义具体协议，而是说“底层只要是能传输数据的网络都可以”</dd>
+    </dl>
+    <h2>TCP/IP 五层协议体系结构</h2>
+    <dl>
+      <figure>
+        <img src="./imgs/ar2.png" alt="TCP/IP 5层">
+        <figcaption>TCP/IP 5层</figcaption>
+      </figure>
+      <dd>弥补了 TCP/IP 四层模型“底层定义模糊”的缺陷而提出的教学模型</dd>
+      <dd>综合了OSI的严谨和TCP/IP的实用</dd>
+      <dd>更接近 OSI 七层模型的严谨性</dd>
+      <dd>把TCP/IP的“网络接口层”拆分为“物理层”和“数据链路层”</dd>
+      <dd>方便讲解局域网原理，同时也保留了TCP/IP的精髓</dd>
+      <div class="tips">
+        <p>四层：实干家；它指导了互联网的硬件和软件设计</p>
+        <p>五层：解说员；它帮我们拆解了四层中黑盒子般的底层细节</p>
+        <p>两者并不矛盾，本质是同一套协议栈在不同维度上的呈现</p>
+      </div>
+      <div class="tips">
+        <p>网络协议 (Network Protocol)</p>
+        <p>为进行网络中的数据交换而建立的规则、标准或约定</p>
+        <p>网络协议是计算机网络的不可缺少的组成部分</p>
+        <p>三个组成要素：</p>
+        <p>1. 语法：数据与控制信息的结构或格式</p>
+        <p>2. 语义：需要发出何种控制信息，完成何种动作以及做出何种响应</p>
+        <p>3. 同步：事件实现顺序的详细说明</p>
+      </div>
+      <div class="tips">
+        <div>协议数据单元 PDU (Protocol Data Unit)</div>
+        <div>每层协议规定的数据传输单位</div>
+      </div>
+      <dt>应用层 Application Layer</dt>
+      <dd>任务：通过应用进程间的交互来完成特定网络应用</dd>
+      <dd>协议：定义的是应用进程间通信和交互的规则</dd>
+      <dd>数据：PDU 为 <strong>报文 Message、数据 Data</strong></dd>
+      <dd><a class="link" href="./chap6telnet.html">Telnet</a> - 远程登陆；基于TCP</dd>
+      <dd><a class="link" href="./chap6http.html">HTTP</a> - Hypertext Transfer Protocol，超文本传输协议；基于TCP</dd>
+      <dd>HTTPS - Hypertext Transfer Protocol Secure，安全的超文本传输协议；基于TCP</dd>
+      <dd><a class="link" href="./chap6ftp.html">FTP</a> - File Transfer Protocol，文件传输协议；基于TCP</dd>
+      <dd>SMTP - Simple Mail Transfer
+        Protocol，简单邮件传输协议，一种用于发送电子邮件的协议。它定义了电子邮件的传输方式，负责将邮件从发件人的电子邮件服务器发送到接收人的电子邮件服务器。SMTP负责处理邮件的路由和传输，确保邮件能够准确地传递到目标服务器
+        ；基于TCP</dd>
+      <dd>POP3 - Post Office Protocol 3，用于接收电子邮件的协议。它允许用户从邮件服务器上下载和接收邮件，如Outlook；基于TCP</dd>
+      <dd><a class="link" href="./chap6dns.html">DNS</a> - Domain Name System，域名系统</dd>
+      <dd><a class="link" href="./chap6dhcp.html">DHCP</a> - Dynamic Host Configuration Protocol，动态主机分配协议</dd>
+      <dd>SNMP - Simple Network Management
+        Protocol，简单网络管理协议；一种用于网络管理的应用层协议。它允许网络管理员监视和管理网络设备、服务器、路由器和其他网络设备的运行状态和性能；基于UDP协议</dd>
+      <dd><a class="link" href="./chap4rip.html">RIP</a> - Routing Information Protocol，路由信息协议，主要的路由协议之一；基于UDP协议</dd>
+      <dt>运输层 Transportation Layer</dt>
+      <dd>任务：负责向两台主机中进程之间的通信提供通用的数据传输服务；具有复用和分用的功能</dd>
+      <dd>PDU 为 <strong>数据段/报文段 Segment</strong></dd>
+      <dd>主要使用两种协议：
+        <p>传输控制协议 TCP(Transmission Control Protocol)，提供面向连接的、可靠的数据传输服务</p>
+        <p>用户数据报协议 UDP (User Datagram Protocol)：提供无连接的尽最大努力 (best-effort) 的数据传输服务；不保证数据传输的可靠性；数据单元称为 <strong>用户数据报
+            Packet</strong></p>
+      </dd>
+      <dd><a class="link" href="./chap5tcp.html">TCP</a> - Transmission Control Protocol，传输控制协议；面向连接，可靠</dd>
+      <dd><a class="link" href="./chap5udp.html">UDP</a> - User Datagram Protocol，用户数据报协议；无连接、最大努力交付；直播流</dd>
+      <dt>网络层 Network Layer</dt>
+      <dd>使用IP 协议(Internet Protocol)和其它协议为分组交换网上的不同主机提供通信服务</dd>
+      <dd>IP 协议分组也叫做 IP 数据报，或简称为 <strong>数据报 Packet</strong></dd>
+      <dd>PDU 为 <strong>数据报 Datagram、分组 Packet</strong></dd>
+      <dd>核心设备：路由器</dd>
+      <dd>两个具体任务：
+        <p>路由选择：通过一定的算法，在互联网中的每一个路由器上，生成一个用来转发分组的转发表</p>
+        <p>转发：每一个路由器在接收到一个分组时，要依据转发表中指明的路径把分组转发到下一个路由器</p>
+      </dd>
+      <dd><a class="link" href="./chap4ip.html">IP</a> - Internet Protocol，互联网协议</dd>
+      <dd><a class="link" href="./chap4arp.html">ARP</a> - Address Resolution Protocol，地址解析协议</dd>
+      <dd>RARP - Reverse Address Resolution Protocol，逆地址解析协议</dd>
+      <dd><a class="link" href="./chap4icmp.html">ICMP</a> - Internet Control Message Protocol，Internet控制报文协议</dd>
+      <dd><a class="link" href="./chap4igmp.html">IGMP</a> - Internet Group Management Protocol，Internet组管理协议</dd>
+      <dd><a class="link" href="./chap4ospf.html">OSPF</a> - Open Shortest Path First，开放的最短路径优先协议，基于IP协议，主要的路由协议之一</dd>
+      <dt>数据链路层 Data Link Layer</dt>
+      <dd>任务：实现两个相邻节点之间的可靠通信</dd>
+      <dd>在两个相邻节点间的链路上传送帧</dd>
+      <dd>PDU 为 <strong>帧 Frame</strong></dd>
+      <dd>如发现有差错，就简单地丢弃出错帧</dd>
+      <dd>如果需要改正出现的差错，就要采用可靠传输协议来纠正出现的差错。这种方法会使数据链路层协议复杂</dd>
+      <dd><a class="link" href="./chap3ppp.html">PPP</a> - Point-to-Point Protocol，点对点协议</dd>
+      <dd>核心设备：交换机</dd>
+      <dt>物理层 Physical Layer</dt>
+      <dd>任务：实现比特 0、1的传输</dd>
+      <dd>PDU 为 <strong>比特 Bit</strong></dd>
+      <dd>确定连接电缆的插头应当有多少根引脚，以及各引脚应如何连接</dd>
+      <dd>注意：传递信息所利用的一些物理媒体，如双绞线、同轴电缆、光缆、无线信道等，并不在物理层协议之内，而是在物理层协议的下面</dd>
+      <dd>核心设备：集线器、中继器</dd>
+      <table>
+        <caption>各层协议</caption>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>PDU</th>
+            <th>Protocol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Application Layer</td>
+            <td>Message/Data</td>
+            <td>HTTP/HTTPS SMTP FTP DNS RIP POP3 SNMP Telnet</td>
+          </tr>
+          <tr>
+            <td>Transportation Layer</td>
+            <td>Segment</td>
+            <td>TCP UDP</td>
+          </tr>
+          <tr>
+            <td>Network Layer</td>
+            <td>Datagram/Packet</td>
+            <td>IP IGMP ICMP OSPF BGP</td>
+          </tr>
+          <tr>
+            <td>Data Link Layer</td>
+            <td>Frame</td>
+            <td>ARP PPP Ethernet</td>
+          </tr>
+          <tr>
+            <td>Physical Layer</td>
+            <td>Bit</td>
+            <td>RJ45接口、光纤、集线器、电压等规范</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <h2>数据流 Data flow</h2>
+    <dl>
+      <dt>对等层通信 Peer To peer</dt>
+      <dd>任何两个同样的层次数据单元加上控制信息通过水平虚线直接传递给对方</dd>
+      <dd>各层协议实际上就是在各个对等层之间传递数据时的各项规定</dd>
+      <figure>
+        <img src="./imgs/p29.png" alt="数据流 Data flow">
+        <figcaption>数据流 Data flow</figcaption>
+      </figure>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
