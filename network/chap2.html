@@ -16,7 +16,7 @@
       width: max-content;
       color: transparent;
       font-weight: 600;
-      background-image: linear-gradient(90deg, var(--main-color), #ff0, var(--main-color));
+      background-image: linear-gradient(90deg, var(--warn-color), #ff0, var(--warn-color));
       font-size: 4rem;
       line-height: 1;
       margin: 2rem auto;
@@ -98,16 +98,22 @@
         <img src="./imgs/ph2.png" alt="">
         <figcaption>全双工 Full-Duplex</figcaption>
       </figure>
-      <dt>信道极限容量 Capacity</dt>
-      <dd>奈奎斯特定律 Nyquist's law
-        <p>在带宽W(hz)的低通信道中，不考虑噪声影响，码元传输的最高速率是2W(码元/秒)</p>
-      </dd>
-      <dd>信噪比 signal-to-noise ratio</dd>
-      <div class="txt-bg-grad">SNR = 10 * log<sub>10</sub>(S/N) (dB)</div>
-      <dd>香农公式 Shannon Theory</dd>
-      <div class="txt-bg-grad">R<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
-      <div class="tips">log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</div>
-      <div class="demo">P70/2-08 假定要用 3 kHz 带宽的电话信道传送 64 kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
+      <dt>奈奎斯特定律 Nyquist's law</dt>
+      <dd>体现信道极限容量 Capacity、信噪比 S/N 和带宽 W 之间的关系</dd>
+      <dd>在带宽 W(hz) 的低通信道中，不考虑噪声影响，码元传输的最高速率是 2W(码元/秒)</dd>
+      <figure>
+        <div class="txt-bg-grad">R<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
+        <figcaption>香农公式 Shannon Theory</figcaption>
+      </figure>
+      <figure>
+        <div class="txt-bg-grad">SNR = 10 * log<sub>10</sub>(S/N) (dB)</div>
+        <figcaption>信噪比 signal-to-noise ratio</figcaption>
+      </figure>
+      <div class="tips">
+        <p>log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</p>
+        <p>统一单位后再计算</p>
+      </div>
+      <div class="demo">P70/2-08 假定要用 3 khz 带宽的电话信道传送 64 kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
       </div>
       <dd>答：</dd>
       <div class="txt-indent">
