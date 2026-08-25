@@ -16,79 +16,106 @@
     </header>
     <dl>
       <dt>概述 Overview</dt>
-      <dd>路由追踪，用于测试本端主机到某个目标主机所经过的路由，即：确定 IP 数据包访问目标所采取的路径</dd>
-      <dd>使用UDP协议发送数据</dd>
-      <dd>多用于内部检测网络故障节点情况</dd>
-      <dd>安全考虑，外网部分网络主机不允许被追踪，可能出现请求超时的情况</dd>
-      <dd>Ctrl+C强制退出测试状态</dd>
-      <dd>使用tracert /?查看完整命令</dd>
-      <pre>
-C:\Users\cnplaman>tracert /?
-
-用法: tracert [-d] [-h maximum_hops] [-j host-list] [-w timeout]
-               [-R] [-S srcaddr] [-4] [-6] target_name
-
-选项:
-    -d                 不将地址解析成主机名。
-    -h maximum_hops    搜索目标的最大跃点数。
-    -j host-list       与主机列表一起的松散源路由(仅适用于 IPv4)。
-    -w timeout         等待每个回复的超时时间(以毫秒为单位)。
-    -R                 跟踪往返行程路径(仅适用于 IPv6)。
-    -S srcaddr         要使用的源地址(仅适用于 IPv6)。
-    -4                 强制使用 IPv4。
-    -6                 强制使用 IPv6。</pre>
-      </dd>
-      <dd>-d：不解析主机名，只使用IP地址；命令的位置只能在host/IP前面；可以加快追踪时间</dd>
-      <dd>-h：指定最大跃点数追踪路由；查跟设备最近的几个连接点的问题，通常在网络问题中，先要排除前端跟设备直接连接的最近的几个设备是否有故障，如果这几个近点跟踪可以正常互通，那么问题可能就出现在后端</dd>
-      <dd>-w：当网络很慢，或者很卡时，要检测是哪个设备的反应速度比较慢，设个标准值|阈值，超过阈值的设备不显示</dd>
-      <dt>工作原理</dt>
-      <dd>源主机向目标主机发送一连串IP数据报来确定到目标所采取的路由</dd>
-      <dd>每个IP数据报的生存时间TTL依次加1</dd>
-      <dd>路径上每个路由器在转发数据包之前将TTL减1</dd>
-      <dd>TTL减为0时，路由器应该将"ICMP已超时"消息发回源主机</dd>
-      <dd>最后一个IP数据可以达到目标主机；因为采用的是无法交付的UDP，所有目标主机要向源主机发送"目标不可达"消息</dd>
-      <dd>通过检查中间路由器发回的“ICMP已超时”的消息确定路由</dd>
-      <dt>结果分析</dt>
-      <dd>tracert 默认对每一跳发送<strong>3</strong>个探测数据包（ICMP 或 UDP 包，取决于系统），目的是：
+      <dd>路由追踪，用于测试本端主机到某个目标主机所经过的路由，即：确定 IP 数据包访问目标所选择的路径</dd>
+      <dd>tracert 默认对每一跳发送 <strong>3</strong> 个探测数据包（ICMP 或 UDP 包，取决于系统）
         <p>测试连接的延迟稳定性</p>
         <p>检测是否出现丢包</p>
         <p>提高结果的可靠性</p>
       </dd>
-      <table>
-        <caption>结果分析</caption>
-        <tr>
-          <td>参数1</td>
-          <td>Hop Number
-            <p>跃点编号</p>
-            <p>表示这是路径中的第几个路由器或网络节点</p>
-            <p>从你的电脑出发，每经过一次转发，跳数 +1</p>
-          </td>
-        </tr>
-        <tr>
-          <td>参数2</td>
-          <td>Round-trip Time, RTT
-            <p>探测包到该节点并收到响应所用的时间</p>
-            <p>单位ms</p>
-            <p>第1个ICMP的往返时间</p>
-          </td>
-        </tr>
-        <tr>
-          <td>参数3</td>
-          <td>第2个ICMP的往返时间</td>
-        </tr>
-        <tr>
-          <td>参数4</td>
-          <td>第3个ICMP的往返时间</td>
-        </tr>
-        <tr>
-          <td>参数5</td>
-          <td>响应这一跳的设备的IP地址
-            <p>如果有主机名，还会解析</p>
-          </td>
-        </tr>
-      </table>
+      <dd>安全考虑，外网部分网络主机不允许被追踪，可能出现请求超时的情况</dd>
+      <dd>使用 tracert /? 查看完整命令</dd>
+      <pre>
+tracert 
+  [-d] 
+  [-h maximum_hops] 
+  [-j host-list] 
+  [-w timeout]
+  [-R] 
+  [-S srcaddr] 
+  [-4] 
+  [-6] 
+  target_name</pre>
+      <dd>-d</dd>
+      <ul>
+        <li>Do not resolve addresses to hostnames</li>
+        <li>不解析主机名，只使用IP地址，可以加快追踪时间</li>
+        <li>强烈建议 <strong>始终</strong> 加上 -d 参数</li>
+        <li>如果目标没有配置对应的域名，或者运营商/路由器没有开启反向 DNS 记录，则无效</li>
+      </ul>
+      <dd>-h</dd>
+      <ul>
+        <li>Maximum hops</li>
+        <li>指定追踪路由的最大跃点数</li>
+        <li>使用分段隔离法排查
+          <p>通常先用较小的跃点值排除近端几个设备是否正常（最后一公里）</p>
+          <p>如果近端设备正常，再增加跃点值排查远端（主干链路）</p>
+        </li>
+      </ul>
+      <dd>-w</dd>
+      <ul>
+        <li>指定等待每个回复的超时时间（以ms为单位）默认 4000 毫秒</li>
+        <li>参数控制的是 tracert 的“耐心程度”
+          <p>耐心越小（值越低），测试越快，但可能会漏掉响应稍慢的正常节点</p>
+          <p>耐心越大（值越高），测试越准，但耗时也会成倍增加</p>
+        </li>
+        <li>当网络很慢，或者很卡时，要检测是哪个设备的反应速度比较慢，设个标准值|阈值</li>
+        <li>超过阈值的设备不显示</li>
+      </ul>
+      <dd>-j</dd>
+      <ul>
+        <li>Loose Source Route（松散源路由）</li>
+        <li>强制指定数据包在到达最终目的地之前，<strong>必须经过</strong> 的中间节点（IP地址列表）</li>
+        <li>精准定位特定路径的故障：当网络中存在多条路径时，你可以用 -j 强制数据包走某一条特定的骨干网链路。通过对比带 -j 和不带 -j 的结果，可以精确验证某一条特定路径的性能或延迟情况</li>
+        <li>很多现代网络设备（路由器、防火墙）出于安全考虑，默认禁用了源路由功能。如果中间节点不支持，tracert 可能会直接报错（如“传输失败”），或者忽略你的 -j
+          设置。因此，更多用于 <strong>企业内部</strong> 网络或受控网络环境中的深度排查</li>
+      </ul>
+      <div class="tips">
+        <p>命令的位置只能在host/IP前面</p>
+        <p>Ctrl + C 强制退出测试状态</p>
+      </div>
+      <dt>工作原理</dt>
+      <dd>源主机向目标主机发送一连串 IP 数据报来确定到目标所采取的路由</dd>
+      <dd>每个 IP 数据报的生存时间 TTL 依次加 1</dd>
+      <dd>路径上每个路由器在转发数据包之前将 TTL 减1</dd>
+      <dd>TTL 减为 0 时，路由器应该将 "ICMP已超时" 消息发回源主机</dd>
+      <dd>最后一个 IP 数据可以达到目标主机；因为采用的是无法交付的 UDP，所有目标主机要向源主机发送"目标不可达"消息</dd>
+      <dd>通过检查中间路由器发回的 “ICMP已超时” 的消息确定路由</dd>
+      <dt>结果分析</dt>
+      <pre>
+参数1 参数2    参数3    参数4 参数5
+1     5 ms     3 ms     3 ms  10.23.255.254</pre>
+      <dd>参数1</dd>
+      <ul>
+        <li>Hop Number</li>
+        <li>跃点编号</li>
+        <li>表示这是路径中的第几个路由器或网络节点</li>
+        <li>从你的电脑出发，每经过一次转发，跳数 +1</li>
+      </ul>
+      <dd>参数2</dd>
+      <ul>
+        <li>Round-trip Time, RTT</li>
+        <li>探测包到该节点并收到响应所用的时间</li>
+        <li>单位ms</li>
+        <li>第 1 个 ICMP 的往返时间</li>
+      </ul>
+      <dd>参数3</dd>
+      <dd>第 2 个 ICMP 的往返时间</dd>
+      <dd>参数4</dd>
+      <dd>第 3 个 ICMP 的往返时间</dd>
+      <dd>参数5</dd>
+      <ul>
+        <li>响应这一跳的设备的 IP 地址</li>
+        <li>如果有主机名，还会解析</li>
+      </ul>
+      <div class="tips">
+        <p>中间星号 + 后面正常 = 节点禁 Ping，链路正常</p>
+        <p>全程星号 + 业务正常 = 目标端或路径禁 Ping，链路正常</p>
+        <p>全程星号 + 业务瘫痪 = 链路真的中断或严重拥塞，需要联系运营商排查</p>
+      </div>
       <div class="demo"> 本机到默认网关的路由情况</div>
-      <dd>首先获取本机IP地址和网关，再测试到默认网关的路由情况</dd>
+      <dd>首先获取本机 IP 地址和网关（略）</dd>
+      <!-- <pre>ipconfig</pre> -->
+      <dd>再测试到默认网关的路由情况</dd>
       <dd>显然，只有一跳即可到达默认网关</dd>
       <pre>
 C:\Users\huawei>tracert 10.23.255.254
@@ -122,7 +149,21 @@ C:\Users\huawei>tracert glplaman.github.io
  14   135 ms   136 ms   136 ms  cdn-185-199-108-153.github.com [185.199.108.153]
 
 跟踪完成。</pre>
-      <div class="demo"> 本机到baidu的路由情况 - 限定跳数</div>
+      <dd>指定 5 个跃点</dd>
+      <pre>
+C:\Users\huawei>tracert -h 5 glplaman.github.io
+
+通过最多 5 个跃点跟踪
+到 glplaman.github.io [2606:50c0:8000::153] 的路由:
+
+  1     7 ms     2 ms     2 ms  2001:250:301e:1023::1
+  2     4 ms     2 ms     2 ms  2001:250:301e:1070::5
+  3    18 ms     5 ms     6 ms  2001:250:301e:f000::1
+  4  1125 ms  1100 ms     *     cernet2.net [2001:da8:a2:9a5::10]
+  5     6 ms     6 ms     4 ms  cernet2.net [2001:da8:a2:9a3::10]
+
+跟踪完成。</pre>
+      <div class="demo"> 本机到 baidu 的路由情况 - 限定跳数</div>
       <dd>第一跳显然应该先到本机的默认网关</dd>
       <dd>前3都是私有地址，表示还没有进入公网</dd>
       <dd>第4条开始，没有收到回应
@@ -143,7 +184,7 @@ C:\Users\huawei>tracert -h 5 www.baidu.com
   5     *        *        *     请求超时。
 
 跟踪完成。</pre>
-      <div class="demo"> 本机到baidu的路由情况 - 不限跳数</div>
+      <div class="demo"> 本机到 baidu 的路由情况 - 不限跳数</div>
       <dd>百度真是良心企业啊</dd>
       <pre>
 C:\Users\huawei>tracert www.baidu.com
@@ -165,7 +206,7 @@ C:\Users\huawei>tracert www.baidu.com
  12     6 ms     6 ms     6 ms  183.2.172.17
 
 跟踪完成。</pre>
-      <div class="demo"> 追踪响应时间小于5ms的路由情况</div>
+      <div class="demo"> 追踪响应时间小于 5ms 的路由情况</div>
       <dd>追踪响应时间小于5ms的路由情况</dd>
       <pre>
 C:\Users\cnplaman>tracert -w 5 www.baidu.com
