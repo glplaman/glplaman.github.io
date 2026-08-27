@@ -486,10 +486,11 @@ cookie = （同上）</pre>
       </table>
       <div>2. 请求头 Headers</div>
       <dd>若干键值对，用于传递元信息
-        <p>Host：目标主机和端口（HTTP/1.1 必须）</p>
-        <p>User-Agent：客户端信息</p>
+        <p>Host：目标主机IP地址、端口（HTTP/1.1 必须）</p>
+        <p>User-Agent：客户端信息和操作系统信息</p>
         <p>Accept：客户端可接受的 MIME 类型</p>
         <p>Content-Type：请求体的媒体类型（如 POST 数据）</p>
+        <p>Referer：从哪个页面跳转过来</p>
         <p>Authorization：认证信息</p>
       </dd>
       <div>3. 空行 CRLF</div>
@@ -560,33 +561,38 @@ console.log(res)
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr style="color: #64748a;">
             <td>1xx</td>
             <td>信息响应</td>
             <td>100 Continue</td>
           </tr>
-          <tr>
+          <tr style="color: #13b983;">
             <td>2xx</td>
             <td>成功</td>
             <td>200 OK, 201 Created, 204 No Content</td>
           </tr>
-          <tr>
+          <tr style="color: #3e81f8;">
             <td>3xx</td>
             <td>重定向</td>
             <td>301 Moved Permanently, 302 Found, 304 Not Modified</td>
           </tr>
-          <tr>
+          <tr style="color: #f69d0d;">
             <td>4xx</td>
             <td>客户端错误</td>
             <td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td>
           </tr>
-          <tr>
+          <tr style="color: #f14548;">
             <td>5xx</td>
             <td>服务器错误</td>
             <td>500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</td>
           </tr>
         </tbody>
       </table>
+      <div class="tips">
+        <p>WAF欺骗</p>
+        <p>403伪装</p>
+        <p>不拒绝，而是返回404，让你以为找不到</p>
+      </div>
       <div class="demo"> 开发环境和生产环境下的报文</div>
       <dd>借助开发者工具中查看 chap6http.html</dd>
       <figure>

@@ -113,24 +113,22 @@
       <dd>现在多使用 &lt;nav&gt; → &lt;a&gt; 实现；结构层级减少而又不失去 SEO 增强</dd>
       <div>[<span class="iconfont icon-help"></span>] OA文档如何定制下划线颜色？</div>
       <div>[<span class="iconfont icon-help"></span>] OA文档如何定制项目符号？</div>
-      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul">&lt;ul&gt;</a></dt>
-      <dd>块盒 block</dd>
-      <dd>可以嵌套使用</dd>
-      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/li">&lt;li&gt;</a></dt>
-      <dd>列表项 list item；块盒 block</dd>
-      <dd>&lt;ul&gt; 的子元素只能是 &lt;li&gt;</dd>
       <pre>
 &lt;ul type=""&gt;
     &lt;li&gt;&lt;/li&gt;
     //... ...
     &lt;li&gt;&lt;/li&gt;
 &lt;/ul&gt;</pre>
+      <dt>1. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul">&lt;ul&gt;</a></dt>
+      <dd>无序列表 Unordered List</dd>
+      <dd>块盒 block</dd>
+      <dd>可以嵌套使用</dd>
       <table>
-        <caption>无序列表属性 type</caption>
+        <caption>无序列表 &lt;ul&gt; 的 type 属性 </caption>
         <thead>
           <tr>
-            <th>类别</th>
-            <th>说明</th>
+            <th>item</th>
+            <th>desc</th>
           </tr>
         </thead>
         <tbody>
@@ -148,13 +146,15 @@
           </tr>
         </tbody>
       </table>
-      <dt><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::marker">::marker</a></dt>
-      <dd>除了使用 type 选择项目符号外，还可以使用列表的 <a href="./selector_ele.html">伪元素</a> ::marker 定制更为丰富的效果</dd>
-      <dd>列表默认的项目符号也是通过 ::marker 实现的</dd>
-      <dd>更多使用，请访问 <a
-          href="https://css-tricks.com/everything-you-need-to-know-about-the-gap-after-the-list-marker/">Everything
-          You
-          Need to Know About the Gap After the List Marker</a>、<a href="./counter.html">计数器</a></dd>
+      <dd>高频样式 list-style，简写属性，包括：
+        <p>list-style-type；同标签属性类型</p>
+        <p>list-style-image：使用图片相关的资源</p>
+        <p>list-style-position：outside | inside</p>
+      </dd>
+      <dt>2. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/li">&lt;li&gt;</a></dt>
+      <dd>列表项 list item</dd>
+      <dd>块盒 block</dd>
+      <dd>&lt;ul&gt; 的子元素只能是 &lt;li&gt;</dd>
       <div class="demo"> 常见无序列表</div>
       <ul>
         <li>使用 type，指定为 square；适合单个列表</li>
@@ -173,14 +173,27 @@ ul {
 li::marker {
   color: #fa8231;
 }</pre>
-        <li>定制项目符号/标记；可以使用普通字符或使用 CSS 的实体 <a href="./entity.html">Entity</a> 对应的 Unicode 编码</li>
+        <li>使用图片；但是无法调整图片大小；只能提前处理好图片</li>
+        <pre>
+ul {
+  list-style-position: inside;
+  list-style-image: url(/imgs/avatar.jpg);
+}</pre>
+        <li>使用列表项的 <a href="./selector_ele.html">伪元素</a> <a
+            href="https://developer.mozilla.org/en-US/docs/Web/CSS/::marker">::marker</a> 定制更为丰富的效果</li>
+        <li>可以使用普通字符或使用 CSS 的实体 <a href="./entity.html">Entity</a> 对应的 Unicode 编码</li>
+        <li>列表默认的项目符号也是通过 ::marker 实现的</li>
+        <li>更多使用，请访问 <a
+            href="https://css-tricks.com/everything-you-need-to-know-about-the-gap-after-the-list-marker/">Everything
+            You
+            Need to Know About the Gap After the List Marker</a>、<a href="./counter.html">计数器</a></li>
         <pre>
 // 普通字符 - 一个或多个
 li::marker {
   content: '+';
 }</pre>
         <pre>
-// 直接拼接
+// 可以拼接其它字符，如：空格
 li::marker {
   content: '+ ';
 }</pre>
@@ -195,8 +208,18 @@ li::marker {
   content: '\00A9''. ';
 }</pre>
       </ul>
-      <dt>最佳体验</dt>
-      <dd>为了消除默认的项目符号对布局的影响，取消默认的项目符号，并使用 <a href="./selector_ele.html">伪元素 ::before</a> 定制</dd>
+      <dt>最佳体验 Best Practice</dt>
+      <div>方案1：调整 &lt;ul&gt; 标记位置；默认是外部 outside</div>
+      <pre>
+ul {
+  list-style: disc inside;
+}</pre>
+      <div>方案1：&lt;ul&gt; 保持默认样式；调整 &lt;li&gt;的样式，左侧预留空白 margin</div>
+      <pre>
+li {
+  margin-left: 24px;
+}</pre>
+      <div>方案3：取消默认的项目符号，并使用 <a href="./selector_ele.html">伪元素 ::before</a> 定制</div>
       <pre>
 ul {
   list-style: none;

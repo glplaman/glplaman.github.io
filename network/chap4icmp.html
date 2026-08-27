@@ -93,8 +93,8 @@
       </dd>
       <dt>代码 Code</dt>
       <dd>8 bits</dd>
-      <dd>对Type的补充说明，提供更具体的错误或状态信息</dd>
-      <dd>Type = 3（Destination Unreachable）时，Code可以是：
+      <dd>进一步对 Type 补充说明，提供更具体的错误或状态信息</dd>
+      <dd>Type = 3（Destination Unreachable）时，Code 可以是：
         <p>0：网络不可达</p>
         <p>1：主机不可达</p>
         <p>2：协议不可达</p>
@@ -104,8 +104,8 @@
       <dt>校验和 CHECKSUM</dt>
       <dd>16 bits</dd>
       <dd>
-        <p>用于检测ICMP报文在传输过程中是否发生错误</p>
-        <p>计算方式：对整个ICMP报文（包括头部和数据）进行反码求和（One's Complement Sum）</p>
+        <p>用于检测 ICMP 报文在传输过程中是否发生错误</p>
+        <p>计算方式：对整个 ICMP 报文（包括头部和数据）进行反码求和（One's Complement Sum）</p>
         <p>发送方计算并填入，接收方重新计算验证</p>
         <p>若校验失败，丢弃该报文</p>
       </dd>
@@ -113,27 +113,27 @@
       <dd>16 bits</dd>
       <dd>
         <p>用于标识一个特定的进程或会话</p>
-        <p>在Echo Request/Reply中，发送方设置ID，接收方原样返回</p>
-        <p>通常由应用程序设定（如ping程序使用进程ID或随机数）</p>
-        <p>有助于区分来自不同应用的ICMP报文</p>
-        <p>若用户同时运行两个ping命令，ID可帮助区分它们的响应</p>
+        <p>在 Echo Request/Reply 中，发送方设置 ID，接收方原样返回</p>
+        <p>通常由应用程序设定（如 Ping 程序使用进程ID或随机数）</p>
+        <p>有助于区分来自不同应用的 ICMP 报文</p>
+        <p>若用户同时运行两个 Ping 命令，ID 可帮助区分它们的响应</p>
       </dd>
       <dt>序列号 SEQ NUMBER</dt>
       <dd>16 bits</dd>
       <dd>
-        <p>用于跟踪连续的Echo请求</p>
-        <p>每次发送新的Echo Request时，序列号递增 - 模加1</p>
+        <p>用于跟踪连续的 Echo 请求</p>
+        <p>每次发送新的 Echo Request 时，序列号递增 - 模加1</p>
         <p>接收方返回相同的序号，便于确认是否收到所有包</p>
         <p>帮助检测丢包或乱序</p>
-        <p>Ping的4个探测，ID相同；SEQ递增</p>
-        <p>并非所有ICMP报文都有ID和SEQ NUMBER，仅Echo类报文有</p>
+        <p>Ping 的4个探测，ID 相同；SEQ 递增</p>
+        <p>并非所有 ICMP 报文都有 ID 和 SEQ NUMBER，仅 Echo 类报文有</p>
       </dd>
       <dt>数据 Data</dt>
       <dd>可变长度</dd>
       <dd>
         <p>携带实际的数据内容</p>
-        <p>对于Echo Request/Reply，通常是任意数据（如时间戳、填充字节等），用于测试往返延迟</p>
-        <p>对于其他ICMP报文（如Destination Unreachable），Data部分可能包含引发错误的原始IP报文的头部（最多64byte）</p>
+        <p>对于 Echo Request/Reply，通常是任意数据（如时间戳、填充字节等），用于测试往返延迟</p>
+        <p>对于其他 ICMP 报文（如Destination Unreachable），Data 部分可能包含引发错误的原始 IP 报文的头部（最多64byte）</p>
       </dd>
       <figure>
         <img src="./imgs/icmp4.png" alt="">
@@ -153,8 +153,8 @@
       </figure>
       <dt>典型应用 Application</dt>
       <ul>
-        <li><a class="link" href="./com_ping.html">ping</a></li>
-        <li><a class="link" href="./com_tracert.html">trancert</a></li>
+        <li><a class="link" href="./com_ping.html">Ping</a></li>
+        <li><a class="link" href="./com_tracert.html">Trancert</a></li>
       </ul>
     </dl>
     <h2>实操 Drill</h2>
@@ -166,11 +166,11 @@
           <img src="./imgs/ping4.png" alt="">
           <figcaption>拓扑</figcaption>
         </figure>
-        <li>配置主机IP地址 - 见拓扑图</li>
+        <li>配置主机 IP 地址 - 见拓扑图</li>
         <li>切换至 Simulation 模式，编辑过滤器 Edit Filters，仅保留 ICMP 协议</li>
-        <li>单击主机PC0，打开桌面 desktop →命令行 Command Prompt，执行下面命令</li>
+        <li>单击主机 PC0，打开桌面 desktop →命令行 Command Prompt，执行下面命令</li>
         <pre>ping 192.168.1.2</pre>
-        <li>点击 "Capture / Forward" 按钮，逐步推进事件，并查看报文中的ICMP参数变化
+        <li>点击 "Capture / Forward" 按钮，逐步推进事件，并查看报文中的 ICMP 参数变化
           <p>发送报文</p>
           <p>回复报文</p>
           <p>SEQ</p>
@@ -190,20 +190,20 @@
     <dl>
       <dt>Summary</dt>
       <ol>
-        <li>ICMP在协议栈中的位置和作用</li>
-        <li>ICMP的报文格式</li>
-        <li>ICMP的基本应用</li>
+        <li>ICMP 在协议栈中的位置和作用</li>
+        <li>ICMP 的报文格式</li>
+        <li>ICMP 的基本应用</li>
       </ol>
       <dt>Homework</dt>
       <ol>
-        <li>结合 ping，简述ICMP报文中，ID和SEQ的作用和变化</li>
+        <li>结合 Ping，简述 ICMP 报文中，ID 和 SEQ 的作用和变化</li>
         <li>分别使用静态路由和默认路由，实现两侧主机的通信；网络拓扑参考如下
           <p>创建拓扑</p>
-          <p>配置IP地址</p>
+          <p>配置 IP 地址</p>
           <p>配置静态路由</p>
-          <p>利用 ping 测试网络的连通性，并分析可能出现的问题</p>
+          <p>利用 Ping 测试网络的连通性，并分析可能出现的问题</p>
           <p>删除配置的静态路由；重新配置默认路由</p>
-          <p>利用 ping 测试网络的连通性，并分析可能出现的问题</p>
+          <p>利用 Ping 测试网络的连通性，并分析可能出现的问题</p>
         </li>
         <figure>
           <img src="./imgs/default4.png" alt="">
