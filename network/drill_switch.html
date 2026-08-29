@@ -23,8 +23,27 @@
       <dd>交换机 Switch</dd>
       <dt>实验目的</dt>
       <dt>实验内容</dt>
+      <dd>交换机常用命令</dd>
+      <dd>交换机基本配置</dd>
+      <dd>局域网 LAN</dd>
+      <dd>虚拟局域网 VLAN</dd>
       <dt>实验器材</dt>
       <dt>前置知识</dt>
+      <dt>使用步骤</dt>
+      <ol>
+        <li>构建网络拓扑
+          <p>3层架构</p>
+        </li>
+        <figure>
+          <img src="./imgs/s0.png" alt="">
+          <figcaption>参考拓扑</figcaption>
+        </figure>
+        <li>接入交换机 (2960)：划分 VLAN，将终端端口划入对应 VLAN</li>
+        <li>汇聚交换机 (3560)：配置 VLAN 接口（SVI），实现 VLAN 间路由；配置 Trunk 连接核心</li>
+        <li>核心交换机 (3560)：配置路由（静态或 OSPF），连接汇聚和出口</li>
+        <li>出口路由器 (2911)：配置 NAT，默认路由指向外部网络</li>
+        <li>终端设备：配置 IP 地址和默认网关</li>
+      </ol>
       <dt>参考效果和参考命令</dt>
       <dt>拓展与思考</dt>
       <div id="footer"></div>
@@ -41,7 +60,6 @@
     </dl>
   </div>
   <script src="/utils/custom/footer.js"></script>
-  <script src="/utils/custom/star.js"></script>
 </body>
 
 </html>
