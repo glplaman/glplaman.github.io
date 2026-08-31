@@ -26,13 +26,21 @@
       <dd>带宽 Bandwidth</dd>
       <dd>吞吐量 Throughput</dd>
       <dd>延迟 Delay</dd>
-      <dd>延迟带宽积 Delay</dd>
       <dd>往返时间 RTT</dd>
+      <dd>延迟带宽积 Delay</dd>
       <dd>利用率 Utilization</dd>
+      <div class="tips">
+        <p>速率 bps</p>
+        <p>时间 s</p>
+        <p>容量 bit</p>
+        <p>利用率 %</p>
+      </div>
     </dl>
     <dl>
       <dt>速率 Rate</dt>
       <dd>表示单位时间内传输的数据量</dd>
+      <dd>也叫比特率</dd>
+      <dd>每秒搬运了多少数据</dd>
       <dd>数据传输的 <strong>额定</strong> 速度</dd>
       <dd>单位：比特每秒；bps、bit/s</dd>
       <figure>
@@ -40,14 +48,19 @@
         <figcaption>速率 Rate</figcaption>
       </figure>
       <dt>带宽 Bandwidth</dt>
-      <dd>网络连接的 <strong>最大</strong> 数据传输能力</dd>
+      <dd>从时域 (Time Domain)角度，指网络中某通道传送数据的能力 - <strong>网速</strong></dd>
+      <dd>表示在单位时间内网络中的某信道所能通过的 <strong>最高</strong> 数据率</dd>
       <dd>单位：比特每秒；bps、bit/s</dd>
+      <dd>还有一个衡量指标，在频域 (Frequency Domain) 使用赫兹 Hz</dd>
       <figure>
         <img src="./imgs/p19.jpg" alt="带宽 Bandwidth">
         <figcaption>带宽 Bandwidth</figcaption>
       </figure>
+      <div class="demo">多车道高速公路</div>
+      <div class="demo">高铁</div>
+      <div class="demo">Wi-Fi 2.4GHz 频段 vs Wi-Fi 5GHz 频段</div>
       <dt>吞吐量 Throughput</dt>
-      <dd><strong>实际</strong> 通过网络传输的数据量</dd>
+      <dd><strong>实际 Realtime</strong> 通过网络传输的数据量</dd>
       <dd>单位：比特每秒；bps、bit/s</dd>
       <div class="tips">
         <p>速率</p>
@@ -110,10 +123,14 @@
           </tr>
         </tbody>
       </table>
+      <div class="tips">
+        <p>考虑到传播时延和信号衰减，IEEE 802.3 规定：单段网线（双绞线）最大传输距离是 100m</p>
+        <p>工程实践推荐 50m-90m</p>
+      </div>
       <div>3. 排队时延</div>
       <dd>分组在路由器输入输出队列中排队等待处理和转发所经历的时延</dd>
       <dd>排队时延的长短往往取决于网络中当时的通信量</dd>
-      <dd>当网络的通信量很大时会发生队列溢出，使分组丢失，这相当于排队时延为无穷大</dd>
+      <dd>当网络的通信量很大导致拥塞时，会发生队列溢出，致使分组丢失，这相当于排队时延为无穷大</dd>
       <div>4. 处理时延</div>
       <dd>主机或路由器在收到分组时，为处理分组（例如分析首部、提取数据、差错检验或查找路由）所花费的时间</dd>
       <div class="tips">
@@ -143,19 +160,6 @@
         <p>（4）发送时延 = 1 × 8 bit÷ 10<sup>9</sup> bit/s= 8 × 10<sup>-9</sup> s = 0.008 μs</p>
         <p>总时延 = 0.000008 ms+ 5 ms= 5.000008 ms。与（3）相比没有明显减小</p>
       </div>
-      <dt>延迟带宽积 Delay</dt>
-      <dd>延迟带宽积是指网络中传播延迟与带宽的乘积，表示在传播路径上可以容纳的数据量</dd>
-      <dd>又称以比特为单位的链路长度</dd>
-      <dd>管道中的比特数表示：从发送端发出但尚未到达接收端的比特数；滞留在信道中的数据</dd>
-      <dd>只有管道都充满比特时，链路才得到了充分利用</dd>
-      <figure>
-        <img src="./imgs/p23.png" alt="延迟带宽积 Delay">
-        <figcaption>延迟带宽积 Delay</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/p24.png" alt="示意图">
-        <figcaption>示意图</figcaption>
-      </figure>
       <dt>往返时间 RTT</dt>
       <dd>Round-Trip Time</dd>
       <dd>往返时间是指数据从发送端到接收端再返回发送端所需的时间</dd>
@@ -185,6 +189,22 @@
       <figure>
         <img src="./imgs/p28.png" alt="多节点RTT">
         <figcaption>多节点RTT</figcaption>
+      </figure>
+      <dt>延迟带宽积 Delay</dt>
+      <dd>延迟带宽积是指网络中传播延迟与带宽的乘积，表示在传播路径上可以 <strong>容纳</strong> 的数据量</dd>
+      <dd>又称以比特为单位的链路长度</dd>
+      <dd>管道中的比特数：从发送端发出但尚未到达接收端的比特数；<strong>滞留</strong> 在信道中的数据</dd>
+      <figure>
+        <img src="./imgs/p23.png" alt="延迟带宽积 Delay">
+        <figcaption>延迟带宽积 Delay</figcaption>
+      </figure>
+      <dd>带宽（Bandwidth）：水管的粗细（每秒钟能流出多少水）</dd>
+      <dd>时延（Delay）：水流完这根水管需要花多长时间</dd>
+      <dd>延迟带宽积：水管的总体积（容量）；当水管完全装满水时，里面有多少水</dd>
+      <dd>只有管道都充满比特时，链路才得到了充分利用</dd>
+      <figure>
+        <img src="./imgs/p24.png" alt="示意图">
+        <figcaption>示意图</figcaption>
       </figure>
       <dt>利用率 Utilization</dt>
       <dd>利用率是指网络资源被实际使用的比例</dd>
