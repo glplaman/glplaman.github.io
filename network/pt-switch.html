@@ -14,17 +14,24 @@
       <h1>交换机 Switch</h1>
     </header>
     <dl>
-      <dt>操作模式</dt>
+      <div class="tips">
+        <p>命令可以使用简写，不需要打全，使用 Tab 主动补全</p>
+        <p>通常输入命令关键字的前3个字母即可；应确保对应的命令唯一</p>
+        <p>强制退出命令行卡顿：Ctrl + Shift + 6</p>
+      </div>
+      <dt>操作模式 Mode</dt>
       <table>
         <caption>操作模式</caption>
         <tbody>
           <tr>
             <td>Switch></td>
-            <td>用户模式，en进入特权模式</td>
+            <td>用户模式，en 进入特权模式</td>
           </tr>
           <tr>
             <td>Switch#</td>
-            <td>特权模式，conf ter进入全局配置模式</td>
+            <td>Privileged EXEC Mode
+              <br>特权模式，conf ter 进入全局配置模式
+            </td>
           </tr>
           <tr>
             <td>Switch#conf</td>
@@ -36,74 +43,94 @@
           </tr>
           <tr>
             <td>Switch(config-vlan)</td>
-            <td>VLAN配置</td>
+            <td>VLAN 配置</td>
           </tr>
           <tr>
             <td>Switch(config-line)</td>
-            <td>console配置</td>
+            <td>console 配置</td>
           </tr>
         </tbody>
       </table>
-      <dt>Show</dt>
-      <dd>查看命令</dd>
+      <dt>查看 Show</dt>
       <dd>switch>show ver 查看版本信息</dd>
       <dd>switch#show running-config 查看运行配置</dd>
       <dd>switch#show flash 查看已用/可用空间</dd>
       <dd>switch#show arp 查看ARP缓存</dd>
-      <dd>switch#show mac-addr 查看MAC转发表</dd>
+      <dd>switch#show mac-addr 查看 MAC 转发表</dd>
       <dd>switch#show interface 查看所有端口</dd>
-      <dd>switch#show interface fa0/1 查看指定端口fa0/1</dd>
+      <dd>switch#show interface fa0/1 查看指定端口 fa0/1</dd>
       <dd>switch#show interface fa0/1 switchport 查看指定端口模式</dd>
       <dd>switch#show ip interface 查看IP端口信息</dd>
       <dd>switch#show history 查看历史命令</dd>
-      <dt>clear</dt>
-      <dd>clear mac-address-table</dd>
-      <dt>Exit</dt>
+      <dt>清除 Clear</dt>
+      <dd>clear mac-address-table 清除 MAC 地址表</dd>
+      <dt>退出 Exit</dt>
       <dd>返回上一级</dd>
-      <dt>End</dt>
-      <dd>直接回到特权模式#</dd>
-      <dt>write</dt>
+      <dd>一层一层退出</dd>
+      <dt>结束 End</dt>
+      <dd>直接回到特权模式 #</dd>
+      <dd>从任意深层的配置子模式（如全局配置模式、接口模式等）直接一步返回到特权模式</dd>
+      <dd>你已经身处特权模式，所以该命令是无效的</dd>
+      <dt>写入 Write</dt>
       <dd>保存配置参数</dd>
-      <dt>基本配置</dt>
-      <dd>交换机的日常执勤中，很少直接操作交换机</dd>
-      <dd>初始化配置：通常使用PC的串口RS232连接交换机，在PC上操作交换机，配置其基本参数，如主机名、登陆权限等</dd>
-      <dd>日常运维:使用串口；使用telnet远程登陆</dd>
+      <dd>模拟环境中，使用 Ctrl + S 即可</dd>
+      <dd>实际环境中，不会反复启动设备，必须养成随手写入的好习惯</dd>
+      <div class="tips">
+        <p>交换机的日常执勤中，很少直接操作交换机</p>
+        <p>初始化配置：通常使用PC的串口RS232连接交换机，在PC上操作交换机，配置其基本参数，如主机名、登陆权限等</p>
+        <p>日常运维:使用串口；使用telnet远程登陆</p>
+      </div>
+      <dt>主机名 Hostname</dt>
       <dd>修改交换机的系统网络名</dd>
+      <dd>Hostname 可以不唯一</dd>
       <pre>switch(config)#hostname huali</pre>
+      <dt>特权密码 Password</dt>
       <dd>配置交换机特权模式密码</dd>
+      <dd>默认情况下，用户模式进入特权模式没有密码</dd>
       <pre>huali(config)#ena pass xxx // 明文密码</pre>
       <pre>huali(config)#ena secret xxx // 密文密码</pre>
+      <dt>串口密码 Console</dt>
       <dd>配置交换机串口密码</dd>
-      <pre>huali(config)#line console 0 // 选择console口</pre>
+      <dd>为了方便用户首次初始化配置，Console 访问交换机默认没有密码</dd>
+      <pre>huali(config)#line console 0 // 选择 Console 口</pre>
       <pre>huali(config-line)#password xxx // 配置密码</pre>
       <pre>huali(config-line)#login // 登陆时检测密码</pre>
+      <dt>远程登陆密码 Telnet</dt>
       <dd>配置远程登陆密码</dd>
       <pre>huali(config)#line vty 0 4</pre>
       <pre>huali(config-line)#password huali</pre>
       <pre>huali(config-line)#login</pre>
+      <div class="tips">
+        <p>安全起见，应为不同的模式配置不同的密码</p>
+        <p>建议根据需要选择合适的密码前缀</p>
+      </div>
     </dl>
     <h2>VLAN Command</h2>
     <dl>
-      <dd>查看所有VLAN</dd>
+      <dt>查看 show</dt>
+      <dd>适用用户模式和特权模式</dd>
+      <dd>默认情况下，交换机只有 1 个 vlan1；所有的端口都属于 vlan1</dd>
+      <div>1. 查看所有 Vlan</div>
       <pre>switch#show vlan</pre>
       <figure>
         <img src="./imgs/vlan3.png" alt="">
         <figcaption>查看所有VLAN</figcaption>
       </figure>
-      <dd>查看指定id的VLAN</dd>
+      <div>2. 根据 id 查看 VLAN</div>
       <pre>switch#show vlan id 1</pre>
       <figure>
         <img src="./imgs/vlan4.png" alt="">
         <figcaption>查看指定id的VLAN</figcaption>
       </figure>
-      <dd>查看指定name的VLAN</dd>
+      <div>3. 根据 name 查看 VLAN</div>
       <pre>switch#show vlan name xit</pre>
       <figure>
         <img src="./imgs/vlan5.png" alt="">
         <figcaption>查看指定name的VLAN</figcaption>
       </figure>
-      <dd>创建VLAN</dd>
+      <dt>创建VLAN</dt>
       <pre>switch(config)#vlan 10</pre>
+      <dd>指定名字</dd>
       <pre>switch(config-vlan)#name gl</pre>
       <figure>
         <img src="./imgs/vlan6.png" alt="">

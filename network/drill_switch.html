@@ -50,13 +50,75 @@
     </dl>
     <dl>
       <div class="demo"> 串口初始化配置交换机</div>
-      <img src="./imgs/linkLayer2/幻灯片20.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片21.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片22.JPG" alt="">
-      <div class="demo">Telnet远程登陆交换机</div>
-      <img src="./imgs/linkLayer2/幻灯片23.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片24.JPG" alt="">
-      <img src="./imgs/linkLayer2/幻灯片25.JPG" alt="">
+      <ol>
+        <li>搭建拓扑：利用串口线（console）分别连接主机 PC0 和交换机 Switch0 的串口</li>
+        <figure>
+          <img src="./imgs/s1.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>打开：PC0 → 桌面（Desktop）→ 终端程序（terminal），使用默认的参数，单击 "OK"，连接交换机；提示按回车 Return 开始</li>
+        <figure>
+          <img src="./imgs/s2.png" alt="终端程序">
+          <figcaption>终端程序</figcaption>
+        </figure>
+        <li>修改主机名为 net2026</li>
+        <pre>
+Switch>
+Switch>en
+Switch#conf ter
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname net2026
+net2026(config)#</pre>
+        <li>设置特权密码；先查看命令再设置</li>
+        <pre>
+net2026(config)#enable ?
+  password  Assign the privileged level password
+  secret    Assign the privileged level secret
+net2026(config)#enable pass 2026</pre>
+        <li>返回用户模式；先 end，再 exit</li>
+        <li>进入特权模式，提示输入密码</li>
+        <pre>
+net2026>en
+Password:</pre>
+        <dd>取消特权密码；进入特权的全局配置模式</dd>
+        <pre>net2026(config)#no ena pass</pre>
+        <li>还原主机名</li>
+        <pre>net2026(config)#no hostname</pre>
+        <li>查看其它感兴趣的命令 – 配合?使用</li>
+      </ol>
+      <div class="demo">Telnet 远程登陆交换机</div>
+      <dd>要成功地建立 Telnet 连接，除了要求掌握远程计算机上的账号和密码外，还需要远程计算机开启“Telnet服务”，并去除 NTLM 验证</dd>
+      <dd>也可以使用专门的 Telnet 工具来进行连接，比如STERM，CTERM等工具（win11程序和应用可选功能更多window功能）</dd>
+      <dd>学完网络层再回来做这个实验</dd>
+      <ol>
+        <li>搭建拓扑</li>
+        <figure>
+          <img src="./imgs/s3.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>使用配置设置特权密码</li>
+        <pre>Switch(config)#enable password 2026</pre>
+        <li>配置 telnet 远程登陆密码
+          <p>vty：Virtual Teletype Terminal，表示虚拟电信终端</p>
+          <p>vty 0 4：表示允许5个线路/用户远程登陆该设备；默认至少4个；最多15个</p>
+        </li>
+        <pre>
+Switch(config)#line vty 0 4
+Switch(config-line)#password xit
+Switch(config-line)#login</pre>
+        <li>管理 IP 地址
+          <p>交换机 Switch0 和主机 PC0 的 IP 地址必须是同一网段</p>
+          <p>通常配置 vlan1 为管理地址</p>
+        </li>
+        <pre>
+Switch(config)#int vlan 1
+Switch(config-if)#ip add 192.168.1.254 255.255.255.0
+Switch(config-if)#no shutdown
+Switch#write</pre>
+        <li>查看交换机配置</li>
+        <pre>Switch#show running-config</pre>
+        <li>配置PC并远程登陆交换机</li>
+      </ol>
     </dl>
   </div>
   <script src="/utils/custom/footer.js"></script>
