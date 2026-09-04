@@ -30,24 +30,10 @@
       <dt>实验器材</dt>
       <dt>前置知识</dt>
       <dt>使用步骤</dt>
-      <ol>
-        <li>构建网络拓扑
-          <p>3层架构</p>
-        </li>
-        <figure>
-          <img src="./imgs/s0.png" alt="">
-          <figcaption>参考拓扑</figcaption>
-        </figure>
-        <li>接入交换机 (2960)：划分 VLAN，将终端端口划入对应 VLAN</li>
-        <li>汇聚交换机 (3560)：配置 VLAN 接口（SVI），实现 VLAN 间路由；配置 Trunk 连接核心</li>
-        <li>核心交换机 (3560)：配置路由（静态或 OSPF），连接汇聚和出口</li>
-        <li>出口路由器 (2911)：配置 NAT，默认路由指向外部网络</li>
-        <li>终端设备：配置 IP 地址和默认网关</li>
-      </ol>
       <dt>参考效果和参考命令</dt>
       <dt>拓展与思考</dt>
-      <div id="footer"></div>
     </dl>
+    <h2>案例 Cases</h2>
     <dl>
       <div class="demo"> 串口初始化配置交换机</div>
       <ol>
@@ -119,7 +105,257 @@ Switch#write</pre>
         <pre>Switch#show running-config</pre>
         <li>配置PC并远程登陆交换机</li>
       </ol>
+      <div class="demo">交换机的MAC地址表 <a href="./pt/lan.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a></div>
+      <ol>
+        <li>搭建拓扑</li>
+        <li>配置各主机IP</li>
+        <li>利用 ping 测试各主机之间链路是否连通</li>
+        <li>分阶段多次查看各交换机的 MAC 表
+          <p>交换机之间会自动学习 - 链路由红色转为绿色</p>
+          <p>主机之间只有通信的情况下，交换机才会学习</p>
+        </li>
+        <figure>
+          <img src="./imgs/l2.png" alt="">
+          <figcaption>CLI 查看交换机的MAC表</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/l3.png" alt="">
+          <figcaption>监视工具查看交换机的MAC表</figcaption>
+        </figure>
+      </ol>
+      <figure>
+        <img src="./imgs/lan1.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
+      <div class="demo">单个交换机的 VLAN 的划分 <a href="./pt/vlan-s.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a>
+      </div>
+      <ol>
+        <li>创建拓扑并分配IP
+          <p>Switch：1台2层交换机 2960</p>
+          <p>PC：若干台</p>
+          <p>VLAN 10：A、B</p>
+          <p>VLAN 20：C、D</p>
+          <p>VLAN 30：E、F</p>
+        </li>
+        <figure>
+          <img src="./imgs/vlan8.png" alt="">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>为各主机配置 IP</li>
+        <li>各主机互相通信，如发送广播（简单PDU），查看广播风暴情况</li>
+        <li>配置 VLAN
+          <p>创建 vlan10</p>
+          <p>添加相应的端口 fa0/1、fa0/2</p>
+          <p>指定访问模式；默认是 access，可以略</p>
+        </li>
+        <pre>
+Switch>en
+Switch#conf ter
+Switch(config)#vlan 10
+Switch(config-vlan)#inter fa0/1
+switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 10
+Switch(config-if)#inter fa0/2
+switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 10
+Switch(config-if)#end</pre>
+        <li>查看 VLAN 配置结果 - 多了一个 VLAN 10</li>
+        <pre>
+Switch#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/3, Fa0/4, Fa0/5, Fa0/6
+                                                Fa0/7, Fa0/8, Fa0/9, Fa0/10
+                                                Fa0/11, Fa0/12, Fa0/13, Fa0/14
+                                                Fa0/15, Fa0/16, Fa0/17, Fa0/18
+                                                Fa0/19, Fa0/20, Fa0/21, Fa0/22
+                                                Fa0/23, Fa0/24, Gig0/1, Gig0/2
+10   VLAN0010                         active    Fa0/1, Fa0/2
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0
+10   enet  100010     1500  -      -      -        -    -        0      0
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0</pre>
+        <li>配置其它 VLAN 并查看</li>
+        <li>测试通信情况：VLAN 内部、VLAN 之间</li>
+      </ol>
+      <dd>验证1：不同 VLAN 的用户不能通信
+        <p>192.168.1.1 → 192.168.1.3：失败</p>
+        <pre>
+C:\>ping 192.168.1.3
+
+Pinging 192.168.1.3 with 32 bytes of data:
+
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 192.168.1.3:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+
+C:\></pre>
+        <p>192.168.1.1 → 192.168.1.5：失败</p>
+        <pre>
+C:\>ping 192.168.1.5
+
+Pinging 192.168.1.5 with 32 bytes of data:
+
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 192.168.1.5:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+
+C:\></pre>
+      </dd>
+      <dd>验证2：VLAN 可以隔离广播域
+        <p>模拟通信模式下，某个PC发送广播，查看各PC的通信情况</p>
+      </dd>
+      <figure>
+        <img src="./imgs/vlan13.png" alt="">
+        <img src="./imgs/vlan14.png" alt="">
+        <figcaption>隔离广播域</figcaption>
+      </figure>
+      <div class="tips">单个交换机无法直接查看到 802.1Q 的封帧情况</div>
+      <div class="demo">跨交换机的 VLAN 的划分 <a href="./pt/vlan-m.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a>
+      </div>
+      <ol>
+        <li>搭建拓扑
+          <p>Switch：2台2层交换机 2960</p>
+          <p>PC：若干台</p>
+          <p>VLAN 10：A、B</p>
+          <p>VLAN 20：C、D</p>
+          <p>VLAN 30：E、F</p>
+        </li>
+        <figure>
+          <img src="./imgs/vlan15.png" alt="">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>配置各主机IP（略）</li>
+        <li>创建 VLAN 10，VLAN 20，VLAN 30（略）</li>
+        <li>划分端口到相应的 VLAN（略）</li>
+        <li>两侧交换机设置互联端口为 trunk 模式并放行 VLAN 20
+          <p>交换机某一侧已经设置为 trunk 模式的前提下，对端交换机可以不设置 trunk - 系统会自动调整</p>
+          <p>且会让所有的 VLAN 都通过</p>
+          <p>建议双方交换机都显式的设置为 trunk 并指定允许通过的 VLAN</p>
+        </li>
+        <pre>
+Switch#conf ter
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#inter fa0/4
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#switchport trunk allowed vlan 20
+Switch(config-if)#end</pre>
+        <li>查看对应端口模式</li>
+        <pre>
+Switch#show interfaces trunk 
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/4       on           802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Fa0/4       20
+
+Port        Vlans allowed and active in management domain
+Fa0/4       20
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/4       20
+
+Switch#</pre>
+        <li>测试各 VLAN 的通信情况</li>
+        <li>查看交换机 VLAN 的配置情况</li>
+        <li>查看交换机 trunk 端口的详细信息</li>
+        <pre>
+Switch#show interfaces tru
+Switch#show interfaces trunk 
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/4       auto         n-802.1q       trunking      1
+
+Port        Vlans allowed on trunk
+Fa0/4       1-1005
+
+Port        Vlans allowed and active in management domain
+Fa0/4       1,20,30
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/4       1,20,30</pre>
+        <pre>
+Switch#show interfaces tru
+Switch#show interfaces trunk 
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/4       on           802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Fa0/4       20
+
+Port        Vlans allowed and active in management domain
+Fa0/4       20
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/4       20</pre>
+        <li>查看指定端口的模式</li>
+        <pre>
+Switch#show interfaces fa0/4 switchport 
+Name: Fa0/4
+Switchport: Enabled
+Administrative Mode: trunk
+Operational Mode: trunk
+Administrative Trunking Encapsulation: dot1q
+Operational Trunking Encapsulation: dot1q
+Negotiation of Trunking: On
+Access Mode VLAN: 1 (default)
+Trunking Native Mode VLAN: 1 (default)
+Voice VLAN: none
+Administrative private-vlan host-association: none
+Administrative private-vlan mapping: none
+Administrative private-vlan trunk native VLAN: none
+Administrative private-vlan trunk encapsulation: dot1q
+Administrative private-vlan trunk normal VLANs: none
+Administrative private-vlan trunk private VLANs: none
+Operational private-vlan: none
+Trunking VLANs Enabled: 20
+Pruning VLANs Enabled: 2-1001
+Capture Mode Disabled
+Capture VLANs Allowed: ALL
+Protected: false
+Unknown unicast blocked: disabled
+Unknown multicast blocked: disabled
+Appliance trust: none</pre>
+      </ol>
+      <div class="demo">3层交换机构建 VLAN <a href="./pt/vlan-s3.pkt" download>点击下载PT文件 <span
+            class="iconfont icon-filedownload"></span></a></div>
+      <ol>
+        <li>构建网络拓扑
+          <p>3层架构</p>
+          <p>Switch：2台2层交换机 2960；1台3层交换机 3560</p>
+          <p>PC：若干台</p>
+        </li>
+        <figure>
+          <img src="./imgs/s0.png" alt="">
+          <figcaption>参考拓扑</figcaption>
+        </figure>
+        <li>接入交换机 (2960)：划分 VLAN，将终端端口划入对应 VLAN</li>
+        <li>汇聚交换机 (3560)：配置 VLAN 接口（SVI），实现 VLAN 间路由；配置 Trunk 连接核心</li>
+        <li>核心交换机 (3560)：配置路由（静态或 OSPF），连接汇聚和出口</li>
+        <li>出口路由器 (2911)：配置 NAT，默认路由指向外部网络</li>
+        <li>终端设备：配置 IP 地址和默认网关</li>
+      </ol>
     </dl>
+    <div id="footer"></div>
   </div>
   <script src="/utils/custom/footer.js"></script>
 </body>

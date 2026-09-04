@@ -15,6 +15,7 @@
     </header>
     <dl>
       <div class="tips">
+        <p>Cisco CLI中，命令关键字不区分大小写</p>
         <p>命令可以使用简写，不需要打全，使用 Tab 主动补全</p>
         <p>通常输入命令关键字的前3个字母即可；应确保对应的命令唯一</p>
         <p>强制退出命令行卡顿：Ctrl + Shift + 6</p>
@@ -51,6 +52,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="tips">
+        <p>使用 ↑、↓ 可以选择历史命令；如果没有出现，则表明该命令不适用当前模式</p>
+      </div>
       <dt>查看 Show</dt>
       <dd>switch>show ver 查看版本信息</dd>
       <dd>switch#show running-config 查看运行配置</dd>
@@ -62,8 +66,9 @@
       <dd>switch#show interface fa0/1 switchport 查看指定端口模式</dd>
       <dd>switch#show ip interface 查看IP端口信息</dd>
       <dd>switch#show history 查看历史命令</dd>
+      <dd>Switch#show mac-address-table 查看交换机的MAC表</dd>
       <dt>清除 Clear</dt>
-      <dd>clear mac-address-table 清除 MAC 地址表</dd>
+      <dd>Switch#clear mac-address-table 清除交换机的MAC表 - 特权模式</dd>
       <dt>退出 Exit</dt>
       <dd>返回上一级</dd>
       <dd>一层一层退出</dd>
@@ -105,44 +110,104 @@
         <p>建议根据需要选择合适的密码前缀</p>
       </div>
     </dl>
+    <h2>PT中的交换机 Switch</h2>
+    <dl>
+      <dt>2960</dt>
+      <dd>类型：普通二层交换机</dd>
+      <dd>定位：接入层</dd>
+      <dd>用途：连接终端用户（PC、打印机、IP 电话等），负责 VLAN 划分和二层隔离</dd>
+      <dd>特点：纯二层交换，不支持路由功能，不支持 PoE（此型号）</dd>
+      <dt>356024PS</dt>
+      <dd>类型：三层交换机（多层交换机）</dd>
+      <dd>定位：汇聚层 / 核心层（适用于中小型网络或 PT 实验）</dd>
+      <dd>用途：VLAN 间路由、OSPF / 静态路由、高速数据转发</dd>
+      <dd>特点：
+        <p>24 个端口</p>
+        <p>支持 PoE（可为下联 AP、摄像头等供电）</p>
+        <p>标准软件镜像（Standard Image）</p>
+      </dd>
+      <dt>365024PS</dt>
+      <dd>类型：三层交换机（多层交换机）</dd>
+      <dd>定位：汇聚层 / 核心层（与 3560 定位相同，性能更强）</dd>
+      <dd>用途：VLAN 间路由、动态路由、策略控制、高速转发</dd>
+      <dd>特点：
+        <p>24 个端口</p>
+        <p>支持 PoE（若下联 AP / 摄像头可用）</p>
+        <p>是 3560 的升级版，性能更强，功能更丰富</p>
+        <p>标准软件镜像（Standard Image）</p>
+      </dd>
+      <div class="tips">
+        <p>PoE：Power over Ethernet，以太网供电</p>
+      </div>
+    </dl>
     <h2>VLAN Command</h2>
     <dl>
-      <dt>查看 show</dt>
-      <dd>适用用户模式和特权模式</dd>
-      <dd>默认情况下，交换机只有 1 个 vlan1；所有的端口都属于 vlan1</dd>
-      <div>1. 查看所有 Vlan</div>
+      <dt>接入模式 Access</dt>
+      <ol>
+        <li>创建VLAN</li>
+        <li>指定名字（可选）</li>
+        <li>选择端口并进入端口配置模式</li>
+        <li>设置端口交换模式</li>
+        <li>把端口划入指定的 VLAN</li>
+        <pre>
+switch>en
+switch>conf ter
+switch(config)#vlan 10
+switch(config-vlan)#name gl
+switch(config)#inte fa0/1
+switch(config-if)#swi mode access
+switch(config-if)#swi acc vlan 10
+switch(config-if)exit
+switch#</pre>
+        <figure>
+          <img src="./imgs/vlan6.png" alt="">
+          <figcaption>创建VLAN</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/vlan7.png" alt="">
+          <figcaption>添加端口</figcaption>
+        </figure>
+      </ol>
+      <dt>中继模式 Trunk</dt>
+      <dd>基本设置大同小异</dd>
+      <dd>更改端口模式</dd>
+      <pre>Switch(config-if)#switchport mode trunk</pre>
+      <dd>VLAN 放行</dd>
+      <pre>Switch(config-if)#switchport trunk allowed vlan 20</pre>
+      <pre>Switch(config-if)#switchport trunk allowed vlan 20, 30</pre>
+      <pre>Switch(config-if)#switchport trunk allowed vlan 20-30</pre>
+      <dt>查看 Show</dt>
       <pre>switch#show vlan</pre>
+      <pre>Switch#show vlan brief</pre>
+      <pre>switch#show vlan id 1</pre>
+      <pre>switch#show vlan name xit</pre>
+      <pre>Switch#show interfaces trunk</pre>
+      <pre>Switch#show interfaces fa0/4 switchport</pre>
       <figure>
         <img src="./imgs/vlan3.png" alt="">
-        <figcaption>查看所有VLAN</figcaption>
+        <figcaption>查看所有 VLAN</figcaption>
       </figure>
-      <div>2. 根据 id 查看 VLAN</div>
-      <pre>switch#show vlan id 1</pre>
       <figure>
         <img src="./imgs/vlan4.png" alt="">
-        <figcaption>查看指定id的VLAN</figcaption>
+        <figcaption>根据 id 查看 VLAN</figcaption>
       </figure>
-      <div>3. 根据 name 查看 VLAN</div>
-      <pre>switch#show vlan name xit</pre>
       <figure>
         <img src="./imgs/vlan5.png" alt="">
-        <figcaption>查看指定name的VLAN</figcaption>
+        <figcaption>根据 name 查看 VLAN</figcaption>
       </figure>
-      <dt>创建VLAN</dt>
-      <pre>switch(config)#vlan 10</pre>
-      <dd>指定名字</dd>
-      <pre>switch(config-vlan)#name gl</pre>
-      <figure>
-        <img src="./imgs/vlan6.png" alt="">
-        <figcaption>创建VLAN</figcaption>
-      </figure>
-      <dd>添加端口</dd>
-      <pre>switch(config)#inte fa0/1</pre>
-      <pre>switch(config-if)#swi acc vlan 10</pre>
-      <figure>
-        <img src="./imgs/vlan7.png" alt="">
-        <figcaption>添加端口</figcaption>
-      </figure>
+    </dl>
+    <h2>3层交换机 Layer3 Switching</h2>
+    <dl>
+      <dd>以上操作适用于 PT 的2层交换机 2960</dd>
+      <dd>下述内容以 PT 的3层交换机 3560 为例</dd>
+      <dt>概述 Overview</dt>
+      <dd>带有路由功能</dd>
+      <dd>默认没有开启；使用时，需要启动路由功能</dd>
+      <pre>Switch(config)#ip routing</pre>
+      <div class="demo">如何检查是否启动了路由功能</div>
+      <dd>方案1：show ip route</dd>
+      <dd>方案2：show running-config</dd>
+      <pre>Switch#show running-config</pre>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

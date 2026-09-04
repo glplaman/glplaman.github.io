@@ -22,16 +22,16 @@
     </header>
     <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
     <dl>
-      <dd>交换机通过维护一个MAC地址表/转发表来实现链路层数据帧的通信</dd>
-      <dd>交换机通过学习数据帧的源MAC地址来建立MAC地址表 - 基于源MAC帧</dd>
+      <dd>交换机通过维护一个 MAC 地址表/转发表来实现链路层数据帧的通信</dd>
+      <dd>交换机通过学习数据帧的源 MAC 地址来建立 MAC 地址表 - 基于源 MAC 帧</dd>
       <dt>MAC table</dt>
       <dd>内容 Component：
-        <p>进入交换机的数据帧的源地址和进入的端口号，所在Vlan及有效时间</p>
-        <p>哪个端口 port 连着谁 MAC</p>
+        <p>进入交换机的数据帧的源地址和进入的端口号，所在 Vlan 及有效时间</p>
+        <p>哪个端口 Port 连着谁 MAC</p>
         <p>谁 MAC 从哪个端口进来</p>
       </dd>
       <dd>容量 Capacity
-        <p>MAC表条目的大小</p>
+        <p>MAC 表条目的大小</p>
         <p>1K、2k、4k</p>
       </dd>
       <table>
@@ -54,23 +54,9 @@
           </tr>
         </tbody>
       </table>
-      <dt>常用命令 Command</dt>
-      <dd>查看交换机的MAC表</dd>
-      <pre>Switch#show mac-address-table</pre>
-      <dd>清除交换机的MAC表 - 特权模式</dd>
-      <pre>Switch#clear mac-address-table</pre>
-      <div class="demo">查看交换机的MAC表</div>
-      <figure>
-        <img src="./imgs/l2.png" alt="">
-        <figcaption>CLI 查看交换机的MAC表</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/l3.png" alt="">
-        <figcaption>监视工具查看交换机的MAC表</figcaption>
-      </figure>
       <dt>Procedure</dt>
       <div>1. 登记 Registration</div>
-      <dd>查找表中是否有与接收帧的源MAC地址匹配的项目：
+      <dd>查找表中是否有与接收帧的源 MAC 地址匹配的项目：
         <p>如果有，则更新</p>
         <p>如果没有，则增加</p>
       </dd>
@@ -78,12 +64,12 @@
       <dd>是否是广播帧：
         <p>如果是，全端口转发</p>
         <p>如果不是，则查找表中是否有与接收帧的目的MAC地址匹配的项目：</p>
-        <p>- 如果没有，则泛洪flooding到其他所有端口上</p>
+        <p>- 如果没有，则泛洪 Flooding 到其他所有端口上</p>
         <p>- 如果有，则比较进入的端口与登记的端口：</p>
-        <p>- - 如果不同，则按照登记的端口转发 forwarding</p>
-        <p>- - 如果相同，表明是同一侧的主机，不需要转发，丢弃 disregarding /过滤 filtering 该帧</p>
+        <p>- - 如果不同，则按照登记的端口转发 Forwarding</p>
+        <p>- - 如果相同，表明是同一侧的主机，不需要转发，丢弃 Disregarding /过滤 Filtering 该帧</p>
       </dd>
-      <div class="demo"> MAC的通信情况</div>
+      <div class="demo"> MAC 地址表的动态维护</div>
       <figure>
         <img src="./imgs/l13.png" alt="">
         <figcaption>维护过程</figcaption>
@@ -96,7 +82,7 @@
           <p>同时登记 A → 1</p>
         </li>
         <table>
-          <caption>交换机的MAC地址表</caption>
+          <caption>交换机的 MAC 地址表</caption>
           <tbody>
             <tr>
               <td>MAC</td>
@@ -121,7 +107,7 @@
           <p>B 收到并回复，则交换机学习到了 B 的位置；登记 B → 2</p>
         </li>
         <table>
-          <caption>交换机的MAC地址表</caption>
+          <caption>交换机的 MAC 地址表</caption>
           <tbody>
             <tr>
               <td>MAC</td>
@@ -146,7 +132,7 @@
           </tbody>
         </table>
         <li>E → A
-          <p>过滤 filtering</p>
+          <p>过滤 Filtering</p>
           <p>最不希望的转发</p>
         </li>
       </ol>
@@ -178,7 +164,7 @@
         <thead>
           <tr>
             <th>通信方向</th>
-            <th>MAC地址表</th>
+            <th>MAC 地址表</th>
             <th>转发端口</th>
           </tr>
         </thead>
@@ -217,8 +203,8 @@
     <h2>Security</h2>
     <dl>
       <dt>MAC Flapping</dt>
-      <dd>如果同一个MAC地址频繁在不同端口间“出现”，MAC表会不断更新，可能表明存在环路或攻击</dd>
-      <dd>交换机通常会告警或启用STP（生成树协议）来防止环路
+      <dd>如果同一个 MAC 地址频繁在不同端口间“出现”，MAC 表会不断更新，可能表明存在环路或攻击</dd>
+      <dd>交换机通常会告警或启用 STP（生成树协议）来防止环路
         <p>选举根桥</p>
         <p>确定根端口</p>
         <p>选举指定端口</p>
@@ -229,38 +215,20 @@
         <figcaption>生成树协议</figcaption>
       </figure>
       <dt>MAC Flooding</dt>
-      <dd>攻击者发送大量伪造源MAC地址的帧，填满交换机的MAC表，导致交换机退化为“集线器”模式，对所有流量进行泛洪，从而进行嗅探攻击</dd>
+      <dd>攻击者发送大量伪造源 MAC 地址的帧，填满交换机的 MAC 表，导致交换机退化为“集线器”模式，对所有流量进行泛洪，从而进行嗅探攻击</dd>
       <dd>频繁泛洪会导致网络拥塞</dd>
-    </dl>
-    <h2>实操 Drill</h2>
-    <dl>
-      <dt>创建局域网 <a href="./pt/lan.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a></dt>
-      <dd>使用交换机在链路层拓展网络</dd>
-      <ol>
-        <li>搭建拓扑</li>
-        <li>配置各主机IP</li>
-        <li>利用 ping 测试各主机之间链路是否连通</li>
-        <li>分阶段多次查看各交换机的MAC表
-          <p>交换机之间会自动学习 - 链路由红色转为绿色</p>
-          <p>主机之间只有通信的情况下，交换机才会学习</p>
-        </li>
-      </ol>
-      <figure>
-        <img src="./imgs/lan1.png" alt="">
-        <figcaption>拓扑</figcaption>
-      </figure>
     </dl>
     <h2>Homework</h2>
     <dl>
       <dt>Homework</dt>
       <ol>
-        <li>以太网交换机转发决策时使用的PDU地址是（ ）。
+        <li>以太网交换机转发决策时使用的 PDU 地址是（ ）。
           <div>A：目的物理地址</div>
-          <div>B：目的IP地址</div>
+          <div>B：目的 IP 地址</div>
           <div>C：源物理地址</div>
-          <div>D：源IP地址</div>
+          <div>D：源 IP 地址</div>
         </li>
-        <li>选择学校组织结构中某一个或几个分系统，利用交换机和PC模拟搭建局域网
+        <li>选择学校组织结构中某一个或几个分系统，利用交换机和 PC 模拟搭建局域网
           <p>部门之间如何互不影响的通信？</p>
           <p>学校规模达到一定阶段后，如何更好的组织网络？</p>
         </li>
