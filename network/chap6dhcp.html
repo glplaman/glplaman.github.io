@@ -145,42 +145,6 @@
       <dd>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须停止使用该 IP 地址</dd>
       <dd>随后重新发起完整的 DHCP Discover 流程获取新地址</dd>
     </dl>
-    <h2>实操 Drill</h2>
-    <dl>
-      <dt>实操目的</dt>
-      <dd>DHCP 服务器配置和使用</dd>
-      <dt>设备需求</dt>
-      <dd>若干台PC</dd>
-      <dd>一台路由器</dd>
-      <dd>一台交换机</dd>
-      <dt>基本思路</dt>
-      <dd>先配置路由器；再配置 DHCP 服务器</dd>
-      <ol>
-        <li>搭建拓扑</li>
-        <figure>
-          <img src="../imgs/network/dhcp/幻灯片9.JPG" alt="">
-        </figure>
-        <li>配置路由器IP地址</li>
-        <pre>
-Router(config)#interface GigabitEthernet0/0/0
-Router(config-if)#ip address 192.168.1.10 255.255.255.0
-Router(config-if)#no shutdown</pre>
-        <li>服务器配置IP地址和网关</li>
-        <figure>
-          <img src="../imgs/network/dhcp/幻灯片10.JPG" alt="">
-        </figure>
-        <li>服务器开启 DHCP</li>
-        <figure>
-          <img src="../imgs/network/dhcp/幻灯片11.JPG" alt="">
-        </figure>
-        <li>各PC使用 DHCP</li>
-        <figure>
-          <img src="../imgs/network/dhcp/幻灯片12.JPG" alt="">
-        </figure>
-      </ol>
-      <dt>扩展练习 Extending</dt>
-      <dd>增加一台PC；将操作模式调整为模拟通信；更改PC的地址分配方式为DHCP，单步调试查看 DHCP 数据报的发送过程</dd>
-    </dl>
     <h2>Summary & Homework</h2>
     <dl>
       <dt>Summary</dt>

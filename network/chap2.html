@@ -17,7 +17,7 @@
       color: transparent;
       font-weight: 600;
       background-image: linear-gradient(90deg, var(--warn-color), #ff0, var(--warn-color));
-      font-size: 4rem;
+      font-size: 2rem;
       line-height: 1;
       margin: 2rem auto;
       background-clip: text;
@@ -81,43 +81,192 @@
       <dd>规程特性
         <p>规定接口上各种信号线以及各种电平出现的先后顺序，即哪根信号线先动作，哪根信号线后动作</p>
       </dd>
-      <dt>通信模式 Mode</dt>
-      <dd>单工 Simplex</dd>
-      <dd>半双工 Half-Duplex</dd>
-      <dd>全双工 Full-Duplex</dd>
-      <dd>双工 Duplex</dd>
+    </dl>
+    <h2>通信模式 Mode</h2>
+    <dl>
+      <dt>单工 Simplex</dt>
+      <dd>单方向通信</dd>
       <figure>
         <img src="./imgs/ph0.png" alt="">
         <figcaption>单工 Simplex</figcaption>
       </figure>
+      <dt>半双工 Half-Duplex</dt>
+      <dd>双向通信</dd>
+      <dd>但不能同时通信</dd>
       <figure>
         <img src="./imgs/ph1.png" alt="">
         <figcaption>半双工 Half-Duplex</figcaption>
       </figure>
+      <dt>全双工 Full-Duplex</dt>
+      <dd>双向通信</dd>
+      <dd>可同时通信</dd>
       <figure>
         <img src="./imgs/ph2.png" alt="">
         <figcaption>全双工 Full-Duplex</figcaption>
       </figure>
-      <dt>奈奎斯特定律 Nyquist's law</dt>
-      <dd>体现信道极限容量 Capacity、信噪比 S/N 和带宽 W 之间的关系</dd>
-      <dd>在带宽 W(hz) 的低通信道中，不考虑噪声影响，码元传输的最高速率是 2W(码元/秒)</dd>
+    </dl>
+    <h2>信号 Signal</h2>
+    <dl>
+      <dt>基带信号</dt>
+      <dd>仅仅包含基本频率信号</dd>
+      <dd>属于低频，甚至有直流分量；如：音频信号 0.3-3Khz</dd>
+      <dd>功率小；不利于传播</dd>
+      <dd>解决途径：调制 Modulation
+        <p>基带调制：俗称编码 Coding</p>
+        <p>频带调制：频谱搬移；借助载波 Carrier，从低频搬移至高频</p>
+      </dd>
+      <dt>频带信号</dt>
+      <dd>经过频带调制的信号</dd>
+      <dd>属于高频部分</dd>
+    </dl>
+    <h2>编码 Coding</h2>
+    <dl>
+      <dt>不归零码 NRZ,Non-Return to Zero</dt>
+      <dd>核心原理：电平在整个位元时间内保持恒定（不归零）</dd>
+      <dd>NRZ-L：电平高低直接表示“1”或“0”（如高电平=1，低电平=0）</dd>
+      <dd>NRZ-I：电平跳变表示“1”，不变表示“0”（差分编码）</dd>
+      <dd>波形特点：
+        <p>位中间电平不归零，连续多个相同比特时，电平线保持平直</p>
+        <p>如:连发几个“1”，信号就一直拉高。接收端很难判断这一个比特到底“走了多长”，容易发生错位（漂移）</p>
+      </dd>
+      <dd>优点：占用频带窄，利用率高，实现简单</dd>
+      <dd>缺点：
+        <p>缺乏同步时钟信息（连续长“0”或长“1”时，接收端无法判断位边界）</p>
+        <p>存在直流分量（信号平均电平不为0）</p>
+      </dd>
+      <dd>典型应用：RS-232串口、磁盘磁记录</dd>
+      <dt>归零码 RZ, Return to Zero</dt>
+      <dd>核心原理：每个码元中间，电平都会回归到零电平（正电平代表1，负电平代表0，位中间回零）</dd>
+      <dd>波形特点：每个比特周期内，信号都会跳变一次（由高/低→零）</dd>
+      <dd>优点：每个码元都包含同步信息（归零动作），利于接收端提取位时钟</dd>
+      <dd>缺点：
+        <p>占用带宽是NRZ的两倍（因为码元内多了一次跳变）</p>
+        <p>仍存在直流分量问题（虽然比NRZ有所改善）</p>
+      </dd>
+      <dd>典型应用：早期数字传输系统，目前已较少单独使用（常作为其他编码的基础）</dd>
+      <dt>曼切斯特码 Manchester Encoding</dt>
+      <dd>位中间跳变兼具数据表示和同步功能</dd>
+      <dd>标准IEEE 802.3（以太网）：高→低跳变表示“1”，低→高跳变表示“0”</dd>
+      <dd>反之亦可（不同标准定义可能相反）</dd>
+      <dd>波形特点：每个比特位中间必然有一次跳变，跳变方向决定数据值</dd>
+      <dd>优点：
+        <p>无直流分量（每个位内正负时间相等）</p>
+        <p>同步性能极佳（跳变即为时钟）</p>
+        <p>易于检测错误（若无中间跳变则为非法信号）</p>
+      </dd>
+      <dd>缺点：带宽需求是NRZ的2倍，编码效率仅为50%</dd>
+      <dd>典型应用：经典以太网（10BASE-T）、RFID、航空数据总线</dd>
+      <dt>差分曼切斯特码 Differential Manchester Encoding</dt>
+      <dd>位中间跳变仅用于同步，数据值由位起始边沿是否跳变决定</dd>
+      <dd>位起始处有跳变 → 表示“0”</dd>
+      <dd>位起始处无跳变 → 表示“1”</dd>
+      <dd>波形特点：每位中间必定跳变，但起始边沿可有可无</dd>
+      <dd>优点：
+        <p>兼具无直流、强同步特性</p>
+        <p>抗噪性优于曼彻斯特码（因为逻辑判断仅依赖跳变有无，而非跳变方向，极性反转不影响解码）</p>
+      </dd>
+      <dd>缺点：带宽需求同样为NRZ的2倍，实现复杂度略高于曼彻斯特</dd>
+      <dd>典型应用：令牌环网 (Token Ring)、IEEE 802.5标准</dd>
       <figure>
-        <div class="txt-bg-grad">R<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
+        <img src="./imgs/coding.png" alt="编码 Coding">
+        <figcaption>编码 Coding</figcaption>
+      </figure>
+    </dl>
+    <h2>调制 Modulation</h2>
+    <dl>
+      <dt>调幅 AM</dt>
+      <dd>原理：改变载波的振幅（高低）来携带信息。载波的频率和相位保持不变</dd>
+      <dd>数字信号（ASK）：例如，振幅高代表“1”，振幅低（或为0）代表“0”</dd>
+      <dd>优点：实现简单，设备成本低，占用频带窄</dd>
+      <dd>缺点：抗干扰能力极差。因为自然界中许多干扰（如闪电、电机火花、信号衰减）都会直接改变信号的振幅。接收端很容易把干扰误认为是信号变化</dd>
+      <dd>常见应用：中波广播（AM收音机）、早期的低速无线传输</dd>
+      <dt>调频 FM</dt>
+      <dd>原理：改变载波的频率（波形疏密）来携带信息。载波的振幅保持不变（保持不变是它抗干扰的关键）</dd>
+      <dd>数字信号（FSK）：例如，频率高代表“1”，频率低代表“0”</dd>
+      <dd>优点：抗干扰能力强。因为干扰通常改变的是振幅，接收端通过“限幅”把振幅削平，只关注频率的变化，就能准确还原信号。音质比AM好</dd>
+      <dd>缺点：需要比AM更宽的带宽</dd>
+      <dd>常见应用：调频广播（FM收音机）、蓝牙（经典蓝牙的部分阶段）、老式拨号调制解调器</dd>
+      <dt>调相 PM</dt>
+      <dd>原理：改变载波的相位（波形的起始或偏移位置）来携带信息。振幅和频率保持不变</dd>
+      <dd>数字信号（PSK）：例如，波形保持原样代表“0”，波形反转180度代表“1”</dd>
+      <dd>优点：抗干扰能力强。更关键的是，PSK很容易与其他调制结合</dd>
+      <dd>缺点：接收端需要一个非常精准的“参考相位”来对比是0度还是180度，否则容易解调错误</dd>
+      <dd>常见应用：卫星通信、Wi-Fi（早期802.11b的DSSS部分）</dd>
+      <dt>正交振幅调制 QAM</dt>
+      <dd>原理：这是幅度和相位的结合。它同时改变载波的振幅和相位来传递信息</dd>
+      <dd>为什么叫“正交”：因为它在数学上利用了相差90度的两个载波（正弦波和余弦波）来同时传输两路信号，互不干扰</dd>
+      <dd>核心优势：效率极高。QAM像是一个“二维坐标系”，它把每个“点”都对应一个二进制数</dd>
+      <dd>16-QAM：有16个点，每个点代表4个比特（2^4=16）</dd>
+      <dd>64-QAM：有64个点，每个点代表6个比特</dd>
+      <dd>256-QAM：有256个点，每个点代表8个比特</dd>
+      <dd>优点：在有限的带宽下，能传输极高的数据量（频谱效率极高）</dd>
+      <dd>缺点：对噪声极其敏感。因为点靠得太近了，一点微弱的噪声/振幅变化，就可能导致接收端把“A点”误判为旁边的“B点”</dd>
+      <dd>常见应用：4G/5G蜂窝网络、Wi-Fi（802.11ac/ax）、有线电视电缆调制解调器（DOCSIS）、数字电视广播</dd>
+      <dd>你常听到的“星座图”就是这些点在坐标系的分布图，点越密集，传输速率越快</dd>
+      <figure>
+        <img src="./imgs/coding1.png" alt="调制 Modulation">
+        <figcaption>调制 Modulation</figcaption>
+      </figure>
+    </dl>
+    <h2>信道容量 Capcity</h2>
+    <dl>
+      <dt>码间串扰 ISI，Inter-symbol Interference</dt>
+      <dd>由于信道中噪声的影响，造成前一码元的拖尾过长与后一码元发生混叠，使得在接收端无法识别各个数字信号</dd>
+      <dd>接收端收到的信号波形失去了码元之间的 <strong>清晰界限</strong></dd>
+      <figure>
+        <img src="./imgs/coding2.png" alt="码间串扰 ISI">
+        <figcaption>码间串扰 ISI</figcaption>
+      </figure>
+      <dt>奈奎斯特定律 Nyquist's law</dt>
+      <dd>在带宽为 W (Hz) 的低通信道中，若不考虑噪声影响，则码元传输的最高速率是 2W (码元/秒)</dd>
+      <div class="txt-bg-grad">码元传输的最高速率 = 2W （码元/秒）</div>
+      <dd>传输速率超过此上限，就会出现严重的码间串扰的问题，使接收端对码元的判决/识别成为不可能。</dd>
+      <dd>体现信道极限容量 Capacity、信噪比 S/N 和带宽 W 之间的关系</dd>
+      <dd>在带宽 W(Hz) 的低通信道中，不考虑噪声影响，码元传输的最高速率是 2W(码元/秒)</dd>
+      <dt>香农公式 Shannon Theory</dt>
+      <dd>信道的极限信息传输速率 C 可表达为</dd>
+      <figure>
+        <div class="txt-bg-grad">C<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
+        <div class="txt-right">
+          <p>W 信道带宽 (Hz)</p>
+          <p>S 信道内所传信号的平均功率</p>
+          <p>N 信道内部的高斯噪声功率</p>
+        </div>
         <figcaption>香农公式 Shannon Theory</figcaption>
       </figure>
+      <dd>信道的带宽 W 或信道中的信噪比 S/N 越大，则信息的极限传输速率 C 就越高</dd>
+      <dd>如果带宽 W和 信噪比 S/N 都不变，根据香农公式，极限信息传输速率C max​ 已经锁死，是一个绝对的物理天花板</dd>
+      <p>在这个限制下传输更多数据，必须通过高阶调制提高码元携带的比特数，并配合先进的信道编码来逼近这个极限</p>
+      <dd>让码元携带更多的信息</dd>
+      <dt>信噪比 S/N</dt>
+      <dd>信号的平均功率和噪声的平均功率之比</dd>
+      <dd>常用分贝 dB 作为度量单位
+        <p>当 S/N =10 时，信噪比为10dB</p>
+        <p>当 S/N =1000 时，信噪比为30dB</p>
+      </dd>
       <figure>
         <div class="txt-bg-grad">SNR = 10 * log<sub>10</sub>(S/N) (dB)</div>
         <figcaption>信噪比 signal-to-noise ratio</figcaption>
       </figure>
       <div class="tips">
+        <p>奈氏准则：激励工程人员不断探索更加先进的编码技术，使每一个码元携带更多比特的信息量</p>
+        <p>香农公式：告诫工程人员，在实际有噪声的信道上，不论采用多么复杂的编码技术，都不可能突破信息传输速率的绝对极限</p>
+      </div>
+      <div class="tips">
         <p>log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</p>
         <p>统一单位后再计算</p>
       </div>
-      <div class="demo">P70/2-08 假定要用 3 khz 带宽的电话信道传送 64 kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
+      <div class="tips">
+        <p>扩频通信 Spread Spectrum Communication</p>
+        <p>香农公式极其经典的实际应用</p>
+        <p>传输速率恒定的情况下，增加带宽 W，可以降低对信噪比 S/N 的要求</p>
+        <p>信号可以完全淹没在噪声中，只要带宽足够宽，都可以实现隐蔽通信</p>
+      </div>
+      <div class="demo">P70/2-08 假定要用 3 KHz 带宽的电话信道传送 64 Kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
       </div>
       <dd>答：</dd>
       <div class="txt-indent">
-        <p>根据香农公式，有：64 Kbps = 3 Khz * log<sub>2</sub>(1+S/N)</p>
+        <p>根据香农公式，有：64 Kbps = 3 KHz * log<sub>2</sub>(1+S/N)</p>
         <p>等式变换后。有：S/N = 2<sup>64/3</sup> - 1</p>
         <P>= 2<sup>(63 + 1)/3</sup> - 1</P>
         <P>= 2<sup>(21 + 1/3)</sup> - 1</P>
@@ -163,6 +312,9 @@
             Communication
           </a></li>
         <li><a class="link" href="https://networkencyclopedia.com/duplex/">Duplex Communication</a></li>
+        <li><a class="link"
+            href="https://rahsoft.com/2024/12/31/understanding-inter-symbol-interference-isi-in-communication-systems/">ISI</a>
+        </li>
       </ol>
     </dl>
     <div id="footer"></div>

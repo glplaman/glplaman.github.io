@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态主机配置协议 DHCP</title>
+  <link rel="stylesheet" href="../css/drill.css">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>动态主机配置协议</h1>
+    <h4>DHCP</h4>
+    <dl>
+      <dt>方案1：使用专门的服务器</dt>
+      <dd>Server-PT：
+        <p>端设备；同主机 PC</p>
+        <p>本质上就是一台Windows/Linux服务器的角色，和家里的电脑是同类设备，只不过"预装"了各种服务软件</p>
+        <p>可以装各种服务，如HTTP、DHCP、DNS、Email、FTP、IoT等</p>
+        <p>不具备路由功能；不能做IP包转发；不能做网关</p>
+      </dd>
+      <dd>特点：简单</dd>
+      <ol>
+        <li>搭建拓扑
+          <p>服务器：Server-PT</p>
+          <p>交换机：2960</p>
+          <p>PC：若干台</p>
+        </li>
+        <figure>
+          <img src="./imgs/dhcp8.png" alt="DHCP 网络拓扑">
+          <figcaption>DHCP 网络拓扑</figcaption>
+        </figure>
+        <li>服务器 IP 配置
+          <p>IP 地址</p>
+          <p>子网掩码 Subnet Mask</p>
+          <p>"桌面 Desktop" → "IP 配置"，可以配置更多参数，如默认网关 Default Gateway</p>
+        </li>
+        <li>服务器开启 DHCP：服务 Service → DHCP</li>
+        <figure>
+          <img src="../imgs/network/dhcp/幻灯片11.JPG" alt="">
+        </figure>
+        <li>各 PC 启用 DHCP
+          <p>因为是动态分配 IP，不再使用"配置 Config"</p>
+          <p>而是使用："桌面 Desktop" → "IP 配置" → 启用 DHCP</p>
+          <p>稍后即可看到分配的 IP</p>
+          <p>也可以开启后，使用终端命令 ipconfig 查看</p>
+        </li>
+        <figure>
+          <img src="./imgs/dhcp7.png" alt="">
+          <img src="../imgs/network/dhcp/幻灯片12.JPG" alt="">
+        </figure>
+        <li>利用 ping 命令，测试各设备的连通性</li>
+      </ol>
+      <dt>方案2：使用路由器 <a href="./pt/dhcp.pkt" download>点击下载PT文件</a></dt>
+      <dd>相关命令</dd>
+      <pre>Router#show ip dhcp pool</pre>
+      <pre>Router#show ip dhcp binding</pre>
+      <ol>
+        <li>搭建拓扑
+          <p>路由器：2811</p>
+          <p>交换机：2960</p>
+          <p>PC：若干台</p>
+        </li>
+        <figure>
+          <img src="./imgs/dhcp9.png" alt="DHCP 使用路由器">
+          <figcaption>DHCP 使用路由器</figcaption>
+        </figure>
+        <li>路由器完整配置命令</li>
+        <pre>
+enable
+configure terminal
+ip dhcp excluded-address 192.168.1.1 192.168.1.50 # 从 .1 到 .50 共 50个IP地址；统计时 只算作 1 个排除项（范围）
+ip dhcp pool LAN_POOL
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+dns-server 8.8.8.8
+exit
+interface fa0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+write memory</pre>
+        <li>检查接口状态；看到 up/up 说明物理连接正常</li>
+        <pre>Router#show ip interface brief</pre>
+        <li>检查 DHCP 地址池</li>
+        <li>检查 DHCP 地址绑定/已分配</li>
+        <li>各主机启用 DHCP（略）</li>
+        <li>查看各主机 IP 地址；应该是51 52 53； DHCP 地址池按顺序分配</li>
+        <li>测试设备的连通性</li>
+      </ol>
+      <dt>扩展练习 Extending</dt>
+      <dd>增加一台PC；将操作模式调整为模拟通信；更改PC的地址分配方式为DHCP，单步调试查看 DHCP 数据报的发送过程</dd>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
