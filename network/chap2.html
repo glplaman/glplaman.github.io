@@ -210,8 +210,17 @@
     </dl>
     <h2>信道容量 Capcity</h2>
     <dl>
+      <dt>符号 Symbol</dt>
+      <dd>也叫码元</dd>
+      <dd>承载比特的物理载体</dd>
+      <dd>一个特定波形/电平状态</dd>
+      <dd>一个码元可以携带1个或多个比特
+        <p>如果是 2个电平（比如0V和5V），一个码元携带 1 个比特（高=1，低=0）</p>
+        <p>如果是 4个电平（比如0V, 1V, 2V, 3V），一个码元携带 2 个比特（00, 01, 10, 11）</p>
+      </dd>
       <dt>码间串扰 ISI，Inter-symbol Interference</dt>
-      <dd>由于信道中噪声的影响，造成前一码元的拖尾过长与后一码元发生混叠，使得在接收端无法识别各个数字信号</dd>
+      <dd>由于信道中噪声的影响，造成前一码元的拖尾过长与后一码元发生混叠/撞车</dd>
+      <dd>使得在接收端无法识别各个数字信号</dd>
       <dd>接收端收到的信号波形失去了码元之间的 <strong>清晰界限</strong></dd>
       <figure>
         <img src="./imgs/coding2.png" alt="码间串扰 ISI">
@@ -219,30 +228,42 @@
       </figure>
       <dt>奈奎斯特定律 Nyquist's law</dt>
       <dd>在带宽为 W (Hz) 的低通信道中，若不考虑噪声影响，则码元传输的最高速率是 2W (码元/秒)</dd>
-      <div class="txt-bg-grad">码元传输的最高速率 = 2W （码元/秒）</div>
-      <dd>传输速率超过此上限，就会出现严重的码间串扰的问题，使接收端对码元的判决/识别成为不可能。</dd>
-      <dd>体现信道极限容量 Capacity、信噪比 S/N 和带宽 W 之间的关系</dd>
-      <dd>在带宽 W(Hz) 的低通信道中，不考虑噪声影响，码元传输的最高速率是 2W(码元/秒)</dd>
+      <div class="txt-bg-grad">码元传输的最高速率 = 2W （Baud）</div>
+      <dd>传输速率超过此上限，就会出现严重的码间串扰的问题，使接收端对码元的判决/识别成为不可能</dd>
+      <dd>物理上能发多少个波形（码元）</dd>
+      <dd>波特率 Baud：码元传输的速率，每秒钟传输的码元个数</dd>
       <dt>香农公式 Shannon Theory</dt>
-      <dd>信道的极限信息传输速率 C 可表达为</dd>
+      <dd>也称香农-哈特利定理</dd>
+      <dd>由信息论创始人克劳德·香农（Claude Shannon）1948年提出</dd>
+      <dd>解决了一个根本性问题：在充满噪声的真实物理信道中，理论上每秒最多能传输多少信息（比特）</dd>
+      <dd>体现信道极限容量 Capacity、信噪比 S/N 和带宽 W 之间的关系</dd>
       <figure>
-        <div class="txt-bg-grad">C<sub>max</sub> = W * log<sub>2</sub>(1+S/N)（bps）</div>
+        <div class="txt-bg-grad">C<sub>max</sub> = W * log<sub>2</sub>(1+S/N)</div>
         <div class="txt-right">
+          <p>C 信道容量（bit/s）</p>
           <p>W 信道带宽 (Hz)</p>
           <p>S 信道内所传信号的平均功率</p>
           <p>N 信道内部的高斯噪声功率</p>
         </div>
         <figcaption>香农公式 Shannon Theory</figcaption>
       </figure>
-      <dd>信道的带宽 W 或信道中的信噪比 S/N 越大，则信息的极限传输速率 C 就越高</dd>
-      <dd>如果带宽 W和 信噪比 S/N 都不变，根据香农公式，极限信息传输速率C max​ 已经锁死，是一个绝对的物理天花板</dd>
-      <p>在这个限制下传输更多数据，必须通过高阶调制提高码元携带的比特数，并配合先进的信道编码来逼近这个极限</p>
-      <dd>让码元携带更多的信息</dd>
+      <dt>信道容量 C</dt>
+      <dd>物理环境决定的极限</dd>
+      <dd>客观存在的天花板</dd>
+      <dd>根据香农公式，极限信息传输速率 Cmax​ 已经锁死，是一个绝对的物理天花板</dd>
+      <dd>在这个限制下传输更多数据，必须通过高阶调制提高码元携带的比特数，并配合先进的信道编码来逼近这个极限</dd>
+      <dt>信息传输速率 R</dt>
+      <div class="txt-bg-grad">R &le; C</div>
+      <dd>设备（人为）实际发送的数据速率</dd>
+      <dd>在理想状况下，信道容量就是信息传输速率的上限</dd>
+      <dd>只要实际的信息传输速率 R 低于这个上限 C，就一定可以通过复杂的编码技术（如纠错码）实现几乎无差错的传输</dd>
+      <dd>通信工程师毕生追求的目标</dd>
+      <dd>一旦试图超过这个上限 C，无论设计多精妙的系统，误码率都会失控</dd>
       <dt>信噪比 S/N</dt>
       <dd>信号的平均功率和噪声的平均功率之比</dd>
       <dd>常用分贝 dB 作为度量单位
-        <p>当 S/N =10 时，信噪比为10dB</p>
-        <p>当 S/N =1000 时，信噪比为30dB</p>
+        <p>当 S/N =10 时，信噪比为 10dB</p>
+        <p>当 S/N =1000 时，信噪比为 30dB</p>
       </dd>
       <figure>
         <div class="txt-bg-grad">SNR = 10 * log<sub>10</sub>(S/N) (dB)</div>
@@ -253,15 +274,22 @@
         <p>香农公式：告诫工程人员，在实际有噪声的信道上，不论采用多么复杂的编码技术，都不可能突破信息传输速率的绝对极限</p>
       </div>
       <div class="tips">
-        <p>log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</p>
-        <p>统一单位后再计算</p>
-      </div>
-      <div class="tips">
         <p>扩频通信 Spread Spectrum Communication</p>
         <p>香农公式极其经典的实际应用</p>
         <p>传输速率恒定的情况下，增加带宽 W，可以降低对信噪比 S/N 的要求</p>
         <p>信号可以完全淹没在噪声中，只要带宽足够宽，都可以实现隐蔽通信</p>
       </div>
+      <div class="tips">
+        <p>log 函数：通过数学运算，把前端的“物理量（功率比）”转化为后端的“信息量（比特）</p>
+        <p>以 e 为底（ ln ），结果的单位是 奈特 nat</p>
+        <p>以 2 为底（ log 2 ​ ），结果的单位是 比特 bit</p>
+        <p>以 10 为底（ lg ）：在工程中常被称为哈特利 Hartley，主要用于早期信息论计算</p>
+      </div>
+      <div class="tips">
+        <p>log<sub>2</sub>(x) = log<sub>10</sub>(x) / log<sub>10</sub>(2)</p>
+        <p>统一单位后再计算</p>
+      </div>
+      <div class="demo">收纳</div>
       <div class="demo">P70/2-08 假定要用 3 KHz 带宽的电话信道传送 64 Kbit/s 的数据 (无差错传输)，试问这个信道应具有多高的信噪比 (分别用比值和分贝来表示)？这个结果说明什么问题？
       </div>
       <dd>答：</dd>
@@ -274,6 +302,14 @@
         <p>≈ 2,642,244.94</p>
         <p>相应的分贝 = 10 * log<sub>10</sub>(2,642,244.94)</p>
         <p>= 64.22 dB</p>
+      </div>
+      <div class="demo">P70/2-07 假定某信道受奈氏准则限制的最高码元速率为 20000 码元/秒。如果采用振幅调制，把码元的振幅划分为 16 个不同等级来传送，那么可以获得多高的数据率 (bit/s)？
+      </div>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>码元的振幅划分为 16 个等级，意味着每个码元有 16 种不同的物理状态；每次发送这 16 个状态/符号的一个</p>
+        <p>每个码元可以使用 4 bits 来表示：2<sup>4</sup> = 16；每个码元可以携带 4 bits 信息</p>
+        <p>总数据率 = 码元速率 × 每个码元携带的比特数 = 20000 Baud/s × 4 bit/Baud= 80000 bit/s</p>
       </div>
     </dl>
     <h2>物理层设备 Device</h2>
@@ -292,17 +328,7 @@
         <div>现在网络中很少使用中继器和集线器</div>
       </div>
     </dl>
-    <h2>Homework</h2>
     <dl>
-      <dt>Homework</dt>
-      <div class="demo">P70/2-07 假定某信道受奈氏准则限制的最高码元速率为 20000 码元/秒。如果采用振幅调制，把码元的振幅划分为 16 个不同等级来传送，那么可以获得多高的数据率 (bit/s)？
-      </div>
-      <dd>答：</dd>
-      <div class="txt-indent">
-        <p>16个等级的振幅可以使用 4 bits 来表示：2<sup>4</sup> = 16</p>
-        <p>每个码元为 4 bits</p>
-        <p>最高速率为 20000 码元/秒 = 80000 bit/s</p>
-      </div>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://networkencyclopedia.com/physical-layer/">Physical Layer</a></li>

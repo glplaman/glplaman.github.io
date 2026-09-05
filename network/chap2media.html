@@ -28,7 +28,7 @@
     </dl>
     <h2>有线 Wire</h2>
     <dl>
-      <dd>又称导引型传输媒介</dd>
+      <dd>又称导引型 Guided 传输媒介</dd>
       <dt>同轴电缆 Coaxial cable</dt>
       <dd>物理结构组成 Components
         <p>内导体：中心铜线</p>
@@ -97,9 +97,9 @@
             <td>100m</td>
             <td>100Mhz</td>
             <td>100Mbps</td>
-            <td>百兆网</td>
+            <td>应用最广泛</td>
           </tr>
-          <tr>
+          <tr class="warn">
             <td>超5类线</td>
             <td>Cat 5e</td>
             <td>100m</td>
@@ -107,13 +107,13 @@
             <td>1Gbps</td>
             <td>千兆网</td>
           </tr>
-          <tr>
+          <tr class="warn">
             <td>6类线</td>
             <td>Cat 6</td>
             <td>100m</td>
             <td>250Mhz</td>
             <td>1Gbps</td>
-            <td></td>
+            <td>市场主力</td>
           </tr>
           <tr>
             <td>超6类线</td>
@@ -121,7 +121,7 @@
             <td>100m</td>
             <td>500Mhz</td>
             <td>10Gbps</td>
-            <td></td>
+            <td>数据中心、企业核心机房</td>
           </tr>
           <tr>
             <td>7类线</td>
@@ -129,7 +129,7 @@
             <td>100m</td>
             <td>600Mhz</td>
             <td>10Gbps</td>
-            <td></td>
+            <td>数据中心、企业核心机房</td>
           </tr>
           <tr>
             <td>8类线</td>
@@ -137,24 +137,26 @@
             <td>30m</td>
             <td>2000Mhz</td>
             <td>25/40Gbps</td>
-            <td></td>
+            <td>数据中心、企业核心机房</td>
           </tr>
         </tbody>
       </table>
       <div class="tips">
+        <p>表格里的 Bandwidth（MHz） 是物理层的“道路宽度”</p>
+        <p>我们常说的“带宽”（如 1000M 宽带）实际是指 Rate（速率），是这条道路上能跑多快的“车流量”</p>
         <p>时延符合该类别标准的线缆，并连接支持相应以太网标准的设备时，所能够达到的最高速度</p>
       </div>
+      <div class="demo">申请宽带业务，应注意什么事项？如果要申请一个 500M 的宽带，使用几类线？</div>
+      <!-- <p>预埋线要匹配速率</p> -->
       <div>2. 按使用分类 Usage</div>
-      <dd>交叉线</dd>
-      <dd>两端线序不一样，一端是T568B，另一端是T568A</dd>
+      <dd>交叉线：两端线序不一样，一端是T568B，另一端是T568A</dd>
       <dd>1-3， 2-6， 3-1， 6-2</dd>
       <dd>同类设备使用
         <p>交换机 ↔ 交换机</p>
         <p>路由器 ↔ 路由器</p>
         <p>PC ↔ PC</p>
       </dd>
-      <dd>直通线</dd>
-      <dd>两端线序一模一样；都是 T568B；或都是 T568A</dd>
+      <dd>直通线：两端线序一模一样；都是 T568B；或都是 T568A</dd>
       <dd>1-1， 2-2， 3-3， 6-6</dd>
       <dd>同类设备使用
         <p>PC ↔ 交换机</p>
@@ -163,53 +165,86 @@
         <p>路由器 ↔ 交换机</p>
         <p>服务器 ↔ 交换机</p>
       </dd>
+      <div class="demo"><a class="link" href="./drill_twist.html">双绞线制作</a></div>
       <dt>光纤 Optical fiber</dt>
       <dd>由玻璃或塑料制成的纤维，利用光的全反射传输数据</dd>
-      <dd>特点 Features
-        <p>传输损耗小</p>
-        <p>抗干扰性好</p>
-        <p>体积小，重量轻</p>
-      </dd>
-      <div class="tips">
-        <p>光也是一种电磁波</p>
-        <p>光纤的信号：使用红外线波段；高频电磁波</p>
-        <p>铜线中的信号：使用无线电波波段（习惯称之为电信号）；低频电磁波</p>
-      </div>
-      <dd>分类 Classification
-        <p>单模光纤 SMF-Single Mode Fiber 适合远距离传输</p>
-        <p>多模光纤 MMF-MUlti Mode Fiber 适合近距离传输</p>
-      </dd>
       <figure><img src="./imgs/p4.jpg" alt="">
         <figcaption>Optical fiber</figcaption>
       </figure>
       <figure><img src="./imgs/p3.jpg" alt="">
         <figcaption>Construction</figcaption>
       </figure>
-      <figure><img src="./imgs/p2.jpg" alt="">
+      <dd>优点 Advantages
+        <p>可用带宽大（50 THz），比铜线高出好几个数量级（2 GHz）</p>
+        <p>传输损耗小，远低于铜线（发热）</p>
+        <p>抗干扰性好；光信号在玻璃纤芯中传输，不受外界电磁场（如雷电、电机、无线信号）的干扰，也不向外辐射信号，安全性高，不易被窃听</p>
+        <p>体积小，重量轻；光纤直径仅约 0.125 mm（纤芯），比头发丝略粗；重量远低于同长度的铜缆，大大降低了布线成本和空间占用</p>
+        <p>原材料丰富；主要原料是石英（二氧化硅），储量丰富，相比铜矿资源更具可持续性</p>
+      </dd>
+      <dd>不足 Disadvantages
+        <p>弯曲敏感；光纤弯曲半径过大会增加信号损耗，施工时需注意保护，不能像铜线那样随意弯折</p>
+        <p>接头成本高；光纤熔接或做冷接头需要专用设备，成本高于铜线水晶头；家庭用户通常由运营商负责，无需自行操作</p>
+        <p>光电转换开销；两端需要光模块（光电转换器），增加了成本和功耗；而铜线是电信号直连，无需转换</p>
+        <p>短距离无优势；在家庭、办公室等短距离（&lt;100米）场景下，光纤的带宽优势无法体现，且成本高于网线，所以家庭内网仍以网线为主</p>
+      </dd>
+      <figure>
+        <img src="./imgs/p2.jpg" alt="Fusion">
         <figcaption>Fusion</figcaption>
       </figure>
-      <div class="demo"><a class="link" href="./drill_twist.html">双绞线制作</a></div>
+      <div class="demo">如何理解光纤的快？</div>
+      <!-- <p>指的是传输速率</p> -->
+      <!-- <p>不是传播速率</p> -->
+      <dd>分类 Classification
+        <p>单模光纤 SMF-Single Mode Fiber 适合远距离传输</p>
+        <p>多模光纤 MMF-MUlti Mode Fiber 适合近距离传输</p>
+      </dd>
+      <div class="tips">
+        <p>光也是一种电磁波</p>
+        <p>光纤的信号：使用红外线波段；高频电磁波</p>
+        <p>铜线中的信号：使用无线电波波段（习惯称之为电信号）；低频电磁波</p>
+      </div>
     </dl>
     <h2>无线 Wireless</h2>
     <dl>
       <dd>又称非导引型传输媒介</dd>
       <dd>泛指各种频段的电磁波</dd>
-      <dt>短波通信 HF</dt>
+      <dt>短波通信 HF，High Frequency</dt>
       <dd>3-30Mhz</dd>
       <dd>非视距通信 NLOS - Non Line Of Sight</dd>
       <dd>通过电离层反射传输</dd>
-      <dt>超短波 VHF</dt>
+      <dd>特点：
+        <p>传输距离远（可达数千公里），适合远程广播、海事通信、应急通信</p>
+        <p>受电离层状态（昼夜、季节、太阳活动）影响大，信道不稳定</p>
+        <p>带宽窄（通常 3–30 kHz），数据速率低，多用于话音和低速数据</p>
+      </dd>
+      <dd>典型应用：航空/海上应急通信、短波电台、气象传真、业余无线电</dd>
+      <dt>超短波 VHF，Very High Frequency</dt>
       <dd>30-300Mhz</dd>
+      <dd>兼具视距与有限非视距（城市环境中可依靠反射）</dd>
+      <dd>特点：
+        <p>受电离层影响小，信道较稳定</p>
+        <p>传播距离一般限制在视距范围内（约几十至上百公里）</p>
+        <p>天线尺寸适中，设备相对简单，功耗较低</p>
+      </dd>
+      <dd>典型应用：FM广播、航空通信（118–137 MHz）、海事通信、对讲机、气象雷达</dd>
       <dt>微波通信 Microwave Communication</dt>
       <dd>300Mhz-300Ghz</dd>
       <dd>视距通信 LOS - Line Of Sight</dd>
-      <dd>多以接力 Relay 的方式进行</dd>
+      <dd>多以接力 Relay 的方式进行；每隔约 30–50 公里设置中继站</dd>
+      <dd>特点：
+        <p>频带宽、容量大，支持高速数据与多路复用</p>
+        <p>受天气影响（雨衰、雾衰）较大，尤其高频段（>10 GHz）</p>
+        <p>天线定向性强，波束窄，抗干扰能力较好</p>
+      </dd>
+      <dd>典型应用：点对点骨干链路、移动通信基站回传、广播电视传输、毫米波通信（5G/6G）</dd>
       <dt>卫星通信 Satellite Communication</dt>
       <dd>本质： 微波通信的一种特殊应用形式（利用卫星作为空中继站）</dd>
       <dd>频率范围： 主要使用微波频段 (1GHz-40GHz)</dd>
-      <dd>通信方式： 广义上的视距通信 (地面站对卫星)</dd>
+      <dd>通信方式： 广义上的视距通信 (地面站 → 卫星 → 地面站），需保持天线对准)</dd>
       <dd>核心优势： 覆盖面积大，通信距离远，不受地理环境限制</dd>
+      <dd>典型应用：全球电视广播、海事/航空通信、军事通信、远程宽带接入、物联网 IoT（低轨星座，如星链 Starlink）</dd>
       <div class="demo"><a class="link" href="https://www.zgtianyan.com/">大国重器，中国天眼</a></div>
+      <div class="demo">物联网 IoT 和卫星通信的关系</div>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
