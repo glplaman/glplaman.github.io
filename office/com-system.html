@@ -16,15 +16,14 @@
     <h1>系统组成</h1>
     <h3>System</h3>
     <dl>
-      <dt>内容 Contents</dt>
-      <dd>概述 - 自学</dd>
-      <dd>系统组成</dd>
-      <dd>信息表示</dd>
-      <dd>微型计算机系统 - 自学</dd>
-      <dd>发展 - 自学</dd>
-    </dl>
-    <h2>冯 · 诺依曼结构 Architect</h2>
-    <dl>
+      <dt>冯 · 诺依曼结构 Architect</dt>
+      <dd>
+        1946年，美籍匈牙利数学家 <a class="link" href="https://zhuanlan.zhihu.com/p/447448972" title="单击访问">冯 · 诺依曼</a>
+        提出；由以下五大基本部件组成</dd>
+      <dd>使用 <strong>二进制</strong> 表示数据和指令</dd>
+      <dd>采用 <strong>存储程序和程序控制</strong> 的工作方式</dd>
+      <dd>是现代计算机的雏形，沿用至今</dd>
+
       <figure>
         <img style="width: 200px;" src="./imgs/f.png" alt="">
         <figcaption>冯 · 诺依曼</figcaption>
@@ -33,10 +32,6 @@
         <img src="./imgs/f0.png" alt="">
         <figcaption>冯 · 诺依曼结构</figcaption>
       </figure>
-      <dd>
-        1946年，美籍匈牙利数学家 <a href="https://zhuanlan.zhihu.com/p/447448972" title="单击访问">冯 · 诺依曼</a>
-        提出；由以下五大基本部件组成</dd>
-      <dd>是现代计算机的雏形，沿用至今</dd>
       <dt>运算器 Arithmetic Logical Unit</dt>
       <dd>又称算术逻辑单元</dd>
       <dd>运算器接受由内存送到的二进制数据并对其进行算术运算和逻辑运算</dd>
@@ -57,8 +52,8 @@
       <dd>以字节 Byte 为单位，一个字节 Byte 占用一个存储单元</dd>
       <dd>每个存储单元都有唯一的地址号，CPU 根据地址访问存储的内容</dd>
       <div>1. 按存储位置与功能分类 (By Location & Function)</div>
-      <dd>内部存储器：也称为内存或者主存 Main Memory，存放将要执行的程序、数据或指令；内存条</dd>
-      <dd>外部存储器：也称辅存 Secondary Storage，存放"暂时"用不着的程序和数据，可以和内存交换数据；磁盘、光盘、U盘、硬盘等</dd>
+      <dd>内部存储器：也称为内存或者 <strong>主存 Main Memory</strong> ，存放将要执行的程序、数据或指令；内存条</dd>
+      <dd>外部存储器：也称 <strong>辅存 Secondary Storage</strong> ，存放"暂时"用不着的程序和数据，可以和内存交换数据；磁盘、光盘、U盘、硬盘等</dd>
       <dd>随机存储器(Random Access Memory，RAM)</dd>
       <div>2. 按读写特性分类 (By Read/Write Capability)</div>
       <dd>只读存储器(Read Only Memory，ROM)</dd>
@@ -68,39 +63,32 @@
       <dt>输出设备 Output Unit</dt>
       <dd>将数据或程序的处理结果展示给用户，例如：显示器、打印机</dd>
       <dd>人机交互的重要接口之一</dd>
-      <dt>特点 Feature</dt>
-      <dd>采用二进制形式表示数据和指令</dd>
-      <dd>整个结构以运算器为中心，数据流动必须经过运算器，并由控制器集中控制</dd>
-      <dd>采用 <strong>存储程序和程序控制</strong> 的工作方式
+      <div class="tips">
+        <p>整个结构以运算器为中心，数据流动必须经过运算器，并由控制器集中控制</p>
         <p>规定控制器是根据存放在存储器中的程序来工作的，即计算机的工作过程就是运行程序的过程</p>
         <p>为了使计算机能正常工作，程序必须预先存放在存储器中</p>
+      </div>
+    </dl>
+    <h2>指令系统 Instruction Code System</h2>
+    <dl>
+      <dt>指令 Instruction Code</dt>
+      <dd>指令是能被计算机识别并执行的二进制代码，也叫机器指令</dd>
+      <dd>计算机运行的最小功能单位</dd>
+      <dd>一条指令对应着一种基本操作</dd>
+      <dd>根据冯 · 诺依曼机的"存储程序"概念，计算机的工作过程实际上就是执行指令和程序的过程</dd>
+      <dd>指令使用二进制，也可以用助记符表达的汇编语言形式表示</dd>
+      <dt>指令组成 Component</dt>
+      <dd>一条指令由操作码 Opcode 和操作数 Operand 两部分组成
+        <p>操作码：计算机要完成的操作，如取数、加法等</p>
+        <p>操作数：操作对象的内容或所在内存单元的地址</p>
+        <p>操作的对象有时存放的是数据的地址，又称地址码 Address Code</p>
       </dd>
-    </dl>
-    <h2>系统组成 Components</h2>
-    <dl>
-      <dd>一个完整的计算机系统包含硬件系统和软件系统两大部分</dd>
-      <dt>硬件系统 Hardware</dt>
-      <dd>组成计算机的各个硬件部分</dd>
-      <dd>眼睛能看得到的存在</dd>
-      <dt>软件系统 Software</dt>
-      <div>1. 系统软件</div>
-      <dd>是指担负控制和协调计算机及其外部设备、支持应用软件的开发和运行的一类计算机软件</dd>
-      <dd>一般包括 <a href="./com-os.html">操作系统</a>、语言处理程序、数据库系统和网络管理系统</dd>
-      <dd>Dos、Window、Linux、Android、IOS、COS</dd>
-      <div>2. 应用软件</div>
-      <dd>为特定领域开发、并为特定目的服务的一类软件</dd>
-      <dd>它是直接面向用户需要，帮助用户提高工作质量和效率，甚至可以帮助用户解决某些难题等等</dd>
-      <dd>办公软件 Office、社交软件 QQ、微信 Wechat、图形处理软件 PS、杀毒软件、休闲娱乐软件</dd>
       <figure>
-        <img src="./imgs/sys.png" alt="">
-        <figcaption>系统组成</figcaption>
+        <img src="./imgs/instruction.png" alt="">
+        <figcaption>指令</figcaption>
       </figure>
-    </dl>
-    <h2>工作原理 Principles</h2>
-    <dl>
-      <dt>指令系统 Instruction Code System</dt>
-      <dd>指令是能被计算机识别并执行的二进制代码，也叫机器指令，通常一条指令对应着一种基本操作</dd>
-      <dd>计算机所能直接执行的全部指令，称为该计算机的指令系统，也称<strong>指令集</strong> Instruction Code Set</dd>
+      <dt>指令集 Instruction Code Set</dt>
+      <dd>计算机所能直接执行的全部指令</dd>
       <dd>CPU 支持两组不同的指令集
         <p>CISC - Complex instruction set Computing，复杂指令系统计算机</p>
         <p>RISC - Reduced Instruction Set Computing，精简指令系统计算机</p>
@@ -177,20 +165,87 @@
           </tr>
         </tbody>
       </table>
-      <dt>指令 Instruction Code</dt>
-      <dd>根据冯 · 诺依曼机的"存储程序"概念，计算机的工作过程实际上就是执行指令和程序的过程</dd>
-      <dd>指令是能被计算机识别并执行的二进制代码，用来完成某一特定的操作</dd>
-      <dd>计算机运行的最小功能单位</dd>
-      <dd>指令通常用二进制代码形式表示，也可以用助记符表达的汇编语言形式表示</dd>
-      <dd>一条指令由操作码 Opcode 和操作数 Operand 两部分组成
-        <p>操作码：计算机要完成的操作，如取数、加法等</p>
-        <p>操作数：操作对象的内容或所在内存单元的地址</p>
-        <p>操作的对象有时存放的是数据的地址，又称地址码 Address Code</p>
+      <dt>执行过程 Processing</dt>
+      <dd>
+        <div>取指令 Fetch：根据当前控制器中程序计数器的指令起始地址值，从内存中取出指令送往控制器的指令寄存器存储起来</div>
+        <div>分析指令 Decode：将指令寄存器中存放的指令送往指令译码器，对操作码进行译码，即将指令的操作码转换成相应的控制电位信号，由地址码确定操作数地址</div>
+        <div>执行指令 Execute：由操作控制部件发出该操作所需要的一系列控制信号，驱动相应部件完成该指令所要求的操作。程序计数器自动加1：为执行下一条指令做好准备，即形成下一条指令地址</div>
       </dd>
-      <figure>
-        <img src="./imgs/instruction.png" alt="">
-        <figcaption>指令</figcaption>
-      </figure>
+      <table>
+        <tr>
+          <td>取</td>
+          <td></td>
+          <td></td>
+          <td>取</td>
+          <td></td>
+          <td></td>
+          <td>取</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>分析</td>
+          <td></td>
+          <td></td>
+          <td>分析</td>
+          <td></td>
+          <td></td>
+          <td>分析</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>执行</td>
+          <td></td>
+          <td></td>
+          <td>执行</td>
+          <td></td>
+          <td></td>
+          <td>执行</td>
+        </tr>
+      </table>
+      <dt>流水线</dt>
+      <dd>多条指令执行的并行处理技术</dd>
+      <dd>每个阶段由不同的处理部件完成，所以要确保处理部件没有空闲，利用效率和处理效率要高</dd>
+      <dd>整体处理过程明显缩短</dd>
+      <table>
+        <tr>
+          <td>取</td>
+          <td>取</td>
+          <td>取</td>
+          <td>取</td>
+          <td>取</td>
+          <td>取</td>
+          <td>取</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>分析</td>
+          <td>分析</td>
+          <td>分析</td>
+          <td>分析</td>
+          <td>分析</td>
+          <td>分析</td>
+          <td>分析</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>执行</td>
+          <td>执行</td>
+          <td>执行</td>
+          <td>执行</td>
+          <td>执行</td>
+          <td>执行</td>
+          <td>执行</td>
+        </tr>
+      </table>
+      <div class="memo">拓展阅读</div>
       <dt>寻址方式 Addressing</dt>
       <dd>寻找地址码|操作数</dd>
       <div>1. 立即寻址 Immediate Addressing</div>
@@ -308,86 +363,7 @@
       <dt>程序 Program</dt>
       <dd>指能完成特定功能的一组指令的有序集合</dd>
       <dd>计算机按照程序设定的指令顺序依次执行，完成对应的一系列操作，这就是程序执行的过程</dd>
-      <dt>执行过程 Processing</dt>
-      <dd>
-        <div>取指令 Fetch：根据当前控制器中程序计数器的指令起始地址值，从内存中取出指令送往控制器的指令寄存器存储起来</div>
-        <div>分析指令 Decode：将指令寄存器中存放的指令送往指令译码器，对操作码进行译码，即将指令的操作码转换成相应的控制电位信号，由地址码确定操作数地址</div>
-        <div>执行指令 Execute：由操作控制部件发出该操作所需要的一系列控制信号，驱动相应部件完成该指令所要求的操作。程序计数器自动加1：为执行下一条指令做好准备，即形成下一条指令地址</div>
-      </dd>
-      <table>
-        <tr>
-          <td>取</td>
-          <td></td>
-          <td></td>
-          <td>取</td>
-          <td></td>
-          <td></td>
-          <td>取</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>分析</td>
-          <td></td>
-          <td></td>
-          <td>分析</td>
-          <td></td>
-          <td></td>
-          <td>分析</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>执行</td>
-          <td></td>
-          <td></td>
-          <td>执行</td>
-          <td></td>
-          <td></td>
-          <td>执行</td>
-        </tr>
-      </table>
-      <dt>流水线</dt>
-      <dd>多条指令执行的并行处理技术</dd>
-      <dd>每个阶段由不同的处理部件完成，所以要确保处理部件没有空闲，利用效率和处理效率要高</dd>
-      <dd>整体处理过程明显缩短</dd>
-      <table>
-        <tr>
-          <td>取</td>
-          <td>取</td>
-          <td>取</td>
-          <td>取</td>
-          <td>取</td>
-          <td>取</td>
-          <td>取</td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>分析</td>
-          <td>分析</td>
-          <td>分析</td>
-          <td>分析</td>
-          <td>分析</td>
-          <td>分析</td>
-          <td>分析</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>执行</td>
-          <td>执行</td>
-          <td>执行</td>
-          <td>执行</td>
-          <td>执行</td>
-          <td>执行</td>
-          <td>执行</td>
-        </tr>
-      </table>
+
       <dd class="demo">零地址指令采用( )</dd>
       <dd class="alpha">
         <div>立即寻址</div>

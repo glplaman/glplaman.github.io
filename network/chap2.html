@@ -90,6 +90,10 @@
         <img src="./imgs/ph0.png" alt="">
         <figcaption>单工 Simplex</figcaption>
       </figure>
+      <figure>
+        <img src="./imgs/duplex0.png" alt="收音机">
+        <figcaption>收音机</figcaption>
+      </figure>
       <dt>半双工 Half-Duplex</dt>
       <dd>双向通信</dd>
       <dd>但不能同时通信</dd>
@@ -97,12 +101,20 @@
         <img src="./imgs/ph1.png" alt="">
         <figcaption>半双工 Half-Duplex</figcaption>
       </figure>
+      <figure>
+        <img src="./imgs/duplex1.png" alt="对讲机">
+        <figcaption>对讲机</figcaption>
+      </figure>
       <dt>全双工 Full-Duplex</dt>
       <dd>双向通信</dd>
       <dd>可同时通信</dd>
       <figure>
         <img src="./imgs/ph2.png" alt="">
         <figcaption>全双工 Full-Duplex</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/duplex2.png" alt="Nokia 1110">
+        <figcaption>Nokia 1110</figcaption>
       </figure>
     </dl>
     <h2>信号 Signal</h2>
@@ -118,6 +130,7 @@
       <dt>频带信号</dt>
       <dd>经过频带调制的信号</dd>
       <dd>属于高频部分</dd>
+      <dd>经过调制的信号，功率更大，传播更远</dd>
     </dl>
     <h2>编码 Coding</h2>
     <dl>
@@ -174,28 +187,40 @@
     </dl>
     <h2>调制 Modulation</h2>
     <dl>
-      <dt>调幅 AM</dt>
+      <dt>调幅 AM, Amplitude Modulation</dt>
       <dd>原理：改变载波的振幅（高低）来携带信息。载波的频率和相位保持不变</dd>
       <dd>数字信号（ASK）：例如，振幅高代表“1”，振幅低（或为0）代表“0”</dd>
       <dd>优点：实现简单，设备成本低，占用频带窄</dd>
       <dd>缺点：抗干扰能力极差。因为自然界中许多干扰（如闪电、电机火花、信号衰减）都会直接改变信号的振幅。接收端很容易把干扰误认为是信号变化</dd>
       <dd>常见应用：中波广播（AM收音机）、早期的低速无线传输</dd>
-      <dt>调频 FM</dt>
+      <dt>调频 FM, Frequency Modulation</dt>
       <dd>原理：改变载波的频率（波形疏密）来携带信息。载波的振幅保持不变（保持不变是它抗干扰的关键）</dd>
       <dd>数字信号（FSK）：例如，频率高代表“1”，频率低代表“0”</dd>
       <dd>优点：抗干扰能力强。因为干扰通常改变的是振幅，接收端通过“限幅”把振幅削平，只关注频率的变化，就能准确还原信号。音质比AM好</dd>
       <dd>缺点：需要比AM更宽的带宽</dd>
       <dd>常见应用：调频广播（FM收音机）、蓝牙（经典蓝牙的部分阶段）、老式拨号调制解调器</dd>
-      <dt>调相 PM</dt>
-      <dd>原理：改变载波的相位（波形的起始或偏移位置）来携带信息。振幅和频率保持不变</dd>
-      <dd>数字信号（PSK）：例如，波形保持原样代表“0”，波形反转180度代表“1”</dd>
-      <dd>优点：抗干扰能力强。更关键的是，PSK很容易与其他调制结合</dd>
+      <dt>调相 PM, Phase Modulation</dt>
+      <dd>通俗地说，相位就是正弦波在时间轴上的“起点”或“偏移量”</dd>
+      <dd>原理：保持振幅和频率保持不变，改变载波的相位（波形的起始或偏移位置）来携带信息</dd>
+      <dd>也成相移键控 PSK，Phase Shift Keying</dd>
+      <dd>如：2PSK / BPSK：2相调制，波形保持原样代表“0”，波形反转180度代表“1”</dd>
+      <dd>优点：<strong>抗干扰</strong>能力强。更关键的是，PSK很容易与其他调制结合</dd>
       <dd>缺点：接收端需要一个非常精准的“参考相位”来对比是0度还是180度，否则容易解调错误</dd>
       <dd>常见应用：卫星通信、Wi-Fi（早期802.11b的DSSS部分）</dd>
-      <dt>正交振幅调制 QAM</dt>
-      <dd>原理：这是幅度和相位的结合。它同时改变载波的振幅和相位来传递信息</dd>
-      <dd>为什么叫“正交”：因为它在数学上利用了相差90度的两个载波（正弦波和余弦波）来同时传输两路信号，互不干扰</dd>
-      <dd>核心优势：效率极高。QAM像是一个“二维坐标系”，它把每个“点”都对应一个二进制数</dd>
+      <figure>
+        <img src="./imgs/coding1.png" alt="调制 Modulation">
+        <figcaption>调制 Modulation</figcaption>
+      </figure>
+      <dt>正交相移键控 QPSK，Quadrature Phase Shift Keying</dt>
+      <dd>也被称为 4PSK</dd>
+      <dd>有 4种 状态。波形分别偏移4个相位 0°、90°、180°、270°</dd>
+      <dd>一次就可以传输 2个比特：00 01 10 11</dd>
+      <dt>正交振幅调制 QAM，Quadrature Amplitude Modulation</dt>
+      <dd>通信领域里的“终极融合技”</dd>
+      <dd>原理：这是幅度和相位的结合。同时改变载波的振幅和相位来传递信息</dd>
+      <dd>正交：使用相差90度的两个载波（正弦波和余弦波）同时传输两路信号，互不干扰</dd>
+      <dd>分别改变这两个波的振幅，然后叠加在一起，就可以在同一个频率下创造出数种不同的信号状态</dd>
+      <dd>核心优势：效率极高。QAM 像是一个“二维坐标系”，它把每个“点”都对应一个二进制数</dd>
       <dd>16-QAM：有16个点，每个点代表4个比特（2^4=16）</dd>
       <dd>64-QAM：有64个点，每个点代表6个比特</dd>
       <dd>256-QAM：有256个点，每个点代表8个比特</dd>
@@ -203,10 +228,14 @@
       <dd>缺点：对噪声极其敏感。因为点靠得太近了，一点微弱的噪声/振幅变化，就可能导致接收端把“A点”误判为旁边的“B点”</dd>
       <dd>常见应用：4G/5G蜂窝网络、Wi-Fi（802.11ac/ax）、有线电视电缆调制解调器（DOCSIS）、数字电视广播</dd>
       <dd>你常听到的“星座图”就是这些点在坐标系的分布图，点越密集，传输速率越快</dd>
-      <figure>
-        <img src="./imgs/coding1.png" alt="调制 Modulation">
-        <figcaption>调制 Modulation</figcaption>
-      </figure>
+      <dd>QPSK 就是最简单的 QAM 变种</dd>
+      <div class="demo">16QAM</div>
+      <dd>16QAM 利用两个频率相同、相位正交/相差90°的载波（正弦波 - Q 路）和 余弦波 - I 路）来同时传输数据</dd>
+      <dd>正弦波： 有 2 种振幅状态（0/1） × 2 种相位状态（0°/180°） = 4 种状态</dd>
+      <dd>余弦波： 有 2 种振幅状态（0/1） × 2 种相位状态（0°/180°） = 4 种状态</dd>
+      <dd>因为发送时，正弦波和余弦波是同时叠加在一起发送的，所以总的状态数量是它们的乘积：</dd>
+      <dd>4（正弦波状态） × 4（余弦波状态） = 16 种状态</dd>
+      <dd>&therefore; 传输一个符号可以携带 log<sub>2</sub>16= 4bit 信息</dd>
     </dl>
     <h2>信道容量 Capcity</h2>
     <dl>
