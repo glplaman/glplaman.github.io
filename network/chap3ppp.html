@@ -13,6 +13,12 @@
       color: #fff;
       padding: 0 var(--p-m-g);
       border-radius: 6px;
+      width: max-content;
+      margin: 0 auto;
+    }
+
+    table {
+      width: max-content;
     }
   </style>
 </head>
@@ -24,10 +30,13 @@
       <span>&commat;PPP</span>
     </header>
     <dl>
-      <img src="./imgs/linkLayer1/幻灯片12.JPG" alt="">
-      <dd>数据链路层的通信协议</dd>
-      <dd>可用于同步或异步链路</dd>
+      <img src="./imgs/ppp4.jpg" alt="PPP">
       <dt>应用 Application</dt>
+      <dd>数据链路层的通信协议</dd>
+      <dd>可用于
+        <p>异步传输 Asynchronous：如电话拨号上网 (POTS)、Modem连接、临时性访问</p>
+        <p>同步传输 Synchronous：租用专线、LAN-to-LAN互联、SDH/SONET高速链路</p>
+      </dd>
       <dd>用户经 ISP（Internet Service Provider）接入互联网
         <p>PPP</p>
         <p>PPPoE - PPP over Ethernet</p>
@@ -38,11 +47,11 @@
         <img src="./imgs/ppp1.png" alt="">
         <figcaption>接入互联网</figcaption>
       </figure>
+      <div class="tips">RADIUS - Remote Authentication Dial In User Service</div>
       <figure>
         <img src="./imgs/ppp2.png" alt="">
         <figcaption>接入互联网</figcaption>
       </figure>
-      <div class="tips">RADIUS - Remote Authentication Dial In User Service</div>
       <dt>协议特点 Feature</dt>
       <dd>简单
         <p>发的帧经过 CRC 校验，正确，则接受；反之丢弃</p>
@@ -71,15 +80,6 @@
         <p>网络地址协商</p>
         <p>数据压缩协商</p>
       </dd>
-      <dt>协议组成 Components </dt>
-      <dd>封帧</dd>
-      <dd>链路控制协议 LCP
-        <p>LCP - Link Control Protocol</p>
-        <p>链路的建立配置和测试</p>
-      </dd>
-      <dd>网络控制协议 NCP
-        <p>NCP - Network Control Protocol</p>
-      </dd>
     </dl>
     <h2>PPP帧格式 Format</h2>
     <dl>
@@ -90,36 +90,209 @@
         <img src="./imgs/ppp0.png" alt="">
         <figcaption>帧格式</fi>
       </figure>
-      <dt>字段 F</dt>
-      <dd>大小：1 Byte</dd>
-      <dd>值：7E；0111 1110</dd>
+      <dt>标志字段 F，Flag</dt>
       <dd>说明：PPP帧界定符；标记一个PPP帧的开始和结束</dd>
-      <dt>字段 A</dt>
       <dd>大小：1 Byte</dd>
-      <dd>值：FF；11111111</dd>
+      <dd>值：0x7E；0111 1110</dd>
+      <dd>Each frame begins and ends with a Flag Sequence, which is the
+        binary sequence 01111110 (hexadecimal 0x7e). All implementations
+        continuously check for this flag, which is used for frame
+        synchronization.</dd>
+      <p>Only one Flag Sequence is required between two frames. Two
+        consecutive Flag Sequences constitute an empty frame, which is
+        silently discarded, and not counted as a FCS error.</p>
+      <dt>地址字段 A，Address</dt>
       <dd>说明：没有指定；不携带信息</dd>
-      <dt>字段 C</dt>
       <dd>大小：1 Byte</dd>
-      <dd>值：03；0000 0011</dd>
+      <dd>值：0xFF；11111111；表示全部对象</dd>
+      <dd>The Address field is a single octet, which contains the binary
+        sequence 11111111 (hexadecimal 0xff), the All-Stations address.
+        Individual station addresses are not assigned. The All-Stations
+        address MUST always be recognized and received.</dd>
+      <dd>The use of other address lengths and values may be defined at a
+        later time, or by prior agreement. Frames with unrecognized
+        Addresses SHOULD <strong>be silently discarded.</strong>.（不处理、不响应、不报错）</dd>
+      <dt>控制字段 C，Control</dt>
       <dd>说明：没有指定；不携带信息</dd>
+      <dd>大小：1 Byte</dd>
+      <dd>值：0x03；0000 0011</dd>
+      <dd>
+        The Control field is a single octet, which contains the binary
+        sequence 00000011 (hexadecimal 0x03), the Unnumbered Information
+        (UI) command with the Poll/Final (P/F) bit set to zero.（只有两个对等的设备，没有主站和从站之分）</dd>
+      <dd>The use of other Control field values may be defined at a later
+        time, or by prior agreement. Frames with unrecognized Control
+        field values SHOULD be silently discarded.</dd>
       <dt>协议字段 Protocol</dt>
-      <dd>大小：1 Byte</dd>
+      <dd>大小：2 Byte</dd>
+      <dd>说明：数据部分向上交付给哪个（网络层）协议处理</dd>
       <dd>值：
         <p>0x0021 IP数据报</p>
         <p>0xC021 链路控制协议</p>
         <p>0x8021 网络层控制数据</p>
       </dd>
-      <dd>说明：数据部分向上交付给哪个协议处理</dd>
-      <dt>数据部分 Data</dt>
+      <div class="tips">
+        <p>地址字段 A、控制字段 C 和协议字段 Protocol又称为帧头</p>
+      </div>
+      <dt>数据部分 Information/Data</dt>
       <dd>说明：大小不超过 1500 Bytes</dd>
+      <dd>如果长度不够，需要填充额外数量的字节直至到 MRU，以保证帧的最小长度或满足硬件处理要求，由实现者决定</dd>
+      <dd>The Information field is zero or more octets. The Information
+        field contains the datagram for the protocol specified in the
+        Protocol field.</dd>
+      <dd>The maximum length for the Information field, including Padding,
+        but not including the Protocol field, is termed the Maximum
+        Receive Unit (MRU), which defaults to 1500 octets. By
+        negotiation, consenting PPP implementations may use other values
+        for the MRU.</dd>
+      <div class="tips">
+        <p>MRU：最大接收单元；链路层的术语；接收方定的规矩；我这边的卸货口有多大，能接收多大的箱子</p>
+        <p>MTU：最大传输单元；网络层的术语；发送方根据对方卸货口（MRU）和自己的包装能力综合考虑后，决定的实际装货大小</p>
+      </div>
       <dt>帧校验序列 FCS</dt>
+      <dd>说明：地址字段 A、控制字段 C、协议字段 P 以及信息/数据字段 DATA（包括数据中可能的填充字段 Padding）</dd>
       <dd>大小：2 Bytes</dd>
-      <dd>说明：地址字段、控制字段、协议字段以及信息/数据字段</dd>
+      <dd>The FCS field is calculated over all bits of the Address, Control,
+        Protocol, Information and Padding fields, not including any start
+        and stop bits (asynchronous) nor any bits (synchronous) or octets
+        (asynchronous or synchronous) inserted for transparency. This
+        also does not include the Flag Sequences nor the FCS field itself.</dd>
+      <div class="demo">PPP帧的处理、流转/交付</div>
+      <dd class="mt2">Part1 发送：链路层向物理层交付。</dd>
+      <ol>
+        <li>从网络层收到数据</li>
+        <li>填写协议字段，组装帧头（Address + Control + Protocol）</li>
+        <li>添加信息和必要的填充 Information + Padding</li>
+        <li>计算 CRC，附加 FCS，得到不含标记位的PPP帧</li>
+        <li>透明处理</li>
+        <li>在转义后的帧的头尾分别添加 Flag (0x7E)</li>
+        <li>交给物理层发送</li>
+        <li>物理层拿到完整的 PPP 帧的比特串，逐 bit 发送出去；PPP帧各协议字段对物理层是透明的，不起任何作用</li>
+      </ol>
+      <dd class="mt2">Part2 接收：链路层向网络层交付</dd>
+      <dd>接收端物理层把比特流收上来，还原成 PPP 帧后，交给数据链路层处理</dd>
+      <ol>
+        <li>帧定界
+          <p>找到标志字段 0x7E，确定帧的起始和结束</p>
+        </li>
+        <li>透明化处理</li>
+        <li>CRC 校验（FCS）
+          <p>计算接收到的帧（地址字段 A + 控制字段 C + 协议字段 Protocol + 信息字段含必要的填充）的 CRC</p>
+          <p>若错误（余数 ≠ 0） → 直接丢弃，不向上交付</p>
+        </li>
+        <li>解析协议字段（关键！）
+          <p>校验通过后（余数 = 0），链路层读取协议字段的值</p>
+          <p>根据这个值，决定把信息字段交给网络层的哪个协议实体</p>
+        </li>
+      </ol>
+      <div class="tips">
+        <p>分拣（帧定界），验货（CRC），拆包（读协议字段），送货（交付网络层）</p>
+      </div>
     </dl>
-    <h2>状态 State</h2>
+    <h2>透明传输 Transparency</h2>
     <dl>
+      <dd>当PPP运行在不同物理特性的线路上时，为了确保数据能正确传输（即“透明传输”），就必须采用不同的处理方法</dd>
+      <dd>对于异步线路，采用字节填充来解决数据中可能出现控制字符的问题</dd>
+      <dd>对于同步线路，则采用零比特填充来防止数据中出现标志位序列</dd>
+      <dt>异步传输</dt>
+      <dd>使用字节填充 Octet-stuffed</dd>
+      <dd>使用转义符 0x7D（0111 1101）</dd>
+      <dd>通过开始和结束比特保证传输</dd>
+      <figure>
+        <img src="./imgs/da.png" alt="">
+        <figcaption>Asynchronous transmission</figcaption>
+      </figure>
+      <div class="tips">有的资料将字节解释为字符，称异步的传输单位是字符</div>
+      <dd>情况1：出现帧定界符 0x7E，将其转变为2个字节：0x7D 和 0x5E</dd>
+      <dd class="txt-center">
+        <span>0x7E</span>
+        <span>→</span>
+        <span>0x7D</span>
+        <span>0x5E</span>
+      </dd>
+      <dd>情况2：出现转义字符 0x7D，将其转变为2个字节：0x7D 和 0x5D</dd>
+      <dd class="txt-center">
+        <span>0x7D</span>
+        <span>→</span>
+        <span>0x7D</span>
+        <span>0x5D</span>
+      </dd>
+      <dd>情况3：其它 ASCII控制字符（&lt;0x20），在其前面加上 0x7D，同时 +20 调整该字符的编码</dd>
+      <dd class="txt-center">
+        <span>0x03</span>
+        <span>→</span>
+        <span>0x7D</span>
+        <span>0x23</span>
+      </dd>
+      <figure>
+        <div class="txt-center warn txt-2xl"> 0x7d + (原始字节 XOR 0x20)</div>
+        <figcaption>编码规则</figcaption>
+      </figure>
+      <div class="demo">转义标志位 0x7E</div>
+      <div>答：</div>
+      <div class="txt-indent">
+        <p>0x7d = (0111 1110)<sub>2</sub></p>
+        <p>0x20 = (0010 0000)<sub>2</sub></p>
+        <p>=(0101 1110)<sub>2</sub> = 0x5E</p>
+        <P>&therefore; 转义后的数据 = 0x7D 0x5E</P>
+      </div>
+      <div class="demo">转义转义位 0x7D → 0x7D 0x5D</div>
+      <div class="demo">转义编码小于 0x20 <a class="link" href="https://www.runoob.com/w3cnote/ascii.html">ASCII码</a>，如控制字符
+        0x03 → 0x7D 0x23</div>
+      <dt>同步传输</dt>
+      <dd>使用比特填充 Bit-stuffed</dd>
+      <dd>信息字段中出现了和标志字段 F 完全一样的 8 比特组合 0x7E = (0111 1110)</dd>
+      <dd>使用0比特进行填充</dd>
+      <dd>需要时钟信号保持同步</dd>
+      <dd>传输不间断</dd>
+      <dd>发端：每发现连续5个1，就填充1个0</dd>
+      <dd>收端：每发现连续5个1，就删除其后面的0</dd>
+      <figure>
+        <img src="./imgs/ds.png" alt="">
+        <figcaption>Synchronous transmission</figcaption>
+      </figure>
+      <figure>
+        <table>
+          <tr>
+            <td>0 1 0 0 1 1 1 1 1 <span class="warn">1</span> 0 0 0 1 0 1 0</td>
+          </tr>
+        </table>
+        <figcaption>原始数据</figcaption>
+      </figure>
+      <figure>
+        <table>
+          <tr>
+            <td>0 1 0 0 1 1 1 1 1 <span class="warn txt-bold">0</span> <span class="warn">1</span> 0 0 0 1 0 1 0</td>
+          </tr>
+        </table>
+        <figcaption>0bit填充</figcaption>
+      </figure>
+      <div class="tips">比特被分组为块，也有资料称同步传输的单位是帧</div>
+    </dl>
+    <h2>PPP 协议的工作状态 State</h2>
+    <dl>
+      <dd>PPP 协议主要包括 </dd>
+      <dt>2个控制协议 Protocol</dt>
+      <div>1. 链路控制协议 LCP，Link Control Protocol</div>
+      <dd>负责链路的建立配置和测试</dd>
+      <div>2. 网络控制协议 NCP，Network Control Protocol</div>
+      <dd>负责网络层的管理</dd>
+      <dd>此外还有封帧的协议；同前面内容</dd>
+      <dt>5个阶段 Phase</dt>
+      <dd>链路静止 Link Dead</dd>
+      <dd>链路建立 Link Establishment Phase</dd>
+      <dd>鉴权 Authentication Phase</dd>
+      <dd>网络层协议 Network-Layer Protocol Phase</dd>
+      <dd>链路终止 Link Termination Phase</dd>
       <dt>基本过程 Procedure</dt>
-      <dd>以用户拨号上网为例</dd>
+      <dd>当用户家中的个人电脑通过光纤接入到ISP后，个人电脑就通过路由器向ISP发送一系列的链路控制协议LCP分组（封装成多个PPP帧），以便建立LCP连接</dd>
+      <dd>在选择了将要使用的一些PPP参数后，还要进行网络层配置，网络控制协议NCP给新接入的用户个人电脑分配一个临时的IP地址</dd>
+      <dd>当用户通信完毕时，NCP 释放网络层连接，收回原来分配出去的IP地址。LCP 释放数据链路层连接。最后释放的是物理层的连接</dd>
+      <figure>
+        <img src="./imgs/ppp3.png" alt="">
+        <figcaption>PPP状态转换</figcaption>
+      </figure>
+      <!-- <dd>以用户拨号上网为例</dd>
       <ol>
         <li>用户拨号
           <p>建立物理链接</p>
@@ -173,61 +346,159 @@
         <p class="bg">链路终止 Link Terminate</p>
         <p>↓</p>
         <p class="bg">链路静止 Link Dead</p>
-      </div>
+      </div> -->
     </dl>
-    <h2>Protocol Reading</h2>
+    <h2>Summary & Homework</h2>
     <dl>
-      <dt>Overview</dt>
-      <dd>The Point-to-Point Protocol is designed for simple links which transport packets between two peers. These
-        links provide full-duplex simultaneous bi-directional operation, and are assumed to deliver packets in order. It
-        is intended that PPP provide a common solution for easy connection of a wide variety of hosts, bridges and
-        routers.</dd>
-      <dt>Encapsulation</dt>
-      <dd>The PPP encapsulation provides for multiplexing of different network-layer protocols simultaneously over the
-        same link. The PPP encapsulation has been carefully designed to retain compatibility with most commonly used
-        supporting hardware.</dd>
-      <dd> Only 8 additional octets are necessary to form the encapsulation when used within the default HDLC-like
-        framing.
-        In environments where bandwidth is at a premium, the encapsulation and framing may be shortened to 2 or 4
-        octets.</dd>
-      <dd>To support high speed implementations, the default encapsulation uses only simple fields, only one of which
-        needs to be examined for demultiplexing. The default header and information fields fall on 32-bit boundaries,
-        and the trailer may be padded to an arbitrary boundary.</dd>
-      <dt>LCP-link control protocol</dt>
-      <dd>The LCP is used to automatically agree upon the encapsulation format options, handle varying limits on sizes
-        of
-        packets, detect a looped-back link and other common misconfiguration errors, and terminate the link. Other
-        optional facilities provided are authentication of the identity of its peer on the link, and determination when
-        a link is functioning properly and when it is failing.</dd>
-      <dt>NCP-network control protocol</dt>
-      <dd>Point-to-Point links tend to exacerbate many problems with the current family of network protocols. For
-        instance, assignment and management of IP addresses , which is a problem even in LAN environments, is especially
-        difficult over circuit-switched point-to-point links (such as dial-up modem servers). These problems are handled
-        by a family of Network Control Protocols (NCPs), which each manage the specific needs required by their
-        respective network-layer protocols. These NCPs are defined in companion documents.</dd>
-      <dt>Protocol field</dt>
-      <dd>The Protocol field is one or two octets, and its value identifies the datagram encapsulated in the Information
-        field of the packet. All Protocols MUST be odd; Also, all Protocols MUST be assigned such that the least
-        significant bit (LSB) of the most significant octet equals "0". Frames received which don't comply with these
-        rules MUST be treated as having an unrecognized Protocol.</dd>
-      <dd>values in the "0***" to "3***" range identify the network-layer protocol of specific packets</dd>
-      <dd>values in the "8***" to "b***" range identify packets belonging to the associated Network Control Protocols
-        (NCPs), if any.</dd>
-      <dd>values in the "4***" to "7***" range are used for protocols with low volume traffic which have no associated
-        NCP.</dd>
-      <dd>values in the "c***" to "f***" range identify packets as link-layer Control Protocols (such as LCP).</dd>
-      <dt>Information Field</dt>
-      <dd>The Information field is zero or more octets. The Information field contains the datagram for the protocol
-        specified in the Protocol field.</dd>
-      <dd>The maximum length for the Information field, including Padding, but not including the Protocol field, is
-        termed
-        the Maximum Receive Unit (MRU), which defaults to 1500 octets. By negotiation, consenting PPP implementations
-        may
-        use other values for the MRU.</dd>
-      <dt>Padding</dt>
-      <dd>On transmission, the Information field MAY be padded with an arbitrary number of octets up to the MRU. It is
-        the
-        responsibility of each protocol to distinguish padding octets from real information.</dd>
+      <dt>Summary</dt>
+      <ol>
+        <li>PPP 信道的应用</li>
+        <li>PPP 的帧格式</li>
+        <li>PPP 的透明传输</li>
+        <li>PPP 的工作状态</li>
+      </ol>
+      <dt>Homework</dt>
+      <div class="demo">简单题：PPP帧实现透明传输的措施有（）和（）。</div>
+      <div class="demo">p112-3-09 一个PPP帧的数据部分是 7D 5E FE 27 7D 5D 7D 5D 65 7D
+        5E。真正的数据是什么？</div>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>还原填充字节</p>
+        <p>7D 5E → 7E</p>
+        <p>7D 5D → 7D</p>
+        <p>7D 5D → 7D</p>
+        <p>7D 5E → 7E</p>
+        <p>最后数据：7E FE 27 7D 7D 7E</p>
+      </div>
+      <div class="demo">p112-3-10 PPP协议使用同步传输传送比特
+        0110111111111100，经过0比特填充后，变成什么比特串？如收到的PPP帧的数据部分是 0001110111110111110110，删除发送端插入的0比特变成什么比特串？</div>
+      <dd>答：</dd>
+      <dd>1. 发送端：每发5个1，插入1个0</dd>
+      <div>填充前</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>0</span>
+      </div>
+      <div>填充后</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span class="warn">0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span class="warn">0</span>
+        <span>0</span>
+        <span>0</span>
+      </div>
+      <div>2. 接收端：每收5个1，就删除后面的0</div>
+      <div>接收到的填充数据</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>0</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+      <div>去除填充后的还原数据</div>
+      <div class="txt-indent">
+        <span>0</span>
+        <span>0</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+      <dt>Protocol Reading</dt>
+      <ol>
+        <li><a href="https://www.rfc-editor.org/info/rfc1661/" class="link">The Point-to-Point Protocol (PPP)</a></li>
+        <li><a href="https://www.rfc-editor.org/info/rfc1662/" class="link">PPP in HDLC-like Framing</a></li>
+        <li><a href="https://www.rfc-editor.org/info/rfc2516/" class="link">A Method for Transmitting PPP Over Ethernet
+            (PPPoE)</a></li>
+        <li><a class="link"
+            href="https://www.geeksforgeeks.org/computer-networks/point-to-point-protocol-ppp-frame-format/">Point-to-Point
+            Protocol (PPP) Frame Format</a></li>
+        <li><a class="link" href="https://networkencyclopedia.com/point-to-point-protocol-ppp/">Point-to-Point Protocol
+            (PPP)</a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/transmission-modes-in-data-transmission/">Transmission
+            Modes in Data Transmission</a> </li>
+        <li><a class="link" href="https://gcore.com/learning/data-transmission-guide-everything-you-need-to-know">What
+            is data transmission | Everything you need to know about it</a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/asynchronous-transmission/">Asynchronous
+            Transmission</a>
+        </li>
+        <li><a class="link" href="https://networkencyclopedia.com/synchronous-transmission/">Synchronous
+            Transmission</a>
+        </li>
+        <li><a class="link" href="https://animalia-life.club/qa/pictures/point-to-point-network">Point To Point
+            Network</a>
+        </li>
+        <li><a class="link" href="https://www.geeksforgeeks.org/computer-networks/ppp-full-form/">PPP Full Form</a>
+        </li>
+        <li><a class="link"
+            href="https://www.bilibili.com/video/BV1HD4y1B7UH/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">深入浅出计算机网络
+            - 3.3 点对点协议PPP</a>
+        </li>
+        <li><a class="link" href="https://blog.csdn.net/qingwangheni/article/details/135395231">PPP & PPPoE & L2TP &
+            PPTP 一文全介绍 <span class="iconfont icon-videocam"></span></a>
+        </li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

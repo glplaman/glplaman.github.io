@@ -109,8 +109,18 @@
           </tr>
         </tbody>
       </table>
-      <dd>SOH，Start Of Header；编码：01</dd>
-      <dd>EOT，End Of Tail；编码：04</dd>
+      <dd>SOH，Start Of Header；编码：0x01</dd>
+      <dd>EOT，End Of Tail；编码：0x04</dd>
+      <div class="tips">
+        <p>注意</p>
+        <p>这是一个教学模型，用来理解'封装成帧'的抽象思想</p>
+        <p>现在的真实协议不会直接用SOH和EOT，而是会选择更适合自身特性的标志</p>
+      </div>
+      <div class="tips">
+        <p>SOH和EOT这两个控制字符在真实历史中确实被用过</p>
+        <p>比如IBM早期的BSC（二进制同步通信）协议，就用它们来划分帧的报头和数据部分</p>
+        <p>但那个协议早已过时，现在的PPP、以太网都不用这套了</p>
+      </div>
     </dl>
     <h2>02 透明传输 Transparent Transmission</h2>
     <dl>
@@ -219,6 +229,7 @@
     <h2>03 循环冗余检测 CRC</h2>
     <dl>
       <dd>数据传输没有百分百的准确，总是有误差存在</dd>
+      <dd>为了保证数据传输的可靠性，在计算机网络传输数据时，必须采用各种差错检测措施</dd>
       <dt>比特差错</dt>
       <dd>传输过程中，比特发生差错</dd>
       <dd>发送的是1，收到的是0</dd>
@@ -234,9 +245,6 @@
       <dd>用生成多项式 P 按照模 2 运算去除 M+n</dd>
       <dd>得到的余数 R 就是冗余码 - 如果位数不够 n 位，前面要补 0</dd>
       <div class="txt-center">发送的报文 = <strong>数据 M + 冗余码 R</strong></div>
-      <dd>接收端用相同的生成多项式对收到的完整报文（消息+冗余码）再次进行模2除法；若余数为0，则认为数据正确；无传输错误</dd>
-      <dd>通常情况下，生成多项式 P 的二进制位数比它生成的冗余码（校验码）的位数多 1 位</dd>
-      <dd>冗余码（校验码）的位数 r 是由生成多项式 P(x) 的最高次数决定的</dd>
       <table style="width: 350px;">
         <caption>模2/异或</caption>
         <thead>
@@ -269,8 +277,18 @@
           </tr>
         </tbody>
       </table>
+      <dd>接收端用相同的生成多项式对收到的完整报文（消息+冗余码）再次进行模2除法</dd>
+      <dd>若余数为0，则认为数据正确；无传输错误</dd>
+      <dd>否则，传输过程出现了差错</dd>
+      <dd>但是无法确定哪里错了，错了多少个，自然也无法纠错</dd>
+      <dd>检错能力极强，但纠错能力为零（或极其有限）</dd>
+      <dd>通常情况下，生成多项式 P 的二进制位数比它生成的冗余码（校验码）的位数多 1 位</dd>
+      <dd>冗余码（校验码）的位数 r 是由生成多项式 P(x) 的最高次数决定的</dd>
       <div class="tips">
         <p>凡是接收到的帧，都被认为是正确的帧 - 因为错误的帧已经被丢弃了</p>
+        <p>CRC校验通过（余数为0），只是说明'在数学上通过了除法检验'，不等于'数据绝对没有错误'</p>
+        <p>CRC提供的是一种“工程上的高可靠性保证”，而不是“数学上的绝对证明”</p>
+        <p>它把漏检概率降到了极低（如CRC-32为43亿分之一），但并不是零</p>
       </div>
       <div class="demo"> 若消息 M = 101001，P = 1101，使用 3 位冗余码，取 n = 3；求冗余码和最后的报文。</div>
       <dd>答：</dd>
@@ -284,37 +302,6 @@
         <img src="./imgs/l0.png" alt="">
         <figcaption>CRC</figcaption>
       </figure>
-      <div class="demo"> 若消息 M = 11010，P(x) = x<sup>3</sup> + x<sup>2</sup> + 1，求：
-      </div>
-      <ol>
-        <li>冗余码</li>
-        <li>发送的报文</li>
-        <li>若收到的报文为11110000，传输有没有差错？</li>
-      </ol>
-      <dd>答：</dd>
-      <div class="txt-indent">
-        <p>生成多项式的最高次幂是3 → n = 3</p>
-        <p>生成多项式对应的二进制 P = 1101</p>
-        <p>被除数 M + n = 11010000</p>
-        <p>除数 P = 1101</p>
-        <p>&therefore; 冗余码 R = 0 → 000</p>
-        <p>发送报文为 M+R = 11010000</p>
-        <p>用 11110000除以 1101，余数为101，不为0，接收端判定数据错误</p>
-      </div>
-      <div class="demo">思考题：比特差错是不是传输差错（）。</div>
-      <div class="demo">思考题：有了 CRC，是不是就可靠传输（）。</div>
-      <div class="demo">判断题：CRC 只能检测比特错误（）。</div>
-      <!-- X -->
-      <!-- 还可以用来检测数据帧的完整性破坏 -->
-      <!-- 数据丢失或截断：如果数据帧在传输过程中丢失了尾部的一部分比特，CRC 校验通常会失败。 -->
-      <!-- 数据插入：如果在数据帧中意外插入了额外的比特，CRC 校验也会失败。 -->
-      <!-- 数据乱序：如果数据块的顺序发生了改变，由于 CRC 算法与数据序列严格绑定，校验同样会报错。 -->
-      <div class="demo">要发送的数据是 1101 0110 11，采用 CRC 校验，生成多项式是 10011，取 n = 4，那么发送的数据是？</div>
-      <!-- <li>1101 0110 1111 10</li> -->
-      <!-- <figure>
-          <img src="./imgs/l1.png" alt="">
-          <figcaption>CRC</figcaption>
-        </figure> -->
       <dt>其它常见错误 Exceptions</dt>
       <dd>除了比特差错外，还有：</dd>
       <ul>
@@ -368,8 +355,50 @@
           </tr>
         </tbody>
       </table>
+    </dl>
+    <h2>Homework</h2>
+    <dl>
+      <div class="demo">判断题：CRC 可以用于完整性检测（）。</div>
+      <!-- <p>√</p> -->
+      <div class="demo">判断题：CRC 只能检错，不能纠错（）。</div>
+      <!-- <p>√</p> -->
+      <div class="demo">判断题：CRC 只能检测比特错误（）。</div>
+      <!-- X -->
+      <!-- 还可以用来检测数据帧的完整性破坏 -->
+      <!-- 数据丢失或截断：如果数据帧在传输过程中丢失了尾部的一部分比特，CRC 校验通常会失败。 -->
+      <!-- 数据插入：如果在数据帧中意外插入了额外的比特，CRC 校验也会失败。 -->
+      <!-- 数据乱序：如果数据块的顺序发生了改变，由于 CRC 算法与数据序列严格绑定，校验同样会报错。 -->
+      <div class="demo">要发送的数据是 1101 0110 11，采用 CRC 校验，生成多项式是 10011，取 n = 4，那么发送的数据是？</div>
+      <!-- <li>1101 0110 1111 10</li> -->
+      <!-- <figure>
+          <img src="./imgs/l1.png" alt="">
+          <figcaption>CRC</figcaption>
+        </figure> -->
+      <div class="demo"> 若消息 M = 11010，P(x) = x<sup>3</sup> + x<sup>2</sup> + 1，求：
+      </div>
+      <ol>
+        <li>冗余码</li>
+        <li>发送的报文</li>
+        <li>若收到的报文为11110000，传输有没有差错？</li>
+      </ol>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>生成多项式的最高次幂是3 → n = 3</p>
+        <p>生成多项式对应的二进制 P = 1101</p>
+        <p>被除数 M + n = 11010000</p>
+        <p>除数 P = 1101</p>
+        <p>&therefore; 冗余码 R = 0 → 000</p>
+        <p>发送报文为 M+R = 11010000</p>
+        <p>用 11110000除以 1101，余数为101，不为0，接收端判定数据错误</p>
+      </div>
+      <div class="demo">思考题：比特差错是不是传输差错（）。</div>
+      <!-- <p>√</p> -->
+      <div class="demo">思考题：有了 CRC，是不是就可靠传输（）。</div>
+      <!-- <p>×</p> -->
       <dt>Reading</dt>
-      <dd><a class="link" href="https://networkencyclopedia.com/data-link-layer/">Data-Link Layer</a></dd>
+      <ol>
+        <li><a class="link" href="https://networkencyclopedia.com/data-link-layer/">Data-Link Layer</a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
