@@ -241,12 +241,26 @@
       <dd>在数据后面附加上供检测用的冗余码再发送出去</dd>
       <dd>冗余码，又称帧校验序列 FCS – Frame Check Sequence</dd>
       <dt>实现 Implementation</dt>
-      <dd>在数据 M 后面加上 n 个 0，即消息 <strong>左移</strong> r 位</dd>
-      <dd>用生成多项式 P 按照模 2 运算去除 M+n</dd>
-      <dd>得到的余数 R 就是冗余码 - 如果位数不够 n 位，前面要补 0</dd>
+      <ol>
+        <li>在数据 M 后面加上 r 个 0（即消息<strong>左移</strong> r 位，这里 r 为生成多项式 P 的最高次幂）</li>
+        <li>用生成多项式 P 对左移后的 M 进行模 2 除法（即异或除法）</li>
+        <li>得到的余数 R 就是冗余码。若 R 的位数不足 r 位，需在高位补 0 凑齐 r 位</li>
+        <li>发送的报文 = 数据 M 拼接冗余码 R</li>
+      </ol>
+      <div class="tips">
+        <p>模2加法和模2减法</p>
+        <p>在CRC运算中，模2加法和模2减法是完全等同的，并且它们都等同于逻辑异或（XOR）运算</p>
+        <p>模2加法和模2减法都不考虑进位和借位</p>
+      </div>
+      <div class="tips">
+        <p>模 2 除法</p>
+        <p>是一个长除法过程</p>
+        <p>建立在异或基础之上</p>
+        <p>每一步用异或代替普通减法，其余步骤（对齐、取商、拉下一位）和普通长除法一样</p>
+      </div>
       <div class="txt-center">发送的报文 = <strong>数据 M + 冗余码 R</strong></div>
       <table>
-        <caption>模2/异或</caption>
+        <caption>异或</caption>
         <thead>
           <tr>
             <th>a</th>
