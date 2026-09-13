@@ -17,6 +17,17 @@
       max-width: 600px;
     }
 
+    .layer {
+      position: relative;
+    }
+
+    .layer span {
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      color: var(--warn-color);
+    }
+
     .btm {
       border-bottom: 1px solid var(--main-color);
     }
@@ -34,60 +45,7 @@
       <dd>二进制 Binary ：计算机内部唯一直接使用的数制，所有数据最终都以0和1存储和运算</dd>
       <dd>八进制 Octal：使用较少；现在多被十六进制取代</dd>
       <dd>十进制 Decimal：日常应用最多；直观；符合习惯</dd>
-      <dd>十六进制 Hexadecimal：计算机系统中大量使用，用于简化二进制（每4位二进制转1位十六进制），常见于内存地址、颜色代码、机器指令等</dd>
-      <dt>表示</dt>
-      <div>1. 字母后缀；使用各进制首字母表示</div>
-      <div>2. 括号加小标</div>
-      <dd>这是数学和教科书中最标准的表示法，通用且无歧义</dd>
-      <div>3. 字母前缀</div>
-      <dd>主要用于编程语言中直接书写常量</dd>
-      <table>
-        <thead>
-          <tr>
-            <th>进制</th>
-            <th>后缀</th>
-            <th>括号加小标</th>
-            <th>前缀</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>二进制 Binary</td>
-            <td>1101B</td>
-            <td>(1101)<sub>2</sub></td>
-            <td>0b1101 或 0B1101</td>
-          </tr>
-          <tr>
-            <td>八进制 Octal</td>
-            <td>1101O</td>
-            <td>(1101)<sub>8</sub></td>
-            <td>01101</td>
-          </tr>
-          <tr>
-            <td>十进制 Decimal</td>
-            <td>1101D 或 1101</td>
-            <td>(1101)<sub>10</sub></td>
-            <td>无前缀</td>
-          </tr>
-          <tr>
-            <td>十六进制 Hexadecimal</td>
-            <td>1101H</td>
-            <td>(1101)<sub>16</sub></td>
-            <td>0x1101 或 0X1101</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="tips">
-        <p>八进制前缀 0 在 JavaScript 的严格模式下已弃用，Python 3 中改为 0o（如 0o15）</p>
-        <p>不同编程语言/场景可能还有额外前缀，如 0o 表示八进制（Python），0b 表示二进制</p>
-        <p>汇编语言中常直接用后缀（如 1101H），而 高级语言多用前缀（如 0x1101）</p>
-      </div>
-      <dt>计算</dt>
-      <dd>常用的进位计数使用 <strong>基数</strong> 和 <strong>位权</strong>来表示</dd>
-      <div>1. 基数 Radix/Base</div>
-      <dd>使用的数字符号/数码 Digit 的个数</dd>
-      <dd>二进制的基数为2，使用 0、1；逢二进一</dd>
-      <dd>十进制的基数为10，使用 0、1、2、3、4、5、6、7、8、9；逢十进一</dd>
+      <dd>十六进制 Hexadecimal：计算机系统中大量使用，用于简化二进制，如内存地址、颜色代码、机器指令等</dd>
       <table>
         <caption>常用数制</caption>
         <thead>
@@ -104,14 +62,14 @@
             <td>2</td>
           </tr>
           <tr>
-            <td>十进制 Decimal</td>
-            <td>0 1 2 3 4 5 6 7 8 9</td>
-            <td>10</td>
-          </tr>
-          <tr>
             <td>八进制 Octal</td>
             <td>0 1 2 3 4 5 6 7</td>
             <td>8</td>
+          </tr>
+          <tr>
+            <td>十进制 Decimal</td>
+            <td>0 1 2 3 4 5 6 7 8 9</td>
+            <td>10</td>
           </tr>
           <tr>
             <td>十六进制 Hexadecimal</td>
@@ -120,6 +78,58 @@
           </tr>
         </tbody>
       </table>
+      <dt>表示</dt>
+      <div>1. 字母后缀 Suffix</div>
+      <dd>使用各进制首字母表示</dd>
+      <dd>汇编语言中常直接用后缀；如 1101H，而 高级语言多用前缀；如 0x1101</dd>
+      <div>2. 括号加小标 Subscript</div>
+      <dd>这是数学和教科书中最标准的表示法，通用且无歧义</dd>
+      <div>3. 字母前缀 Prefix</div>
+      <dd>主要用于编程语言中直接书写常量</dd>
+      <dd>不同编程语言/场景可能还有额外前缀，如 0o 表示八进制（Python），0b 表示二进制</dd>
+      <table>
+        <thead>
+          <tr>
+            <th>进制</th>
+            <th>后缀</th>
+            <th>括号加小标</th>
+            <th>前缀</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>二进制 Binary</td>
+            <td>1101<span class="warn">B</span></td>
+            <td>(1101)<sub class="warn">2</sub></td>
+            <td>0b1101 或 0B1101</td>
+          </tr>
+          <tr>
+            <td>八进制 Octal</td>
+            <td>1101<span class="warn">O</span></td>
+            <td>(1101)<sub class="warn">8</sub></td>
+            <td>01101</td>
+          </tr>
+          <tr>
+            <td>十进制 Decimal</td>
+            <td>1101<span class="warn">D</span> 或 1101</td>
+            <td>(1101)<sub class="warn">10</sub></td>
+            <td>无前缀</td>
+          </tr>
+          <tr>
+            <td>十六进制 Hexadecimal</td>
+            <td>1101<span class="warn">H</span></td>
+            <td>(1101)<sub class="warn">16</sub></td>
+            <td>0x1101 或 0X1101</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>计算</dt>
+      <dd>使用 <strong>基数</strong> 和 <strong>位权</strong>来表示</dd>
+      <div>1. 基数 Radix/Base</div>
+      <dd>使用的数字符号/数码 Digit 的个数</dd>
+      <dd>二进制的基数为2，使用 0、1；逢二进一</dd>
+      <dd>十进制的基数为10，使用 0、1、2、3、4、5、6、7、8、9；逢十进一</dd>
+      <dd>依次类推</dd>
       <div>2. 位权 Weight </div>
       <dd>某个位置上的数代表的数量大小，表示此数在整个数中所占的份量 (权重)</dd>
       <dd>使用基数的诺干次幂表示</dd>
@@ -132,8 +142,16 @@
         d<sub>-1</sub>×B<sup>-1</sup> +
         d<sub>-2</sub>×B<sup>-2</sup> +
         d<sub>-3</sub>×B<sup>-3</sup></div>
+    </dl>
+    <h2>进制转换</h2>
+    <dl>
       <dt>r 进制 → 十进制</dt>
       <dd>将 r 进制按位权展开求和，便可得到对应的十进制</dd>
+      <div class="tips">
+        <p>只计算不为0的数值</p>
+        <p>任何非零整数的 0 次幂都等于 1</p>
+        <p>学会使用计数器验证结果</p>
+      </div>
       <div class="demo">(1101)<sub>2</sub> </div>
       <dd>= 1×2<sup>3</sup> + 1×2<sup>2</sup> + 1×2<sup>1</sup> + 1×2<sup>0</sup> = 8 +
         4 + 1 = (13)<sub>10</sub></dd>
@@ -145,22 +163,21 @@
       <div class="demo">(365.2)<sub>8</sub></div>
       <dd>= 3×8<sup>2</sup>+6×8<sup>1</sup>+5×8<sup>0</sup>+2×8<sup>-1</sup> = (245.25)<sub>10</sub>
       </dd>
-      <div class="demo">93 = 9×10<sup>1</sup> + 3×<sup>0</sup> = 90 + 3</div>
-      <dd>数字 9 所在的数位指数为 1， 位权 Weight 为 10×<sup>1</sup></dd>
-      <dd>数字 3 所在的数位指数为 0， 位权 Weight 为 10×<sup>0</sup></dd>
-      <div class="demo">1024 = 1×10<sup>3</sup> + 0×10<sup>2</sup> + 2×10<sup>1</sup> + 4×10<sup>0</sup> = 1000 + 20 + 4
-      </div>
+      <div class="demo">93 </div>
+      <dd>= 9×10<sup>1</sup> + 3×<sup>0</sup> </dd>
+      <dd>= 90 + 3</dd>
+      <dd>= 93</dd>
+      <div class="demo">1024 </div>
+      <dd>= 1×10<sup>3</sup> + 0×10<sup>2</sup> + 2×10<sup>1</sup> + 4×10<sup>0</sup> </dd>
+      <dd>= 1000 + 20 + 4</dd>
+      <dd>= 1024</dd>
       <div class="demo">(1024)<sub>16</sub> </div>
       <dd>= 1×16<sup>3</sup> + 2×16<sup>1</sup> + 4 = (4132)<sub>10</sub></dd>
       <div class="demo">(F5.4)<sub>16</sub></div>
       <dd>=15×16<sup>1</sup>+5×16<sup>0</sup>+4×16<sup>-1</sup> = (245.25)<sub>10</sub></dd>
       <div class="demo">11111111.10000000.00000001.00000000 对应的IP地址是多少 <span class="iconfont icon-help"></span></div>
       <div class="demo">手表的秒和分是多少进制 <span class="iconfont icon-help"></span></div>
-      <div class="tips">
-        <p>只计算不为0的数值</p>
-        <p>任何非零整数的 0 次幂都等于 1</p>
-        <p>学会使用计数器验证结果</p>
-      </div>
+
       <dt>十进制 → r 进制</dt>
       <dd>整数部分
         <p><strong>除 r 取余法</strong>，直到商为0</p>
@@ -189,37 +206,40 @@
         <tr>
           <td>48/2</td>
           <td>24</td>
-          <td>0</td>
+          <td class="layer">0<span>&uparrow;</span></td>
         </tr>
         <tr>
           <td>24/2</td>
           <td>12</td>
-          <td>0</td>
+          <td class="layer">0<span>&uparrow;</span></td>
         </tr>
         <tr>
           <td>12/2</td>
           <td>6</td>
-          <td>0</td>
+          <td class="layer">0<span>&uparrow;</span></td>
         </tr>
         <tr>
           <td>6/2</td>
           <td>3</td>
-          <td>0</td>
+          <td class="layer">0<span>&uparrow;</span></td>
         </tr>
         <tr>
           <td>3/2</td>
           <td>1</td>
-          <td>1</td>
+          <td class="layer">1<span>&uparrow;</span></td>
         </tr>
         <tr>
           <td>1/2</td>
           <td><span class="warn">0</span></td>
-          <td>1</td>
+          <td class="layer">1<span>&uparrow;</span></td>
         </tr>
       </table>
       <dd>(97)<sub>10</sub> = (1100001)<sub>2</sub></dd>
-      <dd>方案2：最大凑整法</dd>
-      <dd>97 = 64 + 32 + 1 = 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>0</sup></dd>
+      <dd>方案2：最大凑整法；适用于二进制和十进制之间</dd>
+      <dd>97 = 64 + 32 + 1 </dd>
+      <dd>= 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>0</sup></dd>
+      <dd>第6位是1；第5位是1；第0位是1；其它各位是0</dd>
+      <dd>= (1100001)<sub>2</sub></dd>
       <div class="demo">(0.3125)<sub>10</sub> 转换为二进制</div>
       <dd>分析：只有小数部分；使用×2取整</dd>
       <table>
@@ -236,17 +256,17 @@
         <tr>
           <td>0.625×2</td>
           <td>1.25</td>
-          <td>1</td>
+          <td class="layer">1<span>&downarrow;</span></td>
         </tr>
         <tr>
           <td>0.25×2</td>
           <td>0.5</td>
-          <td>0</td>
+          <td class="layer">0<span>&downarrow;</span></td>
         </tr>
         <tr>
           <td>0.5×2</td>
           <td>1.<span class="warn">0</span></td>
-          <td>1</td>
+          <td class="layer">1<span>&downarrow;</span></td>
         </tr>
       </table>
       <dd>= (0.0101)<sub>2</sub></dd>
@@ -267,7 +287,7 @@
         <tr>
           <td>7/8</td>
           <td><span class="warn">0</span></td>
-          <td>7</td>
+          <td class="layer">7<span>&uparrow;</span></td>
         </tr>
       </table>
       <dd>&therefore; = (72)<sub>8</sub></dd>
@@ -312,7 +332,10 @@
       <dd>每1位十六进制对应4位二进制</dd>
       <div class="demo">求 (1011010101.0111101)<sub>2</sub> 对应的十六进制</div>
       <dd>把二进制4位一组划分，转换为求对应的十六进制</dd>
-      <dd>不足4位的，整数部分 <strong>前面|高位</strong> 补0；小数部分 <strong>后面|低位</strong> 补0</dd>
+      <dd>不足4位的，
+        <p>整数部分 <strong>前面|高位</strong> 补0</p>
+        <p>小数部分 <strong>后面|低位</strong> 补0</p>
+      </dd>
       <dd>= (10 1101 0101.0111 101)<sub>2</sub></dd>
       <dd>= (<span class="warn">00</span>10 1101 0101.0111 101<span class="warn">0</span>)<sub>2</sub></dd>
       <dd>= (2 D 5.7 A)<sub>16</sub></dd>
@@ -339,9 +362,6 @@
       <div class="demo">(652.307)<sub>8</sub></div>
       <dd>把每1位八进制转换为对应的二进制</dd>
       <dd>= (110 101 010.011 000 111)<sub>2</sub></dd>
-      <div class="tips">
-        <p>学会使用计数器验证结果</p>
-      </div>
     </dl>
     <div id="footer"></div>
   </div>
