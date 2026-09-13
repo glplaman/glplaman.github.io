@@ -20,6 +20,28 @@
     table {
       width: max-content;
     }
+
+    .tcpip {
+      width: 160px;
+      margin: 0 auto;
+    }
+
+    .tcpip .layer {
+      position: relative;
+      height: 40px;
+      background-color: var(--color);
+      color: #fff;
+      line-height: 40px;
+      font-size: 14px;
+    }
+
+    .tcpip .layer span {
+      position: absolute;
+      color: #000;
+      font-size: 30px;
+      top: -20px;
+      right: -20px;
+    }
   </style>
 </head>
 
@@ -30,24 +52,40 @@
       <span>&commat;PPP</span>
     </header>
     <dl>
-      <img src="./imgs/ppp4.jpg" alt="PPP">
-      <dt>应用 Application</dt>
+      <img src="./imgs/ppp4.png" alt="PPP">
+      <dt>PPP，Point-to-Point Protocol</dt>
+      <p>点对点链路协议</p>
       <dd>数据链路层的通信协议</dd>
       <dd>可用于
         <p>异步传输 Asynchronous：如电话拨号上网 (POTS)、Modem连接、临时性访问</p>
         <p>同步传输 Synchronous：租用专线、LAN-to-LAN互联、SDH/SONET高速链路</p>
       </dd>
-      <dd>用户经 ISP（Internet Service Provider）接入互联网
-        <p>PPP</p>
-        <p>PPPoE - PPP over Ethernet</p>
-      </dd>
+      <dt>PPPoE，PPP over Ethernet</dt>
+      <dd>在以太网上跑 PPP</dd>
+      <dd>把 PPP 帧封装进以太网帧里</dd>
+      <dd>用户经 ISP（Internet Service Provider）接入互联网</dd>
+      <dd>宽带运营商能在以太网/DSL/光纤等环境中对用户做拨号认证和会话管理</dd>
       <dd>广域网 WAN 之间的专有链路</dd>
       <dd>虚拟私有网络 VPN 之间的通信链路</dd>
+      <div class="demo">应用1 典型的 ISP / 校园网接入架构 (Point-to-Multipoint)</div>
+      <dd>早期的宽带入户</dd>
+      <ul>
+        <li>客户端是终端设备：每台电脑（主机）都需要独立安装拨号软件（或操作系统自带拨号）进行 PPPoE 拨号</li>
+        <li>用户隔离：在接入网中，各个用户通常被隔离，各自建立独立的 PPPoE 会话</li>
+        <li>公网 IP：PPPoE Server 通常会为每个拨号成功的用户分配一个公网 IP（或运营商内网 IP）</li>
+      </ul>
       <figure>
         <img src="./imgs/ppp1.png" alt="">
         <figcaption>接入互联网</figcaption>
       </figure>
       <div class="tips">RADIUS - Remote Authentication Dial In User Service</div>
+      <div class="demo">应用2 典型的企业/家庭宽带网关架构 (Gateway 拨号)</div>
+      <dd>家里如果装了电信、联通或移动的宽带，大概率依然是这种模式。光猫（Modem）桥接，你家里的路由器负责拨号（PPPoE Client），获取运营商分配的动态公网 IP（或大内网 IP）</dd>
+      <ul>
+        <li>客户端是路由器（网关）：内部的电脑（主机A、B）不需要拨号。它们通过 DHCP 获取内网 IP，通过 NAT（网络地址转换）共享路由器建立的这一条 PPPoE 连接上网</li>
+        <li>单条会话：整个企业网络通常只建立 1 个 PPPoE 会话（由路由器发起）</li>
+        <li>私有 IP：内部主机使用的是私有 IP（如 192.168.x.x），对外表现为路由器获取的那个公网 IP</li>
+      </ul>
       <figure>
         <img src="./imgs/ppp2.png" alt="">
         <figcaption>接入互联网</figcaption>
@@ -164,11 +202,22 @@
         <li>填写协议字段，组装帧头（Address + Control + Protocol）</li>
         <li>添加信息和必要的填充 Information + Padding</li>
         <li>计算 CRC，附加 FCS，得到不含标记位的PPP帧</li>
-        <li>透明处理</li>
+        <li>透明处理( 可以先透明化处理再 CRC 吗<span class="iconfont icon-help"></span>)</li>
+        <!-- 假设算出来的 CRC 结果刚好包含 0x7E。那么发送出去的字节流里就包含了 0x7E。 -->
         <li>在转义后的帧的头尾分别添加 Flag (0x7E)</li>
         <li>交给物理层发送</li>
         <li>物理层拿到完整的 PPP 帧的比特串，逐 bit 发送出去；PPP帧各协议字段对物理层是透明的，不起任何作用</li>
       </ol>
+      <figure>
+        <div class="tcpip">
+          <div class="layer" style="--color:#ed7d31">Application Layer</div>
+          <div class="layer" style="--color:#f4bf00">Transport Layer</div>
+          <div class="layer" style="--color:#5399d9">Network Layer </div>
+          <div class="layer" style="--color:#6db041">Data Link Layer <span>&downarrow;</span></div>
+          <div class="layer" style="--color:#a5a5a5">Physical Layer <span>&downarrow;</span></div>
+        </div>
+        <figcaption>发送数据</figcaption>
+      </figure>
       <dd class="mt2">Part2 接收：链路层向网络层交付</dd>
       <dd>接收端物理层把比特流收上来，还原成 PPP 帧后，交给数据链路层处理</dd>
       <ol>
@@ -185,15 +234,40 @@
           <p>根据这个值，决定把信息字段交给网络层的哪个协议实体</p>
         </li>
       </ol>
+      <figure>
+        <div class="tcpip">
+          <div class="layer" style="--color:#ed7d31">Application Layer</div>
+          <div class="layer" style="--color:#f4bf00">Transport Layer</div>
+          <div class="layer" style="--color:#5399d9">Network Layer </div>
+          <div class="layer" style="--color:#6db041">Data Link Layer <span>&uparrow;</span></div>
+          <div class="layer" style="--color:#a5a5a5">Physical Layer <span>&uparrow;</span></div>
+        </div>
+        <figcaption>接收数据</figcaption>
+      </figure>
       <div class="tips">
         <p>分拣（帧定界），验货（CRC），拆包（读协议字段），送货（交付网络层）</p>
       </div>
     </dl>
     <h2>透明传输 Transparency</h2>
     <dl>
+      <div class="demo">什么是异步编程<span class="iconfont icon-help"></span></div>
+      <pre>
+const getRank = async() => {
+  const res = await fetch('https://glplaman.github.io/utils/data/rank/202601.json')
+  const data = await res.json()
+  console.log(data);
+}
+getRank()</pre>
       <dd>当PPP运行在不同物理特性的线路上时，为了确保数据能正确传输（即“透明传输”），就必须采用不同的处理方法</dd>
-      <dd>对于异步线路，采用字节填充来解决数据中可能出现控制字符的问题</dd>
-      <dd>对于同步线路，则采用零比特填充来防止数据中出现标志位序列</dd>
+      <dd>对于异步线路
+        <p>有起止标记，可以随时停下来，按字符发</p>
+        <p>采用字节填充来解决数据中可能出现控制字符的问题</p>
+        <p>有的资料将字节解释为字符</p>
+      </dd>
+      <dd>对于同步线路
+        <p>没有起止标记，必须依靠连续的数据流来维持时钟同步，只能按块发</p>
+        <p>采用零比特填充来防止数据中出现标志位序列</p>
+      </dd>
       <dt>异步传输</dt>
       <dd>使用字节填充 Octet-stuffed</dd>
       <dd>使用转义符 0x7D（0111 1101）</dd>
@@ -202,7 +276,6 @@
         <img src="./imgs/da.png" alt="">
         <figcaption>Asynchronous transmission</figcaption>
       </figure>
-      <div class="tips">有的资料将字节解释为字符，称异步的传输单位是字符</div>
       <dd>情况1：出现帧定界符 0x7E，将其转变为2个字节：0x7D 和 0x5E</dd>
       <dd class="txt-center">
         <span>0x7E</span>
@@ -217,36 +290,53 @@
         <span>0x7D</span>
         <span>0x5D</span>
       </dd>
-      <dd>情况3：其它 ASCII控制字符（&lt;0x20），在其前面加上 0x7D，同时 +20 调整该字符的编码</dd>
+      <dd>情况3：其它 <a class="link" href="https://www.runoob.com/w3cnote/ascii.html">ASCII</a>控制字符（&lt;0x20），在其前面加上 0x7D，同时
+        +20 调整该字符的编码</dd>
       <dd class="txt-center">
         <span>0x03</span>
         <span>→</span>
         <span>0x7D</span>
         <span>0x23</span>
       </dd>
+      <div class="tips">
+        <p>控制符的转义</p>
+        <p>在串口通信中经常被用作通信控制（例如：换行、回车、流控 XON/XOFF 等）</p>
+        <p>如果数据载荷中出现了这些控制字符，接收方的硬件或驱动可能会误以为这是通信控制指令，从而导致数据被截断或出错</p>
+        <p>为了保证数据链路层的透明传输（），必须把这些可能引起歧义的控制字符“伪装”起来，即转义</p>
+      </div>
       <figure>
         <div class="txt-center warn txt-2xl"> 0x7d + (原始字节 XOR 0x20)</div>
         <figcaption>编码规则</figcaption>
       </figure>
-      <div class="demo">转义标志位 0x7E</div>
+      <div class="demo">转义 0x7E</div>
       <div>答：</div>
       <div class="txt-indent">
-        <p>0x7d = (0111 1110)<sub>2</sub></p>
+        <p>0x7E 是标志位</p>
+        <p>0x7E = (0111 1110)<sub>2</sub></p>
         <p>0x20 = (0010 0000)<sub>2</sub></p>
         <p>=(0101 1110)<sub>2</sub> = 0x5E</p>
         <P>&therefore; 转义后的数据 = 0x7D 0x5E</P>
       </div>
-      <div class="demo">转义转义位 0x7D → 0x7D 0x5D</div>
-      <div class="demo">转义编码小于 0x20 <a class="link" href="https://www.runoob.com/w3cnote/ascii.html">ASCII码</a>，如控制字符
-        0x03 → 0x7D 0x23</div>
+      <div class="demo">转义 0x7D（转义位） → 0x7D 0x5D</div>
+      <dd>自行验证</dd>
+      <!-- <p>0x7D 是标志位</p>
+      <p>0x7D = (0111 1101)<sub>2</sub></p>
+      <p>0x20 = (0010 0000)<sub>2</sub></p>
+      <p>=(0101 1101)<sub>2</sub> = 0x5D</p>
+      <P>&therefore; 转义后的数据 = 0x7D 0x5D</P> -->
+      <div class="demo">转义 0x03(编码小于 0x20 的ASCII码，如控制字符) 0x03 → 0x7D 0x23</div>
+      <dd>自行验证</dd>
+      <!-- <p>0x03 = (0000 0011)<sub>2</sub></p>
+      <p>0x20 = (0010 0000)<sub>2</sub></p>
+      <p>=(0010 0011)<sub>2</sub> = 0x23</p>
+      <P>&therefore; 转义后的数据 = 0x7D 0x23</P> -->
       <dt>同步传输</dt>
-      <dd>使用比特填充 Bit-stuffed</dd>
-      <dd>信息字段中出现了和标志字段 F 完全一样的 8 比特组合 0x7E = (0111 1110)</dd>
-      <dd>使用0比特进行填充</dd>
+      <dd>使用0比特填充 Bit-stuffed</dd>
+      <dd>发端：每发现连续5个1，就填充1个0（为什么是5个1就要填1个0<span class="iconfont icon-help"></span>）</dd>
+      <!-- <dd>信息字段中出现了和标志字段 F 完全一样的 8 比特组合 0x7E = (0111 1110)</dd> -->
+      <dd>收端：每发现连续5个1，就删除其后面的0</dd>
       <dd>需要时钟信号保持同步</dd>
       <dd>传输不间断</dd>
-      <dd>发端：每发现连续5个1，就填充1个0</dd>
-      <dd>收端：每发现连续5个1，就删除其后面的0</dd>
       <figure>
         <img src="./imgs/ds.png" alt="">
         <figcaption>Synchronous transmission</figcaption>
@@ -290,6 +380,10 @@
       <dd>当用户通信完毕时，NCP 释放网络层连接，收回原来分配出去的IP地址。LCP 释放数据链路层连接。最后释放的是物理层的连接</dd>
       <figure>
         <img src="./imgs/ppp3.png" alt="">
+        <figcaption>PPP状态转换</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/ppp6.png" alt="">
         <figcaption>PPP状态转换</figcaption>
       </figure>
       <!-- <dd>以用户拨号上网为例</dd>
@@ -368,7 +462,7 @@
         <p>7D 5D → 7D</p>
         <p>7D 5D → 7D</p>
         <p>7D 5E → 7E</p>
-        <p>最后数据：7E FE 27 7D 7D 7E</p>
+        <p>&therefore;最后数据：7E FE 27 7D 7D 7E</p>
       </div>
       <div class="demo">p112-3-10 PPP协议使用同步传输传送比特
         0110111111111100，经过0比特填充后，变成什么比特串？如收到的PPP帧的数据部分是 0001110111110111110110，删除发送端插入的0比特变成什么比特串？</div>
@@ -463,6 +557,16 @@
         <span>1</span>
         <span>0</span>
       </div>
+      <div class="demo">翻译</div>
+      <div>
+        <p>Point-to-Point Protocol over Ethernet (PPPoE) is a network protocol that encapsulates Point-to-Point Protocol
+          (PPP) frames within Ethernet frames. The encapsulation allows the transport of PPP sessions over Ethernet
+          networks, enabling session management and user authentication in broadband access environments.
+        </p>
+        <p>PPPoE combines the authentication, encryption, and compression functionalities of PPP with high-speed data
+          transfer of Ethernet. It allows ISPs to manage individual customer connections on a shared network
+          infrastructure.</p>
+      </div>
       <dt>Protocol Reading</dt>
       <ol>
         <li><a href="https://www.rfc-editor.org/info/rfc1661/" class="link">The Point-to-Point Protocol (PPP)</a></li>
@@ -497,6 +601,10 @@
         </li>
         <li><a class="link" href="https://blog.csdn.net/qingwangheni/article/details/135395231">PPP & PPPoE & L2TP &
             PPTP 一文全介绍 <span class="iconfont icon-videocam"></span></a>
+        </li>
+        <li>
+          <a class="link"
+            href="https://www.techopedia.com/definition/point-to-point-protocol-over-ethernet-pppoe">PPPoE</a>
         </li>
       </ol>
     </dl>

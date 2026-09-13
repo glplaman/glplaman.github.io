@@ -125,8 +125,8 @@
     <h2>02 透明传输 Transparent Transmission</h2>
     <dl>
       <dd>Transparent transmission</d>
-      <dd>你发什么，我收到的就是什么</dd>
-      <dd>如果发送的数据中包含界定符（<span class="warn">使用红色表示</span> ），则帧的界定/判断就会出错</dd>
+      <dd>不管上层发什么数据，底层都能原封不动地传什么 - 你发什么，我收到的就是什么</dd>
+      <dd>如果发送的数据中包含界定符（<span class="warn">使用红色表示</span> ）或控制符，则帧的界定/判断就会出错</dd>
       <table>
         <caption>数据中包含帧界定符</caption>
         <tbody>
@@ -143,10 +143,10 @@
       </table>
       <dt>解决方案 Solution</dt>
       <dd>使用转义字符 ESC 填充</dd>
-      <dd>也称字节填充 Byte Padding 或 字符填充 Character Padding</dd>
       <dd>数据中包含帧界定符</dd>
       <dd>使用转义符填充，防止数据被误认为是帧边界</dd>
-      <dd>不同协议对转义字符的定义是不同的</dd>
+      <dd>不同协议对转义字符的定义和实现是不同的</dd>
+      <dd>常见的有：字节填充 Byte Padding 或 字符填充 Character Padding</dd>
       <dd>情况1：数据中出现尾部 EOT（<span class="warn">使用红色表示</span> ）</dd>
       <table>
         <caption>填充前</caption>
