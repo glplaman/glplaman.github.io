@@ -32,15 +32,24 @@
       <dt>标准 Standard</dt>
       <ol>
         <li>DIX Ethernet标准</li>
-        <p>由施乐Xerox公司创建，并联合Inter，DEC共同发布基带总线局域网标准</p>
+        <p>由迪吉多 DEC、英特尔 Inter、 施乐 Xerox 联合共同发布的基带总线局域网标准</p>
         <p>以历史上发现电磁波的 <strong>以太 Ether</strong> 命名</p>
-        <p>1982年发布的第2个版本DIX Ethernet</p>
-        <p>V2是世界上第一个互联网产品的规约。数据传输率达到10Mbps</p>
+        <p>1982年，DIX 发布的第2个版本 DIX Ethernet V2</p>
+        <p>V2 是世界上第一个互联网产品的规约。数据传输率达到 10Mbps</p>
+        <p>通常说的以太网指的是符合 DIX Ethernet V2 标准的局域网</p>
         <li><strong>IEEE 802.3 标准</strong></li>
-        <p>802委员会1983年发布的第一个以太网标准</p>
-        <p>数据速率达到10Mbps</p>
-        <p>通常说的以太网指的是符合DIX Ethernet V2标准的局域网</p>
+        <p>1983年，IEEE 802 委员会发布的第一个以太网标准</p>
+        <p>数据速率达到 10Mbps</p>
       </ol>
+      <div class="tips">
+        <p>V2 版本比 IEEE 的官方标准更早面世</p>
+        <p>在商业市场上，V2 已经获得了大量的应用和支持，成为事实标准</p>
+      </div>
+      <div class="tips">
+        <p>DEC（Digital Equipment Corporation），数字设备公司，也称迪吉多</p>
+        <p>1957 年由肯·奥尔森（Kenneth Olsen）与哈兰·安德森（Harlan Anderson）在美国马萨诸塞州创立的一家计算机公司</p>
+        <p>它曾是世界上第二大电脑厂商，也是“小型机”（Minicomputer）时代的开创者与领导者</p>
+      </div>
       <dt>常见分类 Classification</dt>
       <dd><strong>10BASE</strong> - T以太网 - 传统以太网</dd>
       <dd>100BASE - T以太网 - 快速以太网</dd>
@@ -109,11 +118,11 @@
       <dd>俗称网卡 NIC，Network Interface Card</dd>
       <dd>早期：独立</dd>
       <dd>现在：集成化</dd>
-      <dd>拥有一个全球唯一的硬件地址 MAC地址</dd>
-      <dd>工作在OSI模型的物理层和数据链路层</dd>
+      <dd>拥有一个全球唯一的硬件地址 MAC 地址</dd>
+      <dd>工作在 OSI 模型的物理层和数据链路层</dd>
       <dd>功能：
         <p>串并转换：适配器和局域网之间是串行通信，而适配器和计算机之间是并行通信</p>
-        <p>数据缓存：网络的速率和计算机的速率不匹配，须要缓存；适配器有自己的存储器和缓存器，工作时不占用计算机的CPU</p>
+        <p>数据缓存：网络的速率和计算机的速率不匹配，须要缓存；适配器有自己的存储器和缓存器，工作时不占用计算机的 CPU</p>
         <p>过滤：是发给自己的就接收；否则丢弃(安全)</p>
       </dd>
       <figure>
@@ -141,54 +150,36 @@
           <td>数据链路层</td>
           <td>成帧 Framing
             <br>错误检测 CRC
-            <br>寻址 - 基于MAC地址通信
-            <br>如何将比特流组织成帧，并通过MAC地址在直接相连的设备间可靠地传输这些帧
+            <br>寻址 - 基于 MAC 地址通信
+            <br>如何将比特流组织成帧，并通过 MAC 地址在直接相连的设备间可靠地传输这些帧
           </td>
         </tr>
       </table>
-      <div class="tips">
-        <p>物理层关注的是如何在物理媒介上传输原始比特流</p>
-        <p>数据链路层关注的是如何将比特流组织成帧，并通过MAC地址在直接相连的设备间可靠地传输这些帧</p>
-      </div>
-      <!-- <dd>NIC stands for Network Interface Card is an adapter card that plugs into the system bus of a computer and
-        allows the computer to send and <strong>receive signals</strong> on a network. </dd>
-      <dd>A network interface card (NIC) is also known as a network adapter card or simply a network card.</dd>
-      <dt>How It Works</dt>
-      <dd>NICs can be legacy components that require manual configuration of interrupt request (IRQ) and base I/O port
-        settings, or they can be plug and play components.</dd>
-      <dd>NICs are available for any system bus type: Industry Standard Architecture (ISA), Extended Industry Standard
-        Architecture (EISA), Micro Channel Architecture, and Peripheral Component Interconnect (PCI).</dd>
-      <dd>PCI cards are 32-bit and give the best performance.</dd>
-      <dd>They are available <strong>in various speeds</strong>, such as 10 Mbps for Ethernet and 10/100 Mbps for Fast
-        Ethernet. </dd>
-      <dd>Other cards are available for networking technologies such as Token Ring and Fiber Distributed Data Interface
-        (FDDI).</dd> -->
       <dt>MAC - Medium Access Control</dt>
       <dd>又叫物理地址、硬件地址，固化在适配器的 ROM 中</dd>
-      <dd>IEEE802.3 规定 MAC地址为长度6 Bytes，共48 bits</dd>
+      <dd>IEEE802.3 规定，MAC 地址为长度6 Bytes，共 48 bits</dd>
       <dd>高24位(前3 Bytes)是公司标识符 OUI - Organization Unique Identifier
         <p>由注册管理机构 RA - Registration Authority 分配</p>
       </dd>
       <dd>低24位(后3 Bytes)是扩展标识符 EUI - Extended Unique Identifier
-        <p>由公司指定</p>
+        <p>由公司自己指定</p>
       </dd>
-      <dd>48位 = 24位OUI + 24位EUI</dd>
+      <dd>48位 = 24位 OUI + 24位 EUI</dd>
       <dd>每个字节以冒号 : 分隔，如：00:01:96:A4:41:5E</dd>
       <figure>
         <img src="./imgs/mac2.png" alt="">
         <figcaption>MAC</figcaption>
       </figure>
-
       <dt>I/G 位</dt>
       <dd>判断是单播还是多播/广播(Individual/Group)</dd>
       <dd>第一个字节的最低有效位 LSB</dd>
-      <dd>I/G位 = 0: 单播地址 (Individual/Unicast)</dd>
-      <dd>I/G位 = 1: 组地址 (Group Address)，包括多播和广播</dd>
+      <dd>I/G = 0: 单播地址 (Individual/Unicast)</dd>
+      <dd>I/G = 1: 组地址 (Group Address)，包括多播 Multicast和广播 Broadcast，即一对多的所有形式</dd>
       <dt>U/L 位</dt>
       <dd>判断是全球管理地址还是本地管理地址(位（Universal/Local)</dd>
       <dd>第一个字节的次最低有效位</dd>
-      <dd>U/L = 0：表示全球管理地址（Universal）。这是最常见的类型，代表该地址由 IEEE 统一分配，并作为硬件地址（BIA）固化在网卡的芯片中，保证全球唯一</dd>
-      <dd>U/L = 1：表示本地管理地址（Local）。代表该地址没有经过 IEEE 注册，而是由用户、网络管理员或操作系统在软件层面手动设置或随机生成的（例如开启手机或电脑隐私保护功能时生成的“私有Wi-Fi地址”）</dd>
+      <dd>U/L = 0：全球管理地址（Universal）。最常见的类型，代表该地址由 IEEE 统一分配，并作为硬件地址（BIA）固化在网卡的芯片中，保证全球唯一</dd>
+      <dd>U/L = 1：本地管理地址（Local）。代表该地址没有经过 IEEE 注册，而是由用户、网络管理员或操作系统在软件层面手动设置或随机生成</dd>
       <dd>在组地址中，再通过地址值区分多播和广播：
         <p>FF:FF:FF:FF:FF:FF 是广播</p>
         <p>其他I/G位为1的地址是多播</p>
@@ -205,36 +196,37 @@
         <p>在讨论和书写MAC地址分类时，通常采用大端序（Big-Endian），即先写最高位</p>
       </div>
       <dt>分类 Type</dt>
-      <dd>单播帧 unicast：
+      <dd>单播帧 Unicast：
         <p>一对一</p>
         <p>可用于目的 MAC 地址、源 MAC地址</p>
       </dd>
-      <dd>广播帧 broadcast：
+      <dd>广播帧 Broadcast：
         <p>一对全体</p>
         <p>固定为 FF:FF:FF:FF:FF:FF</p>
-        <p>第一个字节的最高有效位 I/G 为1，并且所有48位都为1</p>
+        <p>第一个字节的最低有效位 I/G 为1，并且所有48位都为1</p>
         <P>只能作为目的地址使用</P>
       </dd>
-      <dd>多播帧 multicast：
+      <dd>组播帧 Groupcast：
         <p>一对多</p>
-        <p>第一个字节的最高有效位 I/G 为1；其它位不全是1</p>
+        <p>第一个字节的最低有效位 I/G 为1；其它位不全是1</p>
       </dd>
-      <div class="demo">判断 MAC地址类型 00:1A:2B:3C:4D:5E</div>
+      <div class="demo">判断 MAC 地址类型 00:1A:2B:3C:4D:5E</div>
       <dd>答：</dd>
       <div class="txt-indent">
-        <p>00 → 00000000</p>
+        <p>00 → 0000000<span class="warn">0</span></p>
         <p>最低有效位是0</p>
         <p>&therefore;是单播地址</p>
       </div>
-      <div class="demo">判断 MAC地址类型 01:00:5E:00:00:01</div>
+      <div class="demo">判断 MAC 地址类型 01:00:5E:00:00:01</div>
       <dd>答：</dd>
       <div class="txt-indent">
-        <p>01 → 00000001</p>
+        <p>01 → 0000000<span class="warn">1</span></p>
         <p>最低有效位是1，其它不变全为1</p>
         <p>&therefore;是组播地址</p>
+        <p>如果全为1，则是广播地址</p>
       </div>
       <div class="demo"> <a href="https://mac.bmcx.com/">MAC地址查询 <span class="iconfont icon-share"></span></a></div>
-      <dt>链路本地地址 Link Local Address</dt>
+      <dt>链路本地地址 Link Local Address（拓展）</dt>
       <dd>IPv6 的链路本地地址</dd>
       <dd>128 bits</dd>
       <dd>仅在当前物理网段（链路）内有效</dd>
@@ -293,8 +285,8 @@
       <dd>计算机通过一根总线链接在一起 - <strong>共享信道</strong></dd>
       <dd>每个主机发送数据时，会引起线电压发送变化，每个主机都可以检测到这个数据 - <strong>广播</strong></dd>
       <dd>除了广播，还希望实现点对点通信</dd>
-      <dd>为每一个适配器分配唯一的地址标识 - <strong>MAC地址</strong></dd>
-      <dd>判断数据帧的目标 MAC 地址与适配器的MAC地址是否匹配
+      <dd>为每一个适配器分配唯一的地址标识 - <strong>MAC 地址</strong></dd>
+      <dd>判断数据帧的目标 MAC 地址与适配器的 MAC 地址是否匹配
         <p>匹配，就接收</p>
         <p>否则丢弃</p>
       </dd>
@@ -307,6 +299,20 @@
       </figure>
     </dl>
     <dl>
+      <dt>Homework</dt>
+      <dd>翻译</dd>
+      <dd>NIC stands for Network Interface Card is an adapter card that plugs into the system bus of a computer and
+        allows the computer to send and <strong>receive signals</strong> on a network. </dd>
+      <dd>A network interface card (NIC) is also known as a network adapter card or simply a network card.</dd>
+      <dd>NICs can be legacy components that require manual configuration of interrupt request (IRQ) and base I/O port
+        settings, or they can be plug and play components.</dd>
+      <dd>NICs are available for any system bus type: Industry Standard Architecture (ISA), Extended Industry Standard
+        Architecture (EISA), Micro Channel Architecture, and Peripheral Component Interconnect (PCI).</dd>
+      <dd>PCI cards are 32-bit and give the best performance.</dd>
+      <dd>They are available <strong>in various speeds</strong>, such as 10 Mbps for Ethernet and 10/100 Mbps for Fast
+        Ethernet. </dd>
+      <dd>Other cards are available for networking technologies such as Token Ring and Fiber Distributed Data Interface
+        (FDDI).</dd>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://mac.bmcx.com/">MAC地址查询 <span class="iconfont icon-share"></span></a></li>
