@@ -23,12 +23,13 @@
     </header>
     <dl>
       <dt>标准</dt>
-      <dd>以太网V2标准，使用最广泛</dd>
+      <dd>以太网 V2 标准（EthernetⅡ），使用最广泛</dd>
       <dd>IEEE 802.3 标准</dd>
-      <dd>长度：最小64 Bytes</dd>
+      <dd>长度：最小 64 Bytes</dd>
       <!-- <dd>51.2us</dd> -->
       <dt>完整以太网帧</dt>
-      <table>
+      <dd>完整的帧长度包含8 Bytes 的前导码和 12 Bytes 的空闲帧</dd>
+      <table style="max-width: 450px; text-align: center;">
         <caption>完整以太网帧结构</ca>
         <tbody>
           <tr>
@@ -40,7 +41,7 @@
           <tr>
             <td>7</td>
             <td>1</td>
-            <td></td>
+            <td>1518</td>
             <td>12</td>
           </tr>
         </tbody>
@@ -51,26 +52,36 @@
       <dd>用来 <strong>同步和定位</strong> 帧开始</dd>
       <dd>用于物理层接收端的时钟同步。接收机通过检测这个规律的信号，调整自己的采样时钟，使其与发送方同步</dd>
       <dd>是帧接收的第一步，不包含在实际数据长度内</dd>
-      <div>2. 帧起始定界符 SFD(Start Frame Delimiter)</div>
+      <div>2. 帧起始定界符 SFD，Start Frame Delimiter</div>
       <dd>1 Byte</dd>
       <dd>0xAB；10101011</dd>
-      <dd>标志着有效帧的开始。打破了Preamble的交替模式（最后两位为11），告诉接收端：现在开始接收真正的帧头了</dd>
-      <dd>SFD 是帧的正式起点，但不是MAC帧的一部分</dd>
-      <div>3. 帧间隔 IFG(Inter-Frame Gap)</div>
+      <dd>标志着有效帧的开始。打破了 Preamble 的交替模式（最后两位为11），告诉接收端：现在开始接收真正的帧头了</dd>
+      <dd>SFD 是帧的正式起点，但不是 MAC 帧的一部分</dd>
+      <div>3. 帧间隔 IFG，Inter-Frame Gap</div>
       <dd>12 Bytes</dd>
       <dd>帧和帧之间的间隔</dd>
       <dd>紧跟在当前帧的 FCS 之后，下一个帧的 Preamble 之前</dd>
       <dd>它不属于帧本身，但却是连续发包时的必要间隔</dd>
-      <dd>体现在物理介质上（即线路上传输完一个帧后，空闲 12 Bytes时间再传下一个）</dd>
+      <dd>体现在物理介质上（即线路上传输完一个帧后，空闲 12 Bytes 时间再传下一个）</dd>
       <dd>因为帧之间有传输间隙，所以不需要帧结束的界定</dd>
       <div class="tips">
-        <p>接收方一旦检测到线路空闲超过 96 bits 时间，就认为当前帧结束，不需要像 PPP 那样专门在尾部加一个 7E 字节</p>
-        <p>以太网靠"开头同步（Preamble + SFD）+ 尾部空闲（IFG）"来界定帧，而不靠尾部标志</p>
+        <p>接收方一旦检测到线路空闲超过 12 Bytes / 96 bits 时间，就认为当前帧结束，不需要像 PPP 那样专门在尾部加一个 0x7E 字节</p>
+        <p>以太网靠"开头同步（Preamble + SFD）+ 尾部空闲（IFG）"来界定帧，而不靠尾部标志 Flag</p>
       </div>
+      <div class="tips">
+        <p>以太网带宽 Bandwidth</p>
+        <p>每秒处理的比特 - bps</p>
+        <p>计算带宽时，使用的帧长是完整帧长，否则计算出来的仅仅是以太网的有效带宽</p>
+      </div>
+      <div class="demo">鸣锣开道</div>
+      <figure>
+        <img src="./imgs/mac0.gif" alt="">
+        <figcaption>鸣锣开道</figcaption>
+      </figure>
     </dl>
-    <h2>以太网帧 Frame</h2>
+    <h2>以太网帧格式 Frame</h2>
     <dl>
-      <table>
+      <table style="max-width: 450px; text-align: center;">
         <caption>帧结构</ca>
         <tbody>
           <tr>
@@ -89,18 +100,15 @@
           </tr>
         </tbody>
       </table>
-      <dt>Destination MAC</dt>
-      <dd>目的MAC地址</dd>
+      <dt>目的 MAC 地址，Destination MAC</dt>
       <dd>6 Bytes</dd>
-      <dd>标识该帧要发送到的目标设备的物理地址 - MAC地址</dd>
+      <dd>标识该帧要发送到的目标设备的物理地址 - MAC 地址</dd>
       <dd>全球唯一（如由厂商分配），用于局域网内的寻址</dd>
-      <dt>Source MAC</dt>
-      <dd>源MAC地址</dd>
+      <dt>源 MAC 地址，Source MAC</dt>
       <dd>6 Bytes</dd>
       <dd>标识发送该帧的设备的物理地址</dd>
       <dd>用于响应（如ARP回复）、网络故障排查等</dd>
-      <dt>Type</dt>
-      <dd>类型和长度</dd>
+      <dt>类型和长度，Type</dt>
       <dd>2 Bytes</dd>
       <dd>上层使用的协议</dd>
       <dd>决定了 Data 部分如何被解析</dd>
@@ -118,16 +126,16 @@
             <td>IPv4 互联网协议第4版</td>
           </tr>
           <tr>
+            <td>0x86DD</td>
+            <td>IPv6 互联网协议第6版</td>
+          </tr>
+          <tr>
             <td>0x0806</td>
             <td>ARP 地址解析协议</td>
           </tr>
           <tr>
             <td>0x8100</td>
             <td>VLAN-tagged frame (IEEE 802.1Q) 虚拟局域网标签帧</td>
-          </tr>
-          <tr>
-            <td>0x86DD</td>
-            <td>IPv6 互联网协议第6版</td>
           </tr>
           <tr>
             <td>0x8847</td>
@@ -155,22 +163,20 @@
           </tr>
         </tbody>
       </table>
-      <dt>Data</dt>
-      <dd>数据载荷</dd>
+      <dt>数据载荷、Data</dt>
       <dd>46 Bytes 到 1500 Bytes</dd>
       <dd>最小长度：46 Bytes；不足，会用填充字节补足</dd>
       <dd>最大长度：1500 Bytes；标准的MTU - Maximum Transmission Unit</dd>
       <dd>封装的上层协议数据，如IP包、ARP请求等</dd>
       <dd>总帧长限制：整个以太网帧（不含Preamble和SFD）最大长度为：</dd>
-      <dd class="txt-center">1500 Bytes + 6 Bytes + 6 Bytes + 2 Bytes + 4 Bytes = 1518 Bytes</dd>
-      <dt>FCS</dt>
-      <dd>Frame Check Sequence</dd>
+      <dd class="txt-center">1500 + 6 + 6 + 2 + 4 = 1518 Bytes</dd>
+      <dt>帧校验序列，FCS，Frame Check Sequence</dt>
       <dd>4 Bytes</dd>
-      <dd>帧校验序列；用于检错</dd>
+      <dd>用于检错</dd>
+      <dd>校验范围：目的 MAC + 源 MAC 地址 + 数据 Data + 类型和长度 + FCS；不包括前导码和帧起始定界符</dd>
       <dd>使用 CRC-32 算法计算出的校验码</dd>
       <dd>接收端收到帧后，重新计算CRC并与FCS比较，若不一致则认为帧损坏，丢弃该帧</dd>
       <dd>位于帧的末尾</dd>
-      <dd>校验范围：目的 MAC + 源 MAC 地址 + 数据 Data + 类型和长度 + FCS；不包括前导码和帧起始定界符</dd>
       <dd>接收方（网卡/NIC）收到帧后，会：
         <p>使用相同的 CRC-32 算法 对帧内容（目的 MAC 到数据）重新计算 CRC</p>
         <p>将计算结果与帧中的 FCS 字段比对</p>
@@ -178,29 +184,30 @@
         <p>上层看不见错误帧</p>
       </dd>
       <div class="tips">收到的帧都是正确的帧 - 没有比特级的错误</div>
-      <div class="demo">常见帧的结构</div>
+      <div class="demo">普通局域网LAN的帧结构</div>
       <figure>
         <img src="./imgs/vlan19.png" alt="">
-        <figcaption>普通LAN的帧结构</figcaption>
+        <figcaption>普通局域网LAN的帧结构</figcaption>
       </figure>
-      <figure>
-        <img src="./imgs/vlan20.png" alt="">
-        <figcaption>VLAN的帧结构</figcaption>
-      </figure>
+      <dd>TYPE: 0x0800，标明上层协议是 IPv4，载荷 DATA 为 IP 数据包/封装数据包</dd>
+      <div class="demo">ARP请求的帧结构</div>
       <figure>
         <img src="./imgs/vlan21.png" alt="">
-        <figcaption>ARP的帧结构</figcaption>
+        <figcaption>ARP请求的帧结构</figcaption>
+      </figure>
+      <dd>DEST ADDR (目的MAC地址): FFFF.FFFF.FFFF，以太网的广播地址。当一台设备不知道另一台设备的 MAC 地址时，它就会发送广播，询问网络上的所有设备。ARP 请求最显著的特征</dd>
+      <dd>SRC ADDR: 0060.7086.CC04，这是发起 ARP 请求的那台设备的物理地址</dd>
+      <dd>TYPE: 0x0806，这表明以太网帧的“数据（DATA）”部分里面封装的是一个 ARP 报文</dd>
+      <div class="demo">虚拟局域网VLAN的帧结构</div>
+      <figure>
+        <img src="./imgs/vlan20.png" alt="">
+        <figcaption>虚拟局域网VLAN的帧结构</figcaption>
       </figure>
       <div class="tips">
         <p>当 MAC 帧通过物理介质（如双绞线、光纤）传输时，物理层（PHY）会在它前面加上额外的信息，并在帧与帧之间留出空隙</p>
         <p>实际的帧要比MAC帧多8 Bytes</p>
         <p>帧的最小时间间隔IFG 96比特时间</p>
       </div>
-      <dt>以太网带宽 Bandwidth</dt>
-      <dd>含义：每秒处理的bit - bps</dd>
-      <dd>完整的帧长度包含8 Bytes 的前导码和 12Bytes 的空闲帧</dd>
-      <dd>前导码用于同步同步发送方/接收方的bit流，提示有效帧内容的开始</dd>
-      <dd>计算带宽时，使用的帧长是完整帧长，否则计算出来的仅仅是以太网的有效带宽</dd>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>

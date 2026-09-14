@@ -173,27 +173,22 @@
         <p>由公司指定</p>
       </dd>
       <dd>48位 = 24位OUI + 24位EUI</dd>
-      <div class="demo"> <a href="https://mac.bmcx.com/">MAC地址查询 <span class="iconfont icon-share"></span></a></div>
-      <dt>分类 Type</dt>
-      <!-- <dd>除了传统的广播通信，还可以借助MAC实现点到点的通信，所以：</dd> -->
-      <dd>单播帧 unicast：
-        <p>一对一</p>
-        <p>目的MAC地址是一个单播地址。单播地址的第一个字节的最低有效位I/G（Individual/Group）为0</p>
-        <p>00:1A:2B:3C:4D:5E</p>
-      </dd>
-      <dd>广播帧 broadcast：
-        <p>一对全体</p>
-        <p>固定为 FF:FF:FF:FF:FF:FF。<strong>第一个字节</strong>的最低有效位I/G为1，并且所有48位都为1</p>
-      </dd>
-      <dd>多播帧 multicast：
-        <p>一对多</p>
-        <p>第一个字节的最低有效位I/G为1，但不是全1</p>
-        <p>01:00:5E:00:00:01</p>
-      </dd>
-      <dd>判断是单播还是多播/广播，最核心的依据是目的MAC地址第一个字节的最低位（I/G位）：
-        <p>I/G位 = 0: 单播地址 (Individual/Unicast)</p>
-        <p>I/G位 = 1: 组地址 (Group Address)，包括多播和广播</p>
-      </dd>
+      <dd>每个字节以冒号 : 分隔，如：00:01:96:A4:41:5E</dd>
+      <figure>
+        <img src="./imgs/mac2.png" alt="">
+        <figcaption>MAC</figcaption>
+      </figure>
+
+      <dt>I/G 位</dt>
+      <dd>判断是单播还是多播/广播(Individual/Group)</dd>
+      <dd>第一个字节的最低有效位 LSB</dd>
+      <dd>I/G位 = 0: 单播地址 (Individual/Unicast)</dd>
+      <dd>I/G位 = 1: 组地址 (Group Address)，包括多播和广播</dd>
+      <dt>U/L 位</dt>
+      <dd>判断是全球管理地址还是本地管理地址(位（Universal/Local)</dd>
+      <dd>第一个字节的次最低有效位</dd>
+      <dd>U/L = 0：表示全球管理地址（Universal）。这是最常见的类型，代表该地址由 IEEE 统一分配，并作为硬件地址（BIA）固化在网卡的芯片中，保证全球唯一</dd>
+      <dd>U/L = 1：表示本地管理地址（Local）。代表该地址没有经过 IEEE 注册，而是由用户、网络管理员或操作系统在软件层面手动设置或随机生成的（例如开启手机或电脑隐私保护功能时生成的“私有Wi-Fi地址”）</dd>
       <dd>在组地址中，再通过地址值区分多播和广播：
         <p>FF:FF:FF:FF:FF:FF 是广播</p>
         <p>其他I/G位为1的地址是多播</p>
@@ -201,8 +196,95 @@
       <div class="tips">
         <p>LSB - Least Significant Bit；最低有效位 </p>
         <p>MSB - Most Significant Bit；最高有效位 </p>
-        <p>网卡出厂时烧录的MAC地址，其第一个字节的LSB总是0，因此它是一个单播地址。这是物理固定的</p>
+        <p>网卡出厂时烧录的 MAC 地址，其第一个字节的 LSB 总是0，因此它是一个单播地址。这是物理固定的</p>
         <p>多播/广播是逻辑概念</p>
+      </div>
+      <div class="tips">
+        <p>字节位序 Bit Order</p>
+        <p>以太网物理传输时，位序采用小端序（Little-Endian），即先发送最低位</p>
+        <p>在讨论和书写MAC地址分类时，通常采用大端序（Big-Endian），即先写最高位</p>
+      </div>
+      <dt>分类 Type</dt>
+      <dd>单播帧 unicast：
+        <p>一对一</p>
+        <p>可用于目的 MAC 地址、源 MAC地址</p>
+      </dd>
+      <dd>广播帧 broadcast：
+        <p>一对全体</p>
+        <p>固定为 FF:FF:FF:FF:FF:FF</p>
+        <p>第一个字节的最高有效位 I/G 为1，并且所有48位都为1</p>
+        <P>只能作为目的地址使用</P>
+      </dd>
+      <dd>多播帧 multicast：
+        <p>一对多</p>
+        <p>第一个字节的最高有效位 I/G 为1；其它位不全是1</p>
+      </dd>
+      <div class="demo">判断 MAC地址类型 00:1A:2B:3C:4D:5E</div>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>00 → 00000000</p>
+        <p>最低有效位是0</p>
+        <p>&therefore;是单播地址</p>
+      </div>
+      <div class="demo">判断 MAC地址类型 01:00:5E:00:00:01</div>
+      <dd>答：</dd>
+      <div class="txt-indent">
+        <p>01 → 00000001</p>
+        <p>最低有效位是1，其它不变全为1</p>
+        <p>&therefore;是组播地址</p>
+      </div>
+      <div class="demo"> <a href="https://mac.bmcx.com/">MAC地址查询 <span class="iconfont icon-share"></span></a></div>
+      <dt>链路本地地址 Link Local Address</dt>
+      <dd>IPv6 的链路本地地址</dd>
+      <dd>128 bits</dd>
+      <dd>仅在当前物理网段（链路）内有效</dd>
+      <dd>只要网卡启用了 IPv6，操作系统（或模拟器）通常会自动为它生成一个链路本地地址，即使您没有手动配置全局 IPv6 地址</dd>
+      <p>也可以由 DHCPv6 分配，但在没有 DHCP 的情况下，设备会自己生成</p>
+      <dd>IPv6 链路本地地址专属前缀：FE80::。只要看到以 FE80 开头的 IPv6 地址，它就一定是链路本地地址</dd>
+      <figure>
+        <img src="./imgs/mac1.png" alt="">
+        <figcaption>MAC vs Link Local Address</figcaption>
+      </figure>
+      <table style="width: 500px;">
+        <caption>MAC vs Link Local Address</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PT</td>
+            <td>0001.96A4.415E</td>
+          </tr>
+          <tr>
+            <td>EUI-64</td>
+            <td>00:01:96:A4:41:5E</td>
+          </tr>
+          <tr>
+            <td>中间插入 FF:FE</td>
+            <td>00:01:96:<span class="warn">FF:FE</span>:A4:41:5E</td>
+          </tr>
+          <tr>
+            <td>反转U/L 位</td>
+            <td><span class="warn">00</span>:01:96:FF:FE:A4:41:5E
+              <br><span class="warn">02</span>:01:96:FF:FE:A4:41:5E
+            </td>
+          </tr>
+          <tr>
+            <td>添加专属前缀</td>
+            <td><span class="warn">FE80::</span>02:01:96:FF:FE:A4:41:5E</td>
+          </tr>
+          <tr>
+            <td>链路本地地址</td>
+            <td><span class="warn">FE80::</span>0201:96FF:FEA4:415E</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="tips">
+        <p>IEEE 和 IETF 对这个位的 0 和 1 定义刚好相反</p>
+        <p>为了保证从 MAC 地址自动生成的 IPv6 地址在逻辑上不出错，必须在生成 EUI-64 接口标识符时，将这一位取反</p>
       </div>
     </dl>
     <img src="./imgs/lan3.jpg" alt="network">
