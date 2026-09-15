@@ -41,7 +41,7 @@
           <tr>
             <td>7</td>
             <td>1</td>
-            <td>1518</td>
+            <td>64-1518</td>
             <td>12</td>
           </tr>
         </tbody>
@@ -57,7 +57,10 @@
       <dd>0xAB；10101011</dd>
       <dd>标志着有效帧的开始。打破了 Preamble 的交替模式（最后两位为11），告诉接收端：现在开始接收真正的帧头了</dd>
       <dd>SFD 是帧的正式起点，但不是 MAC 帧的一部分</dd>
-      <div>3. 帧间隔 IFG，Inter-Frame Gap</div>
+      <div>3. 数据帧 Frame</div>
+      <dd>最短帧：64 Bytes</dd>
+      <dd>最长帧：1518 Bytes</dd>
+      <div>4. 帧间隔 IFG，Inter-Frame Gap</div>
       <dd>12 Bytes</dd>
       <dd>帧和帧之间的间隔</dd>
       <dd>紧跟在当前帧的 FCS 之后，下一个帧的 Preamble 之前</dd>
@@ -166,10 +169,17 @@
       <dt>数据载荷、Data</dt>
       <dd>46 Bytes 到 1500 Bytes</dd>
       <dd>最小长度：46 Bytes；不足，会用填充字节补足</dd>
-      <dd>最大长度：1500 Bytes；标准的MTU - Maximum Transmission Unit</dd>
-      <dd>封装的上层协议数据，如IP包、ARP请求等</dd>
+      <dd>最大长度：<strong>1500 Bytes</strong>；标准的MTU - Maximum Transmission Unit</dd>
+      <dd>封装的上层协议数据，如 IP 包、ARP 请求等</dd>
       <dd>总帧长限制：整个以太网帧（不含Preamble和SFD）最大长度为：</dd>
       <dd class="txt-center">1500 + 6 + 6 + 2 + 4 = 1518 Bytes</dd>
+      <div class="tips">
+        <p>1500</p>
+        <p>如果太大（如4KB）：当时的硬件内存撑不住，且一旦冲突重传代价极高</p>
+        <p>如果太小（如512字节）：协议开销太大，有效数据占比低，效率极差</p>
+        <p>经过大量实验，工程师们最终选中了 1500 这个数字</p>
+        <p>既能保证不错的传输效率，又不会撑爆当时的硬件缓冲区，是物理定律、硬件极限和用户需求之间的最佳平衡点</p>
+      </div>
       <dt>帧校验序列，FCS，Frame Check Sequence</dt>
       <dd>4 Bytes</dd>
       <dd>用于检错</dd>

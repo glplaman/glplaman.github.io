@@ -22,18 +22,15 @@
     </header>
     <img src="./imgs/linkLayer2/幻灯片3.JPG" alt="">
     <dl>
-      <dd>交换机通过维护一个 MAC 地址表/转发表来实现链路层数据帧的通信</dd>
-      <dd>交换机通过学习数据帧的源 MAC 地址来建立 MAC 地址表 - 基于源 MAC 帧</dd>
-      <dt>MAC table</dt>
-      <dd>内容 Component：
-        <p>进入交换机的数据帧的源地址和进入的端口号，所在 Vlan 及有效时间</p>
-        <p>哪个端口 Port 连着谁 MAC</p>
-        <p>谁 MAC 从哪个端口进来</p>
+      <dt>MAC 表内容 Contents</dt>
+      <dd>交换机通过维护一个 <strong>MAC 地址表</strong>/转发表来实现链路层数据帧的通信</dd>
+      <dd>记录各个端口对应设备的 MAC 地址
+        <p>MAC：连接设备的 MAC 地址</p>
+        <p>Port：设备连接的端口</p>
+        <p>Timer：默认老化时间 Aging Time； 思科交换机、华为交换机默认都是 300s；如果一个 MAC 地址条目在 300 秒内没有再次收到来自该 MAC 的报文，交换机就会认为该设备已离线，并将其从表中删除
+        </p>
       </dd>
-      <dd>容量 Capacity
-        <p>MAC 表条目的大小</p>
-        <p>1K、2k、4k</p>
-      </dd>
+      <dd>默认情况下，所有的端口都在同一个Vlan： vlan 1</dd>
       <table>
         <caption>交换机的MAC地址表</caption>
         <tbody>
@@ -43,9 +40,9 @@
             <td>Timer</td>
           </tr>
           <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>0001.96A4.415E</td>
+            <td>FastEhernet0/1</td>
+            <td>300</td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -54,20 +51,32 @@
           </tr>
         </tbody>
       </table>
-      <dt>Procedure</dt>
+      <figure>
+        <img src="./imgs/mac3.png" alt="">
+        <figcaption>PT 中的 MAC Table</figcaption>
+      </figure>
+      <dt>核心思想 Thinking</dt>
+      <dd>交换机每收到一个帧，都做2件事情：先学习，再转发</dd>
+      <dd>学习：<strong>基于源 MAC 地址</strong>，建表；MAC 地址对应的设备在哪个口；从哪个端口进来的；根据进入端口建表</dd>
+      <dd>转发：<strong>基于目的 MAC 地址</strong>，查表并转发；帧往哪去；根据登记端口转发</dd>
+      <dd>建表在前，查表在后，不能颠倒；因为本次学习的结果可能直接决定本次转发</dd>
+      <dd class="tips">
+        <p>MAC 地址表里登记的端口，是“该目的 MAC 曾经作为源 MAC 出现过的端口”</p>
+      </dd>
+      <dt>基本过程 Procedure</dt>
       <div>1. 登记 Registration</div>
-      <dd>查找表中是否有与接收帧的源 MAC 地址匹配的项目：
-        <p>如果有，则更新</p>
-        <p>如果没有，则增加</p>
+      <dd>查表中是否有与接收帧的源 MAC 匹配的表项
+        <p>如果有 → 更新（刷新端口、老化计时）</p>
+        <p>如果没有 → 增加一条新表项（学习并建表）</p>
       </dd>
       <div>2. 转发 Forwarding</div>
-      <dd>是否是广播帧：
-        <p>如果是，全端口转发</p>
-        <p>如果不是，则查找表中是否有与接收帧的目的MAC地址匹配的项目：</p>
-        <p>- 如果没有，则泛洪 Flooding 到其他所有端口上</p>
-        <p>- 如果有，则比较进入的端口与登记的端口：</p>
-        <p>- - 如果不同，则按照登记的端口转发 Forwarding</p>
-        <p>- - 如果相同，表明是同一侧的主机，不需要转发，丢弃 Disregarding /过滤 Filtering 该帧</p>
+      <dd>判断目的 MAC 的类型（查表）</dd>
+      <dd>如果是广播帧或组播帧：除入端口外，向同 VLAN 的所有端口泛洪 Flooding 转发出去</dd>
+      <dd>如果是单播帧，查表中是否有与目的 MAC 匹配的表项
+        <p>如果没有，是未知单播帧，泛洪 Flooding 到同 VLAN 的其他所有端口</p>
+        <p>如果有，则比较进入的端口与登记的端口，确定目的主机和源主机是不是在同一侧：</p>
+        <p>情况1：端口不同，则按照登记的端口转发 Forwarding（核心工作状态）</p>
+        <p>情况2：端口相同，表明是同一侧的主机，不需要转发，丢弃 Disregarding /过滤 Filtering 该帧</p>
       </dd>
       <div class="demo"> MAC 地址表的动态维护</div>
       <figure>
@@ -75,20 +84,19 @@
         <figcaption>维护过程</figcaption>
       </figure>
       <ol>
-        <li>A → D
-          <P>查找交换表，存在</P>
-          <p>按登记端口转发 Forwarding；这是最期望的高效转发</p>
-          <p>单播</p>
-          <p>同时登记 A → 1</p>
-        </li>
+        <li>A → D</li>
+        <p>学习：源 A 不在表中，登记 A → 1</p>
+        <P>转发：单播；查找交换表，目标 D 存在，且登记端口 4 ≠ 入端口 1，按登记端口 4 转发 Forwarding；这是最期望的高效转发</p>
         <table>
           <caption>交换机的 MAC 地址表</caption>
-          <tbody>
+          <thead>
             <tr>
-              <td>MAC</td>
-              <td>Port</td>
-              <td>Timer</td>
+              <th>MAC</th>
+              <th>Port</th>
+              <th>Timer</th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>D</td>
               <td>4</td>
@@ -101,19 +109,20 @@
             </tr>
           </tbody>
         </table>
-        <li>A → B
-          <P>查找交换表，没有</P>
-          <p>为了确保帧能到达目标，全端口泛洪 Flooding 转发/广播</p>
-          <p>B 收到并回复，则交换机学习到了 B 的位置；登记 B → 2</p>
-        </li>
+
+        <li>A → B</li>
+        <p>学习：源 A 在表中，更新老化时间</p>
+        <P>转发：目标 B 不存在，泛洪 Flooding 端口2、3、4；B 收到并回复，则登记 B → 2；C、D 则丢弃</p>
         <table>
           <caption>交换机的 MAC 地址表</caption>
-          <tbody>
+          <thead>
             <tr>
-              <td>MAC</td>
-              <td>Port</td>
-              <td>Timer</td>
+              <th>MAC</th>
+              <th>Port</th>
+              <th>Timer</th>
             </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>D</td>
               <td>4</td>
@@ -131,28 +140,43 @@
             </tr>
           </tbody>
         </table>
-        <li>E → A
-          <p>过滤 Filtering</p>
-          <p>最不希望的转发</p>
-        </li>
+
+        <li>E → A</li>
+        <p>学习：源 E 不在表中，登记 E → 1</p>
+        <P>转发：目标 A 存在，且登记端口 1 = 入端口 1，丢弃/过滤 Filtering</p>
+        <table>
+          <caption>交换机的 MAC 地址表</caption>
+          <thead>
+            <tr>
+              <th>MAC</th>
+              <th>Port</th>
+              <th>Timer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>D</td>
+              <td>4</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>A</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>2</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>E</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
       </ol>
-      <div class="demo"> p114-3-30
-        某学院的以太网交换机有三个端口分别和学院三个系的以太网相连，另外三个端口分别和电子邮件服务器、万维网服务器以及一个连接互联网的路由器相连。图中的 A、B 和 C 都是 100-Mbit/s
-        以太网交换机。假定所有的链路的速率都是 100 Mbit/s，并且图中的 9 台主机中的任何一台都可以向任何一台服务器或主机通信。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
-      <dd>答：</dd>
-      <div class="txt-indent">
-        <p>总吞吐量 = 9台主机的吞吐量 + 2台服务器的吞吐量</p>
-        <p>= 900 Mbit/s + 200 Mbit/s</p>
-        <p>= 1100 Mbit/s</p>
-      </div>
-      <div class="demo"> p114-3-31假定图 上例中的所有链路的速率仍然为 100 Mbit/s，但三个系的以太网交换机都换成 100
-        Mbit/s
-        的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
-      <dd>答：</dd>
-      <div class="txt-indent">
-        <p>如果把三台交换机换成集线器，由于集线器是总线型，同一集线器下同一时刻只能一台设备发送数据</p>
-        <p>所以图中9台主机其实只有三台在发送，吞吐量是300M，两个服务器吞吐量是200M，所以吞吐总量是500M</p>
-      </div>
       <div class="demo"> p114-3-33 初始交换表为空</div>
       <figure>
         <img src="./imgs/lan0.png" alt="">
@@ -199,6 +223,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="demo">查看老化时间</div>
+      <dd>PT中，点击快进“Fast Forward Time”，再查看 MAC 表，条目会消失</dd>
+      <dd>真实设备使用 show mac address-table aging-time 或 show mac address-table 查看</dd>
     </dl>
     <h2>Security</h2>
     <dl>
@@ -228,6 +255,7 @@
           <div>C：源物理地址</div>
           <div>D：源 IP 地址</div>
         </li>
+        <!-- <P>A</P> -->
         <li>选择学校组织结构中某一个或几个分系统，利用交换机和 PC 模拟搭建局域网
           <p>部门之间如何互不影响的通信？</p>
           <p>学校规模达到一定阶段后，如何更好的组织网络？</p>
