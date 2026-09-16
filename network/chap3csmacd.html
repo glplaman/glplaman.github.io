@@ -44,10 +44,6 @@
     .p7 {
       height: 420px;
     }
-
-    table {
-      max-width: 350px;
-    }
   </style>
 </head>
 
@@ -84,7 +80,7 @@
       <dt>时延 Delay</dt>
       <dd>数据的发送和处理等环节不是一蹴而就的，都需要时间</dd>
       <dd>因此带来的时延对信道的影响非常关键</dd>
-      <table>
+      <table style="max-width: 350px;">
         <caption>时延 Delay</caption>
         <thead>
           <tr>
@@ -183,7 +179,7 @@
       <dd>所以帧长不足应通过填充弥补</dd>
       <dd>避免数据帧太短导致发送时间不足引起误判</dd>
       <dd>抛去帧的地址、校验和类型这些开销，数据部分至少46 Bytes</dd>
-      <table>
+      <table style="max-width: 350px;">
         <caption>最短帧</caption>
         <tbody>
           <tr>
@@ -232,21 +228,77 @@
         <p>在保证网络稳定运行的前提下，尽可能小的时间开销，是早期以太网工程师经过反复实验后定下的“黄金数字”，并一直沿用至今</p>
         <p>虽然现在的千兆、万兆网卡速度快了无数倍，但为了兼容性，这个 12 字节的 IFG 标准依然被保留</p>
       </div>
-      <dt>比特时间 Bit Time（拓展）</dt>
+      <dt>比特时 Bit Time</dt>
       <dd>发送一个比特所需的时间</dd>
       <dd>与数据传输速率密切相关</dd>
       <dd>是衡量信号变化速度的基本时间单位</dd>
       <dd>常用于网络和通信中描述帧的持续时间、冲突检测窗口等</dd>
+      <dd>以太网标准规定：</dd>
+      <dd class="txt-center txt-2xl">争用期 2τ= 512 比特时间</dd>
       <dd>数据速率为 1 Mbps，则每个比特时间为 1 μs</dd>
       <dd>数据速率是 1 Gbps，则每个比特时间为 1 ns</dd>
-      <div class="demo"> p113-3-22 假定在使用 CSMA/CD 协议的 10 Mbps
-        以太网中，某个站在发送数据时检测到碰撞，执行退避算法时选择随机数
-        r=100。试问这个站需要等待多长时间后才能再次发送数据？如果是 100 比特时间，以太网能运行吗？</div>
-      <div class="txt-indent">
-        <p>对于 10Mbps 的以太网，争用期 2τ = 512bits/10Mbps = 51.2μs</p>
-        <p>退避时间为 r*2τ = 100 * 51.2μs = 5.12ms</p>
-        <p>如果是100比特时间，则实际退避时间为：100bits/10Mbps = 10μs &lt; 51.2μs → 以太网无法运行</p>
-      </div>
+      <dd>下表中，不同类型以太网的IFG都是 96 比特时</dd>
+      <table>
+        <caption>常见以太网</caption>
+        <thead>
+          <tr>
+            <th>分类</th>
+            <th>通信方式</th>
+            <th>网段</th>
+            <th>最短帧长e</th>
+            <th>争用期</th>
+            <th>帧间隔</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10BASE</td>
+            <td>半双工</td>
+            <td>100m</td>
+            <td>64Bytes</td>
+            <td>51.2μs</td>
+            <td>9.6μs</td>
+          </tr>
+          <tr>
+            <td>100BASE</td>
+            <td>半双工、全双工</td>
+            <td>100m</td>
+            <td>64Bytes</td>
+            <td>5.12μs</td>
+            <td>0.96μs</td>
+          </tr>
+          <tr>
+            <td>1000BASE</td>
+            <td>半双工、全双工</td>
+            <td>100m</td>
+            <td>512Bytes</td>
+            <td>409.6μs</td>
+            <td>0.096μs</td>
+          </tr>
+          <tr>
+            <td>10GBASE</td>
+            <td>全双工</td>
+            <td>100m</td>
+            <td>64Bytes</td>
+            <td>-</td>
+            <td>0.0096μs</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">为什么 1000BASE 的最短帧长增加到 512 Bytes<span class="iconfont icon-help"></span></div>
+      <dd>依然保留着半双工模式，需要 CSMA/CD 机制来检测冲突</dd>
+      <dd>如果还发 64 Bytes/512bits，只需要 0.512μs</dd>
+      <dd>争用期依然是 512个比特时 = 0.512μs</dd>
+      <dd>信号往返一次实际需要的时间依然是大约 5.12 μs（因为速度没变）</dd>
+      <dd>这就导致发得太快，还没收到远处的冲突反馈，帧就发完了，CSMA/CD 失效</dd>
+      <dd>解决方案：为了在半双工下维持 100m 的网段，千兆以太网只能强行把最短帧长从 64 Bytes扩展到 512 Bytes（即载波延伸技术），强行把发送时间拉长到 409.6μs（或通过帧突发），以覆盖争用期</dd>
+      <div class="demo">为什么 10GBASE 没有争用期 <span class="iconfont icon-help"></span></div>
+      <!-- 10G以太网只工作在全双工模式下。发送和接收有独立的通道，互不干扰 -->
+      <div class="demo">为什么10GBASE 最短帧长变回 64 Bytes <span class="iconfont icon-help"></span></div>
+      <!-- 从共享式半双工彻底进化为交换式全双工 -->
+      <!-- 全双工交换式网络中，发送和接收使用不同的线对（或不同的波长），根本不存在冲突 -->
+      <!-- 既然没有冲突，就不需要 CSMA/CD，自然也就不需要“争用期”和“最短帧长必须大于争用期”这个约束 -->
+      <!-- 采用了更高级的编码方式（如 64B/66B编码）实现高速传输 -->
       <div class="demo"> 短帧引起的误判 - 发完只需1.5τ。</div>
       <div>答：</div>
       <div class="txt-indent">核心：在碰撞信号返回到A时，A已经发完了，不再监听信道，所以不知道发生了碰撞
@@ -267,7 +319,7 @@
       <dd>使用 bit 作为争用期的单位
         <p>争用期是 512bits；表示争用期为发送 512bits 的时间 - 比特时间</p>
       </dd>
-      <dd><strong>退后重传时间 = r * 争用期</strong>
+      <dd><strong>退后重传时间 = r × 争用期</strong>
         <p>k 由重传次数获取 k = min[重传次数， 10]</p>
         <p>r 从整数集合 [0, 1, 2, ..., 2<sup>k</sup>-1] 中随机获取</p>
       </dd>
@@ -309,17 +361,30 @@
       <!-- <p>√</p> -->
       <div class="demo">发送数据时，如果检测到碰撞，应立即停止发送；直到信道空闲时才可以再次发送数据（）。</div>
       <!-- <p>√</p> -->
-      <div class="demo"> p113-3-20 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbps。信号在网络上的传播速率为
+      <div class="demo">[P87/T3-06] 假设一个 1km 的 CSMA/CD 网络的数据速率为 1Gbps。信号在网络上的传播速率为
         200000
         km/s。求能够使用此协议的最短帧长。</div>
       <div>答：</div>
       <div class="txt-indent">
-        <p>τ = 1Km / 200000 Km/s = 5*10<sup>-6</sup>s = 5μs</p>
+        <p>τ = 1km / 200000 km/s = 5 × 10<sup>-6</sup>s = 5μs</p>
         <p>2τ = 10μs</p>
-        <p>最短帧长 = 2τ* 1Gbps = 10*10<sup>-6</sup>s*1*10<sup>9</sup>bps=10*10<sup>3</sup>bits</p>
+        <p>最短帧长 = 2τ × 1Gbps = 10 × 10<sup>-6</sup>s × 1 × 10<sup>9</sup>bps=10 × 10<sup>3</sup>bits</p>
         <p>= 10000 bits</p>
         <p>= 10000/8 Bytes</p>
         <p>= 1250 Bytes</p>
+      </div>
+      <div class="demo">[P87/T3-07] 假定在使用 CSMA/CD 协议的 10 Mbps
+        以太网中，某个站在发送数据时检测到碰撞，执行退避算法时选择随机数
+        r=100。试问这个站需要等待多长时间后才能再次发送数据？如果是 100 Mbps 的以太网呢？</div>
+      <div>答：</div>
+      <div class="txt-indent">
+        <p>对于 10Mbps 的以太网</p>
+        <p>争用期 2τ = 512bits/10Mbps = 51.2μs</p>
+        <p>退避时间为 r × 2τ = 100 × 51.2μs = 5120μs = 5.12ms</p>
+        <p>对于 100Mbps 的以太网</p>
+        <p>争用期 2τ = 512bits/100Mbps = 5.12μs</p>
+        <p>退避时间为 r × 2τ = 100 × 5.12μs = 512μs = 0.512ms</p>
+        <!-- <p>如果是100比特时间，则实际退避时间为：100bits/10Mbps = 10μs &lt; 51.2μs → 以太网无法运行</p> -->
       </div>
       <div class="demo">翻译
         <p>When a device wants to transmit a frame, it checks to see if the segment is free. If the segment is not
