@@ -8,6 +8,12 @@
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="./css/style.css">
   <base target="_blank">
+  <style>
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -29,31 +35,45 @@
       <dt>定义 </dt>
       <dd> 一般认为，计算机网络是通过通信设施，将地理上分散的具有自治功能的多个计算机系统互连起来进行信息交换，实现资源共享、互操作和协同工作的计算机系统。
         该定义包括如下特征</dd>
-      <dd>系统<span class="em">互连</span>要通过通信设施来实现。通信设施一般都由通信线路、相关的传输设备及交换设备等组成 </dd>
+      <dd>系统<strong>互连</strong>要通过通信设施来实现。通信设施一般都由通信线路、相关的传输设备及交换设备等组成 </dd>
       <dd>计算机网络是一个互连的计算机系统。这些计算机系统在地理上是分布的 </dd>
       <dd>这些计算机系统是自治的，在网络协议控制下协同工作 </dd>
-      <dd>系统通过通信设施执行信息交换、资源<span class="em">共享</span>、互操作和协作处理，实现各种应用需求。</dd>
+      <dd>系统通过通信设施执行信息交换、资源<strong>共享</strong>、互操作和协作处理，实现各种应用需求。</dd>
       <dt>构成</dt>
       <dd>通信子网</dd>
       <dd>资源子网</dd>
       <dt>分类</dt>
-      <div>按照地理覆盖范围</div>
-      <dd>PAN - Personal Area Network</dd>
-      <dd>LAN - Local Area Network</dd>
-      <dd>MAN - Metropolitan Area Network</dd>
-      <dd>WAN - Wide Area Network</dd>
-      <div>按照网络使用者</div>
-      <dd>公用网络：互联网</dd>
-      <dd>专用网络：银行系统、铁路系统和军队系统</dd>
-      <div>按照拓扑结构</div>
-      <dd>星型 Star</dd>
-      <dd>环型 Ring</dd>
-      <dd>总线型 Bus</dd>
-      <dd>混合型 Hybrid</dd>
-      <figure>
-        <img src="./imgs/tuopu.png" alt="">
-        <figcaption>常见拓扑</figcaption>
-      </figure>
+      <div>1. 按照地理覆盖范围</div>
+      <ul>
+        <li>个域网 PAN - Personal Area Network</li>
+        <li>局域网 LAN - Local Area Network</li>
+        <li>城域网 MAN - Metropolitan Area Network</li>
+        <li>广域网 WAN - Wide Area Network</li>
+      </ul>
+      <div>2. 按照网络使用者</div>
+      <ul>
+        <li>公用网络：互联网</li>
+        <li>专用网络：银行系统、铁路系统和军队系统</li>
+      </ul>
+      <div>3. 按照拓扑结构</div>
+      <ul>
+        <li>总线型 Bus</li>
+        <figure>
+          <img src="/network/imgs/l6.png" alt="">
+          <figcaption>总线型拓扑</figcaption>
+        </figure>
+        <li>环型 Ring</li>
+        <figure>
+          <img src="/network/imgs/l5.png" alt="">
+          <figcaption>环型 Ring拓扑</figcaption>
+        </figure>
+        <li>星型 Star</li>
+        <figure>
+          <img src="/network/imgs/l4.png" alt="">
+          <figcaption>星型 Star拓扑</figcaption>
+        </figure>
+        <li>混合型 Hybrid</li>
+      </ul>
       <dt>功能</dt>
       <dd>资源共享 </dd>
       <dd>数据传输 </dd>
@@ -84,13 +104,13 @@
       <dd>系统：是指各系统中与互联有关的部分</dd>
       <dd>这一标准定义了网络互联的7层框架</dd>
       <dd>ISO开放系统互联模型实现了系统间的互联性、互操作性和可移植性</dd>
-      <dd class="em txt-center"><span>all</span> <span>people</span> <span>seem</span> <span>to</span> <span>need</span>
-        <span>data</span> <span>photo</span>
-      </dd>
       <figure>
-        <img src="./imgs/osi.png" alt="">
+        <img src="/network/imgs/ar0.png" alt="">
         <figcaption>OSI参考模型</figcaption>
       </figure>
+      <dd class="tips">助记词：<span>all</span> <span>people</span> <span>seem</span> <span>to</span> <span>need</span>
+        <span>data</span> <span>photo</span>
+      </dd>
       <dt>物理层 Physical Layer</dt>
       <dd>协议数据单元PDU：<span class="warn">比特 bit</span></dd>
       <dd>连接不同的物理设备，为上层协议提供了一个传输数据的可靠的物理媒体</dd>
@@ -128,9 +148,11 @@
       <dt>应用层 Application Layer</dt>
       <dd>主要功能：定义数据的编码格式、是否进行数据压缩、加密/解密等操作</dd>
       <dt>设计缺陷</dt>
-      <dd>过于理想化，无法实现 </dd>
-      <dd>先于网络产生，不符合网络实际发展 </dd>
-      <dd>每一层之间划分过于绝对，复杂，过度追求完美 </dd>
+      <ul>
+        <li>过于理想化，无法实现 </li>
+        <li>先于网络产生，不符合网络实际发展 </li>
+        <li>每一层之间划分过于绝对，复杂，过度追求完美 </li>
+      </ul>
       <div class="tips">
         <div>PDU - Protocol Data Unit</div>
         <div>协议数据单元：每层协议规定的数据传输单位</div>
@@ -139,17 +161,18 @@
     <h2>TCP/IP4层模型</h2>
     <dl>
       <dd>1. 标准模型</dd>
-      <dd>2. 对等模型</dd>
+
       <figure>
-        <img src="./imgs/tcpip.png" alt="">
+        <img src="/network/imgs/ar1.png" alt="">
         <figcaption>TCP/IP4层模型 - 标准模型</figcaption>
       </figure>
+      <dd>2. 对等模型</dd>
       <figure>
         <img src="./imgs/flow.png" alt="">
         <figcaption>数据流 - 对等模型</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/packet.png" alt="">
+        <img src="/network/imgs/p29.png" alt="">
         <figcaption>数据打包</figcaption>
       </figure>
       <table>
