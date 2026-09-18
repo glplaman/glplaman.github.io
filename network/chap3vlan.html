@@ -14,6 +14,7 @@
 
     table {
       max-width: 600px;
+      text-align: center;
     }
   </style>
 </head>
@@ -31,24 +32,27 @@
       <dd>虚拟局域网的特点</dd>
       <dd>IEEE 802.1Q</dd>
       <dt>传统以太网的局限性</dt>
-      <dd>资源的竞争</dd>
-      <dd>通信的私密性</dd>
-      <figure>
+      <!-- <figure>
         <img src="https://networkencyclopedia.com/wp-content/uploads/2019/08/vlan.jpg" alt="">
         <figcaption>焦点</figcaption>
-      </figure>
-      <dt>广播风暴 Broadcast Storm</dt>
-      <dd>通信过程中，会产生大量广播帧</dd>
-      <dd>广播域 - 广播可以抵达的地方；这个区域越小越好</dd>
-      <dd>Broadcast Storm is a network condition in which so many broadcasts are occurring (for example, for apress
-        verification purposes) that normal communication is disrupted.</dd>
-      <dd>continually sending out broadcast messages</dd>
-      <dd>the wire is continually busy</dd>
-      <dd>no other station is able to transmit information</dd>
-      <figure>
+      </figure> -->
+      <ul>
+        <li>资源的竞争</li>
+        <li>通信的私密性</li>
+        <li>广播风暴 Broadcast Storm</li>
+        <p>通信过程中，会产生大量广播帧</p>
+        <p>广播域 - 广播可以抵达的地方；这个区域越小越好</p>
+      </ul>
+      <dd>Broadcast Storm is a network condition in which so many broadcasts are occurring that normal communication is
+        disrupted.
+        <p>continually sending out broadcast messages</p>
+        <p>the wire is continually busy</p>
+        <p>no other station is able to transmit information</p>
+      </dd>
+      <!-- <figure>
         <img src="https://networkencyclopedia.com/wp-content/uploads/2019/09/broadcast-storm.jpeg" alt="">
         <figcaption>Broadcast Storm</figcaption>
-      </figure>
+      </figure> -->
     </dl>
     <h2>虚拟局域网 Virtual LAN</h2>
     <dl>
@@ -62,51 +66,71 @@
         <figcaption>VLAN 特点</figcaption>
       </figure>
       <dt>特点 Feature</dt>
-      <dd>限制/隔离广播域:
-        <p>广播域被限制在一个 VLAN 内，节省带宽，提高网络的处理能力</p>
-      </dd>
-      <dd>增强局域网的安全性：
-        <p>不同 VLAN 内的报文在传输时是相互隔离的不同的 VLAN 用户不能和其它 VLAN 用户直接通信</p>
-      </dd>
-      <dd>提高网络的健壮性：
-        <p>故障被限制在一个 VLAN 内，本 VLAN 内的故障不会影响其他 VLAN 的正常工作</p>
-      </dd>
-      <dd>灵活构建虚拟工作组：
-        <p>划分不同的用户到不同的工作组，网络构建和维护更方便灵活、更容易</p>
-      </dd>
-      <dt>使用 Usage</dt>
+      <ul>
+        <li>限制/隔离广播域:
+          <p>广播域被限制在一个 VLAN 内</p>
+          <p>一个 VlAN 就是一个一个广播域</p>
+          <p>节省带宽，提高网络的处理能力</p>
+        </li>
+        <li>增强局域网的安全性：
+          <p>不同的 VLAN 用户不能和其它 VLAN 用户直接通信</p>
+          <p>不同 VLAN 内的报文在传输时是相互隔离的</p>
+        </li>
+        <li>提高网络的健壮性：
+          <p>故障被限制在一个 VLAN 内</p>
+          <p>本 VLAN 内的故障不会影响其他 VLAN 的正常工作</p>
+        </li>
+        <li>灵活构建虚拟工作组：
+          <p>划分不同的用户到不同的工作组，网络构建和维护更方便灵活、更容易</p>
+          <p>一个交换机可以划分多个 VLAN</p>
+          <p>一个 VLAN 也可以跨域多个交换机</p>
+        </li>
+      </ul>
+      <div class="tips">
+        <p>风暴隔离</p>
+        <p>业务隔离</p>
+        <p>安全隔离</p>
+      </div>
+      <dt>角色 Role</dt>
+      <ul>
+        <li>业务 VLAN</li>
+        <li>互联 VLAN</li>
+        <li>管理 VLAN</li>
+      </ul>
+      <dt>实现 Implementation</dt>
+      <dd>利用交换机的端口 Port 划分 VLAN</dd>
       <dd>一个交换机可以划分多个 VLAN</dd>
-      <dd>每个 VLAN 不受网络物理位置的限制</dd>
-      <dd>通常利用交换机的端口划分 VLAN</dd>
       <dd>一个 VLAN 可以包含多个端口</dd>
-      <dd>一个端口只能属于一个 VLAN，所以一般称 <strong>port VLAN</strong></dd>
+      <dd>每个 VLAN 不受网络物理位置的限制</dd>
+      <dd>一个端口只能属于一个 VLAN，所以一般称 <strong>Port VLAN</strong></dd>
       <dd>VLAN 由 <strong>id</strong> 和 <strong>name</strong> 来标识</dd>
       <dd>根据 IEEE 802.1Q 标准，VLAN ID 是 12 位，因此理论上最多支持 2^12 = 4096 个 VLAN - 4K</dd>
       <dd>其中 VLAN 0 和 VLAN 4095 被保留；VLAN 1 为默认 VLAN，所以实际可用的 VLAN ID 范围是 1-4094</dd>
       <dd>默认情况下，所有端口都属于 VLAN 1</dd>
+      <div class="demo">VLAN的默认划分</div>
+      <pre>Switch>show vlan</pre>
+      <pre>Switch#show vlan</pre>
       <figure>
         <img src="./imgs/vlan0.png" alt="">
         <figcaption>默认 VLAN 划分</figcaption>
       </figure>
-      <dt>角色 Role</dt>
-      <dd>业务 VLAN</dd>
-      <dd>互联 VLAN</dd>
-      <dd>管理 VLAN</dd>
       <dt>端口模式 Mode</dt>
-      <dd>access：
-        <p>默认模式：用于接入</p>
-        <p>一般用于链接用户计算机</p>
-        <p>access 端口只能属于一个 VLAN</p>
-      </dd>
-      <dd>trunk：
-        <p>中继模式</p>
-        <p>用于交换机之间或交换机和路由器之间的链接</p>
-        <p>trunk 端口可以属于多个 VLAN</p>
-      </dd>
-      <dd>hybrid：
-        <p>混合模式</p>
-        <p>华为专有模式</p>
-      </dd>
+      <ul>
+        <li>access：
+          <p>默认模式：用于接入</p>
+          <p>一般用于链接用户计算机</p>
+          <p>access 端口只能属于一个 VLAN</p>
+        </li>
+        <li>trunk：
+          <p>中继模式</p>
+          <p>用于交换机之间或交换机和路由器之间的链接</p>
+          <p>trunk 端口可以属于多个 VLAN</p>
+        </li>
+        <li>hybrid：
+          <p>混合模式</p>
+          <p>华为专有模式</p>
+        </li>
+      </ul>
       <figure>
         <img src="./imgs/vlan24.png" alt="">
         <figcaption>跨交换机划分 VLAN</figcaption>
@@ -118,11 +142,12 @@
     </dl>
     <h2>IEEE 802.1Q</h2>
     <dl>
-      <dd>简称 Dot One Q，加入 4 Bytes 的 VLAN 标记，对以太网帧格式扩展，即：比普通以太网帧多 4 Bytes</dd>
-      <dd>携带 VLAN 标记的帧长：</dd>
-      <dd class="txt-center"> 1518 Bytes + 4 Bytes = 1522 Bytes</dd>
+      <dd>简称 Dot One Q，对以太网帧格式扩展</dd>
+      <dd>在源地址和类型之间插入 4 Bytes 的 VLAN 标记</dd>
+      <dd>&therefore; VLAN 帧比普通以太网帧多 4 Bytes</dd>
+      <dd class="txt-center txt-2xl"> 1518 Bytes + 4 Bytes = 1522 Bytes</dd>
       <table>
-        <caption>普通帧</ca>
+        <caption>普通以太网帧</ca>
         <tbody>
           <tr>
             <td>Preamble</td>
@@ -145,7 +170,7 @@
         </tbody>
       </table>
       <table>
-        <caption>IEEE 802.1Q帧</ca>
+        <caption>IEEE 802.1Q 帧</ca>
         <tbody>
           <tr>
             <td>Preamble</td>
@@ -169,40 +194,61 @@
           </tr>
         </tbody>
       </table>
+      <div class="demo">VLAN 标记插入的位置可以是类型和数据之间吗 <span class="iconfont icon-help"></span></div>
       <dt>VLAN 标记</dt>
       <dd>每个 VLAN 帧都一个明确的标识 VLAN tag，表明帧属于哪个 VLAN</dd>
-      <table>
-        <caption>VLAN 标记</ca>
+      <table class="bg">
+        <caption>VLAN Tag</ca>
         <tbody>
-          <tr class="bg">
+          <tr>
             <td>TPID</td>
             <td colspan="3">TCI</td>
           </tr>
-          <tr class="bg">
-            <td>2byte</td>
-            <td>1bit</td>
-            <td>3bit</td>
-            <td>12bit</td>
+          <tr>
+            <td>0x8100</td>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td>2 Bytes</td>
+            <td>3 Bits</td>
+            <td>1 Bit</td>
+            <td>12 Bits</td>
           </tr>
         </tbody>
       </table>
-      <dd>标签协议标识 TPID(Tag Protocol Identifier)
+      <dd>标签协议标识 TPID，Tag Protocol Identifier
         <p>2 Bytes</p>
         <p>固定为 0x8100</p>
       </dd>
-      <dd>标签控制信息 TCI(Tag Control Information)，包括
-        <p>CFI：格式；1 bit</p>
-        <p>Priority：VLAN 优先级；3 bits</p>
+      <dd>标签控制信息 TCI，Tag Control Information，包括
+        <p>PCP，Priority Code Point：VLAN 优先级；3 bits</p>
+        <p>DEI(CFI)：格式；1 bit</p>
         <p>VLAN ID：VLAN 号；12 bits</p>
       </dd>
+      <div class="tips">
+        <p>规范格式指示符 CFI (Canonical Format Indicator)</p>
+        <p>早期标准（经典以太网时代）</p>
+        <p>早期网络不仅有以太网，还有 Token Ring（令牌环网）等其他局域网技术。这两种网络对 MAC 地址的“比特传输顺序”理解是相反的</p>
+        <p>CFI = 0： 表示这个数据帧是以太网格式（最常用，绝大多数情况都是 0）</p>
+        <p>CFI = 1： 表示这个数据帧是 Token Ring 格式（非以太网格式）</p>
+        <p>随着 Token Ring 技术的消亡，整个网络世界几乎只剩下了以太网。因此，CFI 字段常年固定为 0，失去了原本“指示格式”的意义</p>
+      </div>
+      <div class="tips">
+        <p>丢弃 eligible 指示符 DEI (Drop Eligible Indicator)</p>
+        <p>现代标准（数据中心与 QoS 时代）</p>
+        <p>IEEE 组织在 802.1Q-2011 标准中，把这个闲置的比特位重新定义，赋予了它新的生命，用来支持现代网络拥塞控制（QoS）</p>
+        <p>DEI = 0： 表示这个数据帧“不可随意丢弃”（Drop Ineligible）。网络拥堵时，尽量保留它</p>
+        <p>DEI = 1： 表示这个数据帧“可以优先丢弃”（Drop Eligible）。如果网络交换机缓存满了，这种包会被优先扔掉</p>
+        <p>比如 IP 电话（VoIP）的语音数据包，会设置高优先级（PCP=5或6）并且 DEI=0，保证通话不卡顿；而普通的文件下载数据包，可能会被标记为 DEI=1，拥堵时直接丢弃，等网络空闲了再重传</p>
+      </div>
+      <dt>处理过程 Process</dt>
+      <dd>接收：交换机每收到一个以太网帧，就打上 VLAN 标签：插入 4 Bytes 的 VLAN 标记，变成 IEEE 802.1Q 帧</dd>
+      <dd>转发：根据 VLAN 号转发到相应的端口，去掉标签后转发出去</dd>
       <dd>IEEE 802.1Q 帧只在交换机内部识别并处理，用户主机并不能识别</dd>
       <figure>
         <img src="./imgs/vlan18.png" alt="">
         <figcaption>内部可见</figcaption>
       </figure>
-      <dt>处理过程</dt>
-      <dd>接收：交换机每收到一个以太网帧，就打上 VLAN 标签：插入 4 Bytes 的 VLAN 标记，变成 IEEE 802.1Q 帧</dd>
-      <dd>转发：根据 VLAN 号转发到相应的端口，去掉标签后转发出去</dd>
       <div class="demo"> VLAN 帧的封帧和拆包</div>
       <dd>单个交换机无法直接查看到 802.1Q 的封帧情况</dd>
       <dd>VLAN 帧的 TCI 字段的值 0x14 表示什么 <span class="iconfont icon-help"></span></dd>

@@ -244,8 +244,9 @@
           <tr>
             <th>分类</th>
             <th>通信方式</th>
+            <th>媒质</th>
             <th>网段</th>
-            <th>最短帧长e</th>
+            <th>最短帧长</th>
             <th>争用期</th>
             <th>帧间隔</th>
           </tr>
@@ -254,6 +255,7 @@
           <tr>
             <td>10BASE</td>
             <td>半双工</td>
+            <td>同轴细缆</td>
             <td>100m</td>
             <td>64Bytes</td>
             <td>51.2μs</td>
@@ -262,6 +264,7 @@
           <tr>
             <td>100BASE</td>
             <td>半双工、全双工</td>
+            <td>双绞线</td>
             <td>100m</td>
             <td>64Bytes</td>
             <td>5.12μs</td>
@@ -270,14 +273,16 @@
           <tr>
             <td>1000BASE</td>
             <td>半双工、全双工</td>
+            <td>双绞线</td>
             <td>100m</td>
             <td>512Bytes</td>
-            <td>409.6μs</td>
+            <td>5.12μs</td>
             <td>0.096μs</td>
           </tr>
           <tr>
             <td>10GBASE</td>
             <td>全双工</td>
+            <td>光缆</td>
             <td>100m</td>
             <td>64Bytes</td>
             <td>-</td>
@@ -288,10 +293,18 @@
       <div class="demo">为什么 1000BASE 的最短帧长增加到 512 Bytes<span class="iconfont icon-help"></span></div>
       <dd>依然保留着半双工模式，需要 CSMA/CD 机制来检测冲突</dd>
       <dd>如果还发 64 Bytes/512bits，只需要 0.512μs</dd>
-      <dd>争用期依然是 512个比特时 = 0.512μs</dd>
+      <dd>争用期依然是 512个比特时 = 512 bit/ 1000 Mbps= 0.512μs</dd>
       <dd>信号往返一次实际需要的时间依然是大约 5.12 μs（因为速度没变）</dd>
       <dd>这就导致发得太快，还没收到远处的冲突反馈，帧就发完了，CSMA/CD 失效</dd>
-      <dd>解决方案：为了在半双工下维持 100m 的网段，千兆以太网只能强行把最短帧长从 64 Bytes扩展到 512 Bytes（即载波延伸技术），强行把发送时间拉长到 409.6μs（或通过帧突发），以覆盖争用期</dd>
+      <dd>最短帧长 = 速率 × 往返时间 = 1000 Mbps × 5.12 μs = 5120 bits = 640 Bytes</dd>
+      <dd>但是，IEEE 标准最终妥协规定最短帧长为 512 Bytes（即 4096 bits）</dd>
+      <dd>&therefore; 发送4096 bits需要 = 4096 bits / 1000 Mbps = 4.096 μs &lt; 5.12 μs</dd>
+      <dd>解决方案：最短帧长从 64 Bytes 扩展到 512 Bytes，然后再等待一个特定的时间，不能立即释放信道，以填满那 5.12μs 的窗口，以覆盖争用期</dd>
+      <dd>终极解决方案：放弃半双工</dd>
+      <div class="tips">
+        <p>载波延伸（Carrier Extension）</p>
+        <p>帧突发（Frame Bursting）</p>
+      </div>
       <div class="demo">为什么 10GBASE 没有争用期 <span class="iconfont icon-help"></span></div>
       <!-- 10G以太网只工作在全双工模式下。发送和接收有独立的通道，互不干扰 -->
       <div class="demo">为什么10GBASE 最短帧长变回 64 Bytes <span class="iconfont icon-help"></span></div>

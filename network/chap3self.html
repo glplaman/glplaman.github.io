@@ -29,8 +29,8 @@
         <p>Port：设备连接的端口</p>
         <p>Timer：默认老化时间 Aging Time； 思科交换机、华为交换机默认都是 300s；如果一个 MAC 地址条目在 300 秒内没有再次收到来自该 MAC 的报文，交换机就会认为该设备已离线，并将其从表中删除
         </p>
+        <p>VLAN：端口所在的VLAN；默认情况下，所有的端口都在同一个Vlan： vlan 1</p>
       </dd>
-      <dd>默认情况下，所有的端口都在同一个Vlan： vlan 1</dd>
       <table>
         <caption>交换机的MAC地址表</caption>
         <tbody>
@@ -56,13 +56,15 @@
         <figcaption>PT 中的 MAC Table</figcaption>
       </figure>
       <dt>核心思想 Thinking</dt>
-      <dd>交换机每收到一个帧，都做2件事情：先学习，再转发</dd>
+      <dd>交换机每收到一个帧，都做3件事情：先学习，再转发及必要的更新</dd>
       <dd>学习：<strong>基于源 MAC 地址</strong>，建表；MAC 地址对应的设备在哪个口；从哪个端口进来的；根据进入端口建表</dd>
       <dd>转发：<strong>基于目的 MAC 地址</strong>，查表并转发；帧往哪去；根据登记端口转发</dd>
-      <dd>建表在前，查表在后，不能颠倒；因为本次学习的结果可能直接决定本次转发</dd>
-      <dd class="tips">
+      <dd>更新：当交换机看到一个已知的 MAC 地址从不同的端口进入，则更新这条记录的端口；如果从相同端口进入，则只刷新计时器 Timer</dd>
+      <div class="tips">
         <p>MAC 地址表里登记的端口，是“该目的 MAC 曾经作为源 MAC 出现过的端口”</p>
-      </dd>
+        <p>建表在前，查表在后，不能颠倒；因为本次学习的结果可能直接决定本次转发</p>
+        <p>更新仍然是基于源地址</p>
+      </div>
       <dt>基本过程 Procedure</dt>
       <div>1. 登记 Registration</div>
       <dd>查表中是否有与接收帧的源 MAC 匹配的表项
@@ -131,7 +133,7 @@
             <tr>
               <td>A</td>
               <td>1</td>
-              <td></td>
+              <td>更新 A</td>
             </tr>
             <tr>
               <td>B</td>
@@ -177,52 +179,7 @@
           </tbody>
         </table>
       </ol>
-      <div class="demo"> p114-3-33 初始交换表为空</div>
-      <figure>
-        <img src="./imgs/lan0.png" alt="">
-        <figcaption>拓扑</figcaption>
-      </figure>
-      <dd>答：</dd>
-      <table>
-        <caption>交换表</caption>
-        <thead>
-          <tr>
-            <th>通信方向</th>
-            <th>MAC 地址表</th>
-            <th>转发端口</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>A → D</td>
-            <td>A 1</td>
-            <td>2 3 4 5 6</td>
-          </tr>
-          <tr>
-            <td>D → A</td>
-            <td>A 1
-              <br>D 4
-            </td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>E → A</td>
-            <td>A 1
-              <br>D 4
-              <br>E 5
-            </td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>A → E</td>
-            <td>A 1
-              <br>D 4
-              <br>E 5
-            </td>
-            <td>5</td>
-          </tr>
-        </tbody>
-      </table>
+
       <div class="demo">查看老化时间</div>
       <dd>PT中，点击快进“Fast Forward Time”，再查看 MAC 表，条目会消失</dd>
       <dd>真实设备使用 show mac address-table aging-time 或 show mac address-table 查看</dd>
@@ -248,10 +205,14 @@
     <h2>Homework</h2>
     <dl>
       <dt>Homework</dt>
-      <div class="demo">[T3-15]</div>
+      <div class="demo">[T3-15] 初始交换表为空</div>
+      <figure>
+        <img src="./imgs/lan0.png" alt="">
+        <figcaption>拓扑</figcaption>
+      </figure>
       <dd>答：</dd>
       <table>
-        <caption></caption>
+        <caption>交换表</caption>
         <thead>
           <tr>
             <th>动作</th>
@@ -262,33 +223,41 @@
         </thead>
         <tbody>
           <tr>
-            <td>A发送帧给D</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>D发送帧给A</td>
-            <td></td>
-            <td></td>
+            <td>A → D</td>
+            <td>A → 1
+              <br>D → 4
+            </td>
+            <td>2 3 4 5 6</td>
             <td></td>
           </tr>
           <tr>
-            <td>E发送帧给A</td>
-            <td></td>
-            <td></td>
+            <td>D → A</td>
+            <td>A → 1
+              <br>D → 4
+            </td>
+            <td>1</td>
+            <td>更新 D</td>
+          </tr>
+          <tr>
+            <td>E → A</td>
+            <td>A → 1
+              <br>D → 4
+              <br>E → 5
+            </td>
+            <td>1</td>
             <td></td>
           </tr>
           <tr>
-            <td>A发送帧给E</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>A → E</td>
+            <td>A → 1
+              <br>D → 4
+              <br>E → 5
+            </td>
+            <td>5</td>
+            <td>更新 A</td>
           </tr>
         </tbody>
       </table>
-      <div class="txt-indent">
-      </div>
       <div class="demo">以太网交换机转发决策时使用的 PDU 地址是（ ）。
         <div>A：目的物理地址</div>
         <div>B：目的 IP 地址</div>
