@@ -51,7 +51,6 @@
     <h1>文件管理</h1>
     <h3>FIles</h3>
     <dl>
-      <div class="tips">面向对象的操作</div>
       <dt>内容 Contents</dt>
       <dd>文件 File</dd>
       <dd>文件夹 Folder</dd>
@@ -62,26 +61,30 @@
     <dl>
       <dd>文件通常用以实现某种功能或某个软件的部分功能 - 保存数据/信息</dd>
       <dd>这些信息最初是在内存中建立的，然后以用户给予的名称转存在磁盘上，以便长期保存</dd>
-      <dd>文件标识由文件名 Filename 和扩展名 Extension 两部分组成，它们之间以小数点分隔；扩展名可选</dd>
+      <dd>文件标识由 <strong>文件名 Filename</strong> 和 <strong>扩展名 Extension</strong> 两部分组成，它们之间以小数点分隔</dd>
+      <dd>系统规定，文件名是必须有的，而扩展名是可选的</dd>
       <figure>
         <p class="txt-center">&lt;Filename&gt;[.&lt;Extension&gt;］</p>
         <figcaption>文件命名格式</figcaption>
       </figure>
       <dt>文件名 Filename</dt>
       <dd>文件的基本属性包括文件名、大小（存储容量）、类型、创建和修改时间等</dd>
-      <dd>文件通过 <strong>文件名</strong> 与其他文件相区别</dd>
+      <dd>文件通过文件名与其他文件相区别</dd>
       <dd>对一个文件所有的操作（如复制、改名、删除等）都是基于文件名</dd>
-      <dt>命名规范 Regulation</dt>
-      <dd>最多可有255个字符 </dd>
-      <dd>可以使用汉字和空格，但文件名第一个字符不能为空格，文件名其他位置中可以包含有空格</dd>
-      <dd>禁用下列特殊符号： ? \ / : * " &lt; &gt; | </dd>
-      <dd>不能利用大小写区分文件名。例如，COMPUTER.DOCX与computer.docx 是同一个文件 </dd>
-      <dd>可以使用多个分隔符（即小数点），但文件名最右一个分隔点后面的部分才是扩展名。例如：computert.BAS.txt.docx
-        只有最后一个分隔符的后面部分（即.docx）才是扩展名</dd>
+      <dd>命名规范 Regulation
+        <p>最多可有255个字符 </p>
+        <p>可以使用汉字和空格，但文件名第一个字符不能为空格，文件名其他位置中可以包含有空格</p>
+        <p>禁用下列特殊符号： ? \ / : * " &lt; &gt; | </p>
+        <p>不能利用大小写区分文件名。例如，COMPUTER.DOCX与computer.docx 是同一个文件 </p>
+        <p>可以使用多个分隔符（即小数点），但文件名最右一个分隔点后面的部分才是扩展名。例如：computert.BAS.txt.docx
+          只有最后一个分隔符的后面部分（即.docx）才是扩展名</p>
+      </dd>
+      <div class="tips">
+        <p>如果忘记命名规范，可以创建文件并通过尝试命名的方法来确定</p>
+        <p>特别是考试过程中</p>
+      </div>
       <dt>扩展名 Extension</dt>
       <dd>使用扩展名来区别文件类型，从而决定用哪个程序打开</dd>
-      <dd>系统规定，文件名是必须有的，而扩展名是可选的</dd>
-      <div class="tips">考试过程中，碰到命名是否规范的问题，直接在电脑上创建文件，然后逐一命名去验证即可</div>
       <table class="zebra">
         <caption>常见后缀名</caption>
         <thead>
@@ -159,6 +162,7 @@
           <tr>
             <td>网页 Page</td>
             <td>
+              <p>.htm: 网页文件</p>
               <p>.html: 网页文件</p>
               <p>.css: 样式表文件</p>
               <p>.js: JavaScript 文件</p>
@@ -187,8 +191,9 @@
       </table>
       <div class="demo">显示扩展名</div>
       <dd>系统默认不显示扩展名</dd>
-      <dd>为了方便，通常设置为显示</dd>
-      <dd>资源管理器中，单击菜单栏的"查看" → "显示" → "文件扩展名"或单击"更多 → "查看"，取消隐藏</dd>
+      <dd>为了管理和使用方便，<strong>强烈建议</strong> 设置为显示</dd>
+      <dd>资源管理器中，单击菜单栏的"查看" → "显示" → "文件扩展名"</dd>
+      <dd>或单击"更多 → "查看"，取消"隐藏已知类型文件的扩展名"</dd>
       <figure>
         <img src="./imgs/hide.png" alt="">
         <figcaption>显示文件扩展名</figcaption>
@@ -205,9 +210,10 @@
     <h2>路径 Directory</h2>
     <dl>
       <dt>绝对路径</dt>
-      <dd>从盘符开始，如：D:\Doc\tmp.txt</dd>
+      <dd>从盘符开始，如：D:\Doc</dd>
       <dt>相对路径</dt>
       <dd>从当前目录开始，如Doc\tmp.txt</dd>
+      <dd>文件对象之间的相对关系</dd>
       <dt>全文件名</dt>
       <dd>绝对路径 + 文件名，如D:\Doc\tmp.txt</dd>
     </dl>
@@ -223,8 +229,12 @@
         <img src="./imgs/explore.png" alt="">
         <figcaption>资源管理器</figcaption>
       </figure>
-      <dt>常见操作</dt>
-      <div>1. 文件和文件夹</div>
+    </dl>
+
+    <h2>常见操作 Drill</h2>
+    <dl>
+      <div class="tips">面向对象的操作</div>
+      <dt>文件和文件夹</dt>
       <dd>创建、复制、粘贴、删除</dd>
       <table>
         <caption>文件/文件夹常见操作 Operation</caption>
@@ -278,29 +288,30 @@
           </tr>
         </tbody>
       </table>
-      <div>2. 创建快捷方式</div>
-      <dd>可以发送到桌面或指定位置创建</dd>
+      <dt>创建快捷方式</dt>
       <dd>便于快速访问/打开/浏览</dd>
-      <div>3. 压缩和解压</div>
-      <dd>系统会自动指定并创建同名的文件夹，并把压缩包的内容解压到该文件夹中；默认解压方式</dd>
-      <dd>为避免和目录下的其它文件混在一起，不要把文件内容解压到当前目录中</dd>
-      <div>4. 查看与排序</div>
-      <dd>查看方式：大图标、小图标、列表和详细列表</dd>
-      <dd>排序：根据名称、修改日期、大小和类型</dd>
-      <div>5. 搜索与筛选</div>
-    </dl>
-    <h2>练习 Drill</h2>
-    <dl>
-      <div class="demo">创建快捷方式</div>
-      <dd>
-        <div>1. 桌面：选择文件/文件夹 → 右键 → 发送到 → 桌面快捷方式</div>
-        <div>2. 任意位置：先在桌面创建快捷方式，然后把快捷方式图标剪切并复制到指定位置/目录</div>
-        <div>3. 在指定位置空白处 → 右键 → 新建快捷方式 → 浏览并选择要创建快捷方式的文件或文件夹 → 确定</div>
+      <dd>删除快捷方式并不会影响原来的对象</dd>
+      <div class="demo">发送到桌面快捷方式</div>
+      <dd>选择文件/文件夹 → 右键 → 发送到 → 桌面快捷方式</dd>
+      <div class="demo">任意位置创建快捷方式</div>
+      <dd>在指定位置空白处 → 右键 → 新建快捷方式 → 浏览并选择要创建快捷方式的文件或文件夹 → 确定</dd>
+      <div class="tips">
+        <p>邪修：先在桌面创建快捷方式，然后把快捷方式图标剪切并复制到指定位置/目录</p>
+      </div>
+      <dt>压缩和解压</dt>
+      <dd>压缩
+        <p>打包时会提供一个默认的名字</p>
+        <p>可以修改为自己需要的名字</p>
+        <p>也打包后重命名</p>
+      </dd>
+      <dd>解压
+        <p>系统会自动指定并创建同名的文件夹，并把压缩包的内容解压到该文件夹中；默认解压方式</p>
+        <p>不同系统的，操作提示不完全一样</p>
+        <p>为避免和目录下的其它文件混在一起，不要把文件内容解压到当前目录中</p>
       </dd>
       <div class="demo">压缩|打包</div>
       <dd>选择文件/文件夹 → 右键 → 发送到 → 压缩到</dd>
-      <dd>打包时会使用默认的名字，请在打包后重命名为指定的文件名</dd>
-      <div class="demo">解压</div>
+      <div class="demo">字体的解压、安装和使用</div>
       <dd>以下载、解压、使用谷歌字体为例</dd>
       <ol>
         <li>打开 <a href="https://www.googlefonts.cn" target="_blank">谷歌字体</a></li>
@@ -312,18 +323,24 @@
           <img src="./imgs/zip.png" alt="">
           <figcaption>下载对话框</figcaption>
         </figure>
-        <li>选择压缩包 → 全部解压缩</li>
-        <li>双击进入解压好的文件夹，找到对应的字体文件 .ttf → 双击 → 选择安装</li>
-        <li>打开 Word 应用程序，创建任意文本，设置该字体，查看字体效果</li>
+        <li>右键单击压缩包 → 全部解压缩，选择解压到同名的文件夹</li>
+        <li>双击进入解压好的文件夹 → 选择某个字体文件 .ttf → 双击 → 选择安装</li>
+        <li>打开 Word 应用程序或记事本，创建任意文本，设置该字体，查看字体效果</li>
       </ol>
+      <div class="tips">如果没有网络，请使用老师提供的字体压缩包</div>
       <div class="demo">解压</div>
       <dd>根据提供的截图软件 Snipaste，完成解压、创建快捷方式和使用</dd>
       <ol>
         <li>解压</li>
         <li>发送快捷方式到桌面</li>
-        <li>双击桌面的快捷方式打开；更多使用操作请访问 <a href="https://www.snipaste.com/index.html">Snipaste</a></li>
+        <li>双击桌面的快捷方式打开；更多使用操作请访问 <a class="link" href="https://www.snipaste.com/index.html">Snipaste</a></li>
       </ol>
+      <dt>查看与排序</dt>
+      <dd>查看方式：大图标、小图标、列表和详细列表</dd>
+      <dd>排序：根据名称、修改日期、大小和类型</dd>
+      <dt>搜索与筛选</dt>
     </dl>
+
     <div id="footer"></div>
   </div>
   <script src="/utils/custom/footer.js"></script>
