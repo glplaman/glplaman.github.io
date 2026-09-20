@@ -11,6 +11,19 @@
     header {
       background-image: url(https://networkencyclopedia.com/wp-content/uploads/2019/09/Wide-Area-Network-WAN-1.webp);
     }
+
+    .dot {
+      border-right: none;
+      border-left: none;
+    }
+
+    td:has(+.dot) {
+      border-right: none;
+    }
+
+    .dot+td {
+      border-left: none;
+    }
   </style>
 </head>
 
@@ -33,25 +46,31 @@
       <div class="demo">点分十进制表示法</div>
       <dd>分段：每 8 bits 一组；共 4 组</dd>
       <dd>十进制：每段从二进制转换为十进制</dd>
-      <table>
+      <table style="max-width: 500px;text-align: center;">
         <caption>点分十进制表示法</caption>
         <tbody>
           <tr>
             <td>IP</td>
-            <td colspan="4">10000000000010110000001100011111</td>
+            <td colspan="7">10000000000010110000001100011111</td>
           </tr>
           <tr>
-            <td>分段</td>
+            <td>点分</td>
             <td>10000000</td>
+            <td class="dot">.</td>
             <td>00001011</td>
+            <td class="dot">.</td>
             <td>00000011</td>
+            <td class="dot">.</td>
             <td>00011111</td>
           </tr>
           <tr>
             <td>十进制</td>
             <td>128</td>
+            <td class="dot">.</td>
             <td>11</td>
+            <td class="dot">.</td>
             <td>3</td>
+            <td class="dot">.</td>
             <td>31</td>
           </tr>
         </tbody>
@@ -63,13 +82,15 @@
         <img src="https://networkencyclopedia.com/wp-content/uploads/2019/09/Ip-address-ipv4.png" alt="">
         <figcaption>IP in dotted-decimal notation</figcaption>
       </figure>
-      <table>
+      <table style="max-width: 500px;text-align: center;">
         <caption>IP地址结构</caption>
-        <tbody>
+        <thead>
           <tr>
             <th>网络号 network ID</th>
             <th>主机号 host ID</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>n bits</td>
             <td>(32-n) bits</td>
@@ -84,130 +105,78 @@
       <dd>根据固定的网络号前缀区分为 A、B、C、D、E共5大类；见下表</dd>
       <table>
         <caption>分类IP地址细节</caption>
-        <tr>
-          <th>分类</th>
-          <th>网路地址x + 主机地址y</th>
-          <th>网路数量</th>
-          <th>主机数量/网络</th>
-          <th>示例</th>
-        </tr>
-        <tr>
-          <td>A</td>
-          <td><span class="warn">0</span>xxxxxx yyyyyyyy yyyyyyyy yyyyyyyy</td>
-          <td>2 <sup>8-1</sup>-2</td>
-          <td>2 <sup>32-8</sup>-2</td>
-          <td>126.1.0.4</td>
-        </tr>
-        <tr>
-          <td>B</td>
-          <td><span class="warn">10</span>xxxxx xxxxxxxx yyyyyyyy yyyyyyyy</td>
-          <td>2 <sup>16-2</sup></td>
-          <td>2 <sup>32-16</sup>-2</td>
-          <td>128.1.1.2</td>
-        </tr>
-        <tr>
-          <td>C</td>
-          <td><span class="warn">110</span>xxxx xxxxxxxx xxxxxxxx yyyyyyyy</td>
-          <td>2 <sup>24-3</sup></td>
-          <td>2 <sup>32-24</sup>-2</td>
-          <td>192.3.1.1</td>
-        </tr>
-        <tr>
-          <td>D</td>
-          <td colspan="4">多播地址</td>
-        </tr>
-        <tr>
-          <td>E</td>
-          <td colspan="4">保留</td>
-        </tr>
-      </table>
-      <dd>每个分类的应用定位各不相同；见下表</dd>
-      <table>
-        <caption>IP Address Classes</caption>
         <thead>
           <tr>
-            <th><strong>Class</strong></th>
-            <th><strong>Possible First Octet</strong></th>
-            <th><strong>Used For</strong></th>
+            <th>分类</th>
+            <th>网路地址 + 主机地址</th>
+            <th>网路数量</th>
+            <th>主机数量/网络</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>A</td>
-            <td>1–126</td>
-            <td>Very large networks</td>
+            <td><span class="warn">0</span>xxxxxx yyyyyyyy yyyyyyyy yyyyyyyy
+              <br>0.0.0.0 – 127.255.255.255
+            </td>
+            <td>2 <sup>8-1</sup>-2</td>
+            <td>2 <sup>32-8</sup>-2</td>
           </tr>
           <tr>
             <td>B</td>
-            <td>128–191</td>
-            <td>Medium to large networks</td>
+            <td><span class="warn">10</span>xxxxx xxxxxxxx yyyyyyyy yyyyyyyy
+              <br>128.0.0.0 – 191.255.255.255
+            </td>
+            <td>2 <sup>16-2</sup></td>
+            <td>2 <sup>32-16</sup>-2</td>
           </tr>
           <tr>
             <td>C</td>
-            <td>192–223</td>
-            <td>Small networks</td>
+            <td><span class="warn">110</span>xxxx xxxxxxxx xxxxxxxx yyyyyyyy
+              <br>192.0.0.0 – 223.255.255.255
+            </td>
+            <td>2 <sup>24-3</sup></td>
+            <td>2 <sup>32-24</sup>-2</td>
           </tr>
           <tr>
             <td>D</td>
-            <td>224–239</td>
-            <td>Multicasting</td>
+            <td colspan="4">224.0.0.0 – 239.255.255.255
+              <br>多播地址 Multicasting
+            </td>
           </tr>
           <tr>
             <td>E</td>
-            <td>240–255</td>
-            <td>Reserved (experimental)</td>
+            <td colspan="4">240.0.0.0 – 255.255.255.255
+              <br>保留 Reserved (experimental)
+            </td>
           </tr>
         </tbody>
       </table>
-      <dd>每个分类的地址范围；见下表</dd>
-      <table>
-        <caption>地址范围</caption>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Range</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>A</td>
-            <td>0.0.0.0 – 127.255.255.255</td>
-          </tr>
-          <tr>
-            <td>B</td>
-            <td>128.0.0.0 – 191.255.255.255</td>
-          </tr>
-          <tr>
-            <td>C</td>
-            <td>192.0.0.0 – 223.255.255.255</td>
-          </tr>
-          <tr>
-            <td>D</td>
-            <td>224.0.0.0 – 239.255.255.255</td>
-          </tr>
-          <tr>
-            <td>E</td>
-            <td>240.0.0.0 – 255.255.255.255</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="demo">A类地址：126.1.0.4</div>
+      <div class="demo">B类地址：128.1.1.2</div>
+      <div class="demo">C类地址：192.3.1.1</div>
       <dt>网络地址 Network Address</dt>
       <dd>主机号全为 0 的地址</dd>
       <dd>不能分配给用户主机使用</dd>
       <dt>广播地址 Broadcast Address</dt>
       <dd>主机号全为 1 的地址</dd>
       <dd>不能分配给用户主机使用</dd>
+      <dt>主机地址 Host Address</dt>
+      <dd>可以分配给主机使用的地址</dd>
+      <dd>不能是网络地址</dd>
+      <dd>不能是广播地址</dd>
       <div class="demo">第一个A类网</div>
+      <dd>为什么不是0.0.0.0 <span class="iconfont icon-help"></span></dd>
       <table>
         <caption>第一个A类网</caption>
         <tr>
-          <th>网路地址x</th>
-          <th colspan="3">主机地址y</th>
+          <th>网络地址</th>
+          <th colspan="3">主机地址</th>
           <th>IP地址</th>
           <th>说明</th>
         </tr>
         <tr>
-          <td>0000 0001</td>
+          <td rowspan="4">0000 0001</td>
           <td class="warn">0000 0000</td>
           <td class="warn">0000 0000</td>
           <td class="warn">0000 0000</td>
@@ -215,7 +184,6 @@
           <td>主机位全0；网络地址</td>
         </tr>
         <tr>
-          <td>0000 0001</td>
           <td>0000 0000</td>
           <td>0000 0000</td>
           <td>0000 000<span class="warn">1</span></td>
@@ -223,7 +191,6 @@
           <td>最小主机地址</td>
         </tr>
         <tr>
-          <td>0000 0001</td>
           <td>1111 1111</td>
           <td>1111 1111</td>
           <td>1111 1110</td>
@@ -231,7 +198,6 @@
           <td>最大主机地址</td>
         </tr>
         <tr>
-          <td>0000 0001</td>
           <td class="warn">1111 1111</td>
           <td class="warn">1111 1111</td>
           <td class="warn">1111 1111</td>
@@ -281,11 +247,11 @@
       </table>
       <div class='demo'>在命令行终端使用 ipconfig，查看本地 IP 地址。并说明 IP 地址是哪一类？为什么？</div>
       <dt>保留IP地址块 Reserved Address</dt>
-      <dd>不能用于普通公网主机分配的特殊 IP 地址或地址段</dd>
+      <dd>默认网络：0.0.0.0/8；0.0.0.0：最小网络号</dd>
       <dd>回环地址：127.0.0.0/8</dd>
       <dd>广播地址：255.255.255.255</dd>
-      <dd>默认网络：0.0.0.0/8</dd>
       <dd>多播地址：224.0.0.0 – 239.255.255.255</dd>
+      <dd>不能用于普通公网主机分配的特殊 IP 地址或地址段</dd>
       <dt>环回地址 loopback</dt>
       <dd>表示本机自己</dd>
       <dd>多用于本地调试，如测试网络栈是否正常</dd>

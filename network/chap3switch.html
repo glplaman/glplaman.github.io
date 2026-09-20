@@ -24,8 +24,20 @@
       <dd>交换机是工作在 OSI 模型第二层 - 数据链路层，所以也叫二层交换机 L2 Switch</dd>
       <dd>多端口
         <p>每个端口都与一个主机或另外一个交换机直接相连</p>
-        <p>每个端口都是一个独立的冲突域，用以隔离冲突，减少了数据包冲突的可能性</p>
+        <p>每个端口都是一个 <strong>独立</strong> 的冲突域 Collision Domain，用以隔离冲突，减少了数据包冲突的可能性</p>
+        <p>交换机通过内部的硬件交换矩阵，在通信的两个端口之间临时搭建的一条点对点逻辑信道；彼此互不影响</p>
+        <p>图中 MM 为 内存模块 Memory Module；方块代表交叉点 Crosspoint</p>
+        <!-- <p>端口之间通信会建立一条专用逻辑信道（交叉矩阵 Crossbar Matrix 或者共享内存 Shared Memory 结构），不会影响其它端口的通信</p> -->
       </dd>
+      <figure>
+        <img src="./imgs/switch0.png" alt="Crossbar Switch system">
+        <figcaption>Crossbar Switch System</figcaption>
+      </figure>
+      <div class="tips">
+        <p>冲突域 Collision Domain</p>
+        <p>也叫碰撞域</p>
+        <p>共享信道网络，如Hub，整个集线器上的所有端口属于同一个冲突域</p>
+      </div>
       <dd>多速率</dd>
       <dd>全双工通信</dd>
       <dd>具备缓存功能</dd>
@@ -144,25 +156,31 @@
         <p>≈ 1488095 pps ≈ 1.488 Mpps</p>
       </div>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <dd>碰撞域/冲突域</dd>
+      <dd>交换机的特点</dd>
+      <dd>交换机的分类</dd>
+      <dd>交换机的规格</dd>
       <dt>Homework</dt>
       <div class="demo">[T3-11] 10个站连接到以太网。试计算以下三种情况下每个站所得到的带宽。</div>
-      <dd>10个站都连接到一个 10 Mbit/s 的以太网集线器</dd>
+      <dd>10个站都连接到一个 10Mbit/s 的以太网集线器</dd>
       <!-- <p>共享 10 Mbit/s</p> -->
-      <dd>10个站都连接到一个 100 Mbit/s 的以太网集线器</dd>
+      <dd>10个站都连接到一个 100Mbit/s 的以太网集线器</dd>
       <!-- <p>共享 100 Mbit/s</p> -->
-      <dd>10个站都连接到一个 10 Mbit/s 的以太网交换机</dd>
+      <dd>10个站都连接到一个 10Mbit/s 的以太网交换机</dd>
       <!-- <p>独享 10 Mbit/s</p> -->
       <div class="demo">[T3-12]
-        某学院的以太网交换机有三个端口分别和学院三个系的以太网相连，另外三个端口分别和电子邮件服务器、万维网服务器以及一个连接互联网的路由器相连。图中的 A、B 和 C 都是 100-Mbit/s
-        以太网交换机。假定所有的链路的速率都是 100 Mbit/s，并且图中的 9 台主机中的任何一台都可以向任何一台服务器或主机通信。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
+        某学院的以太网交换机有三个端口分别和学院三个系的以太网相连，另外三个端口分别和电子邮件服务器、万维网服务器以及一个连接互联网的路由器相连。图中的 A、B 和 C 都是 100Mbit/s
+        以太网交换机。假定所有的链路的速率都是 100Mbit/s，并且图中的 9 台主机中的任何一台都可以向任何一台服务器或主机通信。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。</div>
       <dd>答：</dd>
       <div class="txt-indent">
         <p>最大吞吐量 = 9台主机的吞吐量 + 2台服务器的吞吐量</p>
-        <p>= 900 Mbit/s + 200 Mbit/s</p>
-        <p>= 1100 Mbit/s</p>
+        <p>= 900Mbit/s + 200Mbit/s</p>
+        <p>= 1100Mbit/s</p>
       </div>
-      <div class="demo">[T3-13] 假定图中的所有链路的速率仍然为 100 Mbit/s，但三个系的以太网交换机都换成 100 Mbit/s 的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。
+      <div class="demo">[T3-13] 假定图中的所有链路的速率仍然为 100Mbit/s，但三个系的以太网交换机都换成 100Mbit/s 的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。
       </div>
       <dd>答：</dd>
       <div class="txt-indent">
@@ -171,13 +189,18 @@
         <p>所以图中9台主机其实只有三台在发送，吞吐量是300Mbit/s，两个服务器吞吐量是200Mbit/s</p>
         <p>&therefore;最大吞吐量是 300Mbit/s + 200Mbit/s = 500Mbit/s</p>
       </div>
-      <div class="demo">[T3-14] 假定图中所有链路的速率仍然为 100 Mbit/s，但是所有的以太网交换机都换成 100 Mbit/s 的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。
+      <div class="demo">[T3-14] 假定图中所有链路的速率仍然为 100Mbit/s，但是所有的以太网交换机都换成 100Mbit/s 的集线器。试计算这 9 台主机和两台服务器产生的总的吞吐量的最大值。
       </div>
       <dd>答：</dd>
       <div class="txt-indent">
         <p>整个系统是一个碰撞域</p>
         <p>&therefore;最大吞吐总量是 100Mbit/s</p>
       </div>
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="https://www.geeksforgeeks.org/computer-organization-architecture/crossbar-switch/"
+            class="link">Crossbar Switch</a></li>
+      </ol>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>

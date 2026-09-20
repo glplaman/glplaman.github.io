@@ -28,9 +28,7 @@
     <dl>
       <dt>内容 Contents</dt>
       <dd>传统以太网的局限性</dd>
-      <dd>广播风暴</dd>
-      <dd>虚拟局域网的特点</dd>
-      <dd>IEEE 802.1Q</dd>
+      <dd>虚拟局域网 VLAN</dd>
       <dt>传统以太网的局限性</dt>
       <!-- <figure>
         <img src="https://networkencyclopedia.com/wp-content/uploads/2019/08/vlan.jpg" alt="">
@@ -39,20 +37,29 @@
       <ul>
         <li>资源的竞争</li>
         <li>通信的私密性</li>
-        <li>广播风暴 Broadcast Storm</li>
-        <p>通信过程中，会产生大量广播帧</p>
-        <p>广播域 - 广播可以抵达的地方；这个区域越小越好</p>
+        <li>通信过程中，会产生大量广播帧/广播风暴 Broadcast Storm；会严重消耗设备的 CPU 和带宽资源，导致网络瘫痪</li>
+        <li>集线器 Hub：不隔离广播域；所有端口在同一广播域</li>
+        <li>交换机 Switch：默认不隔离广播域。交换机收到广播帧时，会将其从除接收端口外的所有其他端口转发出去。因此，默认情况下，连接在同一台交换机上的所有设备属于同一个广播域</li>
       </ul>
-      <dd>Broadcast Storm is a network condition in which so many broadcasts are occurring that normal communication is
-        disrupted.
+      <div class="tips">
+        <p>广播域 Broadcast Domain - 广播可以抵达的地方；这个区域越小越好</p>
+        <p>网络中能够接收到同一个广播帧（目的 MAC 地址为 FF:FF:FF:FF:FF:FF）的所有设备的集合</p>
+        <p>当一个设备发送广播时，同一广播域内的所有设备都会收到并处理这个数据包（即使它们并不需要）</p>
+        <p>广播域越大，广播风暴的风险越高</p>
+      </div>
+      <div class="tips">Broadcast Storm is a network condition in which so many broadcasts are occurring that normal
+        communication is disrupted.
         <p>continually sending out broadcast messages</p>
         <p>the wire is continually busy</p>
         <p>no other station is able to transmit information</p>
-      </dd>
+      </div>
       <!-- <figure>
         <img src="https://networkencyclopedia.com/wp-content/uploads/2019/09/broadcast-storm.jpeg" alt="">
         <figcaption>Broadcast Storm</figcaption>
       </figure> -->
+      <dt>解决方案 Solution</dt>
+      <dd>使用虚拟局域网 VLAN</dd>
+      <dd>使用上层设备/4层路由器</dd>
     </dl>
     <h2>虚拟局域网 Virtual LAN</h2>
     <dl>
@@ -61,13 +68,14 @@
       <dd>通过配置，将一个物理的局域网在逻辑上划分为若干个虚拟的 LAN</dd>
       <dd>将一个物理网络划分为多个逻辑上独立的广播域</dd>
       <dd>VLAN 内的主机间可以直接通信，而 VLAN 间不能直接互通</dd>
+      <dd>VLAN 是一把双刃剑</dd>
       <figure>
         <img src="./imgs/vlan27.png" alt="">
         <figcaption>VLAN 特点</figcaption>
       </figure>
       <dt>特点 Feature</dt>
       <ul>
-        <li>限制/隔离广播域:
+        <li>限制/隔离广播域：
           <p>广播域被限制在一个 VLAN 内</p>
           <p>一个 VlAN 就是一个一个广播域</p>
           <p>节省带宽，提高网络的处理能力</p>
@@ -261,6 +269,8 @@
         <img src="./imgs/vlan20.png" alt="">
         <figcaption>交换机1收到普通帧封帧 VLAN 帧并转发</figcaption>
       </figure>
+      <dd>下一个交换机连接的如果是另一台交换机（Trunk 链路），带着 VLAN 标记继续转发，直到到达目的主机</dd>
+      <dd>下一个交换机连接的如果是终端设备（Access 链路），去掉 VLAN 标记，还原为普通帧交付</dd>
       <figure>
         <img src="./imgs/vlan25.png" alt="">
         <img src="./imgs/vlan26.png" alt="">
@@ -272,6 +282,9 @@
       <dt>Summary</dt>
       <ol>
         <li>VLAN 的特点</li>
+        <li>交换机的端口模式</li>
+        <li>VLAN 帧结构</li>
+        <li>IEEE 802.1Q</li>
       </ol>
       <dt>Homework</dt>
       <ol>
