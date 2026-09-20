@@ -1,11 +1,14 @@
-    @import url(//at.alicdn.com/t/c/font_3834292_0ld9r9es4w4b.css);
-    @import url(/css/fonts_GreatVibes.css);
+    @import url(//at.alicdn.com/t/c/font_3834292_2rs3apvijum.css);
+    /* @import url(/css/fonts_GreatVibes.css); */
 
     :root {
       --main-color: rgba(255, 255, 255, 0.4);
       --active-color: #ffde00;
       --side-w: 120px;
       --p-m-g: 10px;
+      --bg-url: url(/utils/festival/9181.jpg);
+      --bg-pos-h: 50px;
+      --bg-w: 50%;
     }
 
     * {
@@ -20,12 +23,17 @@
       text-decoration: none;
     }
 
+    img {
+      max-width: 100%;
+    }
+
     body {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       background:
+        var(--bg-url) top var(--bg-pos-h) center/var(--bg-w),
         linear-gradient(#0006, #0000 30% 70%, #0004) 50% 0% / 100% 60%,
         linear-gradient(hsl(0deg 50% 50%) 0 0) 50% 0% / 5vw 60%,
         linear-gradient(hsl(30deg 50% 50%) 0 0) 50% 0% / 15vw 60%,
@@ -58,17 +66,19 @@
     h1 {
       position: fixed;
       left: 50%;
-      top: 10vh;
+      bottom: 6vh;
       width: max-content;
       transform: translateX(-50%);
-      font-family: 'GreatVibes';
+      /* font-family: 'GreatVibes'; */
       color: #fff;
       user-select: none;
-      text-transform: capitalize;
+      font-size: 24px;
+      /* text-transform: capitalize; */
     }
 
     .container {
       position: relative;
+      top: 20vh;
       width: var(--side-w);
       height: var(--side-w);
       display: flex;
@@ -172,6 +182,9 @@
       border-radius: 10px;
       box-shadow: 0 0 10px 4px rgba(255, 255, 255, 1);
       filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
+      background-size: 60%;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .side span {
@@ -181,26 +194,32 @@
 
     .side:nth-child(1) {
       transform: translateZ(var(--offset-w));
+      background-image: url(/utils/military/a0.png);
     }
 
     .side:nth-child(2) {
       transform: rotateY(180deg) translateZ(var(--offset-w));
+      background-image: url(/utils/military/a1.png);
     }
 
     .side:nth-child(3) {
       transform: rotateY(90deg) translateZ(var(--offset-w));
+      background-image: url(/utils/military/a2.png);
     }
 
     .side:nth-child(4) {
       transform: rotateY(-90deg) translateZ(var(--offset-w));
+      background-image: url(/utils/military/a3.png);
     }
 
     .side:nth-child(5) {
       transform: rotateX(90deg) translateZ(var(--offset-w));
+      background-image: url(/utils/military/a4.png);
     }
 
     .side:nth-child(6) {
       transform: rotateX(-90deg) translateZ(var(--offset-w));
+      background-image: url(/utils/military/a5.png);
     }
 
     /* snow */
@@ -241,5 +260,7 @@
     @media screen and (max-width:768px) {
       :root {
         --side-w: 80px;
+        --bg-url: url(/utils/festival/9180.jpg);
       }
+
     }
