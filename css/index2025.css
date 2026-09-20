@@ -178,6 +178,30 @@ header {
   filter: drop-shadow(0 0 0.4rem #fff);
 }
 
+.top {
+  padding: var(--p-m-g);
+  line-height: 2;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.item::before {
+  content: attr(data-title);
+  text-transform: capitalize;
+  order: 2;
+}
+
+.item::after {
+  content: '';
+  flex: 1;
+  height: 3px;
+  background-image: url(/imgs/dot.png);
+  background-repeat: repeat-x;
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
