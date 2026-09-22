@@ -23,11 +23,19 @@
     <dl>
       <img src="./imgs/packet.png" alt="">
       <dt>基本组成 Component</dt>
-      <dd>IP数据报由首部 header 和数据 data 两部分组成</dd>
-      <dd>首部：包括：20 Bytes 的固定部分和可选部分；最大不超过60 Bytes</dd>
-      <dd>数据部分：可选；长度可变；超过最大传输单元 MTU，则需要分片</dd>
+      <dd>IP 数据报由首部 header 和数据 data 两部分组成</dd>
+      <dd>首部：
+        <p>20 Bytes 的固定部分</p>
+        <p>可选部分</p>
+        <p>最大不超过60 Bytes</p>
+      </dd>
+      <dd>数据部分：
+        <p>可选</p>
+        <p>长度可变</p>
+        <p>超过最大传输单元 MTU，则需要分片</p>
+      </dd>
       <table>
-        <caption>IP数据报格式</caption>
+        <caption>IP 数据报格式</caption>
         <thead>
           <tr>
             <th>4 bits</th>
@@ -69,22 +77,22 @@
       </table>
       <figure>
         <img src="./imgs/n7.png" alt="">
-        <figcaption>PT中的IP数据报</figcaption>
+        <figcaption>PT 中的 IP 数据报</figcaption>
       </figure>
       <dt>版本 Version</dt>
       <dd>4 bits</dd>
-      <dd>0100，表示IP v4</dd>
+      <dd>0100，表示 IP v4</dd>
       <dt>首部长度 Internet Header Length</dt>
       <dd>4 bits；以 <strong>4 Bytes</strong> 为单位</dd>
-      <dd>最小值为0101，则最短首部长度：5*4 = 20 Bytes</dd>
-      <dd>最大值为1111，则最大首部长度：(2<sup>4</sup>-1)*4 = 60 Bytes</dd>
+      <dd>最小值为0101，则最短首部长度：5×4 = 20 Bytes</dd>
+      <dd>最大值为1111，则最大首部长度：(2<sup>4</sup>-1)×4 = 60 Bytes</dd>
       <dt>总长度 Total Length</dt>
       <dd>16 bits；以 <strong>Bytes</strong> 为单位</dd>
       <dd>首部和数据部分总和</dd>
       <dd>最大数值为1111 1111 1111 1111，最大长度为2<sup>16</sup>-1=65535 Bytes</dd>
-      <dd>以太网规定：IP数据报的最大传输单元MTU长度为1500 Bytes；长度超过MTU就必须分片，单独封帧再传输</dd>
+      <dd>以太网规定：IP 数据报的最大传输单元 MTU 长度为1500 Bytes；长度超过 MTU 就必须分片，单独封帧再传输</dd>
       <dt>标识 Identification、标记 Flags、片偏移部分 Fragment Offset</dt>
-      <dd>这3个字段用于IP数据报分片</dd>
+      <dd>这3个字段用于 IP 数据报分片</dd>
       <dd>Identification：
         <p>16 bits - 65536</p>
         <p>需要分片的时候，由发送方设置的一个标识</p>
@@ -99,14 +107,14 @@
       </dd>
       <dd>Fragment Offset：13 bits，以 <strong>8 Bytes</strong> 为单位，指出分片数据报的数据部分在 <strong>原</strong> 数据报中的偏移部分；必须为整数</dd>
       <dt>生存时间 Time to Live</dt>
-      <dd>8 bits，以秒s为单位</dd>
-      <dd>最大生存时间是255s</dd>
+      <dd>8 bits，以秒 s 为单位</dd>
+      <dd>最大生存时间是 255s</dd>
       <dd>早期代表时间；现在表示可通过的路由数/跳数</dd>
       <dd>每次转发 <strong>前</strong> 先减1；如果结果为0就丢弃，不转发</dd>
-      <dd>防止IP数据报在网络中无限制的兜圈子</dd>
+      <dd>防止 IP 数据报在网络中无限制的兜圈子</dd>
       <dt>协议 Protocol</dt>
       <dd>8 bits</dd>
-      <dd>它指明 IP 层之上的协议类型；如ICMP、TCP、UDP、OSPF等</dd>
+      <dd>它指明 IP 层之上的协议类型；如 ICMP、TCP、UDP、OSPF等</dd>
       <dd>当一台主机或路由器收到一个 IP 数据包时，需要知道：它的数据部分/有效载荷/payload 交给上层的谁处理</dd>
       <dd>接收端的 IP 模块根据该字段的值，将数据交给对应的上层协议模块处理</dd>
       <figure>
@@ -162,15 +170,15 @@
         <p>字段回填：将计算结果填入首部校验和字段</p>
       </dd>
       <dd>接收端验证过程
-        <p>将收到的IP数据报首部同样按 16 bits 分组</p>
+        <p>将收到的 IP 数据报首部同样按 16 bits 分组</p>
         <p>对所有分组（包括校验和字段）进行二进制反码求和</p>
         <p>如果结果全为1（即0xFFFF），则校验通过，数据未出错</p>
         <p>如果结果不全为1，则数据在传输过程中出现错误；被丢弃</p>
       </dd>
       <dt>源地址 Source Address</dt>
-      <dd>发送方/源主机IP地址；32 bits</dd>
+      <dd>发送方/源主机 IP 地址；32 bits</dd>
       <dt>目标地址 Destination Address</dt>
-      <dd>接收方/目标主机IP地址；32 bits</dd>
+      <dd>接收方/目标主机 IP 地址；32 bits</dd>
     </dl>
     <h2>案例 Cases</h2>
     <dl>
@@ -185,9 +193,9 @@
       <dd>答：</dd>
       <dd>每个分片 = 首部 + 数据</dd>
       <dd>分片后不能超过 1420 Bytes，所以每片的数据部分最大：1420 Bytes - 20Bytes = 1400 Bytes</dd>
-      <dd>假设标识ID为 12345</dd>
+      <dd>假设标识 ID 为 12345</dd>
       <table>
-        <caption>IP数据报的分片</caption>
+        <caption>IP 数据报的分片</caption>
         <thead>
           <tr>
             <th></th>
@@ -225,7 +233,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="demo"> 采用固定首部的某IP数据报长度为 1500B，目标网络的 MTU 是 800B，求分片数量和偏移。</div>
+      <div class="demo"> 采用固定首部的某 IP 数据报长度为 1500B，目标网络的 MTU 是 800B，求分片数量和偏移。</div>
       <dd>答：</dd>
       <table>
         <caption>原始数据报</caption>
@@ -329,16 +337,16 @@
       </ol>
       <dt>Homework</dt>
       <ol>
-        <li>IP数据报由首部和数据2部分组成（）。</li>
-        <li>IP数据报中，首部长度是 20 Bytes（）。</li>
-        <li>IP数据报中，首部的固定部分长度是 20 Bytes（）。</li>
-        <li>某IP数据报中，TTL为1，说明该数据报还可以经路由器转发1次（）。</li>
-        <li>某IP数据报首部字段为0111，则首部长度是（）Bytes。</li>
+        <li>IP 数据报由首部和数据2部分组成（）。</li>
+        <li>IP 数据报中，首部长度是 20 Bytes（）。</li>
+        <li>IP 数据报中，首部的固定部分长度是 20 Bytes（）。</li>
+        <li>某 IP 数据报中，TTL为1，说明该数据报还可以经路由器转发1次（）。</li>
+        <li>某 IP 数据报首部字段为0111，则首部长度是（）Bytes。</li>
         <div>A：7 Bytes</div>
         <div>B：20 Bytes</div>
         <div>C：28 Bytes</div>
         <div>D：60 Bytes</div>
-        <li>图1中，IP数据报使用的通信协议是（）。</li>
+        <li>图1中，IP 数据报使用的通信协议是（）。</li>
         <div>A：ICMP</div>
         <div>B：IGMP</div>
         <div>C：TCP</div>

@@ -47,9 +47,9 @@
       <dd>转发是基于分组首部中的目的IP地址 - <strong>基于终点</strong> 的转发</dd>
       <dd>转发的依据是路由表（直连路由、静态路由和动态路由）</dd>
       <dd>重点关注3张表
-        <p>ARP表</p>
-        <p>MAC表</p>
-        <p>Router表</p>
+        <p>ARP 表</p>
+        <p>MAC 表</p>
+        <p>Router 表</p>
       </dd>
       <figure>
         <img src="./imgs/l17.png" alt="">
@@ -328,8 +328,8 @@
       <div class="demo"> 直连路由转发</div>
       <dd>通过配置Router1的Fa0/0端口和Fa0/1端口，使其分别连接不同的网络；</dd>
       <dd>PC0和PC3的通信由两端交换路径组成：
-        <p>PC0到Router1的Fa0/0端口：IP分组的封帧信息为：源MAC地址为PC0，目标MAC地址为Router1的Fa0/0</p>
-        <p>Router1的Fa0/1端口到PC3：IP分组的封帧信息为：源MAC地址为Router1的Fa0/1，目标MAC地址为PC3</p>
+        <p>PC0到Router1的Fa0/0端口：IP 分组的封帧信息为：源MAC地址为PC0，目标MAC地址为Router1的Fa0/0</p>
+        <p>Router1的Fa0/1端口到PC3：IP 分组的封帧信息为：源MAC地址为Router1的Fa0/1，目标MAC地址为PC3</p>
       </dd>
       <dd>标签说明信息中，上方是IP地址，下方是网关地址</dd>
       <figure>
@@ -346,10 +346,10 @@ Router(config)#interface fa0/1
 Router(config-if)#ip address 192.1.2.254 255.255.255.0
 Router(config-if)#no shutdown</pre>
       <dd>查看 - 使用监视工具
-        <p>Type中C表示直连路由</p>
-        <p>Network为目的网络地址和地址掩码</p>
-        <p>Port为连接下一跳的端口</p>
-        <p>Next hop IP：下一跳的IP地址；对直连路由，目的网络和路由器直接连接，所以为空</p>
+        <p>Type 中C表示直连路由</p>
+        <p>Network 为目的网络地址和地址掩码</p>
+        <p>Port 为连接下一跳的端口</p>
+        <p>Next hop IP：下一跳的 IP 地址；对直连路由，目的网络和路由器直接连接，所以为空</p>
         <p>Metric：
           前一个数值表示管理距离值；每个路由协议都有一个默认的管理距离值；越小，优先级越高；0表示直连路由的优先级最高，即：如果目的网络存在多个类型的路由项，首先使用直连路由
           后一个数值表示距离，直连路由为0</p>

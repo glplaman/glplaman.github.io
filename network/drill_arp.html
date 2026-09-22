@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验 地址解析协议 ARP</title>
+  <link rel="stylesheet" href="../css/drill.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>地址解析协议</h1>
+    <h4>ARP</h4>
+    <dl class="container">
+      <dt>实验学时</dt>
+      <dd>2</dd>
+      <dt>实验类型</dt>
+      <dd>验证型</dd>
+      <dt>实验目的</dt>
+      <dt>实验内容</dt>
+      <dd>网内 ARP</dd>
+      <dd>跨网 ARP</dd>
+      <dd>多网段 ARP</dd>
+      <dt>实验器材</dt>
+      <dt>前置知识</dt>
+      <dt>使用步骤</dt>
+      <dt>参考效果和参考命令</dt>
+      <dt>拓展与思考</dt>
+    </dl>
+    <h2>案例 Cases</h2>
+    <dl>
+      <div class="demo"> 实操1 网内 ARP</div>
+      <figure>
+        <img src="./imgs/arp2.png" alt="">
+        <figcaption>网内 ARP 拓扑</figcaption>
+      </figure>
+      <dd>搭建拓扑；分配 IP 地址</dd>
+      <dd>利用监视工具打开各设备 ARP 表</dd>
+      <dd>PC0 发 PDU 给 PC1，查看 ARP 表的更新情况</dd>
+      <dd>清除 ARP 表重新测试</dd>
+      <dd>清除 ARP 表后使用 ping <strong>重新</strong> 测试，并分析情况</dd>
+      <dd>测试前，各主机 ARP 表内容</dd>
+      <table>
+        <caption>PC0</caption>
+        <thead>
+          <tr>
+            <th>IP Address</th>
+            <th>Hardware Address</th>
+            <th>Interface</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <table>
+        <caption>PC1</caption>
+        <thead>
+          <tr>
+            <th>IP Address</th>
+            <th>Hardware Address</th>
+            <th>Interface</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <dd>测试后，各主机 ARP 表内容</dd>
+      <table>
+        <caption>PC0</caption>
+        <thead>
+          <tr>
+            <th>IP Address</th>
+            <th>Hardware Address</th>
+            <th>Interface</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>192.168.1.2</td>
+          <td>0001.C753.8C96</td>
+          <td>FastEthernet0</td>
+        </tr>
+      </table>
+      <table>
+        <caption>PC1</caption>
+        <thead>
+          <tr>
+            <th>IP Address</th>
+            <th>Hardware Address</th>
+            <th>Interface</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>192.168.1.1</td>
+          <td>0060.470B.C9AD</td>
+          <td>FastEthernet0</td>
+        </tr>
+      </table>
+      <div class="demo"> 实操2 跨网 ARP</div>
+      <figure>
+        <img src="./imgs/l14.png" alt="">
+        <figcaption>跨网 ARP 拓扑</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/l16.png" alt="">
+        <figcaption>路由器端口配置参考</figcaption>
+      </figure>
+      <dd>主机 → 交换机 → 路由器 → 交换机 → 主机</dd>
+      <dd>如果目标主机和源主机不在同一网段，目标主机就向网关发 ARP 请求，然后封装报文、发给网关</dd>
+      <dd>如果网关没有目标主机的 ARP 条目，网关发起 ARP 请求</dd>
+      <dd>如果网关有目标主机的 ARP 条目，网关直接把报文发给目标主机</dd>
+      <!-- <img src="../imgs/network/network layer 1/幻灯片10.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 1/幻灯片11.JPG" alt=""> -->
+      <figure>
+        <img src="./imgs/l15.png" alt="">
+        <figcaption>逐段转发</figcaption>
+      </figure>
+      <div class="tips">逐段转发</div>
+      <div class="demo"> 实操3 多网段 ARP</div>
+      <figure>
+        <img src="./imgs/ipmac0.png" alt="">
+        <figcaption>逐段转发</figcaption>
+      </figure>
+      <!-- <img src="../imgs/network/network layer 1/幻灯片12.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 1/幻灯片13.JPG" alt=""> -->
+      <!-- <img src="../imgs/network/network layer 1/幻灯片14.JPG" alt=""> -->
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

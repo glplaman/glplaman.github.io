@@ -27,24 +27,22 @@
         <figcaption>IP 地址配置</figcaption>
       </figure>
       <dt>地址解析协议 ARP</dt>
-      <dd>根据目标设备的IP地址，查询目标设备的MAC地址，以保证通信的顺利进行</dd>
-      <dd>它是IPv4中网络层必不可少的协议，不过在IPv6中已不再适用，并被邻居发现协议NDP所替代</dd>
-      <dd>ARP的命令一般有三个用法：查询显示、添加记录、与删除记录</dd>
-      <dd>arp -a
-        <p>显示当期IP地址对应的MAC地址</p>
-      </dd>
-      <dd>arp -d
-        <p>删除所有ARP记录</p>
-        <p>如果想彻底清空ARP列表，需要禁止所有网络连接，否则网络数据交互过程中仍然会产生新的ARP列表</p>
-      </dd>
-      <dd>arp -s
-        <p>手动添加或绑定一条ARP记录，也叫绑定MAC地址命令</p>
-        <p>手动添加的记录，称为静态记录；通过ARP添加的记录是动态记录</p>
-        <p>在网络中，通常在办公网络或监控项目中，为了防止用户乱改IP地址或IP地址冲突，需要给IP地址绑定设备的MAC地址 </p>
-        <p>绑定后记得查看，确保成功</p>
-        <pre>arp -s IP地址 MAC地址</pre>
-      </dd>
-      <div class="tips">大多数ARP静态绑定操作都需要网络管理员权限</div>
+      <dd>根据目标设备的 IP 地址，查询目标设备的 MAC 地址，以保证通信的顺利进行</dd>
+      <dd>ARP 的命令一般有三个用法：查询、添加、删除</dd>
+      <div>1. 查看</div>
+      <dd>显示当期 IP 地址对应的 MAC 地址</dd>
+      <pre>arp -a</pre>
+      <div>2. 删除</div>
+      <dd>删除所有 ARP 记录</dd>
+      <dd>如果想彻底清空 ARP 列表，需要禁止所有网络连接，否则网络数据交互过程中仍然会产生新的 ARP 列表</dd>
+      <pre>arp -d [IP]</pre>
+      <div>3. 为指定主机添加一条静态条目</div>
+      <dd>手动添加或绑定一条ARP记录，也叫绑定 MAC 地址命令</dd>
+      <dd>手动添加的记录，称为静态记录；通过 ARP 添加的记录是动态记录</dd>
+      <dd>在网络中，通常在办公网络或监控项目中，为了防止用户乱改 IP 地址或 IP 地址冲突，需要给 IP 地址绑定设备的 MAC 地址 </dd>
+      <dd>绑定后记得查看，确保成功</dd>
+      <pre>arp -s IP地址 MAC地址</pre>
+      <div class="tips">大多数 ARP 静态绑定操作都需要网络管理员权限</div>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
