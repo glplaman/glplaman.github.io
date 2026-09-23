@@ -21,24 +21,26 @@
       <span>&commat;Router</span>
     </header>
     <dl>
-      <img src="./imgs/router2.png" alt="">
-      <dd>三层设备；实现不同类型网络之间的互联；对应的PDU是IP数据报/分组IP packet</dd>
-      <dd>多输入/多输出端口：从某个输入端口收到分组后，根据路由协议，按照分组目标IP，从某个输出端口转发给下一个路由器；重复直至分组到达目的网络</dd>
-      <dd>使用路由器，真正实现了网际互连</dd>
       <div class="tips">
-        <p>A router connects devices across multiple networks. </p>
+        <p>物理层：Repeater / Hub</p>
+        <p>链路层：Switch / Bridge</p>
+        <p>运输层+：Gateway</p>
+      </div> <img src="./imgs/router2.png" alt="">
+      <dd>三层设备</dd>
+      <dd>实现不同类型网络之间的互联</dd>
+      <dd>对应的PDU是IP数据报 Datagram/IP分组 Packet</dd>
+      <dd>多输入/多输出端口：从某个输入端口收到分组后，根据路由协议，按照分组目标IP，从某个输出端口转发给下一个路由器；重复直至分组到达目的网络</dd>
+      <dd>使用路由器，实现了真正的网际互连</dd>
+      <div class="tips">
         <p>Switch’s main objective is to connect various devices in a network.</p>
+        <p>A router connects devices across multiple networks. </p>
       </div>
       <figure>
         <img src="./imgs/n0.png" alt="">
         <img src="./imgs/n11.png" alt="">
         <figcaption>网际互连</figcaption>
       </figure>
-      <div class="tips">
-        <p>物理层：Repeater / Hub</p>
-        <p>链路层：Switch / Bridge</p>
-        <p>运输层+：Gateway</p>
-      </div>
+
       <dt>逻辑结构 Logical</dt>
       <dd>路由选择部分
         <p>根据路由协议，通过定期和相邻路由器交换路由信息来维护路由表</p>
@@ -59,18 +61,18 @@
       <dd>路由表中的每一个条目 Entry 代表一条路由信息，指导路由器如何转发数据包。其包含三个主要部分：</dd>
       <ol>
         <li>网络地址 Network：
-          <p>IP地址和子网掩码，采用CIDR记法；如 128.1.2.192/26</p>
+          <p>目标网络的 IP 地址和子网掩码，采用CIDR记法；如 128.1.2.192/26</p>
         </li>
         <li>转发端口 Port：
-          <p>指明数据包应该从路由器的哪个物理或逻辑接口发送出去；如0、1、3</p>
+          <p>数据包应该从路由器的哪个物理或逻辑接口（如端口 0、1、3）发送出去</p>
         </li>
         <li>下一跳IP地址 Next Hop IP：
-          <p>如果目标网络不是直接连接在本路由器的端口上，那么数据包需要先发送到另一个路由器（即“下一跳”）</p>
-          <p>这个字段就是那个“下一跳”路由器的IP地址</p>
-          <p>如果目标网络是直连的（如前两行所示），则此字段为“–”，表示数据包可以直接交付，无需经过其他路由器</p>
+          <p>如果目标网络不是直连的，数据包需要先发给另一个路由器，这个字段就是下一个路由器的 IP 地址</p>
+          <p>如果目标网络是直连的，这个字段通常显示为 “-”，表示直接交付，无需经过其他路由器</p>
         </li>
       </ol>
-      <table style="max-width: 450px;">
+      <div class="demo">路由表的转发</div>
+      <table style="max-width: 500px;">
         <caption>路由表</caption>
         <thead>
           <tr>
@@ -97,9 +99,11 @@
           </tr>
         </tbody>
       </table>
-      <dd>128.1.2.192/26 通过端口1直接连接，可以直接交付</dd>
-      <dd>128.1.2.128/26 通过端口2直接连接，可以直接交付</dd>
-      <dd>128.1.3.64/26 需要通过端口3转发，并且必须发送到IP地址为 192.168.3.2 的下一个路由器</dd>
+      <div class="txt-indent">
+        <p>凡是目标 IP 在 128.1.2.192/26 这个网段内的数据包，路由器会直接通过端口 1 发送出去，因为该网络是直连的</p>
+        <p>凡是目标 IP 在 128.1.2.128/26 这个网段内的数据包，路由器会直接通过端口 2 发送出去，同样是直连网络</p>
+        <p>目标网络 128.1.3.64/26 不是直连的。路由器会将数据包通过端口 3 转发给下一跳路由器，下一跳路由器的 IP 地址是 192.168.3.2</p>
+      </div>
       <dt>路由分类 Type</dt>
       <dd>静态路由 Static Route
         <p>手动配置</p>

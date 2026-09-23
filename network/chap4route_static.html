@@ -60,17 +60,21 @@
       <dt>第一部分 网络分析 Analyze</dt>
       <dd>1号网和3号网直连；2号网和3号网直连；可以自动生成通往彼此的直连路由</dd>
       <dd>1号网和2号网没有直连，所以不能自动生成通往彼此的直连路由；要实现数据通信，必须指明到达目标网络的路由</dd>
-      <dd>对1号网→2号网，Router0的决策：目标网络是2号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.2</dd>
-      <dd>对2号网→1号网，Router1的决策：目标网络是1号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.1</dd>
+      <dd>对1号网→2号网，Router0的决策：目标网络是2号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.2，即 Router1</dd>
+      <dd>对2号网→1号网，Router1的决策：目标网络是1号网络；输出接口为g0/0/1，下一跳IP地址为192.168.3.1，即 Router0</dd>
       <dd>需配置静态路由：
         <p>Router0 上配置去往 2号网 的静态路由（下一跳 192.168.3.2）</p>
         <p>Router1 上配置去往 1号网 的静态路由（下一跳 192.168.3.1）</p>
       </dd>
+      <dt>第二部分 搭建拓扑</dt>
+      <dd>2台路由器 2911</dd>
+      <dd>2台交换机 2960</dd>
+      <dd>诺干主机</dd>
       <figure>
         <img src="./imgs/r0.png" alt="">
         <figcaption>网络拓扑</figcaption>
       </figure>
-      <dt>第二部分 路由器IP参考配置 IP Configuration</dt>
+      <dt>第三部分 路由器IP参考配置 IP Configuration</dt>
       <dd>Router0</dd>
       <pre>
 Router(config)# inter g0/0/0
@@ -96,8 +100,8 @@ Router(config-if)# no shutdown</pre>
         <img src="./imgs/r2.png" alt="">
         <figcaption>Router1 路由配置前</figcaption>
       </figure>
-      <dt>第三部分 静态路由配置 Route Configuration</dt>
-      <dd>配置出口的路由</dd>
+      <dt>第四部分 静态路由配置 Route Configuration</dt>
+      <dd>配置路由器的出口路由</dd>
       <dd>Router0</dd>
       <pre>
 Router>en
