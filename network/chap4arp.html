@@ -54,6 +54,8 @@
         Entry，用于后续到目的地报文的转发
       </dd>
       <dd>IPv4 中网络层必不可少的协议，不过在 IPv6 中已不再适用，并被邻居发现协议 NDP 所替代</dd>
+      <div class="demo">ARP 缓存表中的动态表项是永久保存的，一旦建立就不会被删除或更新<span class="iconfont icon-help"></span></div>
+      <!-- x -->
       <dt>分类 Type</dt>
       <dd>ARP 条目分为动态 ARP 和静态 ARP</dd>
       <dd>动态 ARP：
@@ -90,6 +92,10 @@
           192.168.0.3 的主机；如果在，请把你的 MAC 地址给我；同时，请记录我的 MAC 地址和 IP 地址，以备后续通信需要</p>
       </dd>
       <dd>除 H1 外，其它主机都会收到这个广播帧</dd>
+      <figure>
+        <img src="./imgs/arp3.png" alt="">
+        <figcaption>广播请求</figcaption>
+      </figure>
       <dd>H2 和 H4 分析后发现，广播要找的目标不是自己，丢弃该帧</dd>
       <dd>H3 分析后，发现是询问自己：
         <p>以 <strong>单播</strong> 的形式给 H1 回一个 <strong>ARP 响应</strong>：我是你找的 192.168.0.3，我的 MAC 地址为 0030.A313.6DA4</p>
@@ -100,6 +106,10 @@
         <p>封帧之前缓存的消息并发送</p>
       </dd>
       <figure>
+        <img src="./imgs/arp4.png" alt="">
+        <figcaption>单播响应</figcaption>
+      </figure>
+      <figure>
         <img src="./imgs/arp.gif" alt="">
         <figcaption>ARP 过程</figcaption>
       </figure>
@@ -108,7 +118,7 @@
       <dd>动态更新：设备重启，网卡更换等</dd>
       <dd>有生存周期：超过生存周期的条目将被删除</dd>
       <dd>每次 ARP 协议使用某个条目，该条目的生存周期都要重新计时</dd>
-      <dd>ARP 协议不出网</dd>
+      <dd>ARP 协议的工作方式是广播；广播无法通过的地方，协议就无法工作，所以 ARP 不出网</dd>
     </dl>
     <h2>安全 Security</h2>
     <dl>
@@ -120,7 +130,10 @@
         <figcaption>ARP欺骗</figcaption>
       </figure>
       <dt>导致 Result in</dt>
-      <dd>中间人攻击 Main-in-the-Middle</dd>
+      <dd>中间人攻击 Main-in-the-Middle
+        <p>告诉主机，我是网关</p>
+        <p>告诉网关，我是主机</p>
+      </dd>
       <dd>会话劫持 Session Hijacking</dd>
       <dd>拒绝服务 Denial of Service (DoS)</dd>
       <figure style="max-width: 600px;">
@@ -142,6 +155,23 @@
         <li>ARP 的解析过程</li>
         <li>ARP 的特点</li>
       </ol>
+      <dt>Homework</dt>
+      <div class="demo">ARP 协议的主要功能是将目标主机的 MAC 地址解析为对应的 IP 地址。()</div>
+      <!-- x -->
+      <div class="demo">ARP 协议仅限在同一个广播域内工作。()</div>
+      <!-- √ -->
+      <div class="demo">ARP 请求报文是以广播方式发送的，而 ARP 响应报文是以单播方式发送的。()</div>
+      <!-- √ -->
+      <div class="demo">主机在收到 ARP 响应报文时，会先验证自己是否曾发送过对应的 ARP 请求，确认无误后才会更新本地 ARP 缓存表。()</div>
+      <!-- x -->
+      <div class="demo">攻击者实施 ARP 欺骗时，只需要欺骗局域网内的普通主机，不需要欺骗网关路由器。()</div>
+      <!-- x -->
+      <div class="demo">在主机或网关上配置静态 ARP 绑定（将正确的 IP 与 MAC 地址手动绑定），可以有效防止 ARP 欺骗攻击。()</div>
+      <!-- √ -->
+      <div class="demo">攻击者可以通过将目标 IP 地址映射到一个不存在的 MAC 地址，导致目标主机无法通信，从而实现拒绝服务攻击。()</div>
+      <!-- √ -->
+      <div class="demo">在 IPv6 网络中，仍然使用 ARP 协议来完成 IP 地址到 MAC 地址的解析。()</div>
+      <!-- x -->
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc826.html">RFC 826</a></li>
