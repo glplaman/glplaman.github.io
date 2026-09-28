@@ -51,7 +51,7 @@
     </dl>
     <h2>报文格式 Format</h2>
     <dl>
-      <table>
+      <table style="max-width: 500px;">
         <caption>ICMP 格式</caption>
         <thead>
           <tr>
@@ -122,6 +122,15 @@
       <dd>帮助检测丢包或乱序</dd>
       <dd>Ping 的4个探测，ID 相同；SEQ 递增</dd>
       <dd>并非所有 ICMP 报文都有 ID 和 SEQ NUMBER，仅 Echo 类报文有</dd>
+      <div class="tips">
+        <p>前面5个部分就是 ICMP 的首部</p>
+        <!-- <p>- 类型 TYPE</p>
+        <p>- 代码 CODE</p>
+        <p>- 校验和 CHECKSUM</p>
+        <p>- 标识符 ID</p>
+        <p>- 序列号 SEQ NUMBER</p> -->
+        <p>固定长度是8 Bytes</p>
+      </div>
       <dt>数据 Data</dt>
       <dd>可变长度</dd>
       <dd>携带实际的数据内容</dd>
@@ -152,7 +161,7 @@
     </dl>
     <h2>实操 Drill</h2>
     <dl>
-      <div class="demo">Ping 的ICMP 报文分析 1</div>
+      <div class="demo">Ping 的 ICMP 报文分析 1</div>
       <ol>
         <li>搭建拓扑
           <p>1台路由器 2911</p>
@@ -179,6 +188,8 @@
           <img src="./imgs/icmp6.png" alt="">
           <figcaption>发送回显请求 Echo Request</figcaption>
         </figure>
+        <!-- ICMP 的大小多少？ -->
+        <!-- 128-5*4=108 Bytes -->
         <li>Router0 收到报文；TTL 128</li>
         <figure>
           <img src="./imgs/icmp7.png" alt="">
@@ -236,7 +247,7 @@ Ping statistics for 192.168.2.10:
     Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
 Approximate round trip times in milli-seconds:
     Minimum = 4ms, Maximum = 4ms, Average = 4ms</pre>
-      <div class="demo">Ping 的ICMP 报文分析 2</div>
+      <div class="demo">Ping 的 ICMP 报文分析 2</div>
       <ol>
         <li>拓扑同上图</li>
         <li>为路由器配置转发为空的<a class="link" href="./chap4route_host.html">主机路由</a></li>
