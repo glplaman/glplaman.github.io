@@ -19,13 +19,24 @@
       <h1>路由器 Router</h1>
     </header>
     <dl>
+      <div class="tips">
+        <p>配置完毕后记得写入 Write 保存！！！</p>
+      </div>
       <dt>mode</dt>
       <dd>用户模式 ></dd>
       <dd>特权模式 #</dd>
       <dd>全局配置模式 conf-xx</dd>
+      <dt>查看端口</dt>
+      <pre>Router> show interface xxx</pre>
+      <pre>Router# show interface xxx</pre>
       <dt>查看路由</dt>
-      <dd>用户模式查看</dd>
       <pre>Router> show ip route</pre>
+      <pre>Router# show ip route</pre>
+      <dd>还可以使用PT的监视器工具 <span class="iconfont icon-search"></span> 查看</dd>
+      <figure>
+        <img src="./imgs/n8.png" alt="">
+        <figcaption>使用PT的监视器工具查看路由表</figcaption>
+      </figure>
       <pre>
 Router>
 Router> show ip route
@@ -47,6 +58,7 @@ L       128.1.2.193/32 is directly connected, GigabitEthernet0/2
      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
 C       192.168.1.0/24 is directly connected, GigabitEthernet0/0
 L       192.168.1.2/32 is directly connected, GigabitEthernet0/0</pre>
+      <dt>路由分类</dt>
       <table>
         <caption>路由项分类</caption>
         <thead>
@@ -100,19 +112,15 @@ L       192.168.1.2/32 is directly connected, GigabitEthernet0/0</pre>
         <p>S 是管理员手动添加的</p>
         <p>其它由路由协议生成</p>
       </div>
-      <dd>也可以在特权模式查看</dd>
-      <pre>Router# show ip route</pre>
-      <dd>还可以使用PT的监视器工具 <span class="iconfont icon-search"></span> 查看</dd>
-      <figure>
-        <img src="./imgs/n8.png" alt="">
-        <figcaption>使用PT的监视器工具查看路由表</figcaption>
-      </figure>
-      <dt>配置路由</dt>
-      <dd>进入特权模式</dd>
-      <dd>进入全局配置模式</dd>
-      <dd>选择端口</dd>
-      <dd>绑定ip地址和地址掩码</dd>
-      <dd>启用端口</dd>
+      <dt>配置端口 IP 地址</dt>
+      <dd>每个端口都可以分配一个 IP 地址</dd>
+      <ol>
+        <li>进入特权模式</li>
+        <li>进入全局配置模式</li>
+        <li>选择端口</li>
+        <li>指定 IP 地址和地址掩码</li>
+        <li>启用端口</li>
+      </ol>
       <dd>可以不用退出，接着切换另外一个端口继续配置</dd>
       <pre>
 Router>en
@@ -122,22 +130,32 @@ Enter configuration commands, one per line. End with CNTL/Z.
 # 配置普通路由
 Router(config)#int g0/0/0
 Router(config-if)#ip address 192.168.0.254 255.255.255.0
-Router(config-if)#no shutdown
-Router(config-if)#int g0/0/1
-Router(config-if)#ip address 192.168.1.254 255.255.255.0
-Router(config-if)#no shutdown
-
-# 配置默认路由，下一跳地址为 192.168.1.1
+Router(config-if)#no shutdown</pre>
+      <dt>配置路由 Route</dt>
+      <dd>Prefix：目的网络的网络地址</dd>
+      <dd>MASK：目的网络的地址掩码</dd>
+      <dd>NEXT-HOP：下一跳设备的 IP 地址</dd>
+      <pre>Router(config)# ip route Prefix MASK NEXT-HOP</pre>
+      <dd>在全局配置模式下</dd>
+      <pre>
+# 下一跳地址为 192.168.1.1；这里是默认路由
 Router(config)# ip route 0.0.0.0 0.0.0.0 192.168.1.1
 
 # 退出并保存配置
 Router(config)# end
 Router# write memory</pre>
+      <dd>特别的，静态路由还是可以使用面板配置</dd>
+      <figure>
+        <img src="./imgs/router3.png" alt="">
+        <figcaption>使用面板配置</figcaption>
+      </figure>
       <dt>删除路由</dt>
-      <pre>Router(config)# no ip route IP MASK NEXT-HOP</pre>
+      <pre>Router(config)# no ip route Prefix MASK NEXT-HOP</pre>
       <dt>查看路由协议</dt>
-      <dd>show ip protocols</d>
-        <pre>
+      <dd>配置/启用了相应的协议才有结果</dd>
+      <pre>Router> show ip protocols</pre>
+      <pre>Router# show ip protocols</pre>
+      <pre>
 Router>show ip protocols 
 Routing Protocol is "rip"
 Sending updates every 30 seconds, next due in 9 seconds

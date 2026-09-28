@@ -48,13 +48,39 @@
         <p>路由器性能较弱，无法运行复杂的动态路由协议（如RIP、OSPF）</p>
       </dd>
       <dt>路由配置命令 Command</dt>
-      <dd>prefix：目的网络的网络地址</dd>
-      <dd>mask：目的网络的地址掩码</dd>
-      <dd>ip：下一跳的IP地址</dd>
-      <pre>ip route prefix mask ip</pre>
+      <dd>Prefix：目的网络的网络地址</dd>
+      <dd>MASK：目的网络的地址掩码</dd>
+      <dd>NEXT-HOP：下一跳设备的 IP 地址</dd>
+      <pre>Router(config)# ip route Prefix MASK NEXT-HOP</pre>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
+      <div class="demo">静态路由配置</div>
+      <figure>
+        <img src="./imgs/r13.png" alt="">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <dd>基本过程</dd>
+      <ol>
+        <li>构建拓扑</li>
+        <li>各主机：
+          <p>H1：分配 IP 地址和默认网关</p>
+          <p>H2：分配 IP 地址和默认网关 <span class="iconfont icon-help"></span></p>
+          <p>H3：分配 IP 地址和默认网关</p>
+        </li>
+        <li>R1
+          <p>端口0：分配 IP 地址</p>
+          <p>端口1：分配 IP 地址</p>
+          <p>配置到网络 128.1.3.64/26 的静态路由</p>
+        </li>
+        <li>R2
+          <p>端口0：分配 IP 地址</p>
+          <p>端口1：分配 IP 地址</p>
+          <p>配置到网络 128.1.2.192/26 的静态路由</p>
+        </li>
+        <li>发简单PDU测试网络连通性并分析先失败后成功的原因</li>
+      </ol>
+
       <div class="demo"> 静态路由配置 <a href="./pt/static-route.pkt" download>点击下载PT文件 <span
             class="iconfont icon-filedownload"></span></a></div>
       <dt>第一部分 网络分析 Analyze</dt>
@@ -106,13 +132,11 @@ Router(config-if)# no shutdown</pre>
       <pre>
 Router>en
 Router#conf ter
-Router(config)#inter g0/0/1
 Router(config)# ip route 192.168.2.0 255.255.255.0 192.168.3.2</pre>
       <dd>Router1</dd>
       <pre>
 Router>en
 Router#conf ter
-Router(config)#inter g0/0/1
 Router(config)# ip route 192.168.1.0 255.255.255.0 192.168.3.1</pre>
       <figure>
         <img src="./imgs/r3.png" alt="">

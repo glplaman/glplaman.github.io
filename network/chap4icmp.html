@@ -151,32 +151,132 @@
     </dl>
     <h2>实操 Drill</h2>
     <dl>
-      <dt>ICMP报文分析</dt>
+      <div class="demo">Ping 的ICMP 报文分析 1</div>
       <ol>
-        <li>搭建拓扑</li>
+        <li>搭建拓扑
+          <p>1台路由器 2911</p>
+          <p>诺干主机</p>
+        </li>
         <figure>
-          <img src="./imgs/ping4.png" alt="">
+          <img src="./imgs/host0.png" alt="">
           <figcaption>拓扑</figcaption>
         </figure>
-        <li>配置主机 IP 地址 - 见拓扑图</li>
-        <li>切换至 Simulation 模式，编辑过滤器 Edit Filters，仅保留 ICMP 协议</li>
+        <li>配置主机 IP 地址
+          <p>PC0：192.168.1.10，255.255.255.0，网关：192.168.1.1</p>
+          <p>PC0：192.168.2.10，255.255.255.0，网关：192.168.2.1</p>
+        </li>
+        <li>切换至 Simulation 模式，编辑过滤器 Edit Filters，仅保留 ARP、ICMP 协议</li>
+        <figure>
+          <img src="./imgs/icmp5.png" alt="">
+          <figcaption>选择协议</figcaption>
+        </figure>
         <li>单击主机 PC0，打开桌面 desktop →命令行 Command Prompt，执行下面命令</li>
-        <pre>ping 192.168.1.2</pre>
-        <li>点击 "Capture / Forward" 按钮，逐步推进事件，并查看报文中的 ICMP 参数变化
-          <p>发送报文</p>
-          <p>回复报文</p>
-          <p>SEQ</p>
-          <p>ID</p>
-        </li>
-        <li>第2次探测
-          <p>SEQ</p>
-          <p>ID</p>
-        </li>
-        <li>4次探测完毕后，再次执行命令
-          <p>ID</p>
-          <p>SEQ</p>
-        </li>
+        <pre>C:\>ping 192.168.2.10</pre>
+        <li>点击 "Capture / Forward" 按钮，逐步推进事件，并查看报文中的 ICMP 参数变化 </li>
+        <li>第1次探测：PC0 创建并发送 回显请求 Echo Request 报文 - create an ICMP Echo Request message</li>
+        <figure>
+          <img src="./imgs/icmp6.png" alt="">
+          <figcaption>发送回显请求 Echo Request</figcaption>
+        </figure>
+        <li>Router0 收到报文；TTL 128</li>
+        <figure>
+          <img src="./imgs/icmp7.png" alt="">
+          <figcaption>收到报文 Inbound</figcaption>
+        </figure>
+        <li>Router0 转发报文；TTL 127</li>
+        <figure>
+          <img src="./imgs/icmp8.png" alt="">
+          <figcaption>收到报文 Outbound</figcaption>
+        </figure>
+        <li>PC1 收到并回复 回显响应 Echo Replay 报文 - sends a Echo Replay</li>
+        <figure>
+          <img src="./imgs/icmp9.png" alt="">
+          <figcaption>回显请求 Echo Replay</figcaption>
+        </figure>
+        <li>Router0 收到并转发报文（略）</li>
+        <li>PC0 收到回显响应 Echo Reply - received an Echo Reply message；第一次 Ping 成功</li>
+        <pre>
+C:\>ping 192.168.2.10
+
+Pinging 192.168.2.10 with 32 bytes of data:
+
+Reply from 192.168.2.10: bytes=32 time=4ms TTL=127</pre>
+        <li>第2次探测：PC0 创建并发送 回显请求 Echo Request 报文 - create an ICMP Echo Request message</li>
+        <figure>
+          <img src="./imgs/icmp10.png" alt="">
+          <figcaption>发送回显请求 Echo Request</figcaption>
+        </figure>
+        <li>后续过程略</li>
+        <li>第3次探测：PC0 创建并发送 回显请求 Echo Request 报文 - create an ICMP Echo Request message</li>
+        <figure>
+          <img src="./imgs/icmp11.png" alt="">
+          <figcaption>发送回显请求 Echo Request</figcaption>
+        </figure>
+        <li>后续过程略</li>
+        <li>第4次探测：PC0 创建并发送 回显请求 Echo Request 报文 - create an ICMP Echo Request message</li>
+        <figure>
+          <img src="./imgs/icmp12.png" alt="">
+          <figcaption>发送回显请求 Echo Request</figcaption>
+        </figure>
+        <li>后续过程略</li>
       </ol>
+      <dd>Ping 的完整过程</dd>
+      <pre>
+C:\>ping 192.168.2.10
+
+Pinging 192.168.2.10 with 32 bytes of data:
+
+Reply from 192.168.2.10: bytes=32 time=4ms TTL=127
+Reply from 192.168.2.10: bytes=32 time=4ms TTL=127
+Reply from 192.168.2.10: bytes=32 time=4ms TTL=127
+Reply from 192.168.2.10: bytes=32 time=4ms TTL=127
+
+Ping statistics for 192.168.2.10:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 4ms, Maximum = 4ms, Average = 4ms</pre>
+      <div class="demo">Ping 的ICMP 报文分析 2</div>
+      <ol>
+        <li>拓扑同上图</li>
+        <li>为路由器配置转发为空的<a class="link" href="./chap4route_host.html">主机路由</a></li>
+        <pre>Router(config)# ip route 192.168.2.10 255.255.255.255 null0</pre>
+        <li>PC0 重新 Ping PC1；创建并发送 回显请求 Echo Request 报文</li>
+        <pre>C:\>ping 192.168.2.10</pre>
+        <figure>
+          <img src="./imgs/icmp13.png" alt="">
+          <figcaption>发送回显请求 Echo Request</figcaption>
+        </figure>
+        <li>由于转发端口为空 Null0，路由器会丢报文，并向 PC0 回复一个目标不可达报文
+          <p>The outgoing interface is a Null interface. The device drops the packet.</p>
+          <p>The device drops the packet.</p>
+        </li>
+        <li>PC0 收到 目标不可达报文 - received a Host Unreachable message.
+          <p>第一次探测失败</p>
+        </li>
+        <pre>
+C:\>ping 192.168.2.10
+
+Pinging 192.168.2.10 with 32 bytes of data:
+
+Reply from 192.168.1.1: Destination host unreachable.</pre>
+        <li>后续略</li>
+      </ol>
+      <dd>Ping 的完整过程</dd>
+      <pre>
+C:\>ping 192.168.2.10
+
+Pinging 192.168.2.10 with 32 bytes of data:
+
+Reply from 192.168.1.1: Destination host unreachable.
+Reply from 192.168.1.1: Destination host unreachable.
+Reply from 192.168.1.1: Destination host unreachable.
+Reply from 192.168.1.1: Destination host unreachable.
+
+Ping statistics for 192.168.2.10:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),</pre>
+      <div class="tips">
+        <p>路由器在发现无法送达时，会把原始 Ping 请求包里的数据（包括一部分IP头和ICMP头）原封不动地“抄”下来，放在这个“不可达”报文的载荷里，作为回执证据发给你的电脑</p>
+      </div>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>

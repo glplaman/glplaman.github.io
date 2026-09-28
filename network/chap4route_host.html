@@ -68,20 +68,26 @@
         </li>
         <figure>
           <img src="./imgs/host0.png" alt="">
-          <figcaption>拓扑</figcaption>
+          <figcaption>网络拓扑</figcaption>
         </figure>
-        <li>配置IP</li>
-        <li>测试直接路由的连通性：PC0 ping PC1</li>
-        <pre>ping 192.168.2.100</pre>
+        <li>配置主机 IP 地址
+          <p>PC0：192.168.1.10，255.255.255.0，网关：192.168.1.1</p>
+          <p>PC0：192.168.2.10，255.255.255.0，网关：192.168.2.1</p>
+        </li>
+        <li>测试直接路由的连通性：PC0 ping PC1，成功</li>
+        <pre>ping 192.168.2.10</pre>
         <li>配置主机路由</li>
-        <pre>Router(config)# ip route 192.168.2.100 255.255.255.255 null0</pre>
-        <li>再次测试连通性</li>
-        <pre>ping 192.168.2.100</pre>
+        <pre>Router(config)# ip route 192.168.2.10 255.255.255.255 null0</pre>
+        <li>再次测试连通性；失败</li>
+        <li>PC1向PC0发送数据可以成功吗？为什么？</li>
+        <pre>ping 192.168.2.10</pre>
         <li>删除主机路由</li>
-        <pre>Router(config)# no ip route 192.168.2.100 255.255.255.255 null0</pre>
-        <li>再次测试连通性</li>
-        <pre>ping 192.168.2.100</pre>
+        <pre>Router(config)# no ip route 192.168.2.10 255.255.255.255 null0</pre>
+        <li>再次测试连通性；成功</li>
+        <pre>ping 192.168.2.10</pre>
       </ol>
+      <!-- <p>Router：The outgoing interface is a Null interface. The device drops the packet.</p> -->
+      <!-- <p>PC0：The ICMP process received a Host Unreachable message.</p> -->
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
