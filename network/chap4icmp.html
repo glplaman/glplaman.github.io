@@ -84,22 +84,22 @@
       <dt>类型 Type</dt>
       <dd>8 bits</dd>
       <dd>报文的功能；差错报告报文和询问报文
-        <p>0：回显应答 Echo Reply</p>
-        <p>3：终点不可达 unreachable → 通知源点</p>
-        <p>5：重定向 Redirect → 通知源点</p>
-        <p>8：回显请求 Echo Request</p>
-        <p>11：路由超时 Time Exceeded → 丢弃并通知源点</p>
-        <p>12：参数错误 Parameter Problem → 丢弃并通知源点</p>
+        <p>0x00：回显应答 Echo Reply</p>
+        <p>0x03：终点不可达 unreachable → 通知源点</p>
+        <p>0x05：重定向 Redirect → 通知源点</p>
+        <p>0x08：回显请求 Echo Request</p>
+        <p>0x0b：路由超时 Time Exceeded → 丢弃并通知源点</p>
+        <p>0x0c：参数错误 Parameter Problem → 丢弃并通知源点</p>
       </dd>
       <dt>代码 Code</dt>
       <dd>8 bits</dd>
       <dd>进一步对 Type 补充说明，提供更具体的错误或状态信息</dd>
       <dd>Type = 3（Destination Unreachable）时，Code 可以是：
-        <p>0：网络不可达</p>
-        <p>1：主机不可达</p>
-        <p>2：协议不可达</p>
-        <p>3：端口不可达</p>
-        <p>4：需要分片，但是设置为禁止分片 DF=1</p>
+        <p>0x00：网络不可达</p>
+        <p>0x01：主机不可达</p>
+        <p>0x02：协议不可达</p>
+        <p>0x03：端口不可达</p>
+        <p>0x04：需要分片，但是设置为禁止分片 DF = 1</p>
       </dd>
       <dt>校验和 CHECKSUM</dt>
       <dd>16 bits</dd>
@@ -127,9 +127,10 @@
       <dd>携带实际的数据内容</dd>
       <dd>对于 Echo Request/Reply，通常是任意数据（如时间戳、填充字节等），用于测试往返延迟</dd>
       <dd>对于其他 ICMP 报文（如Destination Unreachable），Data 部分可能包含引发错误的原始 IP 报文的头部（最多64byte）</dd>
+      <div class="demo">常见报文</div>
       <figure>
         <img src="./imgs/icmp4.png" alt="">
-        <figcaption>IP封装</figcaption>
+        <figcaption>IP 封装 ICMP</figcaption>
       </figure>
       <figure>
         <img src="./imgs/icmp0.png" alt="">
