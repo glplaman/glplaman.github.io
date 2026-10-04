@@ -35,7 +35,7 @@
         <img src="./imgs/b1.png" alt="">
         <figcaption>多播</figcaption>
       </figure>
-      <table class="txt-left">
+      <table class="txt-left" style="max-width: 800px;">
         <caption>广播 vs 多播</caption>
         <tr>
           <td>广播 Broadcast</td>
@@ -66,15 +66,20 @@
       <dd>使用 D 类地址 - 标识位 1110xxxx xxxxxxxx xxxxxxxx xxxxxxxx</dd>
       <dd>每一个 D 类地址标志一个多播组</dd>
       <dd>地址范围：<strong>224.0.0.0 ~ 239.255.255.255</strong>
-        <p>224.0.0.0 – 224.0.0.255：预留本地网段使用（如 224.0.0.1 表示所有主机，224.0.0.2 表示所有路由器），不会被路由器转发</p>
+        <p>224.0.0.1 – 224.0.0.255：预留本地网段使用（如 224.0.0.1 表示所有主机，224.0.0.2 表示所有路由器），不会被路由器转发</p>
         <p>224.0.1.0 – 238.255.255.255：可用于互联网或企业网络中的全局多播通信</p>
         <p>239.0.0.0 – 239.255.255.255：私有多播地址（类似私有IP），仅在组织内部使用</p>
       </dd>
-      <dd>224.0.0.1 是一个预定义的永久多播组，所有支持 IP 多播的主机默认都是该组的成员，无需显式加入
-        <p>默认组</p>
-        <p>类比 VLAN 1</p>
-      </dd>
-      <dd>只能用于目的地址，不能用于源地址</dd>
+      <div class="demo">224.0.0.1</div>
+      <dd>是一个预定义的永久多播组</dd>
+      <dd>代表本地网段内的所有设备（包括普通电脑、手机，以及路由器）</dd>
+      <dd>所有支持/开启了多播的设备，默认都是该组的成员，无需显式加入</dd>
+      <dd>默认组</dd>
+      <dd>类比 VLAN 1</dd>
+      <div class="demo">224.0.0.2 代表本地网段内的所有多播路由器</div>
+      <dd>普通电脑是不会加入这个组的</dd>
+      <dd>它主要用于IGMP协议中设备向路由器发送离开消息等管理操作</dd>
+      <div class="demo">判断：多播地址只能用于目的地址，不能用于源地址。（）</div>
       <div class="demo"> RIP 中的多播 IP 地址</div>
       <figure>
         <img src="./imgs/rip4.png" alt="">
@@ -83,8 +88,8 @@
       </figure>
       <dt>多播 MAC 地址</dt>
       <dd>无法直接使用 MAC 地址</dd>
-      <dd>采用固定映射规/通过多播 IP 地址进行映射
-        <p>高25位固定为：00000001 00000000 01011110 0，即：01-00-5E</p>
+      <dd>采用固定映射/通过多播 IP 地址进行映射
+        <p>高25位固定为：0000000<strong>1</strong> 00000000 01011110 0，即：01-00-5E</p>
         <p>低23位取多播IP地址的后23位</p>
         <p>拼接到 01-00-5E 后面</p>
       </dd>
@@ -95,33 +100,20 @@
       <dd>多播 MAC 地址：00000001 00000000 01011110 0<strong>0000001 00000001 00000001</strong>
       </dd>
       <dd>01-00-5E-01-01-01</dd>
-      <dt>多播管理 IGMP</dt>
+    </dl>
+    <h2>多播管理协议 IGMP</h2>
+    <dl>
+      <dt>概述 Overview</dt>
       <dd>IGMP - Internet Group Management Protocol</dd>
-      <dd>多播路由器：
-        <p>组是否存在：有无成员、成员数量多少、分布在哪些网络上 → 不关心</p>
-        <p>是否有成员加入或退出组</p>
-      </dd>
-      <dd>主机：
-        <p>加入哪个组</p>
-        <p>离开哪个组</p>
-      </dd>
+      <dd>关注：组是否存在；是否有成员加入或退出组</dd>
+      <dd>不关心：成员数量多少、分布在哪些网络上</dd>
+      <dd>具有本地性</dd>
+      <dd>和其它多播路由器协调工作，需要借助多播路由协议 Multicast Routing Protocol</dd>
       <figure>
         <img src="./imgs/b2.png" alt="">
         <figcaption>多播管理</figcaption>
       </figure>
-      <dd>路由选择协议复杂
-        <p>洪泛 Flooding</p>
-        <p>修剪 Prune</p>
-        <p>隧道技术 Tunneling</p>
-        <p>基于核心路由器的发现技术</p>
-      </dd>
-      <dd>动态适应：必须动态地适应多播组成员的变化（这时网络拓扑并未发生变化），因为每一台主机可以随时加入或离开一个多播组</dd>
-      <dd>入组邀请：多播数据报可以由没有加入多播组的主机发出，也可以通过没有组成员的接入网络</dd>
-      <dd>多播路由器在转发多播数据报时，不能仅仅根据多播数据报中的目的地址，还要考虑这个多播数据报从什么地方来和要到什么地方去</dd>
-      <div class="tips">
-        <p>MBONE 网络就是靠隧道技术连接全球的多播岛 Multicast islands</p>
-        <p>在学术和早期互联网中非常重要，但现代互联网中原生 IP 多播并未大规模商用</p>
-      </div>
+
       <div class="demo"> 多播路由决策</div>
       <dd>多播组 M2：(D, E, F) - 图中橙色部分</dd>
       <dd>多播组 M1：(A, B, C) - 图中绿色部分</dd>
@@ -141,9 +133,23 @@
         <figcaption>IP 和 IGMP</figcaption>
       </figure>
     </dl>
-    <h2>多播路由协议 PIM</h2>
+    <h2>多播路由协议 Multicast Routing Protocol</h2>
     <dl>
-      <dd>Protocol Independent Multicast</dd>
+      <dt>概述 Overview</dt>
+      <dd>路由选择协议复杂</dd>
+      <dd>转发多播数据报时，采用的方法有：</dd>
+      <ol>
+        <li>洪泛 Flooding与修剪 Prune</li>
+        <li>隧道技术 Tunneling</li>
+        <li>基于核心路由器的发现技术</li>
+      </ol>
+      <dt>常见的多播路由协议 Application</dt>
+      <div>1. DVMRP[RFC 1075]</div>
+      <div>2. CBT[RFC 2189]</div>
+      <div>3. MOSPF[RFC 1585]</div>
+      <div>4. PIM - SM[RFC 7761]</div>
+      <div>5. PIM - DM[RFC 3973]</div>
+      <dt>Protocol Independent Multicast</dt>
       <dd>专门用于 IP 多播的路由协议，是当前最主流的多播路由协议</dd>
       <dd>不依赖特定的单播路由协议，而是利用现有单播路由表进行 RPF（Reverse Path Forwarding）检查</dd>
       <dd>三个核心报文
@@ -181,6 +187,13 @@
       <dd>被动离开：不再响应后续的查询报文，多播路由器在多次查询无响应后自动判定其已离开</dd>
       <dd>多播路由器收到后，不能立即停止转发（因为可能还有其他成员），于是发送 Group-Specific Query（针对该组的查询）</dd>
       <dd>如果在若干次查询后无人响应 Report，多播路由器才真正停止向该子网转发该组的多播流</dd>
+      <dd>动态适应：必须动态地适应多播组成员的变化（这时网络拓扑并未发生变化），因为每一台主机可以随时加入或离开一个多播组</dd>
+      <dd>入组邀请：多播数据报可以由没有加入多播组的主机发出，也可以通过没有组成员的接入网络</dd>
+      <dd>多播路由器在转发多播数据报时，不能仅仅根据多播数据报中的目的地址，还要考虑这个多播数据报从什么地方来和要到什么地方去</dd>
+      <div class="tips">
+        <p>MBONE 网络就是靠隧道技术连接全球的多播岛 Multicast islands</p>
+        <p>在学术和早期互联网中非常重要，但现代互联网中原生 IP 多播并未大规模商用</p>
+      </div>
       <div class="demo"> 主机 H1 想要加入多播组 224.1.1.1；网络中有一台支持 IGMP 的多播路由器 R；使用 IGMPv2 协议
       </div>
       <ol>
@@ -207,58 +220,75 @@
         <li>多播的IP地址</li>
         <li>多播的MAC地址</li>
         <li>多播的报文类型</li>
+        <li>多播管理协议 IGMP</li>
+        <li>多播路由协议 Multicast Routing Protocol</li>
+        <li>IGMP负责主机与路由器之间的组成员关系管理，而多播路由协议（如PIM）负责在路由器之间构建组播分发树并转发数据。两者缺一不可。</li>
       </ol>
       <dt>Homework</dt>
-      <ol>
-        <li>IGMP用于在主机和直接相连的多播路由器之间维护多播组成员关系（）。</li>
-        <li>IP多播地址属于 D 类地址，其范围是224.0.0.0 到 239.255.255.255（）。</li>
-        <li>多播报文在网络中传输时，其目的 MAC 地址与单播报文相同()。</li>
-        <li>多播报文使用特殊的多播 MAC 地址，由多播 IP 地址映射而来，格式为01-00-5E-xx-xx-xx（）。</li>
-        <li>224.0.0.1 是一个永久多播地址，代表本地子网中的所有主机（）。</li>
-        <li>多播通信只能在局域网内进行，无法跨越路由器传输（）。</li>
-        <li>多播路由器定时向所有组发送成员查询报文，每个组内只需要一个成员响应即可（）。</li>
-        <li>以下哪个 IP 地址属于多播地址？()</li>
-        <p>A. 192.168.1.1 </p>
-        <p>B. 223.255.255.255 </p>
-        <p>C. 224.0.1.10 </p>
-        <p>D. 240.0.0.1</p>
-        <!-- c -->
-        <li>在以太网中，多播 IP 地址 224.1.2.3 对应的多播 MAC 地址是？</li>
-        <p>A. 01-00-5E-01-02-03</p>
-        <p>B. 01-00-5E-81-02-03</p>
-        <p>C. 01-00-5E-01-02-0B</p>
-        <p>D. 01-00-5E-00-02-03</p>
-        <!-- a -->
-        <!-- 映射规则：
+      <div class="demo">IGMP用于在主机和直接相连的多播路由器之间维护多播组成员关系（）。</div>
+      <!-- √ -->
+      <div class="demo">IP多播地址属于 D 类地址，其范围是224.0.0.0 到 239.255.255.255（）。</div>
+      <!-- √ -->
+      <div class="demo">多播报文在网络中传输时，其目的 MAC 地址与单播报文相同()。</div>
+      <!-- × -->
+      <div class="demo">多播报文使用特殊的多播 MAC 地址，由多播 IP 地址映射而来，格式为01-00-5E-xx-xx-xx（）。</div>
+      <!-- √ -->
+      <div class="demo">224.0.0.1 是一个永久多播地址，代表本地子网中的所有主机（）。</div>
+      <!-- × 所有支持组播的设备（或节点） 所有主机和所有路由器-->
+      <div class="demo">多播通信只能在局域网内进行，无法跨越路由器传输（）。</div>
+      <!-- × -->
+      <div class="demo">多播路由器定时向所有组发送成员查询报文，每个组内只需要一个成员响应即可（）。</div>
+      <!-- √ -->
+      <div class="demo">实现多播需要IGMP和多播路由协议共同参与才能完成（）。</div>
+      <!-- √ -->
+      <div class="demo">成员进入多组播，需要向组播对应的IP地址发送请求；离开多播组时，应向224.0.0.2发送离开报文（）。</div>
+      <!-- √ -->
+      <div class="demo">以下哪个 IP 地址属于多播地址？()</div>
+      <p>A. 192.168.1.1 </p>
+      <p>B. 223.255.255.255 </p>
+      <p>C. 224.0.1.10 </p>
+      <p>D. 240.0.0.1</p>
+      <!-- c -->
+      <div class="demo">在以太网中，多播 IP 地址 224.1.2.3 对应的多播 MAC 地址是？</div>
+      <p>A. 01-00-5E-01-02-03</p>
+      <p>B. 01-00-5E-81-02-03</p>
+      <p>C. 01-00-5E-01-02-0B</p>
+      <p>D. 01-00-5E-00-02-03</p>
+      <!-- a -->
+      <!-- 映射规则：
         224.1.2.3 → 
         后24位为0000 0001.0000 0010.0000 0011 → 
         取低23位为000 0001 0000 0010 0000 0011 → 
         即01-02-03 
         -->
-        <li>IGMPv2 报文中，用于主机离开多播组的报文类型是？()</li>
-        <p>A. 成员查询（Membership Query） </p>
-        <p>B. 成员报告（Membership Report） </p>
-        <p>C. 离开组（Leave Group） </p>
-        <p>D. 确认应答（ACK）</p>
-        <!-- c -->
-        <li>下列协议中，主要用于多播路由的是？（）</li>
-        <p>A. OSPF </p>
-        <p>B. RIP </p>
-        <p>C. PIM </p>
-        <p>D. ICMP</p>
-        <!-- c -->
-        <li>以下关于多播的说法，错误的是？()</li>
-        <p>A. 多播可以有效节省网络带宽</p>
-        <p>B. 多播源只发送一份数据，网络中间节点负责复制转发</p>
-        <p>C. 所有加入同一多播组的主机必须位于同一个物理网络</p>
-        <p>D. 多播适用于视频会议、在线直播等一对多应用</p>
-        <!-- c -->
-      </ol>
+      <div class="demo">IGMPv2 报文中，用于主机离开多播组的报文类型是？()</div>
+      <p>A. 成员查询（Membership Query） </p>
+      <p>B. 成员报告（Membership Report） </p>
+      <p>C. 离开组（Leave Group） </p>
+      <p>D. 确认应答（ACK）</p>
+      <!-- c -->
+      <div class="demo">下列协议中，主要用于多播路由的是？（）</div>
+      <p>A. OSPF </p>
+      <p>B. RIP </p>
+      <p>C. PIM </p>
+      <p>D. ICMP</p>
+      <!-- c -->
+      <div class="demo">以下关于多播的说法，错误的是？()</div>
+      <p>A. 多播可以有效节省网络带宽</p>
+      <p>B. 多播源只发送一份数据，网络中间节点负责复制转发</p>
+      <p>C. 所有加入同一多播组的主机必须位于同一个物理网络</p>
+      <p>D. 多播适用于视频会议、在线直播等一对多应用</p>
+      <!-- c -->
       <dt>Reading</dt>
       <ol>
+        <li><a href="https://www.rfc-editor.org/info/rfc1112/" class="link">Host extensions for IP multicasting (RFC
+            1112)</a></li>
+        <li><a href="https://www.rfc-editor.org/info/rfc9776/" class="link">Internet Group Management Protocol, Version
+            3(RFC 9776)</a></li>
         <li><a class="link"
             href="https://www.bilibili.com/video/BV1H4411M7ai/?spm_id_from=333.337.search-card.all.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">多播IGMP协议
-          </a></li>
+          </a>
+        </li>
       </ol>
     </dl>
     <div id="footer"></div>

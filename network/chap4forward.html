@@ -52,7 +52,7 @@
         <p>Router 表</p>
       </dd>
       <figure>
-        <img src="./imgs/l17.png" alt="">
+        <img src="./imgs/l17.png" alt="网络拓扑">
         <figcaption>逐段转发</figcaption>
       </figure>
       <dt>转发过程 Procedure</dt>
@@ -125,10 +125,10 @@
       </ol>
     </dl>
     <dl>
-      <div class="demo"> P109 fig4-21</div>
+      <div class="demo"> P110 fig4-32</div>
       <dd>H1向目的主机H2 128.1.2.132发送分组。Router0的路由表如下。</dd>
       <figure>
-        <img src="./imgs/r13.png" alt="">
+        <img src="./imgs/r13.png" alt="网络拓扑">
         <figcaption>拓扑</figcaption>
       </figure>
       <table style="max-width: 450px;">
@@ -240,8 +240,12 @@
         <!-- 224 = 11100000 -->
       </ol>
       <div class="demo"> p142 fig4-25</div>
-      <dd>原则：最长前缀匹配</dd>
       <dd>目标主机：128.1.24.1</dd>
+      <dd>原则：最长前缀匹配</dd>
+      <figure>
+        <img src="./imgs/f11.png" alt="网络拓扑">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
       <table style="max-width: 450px;">
         <caption>R1路由表</caption>
         <thead>
@@ -284,8 +288,8 @@
           <span>128</span><span>1</span><span>24</span><span>0</span>
         </div>
       </dd>
-      <dd>结论：根据最大前缀匹配原则，分组应该从1口转发</dd>
-      <div><span class="bg">验证：</span> </div>
+      <dd>结论：根据最大前缀匹配原则，分组应该从1口转发；更具体、更详细</dd>
+      <div class="demo">聚合路由与最长前缀匹配</div>
       <dd>公司B有3个子网：128.1.25.0/24、128.1.26.0/24、128.1.27.0/24</dd>
       <dd>路由聚合为：128.1.24.0/22 → 发往公司B的分组走这个端口转发，没有问题</dd>
       <dd>但是：目标IP 128.1.24.1 不在其中任何一个网络
@@ -293,6 +297,8 @@
         <p>子网2的最小 IP 地址：128.1.26.1</p>
         <p>子网3的最小 IP 地址：128.1.27.1</p>
       </dd>
+      <dd>聚合路由会把没有使用的网络也覆盖进去</dd>
+      <dd>导致某些分组无法正常交付</dd>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -304,7 +310,7 @@
       </dd>
       <dd>标签说明信息中，上方是IP地址，下方是网关地址</dd>
       <figure>
-        <img src="./imgs/r14.png" alt="">
+        <img src="./imgs/r14.png" alt="网络拓扑">
         <figcaption>拓扑</figcaption>
       </figure>
       <dd>路由器IP地址配置参考</dd>
@@ -326,7 +332,7 @@ Router(config-if)#no shutdown</pre>
           后一个数值表示距离，直连路由为0</p>
       </dd>
       <figure>
-        <img src="./imgs/r15.png" alt="">
+        <img src="./imgs/r15.png" alt="网络拓扑">
         <figcaption>路由表</figcaption>
       </figure>
       <div class="tips">也可使用路由器的 CLI：show ip route 查看路由表</div>
@@ -334,7 +340,7 @@ Router(config-if)#no shutdown</pre>
             class="iconfont icon-filedownload"></span></a>
       </div>
       <figure>
-        <img src="./imgs/r13.png" alt="">
+        <img src="./imgs/r13.png" alt="网络拓扑">
         <figcaption>拓扑</figcaption>
       </figure>
       <dt>转发过程</dt>
@@ -342,23 +348,23 @@ Router(config-if)#no shutdown</pre>
       <dd>Router0 g0/1 → H2</dd>
       <dd>三张表</dd>
       <figure>
-        <img class="border" src="./imgs/f0.png" alt="">
+        <img class="border" src="./imgs/f0.png" alt="网络拓扑">
         <figcaption>主机H1 ARP表</figcaption>
       </figure>
       <figure>
-        <img class="border" src="./imgs/f1.png" alt="">
+        <img class="border" src="./imgs/f1.png" alt="网络拓扑">
         <figcaption>主机H2 ARP表</figcaption>
       </figure>
       <figure>
-        <img class="border" src="./imgs/f2.png" alt="">
+        <img class="border" src="./imgs/f2.png" alt="网络拓扑">
         <figcaption>交换机Switch2 MAC表</figcaption>
       </figure>
       <figure>
-        <img class="border" src="./imgs/f3.png" alt="">
+        <img class="border" src="./imgs/f3.png" alt="网络拓扑">
         <figcaption>交换机Switch1 MAC表</figcaption>
       </figure>
       <figure>
-        <img class="border" src="./imgs/f4.png" alt="">
+        <img class="border" src="./imgs/f4.png" alt="网络拓扑">
         <figcaption>路由器Router0 Router表</figcaption>
       </figure>
     </dl>

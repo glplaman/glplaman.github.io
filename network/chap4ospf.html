@@ -28,7 +28,7 @@
 
     .ospf {
       width: 472px;
-      height: 120px;
+      height: 150px;
       background-image: url(./imgs/ospf1.png);
       margin: 0 auto;
     }
@@ -56,35 +56,54 @@
     <dl>
       <img src="./imgs/ospf.png" alt="">
       <dt>概述 Overview</dt>
-      <dd>OSPF Open Shortest Path First，开放最短路径优先</dd>
+      <dd>OSPF Open Shortest Path First，开放最短路径优先
+        <p>开放：协议公开 <a class="link" href="https://www.rfc-editor.org/rfc/rfc2328">RFC 2328</a></p>
+        <p>最短路径：采用最短路径优先算法SPF - Dijkstra 提出</p>
+      </dd>
       <dd>内部网关协议 IGP，用于在单一自治系统 AS 内路由选择</dd>
-      <dd>基于 <strong>链路状态协议 LCP - Link State Protocol</strong>，路由器会收集并维护整个网络的拓扑信息
-        <p>Dijkstra 算法</p>
-      </dd>
-      <dd>交换的是链路信息；不是路由信息
-        <p>描述自己连接的网络，以及它与邻居之间的链路状态及开销 Cost，具体由网络管理人员制定</p>
-        <p>是自己看到的局部拓扑</p>
-      </dd>
       <dd>不使用 TCP 或 UDP，而是直接封装在 IP 报文内，使用 IP 协议号89</dd>
       <dd>支持VLSM：支持可变长子网划分和无分类编址CIDR</dd>
       <dd>支持认证：提供简单密码认证和MD5认证</dd>
       <dd>支持多路径负载均衡：最多支持等价多路径负载均衡</dd>
       <dd>适用大型网络</dd>
+      <dt>链路状态 Link State</dt>
+      <dd>OSPF 基于 <strong>链路状态</strong> 的路由协议</dd>
+      <dd>链路状态是指与路由器直连的网络或者链路的信息</dd>
+      <dd>描述自己连接的网络，以及它与邻居之间的链路状态及开销 Cost</dd>
+      <dd>是自己看到的局部拓扑</dd>
+      <dd>具体由网络管理人员制定</dd>
       <figure>
         <img src="./imgs/ospf5.png" alt="">
         <figcaption>IP数据报</figcaption>
       </figure>
+      <div class="tips">
+        <p>交换的是链路信息；不是路由信息</p>
+      </div>
+
+      <dt>链路状态通告 LSA，Link State Advertisement</dt>
+      <dd>OSPF 的基本数据单元，也是核心数据结构</dd>
+      <dd>每个路由器需要生成 LSA 来描述直连的链路状态</dd>
+      <dd>并通过泛洪 Flooding 机制传播 LSA</dd>
+      <dd>确保所有域内路由器都能收到</dd>
+
+      <dt>链路状态数据库 LSD，Link State Database</dt>
+      <dd>每台设备都维护一个LSD</dd>
+      <dd>LSD 中每一条记录就是链路状态公告 LSA</dd>
+      <dd>每个 LSA 条目每隔30min刷新，以防止老化过期</dd>
+      <dd>每个路由器根据 LSD 创建一个带权有向图，算出到所有目标网络的最优路径、创建并维护自己的路由表</dd>
+      <dd>最后每个路由器都知道全网的网络特性</dd>
+
       <dt>分区管理 Area</dt>
-      <dd>OSPF将网络划分为不同区域
-        <p>减少链路状态数据库（LSDB）大小：每个区域维护自己的拓扑信息，不传播其他区域的详细拓扑</p>
-        <p>限制路由更新范围：链路状态通告（LSA）在区域内泛洪，跨区域需通过 ABR 汇总</p>
+      <dd>OSPF将网络划分为不同区域 Area
+        <p>减少链路状态数据库 LSDB 大小：每个区域维护自己的拓扑信息，不传播其他区域的详细拓扑</p>
+        <p>限制路由更新范围：链路状态通告 LSA 在区域内泛洪，减少网络风暴</p>
         <p>提升网络可扩展性与稳定性</p>
       </dd>
       <dd>每个区域只知道本区域的网络拓扑</dd>
       <dd>每个区域分配一个区域标识符 Area ID
         <p>32 位无符号整数</p>
-        <p>可以表示为一个十进制数，也可以表示为点分十进制形式</p>
-        <p>Area&nbsp; 0 → 0.0.0.0；Area 0 必须存在，是 OSPF 网络的骨干区域</p>
+        <p>表示为一个十进制数，也可以表示为点分十进制形式</p>
+        <p>Area&nbsp; 0 → 0.0.0.0；Area 0 必须存在，是 OSPF 网络的骨干区域 Backbone Area</p>
         <p>Area&nbsp; 1 → 0.0.0.1</p>
         <p>Area 51 → 0.0.0.51</p>
       </dd>
@@ -108,117 +127,35 @@
       <dd>自治系统边界路由器 ASBR
         <p>Autonomous System Border Router</p>
         <p>连接OSPF域和其他自治系统的路由器，如RIP</p>
+        <p>负责把外部路由（比如 RIP 学到的路由）引入（Redistribute）到 OSPF 网络中</p>
+      </dd>
+      <dd>骨干路由器 Backbone Router
+        <p>至少有一个接口连接到骨干区域 Area 0的路由器</p>
       </dd>
       <dd>区域边界路由器 ABR
         <p>Area Border Router</p>
         <p>连接连接不同 OSPF 区域</p>
-        <p>维护多个区域的LSDB</p>
+        <p>维护多个区域的 LSDB</p>
         <p>在区域间传递路由信息（通过Type 3 LSA）</p>
         <p>不允许在不同区域之间直接交换Type 1/2 LSA</p>
       </dd>
       <dd>内部路由器 Internal Router
         <p>位于一个区域内部</p>
         <p>所有接口都在同一区域内的路由器</p>
-      </dd>
-      <dd>骨干路由器 Backbone Router
-        <p>至少有一个接口连接到骨干区域的路由器</p>
+        <p>只维护这一个区域的链路状态数据库（LSDB），只了解本区域的拓扑</p>
       </dd>
       <figure>
         <img src="./imgs/area.png" alt="">
         <figcaption>路由器类型</figcaption>
       </figure>
-      <dt>特点 Features</dt>
-      <dd>邻接路由器又向它的邻接路由器发送</dd>
-      <dd>前面已经发送过的路由器，不会接收</dd>
-      <dd>构建链路状态数据库 LSD - Link State Database</dd>
-      <dd>每个路由器据此创建并维护自己的路由表</dd>
-      <dd>最后每个路由器都知道全网的网络特性</dd>
-      <dd>邻接路由信息</dd>
-      <dd>链路状态变化或根据定时触发</dd>
     </dl>
     <h2>基本过程 Procedure</h2>
     <dl>
-      <dt>第 1 步：发送 Hello 报文（建立邻居关系）</dt>
-      <dd>通过 <strong>问候分组 Hello</strong> - 组播</dd>
-      <dd>所有邻居都可能跟自己交换链路状态信息</dd>
-      <dd>发现和维持邻站</dd>
-      <dd>每10秒交换一次</dd>
-      <dd>超过40秒没有收到邻站的问候分组，则认为该路由不可达；修改链路状态数据库并重新计算路由</dd>
-      <table>
-        <caption>IP数据报</caption>
-        <tr>
-          <td>源IP</td>
-          <td>目的IP：224.0.0.5</td>
-          <td>协议号：89</td>
-          <td>OSPF首部</td>
-          <td>OSPF分组载荷</td>
-        </tr>
-      </table>
-      <figure>
+      <!-- <figure>
         <img src="./imgs/ospf0.png" alt="">
         <figcaption>OSPF报文格式</figcaption>
-      </figure>
-      <dd>建立邻接关系</dd>
-      <dd>在网络中选举DR - Designated Router和BDR - Backup Designated Router，网络内所有路由器只与DR和BDR建立邻接关系
-        <p>不筛选 N*(N-1)/2</p>
-        <p>筛选 (N-2)*2+1</p>
-      </dd>
-      <dd>筛选邻居
-        <p>只有建立邻接关系的邻居路由器才会交换链路状态信息</p>
-        <p>不是跟所有邻居都建立邻接关系</p>
-      </dd>
-      <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd>
-      <dt>第 2 步：交换 DBD（Database Description）报文</dt>
-      <dd>邻接关系确定后，路由器之间以点对点方式交互 <strong>数据库描述分组 Database Description</strong>，给出自己所有的链路状态<strong>摘要</strong>信息 - 单播
-        <p>描述本路由器的链路状态数据库（LSDB）的摘要信息（即 LSA 头部）</p>
-        <p>用于比较两个路由器的 LSDB 是否一致</p>
-      </dd>
-      <dt>第 3 步：发送 LSR（Link State Request）报文</dt>
-      <dd>在交换完 DBD 后，如果某一方发现自己的 LSDB 缺少某些 LSA 或对方有更新的版本，就会发送 <strong>链路状态请求分组 Link State Request</strong></dd>
-      <dd>每台设备都有一个链路状态数据库 LSD - Link State Database</dd>
-      <dd>LSD 中每一条记录就是链路状态公告 LSA - Link State Advertisement
-        <p>直连网络的链路状态信息</p>
-        <p>邻接路由器的链路状态信息</p>
-        <p>每个 LSA 条目每隔30min刷新，以防止老化过期</p>
-      </dd>
-      <dt>第 4 步：发送 LSU（Link State Update）报文</dt>
-      <dd>LSA 被封装在 <strong>链路状态更新分组 Link State Update</strong>，采用泛洪 Flooding 向所有邻接路由器发送</dd>
-      <dd>采用触发更新 Triggered Update 和增量更新 Incremental Update </dd>
-      <dd>触发更新：一旦检测到网络变化，立即向受影响的邻居发送更新，不需要等待任何固定周期 - 最高效</dd>
-      <dd>增量更新机制，只发邻居需要的LSA</dd>
-      <dt>第 5 步：发送 LSAck（Link State Acknowledgement）报文</dt>
-      <dd>收到 LSU 后，立即发送 LSAck 报文进行确认</dd>
-      <dd>LSAck 包含所确认的 LSA 头部（不含内容）</dd>
-      <dd>可单独发送，也可隐式嵌入在其他报文（如下一个 Hello 或 DBD）中</dd>
-      <dd>收敛以后，区域内所有路由器具有相同的LSD - 查漏补缺</dd>
-      <dd>体现全网的链路状态</dd>
-      <dd>网络中有哪些路由器，各自编号是什么，每台路由器直连的网段是什么，开销是多少</dd>
-      <div class="tips">
-        <p>点餐</p>
-        <p>先给客人看菜单/链路摘要</p>
-        <p>再根据客人需要上菜/详细链路状态</p>
-      </div>
-      <figure>
-        <div class="ospf p0"></div>
-        <figcaption>OSPF 第一次泛洪</figcaption>
-      </figure>
-      <figure>
-        <div class="ospf p1"></div>
-        <figcaption>OSPF 第二次泛洪</figcaption>
-      </figure>
-      <figure>
-        <div class="ospf p2"></div>
-        <figcaption>OSPF 第三次泛洪</figcaption>
-      </figure>
-      <figure>
-        <div class="ospf p3"></div>
-        <figcaption>OSPF 确认</figcaption>
-      </figure>
-      <dt>计算路由</dt>
-      <dd>路由器根据自己维护的LSD创建一个带权有向图</dd>
-      <dd>以自己为根，计算出最短路径树</dd>
-      <dd>最终得出自己的路由表</dd>
-      <table>
+      </figure> -->
+      <table style="max-width: 800px;">
         <caption>分组类型 Type</caption>
         <thead>
           <tr>
@@ -261,25 +198,100 @@
           </tr>
         </tbody>
       </table>
+      <dt>第 1 步：发送问候分组 (Hello) </dt>
+      <dd>发现邻居并维护可达性 - 建立邻居关系</dd>
+      <dd>所有邻居都可以和自己交换链路状态信息</dd>
+      <dd>通过多播 224.0.0.5 发送<strong>问候分组 Hello</strong></dd>
+      <dd>每10s交换一次</dd>
+      <dd>超过40s没有收到邻站的问候分组，则认为该路由不可达；修改链路状态数据库并重新计算路由</dd>
+      <table style="max-width: 500px;">
+        <caption>IP数据报</caption>
+        <tr>
+          <td>源IP</td>
+          <td>目的IP：224.0.0.5</td>
+          <td>协议号：89</td>
+          <td>OSPF首部</td>
+          <td>OSPF分组载荷</td>
+        </tr>
+      </table>
+      <!-- <dd>建立邻接关系</dd>
+      <dd>在网络中选举DR - Designated Router和BDR - Backup Designated Router，网络内所有路由器只与DR和BDR建立邻接关系
+        <p>不筛选 N*(N-1)/2</p>
+        <p>筛选 (N-2)*2+1</p>
+      </dd>
+      <dd>筛选邻居
+        <p>只有建立邻接关系的邻居路由器才会交换链路状态信息</p>
+        <p>不是跟所有邻居都建立邻接关系</p>
+      </dd>
+      <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd> -->
+      <dt>第 2 步：交换 DBD 分组（Database Description）</dt>
+      <dd>邻接关系确定后，路由器之间以单播方式交互 <strong>数据库描述分组 DBD</strong>，给出自己所有的链路状态 <strong>摘要信息</strong>
+      </dd>
+      <dd>用于比较两个路由器的 LSDB 是否一致，以及哪些需要更新</dd>
+      <dt>第 3 步：发送 LSR 分组（Link State Request）</dt>
+      <dd>在交换完 DBD 后，如果某一方发现自己的 LSDB 缺少某些 LSA 或对方有更新的版本，就发送 <strong>链路状态请求分组 LSR</strong></dd>
+      <dt>第 4 步：发送 LSU 分组（Link State Update）</dt>
+      <dd>收到LSR的路由器发送 <strong>链路状态更新分组 LSU</strong>，采用泛洪 Flooding 向所有邻接路由器发送</dd>
+      <dd>把 LSA 封装在分组中发给对方</dd>
+      <dd>一个 LSU 可以封装多个 LSA</dd>
+      <!-- <dd>采用触发更新 Triggered Update 和增量更新 Incremental Update </dd> -->
+      <!-- <dd>触发更新：一旦检测到网络变化，立即向受影响的邻居发送更新，不需要等待任何固定周期 - 最高效</dd> -->
+      <!-- <dd>增量更新机制，只发邻居需要的LSA</dd> -->
+      <dt>第 5 步：发送 LSAck 分组（Link State Acknowledgement）</dt>
+      <dd>路由器收到 LSU 后，应向对方发送 <strong>链路状态确认分组 LSAck</strong></dd>
+      <dd>如果没有收到确认，就要重传</dd>
+      <!-- <dd>LSAck 包含所确认的 LSA 头部（不含内容）</dd> -->
+      <!-- <dd>可单独发送，也可隐式嵌入在其他报文（如下一个 Hello 或 DBD）中</dd> -->
+      <!-- <dd>收敛以后，区域内所有路由器具有相同的LSD - 查漏补缺</dd> -->
+      <!-- <dd>体现全网的链路状态</dd> -->
+      <!-- <dd>网络中有哪些路由器，各自编号是什么，每台路由器直连的网段是什么，开销是多少</dd> -->
+      <div class="tips">
+        <p>点餐</p>
+        <p>先给客人看菜单/链路状态信息摘要</p>
+        <p>再根据客人需要上菜/链路状态信息</p>
+      </div>
+      <div class="demo">使用泛洪 Flooding 机制发送链路状态更新分组 LSU</div>
+      <dd>路由器泛洪时会忽略上游路由器</dd>
+      <dd>每次泛洪都使用多播地址224.0.0.5</dd>
+      <dd>路由器收到重复的链路更新分组，则丢弃</dd>
+      <figure>
+        <div class="ospf p0"></div>
+        <figcaption>OSPF 第一次泛洪：R1</figcaption>
+      </figure>
+      <figure>
+        <div class="ospf p1"></div>
+        <figcaption>OSPF 第二次泛洪：R2、R3、R4</figcaption>
+      </figure>
+      <figure>
+        <div class="ospf p2"></div>
+        <figcaption>OSPF 第三次泛洪：R5、R6</figcaption>
+      </figure>
+      <figure>
+        <div class="ospf p3"></div>
+        <figcaption>OSPF 确认</figcaption>
+      </figure>
       <div class="demo"> Area 1 内新增一条直连网段（如 192.168.10.0/24）</div>
       <figure>
         <img src="./imgs/ospf6.png" alt="">
-        <figcaption>Area 1 内新增路由</figcaption>
+        <figcaption>Area 1 新增网络</figcaption>
       </figure>
-      <dd>R1 生成 Type 1 LSA，描述其接口和 192.168.10.0/24</dd>
-      <dd>在 Area 1 内泛洪给
-        <p>其他 Area 1 路由器</p>
+      <dd>R1</dd>
+      <dd>产生LSA：R1 感知到新网络加入，生成 Type 1 LSA，描述 R1 自身有哪些接口以及这些接口连接到了哪些网络</dd>
+      <dd>区域内泛洪：在 Area 1 内泛洪给
+        <p>Area 1 其他路由器</p>
         <p>ABR R2</p>
-        <p>Type 1 LSA：路由器自身链路状态，仅在本区域内泛洪。</p>
       </dd>
-      <dd>ABR R2 收到后：
-        <p>在 Area 1 LSDB 中记录</p>
-        <p>生成 Type 3 LSA（汇总 192.168.10.0/24），泛洪到 Area 0</p>
-        <p>Type 3 LSA：由ABR生成，用于区域间路由汇总，可穿越多个区域。</p>
-      </dd>
-      <dd>R3（Area 0 路由器） 收到 Type 3 LSA，将其加入路由表，知道去往 192.168.10.0/24 需经 R2</dd>
+      <dd>ABR R2</dd>
+      <dd>是区域边界路由器 ABR，同时属于 Area 1 和 Area 0</dd>
+      <dd>记录：收到了 R1 发来的 Type 1 LSA，并将其记录在自己维护的 Area 1 链路状态数据库 LSDB中</dd>
+      <dd>生成新LSA：生成 Type 3 LSA；不再是描述 R1 的接口，而是一个更概括的信息：“有一条去往 192.168.10.0/24 的路由，可以通过我（R2）到达”</dd>
+      <dd>跨区域泛洪：R2 将这份 Type 3 LSA 泛洪到其连接的骨干区域 Area 0</dd>
+      <dd>R3</dd>
+      <dd>接收与学习：位于 Area 0 的路由器 R3 收到了来自 R2 的 Type 3 LSA</dd>
+      <dd>构建路由表：R3 解析这份 LSA 后，就知道了去往 192.168.10.0/24 的路径</dd>
+      <dd>会根据自己的最短路径树（SPF）算法计算出，到达该网络的最佳路径是经过 R2</dd>
       <dd>跨区域通信通过 ABR 的 Type 3 LSA 实现。</dd>
-      <div class="txt-center">
+      <!-- <div class="txt-center">
         <p class="bg">启动OSPF</p>
         <p>↓</p>
         <p class="bg">发送/接收Hello报文</p>
@@ -303,7 +315,27 @@
         <p class="bg">重新计算最短路径树</p>
         <p>↓</p>
         <p class="bg">更新路由表</p>
-      </div>
+      </div> -->
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>基于 链路状态的路由协议</li>
+        <li>直接使用IP数据报泛洪广播</li>
+        <li>交换链路摘要信息</li>
+        <li>报文种类
+          <p>Hello</p>
+          <p>Database Description - DBD</p>
+          <p>Link State Request - LSR</p>
+          <p>Link State Update - LSU</p>
+          <p>Link State Acknowledgement - LSAck</p>
+        </li>
+        <li>时间
+          <p>10s</p>
+          <p>30min</p>
+        </li>
+      </ol>
       <table>
         <caption>OSP vs RIP</caption>
         <thead>
@@ -376,26 +408,6 @@
           </tr>
         </tbody>
       </table>
-    </dl>
-    <h2>Summary & Homework</h2>
-    <dl>
-      <dt>Summary</dt>
-      <ol>
-        <li>基于 链路状态协议 LCP - Link State Protocol</li>
-        <li>直接使用IP数据报泛洪广播</li>
-        <li>交换链路摘要信息</li>
-        <li>报文种类
-          <p>Hello</p>
-          <p>Database Description</p>
-          <p>Link State Request</p>
-          <p>Link State Update</p>
-          <p>Link State Acknowledgement</p>
-        </li>
-        <li>时间
-          <p>10s</p>
-          <p>30min</p>
-        </li>
-      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc2328">RFC 2328 </a></li>

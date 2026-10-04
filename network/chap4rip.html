@@ -313,8 +313,8 @@
           </tr>
         </table>
         <div>4. 检查R<sub>4</sub>第三个条目 Net3</div>
-        <dd>之前R<sub>6</sub>需要4跳；现在R<sub>4</sub>只需要2跳</dd>
-        <dd>应更新为 2</dd>
+        <dd>之前R<sub>5</sub>需要4跳；现在R<sub>4</sub>只需要2跳</dd>
+        <dd>应更新为使用R4的2跳</dd>
         <table style="max-width: 500px;">
           <tr>
             <td>Net3</td>
@@ -615,7 +615,7 @@
           </tr>
         </table>
         <dd>路由器D的路由表最终结果为：</dd>
-        <table>
+        <table style="max-width: 500px;">
           <caption>更新后路由器D的路由表信息</caption>
           <tr>
             <td>目标网络</td>
@@ -666,6 +666,12 @@
             <td>保留路由</td>
           </tr>
         </table>
+        <dd>Net1: 没有新信息，不变</dd>
+        <dd>Net2: 相同的下一跳，替换</dd>
+        <dd>Net3: 一条新路由，增加</dd>
+        <dd>Net6: 不同的下一跳，新跳数小，替换</dd>
+        <dd>Net8: 不同的下一跳，跳数相同，不变 → 增加</dd>
+        <dd>Net9: 不同的下一跳，新跳数大，不变</dd>
       </div>
       <dt>定时器 Timer</dt>
       <dd>更新定时器 Update timer
@@ -689,7 +695,11 @@
     <h2>路由特点 Feature</h2>
     <dl>
       <dt>好消息传的快</dt>
-      <dd>指网络拓扑变得更好，比如新链路建立、新网络可达、或到达某个网络的路径变短了</dd>
+      <dd>指网络拓扑变得更好
+        <p>发现新链路</p>
+        <p>到达某个网络的路径变短了</p>
+        <p>新网络可达</p>
+      </dd>
       <dd>总是选择距离最短的路径</dd>
       <dt>坏消息传的慢</dt>
       <dd>慢收敛</dd>
@@ -791,10 +801,12 @@ Known via "rip", distance 120, metric 1
         <li>配置IP - 默认掩码
           <p>R1：</p>
           <pre>
+Router(config)#interface GigabitEthernet0/0
 Router(config-if)#ip address 10.0.0.1 255.0.0.0
 Router(config-if)#no shutdown</pre>
           <p>R2</p>
           <pre>
+Router(config)#interface GigabitEthernet0/0
 Router(config-if)#ip address 20.0.0.1 255.0.0.0
 Router(config-if)#no shutdown</pre>
           <p>R3</p>
@@ -871,88 +883,90 @@ R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
         <li>RIP维护路由方法</li>
       </ol>
       <dt>Homework</dt>
-      <ol>
-        <li>路由器到直连网络的距离是1；其它非直连网络，每经过一个网络，距离加1（）。</li>
-        <li>采用RIP协议的路由器只和临近的路由器交换路由信息（）。</li>
-        <li>RIP使用UDP协议发送路由信息，其它路由器监听端口520来接收RIP更新（）。</li>
-        <li>RIP路由条目的有效期是（）秒，失效期是（）秒，超过（）秒，则被删除。</li>
-        <li>如何理解RIP的"坏消息传播的慢"？</li>
-        <li>已知路由器B的路由表；收到的路由器C交换来的路由信息。求路由器B更新后的路由表</li>
-        <table>
-          <caption>路由器B</caption>
-          <thead>
-            <tr>
-              <th>目的网络</th>
-              <th>距离</th>
-              <th>下一跳路由器</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>N1</td>
-              <td>7</td>
-              <td>A</td>
-            </tr>
-            <tr>
-              <td>N2</td>
-              <td>2</td>
-              <td>C</td>
-            </tr>
-            <tr>
-              <td>N6</td>
-              <td>8</td>
-              <td>F</td>
-            </tr>
-            <tr>
-              <td>N8</td>
-              <td>4</td>
-              <td>E</td>
-            </tr>
-            <tr>
-              <td>N9</td>
-              <td>4</td>
-              <td>F</td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <caption>路由器C交换来的路由信息</caption>
-          <thead>
-            <tr>
-              <th>目的网络</th>
-              <th>距离</th>
-              <th>下一跳路由器</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>N2</td>
-              <td>4</td>
-              <td contenteditable>？</td>
-            </tr>
-            <tr>
-              <td>N3</td>
-              <td>8</td>
-              <td contenteditable>？</td>
-            </tr>
-            <tr>
-              <td>N6</td>
-              <td>4</td>
-              <td contenteditable>？</td>
-            </tr>
-            <tr>
-              <td>N8</td>
-              <td>3</td>
-              <td contenteditable>？</td>
-            </tr>
-            <tr>
-              <td>N9</td>
-              <td>5</td>
-              <td contenteditable>？</td>
-            </tr>
-          </tbody>
-        </table>
-      </ol>
+      <div class="demo">路由器到直连网络的距离是1；其它非直连网络，每经过一个网络，距离加1（）。</div>
+      <!-- √ -->
+      <div class="demo">采用RIP协议的路由器只和临近的路由器交换路由信息（）。</div>
+      <!-- √ -->
+      <div class="demo">RIP使用UDP协议发送路由信息，其它路由器监听端口520来接收RIP更新（）。</div>
+      <!-- √ -->
+      <div class="demo">RIP路由条目的有效期是（）秒，失效期是（）秒，超过（）秒，则被删除。</div>
+      <!-- 30 180 300 -->
+      <div class="demo">如何理解RIP的"坏消息传播的慢"？</div>
+      <div class="demo">T4-37 已知路由器B的路由表；收到的路由器C交换来的路由信息。求路由器B更新后的路由表</div>
+      <table style="max-width: 500px;">
+        <caption>路由器B</caption>
+        <thead>
+          <tr>
+            <th>目的网络</th>
+            <th>距离</th>
+            <th>下一跳路由器</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>N1</td>
+            <td>7</td>
+            <td>A</td>
+          </tr>
+          <tr>
+            <td>N2</td>
+            <td>2</td>
+            <td>C</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>8</td>
+            <td>F</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>4</td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>4</td>
+            <td>F</td>
+          </tr>
+        </tbody>
+      </table>
+      <table style="max-width: 500px;">
+        <caption>路由器C交换来的路由信息</caption>
+        <thead>
+          <tr>
+            <th>目的网络</th>
+            <th>距离</th>
+            <th>下一跳路由器</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>N2</td>
+            <td>4</td>
+            <td contenteditable>？</td>
+          </tr>
+          <tr>
+            <td>N3</td>
+            <td>8</td>
+            <td contenteditable>？</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>4</td>
+            <td contenteditable>？</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>3</td>
+            <td contenteditable>？</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>5</td>
+            <td contenteditable>？</td>
+          </tr>
+        </tbody>
+      </table>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://networkencyclopedia.com/routing-information-protocol-rip/">Routing Information
@@ -970,31 +984,6 @@ R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>
-  <!-- <script src="/utils/lib/email.min.js"></script>
-  <script>
-    emailjs.init('MgQhPPBjNMMss5kbw')
-    const btn = document.getElementById('sub-btn');
-    const from = document.getElementById('sub-form');
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      btn.innerHTML = '提交中';
-
-      const serviceID = 'service_bokj9m5';
-      const templateID = 'template_ur5o2es';
-
-      emailjs.sendForm(serviceID, templateID, this)
-        .then(() => {
-          btn.innerHTML = '提交';
-          alert('留言发送成功!');
-          form.reset();
-        }, (err) => {
-          btn.innerHTML = '提交';
-          alert(JSON.stringify(err));
-        });
-    });
-  </script> -->
 </body>
 
 </html>

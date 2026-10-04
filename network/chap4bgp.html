@@ -19,20 +19,27 @@
       <dd>边界网关协议 BGP - Border Gateway Protocol</dd>
       <dd>是构成互联网骨干网络的核心协议</dd>
       <dd>负责在不同AS之间交换路由信息</dd>
+      <dd>最为重要的一个协议</dd>
       <dd>基于<strong>路径向量 Path Vector</strong> 的路由选择协议
         <P>力求选择出一条能够到达目的网络且比较好的路由，而并非要计算出一条最佳路由</P>
-      </dd>
-      <dd>在AS边界部署边界路由器/边界网关，AS之间才可以交换可达路由信息</dd>
-      <dd>使用传输控制协议 TCP（端口 179）
-        <p>可靠、面向连接</p>
-        <p>非广播</p>
       </dd>
       <dd>新版本是BGP 第 4 个版本的 BGP-4
         <p>简写为 BGP</p>
         <p>2006 年 1 月发布</p>
         <p>RFC 4271 ~ 4278</p>
       </dd>
-      <dt>分类 Type</dt>
+      <figure>
+        <img src="./imgs/as4.png" alt="">
+        <figcaption>BGP</figcaption>
+      </figure>
+      <div class="tips">
+        <p>RIP：基于距离向量 Distance-Vector 的路由选择协议</p>
+        <p>OSPF：基于链路状态 Link State 的路由选择协议</p>
+        <p>BGP：基于路径向量 Path Vector 的路由选择协议</p>
+      </div>
+      <dt>BGP路由 Routing</dt>
+      <dd>在AS边界部署边界路由器/边界网关ABR，AS之间才可以交换可达路由信息</dd>
+      <dd>使用可靠、面向连接的传输控制协议 TCP（端口 179）</dd>
       <dd>eBGP - external BGP
         <p>在不同AS之间的BGP对等体（Peers）之间运行</p>
         <p>eBGP邻居通常直连（物理上或逻辑上通过单跳），并且必须位于不同的AS中</p>
@@ -50,16 +57,22 @@
         <figcaption>BGP</figcaption>
       </figure>
       <div class="tips">教材没有区分，将边界路由器/边界网关视为相同</div>
-      <dt>BGP路由</dt>
+      <dt>BGP路由属性 Attributes</dt>
       <dd>使用BGP路由属性描述路由信息</dd>
+      <dd>每个路由都附带一组属性，用于影响路由选择
+        <p>Prefix：目标网络/网络前缀/子网掩码</p>
+        <p>AS-PATH：从本AS到目标网络所经过的AS有序列表；每经过一个AS，就将其加入到列表，用于防环和选路（越短越好）</p>
+        <p>NEXT_HOP：下一跳路由器IP地址</p>
+        <p>LOCAL_PREF：本地优先级，用于决定离开本AS的最佳出口，默认值100，越大越优（仅在iBGP内传递）</p>
+        <p>MED (Multi-Exit Discriminator)：用于影响进入本AS的流量选择哪个入口，默认值0，越小越优（在eBGP间传递）</p>
+        <p>ORIGIN：路由来源（IGP > EGP > Incomplete）</p>
+        <p>WEIGHT：Cisco私有属性，仅本地有效，值越大越优</p>
+      </dd>
       <dd>表示：经过NEXT-HOP，可达AS-PATH的 Prefix 网络
         <p>经过哪些AS到达目标网络</p>
         <p>但没有指出经过哪些路由器</p>
       </dd>
-      <dd>Prefix：目标网络/网络前缀/子网掩码</dd>
-      <dd>AS-PATH：从本AS到目标网络所经过的AS有序列表；每经过一个AS，就将其加入到列表</dd>
-      <dd>NEXT-HOP：下一条路由器</dd>
-      <table>
+      <table style="max-width: 500px;">
         <caption>BGP路由</caption>
         <tr>
           <td>prefix</td>
@@ -69,31 +82,27 @@
       </table>
       <div class="demo"> BGP路由处理过程</div>
       <dd>边界路由器 R<sub>1</sub> → 边界路由器 R<sub>2</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ] - eBGP</dd>
+      <dd>R1告诉R2：经我转发，可以到达AS1的网络X</dd>
       <figure>
         <img src="./imgs/bgp5.png" alt="">
         <figcaption>eBGP发送路由</figcaption>
       </figure>
       <dd>R<sub>2</sub> → R<sub>3</sub>R<sub>4</sub>R<sub>5</sub> 发送BGP路由 [X, AS<sub>1</sub>, R<sub>1</sub> ]
         - iBGP</dd>
+      <dd>各内部路由转换BGP路由起点
+        <p>原来：R1 → X</p>
+        <p>原来：R2 → R1 → X</p>
+      </dd>
       <figure>
         <img src="./imgs/bgp6.png" alt="">
         <figcaption>iBGP发送BGP路由</figcaption>
       </figure>
-      <dd>内部路由器使用内部路由协议IGP如RIP或OSPF处理并创建自己的路由表
+      <dd>使用内部路由协议IGP如RIP或OSPF处理并最终创建自己的路由表
         <p>R<sub>3</sub>：[X, R<sub>2</sub> ]</p>
         <p>R<sub>4</sub>：[X, R<sub>3</sub> ]</p>
         <p>R<sub>5</sub>：[X, R<sub>4</sub> ]</p>
       </dd>
-      <!-- <dt>路径属性 Path Attributes</dt>
-      <dd>BGP决策的关键</dd>
-      <dd>每个路由都附带一组属性，用于影响路由选择</dd>
-      <dd>AS_PATH：经过的AS列表，用于防环和选路（越短越好）</dd>
-      <dd>NEXT_HOP：下一跳IP地址</dd>
-      <dd>LOCAL_PREF：本地优先级，用于决定离开本AS的最佳出口，默认值100，越大越优（仅在iBGP内传递）</dd>
-      <dd>MED (Multi-Exit Discriminator)：用于影响进入本AS的流量选择哪个入口，默认值0，越小越优（在eBGP间传递）</dd>
-      <dd>ORIGIN：路由来源（IGP > EGP > Incomplete）</dd>
-      <dd>WEIGHT：Cisco私有属性，仅本地有效，值越大越优</dd> -->
-      <dt>路由选择</dt>
+      <dt>路由选择 Selecting</dt>
       <dd>方案1：本地偏好 (local preference) 值<strong>最高</strong>的路由 （默认值=100）
         <p>由管理员本地设置</p>
         <p>无法实现负载均衡</p>
@@ -114,11 +123,11 @@
         <figcaption>AS 跳数路由选择</figcaption>
       </figure>
       <dd>方案3：使用<strong>热土豆</strong>路由选择算法
-        <p>BGP路由1：[ X, AS2 AS3 AS4 , R5, LOCAL-PREF = 200 ]</p>
+        <p>BGP路由1：[ X, AS2 AS4 , R5, LOCAL-PREF = 200 ]</p>
         <p>BGP路由2：[ X, AS3 AS4 , R7, LOCAL-PREF = 200 ]</p>
         <p>尽快转发出去 - 分组在 AS 内的转发次数最少</p>
-        <p>对R2：选择路由1；R2 → R3</p>
-        <p>对R1：选择路由2；R1 → R4</p>
+        <p>对R2：选择路由1；R2 → R3 → BGP路由1</p>
+        <p>对R1：选择路由2；R1 → R4 → BGP路由2</p>
       </dd>
       <figure>
         <img src="./imgs/bgp2.png" alt="">
@@ -152,25 +161,44 @@
       <dd>多宿主网络 Multi-homing ：一个AS连接到多个ISP，通过BGP实现冗余和负载均衡</dd>
       <dd>CDN和云服务提供商：用于在全球范围分发内容和服务</dd>
     </dl>
-    <h2>Homework</h2>
+    <h2>Summary & Homework</h2>
     <dl>
-      <dt>Homework</dt>
+      <dt>Summary</dt>
       <ol>
-        <li>直接封装RIP、OSPF、BGP报文的协议分别是（ ）。</li>
-        <div>A：TCP、UDP、IP</div>
-        <div>B：TCP、IP、UDP</div>
-        <div>C：UDP、TCP、IP</div>
-        <div>D：UDP、IP、TCP</div>
-        <!-- <p>D</p> -->
-        <li>下图所示的网络拓扑中，假设自治系统AS3和AS2内部运行OSPF,
-          AS1和AS4内部运行RIP。各自治系统间用BGP作为路由协议，并假设AS2和AS4之间没有物理链路。则路由器3c基于（25）协议学习到网络x的可达性信息。1d通过（26）学习到x的可达性信息。</li>
-        <div>（25）A. OSPF B. RIP C. eBGP D. iBGP
-          <br>（26）A. 3a B. 1a C. 1b D. 1c
-        </div>
-        <figure>
-          <img src="./imgs/bgp4.png" alt="">
-        </figure>
+        <li>BGP的组成</li>
+        <li>BGP的路由过程</li>
+        <li>BGP的路由属性</li>
       </ol>
+      <dt>Homework</dt>
+      <div class="demo">判断：边界路由器ABR交换的是路由表信息。（）</div>
+      <!-- <p>×</p> -->
+      <div class="demo">封装RIP、OSPF、BGP报文的协议分别是（ ）。</div>
+      <div>A：TCP、UDP、IP</div>
+      <div>B：TCP、IP、UDP</div>
+      <div>C：UDP、TCP、IP</div>
+      <div>D：UDP、IP、TCP</div>
+      <!-- <p>D</p> -->
+      <div class="demo">下图所示的网络拓扑中，假设自治系统AS3和AS2内部运行OSPF,
+        AS1和AS4内部运行RIP。各自治系统间用BGP作为路由协议，并假设AS2和AS4之间没有物理链路。则
+        <p>1. 路由器3c基于（）协议学习到网络x的可达性信息</p>
+        <!-- <p>eBGP</p> -->
+        <p>2. 路由器3a基于（）协议学习到网络x的可达性信息</p>
+        <!-- <p>iBGP</p> -->
+        <p>3. 路由器1c基于（）协议学习到网络x的可达性信息</p>
+        <!-- <p>eBGP</p> -->
+        <p>4. 路由器1d基于（）协议学习到网络x的可达性信息</p>
+        <!-- <p>iBGP</p> -->
+        <p>5. 路由器1d通过路由器（）学习到x的可达性信息</p>
+        <!-- <p>1c</p> -->
+      </div>
+      <!-- AS4内部传播： x位于AS4，通过RIP协议由4a通告至4c（AS4边界路由器）。
+      跨AS传播（BGP）： 4c通过BGP将x的路由信息传递给相邻AS3的边界路由器3c。
+      AS3内部传播： 3c在AS3内通过OSPF将x的路由信息传播至3a（AS3边界路由器）。
+      再次跨AS传播（BGP）： 3a通过BGP将x的路由信息通告给AS1的边界路由器1c。
+      AS1内部传播： 1c在AS1内通过RIP将x的路由信息通告给所有内部路由器，包括1d。 -->
+      <figure>
+        <img src="./imgs/bgp4.png" alt="">
+      </figure>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://www.rfc-editor.org/rfc/rfc4271">RFC 4271 </a></li>

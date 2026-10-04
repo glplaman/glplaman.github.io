@@ -12,7 +12,8 @@
 <body>
   <div class="w">
     <header>
-      <h1>NAT - Network Address Translation</h1>
+      <h1>NAT</h1>
+      <span>&commat;Network Address Translation</span>
     </header>
     <dl>
       <dt>目标 Objective</dt>
@@ -26,7 +27,7 @@
       <dd>一个家庭有5台设备，但ISP只分配1个公网IP → 如何上网？</dd>
       <dt>核心 Core</dt>
       <dd>地址转换：将私有IP（如192.168.x.x）替换为公网IP</dd>
-      <dd>端口跟踪（对PAT而言）：记录内网主机使用的源端口，用于回包匹配</dd>
+      <dd>端口跟踪：记录内网主机使用的源端口，用于回包匹配</dd>
       <dt>优点 Merits</dt>
       <dd>一定程度上缓解IPv4地址短缺</dd>
       <dd>隐藏内网结构，提升安全性</dd>
@@ -38,7 +39,7 @@
       <dt>转换过程 Translation</dt>
       <dd>NAT 路由器维护一个IP地址转换表</dd>
       <dd>当 NAT 路由器具有 n 个全球 IP 地址时，专用网内最多可以同时有 n 台主机接入到互联网</dd>
-      <table>
+      <table style="max-width: 500px;">
         <caption>NAT路由转换表</caption>
         <thead>
           <tr>
@@ -74,6 +75,24 @@
         <img src="./imgs/nat.png" alt="">
         <figcaption>NAT转换过程</figcaption>
       </figure>
+      <div class="demo">NAT转换过程产生的NAT表</div>
+      <figure>
+        <img src="./imgs/nat1.png" alt="网络拓扑">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/nat3.png" alt="NAT表">
+        <figcaption>NAT表</figcaption>
+      </figure>
+      <dd>内网地址 Inside Local：192.168.1.10</dd>
+      <dd>内网地址转换后的公网地址 Inside Global：200.1.1.1</dd>
+      <dd>通信目标在公网，所以外部本地和外部公网地址都一样：200.1.1.10</dd>
+      <dd>IP 地址后面的 4 代表的是 ICMP 标识符 (ICMP Identifier)</dd>
+      <div class="demo">请结合下面的网络拓扑，分析NAT转换过程产生的NAT表</div>
+      <figure>
+        <img src="./imgs/nat4.png" alt="网络拓扑">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
@@ -81,16 +100,19 @@
         <li>搭建拓扑 <a href="./pt/nat.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a>
           <p>端设备 End Device - PC</p>
           <p>网络设备 Network Devices - router 2911</p>
-          <p>端设备 End Devices - server</p>
+          <p>端设备 End Devices - Server</p>
         </li>
         <figure>
-          <img src="./imgs/nat1.png" alt="">
-          <figcaption>拓扑</figcaption>
+          <img src="./imgs/nat1.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
         </figure>
         <li>配置IP地址 - 略
-          <p>主机</p>
-          <p>服务器</p>
-          <p>路由器</p>
+          <p>主机：192.168.1.10 255.255.255.0</p>
+          <p>服务器：200.1.1.10 255.255.255.0</p>
+          <p>路由器
+            <br>g0/0：192.168.1.1 255.255.255.0
+            <br>g0/1：200.1.1.1 255.255.255.0
+          </p>
         </li>
         <li>配置NAT</li>
         <pre>
