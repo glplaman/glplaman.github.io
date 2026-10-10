@@ -412,10 +412,10 @@
       <dd>The VLOOKUP function looks for a given value in the leftmost column of a given table and then returns a value
         in the same row from a specified column.</dd>
       <dd>查找：先在最左边垂直方向|行找到关键字 lookup_value，再水平方向找到目标|列索引 col_index_num 对应的值</dd>
-      <dd>查找关键字 lookup_value：必须位于查找区域第一列</dd>
-      <dd>查找区域 table：由关键字和结果值组成；通常使用绝对地址</dd>
+      <dd>查找关键字 lookup_value：必须是查找区域 table_array 第一列的值</dd>
+      <dd>查找区域 table：由关键字和结果值组成；通常使用 <strong>绝对地址</strong> 固定查找区域；直接选择数据区域，不用选标题行</dd>
       <dd>列索引 col_index_num：正整数，第1列为1，第2列为2，以此类推</dd>
-      <dd>查找结果 range_lookup：模糊匹配 TRUE 或精确匹配 FALSE；默认是模糊匹配</dd>
+      <dd>查找结果 range_lookup：模糊匹配 TRUE 或精确匹配 FALSE；默认是模糊匹配；请显式的指定精确匹配 FALSE</dd>
       <dd>模糊匹配：如果没有匹配的关键字，就根据关键字的升序排序空间，模糊匹配；匹配不到会先 #N/A；如成绩档次</dd>
       <dd>精确匹配，通常配合其他错误函数一起使用</dd>
       <dd>获取多个目标数据时，需要手动修改列数</dd>
@@ -427,6 +427,7 @@
       <dd>各个值都是固定的/静态的</dd>
       <dd>公式可以写在任何位置</dd>
       <pre>= VLOOKUP(K1,A1:E10,4,FALSE)</pre>
+      <dt>COLUMN</dt>
       <div class="demo">用法2：<a class="link"
           href="https://www.bilibili.com/video/BV184LB6AEJD/?spm_id_from=333.1387.homepage.video_card.click&vd_source=fe13480e1099e18e9d5f4e25467df4df">BiliBili-多个值查询</a>；使用
         COLUMN() 动态指定结果列</div>
@@ -439,6 +440,55 @@
           href="https://www.bilibili.com/video/BV1Ya5K61Emz/?spm_id_from=333.1387.homepage.video_card.click">BiliBili-跨表多值查询</a>
       </div>
       <pre>=VLOOKUP($A2,学生成绩!$B$2:$H$18,COLUMN(学生成绩!C1)-1,0)</pre>
+      <dt>MATCH(lookup_value, lookup_array, match_type)</dt>
+      <dd>查找目标值匹配的位置</dd>
+      <dd>VLOOKUP 查找的是值</dd>
+      <dd>查找区域全部锁定</dd>
+      <dd>VLOOKUP 锁定列，在同一列查找不同的人</dd>
+      <dd>MATCH 锁定行，在同一行查找不同的字段</dd>
+      <pre>=VLOOKUP($R10,$B$2:$M$31,MATCH(S$9,$B$1:$M$1,0),0)</pre>
+      <table>
+        <caption>VLOOKUP & MATCH</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>val0</th>
+            <th>val1</th>
+            <th>val2</th>
+            <th>val3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>item0</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>item1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>item2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>item3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
       <dt>TEXT</dt>
       <dd>根据指定的数字格式将数值转换成文本</dd>
       <dd>格式串通常以 0：普通数字、YYYY：年；MM：月；DD：日；AAAA：星期</dd>
