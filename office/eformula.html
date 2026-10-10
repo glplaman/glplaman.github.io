@@ -184,8 +184,24 @@
 
 # 五级制：依次判定分数，嵌套较多，不建议使用
 =IF(F3>=90,"A",IF(F3>=80,"B",IF(F3>=70,"C",IF(F3>=60,"D","F"))))</pre>
+      <dt>IFS</dt>
+      <dd>多分支/条件判断，返回与第一个 true 条件匹配的值</dd>
+      <dd>范围要全覆盖，否则会提示值无效</dd>
+      <dd>如果有默认值，请使用 TRUE 指定</dd>
+      <dd>更多案例，请访问 <a class="link" href="https://www.exceldemy.com/excel-ifs-function/">IFS Function</a></dd>
+      <pre>
+# 有效
+= IFS(A2 >= 90, "A", A2 >= 80, "B", A2 >= 70, "C", A2 >= 60, "D", TRUE, "F")
+
+# 有效
+= IFS(U112 > 90, "A", U112 > 80, "B", U112 >= "60", "C", U112&lt;60, "D")
+
+# 无效
+= IFS(U112 > 90, "A", U112 > 80, "B", U112 &lt; 60, "D")</pre>
       <dt>SUMIF(range, criteria, [sum_range])</dt>
-      <dd>根据条件 criteria 求和；如果省略求和区域 sum_range，将使用前面指定的区域 range</dd>
+      <dd>根据条件 criteria 求和</dd>
+      <dd>先指定目标区域 range 及条件 criteria</dd>
+      <dd>再指定求和区域 sum_range；如果省略求和区域 sum_range，将使用前面指定的目标区域 range</dd>
       <dd>更多案例，请访问 <a class="link" href="https://www.exceldemy.com/excel-sumif-function/">SUMIF Function</a></dd>
       <dd>可以通过引用指定条件</dd>
       <div class="demo">求水果类的营业额</div>
@@ -205,20 +221,11 @@
       <pre>=SUMIF(C2:C13,">"&I8,D2:D13)</pre>
       <dd>方案3：日期转换后再计算；适用于数据格式不规范的情况</dd>
       <div class="tips">日期是特殊的数据格式。使用前姚确保格式正确，不要和字符串混淆</div>
-      <dt>IFS</dt>
-      <dd>多分支/条件判断，返回与第一个 true 条件匹配的值</dd>
-      <dd>范围要全覆盖，否则会提示值无效</dd>
-      <dd>如果有默认值，请使用 TRUE 指定</dd>
-      <dd>更多案例，请访问 <a class="link" href="https://www.exceldemy.com/excel-ifs-function/">IFS Function</a></dd>
-      <pre>
-# 有效
-= IFS(A2 >= 90, "A", A2 >= 80, "B", A2 >= 70, "C", A2 >= 60, "D", TRUE, "F")
-
-# 有效
-= IFS(U112 > 90, "A", U112 > 80, "B", U112 >= "60", "C", U112&lt;60, "D")
-
-# 无效
-= IFS(U112 > 90, "A", U112 > 80, "B", U112 &lt; 60, "D")</pre>
+      <dt>SUMIFS(sum_range, criteria_range1, criteria1,[criteria_range1, criteria1],.. )</dt>
+      <dd>先指定求和区域 sum_range</dd>
+      <dd>再指定多个条件</dd>
+      <div class="demo">求2026年度的营业额</div>
+      <pre>=SUMIFS(H2:H31,B2:B31,">=2026/1/1",B2:B31,"<=2026/12/31")</pre>
       <dd>其它例子</dd>
       <pre>
 = COUNTIF(H2:H16, ">=60")：大于等于60，即及格的人数
