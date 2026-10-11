@@ -78,6 +78,11 @@
       </figure>
       <div class="tips">
         <p>交换的是链路信息；不是路由信息</p>
+        <p>Type 1：Router-LSA（路由器 LSA）—— 我周围都有谁</p>
+        <p>Type 2：Network-LSA（网络 LSA）—— 我这段广播网线上连着哪些人</p>
+        <p>Type 3：Summary-LSA（汇总 LSA）—— 隔壁区有什么路</p>
+        <p>Type 4：ASBR-Summary-LSA（ASBR 汇总 LSA）—— 谁负责和外界打交道</p>
+        <p>Type 5：External-LSA（外部 LSA）—— 外面的世界在哪</p>
       </div>
 
       <dt>链路状态通告 LSA，Link State Advertisement</dt>
@@ -136,7 +141,7 @@
         <p>Area Border Router</p>
         <p>连接连接不同 OSPF 区域</p>
         <p>维护多个区域的 LSDB</p>
-        <p>在区域间传递路由信息（通过Type 3 LSA）</p>
+        <p>在区域间传递路由信息（通过Type 3 LSA）- 路由注入</p>
         <p>不允许在不同区域之间直接交换Type 1/2 LSA</p>
       </dd>
       <dd>内部路由器 Internal Router
@@ -225,9 +230,13 @@
       </dd>
       <dd>广播型网络中会选举DR和BDR，PPP网络中不会选举DR和BDR</dd> -->
       <dt>第 2 步：交换 DBD 分组（Database Description）</dt>
-      <dd>邻接关系确定后，路由器之间以单播方式交互 <strong>数据库描述分组 DBD</strong>，给出自己所有的链路状态 <strong>摘要信息</strong>
+      <dd>邻接关系确定后，路由器之间以单播方式交互 <strong>数据库描述分组 DBD</strong>，给出自己所有的链路状态 <strong>摘要信息（LSA Header）</strong>
       </dd>
       <dd>用于比较两个路由器的 LSDB 是否一致，以及哪些需要更新</dd>
+      <dd>参与计算的数据少，效率高</dd>
+      <dd>不需要比较所有数据再判断是否缺失</dd>
+      <div class="demo">打车；电话后四位</div>
+      <div class="demo">日常交流；不说全</div>
       <dt>第 3 步：发送 LSR 分组（Link State Request）</dt>
       <dd>在交换完 DBD 后，如果某一方发现自己的 LSDB 缺少某些 LSA 或对方有更新的版本，就发送 <strong>链路状态请求分组 LSR</strong></dd>
       <dt>第 4 步：发送 LSU 分组（Link State Update）</dt>
@@ -321,9 +330,15 @@
     <dl>
       <dt>Summary</dt>
       <ol>
-        <li>基于 链路状态的路由协议</li>
+        <li>基于链路状态的路由协议
+          <p>OSPF 的链路状态信息 = 每台路由器的接口状态 + 每个网段的连接关系 + 区域间/外部路由的可达性与开销</p>
+          <p>所有路由器把这些信息拼成一张完整的拓扑图，再用 SPF 算法算出到每个目的地的最短路径</p>
+        </li>
         <li>直接使用IP数据报泛洪广播</li>
-        <li>交换链路摘要信息</li>
+        <li>交换链路摘要信息
+          <p>摘要交换</p>
+          <p>按需请求</p>
+        </li>
         <li>报文种类
           <p>Hello</p>
           <p>Database Description - DBD</p>
