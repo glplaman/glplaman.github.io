@@ -354,201 +354,225 @@
           </tbody>
         </table>
       </div>
-      <div class="demo">已知路由器D的路由表；路由器C的路由表；分析：经过C的路由交换后，D的路由表信息</div>
+      <div class="demo">[P182 T4-37]已知路由器B的路由表；路由器C的路由表；分析：经过C的路由交换后，B的路由表信息</div>
       <table style="max-width: 500px;">
-        <caption>路由器D</caption>
-        <tr>
-          <td>目标网络</td>
-          <td>距离</td>
-          <td>下一跳</td>
-        </tr>
-        <tr>
-          <td>N1</td>
-          <td>7</td>
-          <td>A</td>
-        </tr>
-        <tr>
-          <td>N2</td>
-          <td>2</td>
-          <td>C</td>
-        </tr>
-        <tr>
-          <td>N6</td>
-          <td>8</td>
-          <td>F</td>
-        </tr>
-        <tr>
-          <td>N8</td>
-          <td>4</td>
-          <td>E</td>
-        </tr>
-        <tr>
-          <td>N9</td>
-          <td>4</td>
-          <td>F</td>
-        </tr>
-      </table>
-      <table style="max-width: 500px;">
-        <caption>路由器C</caption>
-        <tr>
-          <td>目标网络</td>
-          <td>距离</td>
-          <td>下一跳</td>
-        </tr>
-        <tr>
-          <td>N2</td>
-          <td>4</td>
-          <td>??</td>
-        </tr>
-        <tr>
-          <td>N3</td>
-          <td>8</td>
-          <td>??</td>
-        </tr>
-        <tr>
-          <td>N6</td>
-          <td>4</td>
-          <td>??</td>
-        </tr>
-        <tr>
-          <td>N8</td>
-          <td>3</td>
-          <td>??</td>
-        </tr>
-        <tr>
-          <td>N9</td>
-          <td>5</td>
-          <td>??</td>
-        </tr>
-      </table>
-      <div>答：
-        <dd>路由器D收到C发送的RIP广播报文，并进行改造：所有的距离+1；且下一跳路由都是C</dd>
-        <table style="max-width: 500px;">
-          <caption>改造后的路由信息</caption>
+        <caption>路由器B</caption>
+        <thead>
           <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
+            <th>目标网络</th>
+            <th>距离</th>
+            <th>下一跳</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
-            <td>N2</td>
-            <td>4+<span class="warn">1</span></td>
-            <td><span class="warn">C</span></td>
-          </tr>
-          <tr>
-            <td>N3</td>
-            <td>8+<span class="warn">1</span></td>
-            <td><span class="warn">C</span></td>
-          </tr>
-          <tr>
-            <td>N6</td>
-            <td>4+<span class="warn">1</span></td>
-            <td><span class="warn">C</span></td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>3+<span class="warn">1</span></td>
-            <td><span class="warn">C</span></td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>5+<span class="warn">1</span></td>
-            <td><span class="warn">C</span></td>
-          </tr>
-        </table>
-        <dd>路由器D根据规则更新路由表信息</dd>
-        <dd>N2路由条目：都是经过C转发；之前经过C到N2需要2跳；现在经过C到N2需要5跳，所以5跳是最新的路由：2-&gt;5</dd>
-        <dd><span class="warn">[思考]</span>路由跳数的可能变化</dd>
-        <table>
-          <tr>
-            <td colspan="3">旧路由</td>
-            <td colspan="3">新路由</td>
-            <td colspan="3">最终路由</td>
-          </tr>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
+            <td>N1</td>
+            <td>7</td>
+            <td>A</td>
           </tr>
           <tr>
             <td>N2</td>
             <td>2</td>
             <td>C</td>
-            <td>N2</td>
-            <td>5</td>
-            <td>C</td>
-            <td>N2</td>
-            <td>5</td>
-            <td>C</td>
-          </tr>
-        </table>
-        <dd>N3路由条目：没有该路由，说明发现了新网络，添加新路由</dd>
-        <table>
-          <tr>
-            <td colspan="3">旧路由</td>
-            <td colspan="3">新路由</td>
-            <td colspan="3">最终路由</td>
-          </tr>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>N3</td>
-            <td>9</td>
-            <td>C</td>
-            <td>N3</td>
-            <td>9</td>
-            <td>C</td>
-          </tr>
-        </table>
-        <dd>N6路由条目：之前经过F到N6需要8跳；现在经过C到N6只需要5跳，说明新路由<strong>更短</strong>，应更新旧路由；8-&gt;5，F-&gt;C</dd>
-        <table>
-          <tr>
-            <td colspan="3">旧路由</td>
-            <td colspan="3">新路由</td>
-            <td colspan="3">最终路由</td>
-          </tr>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
           </tr>
           <tr>
             <td>N6</td>
             <td>8</td>
             <td>F</td>
-            <td>N6</td>
-            <td>5</td>
-            <td>C</td>
-            <td>N6</td>
-            <td>5</td>
-            <td>C</td>
           </tr>
+          <tr>
+            <td>N8</td>
+            <td>4</td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>4</td>
+            <td>F</td>
+          </tr>
+        </tbody>
+      </table>
+      <table style="max-width: 500px;">
+        <caption>路由器C</caption>
+        <thead>
+          <tr>
+            <th>目标网络</th>
+            <th>距离</th>
+            <th>下一跳</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>N2</td>
+            <td>4</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N3</td>
+            <td>8</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N6</td>
+            <td>4</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N8</td>
+            <td>3</td>
+            <td>??</td>
+          </tr>
+          <tr>
+            <td>N9</td>
+            <td>5</td>
+            <td>??</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>答：
+        <p>路由器B收到C发送的RIP广播报文，并进行改造：所有的距离+1；且下一跳路由都是C</p>
+        <table style="max-width: 500px;">
+          <caption>改造后的路由信息</caption>
+          <thead>
+            <tr>
+              <th>目标网络</th>
+              <th>距离</th>
+              <th>下一跳</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>N2</td>
+              <td>4+<span class="warn">1</span></td>
+              <td><span class="warn">C</span></td>
+            </tr>
+            <tr>
+              <td>N3</td>
+              <td>8+<span class="warn">1</span></td>
+              <td><span class="warn">C</span></td>
+            </tr>
+            <tr>
+              <td>N6</td>
+              <td>4+<span class="warn">1</span></td>
+              <td><span class="warn">C</span></td>
+            </tr>
+            <tr>
+              <td>N8</td>
+              <td>3+<span class="warn">1</span></td>
+              <td><span class="warn">C</span></td>
+            </tr>
+            <tr>
+              <td>N9</td>
+              <td>5+<span class="warn">1</span></td>
+              <td><span class="warn">C</span></td>
+            </tr>
+          </tbody>
         </table>
-        <dd>N8路由条目：之前经过E到N8需要4跳；现在经过C到N8也需要4跳，所以是<strong>等价路由</strong>，应添加新路由以便均衡负载</dd>
+        <p>路由器B根据规则更新路由表信息</p>
+        <p>N2路由条目：都是经过C转发；之前经过C到N2需要2跳；现在经过C到N2需要5跳，所以5跳是最新的路由：2-&gt;5</p>
+        <p><span class="warn">[思考]</span>路由跳数的可能变化</p>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">旧路由</th>
+              <th colspan="3">新路由</th>
+              <th colspan="3">最终路由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+            </tr>
+            <tr>
+              <td>N2</td>
+              <td>2</td>
+              <td>C</td>
+              <td>N2</td>
+              <td>5</td>
+              <td>C</td>
+              <td>N2</td>
+              <td>5</td>
+              <td>C</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>N3路由条目：没有该路由，说明发现了新网络，添加新路由</p>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">旧路由</th>
+              <th colspan="3">新路由</th>
+              <th colspan="3">最终路由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>N3</td>
+              <td>9</td>
+              <td>C</td>
+              <td>N3</td>
+              <td>9</td>
+              <td>C</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>N6路由条目：之前经过F到N6需要8跳；现在经过C到N6只需要5跳，说明新路由<strong>更短</strong>，应更新旧路由；8-&gt;5，F-&gt;C</p>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="3">旧路由</th>
+              <th colspan="3">新路由</th>
+              <th colspan="3">最终路由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+            </tr>
+            <tr>
+              <td>N6</td>
+              <td>8</td>
+              <td>F</td>
+              <td>N6</td>
+              <td>5</td>
+              <td>C</td>
+              <td>N6</td>
+              <td>5</td>
+              <td>C</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>N8路由条目：之前经过E到N8需要4跳；现在经过C到N8也需要4跳，所以是<strong>等价路由</strong>，应添加新路由以便均衡负载</p>
         <table>
           <tr>
             <td colspan="3">旧路由</td>
@@ -585,92 +609,100 @@
         </table>
         <dd>N9路由条目：之前经过F到N9需要4跳；现在经过C到N9却需要6跳，所以新路由不好，保留旧路由</dd>
         <table>
-          <tr>
-            <td colspan="3">旧路由</td>
-            <td colspan="3">新路由</td>
-            <td colspan="3">最终路由</td>
-          </tr>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>4</td>
-            <td>F</td>
-            <td>N9</td>
-            <td>6</td>
-            <td>C</td>
-            <td>N9</td>
-            <td>4</td>
-            <td>F</td>
-          </tr>
+          <thead>
+            <tr>
+              <th colspan="3">旧路由</th>
+              <th colspan="3">新路由</th>
+              <th colspan="3">最终路由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+              <td>目标网络</td>
+              <td>距离</td>
+              <td>下一跳</td>
+            </tr>
+            <tr>
+              <td>N9</td>
+              <td>4</td>
+              <td>F</td>
+              <td>N9</td>
+              <td>6</td>
+              <td>C</td>
+              <td>N9</td>
+              <td>4</td>
+              <td>F</td>
+            </tr>
+          </tbody>
         </table>
-        <dd>路由器D的路由表最终结果为：</dd>
+        <p>路由器B的路由表最终结果为：</p>
         <table style="max-width: 500px;">
-          <caption>更新后路由器D的路由表信息</caption>
-          <tr>
-            <td>目标网络</td>
-            <td>距离</td>
-            <td>下一跳</td>
-            <td>说明</td>
-          </tr>
-          <tr>
-            <td>N1</td>
-            <td>7</td>
-            <td>A</td>
-            <td>原有路由</td>
-          </tr>
-          <tr>
-            <td>N2</td>
-            <td>2-&gt;5</td>
-            <td>C</td>
-            <td>最新路由</td>
-          </tr>
-          <tr>
-            <td>N3</td>
-            <td>9</td>
-            <td>C</td>
-            <td>添加路由</td>
-          </tr>
-          <tr>
-            <td>N6</td>
-            <td>8-&gt;5</td>
-            <td>F-&gt;C</td>
-            <td>更新路由</td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>4</td>
-            <td>E</td>
-            <td>保留路由</td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>4</td>
-            <td>C</td>
-            <td>添加路由</td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>4</td>
-            <td>F</td>
-            <td>保留路由</td>
-          </tr>
+          <caption>更新后路由器B的路由表信息</caption>
+          <thead>
+            <tr>
+              <th>目标网络</th>
+              <th>距离</th>
+              <th>下一跳</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>N1</td>
+              <td>7</td>
+              <td>A</td>
+              <td>原有路由</td>
+            </tr>
+            <tr>
+              <td>N2</td>
+              <td>2-&gt;5</td>
+              <td>C</td>
+              <td>最新路由</td>
+            </tr>
+            <tr>
+              <td>N3</td>
+              <td>9</td>
+              <td>C</td>
+              <td>添加路由</td>
+            </tr>
+            <tr>
+              <td>N6</td>
+              <td>8-&gt;5</td>
+              <td>F-&gt;C</td>
+              <td>更新路由</td>
+            </tr>
+            <tr>
+              <td>N8</td>
+              <td>4</td>
+              <td>E</td>
+              <td>保留路由</td>
+            </tr>
+            <tr>
+              <td>N8</td>
+              <td>4</td>
+              <td>C</td>
+              <td>添加路由</td>
+            </tr>
+            <tr>
+              <td>N9</td>
+              <td>4</td>
+              <td>F</td>
+              <td>保留路由</td>
+            </tr>
+          </tbody>
         </table>
-        <dd>Net1: 没有新信息，不变</dd>
-        <dd>Net2: 相同的下一跳，替换</dd>
-        <dd>Net3: 一条新路由，增加</dd>
-        <dd>Net6: 不同的下一跳，新跳数小，替换</dd>
-        <dd>Net8: 不同的下一跳，跳数相同，不变 → 增加</dd>
-        <dd>Net9: 不同的下一跳，新跳数大，不变</dd>
+        <p>Net1: 没有新信息，不变</p>
+        <p>Net2: 相同的下一跳，替换</p>
+        <p>Net3: 一条新路由，增加</p>
+        <p>Net6: 不同的下一跳，新跳数小，替换</p>
+        <p>Net8: 不同的下一跳，跳数相同，不变 → 增加</p>
+        <p>Net9: 不同的下一跳，新跳数大，不变</p>
       </div>
       <dt>定时器 Timer</dt>
       <dd>更新定时器 Update timer
@@ -892,81 +924,6 @@ R    10.0.0.0/8 [120/1] via 20.0.0.2, 00:00:08, GigabitEthernet0/0</pre>
       <div class="demo">RIP路由条目的有效期是（）秒，失效期是（）秒，超过（）秒，则被删除。</div>
       <!-- 30 180 300 -->
       <div class="demo">如何理解RIP的"坏消息传播的慢"？</div>
-      <div class="demo">T4-37 已知路由器B的路由表；收到的路由器C交换来的路由信息。求路由器B更新后的路由表</div>
-      <table style="max-width: 500px;">
-        <caption>路由器B</caption>
-        <thead>
-          <tr>
-            <th>目的网络</th>
-            <th>距离</th>
-            <th>下一跳路由器</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>N1</td>
-            <td>7</td>
-            <td>A</td>
-          </tr>
-          <tr>
-            <td>N2</td>
-            <td>2</td>
-            <td>C</td>
-          </tr>
-          <tr>
-            <td>N6</td>
-            <td>8</td>
-            <td>F</td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>4</td>
-            <td>E</td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>4</td>
-            <td>F</td>
-          </tr>
-        </tbody>
-      </table>
-      <table style="max-width: 500px;">
-        <caption>路由器C交换来的路由信息</caption>
-        <thead>
-          <tr>
-            <th>目的网络</th>
-            <th>距离</th>
-            <th>下一跳路由器</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>N2</td>
-            <td>4</td>
-            <td contenteditable>？</td>
-          </tr>
-          <tr>
-            <td>N3</td>
-            <td>8</td>
-            <td contenteditable>？</td>
-          </tr>
-          <tr>
-            <td>N6</td>
-            <td>4</td>
-            <td contenteditable>？</td>
-          </tr>
-          <tr>
-            <td>N8</td>
-            <td>3</td>
-            <td contenteditable>？</td>
-          </tr>
-          <tr>
-            <td>N9</td>
-            <td>5</td>
-            <td contenteditable>？</td>
-          </tr>
-        </tbody>
-      </table>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://networkencyclopedia.com/routing-information-protocol-rip/">Routing Information
