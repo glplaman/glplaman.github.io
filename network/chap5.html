@@ -50,7 +50,7 @@
       </dd>
       <dd>运输层以下各层的任务：解决网络到网络、主机到主机的通信</dd>
       <dd>运输层将主机间通信提升为进程间通信；向上层屏蔽底层网络细节（如拓扑、路由、链路类型）</dd>
-      <dd>计算机通信实际上应用进程之间的通信</dd>
+      <dd>采用逻辑 <strong>端口</strong> 来标识不同的应用进程，实现进程间的准确通信</dd>
       <div class="grid">
         <figure>
           <div class="diagram-wrap">
@@ -148,26 +148,19 @@
           <figcaption>五层简化模型</figcaption>
         </figure>
       </div>
-      <dd>采用 <strong>端口</strong> 来标识不同的应用进程，实现进程间的准确通信</dd>
-      <dd>复用 Multiplexing：发送端多个应用进程的数据通过运输层封装，共享同一网络连接</dd>
-      <dd>分用 Demultiplexing：接收端根据目的端口号将数据准确交付给对应应用进程</dd>
-      <figure>
-        <img src="./imgs/tl0.png" alt="">
-        <figcaption>运输层架构</figcaption>
-      </figure>
-      <dt>服务类型 Service</dt>
-      <dd>无连接的 UDP
-        <p>User Datagram Protocol</p>
-        <p>用户数据报协议</p>
-        <p>不可靠信道</p>
-      </dd>
-      <dd>面向连接的 TCP
-        <p>Transmission Control Protocol</p>
-        <p>传输控制协议</p>
-        <p>可靠信道</p>
-      </dd>
+      <div class="tips">
+        <p>计算机通信实际上应用进程之间的通信</p>
+        <p>运输层是应用进程通信的桥梁</p>
+        <p>通过端口实现精准寻址，利用 TCP/UDP 提供灵活的服务选项</p>
+        <p>它不仅完成端到端的数据传输，还承担可靠性保障、资源协调与网络保护等关键任务，是网络体系结构中承上启下的核心层次</p>
+      </div>
+      <dt>服务类型 Type</dt>
+      <ol>
+        <li>用户数据报协议 UDP，User Datagram Protocol</li>
+        <li>传输控制协议 TCP，Transmission Control Protocol</li>
+      </ol>
       <table>
-        <caption>服务类型 Service</caption>
+        <caption>服务类型 Type</caption>
         <thead>
           <tr>
             <th></th>
@@ -179,12 +172,12 @@
           <tr>
             <td>连接方式</td>
             <td>无连接（无需握手）</td>
-            <td>面向连接（三次握手建立连接）</td>
+            <td>面向连接（建立连接、通信、释放连接）</td>
           </tr>
           <tr>
             <td>可靠性</td>
             <td>不可靠（无确认、无重传）</td>
-            <td>可靠（确认、重传、序号、超时）</td>
+            <td>可靠（序号、确认、超时重传、连接管理、流量管理、拥塞管理）</td>
           </tr>
           <tr>
             <td>开销</td>
@@ -193,81 +186,28 @@
           </tr>
           <tr>
             <td>适用场景</td>
-            <td>实时音视频、DNS、广播</td>
-            <td>文件传输、网页浏览、邮件等</td>
+            <td>实时音视频、广播、DNS</td>
+            <td>网页浏览、文件传输、邮件等</td>
           </tr>
         </tbody>
       </table>
       <dt>职责 Responsibility</dt>
       <dd>运输层作为网络体系结构中的关键层，为上层应用屏蔽了底层网络的复杂性，提供了灵活可靠的数据传输服务</dd>
-      <dd>复用与分用
-        <p>复用：多个应用层进程可同时使用运输层服务</p>
-        <p>分用：运输层能正确将数据交付给对应的应用进程</p>
-      </dd>
-      <dd>差错检测
-        <p>通过校验和检测传输错误</p>
-        <p>TCP还提供差错纠正机制</p>
-      </dd>
-      <dd>流量控制
-        <p>控制发送方发送速率，防止接收方缓冲区溢出</p>
-      </dd>
-      <dd>拥塞控制
-        <p>防止网络拥塞，提高网络利用率</p>
-      </dd>
-      <div class="tips">
-        <p>运输层是应用进程通信的桥梁</p>
-        <p>通过端口实现精准寻址，利用 TCP/UDP 提供灵活的服务选项</p>
-        <p>它不仅完成端到端的数据传输，还承担可靠性保障、资源协调与网络保护等关键任务，是网络体系结构中承上启下的核心层次</p>
-      </div>
+      <ol>
+        <li>复用与分用
+          <p>复用 Multiplexing：发送端多个应用进程的数据通过运输层封装，共享同一网络连接</p>
+          <p>分用 Demultiplexing：接收端根据目的端口号将数据准确交付给对应应用进程</p>
+        </li>
+        <figure>
+          <img src="./imgs/tl0.png" alt="">
+          <figcaption>运输层架构</figcaption>
+        </figure>
+        <li>差错检测
+          <p>通过校验和检测传输错误</p>
+          <p>TCP还提供差错纠正机制</p>
+        </li>
+      </ol>
     </dl>
-    <!-- <h2>实操 Drill</h2>
-    <dl>
-      <figure>
-        <img src="../imgs/network/port/port0.jpg" alt="">
-        <figcaption>网络拓扑</figcaption>
-      </figure>
-      <dd>配置WEB服务器：配置IP地址192.168.0.3</dd>
-      <dd>配置DNS服务器：配置IP地址192.168.0.2；添加WEB服务器对应的域名信息</dd>
-      <figure>
-        <img src="../imgs/network/port/port1.jpg" alt="">
-        <figcaption>配置网络设备</figcaption>
-      </figure>
-      <dd>配置IP地址192.168.0.1；添加DNS服务器地址</dd>
-      <figure>
-        <img src="../imgs/network/port/port2.jpg" alt="">
-        <figcaption>配置主机</figcaption>
-      </figure>
-      <dt>测试网络连通性</dt>
-      <dd>主机到WEB服务器的PING；[请补充测试结果]</dd>
-      <dd>主机到DNS服务器的PING；[请补充测试结果]</dd>
-      <dt>实时测试</dt>
-      <dd>打开主机的WEB浏览器；输入www.cnplaman.com，可以看到返回的WEB页面</dd>
-      <figure>
-        <img src="../imgs/network/port/port3.jpg" alt="">
-      </figure>
-      <dt>模拟测试</dt>
-      <dd>筛选协议</dd>
-      <figure>
-        <img src="../imgs/network/port/port4.jpg" alt="">
-      </figure>
-      <dd>打开主机的WEB浏览器；输入www.cnplaman.com，单步测试数据报的发送过程；主要查看端口</dd>
-    </dl> -->
-    <!-- <h2>Homework</h2>
-    <dl>
-      <dt>Homework</dt>
-      <ol>
-        <li>熟知端口分别有哪些？</li>
-        <li>根据实操部分的内容，完成端口的测试</li>
-      </ol>
-      <dt>Reading</dt>
-      <ol>
-        <li><a href="https://networkencyclopedia.com/difference-between-port-80-and-port-443/">Difference between port
-            80 and port 443 <span class="iconfont icon-share"></span></a></li>
-        <li><a href="https://networkencyclopedia.com/well-known-port-numbers/">Well-Known Port Numbers
-            <span class="iconfont icon-share"></span></a></li>
-        <li><a href=""><span class="iconfont icon-share"></span></a></li>
-      </ol>
-    </dl> -->
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
   </div>

@@ -39,6 +39,21 @@
       </nav>
     </aside>
     <main>
+      <dl>
+        <dt>引言</dt>
+        <div class="demo">TCP vs UDP</div>
+        <dd>情深款款的TCP</dd>
+        <dd>不会闪婚的TCP</dd>
+        <div class="demo"> Joke Time</div>
+        <dd>A TCP packet walks into a bar and says to the bartender, “I'd like a beer.” </dd>
+        <dd>The bartender says, “You'd like a beer?” </dd>
+        <dd>The TCP packet says, “Yes, a beer.”</dd>
+        <div class="demo"> small talk</div>
+        <figure>
+          <img src="./imgs/tcp1.png" alt="">
+          <figcaption>Three-Way Handshake</figcaption>
+        </figure>
+      </dl>
       <h2 class="nav-cont">概述 Overview</h2>
       <dl>
         <dd>TCP - Transmission Control Protocol</dd>
@@ -59,51 +74,36 @@
         <dd>要使每一方能够确知对方的存在</dd>
         <dd>要允许双方协商一些参数（如最大窗口值、是否使用窗口扩大选项和时间戳选项以及服务质量等）</dd>
         <dd>能够对运输实体资源（如缓存大小、连接表中的项目等）进行分配</dd>
-        <dt>解决方案 Solution</dt>
-        <dd>采用三次握手 Three-Way Handshake</dd>
-        <dd>客户和服务器之间交换三个 TCP 报文段</dd>
-        <dd>以防止已失效的连接请求报文段突然又传送到了，因而产生 TCP 连接建立错误</dd>
-        <div class="demo"> 情深款款的TCP</div>
-        <dd>不会闪婚的TCP</dd>
-        <div class="demo"> Joke Time</div>
-        <dd>A TCP packet walks into a bar and says to the bartender, “I'd like a beer.” </dd>
-        <dd>The bartender says, “You'd like a beer?” </dd>
-        <dd>The TCP packet says, “Yes, a beer.”</dd>
-        <div class="demo"> 日常谈话</div>
-        <figure>
-          <img src="./imgs/tcp1.png" alt="">
-          <figcaption>Three-Way Handshake</figcaption>
-        </figure>
+        <dt>实现方案 Solution</dt>
         <dd>借助报文的控制位和序号实现</dd>
-        <dd>通信双方要发送3个报文才能建立连接</dd>
-        <div class="txt-center txt-xl">SYN → SYN+ACK → ACK</div>
+        <dd>客户和服务器之间交换三个 TCP 报文段</dd>
         <dd>客户端 C 主动发起连接；选择初始序号为 x</dd>
         <dd>服务器 S 被动接受连接；选择初始序号为 y</dd>
         <dt class="nav-cont">第一次握手 SYN</dt>
         <dd>C 向 S 主动发出连接请求报文段，进入 SYN_SENT 状态</dd>
-        <dd>同步位 SYN = 1，序号 seq = x</dd>
         <dd>消耗一个序号 <span class="iconfont icon-help"></span></dd>
         <!-- 用于确认，可靠性的要求 -->
         <dd>不能携带数据 <span class="iconfont icon-help"></span></dd>
         <!-- 没有建立连接 -->
         <!-- 接收方尚未分配/协商资源 -->
+        <div class="txt-center txt-xl">seq=x SYN=1</div>
         <dt class="nav-cont">第二次握手 SYN+ACK</dt>
         <dd>S 收到连接请求报文段后，如同意，则发回确认，进入 SYN_RCVD 状态</dd>
-        <dd>同步位 SYN = 1，确认位 ACK = 1，确认号 ack = x + 1，序号 seq = y</dd>
         <dd>消耗一个序号</dd>
-        <dd>仍然不能携带数据</dd>
+        <dd>不能携带数据</dd>
+        <div class="txt-center txt-xl">seq=y ack=x + 1 SYN=1 ACK=1</div>
         <dt class="nav-cont">第三次握手 ACK</dt>
         <dd>C 收到此报文段后向 S 给出确认，进入 ESTABLISHED 状态</dd>
-        <dd>确认位 ACK = 1，确认号 ack = y + 1</dd>
         <dd>可以携带数据</dd>
         <dd>如果不携带数据，则不消耗序号；但是下次发数据仍从 x+1 开始</dd>
+        <div class="txt-center txt-xl">seq=x+1 ack=y + 1 ACK=1</div>
         <figure>
           <img src="./imgs/tcp12.png" alt="">
           <figcaption>三次握手</figcaption>
         </figure>
         <dt>说明 Notation</dt>
         <dd>TCP 的序号是为数据字节服务的</dd>
-        <dd>第三次握手的 ACK 报文本身不包含数据，所以它虽然设置了 seq = x+1，但不产生实际数据字节</dd>
+        <dd>第三次握手的 ACK 报文本身不包含数据，所以它虽然设置了 seq=x+1，但不产生实际数据字节</dd>
         <dd>因此，这个序号不会被真正使用或消耗</dd>
         <dd>后续发送数据时，仍然可以从 x+1 开始</dd>
         <dd>但如果携带了数据，则这些数据会占用序号空间，属于消耗</dd>
@@ -117,24 +117,24 @@
         <dd>TCP 连接释放采用四报文握手</dd>
         <dt class="nav-cont">第一次挥手</dt>
         <dd>C 没有数据要发送；发出连接释放报文段，主动关闭 TCP 连接</dd>
-        <dd>同步位 FIN = 1，序号 seq = u</dd>
         <dd>进入 FIN_WAIT_1 状态，等待 S 的确认</dd>
+        <div class="txt-center txt-xl">seq=u FIN=1</div>
         <dt class="nav-cont">第二次挥手</dt>
         <dd>S 发出确认</dd>
-        <dd>确认位 ACK = 1，确认号 ack = u+1</dd>
         <dd>S 进入 CLOSE_WAIT 状态；通知高层应用进程；从 C 到 S 这个方向的连接就释放了，TCP 连接处于半关闭 Half-Close 状态</dd>
-        <dd>C 收到 ACK 后，进入 FIN_WAIT_2 状态</dd>
-        <dd>S 若发送数据，C 仍要接收；并指定序号 seq = v</dd>
+        <dd>S 可以指定序号 seq=v，继续发送数据</dd>
+        <dd>C 收到确认后，进入 FIN_WAIT_2 状态</dd>
+        <div class="txt-center txt-xl">seq=v ack=u+1 ACK=1</div>
         <dt class="nav-cont">第三次挥手</dt>
         <dd>S 发完数据；通知 TCP 释放连接；再次确认 C 的释放连接</dd>
-        <dd>同步位 FIN = 1，确认位 ACK = 1，确认号 ack = u+1，序号 seq = w</dd>
         <dd>S 进入 LAST_ACK 状态；同时启动一个重传定时器（retransmission timer）</dd>
         <dd>如果在超时时间内没收到 C 的 ACK（第 4 次挥手），B 会重传 FIN</dd>
+        <div class="txt-center txt-xl">seq=w ack=u+1 FIN=1 ACK=1</div>
         <dt class="nav-cont">第四次挥手</dt>
         <dd>C 收到连接释放报文段后，发出确认</dd>
-        <dd>确认位 ACK = 1，确认号 ack = w+1，序号 seq = u + 1</dd>
         <dd>C 进入 TIME_WAIT 状态；持续 2×MSL，C 才释放 TCP 连接</dd>
         <dd>S 收到确认后，进入 CLOSED 状态，连接彻底释放</dd>
+        <div class="txt-center txt-xl">seq=u+1 ack=w+1 ACK=1</div>
         <figure>
           <img src="./imgs/tcp13.png" alt="">
           <figcaption>四次挥手</figcaption>
@@ -152,23 +152,21 @@
         </dd>
         <dt>说明 Notation</dt>
         <dd>S 释放连接时，再次确认 u+1，是因为 TCP 要求每个报文段都必须包含最新的确认号，即使该确认号与之前相同。这是协议设计的一部分，确保状态同步</dd>
-        <dd>C 最后报文使用 seq = u+1 是它下一个发送序号，符合 TCP 序号递增规则。即使没有数据，ACK 报文也必须携带正确的 seq，以维持协议状态一致性和防重放</dd>
+        <dd>C 最后报文使用 seq=u+1 是它下一个发送序号，符合 TCP 序号递增规则。即使没有数据，ACK 报文也必须携带正确的 seq，以维持协议状态一致性和防重放</dd>
         <dd>四次挥手在实际网络中，考虑到重传的因素，可能变成 4 次、6 次、8 次……报文交互，但逻辑上仍是四步</dd>
       </dl>
-      <h2 class="nav-cont">小结</h2>
+      <h2 class="nav-cont">小结 Summary</h2>
       <ol>
         <li>三次握手</li>
         <li>四次挥手</li>
       </ol>
-      <h2 class="nav-cont">作业</h2>
-      <ol>
-        <li>TCP连接释放中，如果服务端 S 收到了客户端 C 的释放请求报文，自己已经没有数据要发送，则应该回复（），并进入（）状态。</li>
-        <dd>A. FIN=1 ACK=1 ack=u+1，LAST_ACK</dd>
-        <dd>B. FIN=1 ACK=1 ack=u+1，CLOSED</dd>
-        <dd>C. ACK=1 ack=u+1，LAST_ACK</dd>
-        <dd>D. ACK=1 ack=u+1，CLOSED</dd>
-        <!-- <p>A</p> -->
-      </ol>
+      <h2 class="nav-cont">作业 Homework</h2>
+      <div class="demo">TCP连接释放中，如果服务端 S 收到了客户端 C 的释放请求报文，自己已经没有数据要发送，则应该回复（），并进入（）状态。</div>
+      <dd>A. FIN=1 ACK=1 ack=u+1，LAST_ACK</dd>
+      <dd>B. FIN=1 ACK=1 ack=u+1，CLOSED</dd>
+      <dd>C. ACK=1 ack=u+1，LAST_ACK</dd>
+      <dd>D. ACK=1 ack=u+1，CLOSED</dd>
+      <!-- <p>A</p> -->
       <div id="footer"></div>
     </main>
   </div>

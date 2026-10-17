@@ -1,11 +1,11 @@
 :root {
   --w: 1024px;
+  --header-h: 480px;
+  --header-bg-img: url(/utils/festival/810.jpg);
   --bg-color: #f0f0f0;
   --txt-color: #000;
   --main-color: #cb0311;
-  --second-color: #9c010a;
-  --third-color: #f3c4be;
-  --warn-color: #ee7585;
+  --svg-txt-color: #fff;
   --p-m-g: 1rem;
 }
 
@@ -91,10 +91,9 @@ svg {
 
 header {
   position: relative;
-  height: 580px;
+  height: var(--header-h);
   background-color: var(--main-color);
-  /* background-image: url(https://ctdsb.clouddiffuse.xyz/T-20230410082857-fb14c1be-2aef-43d7-af3b-eb450cdda414); */
-  background-image: url(/utils/festival/100.jpg);
+  background-image: linear-gradient(transparent 73%, #7a1d19, #7a1d19), var(--header-bg-img);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center top;
@@ -118,7 +117,7 @@ header {
 
 .svg-txt .title {
   font-size: 2.8rem;
-  fill: #cf2904;
+  fill: var(--svg-txt-color);
   /* stroke: #f40; */
   stroke-width: 2;
   /* text-shadow:
@@ -269,15 +268,15 @@ footer a {
 }
 
 @media screen and (max-width:768px) {
-  header {
-    height: 100vh;
-    height: 100svh;
-    /* background-image: linear-gradient(transparent 73%, #7a1d19, #7a1d19), url(/utils/festival/812.jpg); */
-    background-image: url(/utils/festival/102.jpg);
+  :root {
+    --header-bg-img: url(/utils/festival/812.jpg);
+    --header-h: 100vh;
   }
 
-  .svg-txt .title {
-    fill: #cf2904;
+  header {
+    height: var(--header-h);
+    height: 100svh;
+    /* background-image: url(/utils/festival/102.jpg); */
   }
 }
 

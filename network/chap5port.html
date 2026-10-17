@@ -25,11 +25,10 @@
           <li><a href="#" style="--delay:4" class="txt-indent nav-item">登记端口</a></li>
           <li><a href="#" style="--delay:5" class="txt-indent nav-item">临时端口</a></li>
           <li><a href="#" style="--delay:6" class="nav-item">工作机制</a></li>
-          <li><a href="#" style="--delay:7" class="nav-item">套接字</a></li>
-          <li><a href="#" style="--delay:8" class="nav-item">复用分用</a></li>
-          <li><a href="#" style="--delay:9" class="nav-item">实操</a></li>
-          <li><a href="#" style="--delay:10" class="nav-item">小结</a></li>
-          <li><a href="#" style="--delay:11" class="nav-item">作业</a></li>
+          <li><a href="#" style="--delay:7" class="nav-item">复用分用</a></li>
+          <li><a href="#" style="--delay:8" class="nav-item">套接字</a></li>
+          <li><a href="#" style="--delay:9" class="nav-item">小结</a></li>
+          <li><a href="#" style="--delay:10" class="nav-item">作业</a></li>
         </ul>
       </nav>
     </aside>
@@ -40,7 +39,7 @@
         <pre>https://glplaman.github.io:443</pre>
         <div class="demo"> 开发环境常见端口 - Development</div>
         <dd>Html</dd>
-        <pre>http://localhost:5501</pre>
+        <pre>http://localhost:5500</pre>
         <dd>Vue.js/React.js</dd>
         <pre>http://127.0.0.1:5173</pre>
         <dd>Next.js/Express.js</dd>
@@ -59,7 +58,7 @@
       <ul>
         <li>只具有 <strong>本地</strong> 意义</li>
         <li>同一台主机上，不同进程通过端口号区分</li>
-        <li>跨主机通信时，IP + 端口共同构成套接字 Socket，才是全局唯一标识 - <strong>(IP: port)</strong></li>
+        <li>跨主机通信时，IP + Port 共同构成，才是全局唯一标识 - <strong>(IP: port)</strong></li>
       </ul>
       <h2 class="nav-cont">分类 Classification</h2>
       <dl>
@@ -74,113 +73,93 @@
               <th>port</th>
             </tr>
           </thead>
-          <tr>
-            <td>FTP</td>
-            <td>20 / 21</td>
-          </tr>
-          <tr>
-            <td>SSH</td>
-            <td>22</td>
-          </tr>
-          <tr>
-            <td>Telnet</td>
-            <td>23</td>
-          </tr>
-          <tr>
-            <td>SMTP</td>
-            <td>25</td>
-          </tr>
-          <tr>
-            <td>DNS</td>
-            <td>53</td>
-          </tr>
-          <tr>
-            <td>HTTP</td>
-            <td>80</td>
-          </tr>
-          <tr>
-            <td>HTTPS</td>
-            <td>443</td>
-          </tr>
-          <tr>
-            <td>POP3</td>
-            <td>110</td>
-          </tr>
-          <tr>
-            <td>RIP</td>
-            <td>520</td>
-          </tr>
-          <tr>
-            <td>DHCP</td>
-            <td>67 / 68</td>
-          </tr>
-          <tr>
-            <td>MySQL</td>
-            <td>3306</td>
-          </tr>
-          <tr>
-            <td>Redis</td>
-            <td>6379</td>
-          </tr>
-          <tr>
-            <td>MongoDB</td>
-            <td>27017</td>
-          </tr>
-          <tr>
-            <td>PostgreSQL</td>
-            <td>5432</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>FTP</td>
+              <td>20 / 21</td>
+            </tr>
+            <tr>
+              <td>SSH</td>
+              <td>22</td>
+            </tr>
+            <tr>
+              <td>Telnet</td>
+              <td>23</td>
+            </tr>
+            <tr>
+              <td>SMTP</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>DNS</td>
+              <td>53</td>
+            </tr>
+            <tr>
+              <td>HTTP</td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>HTTPS</td>
+              <td>443</td>
+            </tr>
+            <tr>
+              <td>POP3</td>
+              <td>110</td>
+            </tr>
+            <tr>
+              <td>RIP</td>
+              <td>520</td>
+            </tr>
+            <tr>
+              <td>DHCP</td>
+              <td>67 / 68</td>
+            </tr>
+          </tbody>
         </table>
         <dt class="nav-cont">登记端口 Registered Ports</dt>
         <dd>为没有成为熟知端口的应用程序使用</dd>
         <dd>适用于尚未成为标准但需固定端口的服务</dd>
-        <dd>需在 IANA 登记</dd>
+        <dd>需在互联网号码分配机构 IANA（Internet Assigned Numbers Authority）登记</dd>
+        <dd>IANA 的端口登记是自愿性的，但强烈推荐用于公共协议或跨组织部署的服务，以避免端口冲突</dd>
         <dd>1024-49151</dd>
+        <table>
+          <caption>登记端口</caption>
+          <thead>
+            <tr>
+              <th>protocol</th>
+              <th>port</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MySQL</td>
+              <td>3306</td>
+            </tr>
+            <tr>
+              <td>Redis</td>
+              <td>6379</td>
+            </tr>
+            <tr>
+              <td>MongoDB</td>
+              <td>27017</td>
+            </tr>
+            <tr>
+              <td>PostgreSQL</td>
+              <td>5432</td>
+            </tr>
+          </tbody>
+        </table>
         <dt class="nav-cont">临时端口 Ephemeral Ports</dt>
         <dd>临时端口，客户端程序随机选择使用</dd>
         <dd>无需登记</dd>
         <dd>49152-65535</dd>
         <div class="tips">
-          <p>Internet Assigned Numbers Authority - IANA：互联网号码分配机构</p>
-          <p>IANA 的端口登记是自愿性的，但强烈推荐用于公共协议或跨组织部署的服务，以避免端口冲突</p>
+          <p>Ephemeral 源自希腊语 ephēmeros：</p>
+          <p>epi- = 在……之上</p>
+          <p>hēmera = 一天</p>
+          <p>合起来就是 “只持续一天的”，后来引申为短暂的、转瞬即逝的</p>
+          <p>更有文学色彩，蜉蝣的英文就是 ephemera；成虫寿命极短</p>
         </div>
-        <div class="demo">路由信息协议 RIP(Routing Information Protocol)</div>
-        <dd>应用层协议，依赖于用户数据报 UDP(User Datagram Protocol) 传输数据</dd>
-        <dd>需要指定一个 UDP 端口号 - 520，用于标识 RIP 报文</dd>
-        <dd>下行 &downarrow;：RIP 报文封装在 UDP 数据报中，再由 IP 层传输，对应协议号 17</dd>
-        <dd>上行 &uparrow;：IP 封装的数据报要交给上层的 UDP 处理；UDP 的数据要交给上层的 RIP 处理</dd>
-        <figure>
-          <img src="./imgs/tl1.png" alt="">
-          <figcaption>RIP vs OSPF</figcaption>
-        </figure>
-        <figure>
-          <img src="./imgs/rip4.png" alt="">
-          <figcaption>Protocol 17</figcaption>
-        </figure>
-        <figure>
-          <img src="./imgs/rip3.png" alt="">
-          <figcaption>RIP 520</figcaption>
-        </figure>
-        <div class="demo"> OSPF</div>
-        <dd>网络层协议</dd>
-        <dd>OSPF 没有分配端口？</dd>
-        <dd>可靠性由自身实现
-          <p>OSPF 自己实现了可靠传输机制（如 LSA 确认、重传、序列号等），不需要依赖 TCP</p>
-        </dd>
-        <dd>效率更高
-          <p>跳过 TCP/UDP 层可以减少开销，尤其在大型网络中频繁交换链路状态信息时更高效</p>
-          <p>不需要额外的首部开销 - TCP/20byte、UDP/8byte</p>
-          <p>不希望被拥塞控制限制 - 网络一旦变化，应尽快通告出去</p>
-          <p>不需要建立连接 - Hello报</p>
-          <p>应可靠送达 - UDP 虽轻量，但不可靠</p>
-        </dd>
-        <dd>组播支持更好
-          <p>OSPF 大量使用组播（如 224.0.0.5 和 224.0.0.6），而 UDP 虽然也支持组播，但 OSPF 直接基于 IP 可以更灵活地控制报文格式和行为</p>
-        </dd>
-        <dd>协议定位不同
-          <p>RIP 是简单的距离矢量协议，适合用 UDP</p>
-          <p>OSPF 是复杂的链路状态协议，需要更精细的控制，因此直接构建在 IP 之上</p>
-        </dd>
         <div class="tips">OSPF定制服务</div>
         <dt>端口状态 Status</dt>
         <dd>LISTENING：等待连接请求</dd>
@@ -205,62 +184,7 @@
         <dt>服务器 Server/S 响应</dt>
         <dd>服务器使用其熟知端口作为源端口</dd>
         <dd>服务器使用客户端的临时端口作为目标端口</dd>
-        <div class="demo"> 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
-        <dd>当用户在浏览器中访问/请求一个网站时
-          <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 1025</p>
-          <p>目标端口: Web服务器的标准HTTP端口 80</p>
-          <p>数据流向: 用户电脑(端口1025) → Web服务器(端口80)</p>
-        </dd>
-        <dd class="txt-center">
-          <span>Client/1025</span>
-          <span>→</span>
-          <span>Server/80</span>
-        </dd>
-        <figure>
-          <img src="./imgs/port0.png" alt="">
-          <figcaption>Web服务器收到的HTTP请求 Inbound</figcaption>
-        </figure>
-        <dd>当Web服务器返回响应时
-          <p>源端口: Web服务器的HTTP端口 80</p>
-          <p>目标端口: 用户电脑之前使用的临时端口 1025</p>
-          <p>数据流向: Web服务器(端口80) → 用户电脑(端口1025)</p>
-        </dd>
-        <dd class="txt-center">
-          <span>Server/80</span>
-          <span>→</span>
-          <span>Client/1025</span>
-        </dd>
-        <figure>
-          <img src="./imgs/port1.png" alt="">
-          <figcaption>Web服务器返回的HTTP响应 Outbound</figcaption>
-        </figure>
-        <div class="demo">邮件收发</div>
-        <dd>使用 SMTP 协议</dd>
-        <dd>邮件客户端使用的临时端口，如 51001</dd>
-        <dd>邮件服务器的SMTP端口 25</dd>
-        <dd>发送邮件</dd>
-        <dd class="txt-center">
-          <span>Client/51001</span>
-          <span>→</span>
-          <span>Server/25</span>
-        </dd>
-        <dd>收邮件</dd>
-        <dd class="txt-center">
-          <span>Server/25</span>
-          <span>→</span>
-          <span>Client/51001</span>
-        </dd>
       </dl>
-      <h2 class="nav-cont">套接字 Socket</h2 class="nav-cont">
-      <ul>
-        <li>套接字是网络通信中的一个抽象概念，用于唯一标识网络上的一个通信端点 endpoint</li>
-        <li>它由以下三部分组成：协议、IP 地址和端口号</li>
-        <li>数据总是从源端口流向目标端口</li>
-        <li>无论 UDP 还是 TCP，通信都涉及两个端点 - 四元组 4-tuple</li>
-        <div class="txt-center">(src_IP, src_port, dst_IP, dst_port)</div>
-        <li>在某些场景（如防火墙、NetFlow），还会加入协议类型，形成五元组</li>
-        <div class="txt-center">(TCP, 192.168.1.10, 52000, 93.184.216.34, 80)</div>
-      </ul>
       <h2 class="nav-cont">复用分用 Multiplexing & Demultiplexing</h2>
       <dl>
         <dd>复用和分用在每个层都有不同的体现</dd>
@@ -343,46 +267,16 @@ EtherType=0x0806 → 交给 ARP 模块</pre>
         <dd>模块解耦：各层只需关心自己的标识字段，无需了解上层细节</dd>
         <dd>扩展性：新增协议（如未来的新网络层协议）只需分配新 EtherType 或 Protocol 号即可接入现有系统</dd>
       </dl>
-      <h2 class="nav-cont">实操 Drill</h2>
-      <dl>
-        <div class="demo"> 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
-        <ol>
-          <li>网络拓扑</li>
-          <figure>
-            <img src="../imgs/network/port/port0.jpg" alt="">
-            <figcaption>网络拓扑</figcaption>
-          </figure>
-          <li>Host主机配置：IP地址 192.168.0.1；添加 DNS 服务器地址 192.168.0.2</li>
-          <figure>
-            <img src="../imgs/network/port/port2.jpg" alt="">
-            <figcaption>配置主机</figcaption>
-          </figure>
-          <li>WEB服务器配置：IP地址 192.168.0.2</li>
-          <li>DNS服务器配置：配置IP地址 192.168.0.3；添加WEB服务器对应的域名信息，如 www.cnplaman.com</li>
-          <figure>
-            <img src="../imgs/network/port/port1.jpg" alt="">
-            <figcaption>DNS服务器配置</figcaption>
-          </figure>
-          <li>测试网络连通性</li>
-          <dd>Host主机 → WEB服务器</dd>
-          <dd>Host主机 → DNS服务器</dd>
-          <dd>WEB服务器 → DNS服务器</dd>
-          <li>单步测试数据报的发送过程</li>
-          <dd>筛选协议，保留 HTTP、WEB</dd>
-          <dd>查看端口和协议运用情况</dd>
-          <figure>
-            <img src="../imgs/network/port/port4.jpg" alt="">
-            <figcaption>筛选协议</figcaption>
-          </figure>
-          <li>Host主机访问/请求：打开主机的WEB浏览器；输入 www.cnplaman.com</li>
-          <li>DNS服务器解析域名：www.cnplaman.com → 192.168.0.2</li>
-          <li>WEB服务器响应：看到返回的WEB页面</li>
-          <figure>
-            <img src="../imgs/network/port/port3.jpg" alt="">
-            <figcaption>WEB服务器响应</figcaption>
-          </figure>
-        </ol>
-      </dl>
+      <h2 class="nav-cont">套接字 Socket</h2 class="nav-cont">
+      <ul>
+        <li>套接字是网络通信中的一个抽象概念，用于唯一标识网络上的一个通信端点 endpoint</li>
+        <li>它由以下三部分组成：协议、IP 地址和端口号</li>
+        <li>数据总是从源端口流向目标端口</li>
+        <li>无论 UDP 还是 TCP，通信都涉及两个端点 - 四元组 4-tuple</li>
+        <div class="txt-center">(src_IP, src_port, dst_IP, dst_port)</div>
+        <li>在某些场景（如防火墙、NetFlow），还会加入协议类型，形成五元组</li>
+        <div class="txt-center">(TCP, 192.168.1.10, 52000, 93.184.216.34, 80)</div>
+      </ul>
       <h2 class="nav-cont">小结 Summary</h2>
       <ol>
         <li>端口含义和作用</li>

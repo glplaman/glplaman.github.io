@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/navAside.css">
   <base target="_blank">
+  <style>
+    .one>p {
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
 </head>
 
 <body>
@@ -48,25 +53,28 @@
       <h2 class="nav-cont">概述 Overview</h2>
       <dl>
         <dd>用户数据报 UDP - User Datagram Protocol</dd>
-        <dd>无连接 connectionless
-          <p>不需要建立连接</p>
-          <p>也不维护连接状态</p>
-        </dd>
-        <dd>不可靠 unreliable
-          <p>不重传</p>
-          <p>不确认</p>
-          <p>不排序</p>
-          <p>没有流量控制</p>
-          <p>没有拥塞控制</p>
-          <p>不保证交付 Does not guarantee delivery</p>
-          <p>存在丢包</p>
-          <p>最大努力交付 Best effort delivery</p>
-        </dd>
-        <dd>不分段 segmenting</dd>
-        <dd>不重组 reassembling</dd>
-        <dd>不实现序列号 sequence numbers</dd>
-        <dd>首部开销小：最少 8 Bytes，仅包括首部</dd>
-        <dd>支持单播、组播、多播</dd>
+        <ol>
+          <li>连接与状态
+            <p>无连接 (Connectionless)：无需建立连接，也不维护连接状态</p>
+            <p>支持单播、组播、广播：灵活适应多种通信模式</p>
+          </li>
+          <li>可靠性
+            <p>最大努力交付 (Best-effort)：不保证交付，存在丢包可能</p>
+            <p>无确认、不重传：发送后不等待确认，丢失也不重发</p>
+            <p>不排序：不保证数据按发送顺序到达</p>
+          </li>
+          <li>传输控制
+            <p>无流量控制：发送方不会因接收方处理慢而减速</p>
+            <p>无拥塞控制：网络拥堵时也不会降低发送速率</p>
+          </li>
+          <li>报文处理
+            <p>面向报文：不分段 (No segmenting)、不重组 (No reassembling)</p>
+            <p>无序列号：不实现序列号机制</p>
+          </li>
+          <li>首部开销
+            <p>极小开销：首部仅 8 Bytes，远小于 TCP</p>
+          </li>
+        </ol>
         <div class="tips">
           <p>简单方便；不可靠</p>
           <p>U·D·P = Ultra Delightful Prankster - 超可爱捣蛋鬼</p>
@@ -75,6 +83,7 @@
       </dl>
       <dt class="nav-cont">应用 Application</dt>
       <ul>
+        <li>RIP - Routing Information Protocol</li>
         <li>DNS - Domain Name System，域名系统</li>
         <li>DHCP - Dynamic Host Configuration Protocol，动态主机配置协议</li>
         <li>SNMP - Simple Network Management Protocol，简单网络管理协议</li>
@@ -86,16 +95,55 @@
         <li>多播/组播应用 - Multicast</li>
         <li>游戏通信 - Online Gaming</li>
       </ul>
+      <div class="tips">追求极致的快与实时性</div>
+      <div class="demo">路由信息协议 RIP(Routing Information Protocol)</div>
+      <dd>应用层协议，依赖于用户数据报 UDP(User Datagram Protocol) 传输数据</dd>
+      <dd>需要指定一个 UDP 端口号 - 520，用于标识 RIP 报文</dd>
+      <dd>下行 &downarrow;：RIP 报文封装在 UDP 数据报中，对应协议号 17，再由 IP 层传输</dd>
+      <dd>上行 &uparrow;：IP 封装的数据报要交给上层的 UDP 处理；UDP 的数据要交给上层的 RIP 处理</dd>
+      <figure>
+        <img src="./imgs/tl1.png" alt="">
+        <figcaption>RIP vs OSPF</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rip4.png" alt="">
+        <figcaption>Protocol 17</figcaption>
+      </figure>
+      <figure>
+        <img src="./imgs/rip3.png" alt="">
+        <figcaption>RIP 520</figcaption>
+      </figure>
+      <div class="demo"> 为什么 OSPF 没有分配端口？</div>
+      <ol>
+        <li>网络层协议</li>
+        <li>UDP 提供的服务太简单</li>
+        <li>协议定位不同
+          <p>RIP 是简单的距离矢量协议，路由信息更新频繁，且对实时性要求较高(TCP 的三次握手和重传机制有延迟)</p>
+          <p>OSPF 是复杂的链路状态协议，需要更精细的控制</p>
+        </li>
+        <li>TCP 的重传机制太笨重
+          <p>TCP 如果丢包，会从头开始重传整个窗口的数据</p>
+          <p>OSPF 有自己的确认与重传机制（如 LSAck 显式确认、邻居状态机、定期刷新 LSA）</p>
+          <p>OSPF 只需要重传丢失的那一条 LSA（链路状态通告），而不是整个数据库</p>
+        </li>
+        <li>TCP 连接开销大
+          <p>OSPF 需要和多个邻居建立邻接关系（比如一个路由器有 10 个邻居）。如果每个邻居都建一个 TCP 连接，开销巨大</p>
+          <p>OSPF 直接使用 IP 组播（224.0.0.5 和 224.0.0.6），效率极高</p>
+        </li>
+        <li>TCP 面向字节流
+          <p>OSPF 面向报文(Hello、DD、LSR、LSU、LSAck)</p>
+        </li>
+      </ol>
       <h2 class="nav-cont">报文 Packet</h2>
       <dl>
-        <dd>UDP 是面向报文 Message 的协议，一次发送一个完整的报文</dd>
+        <dd>UDP 是面向报文 Message 的协议，一次发送一个完整的报文；不分组</dd>
         <dd>UDP 将应用层的报文 Message/Data 加上 UDP 首部 Header 后形成数据报 UDP datagram</dd>
         <dd>首部固定 8 Bytes - 开销小</dd>
         <figure>
           <img src="./imgs/udp2.png" alt="">
           <figcaption>UDP 数据报封装</figcaption>
         </figure>
-        <table style="width: max-content;">
+        <table style="max-width: 580px;">
           <caption>UDP 报文组成</caption>
           <tr>
             <td>2 Bytes</td>
@@ -150,7 +198,7 @@
         <dd>发送方</dd>
         <ul>
           <li>填上伪首部：不是真正发送的数据，仅用于 UDP 检验和的计算</li>
-          <li>全0填充校验和字段；全0填充数据部分</li>
+          <li>全0填充校验和字段</li>
           <li>伪首部+首部+数据三部分采用二进制反码求和</li>
           <li>求和结果填入校验和字段并发送UDP报文</li>
           <li>注意：最高进位必须加进去</li>
@@ -161,6 +209,10 @@
           <li>伪首部 + 首部 + 数据三部分采用二进制反码求和</li>
           <li>结果全为 1 则无差错；否则丢弃</li>
         </ul>
+        <div class="tips">
+          <p>二进制反码求和：在二进制加法的基础上多了一个规则：产生的进位 Carry，不丢弃，而是加到最低位（第0位）- 循环进位 End-around Carry</p>
+          <p>运算过程：按位相加 → 循环进位 → 最终取反</p>
+        </div>
         <div class="demo"> 主机 153.19.8.104 在端口 1087 向主机 171.3.14.11 所在端口 13 的进程通信，求校验和的计算</div>
         <dd>数据准备</dd>
         <ul>
@@ -168,39 +220,39 @@
           <li>绿色数字部分：校验和预填充，求得结果后再回填</li>
           <li>蓝色数字部分：0 bit 填充，保证总长度为偶数字节，以便按 16 位求和</li>
         </ul>
-        <table style="width: max-content;">
+        <table style="max-width: 580px;">
           <caption>校验和数据准备</caption>
           <tbody>
             <tr>
-              <td colspan="4">153.19.8.104</td>
+              <td colspan="4" title="源IP">153.19.8.104</td>
             </tr>
             <tr>
-              <td colspan="4">171.3.14.11</td>
+              <td colspan="4" title="目的IP">171.3.14.11</td>
             </tr>
             <tr>
-              <td style="color: #f40;">00000000</td>
-              <td>17</td>
-              <td colspan="2">15 = 8+7</td>
+              <td style="color: #f40;" title="0">00000000</td>
+              <td title="17">17</td>
+              <td colspan="2" title="UDP长度">15 = 8+7</td>
             </tr>
             <tr>
-              <td colspan="2">1087</td>
-              <td colspan="2">13</td>
+              <td colspan="2" title="源端口">1087</td>
+              <td colspan="2" title="目的端口">13</td>
             </tr>
             <tr>
-              <td colspan="2">15 = 8+7</td>
-              <td colspan="2" style="color: #008000;">00000000 00000000</td>
-            </tr>
-            <tr>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
+              <td colspan="2" title="UDP长度">15 = 8+7</td>
+              <td colspan="2" style="color: #008000;" title="预填充校验和">00000000 00000000</td>
             </tr>
             <tr>
               <td>data</td>
               <td>data</td>
               <td>data</td>
-              <td style="color: #00f;">00000000</td>
+              <td>data</td>
+            </tr>
+            <tr>
+              <td>data</td>
+              <td>data</td>
+              <td>data</td>
+              <td style="color: #00f;" title="0bit填充">00000000</td>
             </tr>
           </tbody>
         </table>
@@ -209,6 +261,14 @@
           <img src="./imgs/udp5.png" alt="">
           <figcaption>校验和 CheckSum 的计算</figcaption>
         </figure>
+        <dd>详细过程 - 2组2组的加，有进位就加回去</dd>
+        <div class="one">
+          <p>&nbsp;10011001 00010011 第1组</p>
+          <p>+00001000 01101000 第2组</p>
+          <p>=10100001 01111011</p>
+          <p>+10101011 00000011 第3组</p>
+          <p>...</p>
+        </div>
         <dt>报文大小</dt>
         <dd>若报文太长，IP 层在传送时可能要进行分片，形成多个 IP 分组 Packets</dd>
         <dd>若报文太短，会使 IP 数据报的首部的相对长度太大，降低 IP 层的效率</dd>
@@ -226,9 +286,10 @@
         <dd>接收方看到的源地址一致，便于回信</dd>
         <dt>典型应用</dt>
         <dd>RIP组播</dd>
-        <dd>Web 浏览器访问多个服务</dd>
         <dd>视频直播推流</dd>
         <dd>广播通知系统</dd>
+        <dd>Web 浏览器访问多个服务（DNS、HTTP/3的QUIC）</dd>
+        <dd>a广播，x、y接收</dd>
         <figure>
           <img src="./imgs/udp3.png" alt="">
           <figcaption>一对多通信</figcaption>
@@ -241,6 +302,7 @@
         <dd>文件上传服务</dd>
         <dd>在线游戏服务器</dd>
         <dd>物联网设备上报数据</dd>
+        <dd>a、b发送，x接收</dd>
         <figure>
           <img src="./imgs/udp1.png" alt="">
           <figcaption>多对一通信</figcaption>

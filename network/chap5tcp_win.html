@@ -16,6 +16,7 @@
       <span>&commat;Window</span>
     </header>
     <dl>
+      <dt>概述 Overview</dt>
       <dd>TCP支持全双工通信</dd>
       <dd>通信的双方各自维护一个发送窗口和接收窗口，共4个窗口</dd>
       <dd>简单起见，我们只考虑一个方向的通信</dd>
@@ -26,6 +27,7 @@
       <dd>累积确认 Cumulative Acknowledgment：接收方对按序到达的最后一个分组发送确认，表示：到这个分组为止的所有分组都已正确收到了</dd>
       <dd>发送窗口大小以 Byte 为单位</dd>
       <dd>发送窗口大小由接收方决定：通过 TCP 报文中的 Window 字段告知发送方自己还能接收多少数据</dd>
+      <dd>发送方根据这个 Window，准备相应的数据发送并等待确认</dd>
       <figure>
         <img src="./imgs/arq5.png" alt="">
         <figcaption>发送窗口 swnd</figcaption>
@@ -58,8 +60,8 @@
         <figcaption>发送窗口 swnd</figcaption>
       </figure>
       <dt>接收窗口 rwnd - Receiver Window</dt>
-      <dd>接收方维持一个接收窗口，告诉发送方自己还能接收多少数据，用于 <strong>流量控制</strong></dd>
-      <dd>根据接收窗口的大小动态通知发送方 - 流量控制 Flow Control</dd>
+      <dd>接收方维持一个接收窗口，告诉发送方自己还能接收多少数据</dd>
+      <dd>接收方根据处理情况动态调整窗口大小，实现 <strong>流量控制 Flow Control</strong></dd>
       <dd>窗口左侧是已经已经按序到达且确认过的</dd>
       <dd>窗口内部
         <p>已接收但尚未按序（乱序到达）的数据，被 TCP 缓存在接收缓冲区中，但不能被确认 - 累积确认，只能确认到连续的最高序号</p>

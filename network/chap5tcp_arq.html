@@ -45,8 +45,8 @@
         <dd>每发送完一个分组就停止发送，等待对方的确认</dd>
         <dd>在收到确认后再发送下一个分组</dd>
         <dt class="nav-cont">情况1：无差错</dt>
-        <dd>A 发送完分组 M1 后就暂停发送，等待 B 的确认 (ACK)</dd>
-        <dd>B 收到 M1 向 A 发送 ACK</dd>
+        <dd>A 发送完分组 M1 后就暂停发送，等待 B 的确认</dd>
+        <dd>B 收到 M1 向 A 发送确认</dd>
         <dd>A 在收到了对 M1 的确认后，就再发送下一个分组 M2</dd>
         <figure>
           <img src="./imgs/arq0.png" alt="">
@@ -64,16 +64,17 @@
         </figure>
         <dt class="nav-cont">情况3：确认丢失</dt>
         <dd>B 所发送的对 M1 的确认丢失了，那么 A 在设定的超时重传时间内将不会收到确认，因此 A 在超时计时器到期后重传 M1</dd>
-        <dd>假定 B 正确收到了 A 重传的分组 M1。这时 B 应采取两个行动：
+        <dd>假定 B 正确收到了 A 重传的分组 M1。这时 B 应该：
           <br>1. 丢弃 Discard 这个重复的分组 M1，不向上层交付，避免重复操作
-          <br>2. 向 A 发送确认，提示 A 可以继续发送下一个分组
+          <br>2. 重新向 A 发送确认，提示 A 可以继续发送下一个分组
         </dd>
         <figure>
           <img src="./imgs/arq2.png" alt="">
           <figcaption>确认丢失</figcaption>
         </figure>
         <dt class="nav-cont">情况4：确认迟到</dt>
-        <dd>B 对分组 M1 的确认迟到了，因此 A 在超时计时器到期后重传 M1</dd>
+        <dd>B 对分组 M1 的确认迟到了</dd>
+        <dd>A 在超时计时器到期后重传 M1</dd>
         <dd>B 会收到重复的 M1，丢弃重复的 M1，并重传确认分组</dd>
         <dd>A 会收到重复的确认；丢弃 Discard</dd>
         <figure>

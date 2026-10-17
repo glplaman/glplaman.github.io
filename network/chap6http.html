@@ -279,6 +279,35 @@
       <dd>定义了浏览器与万维网服务器通信的 <strong>格式和规则</strong></dd>
       <dd>是万维网上能够可靠地交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础</dd>
       <dd>HTTP 不仅传送完成超文本跳转所必需的信息，而且也传送任何可从互联网上得到的信息，如文本、超文本、声音和图像等</dd>
+      <div class="demo"> 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
+      <dd>当用户在浏览器中访问/请求一个网站时
+        <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 1025</p>
+        <p>目标端口: Web服务器的标准HTTP端口 80</p>
+        <p>数据流向: 用户电脑(端口1025) → Web服务器(端口80)</p>
+      </dd>
+      <dd class="txt-center">
+        <span>Client/1025</span>
+        <span>→</span>
+        <span>Server/80</span>
+      </dd>
+      <figure>
+        <img src="./imgs/port0.png" alt="">
+        <figcaption>Web服务器收到的HTTP请求 Inbound</figcaption>
+      </figure>
+      <dd>当Web服务器返回响应时
+        <p>源端口: Web服务器的HTTP端口 80</p>
+        <p>目标端口: 用户电脑之前使用的临时端口 1025</p>
+        <p>数据流向: Web服务器(端口80) → 用户电脑(端口1025)</p>
+      </dd>
+      <dd class="txt-center">
+        <span>Server/80</span>
+        <span>→</span>
+        <span>Client/1025</span>
+      </dd>
+      <figure>
+        <img src="./imgs/port1.png" alt="">
+        <figcaption>Web服务器返回的HTTP响应 Outbound</figcaption>
+      </figure>
       <dt>WWW 基本过程</dt>
       <dd>HTTP 使用了面向连接的 TCP 作为运输层协议，保证了数据的可靠传输</dd>
       <dd>在 HTTP 客户与 HTTP 服务器之间的每次交互，都由一个 ASCII 码串构成的请求 Request 和一个类似的通用互联网扩充，即“类MIME (MIME-like)”的响应 Response组成
