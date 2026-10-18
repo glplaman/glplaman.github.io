@@ -147,8 +147,8 @@
         <li>创建VLAN</li>
         <li>指定名字（可选）</li>
         <li>选择端口并进入端口配置模式</li>
-        <li>设置端口交换模式</li>
-        <li>把端口划入指定的 VLAN</li>
+        <li>设置端口交换模式；默认是 access</li>
+        <li>把端口划入指定的 VLAN；默认情况下所有端口都被划分在 VLAN 1</li>
         <pre>
 switch>en
 switch>conf ter
@@ -173,9 +173,14 @@ switch#</pre>
       <dd>更改端口模式</dd>
       <pre>Switch(config-if)#switchport mode trunk</pre>
       <dd>VLAN 放行</dd>
-      <pre>Switch(config-if)#switchport trunk allowed vlan 20</pre>
-      <pre>Switch(config-if)#switchport trunk allowed vlan 20, 30</pre>
-      <pre>Switch(config-if)#switchport trunk allowed vlan 20-30</pre>
+      <ul>
+        <li>指定单个 VLAN</li>
+        <pre>Switch(config-if)#switchport trunk allowed vlan 20</pre>
+        <li>使用逗号 , 指定多个不连续的 VLAN</li>
+        <pre>Switch(config-if)#switchport trunk allowed vlan 20, 30</pre>
+        <li>使用连字符 - 指定连续的 VLAN 范围</li>
+        <pre>Switch(config-if)#switchport trunk allowed vlan 20-30</pre>
+      </ul>
       <dt>查看 Show</dt>
       <pre>switch#show vlan</pre>
       <pre>Switch#show vlan brief</pre>

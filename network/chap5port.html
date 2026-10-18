@@ -11,7 +11,9 @@
 </head>
 
 <body>
-  <header></header>
+  <header>
+    <div class="inner"></div>
+  </header>
   <div class="container">
     <aside>
       <nav class="nav">
@@ -160,11 +162,28 @@
           <p>合起来就是 “只持续一天的”，后来引申为短暂的、转瞬即逝的</p>
           <p>更有文学色彩，蜉蝣的英文就是 ephemera；成虫寿命极短</p>
         </div>
-        <div class="tips">OSPF定制服务</div>
         <dt>端口状态 Status</dt>
         <dd>LISTENING：等待连接请求</dd>
         <dd>ESTABLISHED：连接已建立</dd>
         <dd>CLOSED：端口未开放或连接已关闭</dd>
+        <div class="demo">端口在 Node.js 中的应用</div>
+        <pre>
+//引入包 express
+const express = require('express');
+
+//创建服务器实例
+const app = express();
+
+//指定服务器端口
+const PORT = 3000
+
+//指定静态文件位置
+app.use(express.static('./public'));
+
+//监听
+app.listen(port, () => {
+  console.log(`服务器启动成功，访问地址：http://127.0.0.1:${PORT}/资源名`);
+});</pre>
         <dt>注意事项 Caution</dt>
         <dd>不要随意开启不必要的端口</dd>
         <dd>定期检查开放的端口和服务</dd>
