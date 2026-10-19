@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验 远程登陆 Telnet</title>
+  <link rel="stylesheet" href="../css/drill.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>远程登陆</h1>
+    <h4>Telnet</h4>
+    <dl class="container">
+      <dt>实验内容</dt>
+      <dd>远超登陆交换机</dd>
+      <dt>实验目的</dt>
+      <dd>掌握远超登陆的方法</dd>
+      <dt>前置知识</dt>
+      <dd>要成功地建立 Telnet 连接，除了要求掌握远程计算机上的账号和密码外，还需要远程计算机开启“Telnet服务”，并去除 NTLM 验证</dd>
+      <dd>也可以使用专门的 Telnet 工具来进行连接，比如STERM，CTERM等工具（win11程序和应用可选功能更多window功能）</dd>
+      <dd>先配置网络基础，再使用 Telnet 功能</dd>
+      <dt>实验思路</dt>
+      <dd>先使用主机 PC0 通过 Console 口配置交换机；配置完毕，这条链路就可以拆除了</dd>
+      <dd>再使用主机 Laptop0 远超登陆交换机进行运维</dd>
+      <dd>简便起见，也可以只使用一个主机完成实验</dd>
+      <dd></dd>
+      <dt>实验步骤</dt>
+      <ol>
+        <li>搭建拓扑
+          <p>1台 PC</p>
+          <p>1台 Laptop</p>
+          <p>1台 2960 交换机</p>
+        </li>
+        <figure>
+          <img src="./imgs/s3.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>PC0 通过 Console 口连接交换机</li>
+        <li>安全起见，要设置特权密码；交换机的第一道安全防线</li>
+        <pre>Switch(config)#enable password 2026</pre>
+        <li>配置 telnet 远程登陆信息，允许用户通过虚拟终端线路远程接入
+          <p>vty：Virtual Teletype Terminal，表示虚拟电信终端</p>
+          <p>vty 0 4：表示允许5个线路/用户远程登陆该设备；默认至少4个；最多15个</p>
+        </li>
+        <pre>
+Switch(config)#line vty 0 4
+Switch(config-line)#password tel2026
+Switch(config-line)#login</pre>
+        <li>网络管理并保存
+          <p>通常配置 vlan1 为管理地址</p>
+          <p>交换机 Switch0 和远超主机 Laptop0 的 IP 地址必须是同一网段</p>
+        </li>
+        <pre>
+Switch(config)#int vlan 1
+Switch(config-if)#ip add 192.168.1.254 255.255.255.0
+Switch(config-if)#no shutdown
+Switch(config-if)#end
+Switch#write</pre>
+        <li>查看交换机配置</li>
+        <pre>Switch#show running-config</pre>
+        <li>配置 Laptop0
+          <p>192.168.1.1</p>
+          <p>255.255.255.0</p>
+        </li>
+        <li>在命令行 Command Prompt 远程登陆交换机，输入密码</li>
+        <pre>
+C:\>telnet 192.168.1.254
+Trying 192.168.1.254 ...Open
+
+User Access Verification
+
+Password: 
+Switch></pre>
+      </ol>
+      <dt>拓展与思考</dt>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

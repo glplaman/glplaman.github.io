@@ -15,96 +15,65 @@
     <h1>地址解析协议</h1>
     <h4>ARP</h4>
     <dl class="container">
-      <dt>实验学时</dt>
-      <dd>2</dd>
-      <dt>实验类型</dt>
-      <dd>验证型</dd>
-      <dt>实验目的</dt>
       <dt>实验内容</dt>
-      <dd>网内 ARP</dd>
-      <dd>跨网 ARP</dd>
-      <dd>多网段 ARP</dd>
-      <dt>实验器材</dt>
-      <dt>前置知识</dt>
-      <dt>使用步骤</dt>
-      <dt>参考效果和参考命令</dt>
-      <dt>拓展与思考</dt>
+      <dd>地址解析协议 ARP</dd>
+      <dt>实验目的</dt>
+      <dd>掌握地址解析协议的基本原理和过程</dd>
+      <dt>实验步骤</dt>
+      <!-- <dd><a href="./pt/mac.pkt" download>点击下载PT文件 <span class="iconfont icon-filedownload"></span></a></dd> -->
+      <dd>阶段1 准备</dd>
+      <ol>
+        <li>搭建拓扑
+          <p>3台 PC</p>
+          <p>1台 2960 交换机</p>
+        </li>
+        <figure>
+          <img src="./imgs/lan6.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>配置各主机IP，采用默认掩码255.255.255.0
+          <p>PC0：192.168.1.1</p>
+          <p>PC1：192.168.1.2</p>
+          <p>PC2：192.168.1.3</p>
+        </li>
+        <li>使用监视工具 <span class="iconfont icon-search"></span> 打开 PC0、PC1、PC2 的 ARP 表</li>
+        <li>使用监视工具 <span class="iconfont icon-search"></span> 打开 Switch0 的 MAC 表</li>
+      </ol>
+      <dd>阶段2 Ping</dd>
+      <ol>
+        <li>PC0 → 桌面 Desktop → 命令行 Command Prompt，使用 Ping 命令
+          <p>测试到 PC1的连通性，观察 PC0、PC1的ARP 表、Switch0 的 MAC 表</p>
+          <p>测试到 PC2的连通性，观察 PC0、PC2的ARP 表、Switch0 的 MAC 表</p>
+        </li>
+        <li>持续单击快进 <span class="iconfont icon-fastforward"></span>，再次观察几个表的变化</li>
+        <li>依次清除PC0、PC1、PC2的 ARP 缓存，查看各表变化；为什么交换机的 MAC 会增加相应的条目<span class="iconfont icon-help"></span></li>
+        <pre>arp -d</pre>
+        <li>持续单击快进 <span class="iconfont icon-fastforward"></span>至交换机的 MAC 表为空</li>
+      </ol>
+      <dd>阶段3 模拟简单报文</dd>
+      <ol>
+        <li>切换到模拟模式 Simulation</li>
+        <li>编辑过滤器 Edit Filter，ARP 和 ICMP</li>
+        <figure>
+          <img src="./imgs/lan8.png" alt="网络拓扑">
+          <figcaption>编辑过滤器</figcaption>
+        </figure>
+        <li>PC0 向 PC1 发送数据：单击"添加简单 PDU <span class="iconfont icon-email"></span>" → 再单击"PC0"作为发送方 → 再单击"PC1"作为接收方</li>
+        <li>单步执行 <span class="iconfont icon-next"></span>，查看 PDU 的发送过程
+          <p>PC0 先缓存数据，发起 ARP request（广播）请求 PC1 的 MAC 地址</p>
+          <p>交换机广播分组</p>
+          <p>PC1 接收分组并回复</p>
+          <p>PC2 丢弃分组</p>
+          <p>PC0 封装并通信</p>
+          <p>...</p>
+        </li>
+        <li>删除 Delete 场景或新增 New 一个场景</li>
+        <li>PC0 再次向 PC1 发送数据；交换机不需要广播，直接转发给 PC1；PC1回复</li>
+      </ol>
     </dl>
-    <h2>案例 Cases</h2>
+    <h2>进阶 ARP</h2>
     <dl>
-      <div class="demo"> 实操1 网内 ARP</div>
-      <figure>
-        <img src="./imgs/arp2.png" alt="">
-        <figcaption>网内 ARP 拓扑</figcaption>
-      </figure>
-      <dd>搭建拓扑；分配 IP 地址</dd>
-      <dd>利用监视工具打开各设备 ARP 表</dd>
-      <dd>PC0 发 PDU 给 PC1，查看 ARP 表的更新情况</dd>
-      <dd>清除 ARP 表重新测试</dd>
-      <dd>清除 ARP 表后使用 ping <strong>重新</strong> 测试，并分析情况</dd>
-      <dd>测试前，各主机 ARP 表内容</dd>
-      <table>
-        <caption>PC0</caption>
-        <thead>
-          <tr>
-            <th>IP Address</th>
-            <th>Hardware Address</th>
-            <th>Interface</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
-      <table>
-        <caption>PC1</caption>
-        <thead>
-          <tr>
-            <th>IP Address</th>
-            <th>Hardware Address</th>
-            <th>Interface</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
-      <dd>测试后，各主机 ARP 表内容</dd>
-      <table>
-        <caption>PC0</caption>
-        <thead>
-          <tr>
-            <th>IP Address</th>
-            <th>Hardware Address</th>
-            <th>Interface</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>192.168.1.2</td>
-          <td>0001.C753.8C96</td>
-          <td>FastEthernet0</td>
-        </tr>
-      </table>
-      <table>
-        <caption>PC1</caption>
-        <thead>
-          <tr>
-            <th>IP Address</th>
-            <th>Hardware Address</th>
-            <th>Interface</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>192.168.1.1</td>
-          <td>0060.470B.C9AD</td>
-          <td>FastEthernet0</td>
-        </tr>
-      </table>
-      <div class="demo"> 实操2 跨网 ARP</div>
+      <div class="demo"> 跨网 ARP</div>
       <figure>
         <img src="./imgs/l14.png" alt="">
         <figcaption>跨网 ARP 拓扑</figcaption>
@@ -117,21 +86,16 @@
       <dd>如果目标主机和源主机不在同一网段，目标主机就向网关发 ARP 请求，然后封装报文、发给网关</dd>
       <dd>如果网关没有目标主机的 ARP 条目，网关发起 ARP 请求</dd>
       <dd>如果网关有目标主机的 ARP 条目，网关直接把报文发给目标主机</dd>
-      <!-- <img src="../imgs/network/network layer 1/幻灯片10.JPG" alt=""> -->
-      <!-- <img src="../imgs/network/network layer 1/幻灯片11.JPG" alt=""> -->
       <figure>
         <img src="./imgs/l15.png" alt="">
         <figcaption>逐段转发</figcaption>
       </figure>
       <div class="tips">逐段转发</div>
-      <div class="demo"> 实操3 多网段 ARP</div>
+      <div class="demo"> 多网段 ARP</div>
       <figure>
         <img src="./imgs/ipmac0.png" alt="">
         <figcaption>逐段转发</figcaption>
       </figure>
-      <!-- <img src="../imgs/network/network layer 1/幻灯片12.JPG" alt=""> -->
-      <!-- <img src="../imgs/network/network layer 1/幻灯片13.JPG" alt=""> -->
-      <!-- <img src="../imgs/network/network layer 1/幻灯片14.JPG" alt=""> -->
     </dl>
     <div id="footer"></div>
   </div>

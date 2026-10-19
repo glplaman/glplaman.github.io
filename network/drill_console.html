@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验 串口初始化 Console</title>
+  <link rel="stylesheet" href="../css/drill.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>串口初始化</h1>
+    <h4>Console</h4>
+    <dl class="container">
+      <dt>实验内容</dt>
+      <dd>Console 初始化交换机</dd>
+      <dt>实验目的</dt>
+      <dd>掌握利用 Console 口配置交换机的方法</dd>
+      <dt>前置知识</dt>
+      <dd>生产环境中，新交换机第一次启用需要使用 Console 进行初始化配置</dd>
+      <dt>实验步骤</dt>
+      <ol>
+        <li>搭建拓扑
+          <p>1台 Laptop</p>
+          <p>1台 2960 交换机</p>
+        </li>
+        <li>使用串口线 Console 分别连接 Laptop0 的RS-232 接口和交换机 Switch0 的串口 console</li>
+        <figure>
+          <img src="./imgs/console.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>打开：Laptop0 → 桌面 Desktop → 终端程序 Terminal，使用默认的参数，单击 "OK"，连接交换机</li>
+        <figure>
+          <img src="./imgs/s2.png" alt="终端程序">
+          <figcaption>终端程序</figcaption>
+        </figure>
+        <li>进入命令行界面；按回车 Return 开始配置交换机。当前是用户模式 ></li>
+        <pre>Switch></pre>
+        <div class="tips">
+          <p>可以简写命令</p>
+          <p>也可以使用 Tab 补全命令</p>
+        </div>
+        <li>进入特权模式 #；默认不需要密码</li>
+        <pre>
+Switch>en
+Switch#</pre>
+        <li>进入全局配置模式/终端配置模式</li>
+        <pre>
+Switch#conf ter
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)</pre>
+        <li>修改主机名为 SWxxxx；xxx是你的学号后4位，如2019</li>
+        <pre>
+Switch(config)#hostname SW2019
+SW2019(config)#</pre>
+        <li>设置特权密码为 2026；建议先查看命令再设置</li>
+        <pre>
+SW2019(config)#enable ?
+  password  Assign the privileged level password
+  secret    Assign the privileged level secret
+SW2019(config)#enable pass 2026</pre>
+        <li>返回用户模式；
+          <p>先 end 直接回到特权模式 #</p>
+          <p>再 exit 退回到用户模式 ></p>
+        </li>
+        <li>再次进入特权模式 #，提示输入密码</li>
+        <pre>
+SW2019>en
+Password:</pre>
+        <dd>取消特权密码；进入特权的全局配置模式</dd>
+        <pre>SW2019(config)#no ena pass</pre>
+        <li>还原主机名</li>
+        <pre>SW2019(config)#no hostname</pre>
+        <li>其它感兴趣的命令 – 配合?使用
+          <p>查看设备信息 show ter</p>
+          <p>查看端口信息 show interfaces status</p>
+          <p>查看运行配置 show running-config</p>
+        </li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
