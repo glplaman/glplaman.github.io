@@ -31,6 +31,7 @@
           <li><a href="#" style="--delay:3" class="txt-indent nav-item">源端口</a></li>
           <li><a href="#" style="--delay:4" class="txt-indent nav-item">目标端口</a></li>
           <li><a href="#" style="--delay:5" class="txt-indent nav-item">长度</a></li>
+          <li><a href="#" style="--delay:5" class="txt-indent nav-item">校验和</a></li>
           <li><a href="#" style="--delay:6" class="nav-item">工作模式</a></li>
           <li><a href="#" style="--delay:7" class="txt-indent nav-item">一对多</a></li>
           <li><a href="#" style="--delay:8" class="txt-indent nav-item">多对多</a></li>
@@ -186,11 +187,16 @@
         <dd>数据报的长度是 0x0020 → (0020)<sub>16</sub> = 32 Bytes</dd>
         <dd>数据报的首部是 8 Bytes</dd>
         <dd>所以数据报的数据部分：32 - 8 = 24 Bytes</dd>
-        <dt>检验和 CheckSum</dt>
+        <dt class="nav-cont">检验和 CheckSum</dt>
         <dd>2 Bytes</dd>
         <dd>检测 UDP 用户数据报在传输中是否有错。有错就丢弃</dd>
         <dd>伪首部：源IP地址、目标IP地址、IP协议号17、UDP长度和填充</dd>
         <dd>校验内容：伪首部 + UDP首部 + UDP数据</dd>
+        <dd>可选
+          <p>如果不使用，就填充0x0000</p>
+          <p>如果使用，计算的结果是1，就填 0xFFFF</p>
+          <p>如果使用，计算的结果是0，就强制填 0xFFFF</p>
+        </dd>
         <!-- IP 层的目标：确保“分组路由正确” -->
         <figure>
           <img src="./imgs/udp4.png" alt="">
@@ -324,27 +330,84 @@
         <li>UDP 应用</li>
       </ol>
       <h2 class="nav-cont">作业 Homework</h2>
-      <ol>
-        <li>翻译
-          <p>Source Port：an optional field, when meaningful, it indicates the port
-            of the sending process, and may be assumed to be the port to which a
-            reply should be addressed in the absence of any other information.</p>
-          <p>If not used, a value of zero is inserted.</p>
-          <p>Destination Port：has a meaning within the context of a particular internet destination address.</p>
-          <p>Length is the length：in octets of this user datagram including this header and the data. This means the
-            minimum value of the length is eight.</p>
-          <p>Checksum：the 16-bit one's complement of the one's complement sum of a
-            pseudo header of information from the IP header, the UDP header, and the
-            data, padded with zero octets at the end (if necessary) to make a
-            multiple of two octets.</p>
-        </li>
-        <li>Extending Reading：<a href="https://networkencyclopedia.com/user-datagram-protocol-udp/">User Datagram
-            Protocol (UDP) <span class="iconfont icon-share"></span></a></li>
-        <li>Extending Reading：<a href="https://networkencyclopedia.com/multiplexing/">Multiplexing <span
-              class="iconfont icon-share"></span></a></li>
-        <li>Extending Reading：<a href="https://www.rfc-editor.org/rfc/rfc768">RFC 768 <span
-              class="iconfont icon-share"></span></a></li>
-      </ol>
+      <div class="demo">填空题：用户数据报UDP最大长度是（）Bytes。</div>
+      <!-- 2<sup>17</sup> - 1 = 65535 -->
+      <div class='demo'>[T5-01] UDP数据报的数据为8192Bytes。链路层使用以太网传送。
+        <br>(1)应当划分为几个IP数据报？
+        <br>(2)说明每一个数据报分片的数据字段长度和片偏移。
+      </div>
+      <div>[参考答案]</div>
+      <div class='txt-indent'>
+        <p>UPD报文 = 8 + 8192 = 8200Bytes</p>
+        <p>以太网报文 = 20 + 8200 = 8220Bytes</p>
+        <p>以太网最大传输单元 MTU：1500Bytes</p>
+        <p>IP固定头部 20Bytes</p>
+        <p>每片数据部分最大为 1500 - 20 =1480Bytes</p>
+        <p>Chip1：20 + 1480；偏移 0</p>
+        <p>Chip2：20 + 1480；偏移 1480/8</p>
+        <p>Chip3：20 + 1480；偏移 2*1480/8</p>
+        <p>Chip4：20 + 1480；偏移 3*1480/8</p>
+        <p>Chip5：20 + 1480；偏移 4*1480/8</p>
+        <p>Chip6：20 + 800；偏移 5*1480/8</p>
+      </div>
+      <div class="demo">[T5-02] 一个 UDP 用户数据报的首部的十六进制表示是：06 32 00 45 00 1C E2 17。试求
+        <br>(1) 源端口、目的端口、用户数据报的总长度、数据部分长度
+        <br>(2) 这个用户数据报是从客户发送给服务器还是从服务器发送给客户？
+        <br>(3) 使用 UDP 的这个服务器程序是什么？
+      </div>
+      <div>[参考答案]</div>
+      <div class="txt-indent">
+        <p>源端口：06 32 → 0000 0110 0011 0010 → 2<sup>10</sup>+2<sup>0</sup>+2<sup>5</sup>+2<sup>4</sup>+2<sup>1</sup> =
+          1586
+        </p>
+        <p>目标端口：00 45 → 0000 0000 0100 0101 → 64+4+1 = 69</p>
+        <p>总长度：00 1C → 0000 0000 0001 1100 → 16+8+4 = 28Bytes</p>
+        <p>数据部分：总长度 - 首部 = 28-8 = 20Bytes</p>
+        <p>目标是熟知端口 69，表示从客户发送给服务器</p>
+        <p>服务器程序是简单文件传输协议 TFTP</p>
+      </div>
+      <div class="demo">[T5-24] 在以下几种情况下，UDP 的校验和在发送时的数值分别是多少？
+        <br>(1) 发送方决定不使用校验和。
+        <br>(2) 发送方使用校验和，校验和的数值是全 1。
+        <br>(3) 发送方使用校验和，校验和的数值是全 0。
+      </div>
+      <div>[参考答案]</div>
+      <div class="txt-indent">
+        <p>Data + 0x0000；不使用，填全0</p>
+        <p>Data + 0xFFFF；算出来是 1，直接写成 1</p>
+        <p>Data + 0xFFFF；算出来是 0，强制写成 1</p>
+        <p>说明：接收方只要看到校验和字段是 1 且验证通过，就完事了，不需要去刨根问底它原本是 0 还是 1</p>
+      </div>
+      <div class="demo">[T5-25] 某客户使用UDP将数据发送给一台服务器，数据共 16 字节。试计算在传输层的传输效率（有用字节与总字节之比）。</div>
+      <div>[参考答案]</div>
+      <div class="txt-indent">
+        <p>传输效率 = 16/(16+8) = 66.7%</p>
+      </div>
+      <div class="demo">[T5-24] 网络允许的最大报文段长度为 128 字节，序号用 8 位表示，报文段在网络中的寿命为 30 s。求发送报文段的一方所能达到的最高数据率。</div>
+      <div>[参考答案]</div>
+      <div class="txt-indent">
+        <p>传输效率 = 16/(16+8) = 66.7%</p>
+      </div>
+      <div class="demo">翻译
+        <p>Source Port：an optional field, when meaningful, it indicates the port
+          of the sending process, and may be assumed to be the port to which a
+          reply should be addressed in the absence of any other information.</p>
+        <p>If not used, a value of zero is inserted.</p>
+        <p>Destination Port：has a meaning within the context of a particular internet destination address.</p>
+        <p>Length is the length：in octets of this user datagram including this header and the data. This means the
+          minimum value of the length is eight.</p>
+        <p>Checksum：the 16-bit one's complement of the one's complement sum of a
+          pseudo header of information from the IP header, the UDP header, and the
+          data, padded with zero octets at the end (if necessary) to make a
+          multiple of two octets.</p>
+      </div>
+      <div class="demo">Extending Reading：<a href="https://networkencyclopedia.com/user-datagram-protocol-udp/">User
+          Datagram
+          Protocol (UDP) <span class="iconfont icon-share"></span></a></div>
+      <div class="demo">Extending Reading：<a href="https://networkencyclopedia.com/multiplexing/">Multiplexing <span
+            class="iconfont icon-share"></span></a></div>
+      <div class="demo">Extending Reading：<a href="https://www.rfc-editor.org/rfc/rfc768">RFC 768 <span
+            class="iconfont icon-share"></span></a></div>
       <div id="footer"></div>
     </main>
     <script src="/utils/custom/footer.js"></script>

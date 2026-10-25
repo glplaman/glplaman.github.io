@@ -20,13 +20,15 @@
         <h1 class="logo">自动重传请求<sup>&commat;</sup></h1>
         <span class="iconfont icon-menu ham" id="ham"></span>
         <ul class="nav-menu">
-          <li><a href="#" style="--delay:0" class="nav-item">概述</a></li>
-          <li><a href="#" style="--delay:1" class="nav-item">无差错</a></li>
-          <li><a href="#" style="--delay:2" class="nav-item">超时重传</a></li>
-          <li><a href="#" style="--delay:3" class="nav-item">确认丢失</a></li>
-          <li><a href="#" style="--delay:4" class="nav-item">确认迟到</a></li>
-          <li><a href="#" style="--delay:5" class="nav-item">特点</a></li>
-          <li><a href="#" style="--delay:6" class="nav-item">连续ARQ协议</a></li>
+          <li><a href="#" style="--delay:0" class="nav-item">自动重传请求</a></li>
+          <li><a href="#" style="--delay:1" class="nav-item">停止-等待</a></li>
+          <li><a href="#" style="--delay:2" class="txt-indent nav-item">无差错</a></li>
+          <li><a href="#" style="--delay:3" class="txt-indent nav-item">超时重传</a></li>
+          <li><a href="#" style="--delay:4" class="txt-indent nav-item">确认丢失</a></li>
+          <li><a href="#" style="--delay:5" class="txt-indent nav-item">确认迟到</a></li>
+          <li><a href="#" style="--delay:6" class="nav-item">特点</a></li>
+          <li><a href="#" style="--delay:7" class="nav-item">信道利用率</a></li>
+          <li><a href="#" style="--delay:8" class="nav-item">连续ARQ协议</a></li>
         </ul>
       </nav>
     </aside>
@@ -37,13 +39,14 @@
         <dt>可靠需求 Requirement</dt>
         <dd>传输信道不产生差错</dd>
         <dd>不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据</dd>
-        <dt class="nav-cont">概述 Overview</dt>
-        <dd>自动重传请求 ARQ - Automatic Repeat Request</dd>
+        <dt class="nav-cont">自动重传请求 ARQ - Automatic Repeat Request</dt>
         <dd>用于在不可靠信道上实现可靠的数据传输</dd>
-        <dd>ARQ 不是一种具体协议，而是一个协议框架，包含多种实现方式</dd>
-        <dd>最直接的实现方式：停止-等待 Stop-and-Wait</dd>
         <dd>可靠的本质是 <strong>确认</strong> 和 <strong>超时重传</strong></dd>
         <dd>序号 Sequence Number + 确认号 Acknowledgment Number：实现数据有序传输和重传机制的重要支撑</dd>
+        <dd>ARQ 不是一种具体协议，而是一个协议框架，包含多种实现方式</dd>
+        <div class="tips">实际应用中，可靠传输协议要复杂的多</div>
+        <dt class="nav-cont">停止-等待 Stop-and-Wait</dt>
+        <dd>ARQ 最直接的实现方式</dd>
         <dd>每发送完一个分组就停止发送，等待对方的确认</dd>
         <dd>在收到确认后再发送下一个分组</dd>
         <dt class="nav-cont">情况1：无差错</dt>
@@ -89,15 +92,41 @@
         <dd>超时重传：发送方为发送的每个分组设置一个超时计时器。若超时计时器超时没有收到确认，发送方会自动超时重传分组</dd>
         <dd>超时计时器的重传时间应当比数据在分组传输的平均往返时间 RTT 更长一些，防止不必要的重传</dd>
         <dd>简单，但信道利用率太低</dd>
+        <dt class="nav-cont">信道利用率 Utilization</dt>
+        <dd>发送分组必须要等待确认</dd>
+        <dd>实际使用信道的时间较少</dd>
+        <dd>T<sub>D</sub>：数据的发送时延</dd>
+        <dd>T<sub>A</sub>：数据的处理时延</dd>
+        <dd>RTT：往返时延</dd>
+        <dd class="txt-center">U = T<sub>D</sub>/( T<sub>D</sub> + RTT + T<sub>A</sub>)</dd>
+        <figure>
+          <img src="./imgs/arq9.png" alt="连续ARQ协议">
+          <figcaption>信道利用率</figcaption>
+        </figure>
+        <div class="demo">一个信道的数据传输率为4kb/s，单向传播时延为30ms，如果使停止-等待协议的信道最大利用率达到80%，要求的数据帧长度至少为多少比特？</div>
+        <div>答：</div>
+        <div class="txt-indent">
+          <p>根据题意 0.8 = T<sub>D</sub>/(T<sub>D</sub> + 2×30ms)</p>
+          <p>T<sub>D</sub> = 240ms</p>
+          <p>数据帧长度 L = 240ms×4kbps = 960bits</p>
+        </div>
+        <div class="demo">深度思考：80%的效率是不是很高<span class="iconfont icon-help"></span></div>
         <dt class="nav-cont">连续ARQ协议 Continuous ARQ</dt>
         <dd>流水线传输：在收到确认之前，发送方 <strong>连续</strong> 发出多个分组</dd>
         <dd>由于信道上一直有数据不间断地传送，流水线传输可获得 <strong>较高</strong> 的信道利用率</dd>
         <dd>接收方通常只确认按序到达的 <strong>最高序号</strong> 分组</dd>
+        <dd>为了保证通信的有效性，发送方不能无限制的发送</dd>
+        <dd>使用窗口来限制发送方的发送</dd>
+        <figure>
+          <img src="./imgs/arq8.png" alt="连续ARQ协议">
+          <figcaption>连续ARQ协议</figcaption>
+        </figure>
         <dd>重传策略</dd>
         <ul>
           <li>回退N步 Go-Back-N：若某个分组出错或超时，发送方重传该分组及其之后所有已发送但未确认的分组</li>
           <li>选择重传 Selective Repeat：只重传出错的分组，其余正确接收的分组被缓存。这需要更大的接收缓冲区和更复杂的管理</li>
         </ul>
+
       </dl>
       <div id="footer"></div>
     </main>

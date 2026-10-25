@@ -101,6 +101,7 @@
         <div class="tips">
           <p>供需不平衡：供 &lt; 需</p>
         </div>
+        <div class="demo">停车场空闲；但是被堵在路上无法到达并使用</div>
         <div class="demo">以下措施是否可以解决拥塞<span class="iconfont icon-help"></span></div>
         <ol>
           <li>增加资源</li>
@@ -115,7 +116,7 @@
           <p>网络上的流量要少</p>
           <p>让发送方/源站根据网络状态动态调整发送速率</p>
         </dd>
-        <dd>拥塞控制 <strong>很难</strong> 精准设计；只能一定程度的 <strong>缓解</strong> 拥塞 - 动态变化</dd>
+        <dd>拥塞控制 <strong>很难</strong> 精准设计；只能一定程度的 <strong>缓解</strong> - 动态变化</dd>
       </dl>
       <h2 class="nav-cont">常见方案 Solution</h2>
       <dl>
@@ -124,11 +125,8 @@
         <p>依靠 <strong>预先设定</strong> 的规则进行流量管理</p>
         <dd>但一旦整个系统运行起来，就不再中途进行改正了</dd>
         <dd>思路：力争避免发生拥塞；实际很难实现</dd>
-        <dd>实例</dd>
-        <ul>
-          <li>流水线生产</li>
-          <li>单双号通行</li>
-        </ul>
+        <div class="demo">流水线生产</div>
+        <div class="demo">单双号通行</div>
         <!-- <div class="tips">
           <p>人不能两次踏进同一条河流</p>
           <p class="txt-right">- 古希腊哲学家赫拉克利特 Heraclitus</p>
@@ -138,7 +136,7 @@
           <p class="txt-right">- 德国哲学家莱布尼茨 Gottfried Wilhelm Leibniz</p>
         </div> -->
         <dt class="nav-cont">闭环控制 Closed-loop Control</dt>
-        <dd>基于 <strong>反馈</strong> 环路的概念</dd>
+        <dd>基于 <strong>反馈 Feedback</strong> 环路的概念</dd>
         <dd>根据网络当前运行状态采取相应控制措施</dd>
         <dd>思路：在发生拥塞后，采取措施进行控制，消除拥塞</dd>
         <dd>过程</dd>
@@ -147,11 +145,8 @@
           <li>传送/反馈：将拥塞发生的信息传送到可采取行动的地方/源站 - <strong>控制的核心</strong></li>
           <li>调整：调整网络系统的运行以解决出现的问题</li>
         </ol>
-        <dd>实例</dd>
-        <ul>
-          <li>洗澡</li>
-          <li>开车</li>
-        </ul>
+        <div class="demo">洗澡</div>
+        <div class="demo">开车</div>
         <div class="tips">回调函数 Callback</div>
         <dt>闭环控制措施 Method</dt>
         <div>
@@ -184,7 +179,7 @@
             <li>接收方根据累计确认，没有收到 1000，所以给发送方发送对 1000 的确认，希望发送方重新发送 1000 的报文</li>
             <div class="txt-center">seq = 1000; ACK = 1</div>
             <li>发送方重传1000的报文</li>
-            <li>如果仍然多次(3次)收到对1000的确认，就可以判断网络出现了拥塞</li>
+            <li>如果仍然多次(3次)收到对 1000 的确认，就可以判断网络出现了拥塞</li>
             <li>立即进行重传 - 快重传 Fast Retransmit</li>
           </ol>
           <div>方案3. 周期性发送探测分组（主动探测）</div>
@@ -198,18 +193,24 @@
       <dl>
         <dd>TCP 采用基于 <strong>滑动窗口</strong> 进行拥塞控制，属于闭环控制方法</dd>
         <dd><strong>发送方</strong> 维持一个拥塞窗口 cwnd - Congestion Window</dd>
+        <dd>在不造成网络拥塞的前提下，发送方认为自己可以发送的数据量</dd>
         <dd>拥塞窗口的大小取决于网络的拥塞程度，且动态变化</dd>
+        <dd>是TCP拥塞控制算法的核心调节对象</dd>
         <dd>发送方利用拥塞窗口根据网络的拥塞情况调整发送的数据量</dd>
         <dd>发送窗口大小不仅取决于接收方窗口，还取决于网络的拥塞状况</dd>
         <div class="txt-center txt-xl">swnd = min[rwnd, cwnd]</div>
         <dt>rwnd &lt; cwnd</dt>
         <dd>接收方的接收能力限制发送窗口的最大值</dd>
         <dd>接收方的接收缓冲区已接近满，即使网络通畅（cwnd 很大），也不能继续发送更多数据，否则会导致接收方丢包</dd>
-        <dd>示例：餐厅厨房（发送方）可以快速做菜（网络通畅），但顾客（接收方）胃容量有限（缓冲区小），所以不能一直上菜</dd>
+        <div class="demo">rwnd = 400；cwnd = 800</div>
+        <dd>虽然网络通信环境很好，没有拥塞或拥塞较轻，但是我的接收能力有限，只有400；所以你只能发400</dd>
+        <div class="demo">餐厅厨房（发送方）可以快速做菜（网络通畅），但顾客（接收方）胃容量有限（缓冲区小），所以不能一直上菜</div>
         <dt>cwnd &lt; rwnd</dt>
         <dd>网络拥塞限制发送窗口的最大值</dd>
         <dd>接收方还有充足缓冲区（rwnd 很大），但网络出现拥塞（如丢包、延迟增加），发送方主动减小 cwnd 以避免加剧拥塞</dd>
-        <dd>示例：顾客胃口很大（接收缓冲区充足），但外卖骑手堵在路上（网络拥塞），餐厅只能少量多次送餐，避免订单堆积</dd>
+        <div class="demo">rwnd = 800；cwnd = 400</div>
+        <dd>虽然我的接收能力大，但是网络拥塞比较严重，所以你只能发400</dd>
+        <div class="demo">顾客胃口很大（接收缓冲区充足），但外卖骑手堵在路上（网络拥塞），餐厅只能少量多次送餐，避免订单堆积</div>
         <dt>方法 Method</dt>
         <dd>超时重传计时器超时
           <p>网络已经出现了拥塞</p>
@@ -377,6 +378,8 @@
         <li>拥塞窗口大小及调整</li>
       </ol>
       <h2 class="nav-cont">作业 Homework</h2>
+      <div class="demo">判断题：拥塞窗口（cwnd, congestion window）越大，说明网络通信情况越好（）。</div>
+      <!-- √ -->
       <div class="demo">判断题：拥塞窗口（cwnd, congestion window）反映当前网络路径的拥塞状况，由发送方根据网络反馈动态调整（）。</div>
       <!-- √ -->
       <div class="demo">判断题：快传后，为了维持较高的吞吐率，不应退回到慢开始，而进入快恢复（）。</div>
