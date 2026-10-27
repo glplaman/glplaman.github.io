@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>实验 路由器 Router</title>
+  <title>实验 静态路由 Route Static</title>
   <link rel="stylesheet" href="../css/drill.css">
   <base target="_blank">
 </head>
@@ -20,13 +20,120 @@
       <dt>实验类型</dt>
       <dd>验证型</dd>
       <dt>实验题目</dt>
-      <dd>路由器 Router</dd>
+      <dd>静态路由 Route Static</dd>
       <dt>实验目的</dt>
+      <dd>了解路由器的作用</dd>
+      <dd>熟悉路由的基本结构</dd>
+      <dd>熟悉路由器的基本配置</dd>
+      <dd>掌握静态路由的配置</dd>
+      <dd>进一步熟悉eNSP的使用</dd>
+      <dd>进一步熟悉利用抓包工具分析网络的方法</dd>
       <dt>实验内容</dt>
+      <ol>
+        <li>路由器结构</li>
+        <li>静态路由配置</li>
+      </ol>
       <dt>实验器材</dt>
+      <dd>eNSP网络模拟平台</dd>
+      <dd>路由器 AR2220 3台</dd>
       <dt>前置知识</dt>
-      <dt>参考效果和参考命令</dt>
-      <dt>拓展与思考</dt>
+      <dd>人工路由</dd>
+      <dd>由网络管理员手动配置的路由条目，用于明确指定路由器将数据包转发到目标网络的路径</dd>
+      <dd>不会自动学习或更新</dd>
+      <dd>网络拓扑变化时必须人工修改</dd>
+      <dd>特殊静态路由：0.0.0.0/0；默认路由</dd>
+      <dd>适合小型网络、边缘网络、出口默认路由、链路数量少且拓扑稳定的环境</dd>
+      <dd>中大型网络或链路经常变化的网络，一般会改用 OSPF 等动态路由协议</dd>
+      <table>
+        <caption>常用命令</caption>
+        <thead>
+          <tr>
+            <td>命令</td>
+            <td>说明</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>system-view </td>
+            <td>进入系统视图（system view）</td>
+          </tr>
+          <tr>
+            <td>sysname xxx </td>
+            <td>更改设备命令提示符</td>
+          </tr>
+          <tr>
+            <td>undo info-center enable </td>
+            <td>关闭回显信息</td>
+          </tr>
+          <tr>
+            <td>interface type slot/sub/port </td>
+            <td>选择端口</td>
+          </tr>
+          <tr>
+            <td>undo shutdowm </td>
+            <td>开启端口；默认是打开的</td>
+          </tr>
+          <tr>
+            <td>ip route-static NETWORK MASK NEXT-HOP </td>
+            <td>配置静态路由</td>
+          </tr>
+          <tr>
+            <td>display interface brief </td>
+            <td>查看所有端口概要信息</td>
+          </tr>
+          <tr>
+            <td>display interface GigabitEthernet 0/0/0 </td>
+            <td>查看特定端口信息</td>
+          </tr>
+          <tr>
+            <td>display ip routing-table </td>
+            <td>查看路由表</td>
+          </tr>
+          <tr>
+            <td>display ip routing-table protocol static </td>
+            <td>仅仅查看静态路由</td>
+          </tr>
+          <tr>
+            <td>display version </td>
+            <td>显示设备版本号</td>
+          </tr>
+          <tr>
+            <td>undo </td>
+            <td>删除配置命令</td>
+          </tr>
+          <tr>
+            <td>quit </td>
+            <td>返回上一级视图</td>
+          </tr>
+          <tr>
+            <td>return </td>
+            <td>返回用户视图</td>
+          </tr>
+          <tr>
+            <td>save </td>
+            <td>保存配置（用户模式 user view）</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>实验步骤</dt>
+      <dd>核心过程如下；详细过程请访问 <a href="./ensp/Route-static.pdf" class="link">静态路由</a></dd>
+      <ol>
+        <li>进入系统视图</li>
+        <li>关闭回显信息</li>
+        <li>更改主机名/命令提示符</li>
+        <li>选择端口</li>
+        <li>配置IP地址</li>
+        <li>其它操作</li>
+      </ol>
+      <figure>
+        <img src="./imgs/static0.png" alt="网络拓扑">
+        <figcaption>网络拓扑</figcaption>
+      </figure>
+      <dt>拓展练习</dt>
+      <dd>加入终端</dd>
+      <dd>调整为默认路由</dd>
+      <dt>实验分析</dt>
+      <dt>实验总结</dt>
     </dl>
     <div id="footer"></div>
   </div>
