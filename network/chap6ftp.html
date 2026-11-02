@@ -25,7 +25,7 @@
     </header>
     <dl>
       <figure>
-        <img src="./imgs/ftp2.png" alt="">
+        <img src="./imgs/ftp2.png" alt="ftp">
         <figcaption>mindmap</figcaption>
       </figure>
       <dt>概述 Overview</dt>
@@ -78,7 +78,7 @@
         <p>不适合防火墙/NAT 后的客户端（因服务器无法穿透防火墙）</p>
       </dd>
       <figure>
-        <img src="./imgs/ftp0.png" alt="">
+        <img src="./imgs/ftp0.png" alt="ftp">
         <figcaption>Active Mode</figcaption>
       </figure>
       <dt>被动模式 Passive Mode</dt>
@@ -94,48 +94,74 @@
         <p>适合防火墙/NAT后的客户端</p>
       </dd>
       <figure>
-        <img src="./imgs/ftp1.png" alt="">
+        <img src="./imgs/ftp1.png" alt="ftp">
         <figcaption>Passive Mode</figcaption>
       </figure>
     </dl>
     <h2>实操 Drill</h2>
     <dl>
-      <dt>下载 Download</dt>
-      <dd><a class="warn" href="https://filezilla-project.org/">点击 FileZilla</a> <span
-          class="iconfont icon-filedownload"></span>分别下载服务器端和客户端端</dd>
-      <dt>安装 Install</dt>
-      <dd>服务器端安装时，根据需要设置管理密码</dd>
-      <dd>安装完毕后，桌面会出现3个图标，分别是管理FTP，开启FTP服务和关闭FTP服务；后面两个非必须</dd>
-      <div class="grid3">
-        <img style="width:80px;" src="../imgs/network/applayer/f0.jpg" alt="">
-        <img style="width:80px;" src="../imgs/network/applayer/f1.jpg" alt="">
-        <img style="width:80px;" src="../imgs/network/applayer/f2.jpg" alt="">
-      </div>
-      <dt>配置FTP服务器 Config</dt>
-      <dd>指定IP地址、端口号和使用方式</dd>
-      <figure>
-        <img src="../imgs/network/applayer/s1.JPG" alt="">
-        <figcaption>配置FTP服务器</figcaption>
-      </figure>
-      <figure>
-        <img src="../imgs/network/applayer/s2.JPG" alt="">
-        <figcaption>配置FTP服务器</figcaption>
-      </figure>
-      <dt>配置用户 User</d>
-      <dd>组：将特定用户划分到不同的组里，用以区分不同的权限和访问目录</dd>
-      <dd>用户：FTP使用者的账号，并不指特指某个计算机用户；可以多人使用同一个用户；比如互联网1B都可以使用xit这个用户</dd>
-      <dd>不同的组/用户通常指定不同的访问目录</dd>
-      <dd>用户可以单独使用，不一定非要划分到某个组</dd>
-      <figure>
-        <img src="../imgs/network/applayer/s3.JPG" alt="">
-        <figcaption>配置用户</figcaption>
-      </figure>
-      <dt>使用FTP服务</dt>
-      <dd>打开资源管理器[win+E]，在地址栏输入设置的FTP服务器地址，回车并输入密码，即可访问FTP资源</dd>
-      <figure>
-        <img src="../imgs/network/applayer/s4.JPG" alt="">
-        <figcaption>连接FTP服务器</figcaption>
-      </figure>
+      <dt>eNsp FTP</dt>
+      <ol>
+        <li>创建拓扑
+          <p>一个客户端 Client</p>
+          <p>一个服务器 Server</p>
+          <p>一台交换机 S5700</p>
+        </li>
+        <figure>
+          <img src="./imgs/ftp5.png" alt="ftp">
+          <figcaption>创建拓扑</figcaption>
+        </figure>
+        <li>配置IP地址</li>
+        <li>配置服务器</li>
+        <figure>
+          <img src="./imgs/ftp3.png" alt="ftp">
+          <figcaption>配置服务器</figcaption>
+        </figure>
+        <li>配置客户端</li>
+        <figure>
+          <img src="./imgs/ftp4.png" alt="ftp">
+          <figcaption>配置客户端</figcaption>
+        </figure>
+      </ol>
+      <dt>FileZilla FTP</dt>
+      <ol>
+        <li>下载 Download</li>
+        <p><a class="warn" href="https://filezilla-project.org/">点击 FileZilla</a> <span
+            class="iconfont icon-filedownload"></span>分别下载服务器端和客户端端</p>
+        <li>安装 Install</li>
+        <p>服务器端安装时，根据需要设置管理密码</p>
+        <p>安装完毕后，桌面会出现3个图标，分别是管理FTP，开启FTP服务和关闭FTP服务；后面两个非必须</p>
+        <div class="grid3">
+          <img style="width:80px;" src="../imgs/network/applayer/f0.jpg" alt="ftp">
+          <img style="width:80px;" src="../imgs/network/applayer/f1.jpg" alt="ftp">
+          <img style="width:80px;" src="../imgs/network/applayer/f2.jpg" alt="ftp">
+        </div>
+        <li>配置FTP服务器 Config</li>
+        <p>指定IP地址、端口号和使用方式</p>
+        <figure>
+          <img src="../imgs/network/applayer/s1.JPG" alt="ftp">
+          <figcaption>配置FTP服务器</figcaption>
+        </figure>
+        <figure>
+          <img src="../imgs/network/applayer/s2.JPG" alt="ftp">
+          <figcaption>配置FTP服务器</figcaption>
+        </figure>
+        <li>配置用户 User</li>
+        <p>组：将特定用户划分到不同的组里，用以区分不同的权限和访问目录</p>
+        <p>用户：FTP使用者的账号，并不指特指某个计算机用户；可以多人使用同一个用户；比如互联网1B都可以使用xit这个用户</p>
+        <p>不同的组/用户通常指定不同的访问目录</p>
+        <p>用户可以单独使用，不一定非要划分到某个组</p>
+        <figure>
+          <img src="../imgs/network/applayer/s3.JPG" alt="ftp">
+          <figcaption>配置用户</figcaption>
+        </figure>
+        <li>使用FTP服务</li>
+        <p>打开资源管理器[win+E]，在地址栏输入设置的FTP服务器地址，回车并输入密码，即可访问FTP资源</p>
+        <figure>
+          <img src="../imgs/network/applayer/s4.JPG" alt="ftp">
+          <figcaption>连接FTP服务器</figcaption>
+        </figure>
+      </ol>
       <dt>常见问题 Q&A</dt>
       <dd>浏览器不支持：所有采用了最新的谷歌内核的浏览器，都不支持FTP模式了</dd>
       <dd>推荐使用资源管理器WIN+E打开或使用专门的客户端</dd>
