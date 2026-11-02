@@ -35,8 +35,9 @@
           <li class="txt-indent"><a href="#" style="--delay:2" class="nav-item">第二次挥手</a></li>
           <li class="txt-indent"><a href="#" style="--delay:2" class="nav-item">第三次挥手</a></li>
           <li class="txt-indent"><a href="#" style="--delay:2" class="nav-item">第四次挥手</a></li>
-          <li><a href="#" style="--delay:3" class="nav-item">小结</a></li>
-          <li><a href="#" style="--delay:4" class="nav-item">作业</a></li>
+          <li><a href="#" style="--delay:3" class="nav-item">状态机</a></li>
+          <li><a href="#" style="--delay:4" class="nav-item">小结</a></li>
+          <li><a href="#" style="--delay:5" class="nav-item">作业</a></li>
         </ul>
       </nav>
     </aside>
@@ -52,7 +53,7 @@
         <dd>The TCP packet says, “Yes, a beer.”</dd>
         <div class="demo"> small talk</div>
         <figure>
-          <img src="./imgs/tcp1.png" alt="">
+          <img src="./imgs/tcp1.png" alt="tcp">
           <figcaption>Three-Way Handshake</figcaption>
         </figure>
       </dl>
@@ -100,7 +101,7 @@
         <dd>如果不携带数据，则不消耗序号；但是下次发数据仍从 x+1 开始</dd>
         <div class="txt-center txt-xl">seq=x+1 ack=y + 1 ACK=1</div>
         <figure>
-          <img src="./imgs/tcp12.png" alt="">
+          <img src="./imgs/tcp12.png" alt="tcp">
           <figcaption>三次握手</figcaption>
         </figure>
         <dt>说明 Notation</dt>
@@ -138,7 +139,7 @@
         <dd>S 收到确认后，进入 CLOSED 状态，连接彻底释放</dd>
         <div class="txt-center txt-xl">seq=u+1 ack=w+1 ACK=1</div>
         <figure>
-          <img src="./imgs/tcp13.png" alt="">
+          <img src="./imgs/tcp13.png" alt="tcp">
           <figcaption>四次挥手</figcaption>
         </figure>
         <dt>MSL（Maximum Segment Lifetime）</dt>
@@ -156,6 +157,108 @@
         <dd>S 释放连接时，再次确认 u+1，是因为 TCP 要求每个报文段都必须包含最新的确认号，即使该确认号与之前相同。这是协议设计的一部分，确保状态同步</dd>
         <dd>C 最后报文使用 seq=u+1 是它下一个发送序号，符合 TCP 序号递增规则。即使没有数据，ACK 报文也必须携带正确的 seq，以维持协议状态一致性和防重放</dd>
         <dd>四次挥手在实际网络中，考虑到重传的因素，可能变成 4 次、6 次、8 次……报文交互，但逻辑上仍是四步</dd>
+        <div class="tips">
+          <p>应用层通知传输层关闭连接</p>
+          <p>应用程序发送一个 FIN 报文：结果是 TCP 进程发送一个 FIN</p>
+          <p>应用程序发送“关闭”报文：执行 API，如 close()，触发 TCP 进程发送一个 FIN</p>
+        </div>
+      </dl>
+      <h2 class="nav-cont">TCP 状态机 State Machine</h2>
+      <dl>
+        <figure>
+          <img src="./imgs/state.png" alt="tcp">
+          <figcaption>TCP有限状态机</figcaption>
+        </figure>
+        <dd>共11个状态</dd>
+        <ol>
+          <li>LISTEN – LISTEN is state I and it represents waiting for a connection request from any remote TCP host.
+          </li>
+
+          <li>SYN-SENT – SYN-SENT is state II and it represents waiting for a machine connection request after sending a
+            connecting request.</li>
+
+          <li>SYN-RECEIVED – SYN-RECEIVED is state III and it represents waiting for confirmation of connection
+            acknowledgement
+            after both sender and receiver has sent / received connection request.</li>
+
+          <li>ESTABLISHED – It is state IV and represents an open connection, data received to be delivered to the user.
+          </li>
+
+          <li>FIN-WAIT 1 – FIN-WAIT 1 is state V and it represents waiting for a connection termination request from
+            remote TCP
+            host or acknowledgment of connection termination request sent previously.</li>
+
+          <li>FIN-WAIT 2 – It is state VI and represents waiting for connection termination request from remote TCP
+            host.
+          </li>
+
+          <li>CLOSE-WAIT – CLOSE-WAIT is state VII and it represents waiting for a connection termination request from
+            local
+            user.</li>
+
+          <li>CLOSING – It is state VIII that represents waiting for a connection termination request acknowledgement
+            from
+            remote TCP host.</li>
+
+          <li>LAST-ACK – LAST-ACK is state IX of TCP, which represents waiting for connection termination request
+            acknowledgement previously sent to remote TCP host including its acknowledgement of connection termination
+            request.</li>
+
+          <li>TIME-WAIT – It is state X and represents waiting sufficient time to pass to ensure remote TCP host
+            received
+            acknowledgement of its request for connection termination.</li>
+
+          <li>CLOSED – CLOSED is state XI. It is a fictional state and represents no connection state</li>
+        </ol>
+        <div class="demo">[T5-33] TCP 连接处于 ESTABLISHED 状态。以下的事件相继发生：
+          <br>1. 收到一个 FIN 报文段。
+          <br>2. 应用程序发送一个 FIN 报文。
+          <br>在每一个事件之后，连接的状态是什么？在每一个事件之后发生的动作是什么？
+        </div>
+        <div>答：</div>
+        <div class="txt-indent">
+          <p>事件1. </p>
+          <p>连接状态从 ESTABLISHED 变为 CLOSE-WAIT（关闭等待）</p>
+          <p>TCP协议栈立即向发送方回复一个 ACK 报文段，确认序号为收到的FIN序号加1</p>
+          <p>通知上层应用程序“对方已经发送完数据了”（即收到对方的关闭请求）</p>
+          <p>此时进入被动关闭流程。虽然收到了对方的FIN，但本端应用程序可能还有数据要发送，因此TCP连接处于半关闭状态，允许本端继续发送数据</p>
+          <p style="margin-top: 10px;">事件2.</p>
+          <p>连接状态从 CLOSE-WAIT 变为 LAST-ACK（最后确认）</p>
+          <p>发送后，本端不再发送数据，开始等待对方对这个FIN的确认（ACK）</p>
+          <p>一旦收到对方的ACK，连接将彻底断开进入 CLOSED 状态</p>
+        </div>
+        <div class="demo">[T5-34] TCP连接处于SYN-RCVD状态。以下的事件相继发生：
+          <br>1. 应用程序发送“关闭”报文。
+          <br>2. 收到FIN报文段。
+          <br>在以上的每一个事件之后，连接的状态是什么？在每一个事件之后发生的动作是什么？
+        </div>
+        <div>答：</div>
+        <div class="txt-indent">
+          <p>事件1. </p>
+          <p>应用程序发送“关闭”报文，触发 TCP 进程关闭链接</p>
+          <p>进入 FIN-WAIT-1 状态</p>
+          <p>处于 SYN-RCVD 状态的本端（服务器端）向对端发送 FIN 报文段，停止发送数据，并等待对端对 FIN 的确认</p>
+          <p style="margin-top: 10px;">事件2.</p>
+          <p>进入 CLOSING 状态；本端事件1发了FIN，对端现在也发了FIN</p>
+          <p>收到对端的 FIN，本端必须发送 ACK 确认</p>
+        </div>
+        <div class="demo">[T5-35] TCP 连接处于 FIN-WAIT-1 状态。以下的事件相继发生：
+          <br>1. 收到 ACK 报文段。
+          <br>2. 收到 FIN 报文段。
+          <br>3. 发生了超时。
+          <br>在以上的每一个事件之后，连接的状态是什么？在每一个事件之后发生的动作是什么？
+        </div>
+        <div>答：</div>
+        <div class="txt-indent">
+          <p>事件1.</p>
+          <p>进入状态 FIN-WAIT-2</p>
+          <p>不用发送报文</p>
+          <p>事件2.</p>
+          <p>进入状态 TIME-WAIT</p>
+          <P>发送对 FIN 的 ACK</P>
+          <p>事件3.</p>
+          <p>进入状态 CLOSED</p>
+        </div>
       </dl>
       <h2 class="nav-cont">小结 Summary</h2>
       <ol>
@@ -172,13 +275,21 @@
       <div class="demo">分析下图中的通信情况</div>
       <div>详细数据请查看 <a href="./file/tcp.txt" class="link">tcp.txt</a></div>
       <figure>
-        <img src="./imgs/tcp17.png" alt="">
+        <img src="./imgs/tcp17.png" alt="tcp">
         <figcaption>网络拓扑</figcaption>
       </figure>
       <figure>
-        <img src="./imgs/tcp.png" alt="">
+        <img src="./imgs/tcp.png" alt="tcp">
         <figcaption>HTTP通信</figcaption>
       </figure>
+      <div class="demo">拓展阅读 <a href="./file/tcp-state-machine.pdf" class="link">TCP State Machine</a></div>
+      <div class="demo">拓展阅读 <a href="https://yurukusa.github.io/tcp-state-machine/" class="link">TCP State Machine
+          Visualizer</a>
+      </div>
+      <div class="demo">拓展阅读 <a
+          href="http://tcpipguide.com/free/t_TCPOperationalOverviewandtheTCPFiniteStateMachineF-2.htm" class="link">The
+          TCP Guide</a>
+      </div>
       <div id="footer"></div>
     </main>
   </div>

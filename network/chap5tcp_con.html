@@ -359,6 +359,52 @@
             </tr>
           </tbody>
         </table>
+        <div class="demo">[T5-16] 设TCP的 ssthresh 的初始值为 8 (单位为报文段)。当拥塞窗口上升到 12 时网络发生了超时，TCP 使用慢启动和拥塞避免。试分别求出 RTT = 0 到
+          RTT = 14 的各拥塞窗口大小。你能说明拥塞窗口每一次变化的原因吗？</div>
+        <div>答：</div>
+        <div class="txt-indent">
+          <p>RTT &lt; 4，慢开始，翻倍</p>
+          <p>RTT = 4，进入拥塞避免，加1</p>
+          <p>cwnd = 12，超时，进入慢开始；ssthresh = 12/2 = 6，从1开始</p>
+        </div>
+        <table>
+          <tr>
+            <td>cwnd</td>
+            <td>1</td>
+            <td>2</td>
+            <td>4</td>
+            <td class="warn">8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td class="warn">12</td>
+            <td>1</td>
+            <td>2</td>
+            <td>4</td>
+            <td class="warn">6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>RTT</td>
+            <td>0</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+          </tr>
+        </table>
         <dt>说明 Notation</dt>
         <dd>为什么实现中用 MSS 作为单位？
           <p>避免频繁做乘除运算</p>
