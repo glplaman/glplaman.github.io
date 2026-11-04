@@ -7,6 +7,11 @@
   <title>域名解析系统 DNS</title>
   <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
+  <style>
+    table {
+      max-width: 450px;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,30 +25,64 @@
         <img src="./imgs/dns4.png" alt="dns">
         <figcaption>mindmap</figcaption>
       </figure>
-      <dt>概述 Overview</dt>
-      <dd>名称服务器 DNS - Domain Name System</dd>
+      <dt>名称服务器 DNS - Domain Name System</dt>
       <dd>是互联网的一项服务</dd>
-      <dd>解决 IP 地址复杂难以记忆的问题</dd>
       <dd>负责将域名解析为对应的IP地址，以便 <strong>更方便（好记/好维护）</strong> 地访问互联网</dd>
-      <dd>翻译官</dd>
-      <dd>通信录</dd>
       <dd>使用 UDP 协议；协议端口：53</dd>
-      <figure>
-        <img src="./imgs/url.png" alt="dns">
-        <figcaption>DNS解析前</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/dns5.png" alt="dns">
-        <figcaption>DNS解析后</figcaption>
-      </figure>
-      <figure>
-        <img src="./imgs/dns9.png" alt="dns">
-        <figcaption>DNS</figcaption>
-      </figure>
-      <div class="tips">域名变动少；IP地址变动大</div>
-      <dt>详细过程 Details</dt>
+      <dd>存放位置
+        <p>操作系统缓存</p>
+        <p>浏览器/应用程序缓存</p>
+        <p>路由器 / 本地 DNS 服务器缓存</p>
+        <p>静态映射表（唯一写在硬盘文件里的特例）C:\Windows\System32\drivers\etc\hosts；手动配置；优先级最高；系统只读</p>
+      </dd>
+      <div class="tips">
+        <p>翻译官、通信录</p>
+      </div>
+      <dt>域名 Domain</dt>
+      <dd>域名是互联网上用于唯一标识主机或网络服务的层次化逻辑名称</dd>
+      <dd>域名属于 <strong>逻辑标识</strong>，不反映物理位置或网络拓扑</dd>
+      <dd>由标号 (label) 序列组成，各标号之间用点（.）隔开，各标号分别代表不同级别的域名</dd>
+      <div class="txt-xl txt-center">三级域名 · 二级域名 · 顶级域名 .</div>
+      <dd>每个标号不超过 63 字符</dd>
+      <dd>标号不区分大小写</dd>
+      <dd>总长度不超过 255 个字符</dd>
+      <dd>域名的作用
+        <p>定位服务：通过 DNS 解析为 IP 地址，实现对服务器的访问</p>
+        <p>组织标识：体现机构属性（如 .edu 表示教育，.gov 表示政府）</p>
+        <p>服务划分：通过子域名区分 Web、邮件、数据库等不同功能</p>
+        <p>品牌建设：作为机构在互联网上的身份标识</p>
+      </dd>
+      <div class="tips">
+        <p>变长的域名适合人记忆使用</p>
+        <p>定长的IP地址使用机器使用</p>
+      </div>
+      <div class="demo">Http请求流程</div>
+      <div>
+        <figure>
+          <img src="./imgs/url.png" alt="dns">
+          <figcaption>DNS解析前</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/dns5.png" alt="dns">
+          <figcaption>DNS解析后</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/dns9.png" alt="dns">
+          <figcaption>DNS</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/http10.png" alt="dns">
+          <figcaption>使用域名访问</figcaption>
+        </figure>
+        <dd>如果使用IP地址访问，则略过DNS</dd>
+        <figure>
+          <img src="./imgs/dns11.png" alt="dns">
+          <figcaption>使用IP地址访问</figcaption>
+        </figure>
+      </div>
+      <div class="demo">Http请求详细流程</div>
       <ol>
-        <li>查看浏览器本地缓存</li>
+        <li>查看本地缓存（浏览器自身缓存和操作系统缓存）</li>
         <figure>
           <img src="./imgs/dns0.webp" alt="dns">
           <figcaption>step 01</figcaption>
@@ -53,47 +92,26 @@
           <img src="./imgs/dns1.webp" alt="dns">
           <figcaption>step 02</figcaption>
         </figure>
-        <li>向运营商 ISP 指定的 DNS 服务器发起查询</li>
+        <li>客户主机向运营商 ISP 指定的 DNS 服务器发起查询</li>
         <figure>
           <img src="./imgs/dns2.webp" alt="dns">
           <figcaption>step 03</figcaption>
         </figure>
-        <li>向各级 DNS 服务器查询</li>
+        <li>DNS 服务器优先查询自己的缓存；如果没有命中 Cache Miss，则代替客户主机向各级 DNS 服务器迭代查询</li>
         <figure>
           <img src="./imgs/dns3.webp" alt="dns">
           <figcaption>step 04</figcaption>
         </figure>
-        <li>将查询结果返回给请求主机</li>
+        <li>DNS 服务器将查询结果IP地址返回给请求主机；同时缓存记录</li>
         <figure>
           <img src="./imgs/dns4.webp" alt="dns">
           <figcaption>step 05</figcaption>
         </figure>
+        <li>主机使用IP地址访问WWW服务器；同时缓存记录</li>
       </ol>
-      <figure>
-        <img src="./imgs/http10.png" alt="dns">
-        <figcaption>DNS</figcaption>
-      </figure>
-      <div class="tips">
-        互联网的名字空间是按照机构的组织来划分的，与物理的网络无关，与 IP 地址中的“子网”也没有关系
-      </div>
     </dl>
     <h2>域名 Domain Name</h2>
     <dl>
-      <dd>域名是互联网上用于唯一标识主机或网络服务的层次化逻辑名称</dd>
-      <dd>它是 IP 地址的人性化替代，便于用户记忆和使用（如 www.hualixy.edu.cn 代替 113.108.xx.xx）</dd>
-      <dd>域名属于逻辑标识，不反映物理位置或网络拓扑</dd>
-      <dd>域名层级是从右往左数：根域名、顶级域名、二级域名、三级域名</dd>
-      <dd>每级域名可以有自己的子域名 subdomain</dd>
-      <dd>由标号 (label) 序列组成，各标号之间用点（.）隔开，各标号分别代表不同级别的域名</dd>
-      <dd>每个标号不超过63字符；整个域名（含分隔点）不超过 253 字节</dd>
-      <dd>标号不区分大小写</dd>
-      <dd>总长度不超过255个字符</dd>
-      <div class="txt-xl txt-center">三级域名 · 二级域名 · 顶级域名 .</div>
-      <dt>域名的作用 Value</dt>
-      <dd>定位服务：通过 DNS 解析为 IP 地址，实现对服务器的访问</dd>
-      <dd>组织标识：体现机构属性（如 .edu 表示教育，.gov 表示政府）</dd>
-      <dd>服务划分：通过子域名区分 Web、邮件、数据库等不同功能</dd>
-      <dd>品牌建设：作为机构在互联网上的身份标识</dd>
       <figure>
         <img src="https://media.geeksforgeeks.org/wp-content/uploads/20251003115622033440/root.webp" alt="dns">
         <figcaption>分层的域名</figcaption>
@@ -106,7 +124,7 @@
       <dd>DNS 解析为</dd>
       <pre>baidu.com.</pre>
       <dd>所有域名最终都归属到根</dd>
-      <dd>根由全球 13 组根服务器（实际为任播集群）维护</dd>
+      <dd>根由全球 13 组根服务器维护</dd>
       <dt>顶级域名 TLD - Top Lever Domain</dt>
       <dd>顶级域名是根域名下的第一级，分为以下几类</dd>
       <p>1. 通用顶级域名 gTLD - Generic TLD</p>
@@ -185,7 +203,8 @@
       <dd>不面向公众注册，仅由 IETF 和 DNS 系统内部使用</dd>
       <dt>二级域名 SLD - Second-Level Domain</dt>
       <dd>二级域名位于顶级域名之下，其命名规则由各国或 TLD 管理机构自行制定</dd>
-      <dd>我国域名中心 <a href="https://www.cnnic.net.cn/">CNNIC - China Internet Network Information Center</a> </dd>
+      <dd>我国域名中心 <a href="https://www.cnnic.net.cn/" class="link">CNNIC - China Internet Network Information Center</a>
+      </dd>
       <div>1. 类别域名</div>
       <dd>以中国 .cn 为例</dd>
       <table>
@@ -302,18 +321,18 @@
     <dl>
       <!-- <dd>在域名的每一层都会有一个域名服务器 DNS Server</dd>
       <dd>一个服务器所负责管辖的(或有权限的)范围称为 <span class="warn">区</span> (不以“域”为单位)</dd>
-      <dd>每个区设置相应的权限域名服务器，用来保存该区中的所有主机的域名到IP地址的映射</dd>
+      <dd>每个区设置相应的权威域名服务器，用来保存该区中的所有主机的域名到IP地址的映射</dd>
       <dd>还必须具有连向其他域名服务器的信息。当自己不能进行域名到IP地址的转换时，能够知道到什么地方去找其他域名服务器</dd> -->
       <dt>根域名服务器 Root Name Server </dt>
       <dd>共13个域名；区域不均衡</dd>
-      <dd>截至 2024年10月，
-        <p>全球共有 1,733 个根服务器实例（即物理部署点）在运行</p>
+      <dd>截至 2026年，
+        <p>全球共有 2047 个根服务器实例（即物理部署点）在运行</p>
         <p>中国境内（包括中国大陆、香港、澳门、台湾地区）共部署了 约 50 个根服务器实例</p>
         <p>内地约有 30–35 个，覆盖北京、上海、广州、杭州、武汉、西安等多个城市</p>
       </dd>
       <dd>知道所有顶级域名服务器的域名和对应的IP地址</dd>
       <dd><span class="warn">不直接解析</span> IP地址，而是告诉对方应该找哪个顶级域名服务器</dd>
-      <table>
+      <table style="max-width: 800px;">
         <caption>根域名服务器</caption>
         <thead>
           <tr>
@@ -404,59 +423,57 @@
       </table>
       <dt>顶级域名服务器 Top-Level Domain Server</dt>
       <dd>负责管理在该顶级域名服务器注册的所有二级域名 </dd>
-      <dd>收到 DNS 查询请求时，就给出相应的权限域名服务器的IP地址</dd>
-      <dd>它总是知道去哪里找权限域名服务器</dd>
-      <dt>权限域名服务器 Authoritative Name Server </dt>
+      <dd>收到 DNS 查询请求时，就给出相应的权威域名服务器的IP地址</dd>
+      <dd>它总是知道去哪里找权威域名服务器</dd>
+      <dt>权威域名服务器 Authoritative Name Server </dt>
       <dd>负责一个区 zone 的域名服务</dd>
       <dd>每台主机都必须在授权域名服务器处登记</dd>
       <dd>实际上，许多域名服务器都同时充当本地域名服务器和授权域名服务器</dd>
       <dd>授权域名服务器 <span class="warn">总能</span> 将其管辖的主机名转换为该主机的IP地址</dd>
       <dd>不在辖区的，向上级请求</dd>
       <dt>本地域名服务器 Local Name Server </dt>
-      <dd>本地域名服务器对域名系统非常重要。</dd>
+      <dd>本地域名服务器对域名系统非常重要</dd>
       <dd>也称默认域名服务器； 距离用户较近 </dd>
       <dd>每个因特网服务提供者ISP， 或一所大学，甚至一所大学中的各个系，都可以拥有一个本地域名服务器</dd>
       <dd>当一台主机发出DNS查询请求时，这个查询请求报文就发送给该主机的本地域名服务器</dd>
       <dd>如果查不到，再去询问其他的域名服务器</dd>
       <div class="tips">
         <p>根服务器 → 返回 TLD 服务器地址</p>
-        <p>TLD 服务器 → 返回权威服务器地址</p>
-        <p>权威服务器 → 返回最终 IP</p>
+        <p>TLD 服务器 → 返回权威域名服务器地址</p>
+        <p>权威域名服务器 → 返回域名对应的IP</p>
       </div>
     </dl>
     <h2>域名解析 Resolution</h2>
     <dl>
       <dd>域名解析融合了递归查询 Recursive Query 和迭代查询 Iterative Query</dd>
-      <dd>主机向本地域名服务器查询时使用递归查询
-        <p>客户端 ↔ 解析器</p>
-      </dd>
-      <dd>本地域名服务器向根域名服务器查询时使用迭代查询
-        <p>解析器 ↔ 上游 DNS 服务器</p>
-      </dd>
+      <dd>客户端 ↔ 本地 DNS 解析器：使用递归查询</dd>
+      <dd>本地 DNS 解析器 ↔ 上游 DNS 服务器：使用迭代查询</dd>
       <dd>只有客户端（如用户主机）可以向支持递归的 DNS 服务器（如本地 DNS）发起递归查询</dd>
       <dd>根服务器、TLD 服务器、权威服务器一律 <strong>不支持</strong> 递归查询</dd>
       <dt>基本过程 Procedure</dt>
       <dd>以 www.example.com 为例</dd>
-      <dd>Client → Local DNS（递归查询）
-        <p>客户端说：“请帮我查 www.example.com 的 IP，必须给我答案。”</p>
-      </dd>
-      <dd>Local DNS → Root Server
-        <p>本地 DNS 不知道，于是问根服务器：“example.com 在哪？”</p>
-        <p>根服务器回答：“去找 .com 的 TLD 服务器。”</p>
-      </dd>
-      <dd>Local DNS → TLD Server
-        <p>本地 DNS 问 TLD 服务器：“www.example.com 的权威服务器是谁？”</p>
-        <p>TLD 回答：“找 example.com 的权威服务器。”</p>
-      </dd>
-      <dd>Local DNS → Authoritative Server
-        <p>本地 DNS 问权威服务器 www.example.com 的 IP 是多少？</p>
-        <p>权威服务器返回：93.184.216.34</p>
-      </dd>
-      <dd>Authoritative → Local DNS → Client
-        <p>本地 DNS 把 IP 返回给客户端</p>
-      </dd>
+      <ol>
+        <li>Client → Local DNS（递归查询）
+          <p>问：请帮我查 www.example.com 的 IP，必须给我最终结果</p>
+        </li>
+        <li>Local DNS → Root Server
+          <p>问：.com 顶级域（TLD）服务器的地址是多少</p>
+          <p>答：返回 .com 对应的 TLD 服务器地址（IP 或域名）</p>
+        </li>
+        <li>Local DNS → TLD Server
+          <p>问：example.com 的权威域名服务器（Authoritative Server）是多少</p>
+          <p>答：返回 example.com 的权威服务器地址（IP 或域名）</p>
+        </li>
+        <li>Local DNS → Authoritative Server
+          <p>问：www.example.com 的 IP 地址是多少</p>
+          <p>答：返回该域名真实的最终 IP</p>
+        </li>
+        <li>Authoritative → Local DNS → Client
+          <p>本地 DNS 将获取到的 IP 结果缓存（根据 TTL），随后将最终结果返回给客户端</p>
+        </li>
+      </ol>
       <div class="tips">后续的迭代查询都是本地 DNS 代替客户端完成</div>
-      <div class="demo"> 完整过程</div>
+      <dt>完整过程 Details</dt>
       <dd>假定某客户机想获知域名为 http://www.abc.com 主机的 IP 地址</dd>
       <figure>
         <img src="./imgs/dns10.png" alt="dns">
@@ -465,46 +482,18 @@
       <dd>当用户在地址栏键入并敲下回车键之后，域名解析就开始了</dd>
       <ol>
         <li>检查浏览器缓存</li>
-        <li>检查本地 hosts 文件</li>
         <li>检查操作系统 DNS 缓存</li>
+        <li>检查本地 hosts 文件</li>
         <li>若均无记录，则向本地 DNS 服务器发起 <strong>递归查询</strong>
-          <p>本地 DNS 服务器通过 <strong>迭代查询</strong> 依次向根服务器、顶级域服务器、授权服务器查询</p>
-          <p>根服务器返回顶级域权威服务器地址</p>
-          <p>顶级域服务器返回子域授权服务器地址</p>
-          <p>授权服务器返回最终的 IP 地址</p>
+          <p>本地 DNS 服务器优先检查自身缓存；若未命中，则代替主机向外部发起「迭代查询」</p>
+          <p>若未命中，则代替主机向外部发起<strong>迭代查询</strong>，依次向根服务器、顶级域服务器、授权服务器查询</p>
+          <p>向根服务器查询，获取顶级域（TLD）服务器地址</p>
+          <p>向顶级域服务器查询，获取权威服务器地址</p>
+          <p>向权威服务器查询，获取最终的 IP 地址</p>
         </li>
-        <li>本地 DNS 将结果返回给客户端，并缓存一段时间</li>
-        <li>浏览器使用 IP 地址建立连接</li>
+        <li>本地 DNS 服务器将最终 IP 返回给客户端，同时将记录存入自身缓存</li>
+        <li>浏览器/操作系统将该 IP 存入本地缓存，并使用该 IP 与目标服务器建立连接</li>
       </ol>
-      <dt>递归查询 Recursive Query</dt>
-      <dd>只发1次请求</dd>
-      <dd>客户端向 DNS 解析器发出请求，并要求解析器必须返回最终的 IP 地址（或错误）</dd>
-      <dd>解析器会代替客户端完成整个查询过程，即使需要联系多个 DNS 服务器，也由解析器自行处理，客户端只需等待最终结果</dd>
-      <figure>
-        <img src="./imgs/dns7.png" alt="dns">
-        <figcaption>递归查询 Recursive Query</figcaption>
-      </figure>
-      <dt>迭代查询 Iterative Query</dt>
-      <dd>多次请求</dd>
-      <dd>DNS 解析器向某台 DNS 服务器（如根服务器或 TLD 服务器）发出请求时，该服务器若没有确切答案，不会代为继续查询，而是返回一个“最佳可用”的指引（例如：“你应去询问某 TLD
-        服务器”）</dd>
-      <dd>解析器再根据该指引向下一服务器发起新的查询，如此反复，直至获得最终答案</dd>
-      <figure>
-        <img src="./imgs/dns8.png" alt="dns">
-        <figcaption>迭代查询 Iterative DNS Service</figcaption>
-      </figure>
-      <!-- <dd>具体过程如下</dd>
-      <ol>
-        <li>客户机向其本地域名服务器发出DNS请求报文 - 递归查询</li>
-        <li>本地域名服务器收到请求后，查询本地缓存，若没有该记录，则以 DNS 客户的身份向根域名服务器发出解析请求</li>
-        <li>根域名服务器收到请求后，判断该域名属于.com域，将对应的顶级域名服务器 http://dns.com 的 IP 地址返回给本地域名服务器</li>
-        <li>本地域名服务器向顶级域名服务器 http://dns.com 发出解析请求报文</li>
-        <li>顶级域名服务器 http://dns.com 收到请求后，判断该域名属于 http://abc.com，因此将对应的授权域名服务器 http://dns.abc.com 的 IP 地址返回给本地域名服务器
-        </li>
-        <li>本地域名服务器向授权域名服务器 http://dns.abc.com 发起解析请求报文</li>
-        <li>授权域名服务器 http://dns.abc.com 收到请求后，将查询结果返回给本地域名服务器</li>
-        <li>本地域名服务器将查询结果保存到本地缓存，同时返回给客户机</li>
-      </ol> -->
       <dt>说明 Notation</dt>
       <dd>部分资料提到使用 8 个UDP报文</dd>
       <dd>简化版描述</dd>
@@ -513,26 +502,48 @@
         <p>无重试</p>
         <p>无多服务器轮询</p>
       </dd>
+      <dt>DNS 安全 Security</dt>
       <div class="demo"> 如果防范钓鱼网站？</div>
+      <dd>钓鱼网站的本质是“伪造身份”</dd>
+      <dd>黑客会建立一个和真实网站（如银行、电商）长得一模一样的假网站，诱导你输入账号密码</dd>
+      <dd>靠“身份验证”机制</dd>
+      <dd>钓鱼网站无法获得受信任的证书（或者证书域名对不上）。浏览器会弹出“您的连接不是私密连接”等红色警告</dd>
       <div class="demo"> 如果服务器返回的查询结果被篡改了？</div>
       <dd>DNS 劫持（DNS Hijacking）</dd>
       <dd>DNS 污染（DNS Cache Poisoning / DNS Spoofing）</dd>
     </dl>
-    <h2>实操 Drill</h2>
+    <h2>常用命令 Command</h2>
     <dl>
-      <dt>域名缓存</dt>
-      <dd>在域名服务器解析的时候，使用缓存保存域名和IP地址的映射；计算机中DNS的记录也分成了两种缓存方式</dd>
-      <dd>浏览器缓存：浏览器在获取网站域名的实际 IP 地址后会对其进行缓存，减少网络请求的损耗</dd>
-      <dd>操作系统缓存：操作系统的缓存其实是用户自己配置的hosts文件；C:\Windows\System32\drivers\etc</dd>
+      <dt>ipconfig /displaydns</dt>
       <dd>查看主机 DNS 缓存</dd>
-      <pre>ipconfig /displaydns</pre>
+      <dd>显示的是"缓存内容"，不是"查询过程"</dd>
+      <pre>
+telemetry.individual.githubcopilot.com
+----------------------------------------
+记录名称. . . . . . . : telemetry.individual.githubcopilot.com
+记录类型. . . . . . . : 5
+生存时间. . . . . . . : 30
+数据长度. . . . . . . : 8
+部分. . . . . . . . . : 答案
+CNAME 记录  . . . . . : copilot-telemetry-service.githubusercontent.com
+
+
+记录名称. . . . . . . : copilot-telemetry-service.githubusercontent.com
+记录类型. . . . . . . : 5
+生存时间. . . . . . . : 30
+数据长度. . . . . . . : 8
+部分. . . . . . . . . : 答案
+CNAME 记录  . . . . . : glb-db52c2cf8be544.github.com
+
+
+记录名称. . . . . . . : glb-db52c2cf8be544.github.com
+记录类型. . . . . . . : 1
+生存时间. . . . . . . : 30
+数据长度. . . . . . . : 4
+部分. . . . . . . . . : 答案
+A (主机)记录  . . . . : 140.82.114.22</pre>
+      <dt>ipconfig /flushdns</dt>
       <dd>清空主机 DNS 缓存</dd>
-      <pre>ipconfig /flushdns</pre>
-      <dt>PT仿真</dt>
-      <figure>
-        <img src="../imgs/network/app/dns.jpg" alt="dns">
-        <figcaption>拓扑</figcaption>
-      </figure>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
@@ -542,97 +553,119 @@
         <li>域名 Domain</li>
         <li>解析 Resolution</li>
       </ol>
-      <div class="tips">客户端 → 本地 DNS 服务器 → 根 DNS 服务器 → TLD 服务器 → 权威 DNS 服务器 → 返回 IP → 本地 DNS → 客户端</div>
       <dt>Homework</dt>
-      <ol>
-        <li>整个 DNS 过程对客户端来说是“一次递归查询”；但对本地 DNS 来说，它内部用了多个迭代查询去完成任务。（）</li>
-        <!-- √ -->
-        <li>DNS 采用客户-服务器工作方式，客户端向 DNS 服务器发送查询请求，服务器返回对应的 IP 地址。()</li>
-        <!-- √ -->
-        <li>DNS 缓存机制可以显著减少查询延迟和网络流量，但可能导致域名更新后客户端仍获取旧的 IP 地址。（）</li>
-        <!-- √ -->
-        <li>每次 DNS 查询都希望获得确定无误的结果，所以 DNS 采用有连接的 TCP协议。（）</li>
-        <!-- x -->
-        <li>DNS 协议默认使用 UDP 端口 53 进行通信，只有在区域传输等特殊情况下才使用 TCP。（）</li>
-        <!-- √ -->
-        <li>DNS 查询过程中，本地域名服务器通常使用递归查询方式向根域名服务器发起请求。（）</li>
-        <!-- x -->
-        <li>有关域名服务器，说法错误的是（）。</li>
-        <div>A：可分为：根域名服务器、顶级域名服务器、权限域名服务器和本地域名服务器</div>
-        <div>B：根域名服务器并不解析域名，而是把待查域名对应的顶级域名服务器的IP地址作为结果返回</div>
-        <div>C：除根域名服务器外，其它域名服务器均能返回待查域名对应的IP地址</div>
-        <div>D：本地域名服务器的IP地址应该直接配置在需要解析域名的主机中</div>
-        <!-- 顶级域名服务器除外 -->
-        <li>在 DNS 系统中，负责管理顶级域名（如 .com、.cn）的服务器是（）。</li>
-        <div>A：根域名服务器</div>
-        <div>B：顶级域名服务器（TLD）</div>
-        <div>C：权威域名服务器</div>
-        <div>D：本地域名服务器</div>
-        <!-- B -->
-        <li>当用户在浏览器中输入 www.example.com 时，首先被查询的 DNS 服务器通常是（）。</li>
-        <div>A：根域名服务器</div>
-        <div>B：.com 顶级域名服务器</div>
-        <div>C：用户配置的本地域名服务器</div>
-        <div>D：example.com 的权威域名服务器</div>
-        <!-- C -->
-        <li>DNS 查询中，迭代查询的特点是（）。</li>
-        <div>A：服务器必须返回最终答案，否则继续代为查询</div>
-        <div>B：服务器若不知道答案，会返回一个“知道该去问谁”的服务器地址</div>
-        <div>C：客户端直接向根服务器发起查询</div>
-        <div>D：所有查询都通过 TCP 完成</div>
-        <!-- B -->
-        <li>假设所有域名服务器均采用递归查询方式进行域名解析。当某台主机访问规范域名为www.abc.xyz.com的网站时，由某台域名服务器完成解析，则可能发出DNS查询的最少和最多次数分别是（）。</li>
-        <div>A：0、3 </div>
-        <div>B：1、3 </div>
-        <div>C：0、4</div>
-        <div>D：1、4 </div>
-        <!-- C：本地缓存如果有，不需要查询；向根/、向com、向xyz.com、向abc.xyz.com -->
-        <li>如果本地域名服务器没有缓存，采用递归方式解析某台主机域名时，用户主机、本地域名服务器发送的域名请求消息数为（）。</li>
-        <div>A：一条、一条</div>
-        <div>B：一条、多条</div>
-        <div>C：多条、一条</div>
-        <div>D：多条、多条</div>
-        <!-- B：递归只需请求1次就可以拿到结果 -->
-        <!-- 只有客户端（如用户主机）可以向支持递归的 DNS 服务器（如本地 DNS）发起递归查询 -->
-        <!-- 根服务器、TLD 服务器、权威服务器一律 不支持 递归查询 -->
-        <li>翻译
-          <p>DNS is a hierarchical and distributed naming system that translates domain names into IP addresses. When
-            you type a domain name like "www.geeksforgeeks.org" into your browser, DNS ensures that the request reaches
-            the correct server by resolving the domain to its corresponding IP address.</p>
-          <p>Without DNS, we’d have to remember the numerical IP address of every website we want to visit, which is
-            highly impractical. </p>
-        </li>
-        <li>翻译
-          <p>User Input: You enter a website address (for example, www.geeksforgeeks.org) into your web browser.
-          </p>
-          <p>Local Cache Check: Your browser first checks its local cache to see if it has recently looked up the
-            domain.
-            If it finds the corresponding IP address, it uses that directly without querying external servers.</p>
-          <p>DNS Resolver Query: If the IP address isn’t in the local cache, your computer sends a request to a DNS
-            resolver. The resolver is typically provided by your Internet Service Provider (ISP) or your network
-            settings.</p>
-          <p>Root DNS Server: The resolver sends the request to a root DNS server. The root server doesn’t know the
-            exact
-            IP address for www.geeksforgeeks.org but knows which Top-Level Domain (TLD) server to query based on the
-            domain’s extension (e.g., .org).
-          </p>
-          <p>TLD Server: The TLD server for .org directs the resolver to the authoritative DNS server for
-            geeksforgeeks.org.</p>
-          <p>Authoritative DNS Server: This server holds the actual DNS records for geeksforgeeks.org, including the IP
-            address of the website’s server. It sends this IP address back to the resolver.</p>
-          <p>Final Response: The DNS resolver sends the IP address to your computer, allowing it to connect to the
-            website’s server and load the page.</p>
-        </li>
-        <li>翻译
-          <p>Root DNS Servers: These are the highest-level DNS servers and know where to find the TLD servers. They are
-            crucial for directing DNS queries to the correct locations.
-          </p>
-          <p>TLD Servers: These servers manage domain extensions like .com, .org, .net, .edu, .gov and others. They help
-            route queries to the authoritative DNS servers for specific domains.</p>
-          <p>Authoritative DNS Servers: These are the servers that store the actual DNS records for domain names. They
-            are responsible for providing the correct IP addresses that allow users to reach websites.</p>
-        </li>
-      </ol>
+      <div class="demo">整个 DNS 过程对客户端来说是“一次递归查询”；但对本地 DNS 来说，它内部用了多个迭代查询去完成任务。（）</div>
+      <!-- √ -->
+      <div class="demo">DNS 采用客户-服务器工作方式，客户端向 DNS 服务器发送查询请求，服务器返回对应的 IP 地址。()</div>
+      <!-- √ -->
+      <div class="demo">DNS 缓存机制可以显著减少查询延迟和网络流量，但可能导致域名更新后客户端仍获取旧的 IP 地址。（）</div>
+      <!-- √ -->
+      <div class="demo">每次 DNS 查询都希望获得确定无误的结果，所以 DNS 采用有连接的 TCP协议。（）</div>
+      <!-- x -->
+      <div class="demo">DNS 协议默认使用 UDP 端口 53 进行通信，只有在区域传输等特殊情况下才使用 TCP。（）</div>
+      <!-- √ -->
+      <div class="demo">DNS 查询过程中，本地域名服务器通常使用递归查询方式向根域名服务器发起请求。（）</div>
+      <!-- x -->
+      <div class="demo">有关域名服务器，说法错误的是（）。</div>
+      <p>A：可分为：根域名服务器、顶级域名服务器、权威域名服务器和本地域名服务器</p>
+      <p>B：根域名服务器并不解析域名，而是把待查域名对应的顶级域名服务器的IP地址作为结果返回</p>
+      <p>C：除根域名服务器外，其它域名服务器均能返回待查域名对应的IP地址</p>
+      <p>D：本地域名服务器的IP地址应该直接配置在需要解析域名的主机中</p>
+      <!-- 顶级域名服务器除外 -->
+      <div class="demo">在 DNS 系统中，负责管理顶级域名（如 .com、.cn）的服务器是（）。</div>
+      <p>A：根域名服务器</p>
+      <p>B：顶级域名服务器（TLD）</p>
+      <p>C：权威域名服务器</p>
+      <p>D：本地域名服务器</p>
+      <!-- B -->
+      <div class="demo">当用户在浏览器中输入 www.example.com 时，首先被查询的 DNS 服务器通常是（）。</div>
+      <p>A：根域名服务器</p>
+      <p>B：.com 顶级域名服务器</p>
+      <p>C：用户配置的本地域名服务器</p>
+      <p>D：example.com 的权威域名服务器</p>
+      <!-- C -->
+      <div class="demo">DNS 查询中，迭代查询的特点是（）。</div>
+      <p>A：服务器必须返回最终答案，否则继续代为查询</p>
+      <p>B：服务器若不知道答案，会返回一个“知道该去问谁”的服务器地址</p>
+      <p>C：客户端直接向根服务器发起查询</p>
+      <p>D：所有查询都通过 TCP 完成</p>
+      <!-- B -->
+      <div class="demo">假设所有域名服务器均采用递归查询方式进行域名解析。当某台主机访问规范域名为www.abc.xyz.com的网站时，由某台域名服务器完成解析，则可能发出DNS查询的最少和最多次数分别是（）。
+      </div>
+      <p>A：0、3 </p>
+      <p>B：1、3 </p>
+      <p>C：0、4</p>
+      <p>D：1、4 </p>
+      <!-- C：本地缓存如果有，不需要查询；向根/、向com、向xyz.com、向abc.xyz.com -->
+      <div class="demo">如果本地域名服务器没有缓存，采用递归方式解析某台主机域名时，用户主机、本地域名服务器发送的域名请求消息数为（）。</div>
+      <p>A：一条、一条</p>
+      <p>B：一条、多条</p>
+      <p>C：多条、一条</p>
+      <p>D：多条、多条</p>
+      <!-- B：递归只需请求1次就可以拿到结果 -->
+      <!-- 只有客户端（如用户主机）可以向支持递归的 DNS 服务器（如本地 DNS）发起递归查询 -->
+      <!-- 根服务器、TLD 服务器、权威服务器一律 不支持 递归查询 -->
+      <div class="demo">查看浏览器缓存</div>
+      <p>Chrome：chrome://net-internals/#dns</p>
+      <p>Edge：edge://net-internals/#dns</p>
+      <div class="demo">查看主机文件 C:\Windows\System32\drivers\etc\hosts</div>
+      <pre>
+# Copyright (c) 1993-2009 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+# localhost name resolution is handled within DNS itself.
+#	127.0.0.1       localhost
+#	::1             localhost</pre>
+      <div class="demo">思考：域名变动少；IP地址变动大</div>
+      <div class="demo">翻译 </div>
+      <p>DNS is a hierarchical and distributed naming system that translates domain names into IP addresses. When
+        you type a domain name like "www.geeksforgeeks.org" into your browser, DNS ensures that the request reaches
+        the correct server by resolving the domain to its corresponding IP address.</p>
+      <p>Without DNS, we’d have to remember the numerical IP address of every website we want to visit, which is
+        highly impractical. </p>
+      <div class="demo">翻译 </div>
+      <p>User Input: You enter a website address (for example, www.geeksforgeeks.org) into your web browser.
+      </p>
+      <p>Local Cache Check: Your browser first checks its local cache to see if it has recently looked up the
+        domain.
+        If it finds the corresponding IP address, it uses that directly without querying external servers.</p>
+      <p>DNS Resolver Query: If the IP address isn’t in the local cache, your computer sends a request to a DNS
+        resolver. The resolver is typically provided by your Internet Service Provider (ISP) or your network
+        settings.</p>
+      <p>Root DNS Server: The resolver sends the request to a root DNS server. The root server doesn’t know the
+        exact
+        IP address for www.geeksforgeeks.org but knows which Top-Level Domain (TLD) server to query based on the
+        domain’s extension (e.g., .org).
+      </p>
+      <p>TLD Server: The TLD server for .org directs the resolver to the authoritative DNS server for
+        geeksforgeeks.org.</p>
+      <p>Authoritative DNS Server: This server holds the actual DNS records for geeksforgeeks.org, including the IP
+        address of the website’s server. It sends this IP address back to the resolver.</p>
+      <p>Final Response: The DNS resolver sends the IP address to your computer, allowing it to connect to the
+        website’s server and load the page.</p>
+      <div class="demo">翻译 </div>
+      <p>Root DNS Servers: These are the highest-level DNS servers and know where to find the TLD servers. They are
+        crucial for directing DNS queries to the correct locations.
+      </p>
+      <p>TLD Servers: These servers manage domain extensions like .com, .org, .net, .edu, .gov and others. They help
+        route queries to the authoritative DNS servers for specific domains.</p>
+      <p>Authoritative DNS Servers: These are the servers that store the actual DNS records for domain names. They
+        are responsible for providing the correct IP addresses that allow users to reach websites.</p>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://networkencyclopedia.com/dns-server/">DNS Server </a></li>
