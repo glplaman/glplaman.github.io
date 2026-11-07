@@ -8,10 +8,6 @@
   <link rel="stylesheet" href="/css/reset.css">
   <base target="_blank">
   <style>
-    details>summary {
-      cursor: pointer;
-    }
-
     summary~* {
       margin-left: 1em;
     }
@@ -28,7 +24,7 @@
       content: counter(code-sn, decimal-leading-zero)'    ';
     }
 
-    figure div {
+    /* figure div {
       width: 180px;
       margin: 0 auto;
       background-color: var(--tips-bold-color);
@@ -44,6 +40,10 @@
 
     figure p:not(:last-child) {
       margin-bottom: 4px;
+    } */
+
+    table {
+      max-width: 600px;
     }
   </style>
 </head>
@@ -60,12 +60,12 @@
         <figcaption>mindmap</figcaption>
       </figure>
       <dt>内容 Contents</dt>
-      <details>
+      <details open>
         <summary>因特网 Internet</summary>
-        <details>
+        <details open>
           <summary>万维网 World Wide Web</summary>
           <div>. 统一资源定位符 Uniform Resource Locator - URL</div>
-          <details>
+          <details open>
             <summary>超文本标记语言 HyperText Mark Language - HTML</summary>
             <div>. 结构标记 Tag</div>
             <div>. 层叠样式表 Cascading Style Sheets - CSS</div>
@@ -76,23 +76,47 @@
         </details>
       </details>
     </dl>
+    <h2>万维网 World Wide Web</h2>
     <dl>
-      <dt>万维网 World Wide Web</dt>
-      <dd>WWW 是一个基于超文本 hypertext 的信息系统，由蒂姆·伯纳斯-李（Tim Berners-Lee）于1989年提出</dd>
-      <dd>由超文本链接构成的全球信息网络</dd>
+      <dd>互联网提供的服务之一</dd>
+      <dd>WWW 是一个基于 <strong>超文本 Hypertext</strong> 的信息系统</dd>
+      <dd>由蒂姆·伯纳斯-李（Tim Berners-Lee）于1989年提出，最初为了让物理学家方便共享论文</dd>
+      <dd>由超文本链接构成的全球信息网络，文字里藏着“链接”，一点就跳到另一份文档；亿万份文档被链接连在一起，就成了“蛛网”一样的 Web</dd>
       <dd>使用 URL 来定位资源</dd>
-      <dd>使用 HTML/CSS/JS 构建网页 page 内容</dd>
+      <dd>使用 HTML/CSS/JS 构建网站 Site、网页 Page 内容</dd>
       <dd>使用 HTTP/HTTPS 协议传输数据</dd>
+      <dd>HTTP 建立在可靠的 TCP 之上，数据不丢、不乱序</dd>
+      <dd>HTTP 是 Web 通信的基础协议</dd>
+      <dd>采用Browser/Server - B/S 通信方式</dd>
+      <dt>浏览器 Browser</dt>
+      <dd>客户端程序，即浏览器，如Chrome、Edge</dd>
+      <dd>所有交互都在浏览器中完成</dd>
+      <dt>服务器 Server</dt>
+      <dd>被动接收请求</dd>
+      <dd>向客户提供服务</dd>
+      <dd>不间断工作</dd>
+      <dd>同时处理多个请求；并发请求</dd>
+      <dd>强大的硬件和高级的操作系统</dd>
+      <dt>基本交互过程</dt>
+      <ol>
+        <li>在浏览器的地址窗口中键入所要找的页面的 URL，发起请求/访问网站</li>
+        <li>在某一个页面中用鼠标点击一个可选部分，这时浏览器会自动在互联网上找到所要链接的页面</li>
+        <li>服务器收到请求后，返回的是 HTML 内容（或 JSON 等格式）</li>
+        <li>浏览器接收到这些内容后，自动解析并展示给用户；现在大多采用服务端渲染 SSR，Server-Side Rendering，更高效</li>
+      </ol>
+      <figure>
+        <img src="./imgs/cs.png" alt="">
+        <figcaption>微C/S - B/S</figcaption>
+      </figure>
       <dt>统一资源定位 URL</dt>
       <dd>资源：指在互联网上可以被访问的任何对象，包括文件目录、文件、文档、图像、声音等，以及与互联网相连的任何形式的数据</dd>
       <dd>互联网上的资源，都有一个唯一确定的 URL</dd>
-      <dd>对字符大写或小写没有要求</dd>
       <figure>
         <img src="./imgs/url1.png" alt="">
         <figcaption>URL</figcaption>
       </figure>
       <figure>
-        <span>schema://host:port/path?query=value#fragment</span>
+        <span class="txt-2xl">schema://host:port/path?query=value#fragment</span>
         <figcaption>带参数URL</figcaption>
       </figure>
       <table>
@@ -105,106 +129,157 @@
         </thead>
         <tbody>
           <tr>
-            <td>schema</td>
-            <td>协议；HTTP、HTTPS、FTP</td>
+            <td>协议 <br>Schema</td>
+            <td>HTTP 超文本传输协议<br>HTTPS 带安全隧道的超文本传输协议<br>FTP 文件传输协议</td>
           </tr>
           <tr>
-            <td>host</td>
-            <td>主机名；以域名或IP地址表示，如glpla.github.io或185.199.109.153</td>
+            <td>主机 <br>Host</td>
+            <td>以域名或IP地址表示；不区分大小写<br>glplaman.github.io<br>185.199.109.153</td>
           </tr>
           <tr>
-            <td>port</td>
-            <td>端口；HTTP 默认 80</td>
+            <td>端口 <br>Port</td>
+            <td>HTTP 80
+              <br>FTP 20/21
+            </td>
           </tr>
           <tr>
-            <td>path</td>
-            <td>路径；请求资源在服务器上的具体位置；默认为 /，根路由</td>
+            <td>路径 <br>Path</td>
+            <td>请求资源在服务器上的具体位置；区分大小写<br>默认为 /，根路由</td>
           </tr>
           <tr>
-            <td>query</td>
-            <td>查询参数；以 ? 拼接值对键值对参数，多个值对使用 & 连接</td>
+            <td>查询参数 <br>Query</td>
+            <td>可选<br>以 ? 拼接值对键值对参数，多个值对使用 & 连接</td>
           </tr>
           <tr>
-            <td>fragment</td>
-            <td>锚点；锚链接，以 # 表示，用以定位页面某个位置；也叫哈希值 Hash</td>
+            <td>锚点 <br>Fragment</td>
+            <td>可选<br>锚链接 Anchor，以 # 表示，用以定位页面某个位置；也叫哈希值 Hash</td>
           </tr>
         </tbody>
       </table>
       <div class="demo"> URL示例</div>
       <figure>
         <img src="./imgs/url.png" alt="">
-        <figcaption>使用缺省端口的URL</figcaption>
+        <figcaption>使用缺省端口</figcaption>
       </figure>
-      <dt>网页 Page</dt>
-      <dd>网页文件的后缀名是 .html；早期多使用.htm - 8.3文件格式</dd>
-      <dd>一个完整的页面需要 结构(html标签)、样式(CSS)和逻辑(JavaScript)共同呈现</dd>
-      <dd>分为：
-        <p>静态万维网文档。内容不会改变。简单</p>
-        <p>动态万维网文档。文档的内容由应用程序动态创建</p>
-        <p>活动万维网文档。由浏览器端改变文档的内容</p>
-      </dd>
-      <dd>从开发角色分工，可以分：
-        <p>前端 Frontend</p>
-        <p>后端 Backend</p>
-        <p>全栈开发 Full Stack</p>
-      </dd>
-      <dd>现在开发的原则：结构、样式和逻辑三分离 - Separation of Concerns</dd>
-      <dd>常见集成开发环境 IDE
-        <p>Vs code</p>
-        <p>Sublime - 付费</p>
-        <p>WebStorm - 付费</p>
-        <p>Atom - 停更</p>
-        <p>IntelliJ IDEA - Java + 前端混合项目</p>
-        <p>PhpStorm - WordPress、Laravel 等 PHP 项目</p>
-        <p>云上平台/线上环境</p>
-      </dd>
-      <dt>文档 Document</dt>
-      <dd>网页 Page，特指 .html</dd>
-      <dd>样式文件 .css</dd>
-      <dd>逻辑文件 .js</dd>
-      <dd>各种资源</dd>
+      <figure>
+        <div>http://127.0.0.1:5500/network/chap6http.html</div>
+        <figcaption>指定端口</figcaption>
+      </figure>
+      <figure>
+        <div>https://glplaman.github.io/web/responsive.html#media</div>
+        <figcaption>使用锚点</figcaption>
+      </figure>
+      <figure>
+        <div>https://www.baidu.com/s?wd=http</div>
+        <figcaption>使用查询参数</figcaption>
+      </figure>
+      <figure>
+        <div>https://search.bilibili.com/all?keyword=http</div>
+        <figcaption>使用查询参数</figcaption>
+      </figure>
+    </dl>
+    <h2>超文本标记语言 HTML</h2>
+    <dl>
+      <dt>概述 Overview</dt>
+      <dd>超文本标记语言 HTML，HyperText Markup Language</dd>
+      <dd>制作万维网页面的标准语言</dd>
+      <dd>定义网页 Page 的结构和内容</dd>
+      <dd>消除了不同计算机之间信息交流的障碍</dd>
+      <dd>是万维网的重要基础 [RFC 2854]</dd>
+
       <dt>网站 Site</dt>
       <dd>网页和各种资源如图像、多媒体、数据库以及脚本的集合</dd>
       <dd>通过互联网提供给用户访问</dd>
       <dd>每个网站有自己的主页 homePage，是一个网站的门户 Portal</dd>
       <dd>默认为 index.html；使用默认文件名可以带来很多便利</dd>
-      <dd>部署
-        <p>早期多使用 FTP</p>
-        <p>SVN / Git + Web Hosting</p>
-        <p>持续集成（CI）+ 持续部署（CD）</p>
-        <p>现在各大 IDE 都可以一键部署</p>
-      </dd>
-      <dt>超文本标记语言 HyperText Markup Language - HTML</dt>
-      <dd>制作万维网页面的标准语言</dd>
-      <dd>它消除了不同计算机之间信息交流的障碍</dd>
-      <dd>是万维网的重要基础 [RFC 2854]</dd>
-      <dd>定义网页的结构和内容</dd>
-      <dd>是网页的骨架</dd>
+
+      <dt>网页 Page</dt>
+      <dd>网页后缀：.html；早期使用 .htm - 8.3文件格式</dd>
+      <dd>HTML 定义了许多用于描述元素、排版的标记，也叫标签 Tag，如 &lt;h1&gt;、&lt;p&gt;、&lt;img&gt;</dd>
+      <dd>HTML 把各种标签嵌入到万维网的页面中，构成 HTML 的网页；是网页的骨架</dd>
       <dd>不负责样式或交互，只关注语义结构</dd>
-      <dd>HTML 定义了许多用于描述元素、排版的命令：标记，也叫标签 Tag，如 &lt;h1&gt;、&lt;p&gt;、&lt;img&gt;</dd>
-      <dd>HTML 把各种标签嵌入到万维网的页面中，构成了所谓的 HTML 文档</dd>
-      <dd>HTML 文档是一种可以用任何文本编辑器创建的 ASCII 码文件</dd>
-      <dd>HTML 文档的后缀：.html 或 .htm</dd>
+      <dd>分为：
+        <p>静态万维网文档。内容不会改变。简单</p>
+        <p>动态万维网文档。文档的内容由应用程序动态创建</p>
+        <p>活动万维网文档。由浏览器端改变文档的内容</p>
+      </dd>
+
+      <dt>层叠样式表 Cascading Style Sheets - CSS</dt>
+      <dd>后缀名为 .css</dd>
+      <dd>控制网页的外观和布局</dd>
+      <dd>决定颜色、字体、大小、间距、动画等视觉效果</dd>
+      <dd>分离内容（HTML）和表现（CSS），便于维护</dd>
+      <dd>可复用样式，统一设计风格</dd>
+
+      <dt>逻辑 JavaScript</dt>
+      <dd>后缀名为 .js</dd>
+      <dd>实现网页的动态行为和交互功能</dd>
+      <dd>如按钮点击、表单验证、轮播图、AJAX 加载等</dd>
+      <dd>运行在浏览器中（客户端脚本）</dd>
+      <dd>可操作 DOM（文档对象模型）、处理事件、发送请求</dd>
+      <div class="tips">
+        <p>一个完整的页面需要结构(html标签)、样式(CSS)和逻辑(JavaScript)共同呈现</p>
+        <p>开发的原则：结构、样式和逻辑三分离 - Separation of Concerns</p>
+        <p>网页、样式文件、逻辑文件及各种资源，如图片、视频、数据等，统称文档 Document</p>
+      </div>
+
+      <dt>常见集成开发环境 IDE</dt>
+      <dd>Vs code</dd>
+      <dd>Sublime - 付费</dd>
+      <dd>WebStorm - 付费</dd>
+      <dd>Atom - 停更</dd>
+      <dd>IntelliJ IDEA - Java + 前端混合项目</dd>
+      <dd>PhpStorm - WordPress、Laravel 等 PHP 项目</dd>
+      <dd>云上平台/线上环境 <a href="https://codepen.io/" class="link">CodePen</a></dd>
+
+      <dt>角色分工 Roles</dt>
+      <dd>前端 Frontend
+        <p>HTML5 + CSS + JavaScript</p>
+        <p>Java</p>
+        <p>Python</p>
+      </dd>
+      <dd>后端 Backend
+        <p>IIS：Internet Information Services，因特网信息服务</p>
+        <p>Apache</p>
+        <p>tomcat，GitHub星级6.1k</p>
+        <p>nginx，GitHub星级16.6k</p>
+        <p>Node.js，GitHub星级88.2k</p>
+        <p>WAMP：Window + Apache + MySql + PHP</p>
+        <p>LAMP：Linux + Apache + MySql + PHP</p>
+        <p>AppSrer</p>
+        <p>Laravel，GitHub星级69.9k</p>
+        <p>PhpStorm</p>
+      </dd>
+      <dd>全栈开发 Full Stack</dd>
+      <dt>部署 Deployment</dt>
+      <dd>早期多使用 FTP</dd>
+      <dd>SVN / Git + Web Hosting</dd>
+      <dd>持续集成（CI）+ 持续部署（CD）；现在各大 IDE 都可以一键部署，如 <a href="https://vercel.com/" class="link">Vercel</a>、<a
+          href="https://app.netlify.com/" class="link">Netlify</a></dd>
+
       <div class="demo"> 网页组成</div>
       <pre class="code">
 <span>&lt;!DOCTYPE html&gt;</span>
-<span>&lt;HTML&gt;</span>
-<span>  &lt;HEAD&gt;</span>
+<span>&lt;html&gt;</span>
+<span>  &lt;head&gt;</span>
 <span>    &lt;meta charset="UTF-8"&gt;</span>
 <span>    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</span>
 <span>    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span>
-<span>    &lt;TITLE&gt;一个 HTML 的例子&lt;/TITLE&gt;</span>
+<span>    &lt;title&gt;一个 HTML 的例子&lt;/title&gt;</span>
 <span>    &lt;link rel="stylesheet" href="../css/style.css"&gt;</span>
 <span>    &lt;style&gt;</span>
 <span>      p{</span>
 <span>        cursor: pointer;</span>
 <span>      }</span>
 <span>    &lt;/style&gt;</span>
-<span>  &lt;/HEAD&gt;</span>
-<span>  &lt;BODY&gt;</span>
-<span>    &lt;H1&gt;HTML 很容易掌握&lt;/H1&gt;</span>
-<span>    &lt;P id = 'leading'&gt;这是第一个段落。&lt;/P&gt;</span>
-<span>    &lt;P&gt;这是第二个段落。&lt;/P&gt;</span>
+<span>  &lt;/head&gt;</span>
+
+<span>  &lt;body&gt;</span>
+<span>    &lt;h1&gt;HTML 很容易掌握&lt;/h1&gt;</span>
+<span>    &lt;p id = 'leading'&gt;这是第一个段落。&lt;/p&gt;</span>
+<span>    &lt;p&gt;这是第二个段落。&lt;/p&gt;</span>
+
+<span>    &lt;script src="/utils/custom/footer.js"&gt;&lt;/script&gt;</span>
 <span>    &lt;script&gt;</span>
 <span>      const age = 18;</span>
 <span>      let dom = document.getElementById('leading');</span>
@@ -212,110 +287,29 @@
 <span>        dom.style.color = '#f40';</span>
 <span>      })</span>
 <span>    &lt;/script&gt;</span>
-<span>  &lt;/BODY&gt;</span>
-<span>&lt;/HTML&gt;</span></pre>
-      <dt>层叠样式表 Cascading Style Sheets - CSS</dt>
-      <dd>控制网页的外观和布局</dd>
-      <dd>决定颜色、字体、大小、间距、动画等视觉效果</dd>
-      <dd>分离内容（HTML）和表现（CSS），便于维护</dd>
-      <dd>可复用样式，统一设计风格</dd>
-      <dt>逻辑 JavaScript</dt>
-      <dd>实现网页的动态行为和交互功能</dd>
-      <dd>如按钮点击、表单验证、轮播图、AJAX 加载等</dd>
-      <dd>运行在浏览器中（客户端脚本）</dd>
-      <dd>可操作 DOM（文档对象模型）、处理事件、发送请求</dd>
-      <dt>浏览器 Browser/服务器 Server - B/S</dt>
-      <dd>HTTP 是 Web 通信的基础协议</dd>
-      <dd>浏览器 Browser
-        <p>客户端程序，即浏览器 </p>
-        <p>所有交互都在浏览器中完成</p>
-      </dd>
-      <dd>服务器 Server
-        <p>被动接收请求</p>
-        <p>向客户提供服务</p>
-        <p>不间断工作</p>
-        <p>同时处理多个请求；并发请求</p>
-        <p>强大的硬件和高级的操作系统</p>
-      </dd>
-      <dd>基本交互过程
-        <p>在浏览器的地址窗口中键入所要找的页面的 URL，发起请求/访问网站</p>
-        <p>在某一个页面中用鼠标点击一个可选部分，这时浏览器会自动在互联网上找到所要链接的页面</p>
-        <p>服务器收到请求后，返回的是 HTML 内容（或 JSON 等格式）</p>
-        <p>浏览器接收到这些内容后，自动解析并展示给用户</p>
-      </dd>
-      <dd>为了区分传统的C/S，这种通信方式也称 Browser/Server - B/S</dd>
-      <dd>特点：
-        <p>整个过程不需要安装特定客户端程序，只需要一个浏览器 Browser</p>
-        <p>微客户端/服务器模式 C/S</p>
-        <p>所有业务逻辑和数据处理集中在服务器端</p>
-        <p>响应由服务器生成 HTML 页面，浏览器负责渲染展示</p>
-        <p>更新方便：只要服务器更新，所有用户立即看到新版本</p>
-      </dd>
-      <figure>
-        <img src="./imgs/cs.png" alt="">
-        <figcaption>微C/S - B/S</figcaption>
-      </figure>
-      <dt>后端 Backend</dt>
-      <dd>服务器技术 Server</dd>
-      <dd>IIS：Internet Information Services，因特网信息服务</dd>
-      <dd>Apache</dd>
-      <dd>tomcat，GitHub星级6.1k</dd>
-      <dd>nginx，GitHub星级16.6k</dd>
-      <dd>Node.js，GitHub星级88.2k</dd>
-      <dd>WAMP：Window + Apache + MySql + PHP</dd>
-      <dd>LAMP：Linux + Apache + MySql + PHP</dd>
-      <dd>AppSrer</dd>
-      <dd>Laravel，GitHub星级69.9k</dd>
-      <dd>PhpStorm</dd>
-      <dt>前端 Frontend</dt>
-      <dd>HTML5 + CSS + JavaScript</dd>
-      <dd>Java</dd>
-      <dd>Python</dd>
+<span>  &lt;/body&gt;</span>
+
+<span>&lt;/html&gt;</span></pre>
     </dl>
     <h2>超文本传输协议 HTTP</h2>
     <dl>
+      <dt>概述 Overview</dt>
       <dd>HTTP 是面向事务的 transaction-oriented 应用层协议</dd>
-      <dd>使用 TCP 连接进行可靠的传送</dd>
       <dd>定义了浏览器与万维网服务器通信的 <strong>格式和规则</strong></dd>
-      <dd>是万维网上能够可靠地交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础</dd>
-      <dd>HTTP 不仅传送完成超文本跳转所必需的信息，而且也传送任何可从互联网上得到的信息，如文本、超文本、声音和图像等</dd>
-      <div class="demo"> 用户访问网页时的 HTTP 通信流程（基于 TCP）</div>
-      <dd>当用户在浏览器中访问/请求一个网站时
-        <p>源端口: 客户端(用户的电脑)随机选择一个临时端口，如 1025</p>
-        <p>目标端口: Web服务器的标准HTTP端口 80</p>
-        <p>数据流向: 用户电脑(端口1025) → Web服务器(端口80)</p>
-      </dd>
-      <dd class="txt-center">
-        <span>Client/1025</span>
-        <span>→</span>
-        <span>Server/80</span>
-      </dd>
-      <figure>
-        <img src="./imgs/port0.png" alt="">
-        <figcaption>Web服务器收到的HTTP请求 Inbound</figcaption>
-      </figure>
-      <dd>当Web服务器返回响应时
-        <p>源端口: Web服务器的HTTP端口 80</p>
-        <p>目标端口: 用户电脑之前使用的临时端口 1025</p>
-        <p>数据流向: Web服务器(端口80) → 用户电脑(端口1025)</p>
-      </dd>
-      <dd class="txt-center">
-        <span>Server/80</span>
-        <span>→</span>
-        <span>Client/1025</span>
-      </dd>
-      <figure>
-        <img src="./imgs/port1.png" alt="">
-        <figcaption>Web服务器返回的HTTP响应 Outbound</figcaption>
-      </figure>
-      <dt>WWW 基本过程</dt>
       <dd>HTTP 使用了面向连接的 TCP 作为运输层协议，保证了数据的可靠传输</dd>
-      <dd>在 HTTP 客户与 HTTP 服务器之间的每次交互，都由一个 ASCII 码串构成的请求 Request 和一个类似的通用互联网扩充，即“类MIME (MIME-like)”的响应 Response组成
+      <dd>HTTP 不仅传送完成超文本跳转所必需的信息，而且也传送任何可从互联网上得到的信息，如文本、超文本、声音和图像等</dd>
+      <dd>HTTP 客户与服务器之间的每次交互，都由一个 ASCII 码串构成的请求 Request 和一个类似的通用互联网扩充，即“类MIME (MIME-like)”的响应 Response组成
         <p>MIME：最初是为电子邮件系统设计的，用于在纯文本邮件中传输非文本内容（如图片、音频、附件等）</p>
       </dd>
+      <dt>特点 Feature</dt>
+      <dd>对所有的HTTP，无论版本，都是无状态的 stateless</dd>
+      <dd>服务器不会记住之前的请求信息</dd>
+      <dd>每次请求都必须包含服务器处理该请求所需的全部信息</dd>
+      <dd>例如：你登录后再次访问页面，服务器不会“记得”你已经登录过，除非你通过 Cookie、Token 等机制主动传递身份信息</dd>
+      <dd>引入 Cookie、Session、Token 等机制在应用层模拟状态</dd>
       <figure>
         <img src="./imgs/http1.png" alt="">
-        <figcaption>WWW基本过程</figcaption>
+        <figcaption>HTTP 操作过程</figcaption>
       </figure>
       <div class="demo"> 请求文档所需的时间</div>
       <dd>先建立 TCP 连接，再传输数据</dd>
@@ -328,16 +322,48 @@
         <img src="./imgs/http2.png" alt="">
         <figcaption>请求文档所需的时间</figcaption>
       </figure>
-      <dt>HTTP 1.0</dt>
-      <dd>无连接的 connectionless
-        <p>每次客户端发起一个请求，服务器处理完就关闭连接</p>
-        <p>客户端和服务器之间不需要维持长期的连接</p>
-        <p>每个请求/响应对都是独立的通信过程</p>
-        <p>每请求一个页面需要2倍的RTT</p>
-        <p>频繁拆连和建连</p>
+      <figure>
+        <img src="./imgs/http10.png" alt="">
+        <figcaption>TCP和HTTP</figcaption>
+      </figure>
+      <div class="demo">基于 TC P的 HTTP 端口应用</div>
+      <dd>当用户在浏览器中访问/请求一个网站时
+        <p>源端口：客户端(用户的电脑)随机选择一个临时端口，如 1025</p>
+        <p>目标端口：Web服务器的标准HTTP端口 80</p>
+        <p>数据流向：用户电脑(端口1025) → Web服务器(端口80)</p>
       </dd>
+      <dd class="txt-center txt-2xl">
+        <span>Client/1025</span>
+        <span>→</span>
+        <span>Server/80</span>
+      </dd>
+      <figure>
+        <img src="./imgs/port0.png" alt="">
+        <figcaption>Web服务器收到的HTTP请求 Inbound</figcaption>
+      </figure>
+      <dd>当Web服务器返回响应时
+        <p>源端口：Web服务器的HTTP端口 80</p>
+        <p>目标端口：用户电脑之前使用的临时端口 1025</p>
+        <p>数据流向：Web服务器(端口80) → 用户电脑(端口1025)</p>
+      </dd>
+      <dd class="txt-center txt-2xl">
+        <span>Server/80</span>
+        <span>→</span>
+        <span>Client/1025</span>
+      </dd>
+      <figure>
+        <img src="./imgs/port1.png" alt="">
+        <figcaption>Web服务器返回的HTTP响应 Outbound</figcaption>
+      </figure>
+      <dt>HTTP 1.0</dt>
+      <dd>无连接的 connectionless </dd>
+      <dd>每次客户端发起一个请求，服务器处理完就关闭连接</dd>
+      <dd>客户端和服务器之间不需要维持长期的连接</dd>
+      <dd>每个请求/响应对都是独立的通信过程</dd>
+      <dd>每请求一个页面需要2倍的RTT</dd>
+      <dd>频繁拆连和建连</dd>
       <dt>HTTP 1.1</dt>
-      <dd>使用持续连接</dd>
+      <dd>使用持续连接 (connection: keep-alive)</dd>
       <dd>一个 TCP 连接可以复用多次请求/响应</dd>
       <dd>但请求和响应必须按顺序完成，容易造成队头阻塞</dd>
       <dd>TCP的重传特性也影响了响应速度</dd>
@@ -346,10 +372,11 @@
       <dt>HTTP 2.0</dt>
       <dd>满足非文本通信需求</dd>
       <dd>满足实时性通信需求</dd>
-      <dd>解决头部重复：
+      <dd>支持多路复用（多个请求/响应在同一个 TCP 连接上并行交错传输），能避免应用层的队头阻塞
         <p>不再以文本形式发送头部，而是使用 HPACK 压缩算法</p>
         <p>建立一个“头部字典”，常见字段用编号代替；重复值只传一次</p>
       </dd>
+      <dd>支持头部压缩和服务器推送</dd>
       <dd>所有主流浏览器（Chrome、Firefox、Safari、Edge 等）只支持在 TLS（即 HTTPS）之上使用 HTTP/2
         <p>想让网站用 HTTP/2，必须部署 HTTPS</p>
         <p>对 Web 前端和普通网站来说，HTTP/2 = HTTPS 是事实标准</p>
@@ -417,7 +444,16 @@ cookie = （同上）</pre>
         <p>cookie → 直接发索引 62（不用再传 70 字节！）</p>
       </dd>
       <dd>其它请求类似</dd>
-      <div class="demo"> 在开发者工具中查看 HTTP 1.X vs HTTP 2.X</div>
+      <div class="demo"> 开发者工具中查看 HTTP 1.X vs HTTP 2.X</div>
+      <dd>开发环境：追求简洁与高效
+        <p>无加密开销</p>
+        <p>便于调试</p>
+        <p>工具兼容性</p>
+      </dd>
+      <dd>生产环境：追求性能与安全
+        <p>强制加密</p>
+        <p>提升并发</p>
+      </dd>
       <dd>开发环境下的 HTTP 1.x</dd>
       <figure>
         <img src="./imgs/http3.png" alt="">
@@ -441,51 +477,46 @@ cookie = （同上）</pre>
         <p>“显示临时标头。禁用缓存以查看完整的标头。” - 正是 HPACK 压缩的体现</p>
         <p>为了防止你误以为“没传”，所以显示“临时标头”或“部分标头”</p>
       </div>
-      <dt>特点 Feature</dt>
-      <dd>对所有的HTTP，无论版本，都是无状态的 stateless
-        <p>服务器不会记住之前的请求信息</p>
-        <p>每次请求都必须包含服务器处理该请求所需的全部信息</p>
-        <p>例如：你登录后再次访问页面，服务器不会“记得”你已经登录过，除非你通过 Cookie、Token 等机制主动传递身份信息</p>
-        <p>引入 Cookie、Session、Token 等机制在应用层模拟状态</p>
-      </dd>
     </dl>
     <h2>HTTP 报文结构</h2>
     <dl>
       <dd>由于 HTTP 是面向正文的 text-oriented，因此报文中每一个字段的值都是一些 ASCII 码串，每个字段的长度都是不确定的</dd>
+      <dd>以 <a href="https://www.rfc-editor.org/info/rfc9112/" class="link">HTTP 1.1 </a>为例</dd>
+      <dd>四个组成部分：
+        <p>开始行 start line：用于区分是请求的请求行 request-line 还是响应的状态行 status-line</p>
+        <p>首部行 header line：说明浏览器、服务器或报文主体的一些信息。可以有多行，也可以不使用</p>
+        <p>空行 CRLF</p>
+        <p>实体主体 body：请求报文中一般不用，响应报文中也可能没有该字段</p>
+      </dd>
+      <pre>
+HTTP-message   = start-line CRLF
+          *( field-line CRLF )
+          CRLF
+          [ message-body ]</pre>
       <dd>两类报文：
         <p>请求报文 Request：从客户向服务器的请求</p>
         <p>响应报文 Response：从服务器到客户的回答</p>
       </dd>
-      <dd>四个组成部分：
-        <p>开始行：用于区分是请求报文还是响应报文</p>
-        <p>首部行：说明浏览器、服务器或报文主体的一些信息。可以有多行，也可以不使用</p>
-        <p>空行 CRLF</p>
-        <p>实体主体：请求报文中一般不用，响应报文中也可能没有该字段</p>
-      </dd>
       <dt>请求报文 Request</dt>
-      <figure>
-        <div>
-          <p>Request Line</p>
-          <p>Request Headers</p>
-          <p>CRLF</p>
-          <p>Request Body</p>
-        </div>
-        <figcaption>Request</figcaption>
-      </figure>
+
+      <table>
+        <caption>Request message </caption>
+        <tr>
+          <td>Request Line</td>
+        </tr>
+        <tr>
+          <td>Request Headers</td>
+        </tr>
+        <tr>
+          <td>CRLF</td>
+        </tr>
+        <tr>
+          <td>Request Body</td>
+        </tr>
+      </table>
       <div>1. 请求行 Request Line</div>
-      <dd>URI
-        <p>请求标识符 Uniform Resource Identifier</p>
-        <p>URL的部分内容</p>
-        <p>通常是 URL 的路径+查询参数部分（如 /users?id=1），配合 Host 头共同构成完整 URL</p>
-      </dd>
-      <pre>&lt;方法> &lt;请求URI> &lt;HTTP版本></pre>
-      <dd>实例</dd>
-      <pre>GET /index.html HTTP/1.1</pre>
-      <pre>
-:authority glplaman.github.io
-:method GET
-:path /network/chap6http.html
-:scheme https</pre>
+      <pre>&lt;Method> &lt;SP> &lt;URI> &lt;SP> &lt;HTTP Version> &lt;CRLF></pre>
+      <div>1.1 方法 Method</div>
       <table class="txt-left">
         <caption>常见方法</caption>
         <thead>
@@ -513,7 +544,12 @@ cookie = （同上）</pre>
           </tr>
         </tbody>
       </table>
-      <div>2. 请求头 Headers</div>
+      <div>1.2 请求标识符 URI，Uniform Resource Identifier</div>
+      <dd>URL的部分内容</dd>
+      <dd>通常是 URL 的路径+查询参数部分（如 /users?id=1），配合 Host 头共同构成完整 URL</dd>
+      <div>1.3 版本 Version</div>
+      <dd>协议版本</dd>
+      <div>2. 请求头 Request Headers</div>
       <dd>若干键值对，用于传递元信息
         <p>Host：目标主机IP地址、端口（HTTP/1.1 必须）</p>
         <p>User-Agent：客户端信息和操作系统信息</p>
@@ -523,65 +559,73 @@ cookie = （同上）</pre>
         <p>Authorization：认证信息</p>
       </dd>
       <div>3. 空行 CRLF</div>
-      <dd>用 \r\n\r\n（即两个 CRLF）表示头部结束，后面是请求体</dd>
-      <div>4. 请求体 Body，可选</div>
+      <dd>用 \r\n\r\n（即两个 CRLF）</dd>
+      <dd>表示头部结束，后面是请求体</dd>
+      <div>4. 请求体 Request Body，可选</div>
       <dd>可选，通常用于 POST、PUT 等方法，携带提交的数据</dd>
+
+      <div class="demo">chap6http.html 的 GET 请求报文</div>
+      <dd>只有请求行和请求头，没有请求体</dd>
       <pre>
-{
-  "username": "alice",
-  "password": "123456"
-}</pre>
+GET /network/chap6http.html HTTP/1.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Accept-Encoding: gzip, deflate, br, zstd
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+Cache-Control: no-cache
+Connection: keep-alive
+Host: 127.0.0.1:5500
+Pragma: no-cache
+Referer: http://127.0.0.1:5500/network/chap6http.html
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0
+sec-ch-ua: "Not:A-Brand";v="8", "Chromium";v="156", "Microsoft Edge";v="156"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"</pre>
+      <div class="demo">POST 请求报文</div>
+      <dd>如表单提交</dd>
+      <dd>携带的数据作为请求体</dd>
+      <dd>需要在请求头中指定数据大小、类型等等</dd>
+      <pre>
+POST / HTTP/1.1
+...
+Content-Length: 33
+Content-Type: application/x-www-form-urlencoded
+...</pre>
+      <dd>在"负载"中查看提交的数据</dd>
+      <pre>
+uname glpla@hotmai
+upass 123456</pre>
       <dt>响应报文 Response</dt>
-      <figure>
-        <div>
-          <p>Response Line</p>
-          <p>Response Headers</p>
-          <p>CRLF</p>
-          <p>Response Body</p>
-        </div>
-        <figcaption>Response</figcaption>
-      </figure>
+      <dd>告知请求结果</dd>
+      <table>
+        <caption>Response message </caption>
+        <tr>
+          <td>Status Line</td>
+        </tr>
+        <tr>
+          <td>Response Headers</td>
+        </tr>
+        <tr>
+          <td>CRLF</td>
+        </tr>
+        <tr>
+          <td>Response Body</td>
+        </tr>
+      </table>
       <div>1. 状态行 Status Line</div>
-      <pre>&lt;HTTP版本&gt; &lt;状态码&gt; &lt;原因短语&gt;</pre>
-      <dd>示例</dd>
-      <pre>HTTP/1.1 200 OK</pre>
-      <pre>状态代码 &nbsp;200 OK</pre>
-      <pre>状态代码 &nbsp;304 Not Modified</pre>
-      <pre>状态代码 &nbsp;404 Not Found</pre>
-      <div class="tips">实际环境中，浏览器只显示状态码和原因短语</div>
-      <div>2. 响应头 Headers</div>
-      <dd>常见响应头字段：
-        <p>Content-Type：响应体的 MIME 类型</p>
-        <p>Content-Length：响应体字节数</p>
-        <p>Location：用于重定向（配合 3xx 状态码）</p>
-        <p>Set-Cookie：设置客户端 Cookie</p>
-      </dd>
-      <div class="demo"> 示例</div>
-      <pre>
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1234
-Server: Apache/2.4.1
-Set-Cookie: sessionid=abc123; Path=/</pre>
-      <div class="demo"> 请求大树小站提供的不同资源，查看响应头的内容类型</div>
-      <dd>创建测试文件 demo.html</dd>
-      <dd>在脚本中请求 &lt;script&gt;</dd>
-      <dd>使用浏览器的开发者工具检查网络请求</dd>
-      <dd>.json</dd>
-      <dd>.png</dd>
-      <dd>.html</dd>
-      <dd>.mp4</dd>
-      <pre>
-fetch('https://glplaman.github.io/utils/video/v0.mp4')
-.then(res=>res.json())
-.then(res=>{
-console.log(res)
-})</pre>
-      <div>3. 空行 CRLF</div>
-      <dd>同样以 \r\n\r\n 分隔头部与响应体</dd>
-      <div>4. 响应体 Body</div>
-      <dd>返回给客户端的实际内容，如 HTML 页面、JSON 数据等</dd>
+      <pre>&lt;Version&gt; &lt;SP> &lt;Status Codes&gt; &lt;SP> &lt;Reason Phrase&gt;</pre>
+      <div>1.1 版本 Version</div>
+      <div>1.2 状态码 Status Codes</div>
+      <div>1.3 原因短语 Reason Phrase</div>
+      <dd>可定制</dd>
+      <dd>客户端通常应该忽略</dd>
+      <dd>但是格式上仍然要使用空格 SP 分隔</dd>
       <table class="txt-left">
-        <caption>HTTP 状态码 Status Codes</caption>
+        <caption>状态码 Status Codes</caption>
         <thead>
           <tr>
             <th>Type</th>
@@ -598,32 +642,55 @@ console.log(res)
           <tr style="color: #13b983;">
             <td>2xx</td>
             <td>成功</td>
-            <td>200 OK, 201 Created, 204 No Content</td>
+            <td>200 OK <br> 201 Created <br> 204 No Content</td>
           </tr>
           <tr style="color: #3e81f8;">
             <td>3xx</td>
             <td>重定向</td>
-            <td>301 Moved Permanently, 302 Found, 304 Not Modified</td>
+            <td>301 Moved Permanently <br> 302 Found <br> 304 Not Modified</td>
           </tr>
           <tr style="color: #f69d0d;">
             <td>4xx</td>
             <td>客户端错误</td>
-            <td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td>
+            <td>400 Bad Request <br> 401 Unauthorized <br> 403 Forbidden <br> 404 Not Found</td>
           </tr>
           <tr style="color: #f14548;">
             <td>5xx</td>
             <td>服务器错误</td>
-            <td>500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</td>
+            <td>500 Internal Server Error <br> 502 Bad Gateway <br> 503 Service Unavailable</td>
           </tr>
         </tbody>
       </table>
-      <div class="tips">
+      <!-- <div class="tips">
         <p>WAF欺骗</p>
         <p>403伪装</p>
         <p>不拒绝，而是返回404，让你以为找不到</p>
-      </div>
-      <div class="demo"> 开发环境和生产环境下的报文</div>
-      <dd>借助开发者工具中查看 chap6http.html</dd>
+      </div> -->
+      <!-- <div class="tips">实际环境中，浏览器只显示状态码和原因短语</div> -->
+      <div>2. 响应头 Headers</div>
+      <dd>常见响应头字段：
+        <p>Content-Type：响应体的 MIME 类型</p>
+        <p>Content-Length：响应体字节数</p>
+        <p>Location：用于重定向（配合 3xx 状态码）</p>
+        <p>Set-Cookie：设置客户端 Cookie</p>
+      </dd>
+      <div>3. 空行 CRLF</div>
+      <dd>同样以 \r\n\r\n 分隔头部与响应体</dd>
+      <div>4. 响应体 Body</div>
+      <dd>返回给客户端的实际内容，如 HTML 页面、JSON 数据等</dd>
+      <div class="demo">chap6http.html 的 响应报文</div>
+      <pre>
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Cache-Control: public, max-age=0
+Last-Modified: Sat, 07 Nov 2026 03:40:31 GMT
+ETag: W/"8e3f-1a1b417f47d"
+Content-Type: text/html; charset=UTF-8
+Content-Length: 37908
+Date: Sat, 07 Nov 2026 03:40:47 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5</pre>
+      <div class="demo">访问 chap6http.html 的完整 HTTP 过程</div>
       <figure>
         <img src="./imgs/http7.png" alt="">
         <figcaption>开发环境下的报文</figcaption>
@@ -632,19 +699,30 @@ console.log(res)
         <img src="./imgs/http8.png" alt="">
         <figcaption>生产环境下的报文</figcaption>
       </figure>
-      <dd>HTTP 状态码 304 Not Modified 表示：“你本地缓存的资源仍然有效，请继续使用它。”</dd>
-      <dd>浏览器在第一次收到 200 响应时，已经记录了完整的响应头，包括 Content-Type: text/html</dd>
-      <dd>当后续收到 304 响应时，浏览器会复用之前缓存的完整响应头 + 缓存的 body</dd>
-      <dd>所以，即使 304 响应里没有 Content-Type，浏览器依然知道它是 text/html</dd>
       <figure>
         <img src="./imgs/http9.png" alt="">
         <figcaption>生产环境下的报文 - 缓存加载</figcaption>
       </figure>
-      <div class="tips">
-        <p>请求报文 = 请求行 + 请求头 + 空行 + 请求体</p>
-        <p>响应报文 = 状态行 + 响应头 + 空行 + 响应体</p>
-        <p>状态码 是理解请求结果的关键，按 1xx~5xx 分类</p>
-      </div>
+      <dd>说明
+        <p>HTTP 状态码 304 Not Modified 表示：“你本地缓存的资源仍然有效，请继续使用它。”</p>
+        <p>浏览器在第一次收到 200 响应时，已经记录了完整的响应头，包括 Content-Type: text/html</p>
+        <p>当后续收到 304 响应时，浏览器会复用之前缓存的完整响应头 + 缓存的 body</p>
+        <p>所以，即使 304 响应里没有 Content-Type，浏览器依然知道它是 text/html</p>
+      </dd>
+      <div class="demo"> 请求大树小站提供的不同资源，查看响应头的内容类型</div>
+      <dd>创建测试文件 demo.html</dd>
+      <dd>在脚本中请求 &lt;script&gt;</dd>
+      <dd>使用浏览器的开发者工具检查网络请求</dd>
+      <dd>.json</dd>
+      <dd>.png</dd>
+      <dd>.html</dd>
+      <dd>.mp4</dd>
+      <pre>
+fetch('https://glplaman.github.io/utils/video/v0.mp4')
+.then(res=>res.json())
+.then(res=>{
+console.log(res)
+})</pre>
     </dl>
     <h2>其它 Other</h2>
     <dl>
@@ -785,7 +863,16 @@ Content-Type: image/jpeg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--</pre>
       </ol>
     </dl>
+    <h2>Summary & Homework</h2>
     <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>WWW</li>
+        <li>HTTP</li>
+        <li>请求报文 = 请求行 + 请求头 + 空行 + 请求体</li>
+        <li>响应报文 = 状态行 + 响应头 + 空行 + 响应体</li>
+        <li>状态码 是理解请求结果的关键，按 1xx~5xx 分类</li>
+      </ol>
       <dt>Reading</dt>
       <ol>
         <li><a class="link" href="https://zhuanlan.zhihu.com/p/543792597">全网最强的 HTTP 协议讲解 </a>
