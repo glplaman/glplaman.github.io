@@ -14,84 +14,146 @@
     <h1>动态主机配置协议</h1>
     <h4>DHCP</h4>
     <dl>
-      <dt>方案1：使用专门的服务器</dt>
-      <dd>Server-PT：
-        <p>端设备；同主机 PC</p>
-        <p>本质上就是一台Windows/Linux服务器的角色，和家里的电脑是同类设备，只不过"预装"了各种服务软件</p>
-        <p>可以装各种服务，如HTTP、DHCP、DNS、Email、FTP、IoT等</p>
-        <p>不具备路由功能；不能做IP包转发；不能做网关</p>
-      </dd>
-      <dd>特点：简单</dd>
+      <dt>实验内容</dt>
+      <dd>动态主机配置 DHCP</dd>
+      <dt>实验目的</dt>
+      <dd>熟悉 DHCP 的建立与释放过程</dd>
+      <dd>掌握 DHCP 服务器的工作原理</dd>
+      <dd>熟悉 DHCP 报文格式与关键字段</dd>
+      <dd>掌握配置变更的风险控制技能</dd>
+      <dt>实验学时</dt>
+      <dd>2</dd>
+      <dt>实验类型</dt>
+      <dd>验证型</dd>
+      <dt>实验器材</dt>
+      <dd>eNSP 网络模拟平台</dd>
+      <dd>路由器 AR2220 1台</dd>
+      <dd>交换机 2960 2台</dd>
+      <dd>主机 PC 诺干台</dd>
+      <dt>前置知识</dt>
+      <dd>网关</dd>
+      <table style="max-width: 600px;">
+        <thead>
+          <tr>
+            <th>命令</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>dhcp enable</td>
+            <td>启动 DHCP</td>
+          </tr>
+          <tr>
+            <td>ip pool </td>
+            <td>[pool_name] 命名地址池</td>
+          </tr>
+          <tr>
+            <td>network [NETWORK] mask [MASK] </td>
+            <td>指定网络</td>
+          </tr>
+          <tr>
+            <td>dns-list [] </td>
+            <td>指定 DNS</td>
+          </tr>
+          <tr>
+            <td>gateway-list [] </td>
+            <td>指定网关 Gateway</td>
+          </tr>
+          <tr>
+            <td>display ip pool</td>
+            <td>查看地址池</td>
+          </tr>
+          <tr>
+            <td>display ip pool name [name]</td>
+            <td>查看指定名称的地址池</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>实验步骤</dt>
       <ol>
-        <li>搭建拓扑
-          <p>服务器：Server-PT</p>
-          <p>交换机：2960</p>
-          <p>PC：若干台</p>
-        </li>
+        <li>搭建拓扑</li>
         <figure>
-          <img src="./imgs/dhcp8.png" alt="DHCP 网络拓扑">
-          <figcaption>DHCP 网络拓扑</figcaption>
+          <img src="./imgs/dhcp10.png" alt="dhcp">
+          <figcaption>网络拓扑</figcaption>
         </figure>
-        <li>服务器 IP 配置
-          <p>IP 地址</p>
-          <p>子网掩码 Subnet Mask</p>
-          <p>"桌面 Desktop" → "IP 配置"，可以配置更多参数，如默认网关 Default Gateway</p>
-        </li>
-        <li>服务器开启 DHCP：服务 Service → DHCP</li>
+        <li>配置各主机采用 DHCP 方式获取 IP</li>
         <figure>
-          <img src="../imgs/network/dhcp/幻灯片11.JPG" alt="">
+          <img src="./imgs/dhcp11.png" alt="dhcp">
+          <figcaption>采用 DHCP 方式获取 IP</figcaption>
         </figure>
-        <li>各 PC 启用 DHCP
-          <p>因为是动态分配 IP，不再使用"配置 Config"</p>
-          <p>而是使用："桌面 Desktop" → "IP 配置" → 启用 DHCP</p>
-          <p>稍后即可看到分配的 IP</p>
-          <p>也可以开启后，使用终端命令 ipconfig 查看</p>
-        </li>
-        <figure>
-          <img src="./imgs/dhcp7.png" alt="">
-          <img src="../imgs/network/dhcp/幻灯片12.JPG" alt="">
-        </figure>
-        <li>利用 ping 命令，测试各设备的连通性</li>
-      </ol>
-      <dt>方案2：使用路由器 <a href="./pt/dhcp.pkt" download>点击下载PT文件</a></dt>
-      <dd>相关命令</dd>
-      <pre>Router#show ip dhcp pool</pre>
-      <pre>Router#show ip dhcp binding</pre>
-      <ol>
-        <li>搭建拓扑
-          <p>路由器：2811</p>
-          <p>交换机：2960</p>
-          <p>PC：若干台</p>
-        </li>
-        <figure>
-          <img src="./imgs/dhcp9.png" alt="DHCP 使用路由器">
-          <figcaption>DHCP 使用路由器</figcaption>
-        </figure>
-        <li>路由器完整配置命令</li>
+        <li>路由器基本设置</li>
         <pre>
-enable
-configure terminal
-ip dhcp excluded-address 192.168.1.1 192.168.1.50 # 从 .1 到 .50 共 50个IP地址；统计时 只算作 1 个排除项（范围）
-ip dhcp pool LAN_POOL
-network 192.168.1.0 255.255.255.0
-default-router 192.168.1.1
-dns-server 8.8.8.8
-exit
-interface fa0/0
-ip address 192.168.1.1 255.255.255.0
-no shutdown
-exit
-write memory</pre>
-        <li>检查接口状态；看到 up/up 说明物理连接正常</li>
-        <pre>Router#show ip interface brief</pre>
-        <li>检查 DHCP 地址池</li>
-        <li>检查 DHCP 地址绑定/已分配</li>
-        <li>各主机启用 DHCP（略）</li>
-        <li>查看各主机 IP 地址；应该是51 52 53； DHCP 地址池按顺序分配</li>
-        <li>测试设备的连通性</li>
+system-view
+undo infor-center enable
+sysname AR1</pre>
+        <li>配置路由器网关
+          <p>配置端口 IP</p>
+          <pre>inter [interface]</pre>
+          <p>配置 IP 地址</p>
+          <pre>ip address [network] [mask] </pre>
+          <p>全局获取</p>
+          <pre>dhcp select global</pre>
+        </li>
+        <li>开启 DHCP</li>
+        <pre>dhcp enable</pre>
+        <li>配置 IP 地址池
+          <p>指定 IP 地址池名称</p>
+          <pre>ip pool [pool_name]</pre>
+          <p>指定网络和掩码</p>
+          <pre>network [network] mask [mask]</pre>
+          <p>指定 DNS</p>
+          <pre>dns-list [dns]</pre>
+          <p>指定网关 Gateway</p>
+          <pre>gateway-list [gateway]</pre>
+          <p>设置租期</p>
+          <pre>lease day [days] hour [hours]</pre>
+          <p>排除网关、DNS 等保留地址</p>
+          <pre>excluded-ip-address [start_ip] [end_ip]</pre>
+        </li>
+        <li>返回用户视图</li>
+        <pre>return</pre>
+        <li>保存路由器配置</li>
+        <pre>save</pre>
+        <li>利用 IPCONFIG 查看各主机 IP 地址获取情况</li>
+        <li>利用 PING 命令，测试各设备的连通性</li>
+        <li>主机侧利用 Wireshark 查看 DHCP 协议的执行过程
+          <p>主机先抓包、再释放，然后更新</p>
+          <pre>ipconfig /release</pre>
+          <pre>ipconfig /renew</pre>
+        </li>
+        <li>路由器侧利用 Wireshark 查看 DHCP 协议的执行过程
+          <p>主机先抓包、再释放，然后更新</p>
+          <pre>ipconfig /release</pre>
+          <pre>ipconfig /renew</pre>
+        </li>
+        <li>其它</li>
       </ol>
-      <dt>扩展练习 Extending</dt>
-      <dd>增加一台PC；将操作模式调整为模拟通信；更改PC的地址分配方式为DHCP，单步调试查看 DHCP 数据报的发送过程</dd>
+      <dt>拓展练习</dt>
+      <dd><a href="./drill_dhcp_pt.html" class="link">DHCP_PT</a></dd>
+      <dt>实验分析</dt>
+      <dt>实验总结</dt>
+      <dt>附录</dt>
+      <dd>路由器配置参考命令</dd>
+      <pre>
+system-view
+undo infor-center enable
+sysname [name]
+dhcp enable
+
+interface g0/0/0
+ip address 10.1.1.1 255.255.255.0
+dhcp select global
+quit
+
+ip pool pool1
+network 10.1.1.0 mask 24
+gateway-list 10.1.1.1
+dns-list 8.8.8.8
+lease day [days] hour [hours]
+excluded-ip-address [start_ip] [end_ip]
+return
+save</pre>
     </dl>
     <div id="footer"></div>
     <script src="/utils/custom/footer.js"></script>
