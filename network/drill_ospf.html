@@ -18,10 +18,151 @@
       <dt>实验内容</dt>
       <dd>开发最短路径优先 OSPF</dd>
       <dt>实验目的</dt>
-      <dt>前置知识</dt>
+      <dd>掌握动态路由 OSPF 的基本概念</dd>
+      <dd>掌握单区动态路由 OSPF 的配置和应用</dd>
+      <dd>熟悉查看和调试 OSPF 路由协议相关信息的命令和方法</dd>
+      <dt>实验学时</dt>
+      <dd>2</dd>
       <dt>实验类型</dt>
       <dd>验证型</dd>
+      <dt>实验器材</dt>
+      <dd>eNSP 网络模拟平台</dd>
+      <dd>路由器 AR2220 3台</dd>
+      <dt>前置知识</dt>
+      <dd>OSPF 进程</dd>
+      <dd>区域 Area</dd>
+      <dd>路由器标识符 Router-id</dd>
+      <dd>lookback 接口</dd>
+      <dd>开销 Cost</dd>
+      <dd>OSPF邻居表</dd>
+      <dd>LSDB 表</dd>
+      <dd>OSPF 路由表</dd>
+      <table style="max-width: 650px;">
+        <caption>OSPF 常用命令</caption>
+        <thead>
+          <tr>
+            <th>命令</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ospf </td>
+            <td>启动 OSPF 路由进程</td>
+          </tr>
+          <tr>
+            <td>reset ospf 1 process </td>
+            <td>重启 OSPF 进程；用户视图</td>
+          </tr>
+          <tr>
+            <td>rouer-id </td>
+            <td>配置路由器 ID</td>
+          </tr>
+          <tr>
+            <td>area </td>
+            <td>设置区域</td>
+          </tr>
+          <tr>
+            <td>network </td>
+            <td>宣告网络</td>
+          </tr>
+          <tr>
+            <td>display ospf brief </td>
+            <td>查看 OSPF 概要信息</td>
+          </tr>
+          <tr>
+            <td>display ospf process-id brief </td>
+            <td>查看 OSPF 概要信息</td>
+          </tr>
+          <tr>
+            <td>display ospf interface </td>
+            <td>显示 OSPF 接口信息</td>
+          </tr>
+          <tr>
+            <td>display ospf lsdb </td>
+            <td>显示 OSPF 数据库表</td>
+          </tr>
+          <tr>
+            <td>display ospf peer [brief] </td>
+            <td>显示 OSPF 邻居表</td>
+          </tr>
+          <tr>
+            <td>display ospf routing-table </td>
+            <td>显示 OSPF 路由表</td>
+          </tr>
+          <tr>
+            <td>display ip routing-table protocol ospf </td>
+            <td>查看 OSPF 路由</td>
+          </tr>
+
+        </tbody>
+      </table>
       <dt>实验步骤</dt>
+      <ol>
+        <li>创建网络拓扑</li>
+        <figure>
+          <img src="./imgs/ospf2.png" alt="ospf">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>路由器IP地址配置</li>
+        <li>在路由器上启用 OSPF 路由进程</li>
+        <pre>ospf [process-id]</pre>
+        <li>指定路由器标识符 Router-id</li>
+        <pre>router-id [router-id]</pre>
+        <li>创建区域</li>
+        <pre>area [area-id]</pre>
+        <li>启用参与路由协议的接口，并且通告网络及所在的区域</li>
+        <pre>network [network-address wildcard-mask]</pre>
+        <li>返回用户视图</li>
+        <pre>return</pre>
+        <li>抓包查看 OSPF 报文的交互过程</li>
+        <li>查看接口状态</li>
+        <pre>display ip interface</pre>
+        <li>查看 OSPF 接口</li>
+        <pre>display ospf interface</pre>
+        <li>查看 OSPF 邻居表</li>
+        <pre>display ospf peer</pre>
+        <li>查看 OSPF 的数据库状态表</li>
+        <pre>display ospf lsdb</pre>
+        <li>查看路由表</li>
+        <pre>display ip routing-tablef</pre>
+        <li>查看 OSPF 路由表</li>
+        <pre>display ip routing-table protocol ospf</pre>
+        <li>保存</li>
+        <pre>save</pre>
+      </ol>
+      <dt>实验分析</dt>
+      <dt>实验总结</dt>
+      <dt>附录</dt>
+      <dd>AR1 命令集：配置部分和查看部分分段粘贴，避免系统没有就绪</dd>
+      <pre>
+system-view
+undo info-center enable
+sysname AR1
+inter g0/0/0
+ip address 192.168.12.1 24
+quit
+
+int loopback 0
+ip address 1.1.1.1 32
+quit
+
+ospf 1
+router-id 1.1.1.1
+area 0
+network 192.168.12.0 0.0.0.255
+network 1.1.1.1 0.0.0.0
+return
+
+display ip interface
+display ip interface brief
+display ospf interface
+display ospf peer
+display ospf peer brief 
+display ospf lsdb 
+display ip routing-table
+display ip routing-table protocol ospf
+save</pre>
     </dl>
     <div id="footer"></div>
   </div>

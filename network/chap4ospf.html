@@ -57,76 +57,55 @@
       <img src="./imgs/ospf.png" alt="">
       <dt>概述 Overview</dt>
       <dd>OSPF Open Shortest Path First，开放最短路径优先
-        <p>开放：协议公开 <a class="link" href="https://www.rfc-editor.org/rfc/rfc2328">RFC 2328</a></p>
+        <p>开放：协议公开 <a class="link" href="https://www.rfc-editor.org/rfc/rfc2328">RFC 2328 - ipv4</a>、<a class="link"
+            href="https://www.rfc-editor.org/rfc/rfc2740">RFC 2740 - ipv6</a></p>
         <p>最短路径：采用最短路径优先算法SPF - Dijkstra 提出</p>
       </dd>
       <dd>内部网关协议 IGP，用于在单一自治系统 AS 内路由选择</dd>
-      <dd>不使用 TCP 或 UDP，而是直接封装在 IP 报文内，使用 IP 协议号89</dd>
-      <dd>支持VLSM：支持可变长子网划分和无分类编址CIDR</dd>
-      <dd>支持认证：提供简单密码认证和MD5认证</dd>
+      <dd>不使用 TCP 或 UDP，而是直接封装在 IP 报文内，使用 IP 协议号 89</dd>
+      <dd>支持VLSM：支持可变长子网划分和无分类编址 CIDR</dd>
+      <dd>支持认证：提供简单密码认证和 MD5 认证</dd>
       <dd>支持多路径负载均衡：最多支持等价多路径负载均衡</dd>
       <dd>适用大型网络</dd>
-      <dt>链路状态 Link State</dt>
-      <dd>OSPF 基于 <strong>链路状态</strong> 的路由协议</dd>
-      <dd>链路状态是指与路由器直连的网络或者链路的信息</dd>
-      <dd>描述自己连接的网络，以及它与邻居之间的链路状态及开销 Cost</dd>
-      <dd>是自己看到的局部拓扑</dd>
-      <dd>具体由网络管理人员制定</dd>
       <figure>
         <img src="./imgs/ospf5.png" alt="">
         <figcaption>IP数据报</figcaption>
       </figure>
-      <div class="tips">
-        <p>交换的是链路信息；不是路由信息</p>
-        <p>Type 1：Router-LSA（路由器 LSA）—— 我周围都有谁</p>
-        <p>Type 2：Network-LSA（网络 LSA）—— 我这段广播网线上连着哪些人</p>
-        <p>Type 3：Summary-LSA（汇总 LSA）—— 隔壁区有什么路</p>
-        <p>Type 4：ASBR-Summary-LSA（ASBR 汇总 LSA）—— 谁负责和外界打交道</p>
-        <p>Type 5：External-LSA（外部 LSA）—— 外面的世界在哪</p>
-      </div>
-
-      <dt>链路状态通告 LSA，Link State Advertisement</dt>
-      <dd>OSPF 的基本数据单元，也是核心数据结构</dd>
-      <dd>每个路由器需要生成 LSA 来描述直连的链路状态</dd>
-      <dd>并通过泛洪 Flooding 机制传播 LSA</dd>
-      <dd>确保所有域内路由器都能收到</dd>
-
-      <dt>链路状态数据库 LSD，Link State Database</dt>
-      <dd>每台设备都维护一个LSD</dd>
-      <dd>LSD 中每一条记录就是链路状态公告 LSA</dd>
-      <dd>每个 LSA 条目每隔30min刷新，以防止老化过期</dd>
-      <dd>每个路由器根据 LSD 创建一个带权有向图，算出到所有目标网络的最优路径、创建并维护自己的路由表</dd>
-      <dd>最后每个路由器都知道全网的网络特性</dd>
-
       <dt>分区管理 Area</dt>
-      <dd>OSPF将网络划分为不同区域 Area
-        <p>减少链路状态数据库 LSDB 大小：每个区域维护自己的拓扑信息，不传播其他区域的详细拓扑</p>
-        <p>限制路由更新范围：链路状态通告 LSA 在区域内泛洪，减少网络风暴</p>
+      <dd>OSPF 将网络划分为不同区域 Area
+        <p>每个区域维护自己的拓扑信息，不传播其他区域的详细拓扑</p>
+        <!-- <p>有效减少链路状态数据库 LSDB 大小</p> -->
+        <p>限制路由更新范围，减少网络风暴</p>
+        <!-- <p>链路状态通告 LSA 在区域内泛洪</p> -->
         <p>提升网络可扩展性与稳定性</p>
       </dd>
       <dd>每个区域只知道本区域的网络拓扑</dd>
       <dd>每个区域分配一个区域标识符 Area ID
         <p>32 位无符号整数</p>
         <p>表示为一个十进制数，也可以表示为点分十进制形式</p>
-        <p>Area&nbsp; 0 → 0.0.0.0；Area 0 必须存在，是 OSPF 网络的骨干区域 Backbone Area</p>
+        <p>Area&nbsp; 0 → 0.0.0.0</p>
         <p>Area&nbsp; 1 → 0.0.0.1</p>
         <p>Area 51 → 0.0.0.51</p>
       </dd>
       <dt>区域类型 Area Type</dt>
-      <dd>骨干区域 Backbone Area (Area 0)：
-        <p>连接所有其他区域的核心区域</p>
-        <p>所有非骨干区域间通信都要通过骨干区域 Area0 经区域边界路由器 ABR 转发</p>
-      </dd>
-      <dd>标准区域 Standard Area：常规的 OSPF 区域</dd>
-      <dd>末节区域 Stub Area：不接收外部路由信息的区域</dd>
-      <dd>完全末节区域 Totally Stubby Area：Cisco专有特性，只保留默认路由</dd>
-      <dd>次末节区域 NSSA：允许引入外部路由但不传播到其他区域</dd>
+      <ul>
+        <li>骨干区域 Backbone Area (Area 0)：
+          <p>必须存在</p>
+          <p>连接所有其他区域的核心区域</p>
+          <p>所有非骨干区域间通信都要通过骨干区域 Area0 经区域边界路由器 ABR 转发</p>
+        </li>
+        <li>标准区域 Standard Area：常规的 OSPF 区域</li>
+        <li>末节区域 Stub Area：不接收外部路由信息的区域</li>
+        <li>完全末节区域 Totally Stubby Area：Cisco专有特性，只保留默认路由</li>
+        <li>次末节区域 NSSA：允许引入外部路由但不传播到其他区域</li>
+      </ul>
       <figure>
         <img
           src="https://www.firewall.cx/images/stories/ospf-operation-basic-advanced-concepts-ospf-areas-roles-theory-overview1.png"
           alt="">
         <figcaption>区域自治系统</figcaption>
       </figure>
+
       <dt>路由器类型 Classification</dt>
       <dd>路由器可以具备多种身份</dd>
       <dd>自治系统边界路由器 ASBR
@@ -153,9 +132,46 @@
         <img src="./imgs/area.png" alt="">
         <figcaption>路由器类型</figcaption>
       </figure>
+      <dt>路由器标识符 Router-ID</dt>
+      <dd>用于在一个 OSPF 域中唯一地标识一台路由器</dd>
+      <dd>不同的域内，可以使用相同的标识符</dd>
+      <dd>相同区域内绝对不能相同</dd>
+      <dd>可使用系统自动配置</dd>
+      <dd>也可手工配置 - <strong>建议</strong></dd>
+      <dd>取值范围同区域 Area id
+        <p>Router-id&nbsp; 0 → 0.0.0.0</p>
+        <p>Router-id&nbsp; 1 → 0.0.0.1</p>
+      </dd>
     </dl>
     <h2>基本过程 Procedure</h2>
     <dl>
+      <dt>链路状态 Link State</dt>
+      <dd>OSPF 基于 <strong>链路状态</strong> 的路由协议</dd>
+      <dd>链路状态是指与路由器直连的网络或者链路的信息</dd>
+      <dd>描述自己连接的网络，以及它与邻居之间的链路状态及开销 Cost</dd>
+      <dd>是自己看到的局部拓扑</dd>
+      <dd>具体由网络管理人员制定</dd>
+      <div class="tips">
+        <p>交换的是链路信息；不是路由信息</p>
+        <p>Type 1：Router-LSA（路由器 LSA）—— 我周围都有谁</p>
+        <p>Type 2：Network-LSA（网络 LSA）—— 我这段广播网线上连着哪些人</p>
+        <p>Type 3：Summary-LSA（汇总 LSA）—— 隔壁区有什么路</p>
+        <p>Type 4：ASBR-Summary-LSA（ASBR 汇总 LSA）—— 谁负责和外界打交道</p>
+        <p>Type 5：External-LSA（外部 LSA）—— 外面的世界在哪</p>
+      </div>
+
+      <dt>链路状态通告 LSA，Link State Advertisement</dt>
+      <dd>OSPF 的基本数据单元，也是核心数据结构</dd>
+      <dd>每个路由器需要生成 LSA 来描述直连的链路状态</dd>
+      <dd>并通过泛洪 Flooding 机制传播 LSA</dd>
+      <dd>确保所有域内路由器都能收到</dd>
+
+      <dt>链路状态数据库 LSD，Link State Database</dt>
+      <dd>每台设备都维护一个LSD</dd>
+      <dd>LSD 中每一条记录就是链路状态公告 LSA</dd>
+      <dd>每个 LSA 条目每隔30min刷新，以防止老化过期</dd>
+      <dd>每个路由器根据 LSD 创建一个带权有向图，算出到所有目标网络的最优路径、创建并维护自己的路由表</dd>
+      <dd>最后每个路由器都知道全网的网络特性</dd>
       <!-- <figure>
         <img src="./imgs/ospf0.png" alt="">
         <figcaption>OSPF报文格式</figcaption>
@@ -173,32 +189,39 @@
             <td>Hello</td>
             <td>
               <p>问候分组</p>
+              <p>周期发送</p>
+              <p>用来发现邻居</p>
             </td>
           </tr>
           <tr>
             <td>Database Description</td>
-            <td>数据库描述分组</td>
+            <td>
+              <p>数据库描述分组 DD</p>
+              <p>描述本地 LSDB 的摘要信息，用于两台设备进行数据库同步</p>
+            </td>
           </tr>
           <tr>
             <td>Link State Request</td>
             <td>
-              <p>链路状态请求分组 </p>
-              <p>根据摘要信息，请求信息的链路状态信息</p>
+              <p>链路状态请求分组 LSR</p>
+              <p>根据摘要信息，用于向对方请求所需的 LSA</p>
+              <p>设备只有在 OSPF 邻居双方成功交换 DD 报文后才会向对方发出 LSR 报文</p>
             </td>
           </tr>
           <tr>
             <td>Link State Update</td>
             <td>
-              <p>链路状态更新分组 </p>
+              <p>链路状态更新分组 LSU</p>
+              <p>用于向对方发送其所需要的 LSA</p>
               <p>一旦路由状态发送变化，则使用泛洪全网更新链路状态</p>
-              <p>OSPF的核心</p>
+              <p>OSPF 的核心</p>
             </td>
           </tr>
           <tr>
             <td>Link State Acknowledgement</td>
             <td>
-              <p>链路状态确认分组 </p>
-              <p>对链路状态更新分组的确认</p>
+              <p>链路状态确认分组</p>
+              <p>用来对收到的 LSA 进行确认；对链路状态更新分组的确认</p>
             </td>
           </tr>
         </tbody>
@@ -325,6 +348,63 @@
         <p>↓</p>
         <p class="bg">更新路由表</p>
       </div> -->
+    </dl>
+    <h2>命令 Command</h2>
+    <dl>
+      <dt>OSPF 进程</dt>
+      <dt>区域 Area</dt>
+      <dt>路由器标识符 Router-id</dt>
+      <dt>lookback 接口</dt>
+      <dd>Loopback 不是必须配，但它能让 OSPF 更稳定、更好管理</dd>
+      <dd>逻辑接口，不是真实网口；没有网线、没有对端设备</dd>
+      <ul>
+        <li>只要设备正常运行，状态永远 UP，比物理口稳定</li>
+        <li>通常配 32 位掩码（/32），表示一个主机地址，不代表一个网段，因此常用来做 Router-ID</li>
+        <li>Loopback 地址与 Router-ID 取相同值是运维习惯（好记、好排错），不是协议强制要求</li>
+        <li>方便远程管理</li>
+        <li>还能用于 BGP、隧道等场景</li>
+        <li>想让全网访问你的 Loopback，必须把它宣告进 IGP</li>
+      </ul>
+      <dt>度量值 Cost</dt>
+      <dd>参考带宽÷实际带宽</dd>
+      <dd>不足1，补到1</dd>
+      <dd>超过1，仅保留整数</dd>
+      <dd>一条 OSPF 路由的 Cost 值可以理解为是从目的网段到本路由器沿途所有入接口的 Cost 值累加</dd>
+      <dt>3张表</dt>
+      <dt>OSPF邻居表</dt>
+      <pre>display ospf peer</pre>
+      <ul>
+        <li>OSPF 在传递链路状态信息之前，需先建立 OSPF 邻居关系</li>
+        <li>OSPF 的邻居关系通过交互 Hello 报文建立</li>
+        <li>OSPF 邻居表显示了 OSPF 路由器之间的邻居状态</li>
+      </ul>
+      <dt>LSDB 表</dt>
+      <pre>display ospf lsdb</pre>
+      <dt>OSPF 路由表</dt>
+      <pre>display ospf routing</pre>
+      <div class="demo">单区域 OSPF 模板</div>
+      <dd>ospf 1：OSPF 进程号，本地有效</dd>
+      <dd>router-id 1.1.1.1：路由器标识</dd>
+      <dd>area 0：骨干区域</dd>
+      <dd>network 192.168.12.0 0.0.0.255：宣告 192.168.12.0/24 网段</dd>
+      <dd>network 1.1.1.1 0.0.0.0：精确宣告 Loopback 接口</dd>
+      <pre>
+&lt;Huawei&gt; system-view
+[Huawei] sysname AR1
+[AR1] interface GigabitEthernet 0/0/0
+[AR1-GigabitEthernet0/0/0] ip address 192.168.12.1 24
+[AR1-GigabitEthernet0/0/0] quit
+
+[AR1] interface LoopBack 0
+[AR1-LoopBack0] ip address 1.1.1.1 32
+[AR1-LoopBack0] quit
+
+[AR1] ospf 1 router-id 1.1.1.1
+[AR1-ospf-1] area 0
+[AR1-ospf-1-area-0.0.0.0] network 192.168.12.0 0.0.0.255
+[AR1-ospf-1-area-0.0.0.0] network 1.1.1.1 0.0.0.0
+[AR1-ospf-1-area-0.0.0.0] quit
+[AR1-ospf-1] quit</pre>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
