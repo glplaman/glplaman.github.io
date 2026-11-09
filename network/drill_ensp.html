@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验 华为企业网络模拟平台 eNSP</title>
+  <link rel="stylesheet" href="../css/drill.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>华为企业网络模拟平台</h1>
+    <h4>Enterprise Network Simulation Platform</h4>
+    <dl class="container">
+      <dt>实验内容</dt>
+      <dd>eNSP 的使用</dd>
+      <dt>实验目的</dt>
+      <dd>掌握 eNSP 的基本使用和一般工作流程</dd>
+      <dd>熟悉常见的网络命令</dd>
+      <dd>初步了解 Wireshark 的使用</dd>
+      <dt>实验学时</dt>
+      <dd>1</dd>
+      <dt>实验类型</dt>
+      <dd>验证型</dd>
+      <dt>实验器材</dt>
+      <dd>eNSP 网络模拟平台</dd>
+      <dd>交换机 2960 3台</dd>
+      <dd>主机 PC 诺干台</dd>
+      <dt>前置知识</dt>
+      <dd>eNSP 工作界面和常见设置
+        <p>设备标签</p>
+        <p>接口标签</p>
+        <p>设置 CLI 字体</p>
+      </dd>
+      <figure>
+        <img src="./imgs/ensp0.png" alt="ensp">
+        <figcaption>选项</figcaption>
+      </figure>
+      <dd>eNSP 设备类型：
+        <p>路由器 Router</p>
+        <P>交换机 Switch</P>
+        <p>终端 Terminal</p>
+        <p>连接线 Connection</p>
+      </dd>
+      <dd>广播域</dd>
+      <dd>地址解析协议 ARP</dd>
+      <dd>交换机自学习</dd>
+      <dd>主机的 ARP 缓存表</dd>
+      <dd>交换机的 MAC 表</dd>
+      <dt>实验步骤</dt>
+      <ol>
+        <li>启动 eNSP</li>
+        <li>新建网络拓扑
+          <p>交换机 S5700 1台</p>
+          <p>终端 PC 3台</p>
+        </li>
+        <figure>
+          <img src="./imgs/ensp2.png" alt="ensp">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>使用设备：从设备区选择分类 → 单击设备 → 拖动到工作区</li>
+        <li>连接设备：选择连接线 → 自动连接 Auto，先单击工作区的某个设备，再单击需要连接的另外一个设备</li>
+        <li>启动设备：单击工具栏启动按钮 <span class="iconfont icon-playarrow" style="color: #0f0;"></span>，启动设备；完毕后，连接线上的红色标记转为绿色
+        </li>
+        <li>打标签：选择工具栏文本按钮 <span class="iconfont icon-duihuakuang"></span> ，在设备附近单击，输入文本信息；输入完毕后，单击工作区空白区域，退出文本编辑
+          ；网络号为学号最后2位，其它参考网络拓扑设置</li>
+        <li>编辑标签：右键标签，可以设置
+          <p>字体大小</p>
+          <p>字体颜色</p>
+          <p>背景颜色</p>
+        </li>
+        <li>添加业务范围：单击工具栏调色板按钮 <span class="iconfont icon-bxs-rectangle"
+            style="color: #d5bf72;"></span>，为设备绘制范围；右键可以取消绘制；设置
+          <p>形状：椭圆</p>
+          <p>边框类型：实线 solid</p>
+          <p>边框粗细：1</p>
+          <p>颜色：参考网络拓扑</p>
+          <p>不填充</p>
+        </li>
+        <figure>
+          <img src="./imgs/ensp1.png" alt="ensp">
+          <figcaption>调色板</figcaption>
+        </figure>
+        <li>配置终端 IP：双击终端，输入 IP 和 掩码，并应用
+          <p>PC1：192.168.58.1 255.255.255.0</p>
+          <p>PC2：192.168.58.2 255.255.255.0</p>
+          <p>PC3：192.168.58.3 255.255.255.0</p>
+        </li>
+        <figure>
+          <img src="./imgs/ensp3.png" alt="ensp">
+          <figcaption>配置终端PC1的IP</figcaption>
+        </figure>
+        <li>查看交换机 MAC 地址表：双击交换机，进入命令行 CLI，输入命令；结果应该为空</li>
+        <pre>
+&lt;Huawei&gt;display mac-address 
+&lt;Huawei&gt;</pre>
+        <li>查看主机 ARP 缓存：双击终端主机，进入命令行 CLI，输入下面命令；三个主机结果应该都为空</li>
+        <pre>
+PC>arp -a
+
+Internet Address    Physical Address    Type</pre>
+        <li>测试网络连通性：PC1 使用 PING 测试到 PC2 的连通性，同时使用 Wireshark 查看通信过程
+          <div>12.1 右键单击 PC1 → 数据抓包 → 端口 G0/0/1，启动 Wireshark，端口标记变为蓝色</div>
+          <div>12.2 双击 PC1，进入命令行，输入命令，查看并分析 Wireshark 的抓包过程</div>
+          <pre>PC>ping 192.168.58.2</pre>
+          <div>12.3 停止抓包：单击 Wireshark 菜单栏 → 捕获 Capture → 停止 Stop</div>
+          <div>12.4 过滤分组：在过滤器中输入：arp||icmp → 应用 Apply</div>
+          <figure>
+            <img src="./imgs/ensp4.png" alt="ensp">
+            <figcaption>过滤分组</figcaption>
+          </figure>
+          <div>12.5 导出分组：单击 Wireshark 菜单栏 → 文件 File → 导出 Export → 文件 File；选择展示 Displayed的分组，使用学号+姓名命名，如范柯炜5125210102658
+          </div>
+          <figure>
+            <img src="./imgs/ensp5.png" alt="ensp">
+            <figcaption>导出分组</figcaption>
+          </figure>
+        </li>
+        <li>再次查看主机 PC1 的 ARP 缓存</li>
+        <pre>
+PC>arp -a
+
+Internet Address    Physical Address    Type
+192.168.58.2        54-89-98-5D-08-C4   dynamic        </pre>
+        <li>再次查看交换机 MAC 表</li>
+        <pre>
+&lt;Huawei&gt;dis mac-address 
+MAC address table of slot 0:
+-------------------------------------------------------------------------------
+MAC Address    VLAN/       PEVLAN CEVLAN Port            Type      LSP/LSR-ID  
+               VSI/SI                                              MAC-Tunnel  
+-------------------------------------------------------------------------------
+5489-985d-08c4 1           -      -      GE0/0/2         dynamic   0/-         
+5489-98dd-6ef3 1           -      -      GE0/0/1         dynamic   0/-         
+-------------------------------------------------------------------------------
+Total matching items on slot 0 displayed = 2</pre>
+        <li>保存拓扑，使用学号+姓名命名，如范柯炜5125210102658（早保存、多保存）</li>
+        <li>提交拓扑（拓扑截图）、抓包分组文件到教师端</li>
+        <li>其它：
+          <p>使用 Wireshark 或 PING，测试其它设备的连通性</p>
+          <p>查看对应的 ARP 缓存</p>
+          <p>查看交换机的 MAC 表变化</p>
+          <p>等待一段时间（180s），再次检查各主机缓存表</p>
+          <p>等待一段时间（300s），再次检查各交换机 MAC 地址表</p>
+          <p>使用其它过滤方法过滤和保存分组</p>
+        </li>
+      </ol>
+      <dt>拓展练习</dt>
+      <dd><a href="./drill_telnet.html" class="link">Telnet_PT</a></dd>
+      <dd><a href="./drill_console.html" class="link">Console_PT</a></dd>
+      <dt>实验分析</dt>
+      <dt>实验总结</dt>
+      <dt>附录</dt>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
