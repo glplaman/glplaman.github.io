@@ -20,20 +20,25 @@
         <img src="./imgs/mail5.png" alt="">
         <figcaption>mindmap</figcaption>
       </figure>
+      <dd class="txt-center txt-2xl">写 → 发送 → 接收</dd>
       <dd>电子邮件 e-mail：指使用电子设备交换的邮件及其方法</dd>
+      <dd>使用方便，传递迅速，费用低廉</dd>
+      <dd>可以传送多种类型的信息，包括：文字信息，声音和图像等</dd>
       <dt>邮件地址格式 Format</dt>
-      <dd>邮箱所在的主机的域名，在全世界应唯一 ；不能有相同域名</dd>
-      <dd>收件人邮箱名：也叫用户名，在该域名的范围内应唯一；不能有同名用户</dd>
-      <div class="txt-center txt-xl"><strong>收件人邮箱名@邮箱所在主机的域名</strong></div>
+      <dd>包括域名和用户名2部分</dd>
+      <ol>
+        <li>邮箱所在的主机的域名，在全世界应唯一 ；不能有相同域名</li>
+        <li>收件人邮箱名：也叫用户名，在该域名的范围内应唯一；不能有同名用户</li>
+        <div class="txt-center txt-xl"><strong>收件人邮箱名@邮箱所在主机的域名</strong></div>
+      </ol>
       <div class="demo">示例</div>
       <pre>1942194789@qq.com</pre>
       <pre>glpla@hotmail.com</pre>
       <dt>组成 Element</dt>
-      <dd>信封 Envelope</dd>
-      <dd>内容 Content</dd>
-      <dt>优点 Merits</dt>
-      <dd>使用方便，传递迅速，费用低廉</dd>
-      <dd>可以传送多种类型的信息，包括：文字信息，声音和图像等</dd>
+      <ol>
+        <li>信封 Envelope：不会出现在最终用户看到的邮件里</li>
+        <li>内容 Content：包括首部 Header 和主体 Body。收件人能看到；相当于信纸</li>
+      </ol>
       <dt>重要标准 Standard</dt>
       <dd>简单邮件发送协议 SMTP</dd>
       <dd>互联网文本报文格式</dd>
@@ -44,7 +49,7 @@
     <dl>
       <dt>用户代理 User Agent - UA</dt>
       <dd>用户与电子邮件系统的接口</dd>
-      <dd>又被称为电子邮件客户端软件，如Outlook、Foxmail</dd>
+      <dd>又被称为电子邮件客户端软件，如 C/S 类的 Outlook，B/S 类的各种在线/网页端应用</dd>
       <dd>基本功能：
         <p>撰写</p>
         <p>显示</p>
@@ -61,33 +66,77 @@
       </dd>
       <dt>邮件发送和邮件读取协议</dt>
       <dd>邮件发送和读取使用不同的协议</dd>
-      <dd>简单邮件发送协议 SMTP：用于在用户代理向邮件服务器或邮件服务器之间发送邮件</dd>
-      <dd>邮局协议 POP3：用于用户代理从邮件服务器读取邮件</dd>
+      <dd>简单邮件发送协议 SMTP：在用户代理向邮件服务器或邮件服务器之间发送邮件</dd>
+      <dd>邮局协议 POP3：用户代理从邮件服务器读取邮件</dd>
+      <dd>SMTP（发）和 POP3（收），是两个独立的、方向相反的动作</dd>
+      <div class="txt-center txt-xl"><strong>推 Push</strong> vs <strong>拉 Pull</strong></div>
       <figure>
         <img src="./imgs/mail0.png" alt="">
-        <figcaption>组成</figcaption>
+        <figcaption>组成及载荷</figcaption>
       </figure>
+
+      <div class="demo">为什么采用不同的协议设计 <span class="iconfont icon-help"></span></div>
+      <dd>1. 职责不同/应用场景不同</dd>
+      <dd>发送时通常不需要验证收件人是谁（只需要验证发件人身份）</dd>
+      <dd>而接收时必须验证用户身份（账号密码），否则谁都能看你的邮件</dd>
+      <dd>2. 行为模式不同</dd>
+      <dd>从客户端把邮件推给服务器，或者从一个服务器把邮件推到另一个服务器。接收方一直在那里等着收</dd>
+      <dd>让用户主动连接到服务器，把存好的邮件拉下来。如果是用 SMTP 接收，服务器就需要主动推给你，但这在动态 IP、防火墙和离线存储的场景下非常困难</dd>
+      <div class="demo">SMTP/POP3 VS HTTP</div>
+      <dd>核心模型：邮件是存储-转发；HTTP是请求-响应</dd>
+      <dd>角色定位：邮件协议是双向主动：SMTP 中，主动发/推；POP3 中，用户主动收/拉；HTTP 中，永远是客户端主动发起连接，服务器被动响应</dd>
+      <dd>设计目标：专用和通用</dd>
+      <div class="tips">
+        <p>SMTP 诞生于 1982 年（甚至更早），而 HTTP 诞生于 1990 年</p>
+        <p>在 HTTP 出现之前，邮件系统已经建立了一套完整的生态，且工作得很好</p>
+        <p>如果让全球所有的邮件服务器改用 HTTP，成本极高，且没有这个必要</p>
+      </div>
+      <dt>基于万维网的电子邮</dt>
+      <dd>发送、接收电子邮件时使用 HTTP 协议
+        <p>使用 HTTP POST 方法提交要发送的邮件</p>
+        <p>使用 HTTP GET 方法读取邮件</p>
+      </dd>
+      <dd>两个邮件服务器之间传送邮件时使用 SMTP</dd>
+      <figure>
+        <img src="./imgs/mail12.png" alt="">
+        <figcaption>基于万维网的电子邮件</figcaption>
+      </figure>
+      <dd>用户代理 UA 的缺点：
+        <p>必须在计算机中安装用户代理软件</p>
+        <p>收发邮件不方便</p>
+      </dd>
+      <dd>万维网电子邮件优点：
+        <p>不需要在计算机中再安装用户代理软件</p>
+        <p>计算机能联网，就能非常方便地收发电子邮件</p>
+        <p>界面非常友好</p>
+      </dd>
+      <div class="demo">网页版邮箱 Gmail 发邮件的过程</div>
+      <dd>浏览器通过 HTTP 把邮件内容提交给 Gmail 的网页服务器</dd>
+      <dd>Gmail 的网页服务器在后台通过 SMTP 协议把邮件发出去</dd>
+      <dd>HTTP 是用户界面层的传输方式，而底层的邮件投递，依然依赖 SMTP</dd>
     </dl>
     <h2>简单邮件传送协议 SMTP</h2>
     <dl>
-      <dd>SMTP，Simple Mail Transfer Protocol</dd>
-      <dd>基于 TCP；采用客户/服务器 - C/S 模式</dd>
-      <dd>使用 ASCII 码</dd>
-      <dd>不支持非英文字符，如中文</dd>
+      <dd>SMTP，<a href="https://www.rfc-editor.org/info/rfc5321/" class="link">RFC 5321: Simple Mail Transfer
+          Protocol</a>
+      </dd>
+      <dd>使用 ASCII 码；不支持非英文字符，如中文 → 简单</dd>
+      <dd>基于 TCP</dd>
+      <dd>采用客户/服务器 - C/S 模式</dd>
       <div class="demo">使用 SMTP 协议收发邮件</div>
       <dd>邮件客户端使用的临时端口，如 51001</dd>
-      <dd>邮件服务器的SMTP端口 25</dd>
+      <dd>邮件服务器的 SMTP 端口 25</dd>
       <dd>发送邮件</dd>
-      <dd class="txt-center">
-        <span>Client/51001</span>
+      <dd class="txt-center txt-xl">
+        <strong>SMTP Client/51001</strong>
         <span>→</span>
-        <span>Server/25</span>
+        <strong>SMTP Server/25</strong>
       </dd>
       <dd>收邮件</dd>
-      <dd class="txt-center">
-        <span>Server/25</span>
+      <dd class="txt-center txt-xl">
+        <strong>SMTP Server/25</strong>
         <span>→</span>
-        <span>Client/51001</span>
+        <strong>SMTP Client/51001</strong>
       </dd>
       <dt>发送过程 Procedure</dt>
       <dd>涉及两个 C/S 交互</dd>
@@ -105,22 +154,27 @@
         <img src="./imgs/mail1.png" alt="">
         <figcaption>SMTP</figcaption>
       </figure>
-      <dt>发送阶段 Phase</dt>
-      <div>1. 连接建立</div>
+      <dt>1. 连接建立</dt>
       <dd>发送主机的 SMTP 客户和接收主机的 SMTP 服务器之间建立</dd>
       <dd>不使用中间的邮件服务器 - 教学简化模型或理想化场景</dd>
       <dd>但是仍然需要中间的站点即邮件传输代理 MTA（Mail Transfer Agent）转发</dd>
       <dd>SMTP 客户首先使用熟知端口 25 与接收方的 SMTP 服务器建立 TCP 连接</dd>
-      <dd>SMTP 服务器发出服务就绪 - 并不是所有协议都由客户端先发</dd>
+      <dd>SMTP 服务器发出服务就绪 - 协议规定；并不是所有协议都由客户端先发</dd>
       <dd>SMTP 客户向服务器发送问候 HELO 命令，附上发送方的主机名</dd>
       <dd>SMTP 服务器若有能力接收邮件，则回答：“250 OK”，表示已准备好接收</dd>
       <figure>
         <img src="./imgs/mail2.png" alt="">
         <figcaption>连接建立</figcaption>
       </figure>
-      <div>2. 邮件传送</div>
+      <div class="demo">对比 TCP 的 0 窗口的处理机制</div>
+      <!-- <dd>接收方接收缓存满，无法再接收数据，及时发送 0 窗口</dd>
+      <dd>发送方收到 0 窗口，马上停止发送数据，启动定时器</dd>
+      <dd>定时器截至后，主动发送探测报文</dd>
+      <dd>如果接收方准备好了，回复报文中应该带上自己的窗口大小，通知发送方发送数据</dd> -->
+      <dt>2. 邮件传送</dt>
       <dd>邮件的内容
-        <p>RFC 5322 只规定了邮件内容中的首部 header 格式</p>
+        <p><a href="https://www.rfc-editor.org/info/rfc5322/" class="link">RFC 5322: Internet Message
+            Format</a>只规定了邮件内容中的首部 header 格式</p>
         <p>邮件的主体 body 部分则让用户自由撰写</p>
       </dd>
       <div>2.1. 信封阶段（Envelope Phase）</div>
@@ -136,14 +190,25 @@
         <p>DATA - 告诉服务器接下来是邮件内容</p>
         <p>服务器回复 354 Start mail input... 表示可以开始输入</p>
         <p>内容以 &lt;CRLF>.&lt;CRLF> 结束（即空行后跟一个点）</p>
-        <p>- 只有当一个单独的行只包含一个点（.）时，才被视为结束标志</p>
+        <p>- 只有当一个行只包含一个单独的点（.）时，才被视为结束标志</p>
         <p>- 点前面必须有 &lt;CRLF>；点后面也必须有 &lt;CRLF></p>
+        <p>- 是传输控制指令。它不属于邮件本身</p>
       </dd>
       <figure>
         <img src="./imgs/mail3.png" alt="">
         <figcaption>邮件传送</figcaption>
       </figure>
-      <div>3. 连接释放</div>
+      <div class="demo">封装过程</div>
+      <ol>
+        <li>封装 Header</li>
+        <li>添加空行</li>
+        <li>封装 Body</li>
+        <li>添加结束标记 &lt;CRLF>.&lt;CRLF></li>
+      </ol>
+      <div class="tips">
+        <p>填表（Header） -> 画线（空行） -> 写信（Body） -> 贴封条（&lt;CRLF>.&lt;CRLF>）</p>
+      </div>
+      <dt>3. 连接释放</dt>
       <dd>邮件发送完毕后，SMTP 应释放 TCP 连接</dd>
       <dd>邮件发送完毕，服务器返回 250 OK</dd>
       <dd>TCP 连接可释放（但通常保持一段时间用于后续邮件）</dd>
@@ -152,43 +217,55 @@
         <figcaption>连接释放</figcaption>
       </figure>
     </dl>
-    <h2>邮件接收协议</h2>
+    <h2>邮局协议 POP3</h2>
     <dl>
-      <dd>POP3（Post Office Protocol version 3）和 IMAP（Internet Message Access Protocol）是两种用于从邮件服务器下载或访问电子邮件的协议</dd>
-      <dd>都是基于 TCP 使用客户/服务器 - C/S 方式</dd>
-      <dd>下图使用 POP3 协议（橙色部分）</dd>
+      <dd>Post Office Protocol version 3</dd>
+      <dd>邮件接收协议之一</dd>
+      <dd>3 表示第3个版本</dd>
+      <dd>基于 TCP 使用客户/服务器 - C/S 方式</dd>
+      <dd>端口 110：标准 POP3 端口（明文或 STARTTLS）</dd>
+      <dd>端口 995：POP3S（POP3 over SSL/TLS），加密连接</dd>
+      <dd>用户连接服务器 → 一次性下载所有新邮件 → 默认从服务器删除</dd>
       <figure>
         <img src="./imgs/mail0.png" alt="">
         <figcaption>POP3</figcaption>
       </figure>
-      <dt>邮局协议 POP3</dt>
-      <dd>Post Office Protocol version 3</dd>
-      <dd>3 表示第3个版本</dd>
-      <dd>端口 110：标准 POP3 端口（明文或 STARTTLS）</dd>
-      <dd>端口 995：POP3S（POP3 over SSL/TLS），加密连接</dd>
-      <dd>用户连接服务器 → 一次性下载所有新邮件 → 默认从服务器删除</dd>
-      <dd>基本流程</dd>
+      <dt>基本流程</dt>
       <ol>
         <li>客户端连接 POP3 服务器（端口 110）</li>
+        <figure>
+          <strong>POP3 Client/51001</strong>
+          <span>→</span>
+          <strong>POP3 Server/110</strong>
+          <figcaption>建立 TCP 连接</figcaption>
+        </figure>
         <li>认证（用户名/密码）</li>
         <li>列出邮件列表（LIST 命令）</li>
         <li>下载邮件（RETR 命令）</li>
+        <figure>
+          <strong>POP3 Server/110</strong>
+          <span>→</span>
+          <strong>POP3 Client/51001</strong>
+          <figcaption>传输数据</figcaption>
+        </figure>
         <li>标记为删除（DELE），退出时真正删除（QUIT）</li>
       </ol>
-      <dd>特点
-        <p>无法多设备同步：在手机上读了邮件，电脑上看不到“已读”状态</p>
-        <p>容易丢失邮件：如果本地设备损坏且服务器已删邮件，数据无法恢复</p>
-        <p>功能单一：不能远程管理文件夹、搜索服务器内容等</p>
-      </dd>
+      <dt>特点</dt>
+      <dd>无法多设备同步：在手机上读了邮件，电脑上看不到“已读”状态</dd>
+      <dd>容易丢失邮件：如果本地设备损坏且服务器已删邮件，数据无法恢复</dd>
+      <dd>功能单一：不能远程管理文件夹、搜索服务器内容等</dd>
       <div class="tips">去邮局取信；取完信，邮局就没有你的信件了</div>
-      <dt>IMAP </dt>
+    </dl>
+    <h2>互联网信息访问协议 IMAP</h2>
+    <dl>
+      <dd>邮件接收协议之一</dd>
       <dd>Internet Message Access Protocol</dd>
       <dd>IMAP（明文或 STARTTLS）：端口 143</dd>
       <dd>IMAPS（SSL/TLS 加密）：端口 993</dd>
       <dd>邮件始终保存在服务器上</dd>
       <dd>客户端通过 IMAP 同步访问服务器上的邮件，所有操作都在服务器上完成，支持多设备实时同步</dd>
       <dd>所有操作（读、删、移、标星）实时同步到所有设备</dd>
-      <dd>基本流程</dd>
+      <dt>基本流程</dt>
       <ol>
         <li>客户端连接 IMAP 服务器（端口 143 或 993）</li>
         <li>身份验证（用户名/密码）</li>
@@ -197,17 +274,16 @@
         <li>实时操作（读、删、移、搜索、过滤）都会反映在服务器上</li>
         <li>支持文件夹层级管理和邮件分类</li>
       </ol>
-      <dd>特点
-        <p>要想查阅邮件，必须先联网</p>
-        <p>占用服务器存储空间</p>
-        <p>对服务器性能要求高</p>
-      </dd>
+      <dt>特点</dt>
+      <dd>要想查阅邮件，必须先联网</dd>
+      <dd>占用服务器存储空间</dd>
+      <dd>对服务器性能要求高</dd>
       <div class="tips">
         <p>POP3：适合只想下载邮件并离线阅读的用户，但缺乏同步能力</p>
         <p>IMAP：适合需要多设备同步、远程管理、实时更新的现代用户，是当前主流选择</p>
       </div>
     </dl>
-    <h2>MIME</h2>
+    <h2>多用途互联网邮件扩展 MIME</h2>
     <dl>
       <dd>Multipurpose Internet Mail Extensions</dd>
       <dd>用于扩展电子邮件；支持
@@ -215,8 +291,8 @@
         <P>附件（如图片、音频、视频、PDF 等二进制文件）</P>
         <P>多部分消息体（例如：一封邮件同时包含纯文本和 HTML 版本）</P>
       </dd>
-      <dd>是：邮件内容的编码方式</dd>
-      <dd>不是：传输协议，因此不绑定端口号</dd>
+      <dd>是邮件内容的编码方式</dd>
+      <dd>不是传输协议，因此不绑定端口号</dd>
       <dd>定义了：
         <p>如何标识内容类型（Content-Type）</p>
         <p>如何对非 ASCII 数据进行编码（如 Base64）</p>
@@ -226,24 +302,53 @@
         <img src="./imgs/mail6.png" alt="">
         <figcaption>MIME</figcaption>
       </figure>
-      <dt> MIME 的三大主要功能</dt>
-      <div>1. 定义了 5 个新的邮件首部字段（Header Fields）</div>
-      <dd>
-        这些字段嵌入在邮件头部，用于描述邮件内容的结构和编码方式：
-        <p>MIME-Version：表明该邮件符合 MIME 标准（通常为 1.0）</p>
-        <p>Content-Type：指定主体（body）的数据类型（如 text/plain、image/jpeg、multipart/mixed）</p>
-        <p>Content-Transfer-Encoding：说明主体如何被编码以通过邮件系统安全传输（如 Base64、quoted-printable）</p>
-        <p>Content-ID：为内容部分分配唯一标识符（常用于 HTML 邮件中引用内嵌图片）</p>
-        <p>Content-Description：对内容进行可读性描述（可选）</p>
-      </dd>
-      <dd>Content-Type 说明必须含有两个标识符</dd>
-      <dd>内容类型 (type) 和子类型 (subtype)，中间用“/”分开</dd>
-      <dd>MIME 标准原先定义了 7 个基本内容类型和 15 种子类型</dd>
-      <dd>MIME 允许发件人和收件人自己定义专用的内容类型
-        <p>为避免可能出现名字冲突，标准要求为专用内容类型选择的名字要以字符串 <strong>X-</strong> 开始</p>
-      </dd>
-      <table class="txt-left">
-        <caption>Content-Type</caption>
+      <dt>主要功能</dt>
+      <div>1. 定义了 5 个新的邮件首部字段 Header Fields</div>
+      <dd>这些字段嵌入在邮件头部，用于描述邮件内容的结构和编码方式</dd>
+      <table class="txt-left" style="max-width: 650px;">
+        <caption>首部字段 Header Fields</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MIME-Version</td>
+            <td>MIME版本
+              <br>通常为 1.0
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Content-Type</strong></td>
+            <td>指定主体 body 的内容类型
+              <br>包括：主类型 type 和子类型 subtype，中间用 / 分开
+              <br>如 text/plain、image/jpeg、multipart/mixed
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Content-Transfer-Encoding</strong></td>
+            <td>编码类型
+              <br>如 Base64、quoted-printable
+            </td>
+          </tr>
+          <tr>
+            <td>Content-ID</td>
+            <td>为内容部分分配唯一标识符
+              <br>常用于 HTML 邮件中引用内嵌图片
+            </td>
+          </tr>
+          <tr>
+            <td>Content-Description</td>
+            <td>内容的可读性描述
+              <br>可选
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="txt-left" style="max-width: 650px;">
+        <caption>内容类型 Content-Type</caption>
         <thead>
           <tr>
             <th>item</th>
@@ -253,19 +358,19 @@
         <tbody>
           <tr>
             <td>text</td>
-            <td>文本类；子类型有 /plain /html /css /xml /csv；通常需要指定编码，如 charset=utf-8</td>
+            <td>文本类；子类型 /plain /html /css /xml /csv；并指定编码，如 charset=utf-8</td>
           </tr>
           <tr>
             <td>image</td>
-            <td>图像类；子类型有 /jpeg /png /gif /webp /svg+</td>
+            <td>图像类；子类型 /jpeg /png /gif /webp /svg+</td>
           </tr>
           <tr>
             <td>application</td>
-            <td>应用类；子类型有 /json /javascript /xml /msword /octet-stream</td>
+            <td>应用类；子类型 /json /javascript /xml /msword /octet-stream</td>
           </tr>
           <tr>
             <td>multipart</td>
-            <td>混合类；子类型有 /form-data</td>
+            <td>混合类；子类型 /form-data</td>
           </tr>
           <tr>
             <td>audio</td>
@@ -277,23 +382,43 @@
           </tr>
         </tbody>
       </table>
+      <div class="tips">
+        <p>MIME 标准原先定义了 7 个基本内容类型和 15 种子类型</p>
+        <p>MIME 允许发件人和收件人自己定义专用的内容类型</p>
+        <p>为避免可能出现名字冲突，标准要求为专用内容类型选择的名字要以字符串 <strong>X-</strong> 开始</p>
+      </div>
       <div>2. 定义了许多邮件内容的格式，对多媒体电子邮件的表示方法进行了标准化</div>
       <dd>支持非 ASCII 文本（如中文、日文、阿拉伯语等）</dd>
       <dd>支持多种媒体类型：文本、图像、音频、视频、应用程序文件等</dd>
-      <dd>引入 多部分（multipart） 结构，使一封邮件可包含多个独立部分（例如：正文 + 附件，或纯文本 + HTML 版本）</dd>
-      <dd>常见类型：
-        <p>multipart/mixed：混合内容（正文+附件）</p>
-        <p>multipart/alternative：同一内容的不同格式（如 text 和 HTML）</p>
-        <p>multipart/related：主文档与关联资源（如 HTML + 内嵌图片）</p>
-      </dd>
-      <div>3. 定义了传送编码（Transfer Encodings），可对任何内容格式进行转换，而不会被邮件系统改变</div>
+      <dd>引入多部分（multipart） 结构，使一封邮件可包含多个独立部分（例如：正文 + 附件，或纯文本 + HTML 版本）</dd>
+      <table class="txt-left" style="max-width: 650px;">
+        <caption>多部分 multipart 结构常见类型</caption>
+        <thead>
+          <tr>
+            <th>item</th>
+            <th>desc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>multipart/mixed</td>
+            <td>混合内容（正文+附件）</td>
+          </tr>
+          <tr>
+            <td>multipart/alternative</td>
+            <td>同一内容的不同格式（如 text 和 HTML）</td>
+          </tr>
+          <tr>
+            <td>multipart/related</td>
+            <td>主文档与关联资源（如 HTML + 内嵌图片）</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>3. 定义了多种传送编码 Transfer Encodings</div>
       <dd>传统 SMTP 只支持 7-bit ASCII，无法直接传输二进制数据</dd>
-      <dd>MIME 引入两种安全编码方式：
-        <p>Base64：将任意二进制数据转换为 ASCII 字符，适合图片、PDF 等</p>
-        <p>Quoted-Printable：仅对非 ASCII 或特殊字符编码，适合含少量非英文字符的文本</p>
       <dd>接收方根据 Content-Transfer-Encoding 字段自动解码，还原原始内容</dd>
-      <table class="txt-left">
-        <caption>Transfer Encodings</caption>
+      <table class="txt-left" style="max-width: 650px;">
+        <caption>传送编码 Transfer Encodings</caption>
         <thead>
           <tr>
             <th>item</th>
@@ -303,35 +428,48 @@
         <tbody>
           <tr>
             <td>7bit</td>
-            <td>7 位 ASCII 编码，每行不能超过 1000 个字符（包括回车和换行）<br>
-              默认编码方法</td>
+            <td>仅限 7-bit US-ASCII 字符
+              <br>每行不能超过 1000 个字符（包括回车和换行）
+              <br>适合纯英文文本邮件
+              <br>默认编码方法
+            </td>
           </tr>
           <tr>
             <td>8bit</td>
-            <td>8 位非 ASCII 编码，每行不能超过 1000 个字节（包括回车和换行）</td>
+            <td>8 位非 ASCII 编码，每行不能超过 1000/998 个字节（包括回车和换行）
+              <br>必须遵守行长限制
+            </td>
           </tr>
           <tr>
             <td>Binary</td>
-            <td>8 位非 ASCII 编码，任意长度的字节串</td>
+            <td>8 位非 ASCII 编码，任意长度的字节串
+              <br>没有行长限制
+              <br>图片、可执行文件、压缩包等二进制文件
+            </td>
           </tr>
           <tr>
-            <td>Base64</td>
-            <td>将任意长度的字节串转换为用 7 位 ASCII 编码表示的字符串 <br>
-              可用于二进制和非文本数据的编码</td>
+            <td><strong>Base64</strong></td>
+            <td>将任意二进制（3字节）拆解重组为 4 个 7-bit ASCII 字符
+              <br>适合图片、PDF、压缩包等二进制附件
+            </td>
           </tr>
           <tr>
             <td>Quoted-printable</td>
-            <td>将任意长度的字节串转换为 ASCII 编码表示的字符串<br>
-              可用于二进制和非文本数据的编码</td>
+            <td>英文/数字/常规标点原样发送
+              <br>非 ASCII 字符（中文）或特殊字符转为 =XX (十六进制)
+              <br>内容以纯文本为主，但包含少量中文或特殊符号的正文
+            </td>
           </tr>
         </tbody>
       </table>
-      <div class="demo">邮件分析</div>
-      <dd>普通文本
-        <p>头部</p>
-        <p>段</p>
-        <p>编码</p>
-      </dd>
+      <div class="tips">
+        <p>邮箱：更多... → 查看 → 查看邮件源</p>
+        <p>邮箱：More options → Original Format</p>
+      </div>
+      <div class="demo">普通文本</div>
+      <dd>头部</dd>
+      <dd>段</dd>
+      <dd>编码</dd>
       <pre>
 X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
 X-QQ-XMAILINFO: NGbyafB8LluuNqt7R5YQ30r3cDvGGYg5XZqRcmOF9eHtGzFuQben31Nubuc7aw
@@ -361,18 +499,18 @@ Message-ID: &lt;tencent_15DA81D51A3014EB4B54E9442B51DEC32109@qq.com&gt;
 X-QQ-MIME: TCMime 1.0 by Tencent
 X-Mailer: QQMail 2.x
 X-QQ-Mailer: QQMail 2.x
-X-QQ-mid: xmsezc37-0t1764483443tc3x3o1cz
+X-QQ-mid: xmsezc37-0t1764483443tc3x3o1cz ### header 结束
 
-This is a multi-part message in MIME format.
+This is a multi-part message in MIME format. ### body 开始
 
-------=_NextPart_692BE173_47525DA0_1A5E35FA
+------=_NextPart_692BE173_47525DA0_1A5E35FA ### 分隔
 Content-Type: text/plain;
 	charset="utf-8"
 Content-Transfer-Encoding: base64
 
 aGksdGhlcmUu
 
-------=_NextPart_692BE173_47525DA0_1A5E35FA
+------=_NextPart_692BE173_47525DA0_1A5E35FA ### 分隔
 Content-Type: text/html;
 	charset="utf-8"
 Content-Transfer-Encoding: base64
@@ -382,15 +520,14 @@ b3I6IHJnYig1NCwgMTE4LCAxNjYpOyBsaW5lLWhlaWdodDogMS40MzsiPmhpLHRoZXJlLjwv
 ZGl2PjxkaXYgY29udGVudGVkaXRhYmxlPSJmYWxzZSI+PGRpdiBzdHlsZT0icGFkZGluZy10
 b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
 
-------=_NextPart_692BE173_47525DA0_1A5E35FA--</pre>
+------=_NextPart_692BE173_47525DA0_1A5E35FA-- ### body 结束</pre>
       <div class="tips">
-        <p>邮件中不同位置的数据，使用不同的编码规则，目的各不相同</p>
+        <p>邮件中不同位置的数据，使用不同的编码规则，目的各不相同；如整体使用 8bit 编码；内部仍然使用 base64</p>
         <p>在复杂环境中追求最大兼容性的工程妥协 - 新旧机制并存</p>
       </div>
-      <dd>普通文本 + png 图片
-        <p>段的嵌套</p>
-        <p>编码</p>
-      </dd>
+      <div class="demo">普通文本 + png 图片</div>
+      <dd>段的嵌套</dd>
+      <dd>编码</dd>
       <figure>
         <img src="./imgs/mail11.png" alt="">
         <figcaption>plain + .png</figcaption>
@@ -404,7 +541,7 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
         <p>对与纯英文，ASCII 编码是 UTF-8 的子集，两者编码结果是一样的</p>
       </div>
       <dt>ASCII 编码</dt>
-      <dd>American Standard Code for Information Interchange</dd>
+      <dd><a href="https://www.ascii-code.com/" class="link">American Standard Code for Information Interchange</a></dd>
       <dd>美国信息交换标准代码</dd>
       <dd>处理的是 文本（text），不是数值</dd>
       <dd>一共有 128 个字符，即 0 到 127</dd>
@@ -413,23 +550,33 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
         <p>控制字符（0–31，127）</p>
         <p>可打印字符（32–126）</p>
       </dd>
-      <table>
-        <caption>ASCII 编码（部分） 实例</caption>
+      <table style="max-width: 650px;">
+        <caption>ASCII 编码（部分） 示例</caption>
         <thead>
           <tr>
-            <th>Character</th>
-            <th>Binary</th>
-            <th>Decimal</th>
-            <th>Hexadecimal</th>
-            <th>Type</th>
+            <th>item</th>
+            <th>desc</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>Character</td>
             <td>9</td>
+          </tr>
+          <tr>
+            <td>Binary</td>
             <td>00111001</td>
+          </tr>
+          <tr>
+            <td>Decimal</td>
             <td>57</td>
+          </tr>
+          <tr>
+            <td>Hexadecimal</td>
             <td>0x39</td>
+          </tr>
+          <tr>
+            <td>Type</td>
             <td>可打印</td>
           </tr>
         </tbody>
@@ -439,7 +586,8 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
       <dd>Unicode Transformation Format - 8-bit，是它的编码方式之一 - 如何把字符变成字节</dd>
       <dd>特点：
         <p>可变长度：ASCII 字符占 1 字节，中文通常占 3 字节，emoji 占 4 字节</p>
-        <p>完全兼容 ASCII：所有 ASCII 文本也是合法的 UTF-8；ASCII 是 UTF-8 的子集。对于纯英文（如 "Hello"），UTF-8 编码的结果和 ASCII 完全一样</p>
+        <p>完全兼容 ASCII：所有 ASCII 文本也是合法的 UTF-8</p>
+        <p>ASCII 是 UTF-8 的子集。对于纯英文（如 "Hello"），UTF-8 编码的结果和 ASCII 完全一样</p>
         <p>互联网事实标准：HTML、邮件、JSON、Linux 系统默认使用 UTF-8</p>
       </dd>
       <dt>Quoted-printable</dt>
@@ -450,10 +598,50 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
       </dd>
       <dd>开销增加：
         原来 1 个字节，现在需要 3 个字节，开销 = 200%</dd>
-      <div class="demo"> 157</div>
-      <dd>157非标准 ASCII 字符（0 - 127）</dd>
-      <table>
-        <caption>Quoted-printable 编码实例</caption>
+      <div class="demo"> Quoted-printable 编码实例</div>
+      <dd>标准字符 9；原样输出</dd>
+      <table style="max-width: 650px;">
+        <caption>标准字符 字符 9</caption>
+        <tr>
+          <th>原始字节</th>
+          <td>01011001</td>
+        </tr>
+        <tr>
+          <th>十进制</th>
+          <td>57</td>
+        </tr>
+        <tr>
+          <th>十六进制</th>
+          <td>0x39</td>
+        </tr>
+        <tr>
+          <th>Quoted-Printable</th>
+          <td>39</td>
+        </tr>
+      </table>
+      <dd>标准字符 字符 =，具备转义</dd>
+      <table style="max-width: 650px;">
+        <caption>标准字符 =</caption>
+        <tr>
+          <th>原始字节</th>
+          <td>00111101</td>
+        </tr>
+        <tr>
+          <th>十进制</th>
+          <td>61</td>
+        </tr>
+        <tr>
+          <th>十六进制</th>
+          <td>0x3D</td>
+        </tr>
+        <tr>
+          <th>Quoted-Printable</th>
+          <td>=3D</td>
+        </tr>
+      </table>
+      <dd>标准的 ASCII 范围是 0-127。157 超出了这个范围，属于 8-bit 扩展字符</dd>
+      <table style="max-width: 650px;">
+        <caption>字符 157</caption>
         <tr>
           <th>原始字节</th>
           <td>10011101</td>
@@ -471,166 +659,54 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
           <td>=9D</td>
         </tr>
       </table>
+      <div class="tips">
+        <p>能用就不管（普通字符原样输出）</p>
+        <p>自己人也要防（转义符自身必须转义，防止歧义）</p>
+        <p>不安全的必须伪装（非 ASCII 字符强制转义，确保 7-bit 安全）</p>
+      </div>
       <dt>Base64 编码</dt>
       <dd>适合任意长度的二进制数据/字节序列</dd>
       <dd>编码结果是 ASCII</dd>
-      <dd>规则
-        <p>把二进制代码划分成一个个的 24bit 的单元</p>
-        <p>不足3字节的，要填充/补充至3的倍数</p>
-        <p>每个单元划分成 4 个 6bit 组</p>
-        <p>每个 6bit 可以表示64值</p>
-        <p>根据编码得到编码结果</p>
-        <p>如果有补充字节，
-          <br> -- 补充 1 字节，则最后一个字符替换为 =
-          <br> -- 补充 2 字节，则最后两个字符替换为 ==
-        </p>
-        <p>用两个连在一起的二个等号“==”和一个等号“=”分别表示最后一组的代码只有 8 位或 16 位</p>
-        <p>回车和换行忽略</p>
-      </dd>
-      <dd>64值
-        <p>26个大小字母：A-Z</p>
-        <p>26个小写字母：a-z</p>
-        <p>数字：0-9</p>
-        <p>+：62</p>
-        <p>/：63</p>
-      </dd>
-      <table>
-        <caption>Base 64</caption>
-        <thead>
-          <tr>
-            <th>Value</th>
-            <th>Character</th>
-            <th>Value</th>
-            <th>Character</th>
-            <th>Value</th>
-            <th>Character</th>
-            <th>Value</th>
-            <th>Character</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0</td>
-            <td>A</td>
-            <td>26</td>
-            <td>a</td>
-            <td>52</td>
-            <td>0</td>
-            <td>62</td>
-            <td>+</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>B</td>
-            <td>27</td>
-            <td>b</td>
-            <td>53</td>
-            <td>1</td>
-            <td>63</td>
-            <td>/</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>C</td>
-            <td>28</td>
-            <td>c</td>
-            <td>54</td>
-            <td>2</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>55</td>
-            <td>3</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>56</td>
-            <td>4</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>57</td>
-            <td>5</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>58</td>
-            <td>6</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>24</td>
-            <td>X</td>
-            <td>48</td>
-            <td>x</td>
-            <td>59</td>
-            <td>7</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>25</td>
-            <td>Y</td>
-            <td>49</td>
-            <td>y</td>
-            <td>60</td>
-            <td>8</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>25</td>
-            <td>Z</td>
-            <td>51</td>
-            <td>z</td>
-            <td>61</td>
-            <td>9</td>
-          </tr>
-        </tbody>
-      </table>
+      <dd>规则</dd>
+      <ol>
+        <li>把二进制代码划分成一个个的 <strong>3byte/24bit</strong> 的单元</li>
+        <li>不足3byte的，要填充/补充至 3 的倍数，以便按 6bit 划分</li>
+        <li>每个单元划分成 4 个 6bit 组</li>
+        <li>每个 6bit 可以表示 64 值</li>
+        <li>根据编码得到编码结果</li>
+        <li>如果有补充字节
+          <p>补充 1 byte，则最后一个字符替换为 =</p>
+          <p>补充 2 byte，则最后两个字符替换为 ==</p>
+        </li>
+        <li>用两个连在一起的二个等号 “==” 和一个等号 “=” 分别表示最后一组的代码只有 8 位或 16 位</li>
+        <li>回车和换行忽略</li>
+      </ol>
+      <figure>
+        <img src="./imgs/mail13.png" alt="">
+        <figcaption>Base64 编码</figcaption>
+      </figure>
       <div class="demo">Base64 编码实例</div>
       <dd>原来为 3 个字节</dd>
       <dd>编码后为 4 个字节</dd>
       <dd>开销 = 25%</dd>
-      <dd>编码：STF5</dd>
+      <dd>编码结果：STF5</dd>
       <figure>
         <img src="./imgs/mail7.png" alt="">
         <figcaption>Base64</figcaption>
       </figure>
       <div class="demo">Base64 编码实例</div>
-      <dd>原始数据只有1个字节</dd>
-      <dd>需要填充2个字节补足24bit</dd>
-      <dd>编码：TQAA</dd>
+      <dd>原始数据只有 1 个字节</dd>
+      <dd>需要填充 2 个字节补足 24bit</dd>
+      <dd>编码结果：TQAA</dd>
       <dd>替换：TQ==</dd>
       <figure>
         <img src="./imgs/mail8.png" alt="">
         <figcaption>Base64</figcaption>
       </figure>
       <div class="demo">Base64 编码实例</div>
-      <dd>原始数据只有2个字节</dd>
-      <dd>需要填充1个字节补足24bit</dd>
-      <dd>编码：QSkA</dd>
+      <dd>原始数据只有 2 个字节</dd>
+      <dd>需要填充 1 个字节补足24bit</dd>
+      <dd>编码结果：QSkA</dd>
       <dd>替换：QSK=</dd>
       <figure>
         <img src="./imgs/mail9.png" alt="">
@@ -643,16 +719,17 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
         <pre>72	101	108	108	111</pre>
         <li>转换成二进制</li>
         <pre>01001000	01100101	01101100	01101100	01101111</pre>
+        <li>原数据为5个字节，要补充一个字节，符合3的倍数</li>
+        <pre>01001000	01100101	01101100	01101100	01101111 <strong>00000000</strong></pre>
         <li>分组：6位1组</li>
-        <pre>010010 000110 010101 101100 011011 000110 1111</pre>
-        <li>原数据为5个字节，要补充一个字节，符合3的倍数；补充并调整分组为</li>
         <pre>010010 000110 010101 101100 011011 000110 1111<strong>00 000000</strong></pre>
         <li>对应的值为</li>
         <pre>18 6 21 44 27 6 60 0</pre>
-        <li>查Base64编码表，结果为</li>
+        <li>查 Base64 编码表，结果为</li>
         <pre>SGVsbG8A</pre>
         <li>最后一个为填充的，替换为=</li>
         <pre>SGVsbG8=</pre>
+        <li>使用 <a href="https://www.toolhelper.cn/EncodeDecode/Base64" class="link">在线工具 Base64</a>验证</li>
       </ol>
       <div class="demo">Base64 编码实例 - hi,there.</div>
       <ol>
@@ -682,18 +759,44 @@ b3A6MTZweCI+PHA+PC9wPjwvZGl2PjwvZGl2Pg==
           <p>POP3</p>
           <p>IMAP</p>
         </li>
+        <li>base64</li>
       </ol>
       <dt>Homework</dt>
-      <ol>
-        <li>邮件发送和接收分别使用几号端口？MIME 有没有分配端口？为什么？</li>
-        <li>趣味练习：给你的小伙伴发送一句 "i love you." 使用 Base64 编码</li>
-      </ol>
+      <div class="demo">思考题：邮件发送和接收分别使用几号端口？MIME 有没有分配端口？为什么？</div>
+      <div class="demo">为什么会同时发送纯文本和 HTML？</div>
+      <!-- <p>发送方的向下兼容策略</p> -->
+      <!-- <p>如果收件人的客户端极其古老（比如老式黑莓手机、终端邮件客户端），不支持 HTML 渲染，就会显示 text/plain 部分，保证用户至少能看到一段文字和一个网址链接。</p> -->
+      <!-- <p>现代邮箱（如 QQ 邮箱）默认会优先渲染最后的 text/html 部分</p> -->
+      <div class="demo">为什么示例中没有看到结束标记 &lt;CRLF>.&lt;CRLF>？</div>
+      <!-- <p>分层 Layering</p> -->
+      <!-- <p>邮件报文 Message Data</p> -->
+      <!-- <p>&lt;CRLF>.&lt;CRLF> 是控制指令，已经被邮件接收服务器解析并剥离了</p> -->
+      <div class="demo">趣味练习：给你的小伙伴发送一句 "i love you." 使用 Base64 编码</div>
+      <div class="demo">翻译</div>
+      <p>"7bit data" refers to data that is all represented as relatively
+        short lines with 998 octets or less between CRLF line separation
+        sequences [RFC-821]. No octets with decimal values greater than 127
+        are allowed and neither are NULs (octets with decimal value 0). CR
+        (decimal value 13) and LF (decimal value 10) octets only occur as
+        part of CRLF line separation sequences.</p>
+      <div class="demo">翻译</div>
+      <p>"8bit data" refers to data that is all represented as relatively
+        short lines with 998 octets or less between CRLF line separation
+        sequences [RFC-821], but octets with decimal values greater than 127
+        may be used. As with "7bit data" CR and LF octets only occur as part
+        of CRLF line separation sequences and no NULs are allowed.</p>
       <dt>Reading</dt>
       <ol>
+        <li><a class="link" href="https://www.rfc-editor.org/info/rfc5321/">RFC 5321: Simple Mail Transfer Protocol</a>
+        </li>
+        <li><a class="link" href="https://www.rfc-editor.org/info/rfc5322/">RFC 5322: Internet Message Format</a></li>
+        <li><a class="link" href="https://www.rfc-editor.org/info/rfc2045/">RFC 2045: Multipurpose Internet Mail
+            Extensions</a></li>
         <li><a class="link" href="https://www.emailjs.com/">EmailJS </a></li>
         <li><a class="link" href="https://www.ascii-code.com/">ASCII </a></li>
         <li><a class="link" href="https://home.unicode.org/">Unicode </a></li>
         <li><a class="link" href="https://www.base64decode.org/">Base64 decode </a></li>
+        <li><a class="link" href="https://www.toolhelper.cn/"> 在线编码工具 </a></li>
       </ol>
     </dl>
     <div id="footer"></div>
