@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验 电子邮件 Email</title>
+  <link rel="stylesheet" href="../css/drill.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>电子邮件</h1>
+    <h4>Email</h4>
+    <dl class="container">
+      <dt>实验内容</dt>
+      <dd>电子邮件 Email</dd>
+      <dt>实验目的</dt>
+      <dd>掌握 Email 的配置和使用</dd>
+      <dd>进一步熟悉 DNS 的配置和使用</dd>
+      <dt>实验类型</dt>
+      <dd>验证型</dd>
+      <dt>实验学时</dt>
+      <dd>1</dd>
+      <dt>实验器材</dt>
+      <dd>Packet Trancer 8.0 网络模拟平台</dd>
+      <dd>交换机 2960 1台</dd>
+      <dd>主机 PC 诺干台</dd>
+      <dd>服务器 2台</dd>
+      <dt>前置知识</dt>
+      <dd>DNS 域名解析协议</dd>
+      <dd>SMTP 简单邮件传输协议</dd>
+      <dd>POP3 邮局协议</dd>
+      <dt>实验说明</dt>
+      <dd>邮件服务器域名命名规则：学号后4位.edu.cn，如2658.edu.cn</dd>
+      <dd>其它信息自定</dd>
+      <dt>实验步骤</dt>
+      <ol>
+        <li>搭建网络拓扑</li>
+        <figure>
+          <img src="./imgs/email0.png" alt="email">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>配置 IP
+          <p>PC0：192.168.1.1</p>
+          <p>PC1：192.168.1.2</p>
+          <p>Email：192.168.1.220</p>
+          <p>DNS：192.168.1.221</p>
+        </li>
+        <li>DNS 配置
+          <p>开启 DNS 服务；关闭其它服务</p>
+          <p>配置邮件服务器域名 glplaman.com 和关联的IP 192.168.1.220</p>
+          <p>配置2条别名 CNAME 记录：pop3.glplaman.com 和 smtp.glplaman.com 是别名</p>
+        </li>
+        <div class="tips"> CNMAE → A → IP</div>
+        <figure>
+          <img src="./imgs/email1.png" alt="email">
+          <figcaption>DNS 配置</figcaption>
+        </figure>
+        <li>Email 配置
+          <p>开启 SMTP 服务、POP3 服务；关闭其它服务</p>
+          <p>设置邮件服务器域名 glplaman.com</p>
+          <p>增加2个用户：1、2，对应的密码分别是111、222</p>
+        </li>
+        <figure>
+          <img src="./imgs/email2.png" alt="email">
+          <figcaption>Email 配置</figcaption>
+        </figure>
+        <li>PC0 配置邮件：桌面 Desktop → Email
+          <p>指定用户邮箱：1@glplaman.com</p>
+          <p>指定收邮件协议：pop3.glplaman.com</p>
+          <p>指定发邮件协议：smtp.glplaman.com</p>
+          <p>指定用户登陆信息：1、111</p>
+        </li>
+        <figure>
+          <img src="./imgs/email3.png" alt="email">
+          <figcaption>PC0 配置邮件</figcaption>
+        </figure>
+        <li>PC1 配置邮件：桌面 Desktop → Email
+          <p>指定用户邮箱：2@glplaman.com</p>
+          <p>指定收邮件协议：pop3.glplaman.com</p>
+          <p>指定发邮件协议：smtp.glplaman.com</p>
+          <p>指定用户登陆信息：2、222</p>
+        </li>
+        <figure>
+          <img src="./imgs/email4.png" alt="email">
+          <figcaption>PC1 配置邮件</figcaption>
+        </figure>
+        <li>PC0 发邮件</li>
+        <figure>
+          <img src="./imgs/email5.png" alt="email">
+          <figcaption>PC0 发邮件</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/email6.png" alt="email">
+          <figcaption>PC0 发邮件</figcaption>
+        </figure>
+        <li>PC1 收邮件</li>
+        <figure>
+          <img src="./imgs/email7.png" alt="email">
+          <figcaption>PC1 收邮件</figcaption>
+        </figure>
+      </ol>
+      <dt>实验分析</dt>
+      <dt>实验总结</dt>
+      <dt>附录</dt>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
