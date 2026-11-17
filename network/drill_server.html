@@ -18,6 +18,9 @@
       <dt>实验内容</dt>
       <dd>服务器综合运用 Server</dd>
       <dt>实验目的</dt>
+      <dd>掌握 DNS 服务器的原理与部署</dd>
+      <dd>掌握 HTTP 服务器的配置与应用</dd>
+      <dd>掌握 FTP 服务器的配置和应用</dd>
       <dt>实验学时</dt>
       <dd>2</dd>
       <dt>实验类型</dt>
@@ -36,34 +39,82 @@
           <figcaption>创建拓扑</figcaption>
         </figure>
         <li>配置IP地址</li>
-        <li>Server 配置 HttpServer 服务器</li>
+        <li>Server 配置 HttpServer 服务器
+          <p>保持默认 80 端口（无法修改）</p>
+          <p>指定网站根目录</p>
+          <p>启动服务</p>
+        </li>
         <figure>
           <img src="./imgs/http11.png" alt="http">
           <figcaption>Server 配置 HttpServer 服务器</figcaption>
         </figure>
-        <li>Server 配置 DNSServer 服务器</li>
+        <li>Server 配置 DNSServer 服务器
+          <p>保持默认 53 端口（无法修改）</p>
+          <p>指定网站域名和对应的IP并增加</p>
+          <p>启动服务</p>
+        </li>
         <figure>
           <img src="./imgs/http13.png" alt="http">
           <figcaption>Server 配置 DNSServer 服务器</figcaption>
         </figure>
-        <li>Client 使用 IP 地址访问 HttpServer 服务器</li>
+        <li>Client 使用 IP 访问 HttpServer 服务器</li>
         <figure>
           <img src="./imgs/http12.png" alt="http">
-          <figcaption>Client 使用 IP 地址访问 HttpServer 服务器</figcaption>
+          <figcaption>Client 使用 IP 访问 HttpServer 服务器</figcaption>
         </figure>
-        <li>使用 Wireshark 查看 IP 地址访问过程</li>
+        <li>使用 Wireshark 查看使用 IP 访问的过程</li>
         <li>Client 使用域名访问 HttpServer 服务器</li>
         <figure>
           <img src="./imgs/http14.png" alt="http">
           <figcaption>Client 使用域名访问 HttpServer 服务器</figcaption>
         </figure>
-        <li>使用 Wireshark 查看 域名 地址访问过程</li>
+        <li>使用 Wireshark 查看使用域名访问的过程</li>
+        <li>访问一个不存在的资源，查看返回的信息并分析</li>
+        <pre>
+HTTP/1.1 404 Not Found
+Server: ENSP HttpServer
+Auth: HUAWEI
+Cache-Control: private
+Content-Type: text/html
+Content-Length: 166</pre>
+        <li>仅关闭 DNS 服务器，访问网站，查看返回信息并分析</li>
+        <li>仅关闭 HTTP 服务器，访问网站，查看返回信息并分析</li>
+        <li>分析下面各图可能产生的原因</li>
+        <figure>
+          <img src="./imgs/http16.png" alt="http">
+          <figcaption>抓包1</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/http17.png" alt="http">
+          <figcaption>抓包2</figcaption>
+        </figure>
+        <li>Server 配置 FTPServer 服务器
+          <p>保持默认 21 端口</p>
+          <p>指定文件根目录；提前准备一些资源</p>
+          <p>启动服务</p>
+        </li>
+        <figure>
+          <img src="./imgs/ftp3.png" alt="ftp">
+          <figcaption>Server 配置 FTPServer 服务器</figcaption>
+        </figure>
+        <li>Client 配置 FTPClient 客户端
+          <p>指定服务器地址 10.10.10.1</p>
+          <p>保持默认 21 端口</p>
+          <p>指定用户名和密码，登陆（Server 是一个轻量级的 FTP 软件。默认允许匿名登录（Anonymous），或者对任何用户名和密码都放行）</p>
+          <p>右侧获取到 FTP 文件资源</p>
+          <p>利用中间的 ←、→ 实现资源的下载或者上传</p>
+        </li>
+        <figure>
+          <img src="./imgs/ftp4.png" alt="ftp">
+          <figcaption>Client 配置 FTPClient 客户端</figcaption>
+        </figure>
       </ol>
       <dt>拓展练习</dt>
-      <dd>配置 FTP服务器并访问</dd>
       <dd><a href="./drill_server_pt.html" class="link">Server_PT</a></dd>
       <dt>实验分析</dt>
       <dt>实验总结</dt>
+      <dd>如修改，应该先停止对应的服务</dd>
+      <dd>...</dd>
       <dt>附录</dt>
     </dl>
     <div id="footer"></div>
