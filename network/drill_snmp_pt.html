@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验 简单网络管理协议 SNMP</title>
+  <link rel="stylesheet" href="../css/drill.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>计算机网络实验</h1>
+    <h4>Network</h4>
+    <dl class="container">
+      <dt>实验内容</dt>
+      <dd>简单网络管理协议 SNMP</dd>
+      <dt>实验目的</dt>
+      <dd>熟练网络管理的基本概念</dd>
+      <dd>了解 SNMP 的基本原理</dd>
+      <dd>熟悉 SNMP 的基本框架和组成</dd>
+      <dd>掌握 SNMP 的基本配置和使用</dd>
+      <dt>实验类型</dt>
+      <dd>验证型</dd>
+      <dt>前置知识</dt>
+      <dd>虚拟局域网 VLAN</dd>
+      <dd>管理 VLAN 的运用</dd>
+      <dd>SNMP 实例</dd>
+      <dd>SNMP 查询方法</dd>
+      <dt>实验步骤</dt>
+      <ol>
+        <li>创建网络拓扑</li>
+        <figure>
+          <img src="./imgs/snmp0.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>配置主机 IP</li>
+        <pre>
+IP Address: 192.168.1.10
+Subnet Mask: 255.255.255.0
+Default Gateway: 192.168.1.1</pre>
+        <li>配置路由器 IP</li>
+        <pre>
+Router>enable
+Router# configure terminal
+Router(config)# interface gigabitEthernet 0/0
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# no shutdown
+Router(config-if)# exit</pre>
+        <li>使用 PING 测试网络连通性</li>
+        <li>配置交换机：创建管理 VLAN；也可以直接使用默认的 VLAN 1</li>
+        <pre>
+Switch>enable
+Switch#conf ter
+Switch(config)#vlan
+Switch(config)#vlan 99
+Switch(config-vlan)# name snmp
+Switch(config-vlan)#exit
+
+Switch(config)#inter vlan 99
+Switch(config-if)#ip address 192.168.1.2 255.255.255.0
+Switch(config-if)#no shutdown 
+Switch(config-if)#exit 
+
+Switch(config)#inter f0/1
+Switch(config-if)#switchport mode access 
+Switch(config-if)#switchport access vlan 99
+Switch(config-if)#exit
+
+Switch(config)#ip default-gateway 192.168.1.1
+Switch(config)#exit
+        </pre>
+        <li>交换机配置 SNMP</li>
+        <pre>Switch(config)#snmp-server community public ro</pre>
+        <li>路由器配置 SNMP</li>
+        <pre>Router(config)#snmp-server community public ro</pre>
+        <li>PC0 配置 MIB 浏览器（桌面 Desktop）
+          <p>地址</p>
+          <p>端口默认</p>
+          <p>社区名</p>
+          <p>版本 v1</p>
+        </li>
+        <figure>
+          <img src="./imgs/snmp2.png" alt="网络拓扑">
+          <figcaption>配置 MIB 浏览器</figcaption>
+        </figure>
+        <li>PC0 查看交换机的系统信息 System 和接口信息 Interfaces
+          <p>地址 Address为：192.168.1.2</p>
+          <p>方法1：单击 MIB 树，依次展开至 system，单击并获取 GET</p>
+          <p>方法2：直接输入对应的 OID；注意以点 . 开始，以0结束，表示查询对象对应的实例</p>
+        </li>
+        <figure>
+          <img src="./imgs/snmp1.png" alt="网络拓扑">
+          <figcaption>交换机对应的 MIB 树</figcaption>
+        </figure>
+        <p>系统 hostname 名称 .1.3.6.1.2.1.1.5.0</p>
+        <pre>Switch</pre>
+        <p>系统描述 .1.3.6.1.2.1.1.1.0</p>
+        <pre>Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Wed 26-Jun-13 02:49 by mnguyen</pre>
+        <p>系统运行时间 .1.3.6.1.2.1.1.3.0</p>
+        <pre>1 hours 54 minutes 33 seconds</pre>
+        <p>系统服务 .1.3.6.1.2.1.1.7.0</p>
+        <p>系统接口 .1.3.6.1.2.1.2.2.1.2.1</p>
+        <li>PC0 查看路由器的系统信息 System 和接口信息 Interfaces
+          <p>地址 Address为：192.168.1.1</p>
+        </li>
+        <p>查看主机名 .1.3.6.1.2.1.1.5.0</p>
+        <p>修改主机名重新查看</p>
+        <pre>Router(config)#hostname SNMPclient</pre>
+        <p>查看端口速率 .1.3.6.1.2.1.2.2.1.5</p>
+        <p>查看MTU .1.3.6.1.2.1.2.2.1.4</p>
+        <p>查看路由表 .1.3.6.1.2.1.4.21.1.1</p>
+        <p>配置一条默认路由；重新查看路由表</p>
+        <pre>Router(config)#ip route 0.0.0.0 0.0.0.0 192.168.1.2</pre>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
