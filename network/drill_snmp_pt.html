@@ -29,18 +29,32 @@
       <dd>管理 VLAN 的运用</dd>
       <dd>SNMP 实例</dd>
       <dd>SNMP 查询方法</dd>
+      <figure>
+        <img src="./imgs/snmp6.png" alt="网络拓扑">
+        <figcaption>MIB 树</figcaption>
+      </figure>
+      <dt>实验思路</dt>
+      <ol>
+        <li>基础配置，打通网络</li>
+        <li>被管设备开启 SNMP，开放读/写</li>
+        <li>管理设备设备使用 MIB 浏览器参与管理</li>
+      </ol>
       <dt>实验步骤</dt>
       <ol>
-        <li>创建网络拓扑</li>
+        <li>创建网络拓扑
+          <p>主机 PC 1台，管理设备</p>
+          <p>交换机 2960 1台 被管设备</p>
+          <p>路由器 1台 被管设备</p>
+        </li>
         <figure>
           <img src="./imgs/snmp0.png" alt="网络拓扑">
           <figcaption>网络拓扑</figcaption>
         </figure>
-        <li>配置主机 IP</li>
-        <pre>
-IP Address: 192.168.1.10
-Subnet Mask: 255.255.255.0
-Default Gateway: 192.168.1.1</pre>
+        <li>配置主机 IP
+          <p>IP Address: 192.168.1.10</p>
+          <p>Subnet Mask: 255.255.255.0</p>
+          <p>Default Gateway: 192.168.1.1</p>
+        </li>
         <li>配置路由器 IP</li>
         <pre>
 Router>enable
@@ -50,6 +64,7 @@ Router(config-if)# ip address 192.168.1.1 255.255.255.0
 Router(config-if)# no shutdown
 Router(config-if)# exit</pre>
         <li>使用 PING 测试网络连通性</li>
+        <pre>C:\>ping 192.168.1.1</pre>
         <li>配置交换机：创建管理 VLAN；也可以直接使用默认的 VLAN 1</li>
         <pre>
 Switch>enable
@@ -72,51 +87,82 @@ Switch(config-if)#exit
 Switch(config)#ip default-gateway 192.168.1.1
 Switch(config)#exit
         </pre>
-        <li>交换机配置 SNMP</li>
+        <li>交换机配置 SNMP（只读 Readonly）</li>
         <pre>Switch(config)#snmp-server community public ro</pre>
-        <li>路由器配置 SNMP</li>
-        <pre>Router(config)#snmp-server community public ro</pre>
-        <li>PC0 配置 MIB 浏览器（桌面 Desktop）
-          <p>地址</p>
-          <p>端口默认</p>
-          <p>社区名</p>
-          <p>版本 v1</p>
+        <li>路由器配置 SNMP（读写）</li>
+        <pre>
+Router(config)#snmp-server community public ro
+Router(config)#snmp-server community private rw</pre>
+        <li>PC0 根据管理对象相应的调整配置 MIB 浏览器（桌面 Desktop）
+          <p>地址 Address</p>
+          <p>端口默认 Port</p>
+          <p>社区名 Community</p>
+          <p>版本 Version</p>
         </li>
+        <li>PC0 查看 <strong>交换机</strong></li>
         <figure>
           <img src="./imgs/snmp2.png" alt="网络拓扑">
           <figcaption>配置 MIB 浏览器</figcaption>
         </figure>
-        <li>PC0 查看交换机的系统信息 System 和接口信息 Interfaces
-          <p>地址 Address为：192.168.1.2</p>
-          <p>方法1：单击 MIB 树，依次展开至 system，单击并获取 GET</p>
-          <p>方法2：直接输入对应的 OID；注意以点 . 开始，以0结束，表示查询对象对应的实例</p>
-        </li>
         <figure>
           <img src="./imgs/snmp1.png" alt="网络拓扑">
           <figcaption>交换机对应的 MIB 树</figcaption>
         </figure>
-        <p>系统 hostname 名称 .1.3.6.1.2.1.1.5.0</p>
-        <pre>Switch</pre>
-        <p>系统描述 .1.3.6.1.2.1.1.1.0</p>
+        <p>系统描述 sysDescr .1.3.6.1.2.1.1.1.0</p>
         <pre>Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)
 Technical Support: http://www.cisco.com/techsupport
 Copyright (c) 1986-2013 by Cisco Systems, Inc.
 Compiled Wed 26-Jun-13 02:49 by mnguyen</pre>
-        <p>系统运行时间 .1.3.6.1.2.1.1.3.0</p>
+        <p>系统设备ID sysObjectID .1.3.6.1.2.1.1.2.0；返回 OID 和对应的值 Value，其中9代表思科；1.716代表 2960，是思科公司分配给这台交换机的编号</p>
+        <table style="max-width: max-content;">
+          <tr>
+            <th>OID</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td>.1.3.6.1.2.1.1.2.0(...)</td>
+            <td>1.3.6.1.4.1.9.1.716</td>
+          </tr>
+        </table>
+        <p>系统运行时间 sysUpTime .1.3.6.1.2.1.1.3.0</p>
         <pre>1 hours 54 minutes 33 seconds</pre>
-        <p>系统服务 .1.3.6.1.2.1.1.7.0</p>
-        <p>系统接口 .1.3.6.1.2.1.2.2.1.2.1</p>
-        <li>PC0 查看路由器的系统信息 System 和接口信息 Interfaces
-          <p>地址 Address为：192.168.1.1</p>
-        </li>
+        <p>联系人 sysContact .1.3.6.1.2.1.1.4.0；默认为空；如果尝试设置，则告警；因为没有开启写 RW</p>
+        <figure>
+          <img src="./imgs/snmp4.png" alt="网络拓扑">
+          <figcaption>SET 联系人告警</figcaption>
+        </figure>
+        <p>系统名称 sysName (hostname) .1.3.6.1.2.1.1.5.0</p>
+        <pre>Switch</pre>
+        <li>PC0 查看 <strong>路由器</strong></li>
+        <figure>
+          <img src="./imgs/snmp3.png" alt="网络拓扑">
+          <figcaption>配置 MIB 浏览器</figcaption>
+        </figure>
+        <figure>
+          <img src="./imgs/snmp7.png" alt="网络拓扑">
+          <figcaption>路由器的 MIB 树</figcaption>
+        </figure>
         <p>查看主机名 .1.3.6.1.2.1.1.5.0</p>
-        <p>修改主机名重新查看</p>
+        <p>手动修改主机名后，再重新查看</p>
         <pre>Router(config)#hostname SNMPclient</pre>
-        <p>查看端口速率 .1.3.6.1.2.1.2.2.1.5</p>
-        <p>查看MTU .1.3.6.1.2.1.2.2.1.4</p>
-        <p>查看路由表 .1.3.6.1.2.1.4.21.1.1</p>
+        <p>查看端口速率 ifSpeed .1.3.6.1.2.1.2.2.1.5</p>
+        <p>查看MTU ifMTU .1.3.6.1.2.1.2.2.1.4</p>
+        <p>查看路由表 ipRouteDest .1.3.6.1.2.1.4.21.1.1</p>
         <p>配置一条默认路由；重新查看路由表</p>
         <pre>Router(config)#ip route 0.0.0.0 0.0.0.0 192.168.1.2</pre>
+        <p>SET 修改主机名；编辑并确定，最后单击"GO"</p>
+        <figure>
+          <img src="./imgs/snmp5.png" alt="网络拓扑">
+          <figcaption>SET 修改主机名</figcaption>
+        </figure>
+        <pre>
+AR1>
+Router></pre>
+        <p>SET 修改联系人；编辑并确定，最后单击"GO"</p>
+        <figure>
+          <img src="./imgs/snmp8.png" alt="网络拓扑">
+          <figcaption>SET 修改联系人</figcaption>
+        </figure>
       </ol>
     </dl>
     <div id="footer"></div>
