@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简单网络管理 SNMP</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <base target="_blank">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>简单网络管理</h1>
+      <span>&commat;SNMP</span>
+    </header>
+    <dl>
+      <dt>概述 Overview</dt>
+      <ol>
+        <li>系统组成</li>
+        <li>基本功能</li>
+        <li>指导思想</li>
+        <li>工作模式</li>
+        <li>版本</li>
+      </ol>
+      <dt>管理信息结构 SMI</dt>
+      <ol>
+        <li>对象ID OID</li>
+        <li>数据类型 Type
+          <P>基本类型</P>
+          <P>结构类型</P>
+          <P>定义类型</P>
+        </li>
+        <li>基本编码 BER
+          <p>T</p>
+          <p>L</p>
+          <p>V</p>
+        </li>
+      </ol>
+      <dt>管理信息库 MIB</dt>
+      <dt>报文 Packet</dt>
+      <dd>报文类型</dd>
+    </dl>
+    <h2>Drill 实操</h2>
+    <dl>
+      <dd>更多实操，请访问 <a href="./drill_snmp_pt.html" class="link">多设备 SNMP</a></dd>
+      <ol>
+        <li>创建网络拓扑
+          <p>主机，作为管理者 Manager</p>
+          <p>路由器，2911，作为被管理对象 Device</p>
+        </li>
+        <figure>
+          <img src="./imgs/snmp10.png" alt="网络拓扑">
+          <figcaption>网络拓扑</figcaption>
+        </figure>
+        <li>主机配置 IP</li>
+        <pre>192.168.1.1 255.255.255.0</pre>
+        <li>路由器 配置 IP</li>
+        <pre>
+Router>en
+Router#conf ter
+Router(config)#inter g0/0
+Router(config-if)#ip add 192.168.1.10 255.255.255.0
+Router(config-if)#no shutdown
+Router(config-if)#exit</pre>
+        <li>路由器配置 Manager</li>
+        <pre>
+Router(config)#snmp-server community public RO
+Router(config)#snmp-server community private RW 
+Router(config)#end
+Router#write</pre>
+        <li>主机使用 MIB 浏览器配置 SNMP</li>
+        <figure>
+          <img src="./imgs/snmp11.png" alt="网络拓扑">
+          <figcaption>配置 Manager</figcaption>
+        </figure>
+        <li>主机管理路由器
+          <p>查询 GET</p>
+          <p>修改 SET</p>
+        </li>
+      </ol>
+    </dl>
+    <h2>Summary & Homework</h2>
+    <dl>
+      <dt>Summary</dt>
+      <ol>
+        <li>网络管理</li>
+        <li>简单网络管理协议 SNMP：2个服务；2个端口；5类报文</li>
+        <li>管理信息结构 SMI：ASN1.1 BER</li>
+        <li>管理信息库 MIB</li>
+        <li>SNMP 报文</li>
+      </ol>
+      <dt>Homework</dt>
+
+      <dt>Reading</dt>
+      <ol>
+        <li><a href="" class="link">Simple Network Management Protocol (SNMP)</a></li>
+        <li><a href="https://www.rfc-editor.org/info/rfc1213/" class="link">RFC1213</a></li>
+        <li><a href="https://www.rfc-editor.org/info/rfc1155/" class="link">RFC1155</a></li>
+        <li><a href="https://www.rfc-editor.org/info/rfc1157/" class="link">RFC1157</a></li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+</body>
+
+</html>
