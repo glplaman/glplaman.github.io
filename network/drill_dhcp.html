@@ -32,7 +32,7 @@
       <dd>主机 PC 诺干台</dd>
       <dt>前置知识</dt>
       <dd>网关</dd>
-      <table style="max-width: 600px;">
+      <table style="max-width: 780px;">
         <caption>常用命令</caption>
         <thead>
           <tr>
@@ -52,6 +52,16 @@
           <tr>
             <td>network [NETWORK] mask [MASK] </td>
             <td>指定网络</td>
+          </tr>
+          <tr>
+            <td>lease day [days] hour [hours] minute [minutes]</td>
+            <td>租期；天数 day 是必填项，小时和分钟是可选；
+              <br>如果不配置，华为设备默认租期通常为 1 天
+            </td>
+          </tr>
+          <tr>
+            <td>excluded-ip-address [start_ip] [end_ip]</td>
+            <td>IP排除</td>
           </tr>
           <tr>
             <td>dns-list [] </td>
@@ -83,11 +93,11 @@
           <img src="./imgs/dhcp11.png" alt="dhcp">
           <figcaption>采用 DHCP 方式获取 IP</figcaption>
         </figure>
-        <li>路由器基本设置</li>
+        <li>路由器基本设置（主机名为DHCP+学号后2位，如DHCP58）</li>
         <pre>
 system-view
 undo infor-center enable
-sysname AR1</pre>
+sysname DHCP58</pre>
         <li>路由器配置网关
           <p>配置端口 IP</p>
           <pre>inter [interface]</pre>
@@ -108,7 +118,7 @@ sysname AR1</pre>
           <p>指定网关 Gateway</p>
           <pre>gateway-list [gateway]</pre>
           <p>设置租期</p>
-          <pre>lease day [days] hour [hours]</pre>
+          <pre>lease day [days] hour [hours] minute [minutes]</pre>
           <p>排除网关、DNS 等保留地址</p>
           <pre>excluded-ip-address [start_ip] [end_ip]</pre>
         </li>
@@ -118,12 +128,12 @@ sysname AR1</pre>
         <pre>save</pre>
         <li>各主机使用 IPCONFIG 查看 IP 地址获取情况</li>
         <li>各主机使用 PING 命令，测试各设备的连通性</li>
-        <li>主机侧利用 Wireshark 查看 DHCP 协议的执行过程
+        <li>主机侧利用 Wireshark 查看 DHCP DORA 四步交互过程
           <p>主机启动抓包、先释放，再更新</p>
           <pre>ipconfig /release</pre>
           <pre>ipconfig /renew</pre>
         </li>
-        <li>路由器侧利用 Wireshark 查看 DHCP 协议的执行过程
+        <li>路由器侧利用 Wireshark 查看 DHCP DORA 四步交互过程
           <p>主机启动抓包、先释放，再更新</p>
           <pre>ipconfig /release</pre>
           <pre>ipconfig /renew</pre>
@@ -135,24 +145,26 @@ sysname AR1</pre>
       <dt>实验分析</dt>
       <dt>实验总结</dt>
       <dt>附录</dt>
-      <dd>路由器配置参考命令</dd>
+      <dd>路由器配置参考命令（主机名为DHCP+学号后2位，如DHCP58）</dd>
       <pre>
 system-view
-undo infor-center enable
-sysname [name]
-dhcp enable
+undo info-center enable
+sysname DHCP58
+dhcp enable                         // 1. 全局开启DHCP服务（必须最先做）
 
-interface g0/0/0
-ip address 10.1.1.1 255.255.255.0
+ip pool mypool                      // 2. 提前建好池子
+network 10.1.58.0 mask 24
+gateway-list 10.1.58.1
+dns-list 8.8.8.8
+lease day 0 hour 0 minute 30
+excluded-ip-address 10.1.58.2 10.1.58.100  // 注意：替换为实际IP，不要带中括号
+quit
+
+interface g0/0/0                    // 3. 配置接口并关联全局池
+ip address 10.1.58.1 255.255.255.0
 dhcp select global
 quit
 
-ip pool pool1
-network 10.1.1.0 mask 24
-gateway-list 10.1.1.1
-dns-list 8.8.8.8
-lease day [days] hour [hours]
-excluded-ip-address [start_ip] [end_ip]
 return
 save</pre>
     </dl>
