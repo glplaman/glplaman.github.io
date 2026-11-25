@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>格式篇 Format</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+  <style>
+    table {
+      text-align: right;
+      max-width: 750px;
+    }
+
+    .flex-btw {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>格式篇</h1>
+    <h3>Format</h3>
+    <dl>
+      <div class="tips">快捷键 Ctrl + 1</div>
+      <dt>0</dt>
+      <td>使用0表示数字；也可以使用多个0表示位数约定</td>
+      <dd>0 和 # 都是数字占位符</dd>
+      <dd>核心区别：0 会强制补零，# 不显示无意义的零</dd>
+      <table>
+        <caption>数字 0 篇</capiton>
+        <thead>
+          <tr>
+            <th>值</th>
+            <th>格式串</th>
+            <th>结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>13010245018</td>
+            <td>000 0000 0000</td>
+            <td>130 1024 5018</td>
+          </tr>
+          <tr>
+            <td>13010245018</td>
+            <td>000-0000-0000</td>
+            <td>130-1024-5018</td>
+          </tr>
+          <tr>
+            <td>176</td>
+            <td>0"CM"</td>
+            <td>176CM</td>
+          </tr>
+          <tr>
+            <td>123</td>
+            <td>0000</td>
+            <td>0123</td>
+          </tr>
+          <tr>
+            <td>123.2</td>
+            <td>0000.00</td>
+            <td>0123.20</td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>[]</dt>
+      <dd>4段：[正数POSITIVE];[负数NEGATIVE];[零值ZERO];[文本TEXT]</dd>
+      <dd>3段：[正数POSITIVE];[负数NEGATIVE];[零值ZERO]</dd>
+      <dd>2段：[正数POSITIVE|零值ZERO];[负数NEGATIVE]</dd>
+      <dd>1. 无条件时 → 分号位置决定语义</dd>
+      <dd>2. 有条件时 → 分号位置失效，改为条件顺序匹配：[条件1]格式1;[条件2]格式2;…;默认格式</dd>
+      <dd>支持的颜色：只能使用预定义好的颜色；黑色、白色、红色、绿色、蓝色、黄色、洋红色、蓝绿色</dd>
+      <dd>支持的条件：&lt;、&gt;、=、&lt;=、&gt;=、&lt;&gt;</dd>
+      <dd>特别的，仅仅使用;;;表示隐藏单元格数据</dd>
+      <table>
+        <caption>[] 篇</capiton>
+        <thead>
+          <tr>
+            <th>值</th>
+            <th>格式串</th>
+            <th>结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>123
+              <br>-58
+              <br>0
+            </td>
+            <td>[绿色];[红色];[蓝色]
+              <br>正;负;零
+            </td>
+            <td><span style="color: green;">123</span>
+              <br><span style="color: red;">-58</span>
+              <br><span style="color: blue;">0</span>
+            </td>
+          </tr>
+          <tr>
+            <td>123
+              <br>-58
+              <br>0
+            </td>
+            <td>[绿色];[红色]
+              <br>正|零;负
+            </td>
+            <td><span style="color: green;">↑123</span>
+              <br><span style="color: red;">↓-58</span>
+              <br><span style="color: green;">↑0</span>
+            </td>
+          </tr>
+          <tr>
+            <td>123
+              <br>-58
+              <br>0
+            </td>
+            <td>[绿色]↑0.00;[红色]↓-0.00
+              <br>可选的标记、位数约束
+            </td>
+            <td><span style="color: green;">↑123.00</span>
+              <br><span style="color: red;">↓-58.00</span>
+              <br><span style="color: green;">↑0.00</span>
+            </td>
+          </tr>
+          <tr>
+            <td>14
+              <br>18
+              <br>32
+            </td>
+            <td>[&lt;18][红色];[绿色]
+              <br>条件限制格式；符合为红色；否则为绿色
+            </td>
+            <td><span style="color: red;">14</span>
+              <br><span style="color: green;">18</span>
+              <br><span style="color: green;">32</span>
+            </td>
+          </tr>
+          <tr>
+            <td>90
+              <br>82
+              <br>75
+              <br>60
+              <br>43
+            </td>
+            <td>[>=90]"优秀";[>=60]"及格";"不及格"
+              <br>最多支持3个条件
+            </td>
+            <td>优秀
+              <br>及格
+              <br>及格
+              <br>及格
+              <br>不及格
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>*</dt>
+      <dd>重复填充，撑满单元格</dd>
+      <dd>后面的符号为填充符号</dd>
+      <table>
+        <caption>* 篇</capiton>
+        <thead>
+          <tr>
+            <th>值</th>
+            <th>格式串</th>
+            <th>结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>123</td>
+            <td>￥* 0</td>
+            <td>
+              <p class="flex-btw"><span>￥</span><span>123</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td>123
+              <br>-58
+              <br>0
+            </td>
+            <td>[绿色]↑* 0.00;[红色]↓* -0.00</td>
+            <td>
+              <p style="color: green;" class="flex-btw"><span>↑</span> <span>123.00</span></p>
+              <p style="color: red;" class="flex-btw"><span>↓</span> <span>-58.00</span></p>
+              <p style="color: green;" class="flex-btw"><span>↑</span> <span>0.00</span></p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <dt>@</dt>
+      <dd>使用@代表原串</dd>
+      <dd>多用以拼接：前缀、后缀、前后缀</dd>
+      <table>
+        <caption>文字篇</capiton>
+        <thead>
+          <tr>
+            <th>值</th>
+            <th>格式串</th>
+            <th>结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>19421947</td>
+            <td>@"@qq.com"</td>
+            <td>19421947@qq.com</td>
+          </tr>
+          <tr>
+            <td style="text-align: left;">计算机应用基础</td>
+            <td>"《"@"》"</td>
+            <td style="text-align: left;">《计算机应用基础》</td>
+          </tr>
+        </tbody>
+      </table>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>

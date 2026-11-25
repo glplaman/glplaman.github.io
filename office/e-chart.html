@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图表篇 Chart</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <base target="_blank">
+  <style>
+    table {
+      text-align: right;
+      max-width: 750px;
+    }
+
+    .flex-btw {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <div class="w">
+    <h1>图表篇</h1>
+    <h3>Chart</h3>
+    <dl>
+      <dt>折线图 Line</dt>
+      <div class="demo"><a href="https://www.bilibili.com/video/BV1tRdhBGEoy/">BiliBli-燃尽图
+          Burn-Down</a></div>
+      <dd>展示项目实际工作量与理想工作量的关系</dd>
+      <figure>
+        <img src="./imgs/chart7.png" alt="">
+        <figcaption>燃尽图 Burn-Down</figcaption>
+      </figure>
+      <div class="demo"><a href="https://www.bilibili.com/video/BV1xjdhBMEo1/">BiliBli-燃起图
+          Burn-Up</a></div>
+      <dd>展示项目已完成工作量和总工作量的关系</dd>
+      <figure>
+        <img src="./imgs/chart8.png" alt="">
+        <figcaption>燃起图 Burn-Up</figcaption>
+      </figure>
+      <dt>条形图 Bar</dt>
+      <div class="demo"><a href="https://www.bilibili.com/video/BV1oQdtB2EMK/">Bilibili-甘特图
+          Gantt</a></div>
+      <figure>
+        <img src="./imgs/chart6.png" alt="">
+        <figcaption>甘特图</figcaption>
+      </figure>
+      <table class="max-w">
+        <caption>参考数据</caption>
+        <thead>
+          <tr>
+            <th>Phase</th>
+            <th>Start</th>
+            <th>Duration</th>
+            <th>End</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Initial</td>
+            <td>2026-1-26</td>
+            <td></td>
+            <td>2026-1-29</td>
+          </tr>
+          <tr>
+            <td>Planning</td>
+            <td>2026-1-28</td>
+            <td></td>
+            <td>2026-1-31</td>
+          </tr>
+          <tr>
+            <td>UI</td>
+            <td>2026-2-1</td>
+            <td></td>
+            <td>2026-2-6</td>
+          </tr>
+          <tr>
+            <td>Developement</td>
+            <td>2026-2-1</td>
+            <td></td>
+            <td>2026-2-15</td>
+          </tr>
+          <tr>
+            <td>Test</td>
+            <td>2026-2-16</td>
+            <td></td>
+            <td>2026-2-28</td>
+          </tr>
+          <tr>
+            <td>Delivery</td>
+            <td>2026-2-28</td>
+            <td></td>
+            <td>2026-3-8</td>
+          </tr>
+        </tbody>
+      </table>
+      <ol>
+        <li>准备数据：阶段 Phase、起始时间 Start 和结束时间 End</li>
+        <li>在 Start 和 End 之间，增加辅助列数据持续时间 Duration：Start - End</li>
+        <li>定位在数据区/全部数据，插入条形图 → 堆积条形图</li>
+        <li>选择数据 → 删除 End 数据部分；或者直接在图中选择 End 的条目并删除</li>
+        <li>单击左侧垂直轴，在"坐标轴"选项中，选择逆序类别</li>
+        <li>计算日期最小时间值和最大时间值：日期 → 数字</li>
+        <li>选择水平轴，根据换算的数值，调整坐标轴最小值和最大值</li>
+        <li>单位大时间为30，即按30天计算</li>
+        <li>单击条形图的前面数据条部分，设置为白色或透明色，只显示持续时间对应的数据条</li>
+        <li>其它格式调整</li>
+      </ol>
+      <div class="demo"><a href="https://www.bilibili.com/video/BV1v1yBzwECb/">Bilibili-漏斗图
+          Funnel</a></div>
+      <figure>
+        <img src="./imgs/chart11.png" alt="">
+        <figcaption>漏斗图</figcaption>
+      </figure>
+      <ol>
+        <li>创建辅助序列；值为其它数据和最大值差值的一半</li>
+        <li>插入条形堆积图</li>
+        <li>调整坐标轴为逆序</li>
+        <li>调整辅助序列到最前面</li>
+        <li>隐藏辅助序列 - 背景透明</li>
+        <li>数据序列显示数据标签</li>
+        <li>居中显示数据序列 - 调整主坐标轴大小为数据最大值</li>
+        <li>隐藏主坐标轴</li>
+        <li>隐藏绘图区网格线</li>
+        <li>设置标签数据格式 - 0"万"</li>
+        <li>其它样式设置</li>
+      </ol>
+    </dl>
+    <div id="footer"></div>
+  </div>
+  <script src="/utils/custom/footer.js"></script>
+</body>
+
+</html>
