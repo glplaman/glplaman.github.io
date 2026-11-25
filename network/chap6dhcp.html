@@ -25,8 +25,8 @@
       <dd>由 DHCP 服务器控制一段IP地址范围，然后客户机登录服务器时就可以自动获得服务器分配的IP地址和子网掩码，从而顺利连通网络</dd>
       <dd>使用客户/服务器 - C/S 方式，采用请求/应答方式工作</dd>
       <dd>基于 UDP 工作
-        <p>服务器运行在 67 号端口</p>
-        <p>客户运行在 68 号端口</p>
+        <p>服务器：67 号端口</p>
+        <p>客户：68 号端口</p>
       </dd>
       <figure>
         <img src="./imgs/dhcp0.png" alt="">
@@ -91,16 +91,15 @@
       <dd>DHCP 中继代理以 <strong>单播</strong> 方式转发发现报文</dd>
       <dd>DHCP 中继代理收到主机广播发送的发现报文后，就以单播方式向 DHCP 服务器 <strong>转发</strong> 此报文，并等待其回答</dd>
       <dd>收到 DHCP 服务器回答的提供报文后，DHCP 中继代理再将其发回给主机</dd>
-      <dd>分配阶段代理</dd>
+      <div>1. 分配阶段代理</div>
       <figure>
         <img src="./imgs/dhcp2.png" alt="">
         <figcaption>DHCP Relay</figcaption>
       </figure>
-      <dd>其它阶段代理
-        <p>拒绝分配</p>
-        <p>释放地址</p>
-        <p>请求其它资源</p>
-      </dd>
+      <div>2. 其它阶段代理</div>
+      <dd>拒绝分配 Decline</dd>
+      <dd>释放地址 Release</dd>
+      <dd>请求其它资源 Inform</dd>
       <figure>
         <img src="./imgs/dhcp3.png" alt="">
         <figcaption>DHCP Relay</figcaption>
@@ -109,30 +108,30 @@
     <h2>租用期 Lease Period</h2>
     <dl>
       <dd>DHCP 服务器分配给 DHCP 客户的 IP 地址是 <strong>临时</strong> 的</dd>
-      <dd>DHCP 客户只能在一段有限的时间内使用这个分配到的 IP 地址 - 租用期</dd>
+      <dd>DHCP 客户只能在一段有限的时间内使用这个分配到的 IP</dd>
       <dd>租用期的数值应由 DHCP 服务器自己决定</dd>
       <dd>目的
-        <p>防止 Ip 地址长期闲置</p>
+        <p>防止 IP 长期闲置</p>
         <p>支持网络中设备动态加入/离开</p>
         <p>实现地址池的自动回收与再分配</p>
       </dd>
-      <dd>DHCP 定义了两个自动续租时间点T1/T2</dd>
+      <dd>DHCP 定义了两个 <strong>自动续租</strong> 时间点T1/T2</dd>
       <dd>DHCP 客户也可在自己发送的报文中（例如，发现报文）提出对租用期的要求</dd>
       <dt>T1</dt>
       <dd>租期的 50%
         <p>租期为 8 小时（28800 秒），则 T1 = 4 小时（14400 秒）</p>
       </dd>
-      <dd>行为：客户端向<strong>原</strong>分配 IP 的 DHCP 服务器发送 DHCP Request 报文，请求续租</dd>
-      <dd>通信方式：单播；因为此时客户端已有有效 IP 和网关信息</dd>
+      <dd>行为：客户端向 <strong>原</strong> 分配 IP 的 DHCP 服务器发送 DHCP Request 报文，请求续租</dd>
+      <dd>通信方式：<strong>单播</strong>；因为此时客户端已有有效 IP 和网关信息</dd>
       <dd>目的：正常、安静地延长租期，无需重新经历完整 DHCP 流程</dd>
       <dt>T2</dt>
       <dd>租期的 87.5%
         <p>租期为 8 小时，则 T2 ≈ 7 小时（25200 秒）</p>
       </dd>
-      <dd>触发条件：若在 T1 未能成功续租（如原服务器宕机）</dd>
-      <dd>行为：客户端广播 DHCP Request 报文，向任意可用的 DHCP 服务器请求续租</dd>
-      <dd>通信方式：广播；因无法确定原服务器是否可达</dd>
-      <dd>目的：作为备用机制，尽力保留当前 IP 地址</dd>
+      <dd>触发条件：若在 T1 未能成功续租；如原服务器未回复，如宕机。。。</dd>
+      <dd>行为：客户端广播 DHCP Request 报文，向 <strong>任意</strong> 可用的 DHCP 服务器请求续租</dd>
+      <dd>通信方式：<strong>广播</strong>；因无法确定原服务器是否可达，必须同时向其它服务器寻求资源</dd>
+      <dd>目的：作为备用机制，尽力保留当前 IP</dd>
       <figure>
         <img src="./imgs/dhcp4.png" alt="">
         <figcaption>DHCP 续租成功</figcaption>
@@ -141,24 +140,25 @@
         <img src="./imgs/dhcp5.png" alt="">
         <figcaption>DHCP 续租成功</figcaption>
       </figure>
-      <dt>说明 Notation</dt>
-      <dd>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须停止使用该 IP 地址</dd>
-      <dd>随后重新发起完整的 DHCP Discover 流程获取新地址</dd>
+      <div class="tips">
+        <p>若 T1 和 T2 均失败，到达 租期 100% 时，客户端必须停止使用该 IP 地址</p>
+        <p>随后重新发起完整的 DHCP Discover 流程获取新地址</p>
+      </div>
     </dl>
     <h2>Summary & Homework</h2>
     <dl>
       <dt>Summary</dt>
       <ol>
         <li>DHCP 的作用</li>
-        <li>DHCP 的过程：
+        <li>DHCP 的过程
           <p>Discover</p>
           <p>Offer</p>
           <p>Request</p>
           <p>ACK</p>
         </li>
-        <li>DHCP 的续租：
-          <p>T1</p>
-          <p>T2</p>
+        <li>DHCP 的续租
+          <p>T1 50%</p>
+          <p>T2 87.5%</p>
         </li>
       </ol>
       <dt>Homework</dt>
