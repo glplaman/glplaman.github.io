@@ -45,7 +45,7 @@
     <h2>基本过程 Procedure</h2>
     <dl>
       <dd>配置过程通过多个广播实现</dd>
-      <dd>假设 DHCP 服务器为：10.1.1.1</dd>
+      <dd>假设 DHCP 服务器为：10.1.1.1/24</dd>
       <figure>
         <img class="sprite1" src="./imgs/dhcp1.png" alt="">
         <figcaption>D-O-R-A</figcaption>
@@ -57,8 +57,8 @@
       <dd>内容：包含客户端 MAC 地址（CHADDR 字段），用于标识自身</dd>
       <dd>此时报文被同一广播域内所有 DHCP 服务器接收</dd>
       <pre>
-No.     Time        Source                Destination           Protocol Info
-24      46.937000   0.0.0.0               255.255.255.255       DHCP     DHCP Discover - Transaction ID 0x3aa1
+No.     Time        Source        Destination           Protocol     Info
+24      46.937000   0.0.0.0       255.255.255.255       DHCP         DHCP Discover - Transaction ID 0x3aa1
 
 Frame 24: 410 bytes on wire (3280 bits), 410 bytes captured (3280 bits)
 Ethernet II, Src: HuaweiTe_f3:40:81 (54:89:98:f3:40:81), Dst: Broadcast (ff:ff:ff:ff:ff:ff)
@@ -76,8 +76,8 @@ Bootstrap Protocol</pre>
       <dd>-历史租约，判断是否到期以及是否冲突，再根据情况处理</dd>
       <dd>Offer 内容：包含提供的 IP 地址、子网掩码、租期、网关、DNS 等配置，以及 该 DHCP 服务器自身的 IP 地址</dd>
       <pre>
-No.     Time        Source                Destination           Protocol Info
-25      46.984000   10.1.1.1              10.1.1.253            DHCP     DHCP Offer    - Transaction ID 0x3aa1
+No.     Time        Source        Destination           Protocol     Info
+25      46.984000   10.1.1.1      10.1.1.253            DHCP         DHCP Offer    - Transaction ID 0x3aa1
 
 Frame 25: 342 bytes on wire (2736 bits), 342 bytes captured (2736 bits)
 Ethernet II, Src: HuaweiTe_f1:05:56 (00:e0:fc:f1:05:56), Dst: HuaweiTe_f3:40:81 (54:89:98:f3:40:81)
@@ -95,8 +95,8 @@ Bootstrap Protocol</pre>
       <dd>告知所选的 DHCP 服务器：我接受你提供的 IP</dd>
       <dd>通知其他 DHCP 服务器：我不使用你们的 Offer，请释放预分配的 IP</dd>
       <pre>
-No.     Time        Source                Destination           Protocol Info
-27      48.937000   0.0.0.0               255.255.255.255       DHCP     DHCP Request  - Transaction ID 0x3aa1
+No.     Time        Source        Destination           Protocol     Info
+27      48.937000   0.0.0.0       255.255.255.255       DHCP         DHCP Request  - Transaction ID 0x3aa1
 
 Frame 27: 410 bytes on wire (3280 bits), 410 bytes captured (3280 bits)
 Ethernet II, Src: HuaweiTe_f3:40:81 (54:89:98:f3:40:81), Dst: Broadcast (ff:ff:ff:ff:ff:ff)
@@ -112,8 +112,8 @@ Bootstrap Protocol</pre>
       <dd>ACK 内容：确认 IP 分配，并再次包含完整的网络配置参数</dd>
       <dd>客户端收到 ACK 后，正式使用该 IP 地址及配置，完成初始化</dd>
       <pre>
-No.     Time        Source                Destination           Protocol Info
-28      49.000000   10.1.1.1              10.1.1.253            DHCP     DHCP ACK      - Transaction ID 0x3aa1
+No.     Time        Source        Destination           Protocol     Info
+28      49.000000   10.1.1.1      10.1.1.253            DHCP         DHCP ACK      - Transaction ID 0x3aa1
 
 Frame 28: 342 bytes on wire (2736 bits), 342 bytes captured (2736 bits)
 Ethernet II, Src: HuaweiTe_f1:05:56 (00:e0:fc:f1:05:56), Dst: HuaweiTe_f3:40:81 (54:89:98:f3:40:81)

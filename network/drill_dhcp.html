@@ -31,8 +31,9 @@
       <dd>交换机 2960 2台</dd>
       <dd>主机 PC 诺干台</dd>
       <dt>前置知识</dt>
-      <dd>网关</dd>
-      <dd>全局池；接口池</dd>
+      <dd>网关 Gateway</dd>
+      <dd>全局地址池 Global Address Pool</dd>
+      <dd>接口地址池 Interface Address Pool</dd>
       <dd>DHCP DORA</dd>
       <table style="max-width: 780px;">
         <caption>常用命令</caption>
@@ -57,7 +58,7 @@
           </tr>
           <tr>
             <td>dhcp select interface/global</td>
-            <td>选择接口池/全局池</td>
+            <td>选择接口地址池/全局地址池</td>
           </tr>
           <tr>
             <td>lease day [days] hour [hours] minute [minutes]</td>
@@ -84,6 +85,10 @@
           <tr>
             <td>display ip pool name [name]</td>
             <td>查看指定名称的地址池</td>
+          </tr>
+          <tr>
+            <td>display ip pool name [name] IP_ADDR</td>
+            <td>查看指定IP的地址租赁</td>
           </tr>
         </tbody>
       </table>
@@ -116,7 +121,7 @@ gateway-list 10.1.58.1 	#指定网关 Gateway
 lease day 0 hour 0 minute 30 	# 设置租期
 excluded-ip-address 10.1.58.1 10.1.58.10 	#排除网关、DNS 等保留地址
 quit</pre>
-        <li>接口配置，与全局池绑定</li>
+        <li>接口配置，与全局地址池绑定</li>
         <pre>
 inter g0/0/0	# 选择端口
 ip address 10.1.58.1 24 	# 配置IP
@@ -139,13 +144,18 @@ save</pre>
           <pre>ipconfig /release</pre>
           <pre>ipconfig /renew</pre>
         </li>
+        <li>路由器侧查看各IP租赁情况</li>
+        <pre>display ip pool name mypool</pre>
+        <li>路由器侧查看特定IP租赁情况</li>
+        <pre>display ip pool name mypool 10.1.58.252</pre>
+        <li>主机侧查看IP租赁情况（依赖设备支持度情况）</li>
         <li>其它</li>
       </ol>
       <dt>拓展练习</dt>
       <dd><a href="./drill_dhcp_pt.html" class="link">DHCP_PT</a></dd>
       <dt>实验分析</dt>
       <dt>实验总结</dt>
-      <dt>附录 1 全局池配置</dt>
+      <dt>附录 1 全局地址池配置</dt>
       <dd>路由器配置参考命令（主机名为DHCP+学号后2位，如DHCP58）</dd>
       <pre>
 system-view
@@ -155,8 +165,8 @@ dhcp enable
 
 ip pool mypool
 network [network] mask [mask]
-gateway-list [dns]
-dns-list 8.8.8.8
+gateway-list [gateway]
+dns-list [dns]
 lease day [day] hour [hour] minute [minute]
 excluded-ip-address [ips]
 quit
@@ -168,7 +178,7 @@ quit
 
 return
 save</pre>
-      <dt>附录2 接口池的配置</dt>
+      <dt>附录2 接口地址池的配置</dt>
       <dd>先配置接口 IP，然后用接口网段做地址池</dd>
       <dd>根据实际拓扑配置</dd>
       <pre>
@@ -185,6 +195,42 @@ dhcp server dns-list [dns]
 dhcp server lease day [day] hour [hour] minute [minute]
 dhcp server excluded-ip-address [ips]
 return
+save</pre>
+      <dt>附录3 多网络配置</dt>
+      <dd>使用全局地址池 Global Address Pool</dd>
+      <pre>
+system-view
+sysname DHCPServer58
+dhcp enable
+
+// ---------------- 配置全局池 pool58 ----------------
+ip pool pool58
+network 10.1.58.0 mask 24
+gateway-list 10.1.58.1
+dns-list 8.8.8.8
+lease day 1
+excluded-ip-address 10.1.58.2 10.1.58.10  // 记得排除不用的地址
+quit
+
+// ---------------- 配置全局池 pool59 ----------------
+ip pool pool59
+network 10.1.59.0 mask 24
+gateway-list 10.1.59.1
+dns-list 8.8.8.8
+lease day 1
+excluded-ip-address 10.1.59.2 10.1.59.10
+quit
+
+// ---------------- 配置接口并绑定全局池 ----------------
+interface GigabitEthernet0/0/0
+ip address 10.1.1.1 24
+dhcp select global
+quit
+
+interface GigabitEthernet0/0/1
+ip address 10.1.59.1 24
+dhcp select global
+quit
 save</pre>
     </dl>
     <div id="footer"></div>
