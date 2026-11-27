@@ -16,19 +16,50 @@
     <dl>
       <dt>介绍 Introduction</dt>
       <dt>捕获 Capture</dt>
-      <dd>先启动捕获，再跑应用</dd>
-      <dt>过滤 Filter</dt>
       <ol>
-        <li>使用序号</li>
-        <pre>frame.number</pre>
-        <li>指定协议</li>
-        <pre>tcp</pre>
+        <li>选择捕获端口</li>
+        <li>开始抓包</li>
+        <li>启动检测的应用服务</li>
       </ol>
+      <dt>过滤 Filter</dt>
+      <dd>区分大小写</dd>
+      <dd>多配合使用关系运算符 &gt;、&lt;、&le;、&ge;、&lt;&gt;</dd>
+      <table>
+        <caption>过滤器 Filter</caption>
+        <thead>
+          <tr>
+            <th>command</th>
+            <th>descr</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>protocol_name </td>
+            <td>按协议过滤
+              <br>tcp
+              <br>bootp；DHCP不是dhcp
+            </td>
+          </tr>
+          <tr>
+            <td>protocol_name.protocol_port </td>
+            <td>按协议端口过滤
+              <br>udp.port == 67 || udp.port == 68
+            </td>
+          </tr>
+          <tr>
+            <td>frame.number == n </td>
+            <td>按帧编号过滤
+              <br>frame.number >= 10
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <dt>导出数据 Export → File</dt>
       <ul>
-        <li>导出捕获 Captured 或展示 Displayed 的数据</li>
-        <li>根据序号 No 范围导出（8-10,12-16）</li>
-        <li>根据选中的分组 Selected Packet（无法多选。。。）</li>
+        <li>根据捕获 Captured 或展示 Displayed 导出</li>
+        <li>根据序号 No 导出（8-10,12-16）</li>
+        <li>根据标记 Marked 导出</li>
+        <li>根据选中 Selected Packet导出</li>
       </ul>
       <figure>
         <img src="./imgs/shark0.png" alt="导出数据 Export → File">

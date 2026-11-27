@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eNSP Router</title>
+  <link rel="stylesheet" href="/css/reset.css">
+</head>
+
+<body>
+  <div class="w">
+    <header>
+      <h1>交换机 Switch</h1>
+    </header>
+    <dl>
+      <table>
+        <caption>恢复设置</caption>
+        <thead>
+          <tr>
+            <th>command</th>
+            <th>descr</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>reset saved-configuration</td>
+            <td>清除保存的配置</td>
+          </tr>
+          <tr>
+            <td>reboot</td>
+            <td>重启；先n再y</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="demo">设备恢复设置</div>
+      <pre>
+&lt;AR1>reset saved-configuration 
+This will delete the configuration in the flash memory.
+
+The device configuratio
+ns will be erased to reconfigure.
+
+Are you sure? (y/n)[n]:y
+ Clear the configuration in the device successfully.
+&lt;AR1>reb	
+&lt;AR1>reboot 
+Info: The system is comparing the configuration, please wait.
+Warning: All the configuration will be saved to the next startup configuration. 
+Continue ? [y/n]:n
+System will reboot! Continue ? [y/n]:y
+Info: system is rebooting ,please wait...
+&lt;AR1>
+Task FECD Init......Ok
+...</pre>
+    </dl>
+    <div id="footer"></div>
+    <script src="/utils/custom/footer.js"></script>
+  </div>
+
+</body>
+
+</html>

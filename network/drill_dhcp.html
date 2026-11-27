@@ -32,6 +32,8 @@
       <dd>主机 PC 诺干台</dd>
       <dt>前置知识</dt>
       <dd>网关</dd>
+      <dd>全局池；接口池</dd>
+      <dd>DHCP DORA</dd>
       <table style="max-width: 780px;">
         <caption>常用命令</caption>
         <thead>
@@ -46,12 +48,16 @@
             <td>启动 DHCP</td>
           </tr>
           <tr>
-            <td>ip pool </td>
-            <td>[pool_name] 命名地址池</td>
+            <td>ip pool [pool_name]</td>
+            <td>命名地址池；全局模式</td>
           </tr>
           <tr>
             <td>network [NETWORK] mask [MASK] </td>
             <td>指定网络</td>
+          </tr>
+          <tr>
+            <td>dhcp select interface/global</td>
+            <td>选择接口池/全局池</td>
           </tr>
           <tr>
             <td>lease day [days] hour [hours] minute [minutes]</td>
@@ -82,8 +88,9 @@
         </tbody>
       </table>
       <dt>实验步骤</dt>
+      <dd>更多内容，请访问 <a href="./drill_dhcp.html" class="link">DHCP Server</a></dd>
       <ol>
-        <li>搭建拓扑</li>
+        <li>搭建网络拓扑</li>
         <figure>
           <img src="./imgs/dhcp10.png" alt="dhcp">
           <figcaption>网络拓扑</figcaption>
@@ -98,34 +105,28 @@
 system-view
 undo infor-center enable
 sysname DHCP58</pre>
-        <li>路由器配置网关
-          <p>配置端口 IP</p>
-          <pre>inter [interface]</pre>
-          <p>配置 IP 地址</p>
-          <pre>ip address [network] [mask] </pre>
-          <p>全局获取</p>
-          <pre>dhcp select global</pre>
-        </li>
-        <li>路由器开启 DHCP</li>
+        <li>开启 DHCP</li>
         <pre>dhcp enable</pre>
-        <li>路由器配置 IP 地址池
-          <p>指定 IP 地址池名称</p>
-          <pre>ip pool [pool_name]</pre>
-          <p>指定网络和掩码</p>
-          <pre>network [network] mask [mask]</pre>
-          <p>指定 DNS</p>
-          <pre>dns-list [dns]</pre>
-          <p>指定网关 Gateway</p>
-          <pre>gateway-list [gateway]</pre>
-          <p>设置租期</p>
-          <pre>lease day [days] hour [hours] minute [minutes]</pre>
-          <p>排除网关、DNS 等保留地址</p>
-          <pre>excluded-ip-address [start_ip] [end_ip]</pre>
-        </li>
-        <li>返回用户视图</li>
-        <pre>return</pre>
-        <li>路由器保存配置</li>
-        <pre>save</pre>
+        <li>配置 DHCP</li>
+        <pre>
+ip pool mypool 	# 指定 IP 地址池名称
+network 10.1.58.0 mask 24 	#指定网络和掩码
+dns-list 8.8.8.8 	#指定 DNS
+gateway-list 10.1.58.1 	#指定网关 Gateway
+lease day 0 hour 0 minute 30 	# 设置租期
+excluded-ip-address 10.1.58.1 10.1.58.10 	#排除网关、DNS 等保留地址
+quit</pre>
+        <li>接口配置，与全局池绑定</li>
+        <pre>
+inter g0/0/0	# 选择端口
+ip address 10.1.58.1 24 	# 配置IP
+dhcp select global	# 让接口使用全局地址池分配 IP
+quit</pre>
+        <li>返回用户视图并保存配置</li>
+        <pre>
+return
+save</pre>
+        <li>交换机侧利用 Wireshark 查看 DHCP DORA 四步交互过程</li>
         <li>各主机使用 IPCONFIG 查看 IP 地址获取情况</li>
         <li>各主机使用 PING 命令，测试各设备的连通性</li>
         <li>主机侧利用 Wireshark 查看 DHCP DORA 四步交互过程
@@ -144,27 +145,45 @@ sysname DHCP58</pre>
       <dd><a href="./drill_dhcp_pt.html" class="link">DHCP_PT</a></dd>
       <dt>实验分析</dt>
       <dt>实验总结</dt>
-      <dt>附录</dt>
+      <dt>附录 1 全局池配置</dt>
       <dd>路由器配置参考命令（主机名为DHCP+学号后2位，如DHCP58）</dd>
       <pre>
 system-view
 undo info-center enable
-sysname DHCP58
-dhcp enable                         // 1. 全局开启DHCP服务（必须最先做）
+sysname [sysname]
+dhcp enable
 
-ip pool mypool                      // 2. 提前建好池子
-network 10.1.58.0 mask 24
-gateway-list 10.1.58.1
+ip pool mypool
+network [network] mask [mask]
+gateway-list [dns]
 dns-list 8.8.8.8
-lease day 0 hour 0 minute 30
-excluded-ip-address 10.1.58.2 10.1.58.100  // 注意：替换为实际IP，不要带中括号
+lease day [day] hour [hour] minute [minute]
+excluded-ip-address [ips]
 quit
 
-interface g0/0/0                    // 3. 配置接口并关联全局池
-ip address 10.1.58.1 255.255.255.0
+interface [interface]
+ip address [ip] [mask]
 dhcp select global
 quit
 
+return
+save</pre>
+      <dt>附录2 接口池的配置</dt>
+      <dd>先配置接口 IP，然后用接口网段做地址池</dd>
+      <dd>根据实际拓扑配置</dd>
+      <pre>
+system-view
+sysname DHCP-Server-Interface
+dhcp enable
+
+interface [interface]
+ip address [ip] [mask]
+dhcp select interface
+
+// Optional
+dhcp server dns-list [dns]
+dhcp server lease day [day] hour [hour] minute [minute]
+dhcp server excluded-ip-address [ips]
 return
 save</pre>
     </dl>
